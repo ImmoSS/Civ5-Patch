@@ -73,6 +73,10 @@ IF EXIST "%cd%\UI_bc1\ToolTips\InfoTooltipInclude.lua" (
   ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\InfoTooltipInclude.lua" "%cd%\%patchfolder%\UI\InfoTooltipInclude.lua"
 )
 REM -------------------------------------------------
+IF EXIST "%cd%\UI_bc1\ToolTips\InfoTooltipInclude.lua" (
+  ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\eui\EUI_unit_include.lua" "%cd%\%patchfolder%\UI\EUI_unit_include.lua"
+)
+REM -------------------------------------------------
 IF EXIST "%cd%\UI_bc1\PlotHelp\PlotHelpManager.lua" (
   ECHO PlotHelpManager.lua exists on EUI, skipping
 ) ELSE (
