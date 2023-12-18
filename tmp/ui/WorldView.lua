@@ -765,8 +765,19 @@ function MovementRButtonUp( wParam, lParam )
 				Game.SelectionListGameNetMessage(GameMessageTypes.GAMEMESSAGE_DO_COMMAND, CommandTypes.COMMAND_CANCEL_ALL);
 			else--if plot == UI.GetGotoPlot() then
 				--print("Game.SelectionListMove(plot,  bAlt, bShift, bCtrl);");
-				Game.SelectionListMove(plot,  bAlt, bShift, bCtrl);
+				--Game.SelectionListMove(plot,  bAlt, bShift, bCtrl);
 				--UI.SetGotoPlot(nil);
+
+				if (pHeadSelectedUnit:GetDomainType() == DomainTypes.DOMAIN_AIR) then
+					iMission = MissionTypes.MISSION_REBASE;
+				
+					Game.SelectionListGameNetMessage(GameMessageTypes.GAMEMESSAGE_PUSH_MISSION, iMission, plotX, plotY, 0, false, bShift);
+					UI.SetInterfaceMode(InterfaceModeTypes.INTERFACEMODE_SELECTION);
+					--Events.ClearHexHighlights();
+					ClearAllHighlights();
+				else
+					Game.SelectionListMove(plot,  bAlt, bShift, bCtrl);
+				end
 			end
 			--Events.ClearHexHighlights();
 			ClearAllHighlights();
