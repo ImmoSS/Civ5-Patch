@@ -7385,6 +7385,9 @@ bool CvUnit::CanEnhanceReligion(const CvPlot* pPlot) const
 #else
 	if(GET_TEAM(getTeam()).isMinorCiv())
 #endif
+	{
+		return false;
+	}
 
 	if(isDelayedDeath())
 	{
