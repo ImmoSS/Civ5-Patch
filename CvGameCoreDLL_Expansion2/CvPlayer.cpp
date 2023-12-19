@@ -6144,6 +6144,11 @@ void CvPlayer::disband(CvCity* pCity)
 		gDLL->GameplayCityDestroyed(pkDllCity.get(), NO_PLAYER);
 	}
 
+#ifdef REPLAY_EVENTS
+	std::vector<int> vArgs;
+	vArgs.push_back(pCity->plot()->GetPlotIndex());
+	GC.getGame().addReplayEvent(REPLAYEVENT_PlotNewCityName, GetID(), vArgs, "NO_CITY");
+#endif
 	pCity->kill();
 
 	if(pPlot)
@@ -24180,7 +24185,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iSpyStartingRank;
 #ifdef ENHANCED_GRAPHS
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= BUMP_SAVE_VERSION_PLAYER)
+	if (uiVersion >= 1002)
 	{
 # endif
 		kStream >> m_iNumStolenScience;
@@ -24313,7 +24318,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iGreatMusiciansCreated;
 #ifdef NQ_GOLDEN_AGE_TURNS_FROM_BELIEF
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= BUMP_SAVE_VERSION_PLAYER)
+	if (uiVersion >= 1000)
 	{
 # endif
 		kStream >> m_bHasUsedDharma;
@@ -24327,7 +24332,7 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef UNITY_OF_PROPHETS_EXTRA_PROPHETS
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= BUMP_SAVE_VERSION_PLAYER)
+	if (uiVersion >= 1000)
 	{
 # endif
 		kStream >> m_bHasUsedUnityProphets;
@@ -24341,7 +24346,7 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef FREE_GREAT_PERSON
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= BUMP_SAVE_VERSION_PLAYER)
+	if (uiVersion >= 1000)
 	{
 # endif
 		kStream >> m_iGreatProphetsCreated;
@@ -24355,7 +24360,7 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #if defined SEPARATE_GREAT_PEOPLE || defined SWEDEN_UA_REWORK
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= BUMP_SAVE_VERSION_PLAYER)
+	if (uiVersion >= 1000)
 	{
 # endif
 		kStream >> m_iGreatScientistsCreated;
@@ -24395,7 +24400,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iEngineersFromFaith;
 #ifdef BELIEF_TO_GLORY_OF_GOD_ONE_GP_OF_EACH_TYPE
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= BUMP_SAVE_VERSION_PLAYER)
+	if (uiVersion >= 1000)
 	{
 # endif
 		kStream >> m_bMerchantsFromFaith;
@@ -24629,7 +24634,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_bHasBetrayedMinorCiv;
 #ifdef CAN_BUILD_OU_AND_NIA_ONLY_ONCE
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= BUMP_SAVE_VERSION_PLAYER)
+	if (uiVersion >= 1000)
 	{
 # endif
 		kStream >> m_bOxfordUniversityWasEverBuilt;

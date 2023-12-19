@@ -1722,7 +1722,7 @@ void CvTeam::meet(TeamTypes eTeam, bool bSuppressMessages)
 			std::vector<int> vArgs;
 			vArgs.push_back(static_cast<int>(eTeam));
 			vArgs.push_back(static_cast<int>(GetID()));
-			GC.getGame().addReplayEvent(REPLAYEVENT_MeetTeam, NO_PLAYER, vArgs);
+			GC.getGame().addReplayEvent(REPLAYEVENT_MeetTeam, getLeaderID(), vArgs);
 		}
 #endif
 	}
@@ -5918,7 +5918,7 @@ void CvTeam::setHasTech(TechTypes eIndex, bool bNewValue, PlayerTypes ePlayer, b
 					std::vector<int> vArgs;
 					vArgs.push_back(static_cast<int>(GetID()));
 					vArgs.push_back(static_cast<int>(eIndex));
-					GC.getGame().addReplayEvent(REPLAYEVENT_TechAcquired, NO_PLAYER, vArgs);
+					GC.getGame().addReplayEvent(REPLAYEVENT_TechAcquired, getLeaderID(), vArgs);
 				}
 #endif
 			}
@@ -6209,7 +6209,7 @@ void CvTeam::testCircumnavigated()
 					{
 						std::vector<int> vArgs;
 						vArgs.push_back(static_cast<int>(eTeamID));
-						GC.getGame().addReplayEvent(REPLAYEVENT_CircumnavigatedGlobe, NO_PLAYER, vArgs);
+						GC.getGame().addReplayEvent(REPLAYEVENT_CircumnavigatedGlobe, getLeaderID(), vArgs);
 					}
 #endif
 				}
@@ -6764,7 +6764,7 @@ void CvTeam::SetCurrentEra(EraTypes eNewValue)
 						std::vector<int> vArgs;
 						vArgs.push_back(static_cast<int>(GetID()));
 						vArgs.push_back(static_cast<int>(eNewValue));
-						GC.getGame().addReplayEvent(REPLAYEVENT_AdvanceEra, NO_PLAYER, vArgs);
+						GC.getGame().addReplayEvent(REPLAYEVENT_AdvanceEra, getLeaderID(), vArgs);
 					}
 #endif
 
@@ -7136,7 +7136,7 @@ void CvTeam::Read(FDataStream& kStream)
 	kStream >> m_iDefensivePactTradingAllowedCount;
 #ifdef DEF_PACT_COUNT
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= BUMP_SAVE_VERSION_TEAM)
+	if (uiVersion >= 1000)
 	{
 # endif
 		kStream >> m_iDefensivePactCount;
@@ -7151,7 +7151,7 @@ void CvTeam::Read(FDataStream& kStream)
 	kStream >> m_iResearchAgreementTradingAllowedCount;
 #ifdef RES_AGR_COUNT
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= BUMP_SAVE_VERSION_TEAM)
+	if (uiVersion >= 1000)
 	{
 # endif
 		kStream >> m_iResearchAgreementCount;

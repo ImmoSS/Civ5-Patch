@@ -11252,7 +11252,7 @@ void CvMPVotingSystem::DoTurn()
 				vArgs.push_back(it->iID);
 				vArgs.push_back(it->eType);
 				vArgs.push_back(it->eProposalSubject);
-				vArgs.push_back(it->eStatus);
+				vArgs.push_back(it->eStatus == STATUS_PASSED);
 				GC.getGame().addReplayEvent(REPLAYEVENT_MPProposalResult, it->eProposalOwner, vArgs);
 #endif
 
@@ -11446,7 +11446,7 @@ void CvMPVotingSystem::DoCheckVoters(int iProposalID)
 					vArgs.push_back(iProposalID);
 					vArgs.push_back(static_cast<int>(GetProposalType(iProposalID)));
 					vArgs.push_back(static_cast<int>(GetProposalSubject(iProposalID)));
-					vArgs.push_back(static_cast<int>(GetProposalStatus(iProposalID)));
+					vArgs.push_back(GetProposalStatus(iProposalID) == STATUS_PASSED);
 					GC.getGame().addReplayEvent(REPLAYEVENT_MPProposalResult, GetProposalOwner(iProposalID), vArgs);
 #endif
 
@@ -11551,7 +11551,7 @@ void CvMPVotingSystem::DoUpdateProposalStatus(int iProposalID)
 		vArgs.push_back(iProposalID);
 		vArgs.push_back(static_cast<int>(GetProposalType(iProposalID)));
 		vArgs.push_back(static_cast<int>(GetProposalSubject(iProposalID)));
-		vArgs.push_back(static_cast<int>(GetProposalStatus(iProposalID)));
+		vArgs.push_back(GetProposalStatus(iProposalID) == STATUS_PASSED);
 		GC.getGame().addReplayEvent(REPLAYEVENT_MPProposalResult, GetProposalOwner(iProposalID), vArgs);
 #endif
 
@@ -11699,16 +11699,16 @@ FDataStream& operator>>(FDataStream& loadFrom, CvMPVotingSystem& writeTo)
 		loadFrom >> temp.iID;
 		loadFrom >> temp.iUIid;
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
-		if (uiVersion >= BUMP_SAVE_VERSION_MP_VOTING_SYSTEM)
+		if (uiVersion >= 1000)
 #endif
 		loadFrom >> temp.iCreationTurn;
-		loadFrom >> temp.iExpirationCounter;
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
-		if (uiVersion < BUMP_SAVE_VERSION_MP_VOTING_SYSTEM)
+		else
 		{
 			temp.iCreationTurn = temp.iExpirationCounter - 2;
 		}
 #endif
+		loadFrom >> temp.iExpirationCounter;
 		loadFrom >> temp.eType;
 		loadFrom >> temp.eStatus;
 		loadFrom >> temp.eProposalOwner;
