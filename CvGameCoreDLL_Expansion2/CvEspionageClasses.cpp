@@ -4070,7 +4070,7 @@ FDataStream& operator>>(FDataStream& loadFrom, CvPlayerEspionage& writeTo)
 
 #ifdef ESPIONAGE_SYSTEM_REWORK
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= BUMP_SAVE_VERSION_ESPIONAGE)
+	if (uiVersion >= 1000)
 	{
 # endif
 		loadFrom >> uiNumCivs;
