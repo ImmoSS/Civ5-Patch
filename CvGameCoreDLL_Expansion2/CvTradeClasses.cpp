@@ -3787,17 +3787,14 @@ int CvPlayerTrade::GetNumPlayerPlotTradeRoutes(CvPlot* pPlot)
 
 		TradeConnection* pConnection = &(pTrade->m_aTradeConnections[uiConnection]);
 
-		if (pConnection->m_eConnectionType == TRADE_CONNECTION_INTERNATIONAL)
+		if (pConnection->m_eOriginOwner == ePlayer)
 		{
-			if (pConnection->m_eOriginOwner == ePlayer)
+			for (uint uiPlotIndex = 0; uiPlotIndex < pConnection->m_aPlotList.size(); uiPlotIndex++)
 			{
-				for (uint uiPlotIndex = 0; uiPlotIndex < pConnection->m_aPlotList.size(); uiPlotIndex++)
+				if (pConnection->m_aPlotList[uiPlotIndex].m_iX == iX && pConnection->m_aPlotList[uiPlotIndex].m_iY == iY)
 				{
-					if (pConnection->m_aPlotList[uiPlotIndex].m_iX == iX && pConnection->m_aPlotList[uiPlotIndex].m_iY == iY)
-					{
-						iNumTradeRoutes++;
-						break;
-					}
+					iNumTradeRoutes++;
+					break;
 				}
 			}
 		}
