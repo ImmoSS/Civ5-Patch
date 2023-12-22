@@ -683,6 +683,8 @@ end
 
 
 function MovementRButtonUp( wParam, lParam )
+    local EUI_options = Modding.OpenUserData( "Enhanced User Interface Options", 1);
+    local bRightButtonRebase = EUI_options.GetValue( "DB_bRightButtonRebase" );
     if( bEatNextUp == true ) then
         bEatNextUp = false;
         return;
@@ -768,7 +770,7 @@ function MovementRButtonUp( wParam, lParam )
 				--Game.SelectionListMove(plot,  bAlt, bShift, bCtrl);
 				--UI.SetGotoPlot(nil);
 
-				if (pHeadSelectedUnit:GetDomainType() == DomainTypes.DOMAIN_AIR) then
+				if (pHeadSelectedUnit:GetDomainType() == DomainTypes.DOMAIN_AIR and bRightButtonRebase == 1) then
 					iMission = MissionTypes.MISSION_REBASE;
 				
 					Game.SelectionListGameNetMessage(GameMessageTypes.GAMEMESSAGE_PUSH_MISSION, iMission, plotX, plotY, 0, false, bShift);
