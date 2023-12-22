@@ -1409,7 +1409,7 @@ function RefreshTheirCities(selectedAgentIndex, selectedAgentCurrentCityPlayerID
 			local pMyTeam = Teams[Game.GetActiveTeam()]
 			
 			local bCheckDiplomat = false;
-			if (city:IsCapital() and (not Players[v.PlayerID]:IsMinorCiv()) and (not pMyTeam:IsAtWar(city:GetTeam()))) then
+			if (city:IsCapital() and (not Players[v.PlayerID]:IsMinorCiv())) then
 				bCheckDiplomat = true;
 			end 
 
