@@ -2,7 +2,8 @@
 <Context ColorSet="Beige_Black_Alpha" >
 
 	<!--AlphaAnim ID="FlagFader" AlphaStart="1" AlphaEnd="0" Speed="2" Cycle="Once" Stopped="1" -->
-	<Container ID="AirCraftFlags" Hidden="1" />
+	<Container ID="ScrapControls" Hidden="1" />
+	<Container ID="AirCraftFlags" />
 	<Container ID="CivilianFlags" />
 	<Container ID="MilitaryFlags" />
 	<Container ID="GarrisonFlags" />

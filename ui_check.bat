@@ -46,8 +46,10 @@ ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\Highlights.xml" "%cd%\%patchfold
 REM -------------------------------------------------
 set text="-- destroy: check fix for need to update plot & cargo & airbase"
 FIND %text% "%cd%\UI_bc1\UnitFlagManager\UnitFlagManager.lua" && (
+  ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\eui\UnitFlagManager.xml" "%cd%\%patchfolder%\UI\UnitFlagManager.xml"
   ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\eui\UnitFlagManager.lua" "%cd%\%patchfolder%\UI\UnitFlagManager.lua"
 ) || (
+  ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\UnitFlagManager.xml" "%cd%\%patchfolder%\UI\UnitFlagManager.xml"
   ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\UnitFlagManager.lua" "%cd%\%patchfolder%\UI\UnitFlagManager.lua"
 )
 REM -------------------------------------------------
