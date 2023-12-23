@@ -104,7 +104,9 @@ local g_UnitFlagClass =
                 o.m_CargoControls.PullDown:RegisterSelectionCallback( UnitFlagClicked );
                 o.m_CargoControls.PullDown:ReprocessAnchoring();
                -- print( "creation cargo" );
-                o:UpdateCargo();
+                if (o.m_CarrierFlag ~= nil) then
+                    o.m_CarrierFlag:UpdateCargo();
+                end
             end
 
             ---------------------------------------------------------
