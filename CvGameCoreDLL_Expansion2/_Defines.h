@@ -985,8 +985,6 @@ enum ReplayEventTypes
 //#define DEV_RECORDING_STATISTICS
 // use PreGame.GetNickName with encoded value to retrieve user's SteamId
 #define PREGAMEAPI_GET_NETID
-///
-#define DISALLOW_MOVEMENT_FOR_TRAITORS
 /*OTHER CHANGES END*/
 
 
