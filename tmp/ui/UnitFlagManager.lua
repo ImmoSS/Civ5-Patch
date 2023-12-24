@@ -93,18 +93,7 @@ local g_UnitFlagClass =
 
             o.m_Instance = o.m_InstanceManager:GetInstance();
             o:Initialize( playerID, unitID, fogState, invisible );
-
-            ---------------------------------------------------------
-            -- build the table for this player and store the flag
-            local playerTable = g_MasterList[ playerID ];
-            if playerTable == nil 
-            then
-                playerTable = {};
-                g_MasterList[ playerID ] = playerTable
-            end
-            g_MasterList[ playerID ][ unitID ] = o;
            
-            -- FIX: call UpdateCargo after building g_MasterList
             ---------------------------------------------------------
             -- Can carry units
             if( pUnit:CargoSpace() > 0 ) then
@@ -119,6 +108,16 @@ local g_UnitFlagClass =
                     o.m_CarrierFlag:UpdateCargo();
                 end
             end
+
+            ---------------------------------------------------------
+            -- build the table for this player and store the flag
+            local playerTable = g_MasterList[ playerID ];
+            if playerTable == nil 
+            then
+                playerTable = {};
+                g_MasterList[ playerID ] = playerTable
+            end
+            g_MasterList[ playerID ][ unitID ] = o;
             
             -- If the unit is cargo, link to the carrier, if it is already created.  If not, the carrier will create the link
             if (pUnit:IsCargo() and o.m_CarrierFlag == nil) then
