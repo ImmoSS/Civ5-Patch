@@ -238,6 +238,39 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_NUMOFBORNMUSICIANS
 		, m_bMayaBoostMusicians(false)
 #endif
+#ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
+		, m_iScientistsTotalScienceBoost(false)
+#endif
+#ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
+		, m_iWritersTotalCultureBoost(false)
+#endif
+#ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
+		, m_iPopulationLostFromNukes(false)
+#endif
+#ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
+		, m_iNumCSQuestsCompleted(false)
+#endif
+#ifdef EG_REPLAYDATASET_ALLIEDCS
+		, m_iNumAlliedCS(false)
+#endif
+#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
+		, m_iNumHappinessFromTradeDeals(false)
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
+		, m_iPercentOfCitiesWithActiveWLTKD(false)
+#endif
+#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
+		, m_iNumFollowersOfPlayerReligion(false)
+#endif
+#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
+		, m_iNumCitiesConvertedToPlayerReligion(false)
+#endif
+#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
+		, m_iNumTotalSpecialistCitizens(false)
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
+		, m_iPercentSpecialistCitizens(false)
+#endif
 	, m_iExtraLeagueVotes(0)
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
@@ -954,6 +987,39 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_NUMOFBORNMUSICIANS
 	m_bMayaBoostMusicians = 0;
+#endif
+#ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
+	m_iScientistsTotalScienceBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
+	m_iWritersTotalCultureBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
+	m_iPopulationLostFromNukes = 0;
+#endif
+#ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
+	m_iNumCSQuestsCompleted = 0;
+#endif
+#ifdef EG_REPLAYDATASET_ALLIEDCS
+	m_iNumAlliedCS = 0;
+#endif
+#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
+	m_iNumHappinessFromTradeDeals = 0;
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
+	m_iPercentOfCitiesWithActiveWLTKD = 0;
+#endif
+#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
+	m_iNumFollowersOfPlayerReligion = 0;
+#endif
+#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
+	m_iNumCitiesConvertedToPlayerReligion = 0;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
+	m_iNumTotalSpecialistCitizens = 0;
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
+	m_iPercentSpecialistCitizens = 0;
 #endif
 	m_iExtraLeagueVotes = 0;
 	m_iSpecialPolicyBuildingHappiness = 0;
@@ -10026,6 +10092,116 @@ bool CvPlayer::GetMayaBoostMusicians() const
 void CvPlayer::SetMayaBoostMusicians(bool bValue)
 {
 	m_bMayaBoostMusicians = bValue;
+}
+#endif
+#ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
+int CvPlayer::GetScientistsTotalScienceBoost() const
+{
+	return m_iScientistsTotalScienceBoost;
+}
+void CvPlayer::ChangeScientistsTotalScienceBoost(int iChange)
+{
+	m_iScientistsTotalScienceBoost = (m_iScientistsTotalScienceBoost + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
+int CvPlayer::GetWritersTotalCultureBoost() const
+{
+	return m_iWritersTotalCultureBoost;
+}
+void CvPlayer::ChangeWritersTotalCultureBoost(int iChange)
+{
+	m_iWritersTotalCultureBoost = (m_iWritersTotalCultureBoost + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
+int CvPlayer::GetPopulationLostFromNukes() const
+{
+	return m_iPopulationLostFromNukes;
+}
+void CvPlayer::ChangePopulationLostFromNukes(int iChange)
+{
+	m_iPopulationLostFromNukes = (m_iPopulationLostFromNukes + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
+int CvPlayer::GetCSQuestsCompleted() const
+{
+	return m_iNumCSQuestsCompleted;
+}
+void CvPlayer::ChangeCSQuestsCompleted(int iChange)
+{
+	m_iNumCSQuestsCompleted = (m_iNumCSQuestsCompleted + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_ALLIEDCS
+int CvPlayer::GetNumAlliedCS() const
+{
+	return m_iNumAlliedCS;
+}
+void CvPlayer::ChangeNumAlliedCS(int iChange)
+{
+	m_iNumAlliedCS = (m_iNumAlliedCS + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
+int CvPlayer::GetNumHappinessFromTradeDeals() const
+{
+	return m_iNumHappinessFromTradeDeals;
+}
+void CvPlayer::ChangeNumHappinessFromTradeDeals(int iChange)
+{
+	m_iNumHappinessFromTradeDeals = (m_iNumHappinessFromTradeDeals + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
+int CvPlayer::GetPercentOfCitiesWithActiveWLTKD() const
+{
+	return m_iPercentOfCitiesWithActiveWLTKD;
+}
+void CvPlayer::ChangePercentOfCitiesWithActiveWLTKD(int iChange)
+{
+	m_iPercentOfCitiesWithActiveWLTKD = (m_iPercentOfCitiesWithActiveWLTKD + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
+int CvPlayer::GetNumFollowersOfPlayerReligion() const
+{
+	return m_iNumFollowersOfPlayerReligion;
+}
+void CvPlayer::ChangeNumFollowersOfPlayerReligion(int iChange)
+{
+	m_iNumFollowersOfPlayerReligion = (m_iNumFollowersOfPlayerReligion + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
+int CvPlayer::GetNumCitiesConvertedToPlayerReligion() const
+{
+	return m_iNumCitiesConvertedToPlayerReligion;
+}
+void CvPlayer::ChangeNumCitiesConvertedToPlayerReligion(int iChange)
+{
+	m_iNumCitiesConvertedToPlayerReligion = (m_iNumCitiesConvertedToPlayerReligion + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
+int CvPlayer::GetNumTotalSpecialistCitizens() const
+{
+	return m_iNumTotalSpecialistCitizens;
+}
+void CvPlayer::ChangeNumTotalSpecialistCitizens(int iChange)
+{
+	m_iNumTotalSpecialistCitizens = (m_iNumTotalSpecialistCitizens + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
+int CvPlayer::GetPercentSpecialistCitizens() const
+{
+	return m_iPercentSpecialistCitizens;
+}
+void CvPlayer::ChangePercentSpecialistCitizens(int iChange)
+{
+	m_iPercentSpecialistCitizens = (m_iPercentSpecialistCitizens + iChange);
 }
 #endif
 
@@ -24413,6 +24589,39 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMOFBORNMUSICIANS
 		kStream >> m_bMayaBoostMusicians;
 #endif
+#ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
+		m_iScientistsTotalScienceBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
+		m_iWritersTotalCultureBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
+		m_iPopulationLostFromNukes = 0;
+#endif
+#ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
+		m_iNumCSQuestsCompleted = 0;
+#endif
+#ifdef EG_REPLAYDATASET_ALLIEDCS
+		m_iNumAlliedCS = 0;
+#endif
+#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
+		m_iNumHappinessFromTradeDeals = 0;
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
+		m_iPercentOfCitiesWithActiveWLTKD = 0;
+#endif
+#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
+		m_iNumFollowersOfPlayerReligion = 0;
+#endif
+#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
+		m_iNumCitiesConvertedToPlayerReligion = 0;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
+		m_iNumTotalSpecialistCitizens = 0;
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
+		m_iPercentSpecialistCitizens = 0;
+#endif
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
 	else if (uiVersion == 1001)
@@ -24495,6 +24704,39 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMOFBORNMUSICIANS
 		m_bMayaBoostMusicians = 0;
 #endif
+#ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
+		m_iScientistsTotalScienceBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
+		m_iWritersTotalCultureBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
+		m_iPopulationLostFromNukes = 0;
+#endif
+#ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
+		m_iNumCSQuestsCompleted = 0;
+#endif
+#ifdef EG_REPLAYDATASET_ALLIEDCS
+		m_iNumAlliedCS = 0;
+#endif
+#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
+		m_iNumHappinessFromTradeDeals = 0;
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
+		m_iPercentOfCitiesWithActiveWLTKD = 0;
+#endif
+#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
+		m_iNumFollowersOfPlayerReligion = 0;
+#endif
+#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
+		m_iNumCitiesConvertedToPlayerReligion = 0;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
+		m_iNumTotalSpecialistCitizens = 0;
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
+		m_iPercentSpecialistCitizens = 0;
+#endif
 	}
 	else
 	{
@@ -24575,6 +24817,39 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_NUMOFBORNMUSICIANS
 		m_bMayaBoostMusicians = 0;
+#endif
+#ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
+		m_iScientistsTotalScienceBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
+		m_iWritersTotalCultureBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
+		m_iPopulationLostFromNukes = 0;
+#endif
+#ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
+		m_iNumCSQuestsCompleted = 0;
+#endif
+#ifdef EG_REPLAYDATASET_ALLIEDCS
+		m_iNumAlliedCS = 0;
+#endif
+#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
+		m_iNumHappinessFromTradeDeals = 0;
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
+		m_iPercentOfCitiesWithActiveWLTKD = 0;
+#endif
+#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
+		m_iNumFollowersOfPlayerReligion = 0;
+#endif
+#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
+		m_iNumCitiesConvertedToPlayerReligion = 0;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
+		m_iNumTotalSpecialistCitizens = 0;
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
+		m_iPercentSpecialistCitizens = 0;
 #endif
 	}
 #endif
@@ -25340,6 +25615,39 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_NUMOFBORNMUSICIANS
 	kStream << m_bMayaBoostMusicians;
+#endif
+#ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
+	kStream << m_iScientistsTotalScienceBoost;
+#endif
+#ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
+	kStream << m_iWritersTotalCultureBoost;
+#endif
+#ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
+	kStream << m_iPopulationLostFromNukes;
+#endif
+#ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
+	kStream << m_iNumCSQuestsCompleted;
+#endif
+#ifdef EG_REPLAYDATASET_ALLIEDCS
+	kStream << m_iNumAlliedCS;
+#endif
+#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
+	kStream << m_iNumHappinessFromTradeDeals;
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
+	kStream << m_iPercentOfCitiesWithActiveWLTKD;
+#endif
+#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
+	kStream << m_iNumFollowersOfPlayerReligion;
+#endif
+#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
+	kStream << m_iNumCitiesConvertedToPlayerReligion;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
+	kStream << m_iNumTotalSpecialistCitizens;
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
+	kStream << m_iPercentSpecialistCitizens;
 #endif
 	kStream << m_iExtraLeagueVotes;
 	kStream << m_iSpecialPolicyBuildingHappiness;
@@ -28095,6 +28403,28 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 
 #ifdef EG_REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS"), iGameTurn, GetNumTimesOpenedDemographics());
+#endif
+#ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
+#endif
+#ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
+#endif
+#ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
+#endif
+#ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
+#endif
+#ifdef EG_REPLAYDATASET_ALLIEDCS
+#endif
+#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
+#endif
+#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
+#endif
+#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
+#endif
+#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
+#endif
+#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
 #endif
 
 /*#ifdef ENHANCED_GRAPHS
