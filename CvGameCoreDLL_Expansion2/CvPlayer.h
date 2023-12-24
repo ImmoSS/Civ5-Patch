@@ -385,12 +385,12 @@ public:
 	void ChangeWritersTotalCultureBoost(int Change);
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
-	int GetPopulationLostFromNukes() const;
-	void ChangePopulationLostFromNukes(int Change);
+	int GetNumPopulationLostFromNukes() const;
+	void ChangeNumPopulationLostFromNukes(int Change);
 #endif
 #ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
-	int GetCSQuestsCompleted() const;
-	void ChangeCSQuestsCompleted(int Change);
+	int GetNumCSQuestsCompleted() const;
+	void ChangeNumCSQuestsCompleted(int Change);
 #endif
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 	int GetNumAlliedCS() const;
@@ -1901,7 +1901,7 @@ protected:
 	int m_iWritersTotalCultureBoost;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
-	int m_iPopulationLostFromNukes;
+	int m_iNumPopulationLostFromNukes;
 #endif
 #ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
 	int m_iNumCSQuestsCompleted;

@@ -245,7 +245,7 @@ CvPlayer::CvPlayer() :
 		, m_iWritersTotalCultureBoost(false)
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
-		, m_iPopulationLostFromNukes(false)
+		, m_iNumPopulationLostFromNukes(false)
 #endif
 #ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
 		, m_iNumCSQuestsCompleted(false)
@@ -995,7 +995,7 @@ void CvPlayer::uninit()
 	m_iWritersTotalCultureBoost = 0;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
-	m_iPopulationLostFromNukes = 0;
+	m_iNumPopulationLostFromNukes = 0;
 #endif
 #ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
 	m_iNumCSQuestsCompleted = 0;
@@ -10115,21 +10115,21 @@ void CvPlayer::ChangeWritersTotalCultureBoost(int iChange)
 }
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
-int CvPlayer::GetPopulationLostFromNukes() const
+int CvPlayer::GetNumPopulationLostFromNukes() const
 {
-	return m_iPopulationLostFromNukes;
+	return m_iNumPopulationLostFromNukes;
 }
-void CvPlayer::ChangePopulationLostFromNukes(int iChange)
+void CvPlayer::ChangeNumPopulationLostFromNukes(int iChange)
 {
-	m_iPopulationLostFromNukes = (m_iPopulationLostFromNukes + iChange);
+	m_iNumPopulationLostFromNukes = (m_iNumPopulationLostFromNukes + iChange);
 }
 #endif
 #ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
-int CvPlayer::GetCSQuestsCompleted() const
+int CvPlayer::GetNumCSQuestsCompleted() const
 {
 	return m_iNumCSQuestsCompleted;
 }
-void CvPlayer::ChangeCSQuestsCompleted(int iChange)
+void CvPlayer::ChangeNumCSQuestsCompleted(int iChange)
 {
 	m_iNumCSQuestsCompleted = (m_iNumCSQuestsCompleted + iChange);
 }
@@ -24596,7 +24596,7 @@ void CvPlayer::Read(FDataStream& kStream)
 		m_iWritersTotalCultureBoost = 0;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
-		m_iPopulationLostFromNukes = 0;
+		m_iNumPopulationLostFromNukes = 0;
 #endif
 #ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
 		m_iNumCSQuestsCompleted = 0;
@@ -24711,7 +24711,7 @@ void CvPlayer::Read(FDataStream& kStream)
 		m_iWritersTotalCultureBoost = 0;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
-		m_iPopulationLostFromNukes = 0;
+		m_iNumPopulationLostFromNukes = 0;
 #endif
 #ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
 		m_iNumCSQuestsCompleted = 0;
@@ -24825,7 +24825,7 @@ void CvPlayer::Read(FDataStream& kStream)
 		m_iWritersTotalCultureBoost = 0;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
-		m_iPopulationLostFromNukes = 0;
+		m_iNumPopulationLostFromNukes = 0;
 #endif
 #ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
 		m_iNumCSQuestsCompleted = 0;
@@ -25623,7 +25623,7 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iWritersTotalCultureBoost;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
-	kStream << m_iPopulationLostFromNukes;
+	kStream << m_iNumPopulationLostFromNukes;
 #endif
 #ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
 	kStream << m_iNumCSQuestsCompleted;
@@ -28211,6 +28211,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_MILITARYMIGHT"), iGameTurn, GetMilitaryMight());
 
+		/// First Banch of Enhanced Graphs
 #ifdef EG_REPLAYDATASET_FAITHPERTURN
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FAITHPERTURN"), iGameTurn, GetTotalFaithPerTurn());
 #endif
@@ -28276,7 +28277,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #ifdef EG_REPLAYDATASET_NUMOFBOUGHTARTISTS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMOFBOUGHTARTISTS"), iGameTurn, getArtistsFromFaith() + bIsFaithPurchaseAllGreatPeople * !getbArtistsFromFaith());
 #endif
-#ifdef EG_REPLAYDATASET_NUMOFARTISTS
+#ifdef EG_REPLAYDATASET_TOTALNUMOFARTISTS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_TOTALNUMOFARTISTS"), iGameTurn, GetNumAristsTotal());
 #endif
 
@@ -28334,7 +28335,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_WORKERSFROMBULLING"), iGameTurn, iBullyWorkers);
 #endif
 
-#ifdef EG_EG_REPLAYDATASET_NUMTRAINEDUNITS
+#ifdef EG_REPLAYDATASET_NUMTRAINEDUNITS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMTRAINEDUNITS"), iGameTurn, GetNumTrainedUnits());
 #endif
 #ifdef EG_REPLAYDATASET_NUMLOSTUNITS
@@ -28404,27 +28405,40 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #ifdef EG_REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS"), iGameTurn, GetNumTimesOpenedDemographics());
 #endif
+
+		/// Second Banch of Enhanced Graphs
 #ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST"), iGameTurn, GetScientistsTotalScienceBoost());
 #endif
 #ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_WRITERSTOTALCULTUREBOOST"), iGameTurn, GetWritersTotalCultureBoost());
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_POPULATIONLOSTFROMNUKES"), iGameTurn, GetNumPopulationLostFromNukes());
 #endif
 #ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CSQUESTSCOMPLETED"), iGameTurn, GetNumCSQuestsCompleted());
 #endif
 #ifdef EG_REPLAYDATASET_ALLIEDCS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_ALLIEDCS"), iGameTurn, GetNumAlliedCS());
 #endif
 #ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_HAPPINESSFROMTRADEDEALS"), iGameTurn, GetNumHappinessFromTradeDeals());
 #endif
 #ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD"), iGameTurn, GetPercentOfCitiesWithActiveWLTKD());
 #endif
 #ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION"), iGameTurn, GetNumFollowersOfPlayerReligion());
 #endif
 #ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION"), iGameTurn, GetNumCitiesConvertedToPlayerReligion());
 #endif
 #ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_TOTALSPECIALISTCITIZENS"), iGameTurn, GetNumTotalSpecialistCitizens());
 #endif
 #ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PERCENTSPECIALISTCITIZENS"), iGameTurn, GetPercentSpecialistCitizens());
 #endif
 
 /*#ifdef ENHANCED_GRAPHS
