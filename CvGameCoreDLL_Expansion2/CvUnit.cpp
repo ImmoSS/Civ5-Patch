@@ -1325,10 +1325,15 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer /*= NO_PLAYER*/)
 		}
 	}
 
-#ifdef ENHANCED_GRAPHS
+#ifdef EG_REPLAYDATASET_NUMKILLEDUNITS
 	if (getUnitCombatType() != NO_UNITCOMBAT && ePlayer != NO_PLAYER && ePlayer != BARBARIAN_PLAYER)
 	{
 		GET_PLAYER(ePlayer).ChangeNumKilledUnits(1);
+	}
+#endif
+#ifdef EG_REPLAYDATASET_NUMLOSTUNITS
+	if (getUnitCombatType() != NO_UNITCOMBAT && ePlayer != NO_PLAYER && ePlayer != BARBARIAN_PLAYER)
+	{
 		GET_PLAYER(getOwner()).ChangeNumLostUnits(1);
 	}
 #endif
@@ -14750,11 +14755,16 @@ int CvUnit::setDamage(int iNewValue, PlayerTypes ePlayer, float fAdditionalTextD
 int CvUnit::changeDamage(int iChange, PlayerTypes ePlayer, float fAdditionalTextDelay, const CvString* pAppendText)
 {
 	VALIDATE_OBJECT;
-#ifdef ENHANCED_GRAPHS
+#ifdef EG_REPLAYDATASET_DAMAGETAKENBYUNITS
+	if (ePlayer != NO_PLAYER && getUnitCombatType() != NO_UNITCOMBAT && iChange > 0)
+	{
+		GET_PLAYER(getOwner()).ChangeUnitsDamageTaken(iChange);
+	}
+#endif
+#ifdef EG_REPLAYDATASET_DAMAGEDEALTTOUNITS
 	if (ePlayer != NO_PLAYER && getUnitCombatType() != NO_UNITCOMBAT && iChange > 0)
 	{
 		GET_PLAYER(ePlayer).ChangeUnitsDamageDealt(iChange);
-		GET_PLAYER(getOwner()).ChangeUnitsDamageTaken(iChange);
 	}
 #endif
 	return setDamage((getDamage() + iChange), ePlayer, fAdditionalTextDelay, pAppendText);

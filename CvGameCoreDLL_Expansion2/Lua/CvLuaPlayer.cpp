@@ -1014,7 +1014,7 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 
 	Method(GetWarmongerPreviewString);
 	Method(GetLiberationPreviewString);
-#ifdef ENHANCED_GRAPHS
+#ifdef EG_REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS
 	Method(AddReplayOpenedDemographics);
 #endif
 
@@ -11139,7 +11139,7 @@ int CvLuaPlayer::lGetLiberationPreviewString(lua_State* L)
 	return 1;
 }
 
-#ifdef ENHANCED_GRAPHS
+#ifdef EG_REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS
 int CvLuaPlayer::lAddReplayOpenedDemographics(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);
