@@ -7890,6 +7890,9 @@ int CvUnit::getDiscoverAmount()
 	iValue *= (100 + GET_PLAYER(getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_DISCOVER_AMONT_SCIENCE_MODIFIER));
 	iValue /= 100;
 #endif
+#ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
+	GET_PLAYER(getOwner()).ChangeScientistsTotalScienceBoost(iValue);
+#endif
 	return iValue;
 }
 
@@ -8930,6 +8933,9 @@ int CvUnit::getGivePoliciesCulture()
 		iValue *= GC.getGame().getGameSpeedInfo().getCulturePercent();
 		iValue /= 100;
 	}
+#ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
+	GET_PLAYER(getOwner()).ChangeWritersTotalCultureBoost(iValue);
+#endif
 	return iValue;
 }
 

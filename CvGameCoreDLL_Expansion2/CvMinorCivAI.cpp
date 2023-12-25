@@ -3415,6 +3415,9 @@ void CvMinorCivAI::DoCompletedQuestsForPlayer(PlayerTypes ePlayer, MinorCivQuest
 				
 				if (bCompleted)
 				{
+#ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
+					GET_PLAYER(ePlayer).ChangeNumCSQuestsCompleted(1);
+#endif
 					GET_PLAYER(ePlayer).GetDiplomacyAI()->LogMinorCivQuestFinished(GetPlayer()->GetID(), iOldFriendshipTimes100, iNewFriendshipTimes100, itr_quest->GetType());
 				}
 			}
@@ -5914,6 +5917,9 @@ void CvMinorCivAI::SetAlly(PlayerTypes eNewAlly)
 		{
 			theMap.updateDeferredFog();
 		}
+#ifdef EG_REPLAYDATASET_ALLIEDCS
+		GET_PLAYER(eOldAlly).ChangeNumAlliedCS(-1);
+#endif
 	}
 
 	m_eAlly = eNewAlly;
@@ -5955,7 +5961,10 @@ void CvMinorCivAI::SetAlly(PlayerTypes eNewAlly)
 		}
 
 		//Achievement Test
-		kNewAlly.GetPlayerAchievements().AlliedWithCityState(GetPlayer()->GetID());;
+		kNewAlly.GetPlayerAchievements().AlliedWithCityState(GetPlayer()->GetID());
+#ifdef EG_REPLAYDATASET_ALLIEDCS
+		GET_PLAYER(eNewAlly).ChangeNumAlliedCS(1);
+#endif
 	}
 
 	// Alter who gets this guy's resources

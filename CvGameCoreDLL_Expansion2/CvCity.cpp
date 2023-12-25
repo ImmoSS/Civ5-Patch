@@ -7260,6 +7260,32 @@ int CvCity::foodDifferenceTimes100(bool bBottom, CvString* toolTipSink) const
 	return iDifference;
 }
 
+#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
+//	--------------------------------------------------------------------------------
+bool CvCity::isCityActiveWLTKD() const
+{
+	VALIDATE_OBJECT
+#ifdef NEW_WLTKD
+	ResourceTypes eResource = GetResourceDemanded();
+	if (eResource != NO_RESOURCE)
+	{
+		// Do we have the right Resource?
+		if (GET_PLAYER(getOwner()).getNumResourceTotal(eResource) > 0)
+		{
+			return true;
+		}
+	}
+#else
+	if (GetWeLoveTheKingDayCounter() > 0)
+	{
+		return true;
+	}
+#endif
+
+	return false;
+}
+#endif
+
 
 //	--------------------------------------------------------------------------------
 int CvCity::growthThreshold() const

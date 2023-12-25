@@ -253,24 +253,6 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 		, m_iNumAlliedCS(false)
 #endif
-#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
-		, m_iNumHappinessFromTradeDeals(false)
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
-		, m_iPercentOfCitiesWithActiveWLTKD(false)
-#endif
-#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
-		, m_iNumFollowersOfPlayerReligion(false)
-#endif
-#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
-		, m_iNumCitiesConvertedToPlayerReligion(false)
-#endif
-#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
-		, m_iNumTotalSpecialistCitizens(false)
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
-		, m_iPercentSpecialistCitizens(false)
-#endif
 	, m_iExtraLeagueVotes(0)
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
@@ -1002,24 +984,6 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 	m_iNumAlliedCS = 0;
-#endif
-#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
-	m_iNumHappinessFromTradeDeals = 0;
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
-	m_iPercentOfCitiesWithActiveWLTKD = 0;
-#endif
-#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
-	m_iNumFollowersOfPlayerReligion = 0;
-#endif
-#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
-	m_iNumCitiesConvertedToPlayerReligion = 0;
-#endif
-#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
-	m_iNumTotalSpecialistCitizens = 0;
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
-	m_iPercentSpecialistCitizens = 0;
 #endif
 	m_iExtraLeagueVotes = 0;
 	m_iSpecialPolicyBuildingHappiness = 0;
@@ -10147,61 +10111,42 @@ void CvPlayer::ChangeNumAlliedCS(int iChange)
 #ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
 int CvPlayer::GetNumHappinessFromTradeDeals() const
 {
-	return m_iNumHappinessFromTradeDeals;
-}
-void CvPlayer::ChangeNumHappinessFromTradeDeals(int iChange)
-{
-	m_iNumHappinessFromTradeDeals = (m_iNumHappinessFromTradeDeals + iChange);
-}
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
-int CvPlayer::GetPercentOfCitiesWithActiveWLTKD() const
-{
-	return m_iPercentOfCitiesWithActiveWLTKD;
-}
-void CvPlayer::ChangePercentOfCitiesWithActiveWLTKD(int iChange)
-{
-	m_iPercentOfCitiesWithActiveWLTKD = (m_iPercentOfCitiesWithActiveWLTKD + iChange);
-}
-#endif
-#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
-int CvPlayer::GetNumFollowersOfPlayerReligion() const
-{
-	return m_iNumFollowersOfPlayerReligion;
-}
-void CvPlayer::ChangeNumFollowersOfPlayerReligion(int iChange)
-{
-	m_iNumFollowersOfPlayerReligion = (m_iNumFollowersOfPlayerReligion + iChange);
-}
-#endif
-#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
-int CvPlayer::GetNumCitiesConvertedToPlayerReligion() const
-{
-	return m_iNumCitiesConvertedToPlayerReligion;
-}
-void CvPlayer::ChangeNumCitiesConvertedToPlayerReligion(int iChange)
-{
-	m_iNumCitiesConvertedToPlayerReligion = (m_iNumCitiesConvertedToPlayerReligion + iChange);
-}
-#endif
-#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
-int CvPlayer::GetNumTotalSpecialistCitizens() const
-{
-	return m_iNumTotalSpecialistCitizens;
-}
-void CvPlayer::ChangeNumTotalSpecialistCitizens(int iChange)
-{
-	m_iNumTotalSpecialistCitizens = (m_iNumTotalSpecialistCitizens + iChange);
-}
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
-int CvPlayer::GetPercentSpecialistCitizens() const
-{
-	return m_iPercentSpecialistCitizens;
-}
-void CvPlayer::ChangePercentSpecialistCitizens(int iChange)
-{
-	m_iPercentSpecialistCitizens = (m_iPercentSpecialistCitizens + iChange);
+	int iHappinessFromTradeDeals = 0;
+	for (int iI = 0; iI < GC.getNumResourceInfos(); iI++)
+	{
+		ResourceTypes eResource = (ResourceTypes)iI;
+		ResourceUsageTypes eUsage = GC.getResourceInfo(eResource)->getResourceUsage();
+		if (eUsage == RESOURCEUSAGE_LUXURY)
+		{
+			if (getResourceImport(eResource) > 0 && getNumResourceTotal(eResource) == getResourceImport(eResource))
+			{
+				if (eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_NUTMEG", true)
+					|| eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_CLOVES", true)
+					|| eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_PEPPER", true))
+				{
+					iHappinessFromTradeDeals += 2;
+				}
+				else
+				{
+					iHappinessFromTradeDeals += 4;
+				}
+			}
+			if (getResourceExport(eResource) > 0 && getNumResourceTotal(eResource) == 0)
+			{
+				if (eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_NUTMEG", true)
+					|| eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_CLOVES", true)
+					|| eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_PEPPER", true))
+				{
+					iHappinessFromTradeDeals += 1;
+				}
+				else
+				{
+					iHappinessFromTradeDeals += 2;
+				}
+			}
+		}
+	}
+	return iHappinessFromTradeDeals;
 }
 #endif
 
@@ -24604,24 +24549,6 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 		m_iNumAlliedCS = 0;
 #endif
-#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
-		m_iNumHappinessFromTradeDeals = 0;
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
-		m_iPercentOfCitiesWithActiveWLTKD = 0;
-#endif
-#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
-		m_iNumFollowersOfPlayerReligion = 0;
-#endif
-#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
-		m_iNumCitiesConvertedToPlayerReligion = 0;
-#endif
-#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
-		m_iNumTotalSpecialistCitizens = 0;
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
-		m_iPercentSpecialistCitizens = 0;
-#endif
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
 	else if (uiVersion == 1001)
@@ -24719,24 +24646,6 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 		m_iNumAlliedCS = 0;
 #endif
-#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
-		m_iNumHappinessFromTradeDeals = 0;
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
-		m_iPercentOfCitiesWithActiveWLTKD = 0;
-#endif
-#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
-		m_iNumFollowersOfPlayerReligion = 0;
-#endif
-#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
-		m_iNumCitiesConvertedToPlayerReligion = 0;
-#endif
-#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
-		m_iNumTotalSpecialistCitizens = 0;
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
-		m_iPercentSpecialistCitizens = 0;
-#endif
 	}
 	else
 	{
@@ -24832,24 +24741,6 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 		m_iNumAlliedCS = 0;
-#endif
-#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
-		m_iNumHappinessFromTradeDeals = 0;
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
-		m_iPercentOfCitiesWithActiveWLTKD = 0;
-#endif
-#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
-		m_iNumFollowersOfPlayerReligion = 0;
-#endif
-#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
-		m_iNumCitiesConvertedToPlayerReligion = 0;
-#endif
-#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
-		m_iNumTotalSpecialistCitizens = 0;
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
-		m_iPercentSpecialistCitizens = 0;
 #endif
 	}
 #endif
@@ -25630,24 +25521,6 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 	kStream << m_iNumAlliedCS;
-#endif
-#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
-	kStream << m_iNumHappinessFromTradeDeals;
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
-	kStream << m_iPercentOfCitiesWithActiveWLTKD;
-#endif
-#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
-	kStream << m_iNumFollowersOfPlayerReligion;
-#endif
-#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
-	kStream << m_iNumCitiesConvertedToPlayerReligion;
-#endif
-#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
-	kStream << m_iNumTotalSpecialistCitizens;
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
-	kStream << m_iPercentSpecialistCitizens;
 #endif
 	kStream << m_iExtraLeagueVotes;
 	kStream << m_iSpecialPolicyBuildingHappiness;
@@ -28426,19 +28299,59 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_HAPPINESSFROMTRADEDEALS"), iGameTurn, GetNumHappinessFromTradeDeals());
 #endif
 #ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
-		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD"), iGameTurn, GetPercentOfCitiesWithActiveWLTKD());
+		int iPercentCitiesWithActiveWLTKD = 0;
+		for (int iI = 0; iI < getNumCities(); iI++)
+		{
+			CvCity* pCity = getCity(iI);
+			if (pCity != NULL)
+			{
+				if (pCity->isCityActiveWLTKD())
+				{
+					iPercentCitiesWithActiveWLTKD++;
+				}
+			}
+		}
+		iPercentCitiesWithActiveWLTKD = iPercentCitiesWithActiveWLTKD * 100 / getNumCities();
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD"), iGameTurn, iPercentCitiesWithActiveWLTKD);
 #endif
 #ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
-		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION"), iGameTurn, GetNumFollowersOfPlayerReligion());
+		int iGetNumFollowers = GC.getGame().GetGameReligions()->GetNumFollowers(GetReligions()->GetReligionCreatedByPlayer());		
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION"), iGameTurn, iGetNumFollowers);
 #endif
 #ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
-		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION"), iGameTurn, GetNumCitiesConvertedToPlayerReligion());
+		int iNumCitiesFollowing = GC.getGame().GetGameReligions()->GetNumCitiesFollowing(GetReligions()->GetReligionCreatedByPlayer());
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION"), iGameTurn, iNumCitiesFollowing);
 #endif
-#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
-		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_TOTALSPECIALISTCITIZENS"), iGameTurn, GetNumTotalSpecialistCitizens());
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
-		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PERCENTSPECIALISTCITIZENS"), iGameTurn, GetPercentSpecialistCitizens());
+#if defined EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS && defined EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
+		int iNumTotalSpecialistCitizens = 0;
+		for (int iI = 0; iI < getNumCities(); iI++)
+		{
+			CvCity* pCity = getCity(iI);
+			if (pCity != NULL)
+			{
+				for (int iBuildingLoop = 0; iBuildingLoop < GC.getNumBuildingInfos(); iBuildingLoop++)
+				{
+					const BuildingTypes eBuilding = static_cast<BuildingTypes>(iBuildingLoop);
+					iNumTotalSpecialistCitizens += pCity->GetCityCitizens()->GetNumSpecialistsInBuilding(eBuilding);
+				}
+			}
+		}
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_TOTALSPECIALISTCITIZENS"), iGameTurn, iNumTotalSpecialistCitizens);
+		int iPercentSpecialistCitizens = 0;
+		for (int iI = 0; iI < getNumCities(); iI++)
+		{
+			CvCity* pCity = getCity(iI);
+			if (pCity != NULL)
+			{
+				for (int iBuildingLoop = 0; iBuildingLoop < GC.getNumBuildingInfos(); iBuildingLoop++)
+				{
+					const BuildingTypes eBuilding = static_cast<BuildingTypes>(iBuildingLoop);
+					CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eBuilding);
+					iNumTotalSpecialistCitizens += pCity->GetCityCitizens()->GetNumSpecialistsAllowedByBuilding(*pkBuildingInfo);
+				}
+			}
+		}
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PERCENTSPECIALISTCITIZENS"), iGameTurn, iNumTotalSpecialistCitizens * 100 / iPercentSpecialistCitizens);
 #endif
 
 /*#ifdef ENHANCED_GRAPHS

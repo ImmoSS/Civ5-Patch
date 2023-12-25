@@ -2374,6 +2374,9 @@ uint CvUnitCombat::ApplyNuclearExplosionDamage(const CvCombatMemberEntry* pkDama
 					iNukedPopulation *= std::max(0, (pkCity->getNukeModifier() + 100));
 					iNukedPopulation /= 100;
 
+#ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
+					GET_PLAYER(pkCity->getOwner()).ChangeNumPopulationLostFromNukes(std::min((pkCity->getPopulation() - 1), iNukedPopulation));
+#endif
 					pkCity->changePopulation(-(std::min((pkCity->getPopulation() - 1), iNukedPopulation)));
 
 					// Add damage to the city

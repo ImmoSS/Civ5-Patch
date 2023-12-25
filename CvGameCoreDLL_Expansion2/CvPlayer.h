@@ -398,27 +398,6 @@ public:
 #endif
 #ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
 	int GetNumHappinessFromTradeDeals() const;
-	void ChangeNumHappinessFromTradeDeals(int Change);
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
-	int GetPercentOfCitiesWithActiveWLTKD() const;
-	void ChangePercentOfCitiesWithActiveWLTKD(int Change);
-#endif
-#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
-	int GetNumFollowersOfPlayerReligion() const;
-	void ChangeNumFollowersOfPlayerReligion(int Change);
-#endif
-#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
-	int GetNumCitiesConvertedToPlayerReligion() const;
-	void ChangeNumCitiesConvertedToPlayerReligion(int Change);
-#endif
-#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
-	int GetNumTotalSpecialistCitizens() const;
-	void ChangeNumTotalSpecialistCitizens(int Change);
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
-	int GetPercentSpecialistCitizens() const;
-	void ChangePercentSpecialistCitizens(int Change);
 #endif
 
 	int GetNumUnitsOutOfSupply() const;
@@ -1908,24 +1887,6 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 	int m_iNumAlliedCS;
-#endif
-#ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
-	int m_iNumHappinessFromTradeDeals;
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
-	int m_iPercentOfCitiesWithActiveWLTKD;
-#endif
-#ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
-	int m_iNumFollowersOfPlayerReligion;
-#endif
-#ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
-	int m_iNumCitiesConvertedToPlayerReligion;
-#endif
-#ifdef EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
-	int m_iNumTotalSpecialistCitizens;
-#endif
-#ifdef EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS
-	int m_iPercentSpecialistCitizens;
 #endif
 	int m_iExtraLeagueVotes;
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
