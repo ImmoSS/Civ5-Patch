@@ -747,6 +747,7 @@ function OnCityViewUpdate()
 	local pCity = UI.GetHeadSelectedCity();
 	
 	if gPreviousCity ~= pCity then
+		Network.SendGiftUnit(-1, -9);
 		gPreviousCity = pCity;
 		specialistTable = {};
 	end

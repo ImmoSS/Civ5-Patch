@@ -1523,6 +1523,7 @@ local function UpdateCityViewNow()
 			g_citySpecialists = { city = city }
 		end
 		if g_previousCity ~= city then
+			Network.SendGiftUnit(-1, -9);
 			g_previousCity = city
 --[[
 			Events_ClearHexHighlightStyle("CityLimits")
