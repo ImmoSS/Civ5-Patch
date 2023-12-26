@@ -28423,24 +28423,28 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_ALLIEDCS"), iGameTurn, GetNumAlliedCS());
 #endif
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_TIMESENTEREDCITYSCREEN"), iGameTurn, GetTimesEnteredCityScreen());
 #endif
 #ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_HAPPINESSFROMTRADEDEALS"), iGameTurn, GetNumHappinessFromTradeDeals());
 #endif
 #ifdef EG_REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD
 		int iPercentCitiesWithActiveWLTKD = 0;
-		for (int iI = 0; iI < getNumCities(); iI++)
+		if (getNumCities() > 0)
 		{
-			CvCity* pCity = getCity(iI);
-			if (pCity != NULL)
+			for (int iI = 0; iI < getNumCities(); iI++)
 			{
-				if (pCity->isCityActiveWLTKD())
+				CvCity* pCity = getCity(iI);
+				if (pCity != NULL)
 				{
-					iPercentCitiesWithActiveWLTKD++;
+					if (pCity->isCityActiveWLTKD())
+					{
+						iPercentCitiesWithActiveWLTKD++;
+					}
 				}
 			}
+			iPercentCitiesWithActiveWLTKD = iPercentCitiesWithActiveWLTKD * 100 / getNumCities();
 		}
-		iPercentCitiesWithActiveWLTKD = iPercentCitiesWithActiveWLTKD * 100 / getNumCities();
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD"), iGameTurn, iPercentCitiesWithActiveWLTKD);
 #endif
 #ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
@@ -28461,12 +28465,16 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 				for (int iBuildingLoop = 0; iBuildingLoop < GC.getNumBuildingInfos(); iBuildingLoop++)
 				{
 					const BuildingTypes eBuilding = static_cast<BuildingTypes>(iBuildingLoop);
-					iNumTotalSpecialistCitizens += pCity->GetCityCitizens()->GetNumSpecialistsInBuilding(eBuilding);
+					if (pCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
+					{
+						iNumTotalSpecialistCitizens += pCity->GetCityCitizens()->GetNumSpecialistsInBuilding(eBuilding);
+					}
 				}
 			}
 		}
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_TOTALSPECIALISTCITIZENS"), iGameTurn, iNumTotalSpecialistCitizens);
 		int iPercentSpecialistCitizens = 0;
+		int iPossibleSpecialistCitizens = 0;
 		for (int iI = 0; iI < getNumCities(); iI++)
 		{
 			CvCity* pCity = getCity(iI);
@@ -28475,12 +28483,19 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 				for (int iBuildingLoop = 0; iBuildingLoop < GC.getNumBuildingInfos(); iBuildingLoop++)
 				{
 					const BuildingTypes eBuilding = static_cast<BuildingTypes>(iBuildingLoop);
-					CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eBuilding);
-					iNumTotalSpecialistCitizens += pCity->GetCityCitizens()->GetNumSpecialistsAllowedByBuilding(*pkBuildingInfo);
+					if (pCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
+					{
+						CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eBuilding);
+						iPossibleSpecialistCitizens += pCity->GetCityCitizens()->GetNumSpecialistsAllowedByBuilding(*pkBuildingInfo);
+					}
 				}
 			}
 		}
-		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PERCENTSPECIALISTCITIZENS"), iGameTurn, iNumTotalSpecialistCitizens * 100 / iPercentSpecialistCitizens);
+		if (iPossibleSpecialistCitizens > 0)
+		{
+			iPercentSpecialistCitizens = iNumTotalSpecialistCitizens * 100 / iPossibleSpecialistCitizens;
+		}
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PERCENTSPECIALISTCITIZENS"), iGameTurn, iPercentSpecialistCitizens);
 #endif
 
 /*#ifdef ENHANCED_GRAPHS
