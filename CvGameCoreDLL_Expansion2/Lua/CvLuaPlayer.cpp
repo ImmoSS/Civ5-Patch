@@ -1017,6 +1017,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 #ifdef EG_REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS
 	Method(AddReplayOpenedDemographics);
 #endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+	Method(AddReplayEnteredCityScreen);
+#endif
 
 
 }
@@ -11144,6 +11147,15 @@ int CvLuaPlayer::lAddReplayOpenedDemographics(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);
 	pkPlayer->ChangeNumTimesOpenedDemographics(1);
+	return 1;
+}
+#endif
+
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+int CvLuaPlayer::lAddReplayEnteredCityScreen(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	pkPlayer->ChangeTimesEnteredCityScreen(1);
 	return 1;
 }
 #endif

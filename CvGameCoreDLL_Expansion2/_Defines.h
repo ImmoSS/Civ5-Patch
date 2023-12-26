@@ -830,9 +830,10 @@
 // 1000: v7.0 (initial)
 // 1001: v7.3 (adds Workers Bully Turn)
 # define BUMP_SAVE_VERSION_MINORAI 1001
-// 1000: v7.0 (initial)
-// 1001: v7.2 (adds ENHANCED_GRAPHS)
+// 1000: v7.0  (initial)
+// 1001: v7.2  (adds ENHANCED_GRAPHS)
 // 1002: v7.2a (adds maya boost GP counters)
+// 1003: v8.1b (adds secsond banch of ENHANCED_GRAPHS)
 # define BUMP_SAVE_VERSION_PLAYER 1002
 // 1000: v7.0 (initial)
 # define BUMP_SAVE_VERSION_POLICIES 1000
@@ -1029,6 +1030,7 @@ enum ReplayEventTypes
 	REPLAYEVENT_ResetTimer,
 	REPLAYEVENT_PauseTimer,
 	REPLAYEVENT_OpenDemoScreen,
+	REPLAYEVENT_EnterCityScreen,
 	REPLAYEVENT_ExtractSpy,
 	REPLAYEVENT_UpdatePolicyBranch,
 	REPLAYEVENT_UnpauseTimer,

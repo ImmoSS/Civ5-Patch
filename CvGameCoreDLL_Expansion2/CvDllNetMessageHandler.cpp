@@ -1132,7 +1132,17 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 	}
 	else
 #endif
-#if defined(TURN_TIMER_RESET_BUTTON) || defined(TURN_TIMER_PAUSE_BUTTON) || defined(EG_REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS)
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+	// -9 -- increment num times entered city screen
+	if (iUnitID == -9) {
+#ifdef REPLAY_EVENTS
+		GC.getGame().addReplayEvent(REPLAYEVENT_EnterCityScreen, ePlayer, vArgs);
+#endif
+		GET_PLAYER(ePlayer).ChangeTimesEnteredCityScreen(1);
+	}
+	else
+#endif
+#if defined(TURN_TIMER_RESET_BUTTON) || defined(TURN_TIMER_PAUSE_BUTTON) || defined(EG_REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS) || defined(EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN)
 	{
 #endif
 		CvUnit* pkUnit = GET_PLAYER(ePlayer).getUnit(iUnitID);
@@ -1147,7 +1157,7 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 #endif
 		GET_PLAYER(eMinor).DoDistanceGift(ePlayer, pkUnit);
 
-#if defined(TURN_TIMER_RESET_BUTTON) || defined(TURN_TIMER_PAUSE_BUTTON) || defined(EG_REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS)
+#if defined(TURN_TIMER_RESET_BUTTON) || defined(TURN_TIMER_PAUSE_BUTTON) || defined(EG_REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS) || defined(EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN)
 	}
 #endif
 }

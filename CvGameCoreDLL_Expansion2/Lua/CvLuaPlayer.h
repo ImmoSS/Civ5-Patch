@@ -1024,6 +1024,9 @@ protected:
 #ifdef EG_REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS
 	static int lAddReplayOpenedDemographics(lua_State* L);
 #endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+	static int lAddReplayEnteredCityScreen(lua_State* L);
+#endif
 };
 
 #endif //CVLUAPLAYER_H

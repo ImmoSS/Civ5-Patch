@@ -253,6 +253,9 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 		, m_iNumAlliedCS(false)
 #endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+		, m_iTimesEnteredCityScreen(false)
+#endif
 	, m_iExtraLeagueVotes(0)
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
@@ -984,6 +987,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 	m_iNumAlliedCS = 0;
+#endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+	m_iTimesEnteredCityScreen = 0;
 #endif
 	m_iExtraLeagueVotes = 0;
 	m_iSpecialPolicyBuildingHappiness = 0;
@@ -10106,6 +10112,16 @@ int CvPlayer::GetNumAlliedCS() const
 void CvPlayer::ChangeNumAlliedCS(int iChange)
 {
 	m_iNumAlliedCS = (m_iNumAlliedCS + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+int CvPlayer::GetTimesEnteredCityScreen() const
+{
+	return m_iTimesEnteredCityScreen;
+}
+void CvPlayer::ChangeTimesEnteredCityScreen(int iChange)
+{
+	m_iTimesEnteredCityScreen = (m_iTimesEnteredCityScreen + iChange);
 }
 #endif
 #ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
@@ -24549,6 +24565,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 		m_iNumAlliedCS = 0;
 #endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+		m_iTimesEnteredCityScreen = 0;
+#endif
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
 	else if (uiVersion == 1001)
@@ -24646,6 +24665,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 		m_iNumAlliedCS = 0;
 #endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+		m_iTimesEnteredCityScreen = 0;
+#endif
 	}
 	else
 	{
@@ -24741,6 +24763,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 		m_iNumAlliedCS = 0;
+#endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+		m_iTimesEnteredCityScreen = 0;
 #endif
 	}
 #endif
@@ -25521,6 +25546,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 	kStream << m_iNumAlliedCS;
+#endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+	kStream << m_iTimesEnteredCityScreen;
 #endif
 	kStream << m_iExtraLeagueVotes;
 	kStream << m_iSpecialPolicyBuildingHappiness;
@@ -28294,6 +28322,8 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_ALLIEDCS"), iGameTurn, GetNumAlliedCS());
+#endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 #endif
 #ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_HAPPINESSFROMTRADEDEALS"), iGameTurn, GetNumHappinessFromTradeDeals());

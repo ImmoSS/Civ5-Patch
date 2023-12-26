@@ -396,6 +396,10 @@ public:
 	int GetNumAlliedCS() const;
 	void ChangeNumAlliedCS(int Change);
 #endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+	int GetTimesEnteredCityScreen() const;
+	void ChangeTimesEnteredCityScreen(int Change);
+#endif
 #ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
 	int GetNumHappinessFromTradeDeals() const;
 #endif
@@ -1887,6 +1891,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_ALLIEDCS
 	int m_iNumAlliedCS;
+#endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+	int m_iTimesEnteredCityScreen;
 #endif
 	int m_iExtraLeagueVotes;
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
