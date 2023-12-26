@@ -457,11 +457,7 @@ public:
 #ifdef REPLAY_MESSAGE_EXTENDED
 	void addReplayMessage(ReplayMessageTypes eType, PlayerTypes ePlayer, const CvString& pszText, int iData1, int iData2, int iPlotX, int iPlotY);
 #endif
-#ifdef statistis_stuff_VARIANT
-	void addReplayStats(ReplayMessageTypes eType, PlayerTypes ePlayer, const char* szData, int iPlotX, int iPlotY);
-#endif
 #ifdef DEV_RECORDING_STATISTICS
-	void addReplayStats2(uint uiDataSet, PlayerTypes ePlayer, uint uiTurn, const char* szDataName, int iValue);
 	void exportReplayDatasets();
 #endif
 	void clearReplayMessageMap();
