@@ -10131,7 +10131,7 @@ int CvPlayer::GetNumHappinessFromTradeDeals() const
 					iHappinessFromTradeDeals += 4;
 				}
 			}
-			if (getResourceExport(eResource) > 0 && getNumResourceTotal(eResource) == 0)
+			if (getResourceExport(eResource) > 0 && getNumResourceTotal(eResource) == 0 && GetPlayerTraits()->GetLuxuryHappinessRetention() > 0)
 			{
 				if (eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_NUTMEG", true)
 					|| eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_CLOVES", true)
