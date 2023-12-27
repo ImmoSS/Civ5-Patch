@@ -4841,8 +4841,10 @@ void CvPlayer::doTurnPostDiplomacy()
 	}
 #endif
 
+#ifndef DO_TURN_CHANGE_ORDER
 	// Gold
 	GetTreasury()->DoGold();
+#endif
 
 	// Culture
 
@@ -5039,6 +5041,11 @@ void CvPlayer::doTurnPostDiplomacy()
 
 	// Science
 	doResearch();
+
+#ifdef DO_TURN_CHANGE_ORDER
+	// Gold
+	GetTreasury()->DoGold();
+#endif
 
 	GetEspionage()->DoTurn();
 
