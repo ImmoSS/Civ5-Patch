@@ -28448,11 +28448,19 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PERCENTOFCITIESWITHACTIVEWLTKD"), iGameTurn, iPercentCitiesWithActiveWLTKD);
 #endif
 #ifdef EG_REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION
-		int iGetNumFollowers = GC.getGame().GetGameReligions()->GetNumFollowers(GetReligions()->GetReligionCreatedByPlayer());		
+		int iGetNumFollowers = 0;
+		if (GetReligions()->GetReligionCreatedByPlayer() > RELIGION_PANTHEON)
+		{
+			iGetNumFollowers = GC.getGame().GetGameReligions()->GetNumFollowers(GetReligions()->GetReligionCreatedByPlayer());
+		}
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FOLLOWERSOFPLAYERRELIGION"), iGameTurn, iGetNumFollowers);
 #endif
 #ifdef EG_REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION
-		int iNumCitiesFollowing = GC.getGame().GetGameReligions()->GetNumCitiesFollowing(GetReligions()->GetReligionCreatedByPlayer());
+		int iNumCitiesFollowing = 0;
+		if (GetReligions()->GetReligionCreatedByPlayer() > RELIGION_PANTHEON)
+		{
+			iNumCitiesFollowing = GC.getGame().GetGameReligions()->GetNumCitiesFollowing(GetReligions()->GetReligionCreatedByPlayer());
+		}
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CITIESCONVERTEDTOPLAYERRELIGION"), iGameTurn, iNumCitiesFollowing);
 #endif
 #if defined EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS && defined EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS

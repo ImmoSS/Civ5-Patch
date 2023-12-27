@@ -7890,9 +7890,6 @@ int CvUnit::getDiscoverAmount()
 	iValue *= (100 + GET_PLAYER(getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_DISCOVER_AMONT_SCIENCE_MODIFIER));
 	iValue /= 100;
 #endif
-#ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
-	GET_PLAYER(getOwner()).ChangeScientistsTotalScienceBoost(iValue);
-#endif
 	return iValue;
 }
 
@@ -7917,6 +7914,9 @@ bool CvUnit::discover()
 
 	// Beakers boost based on previous turns
 	int iBeakersBonus = getDiscoverAmount();
+#ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
+	pPlayer->ChangeScientistsTotalScienceBoost(iBeakersBonus);
+#endif
 	TechTypes eCurrentTech = pPlayer->GetPlayerTechs()->GetCurrentResearch();
 	if(eCurrentTech == NO_TECH)
 	{
@@ -8933,9 +8933,6 @@ int CvUnit::getGivePoliciesCulture()
 		iValue *= GC.getGame().getGameSpeedInfo().getCulturePercent();
 		iValue /= 100;
 	}
-#ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
-	GET_PLAYER(getOwner()).ChangeWritersTotalCultureBoost(iValue);
-#endif
 	return iValue;
 }
 
@@ -8955,6 +8952,9 @@ bool CvUnit::givePolicies()
 	int iCultureBonus = getGivePoliciesCulture();
 	if (iCultureBonus != 0)
 	{
+#ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
+		kPlayer.ChangeWritersTotalCultureBoost(iCultureBonus);
+#endif
 		kPlayer.changeJONSCulture(iCultureBonus);
 		// Refresh - we might get to pick a policy this turn
 #ifdef UPDATE_CULTURE_NOTIFICATION_DURING_TURN
