@@ -1030,7 +1030,6 @@ enum ReplayEventTypes
 	REPLAYEVENT_ResetTimer,
 	REPLAYEVENT_PauseTimer,
 	REPLAYEVENT_OpenDemoScreen,
-	REPLAYEVENT_EnterCityScreen,
 	REPLAYEVENT_ExtractSpy,
 	REPLAYEVENT_UpdatePolicyBranch,
 	REPLAYEVENT_UnpauseTimer,
@@ -1061,6 +1060,7 @@ enum ReplayEventTypes
 	REPLAYEVENT_CongressEnactedProposalsChange,
 	REPLAYEVENT_MPProposalResult,
 	REPLAYEVENT_PlotNewCityName,  // Special event to track city name changes
+	REPLAYEVENT_EnterCityScreen,
 
 	NUM_REPLAYEVENTS
 };
