@@ -380,9 +380,21 @@ public:
 	int GetScientistsTotalScienceBoost() const;
 	void ChangeScientistsTotalScienceBoost(int Change);
 #endif
+#ifdef EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
+	int GetEngineersTotalHurryBoost() const;
+	void ChangeEngineersTotalHurryBoost(int Change);
+#endif
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+	int GetMerchantsTotalTradeBoost() const;
+	void ChangeMerchantsTotalTradeBoost(int Change);
+#endif
 #ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
 	int GetWritersTotalCultureBoost() const;
 	void ChangeWritersTotalCultureBoost(int Change);
+#endif
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+	int GetMusiciansTotalTourismBoost() const;
+	void ChangeMusiciansTotalTourismBoost(int Change);
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
 	int GetNumPopulationLostFromNukes() const;
@@ -1880,8 +1892,17 @@ protected:
 #ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
 	int m_iScientistsTotalScienceBoost;
 #endif
+#ifdef EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
+	int m_iEngineersTotalHurryBoost;
+#endif
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+	int m_iMerchantsTotalTradeBoost;
+#endif
 #ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
 	int m_iWritersTotalCultureBoost;
+#endif
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+	int m_iMusiciansTotalTourismBoost;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
 	int m_iNumPopulationLostFromNukes;

@@ -227,34 +227,43 @@ CvPlayer::CvPlayer() :
 	, m_bMayaBoostEngineers(false)
 #endif
 #ifdef EG_REPLAYDATASET_NUMOFBORNMERCHANTS
-		, m_bMayaBoostMerchants(false)
+	, m_bMayaBoostMerchants(false)
 #endif
 #ifdef EG_REPLAYDATASET_NUMOFBORNWRITERS
-		, m_bMayaBoostWriters(false)
+	, m_bMayaBoostWriters(false)
 #endif
 #ifdef EG_REPLAYDATASET_NUMOFBORNARTISTS
-		, m_bMayaBoostArtists(false)
+	, m_bMayaBoostArtists(false)
 #endif
 #ifdef EG_REPLAYDATASET_NUMOFBORNMUSICIANS
-		, m_bMayaBoostMusicians(false)
+	, m_bMayaBoostMusicians(false)
 #endif
 #ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
-		, m_iScientistsTotalScienceBoost(false)
+	, m_iScientistsTotalScienceBoost(0)
+#endif
+#ifdef EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
+	, m_iEngineersTotalHurryBoost(0)
+#endif
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+	, m_iMerchantsTotalTradeBoost(0)
 #endif
 #ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
-		, m_iWritersTotalCultureBoost(false)
+	, m_iWritersTotalCultureBoost(0)
+#endif
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+	, m_iMusiciansTotalTourismBoost(0)
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
-		, m_iNumPopulationLostFromNukes(false)
+	, m_iNumPopulationLostFromNukes(0)
 #endif
 #ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
-		, m_iNumCSQuestsCompleted(false)
+	, m_iNumCSQuestsCompleted(0)
 #endif
 #ifdef EG_REPLAYDATASET_ALLIEDCS
-		, m_iNumAlliedCS(false)
+	, m_iNumAlliedCS(0)
 #endif
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
-		, m_iTimesEnteredCityScreen(false)
+	, m_iTimesEnteredCityScreen(0)
 #endif
 	, m_iExtraLeagueVotes(0)
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
@@ -976,8 +985,17 @@ void CvPlayer::uninit()
 #ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
 	m_iScientistsTotalScienceBoost = 0;
 #endif
+#ifdef EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
+	m_iEngineersTotalHurryBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+	m_iMerchantsTotalTradeBoost = 0;
+#endif
 #ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
 	m_iWritersTotalCultureBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+	m_iMusiciansTotalTourismBoost = 0;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
 	m_iNumPopulationLostFromNukes = 0;
@@ -10074,6 +10092,26 @@ void CvPlayer::ChangeScientistsTotalScienceBoost(int iChange)
 	m_iScientistsTotalScienceBoost = (m_iScientistsTotalScienceBoost + iChange);
 }
 #endif
+#ifdef EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
+int CvPlayer::GetEngineersTotalHurryBoost() const
+{
+	return m_iEngineersTotalHurryBoost;
+}
+void CvPlayer::ChangeEngineersTotalHurryBoost(int iChange)
+{
+	m_iEngineersTotalHurryBoost = (m_iEngineersTotalHurryBoost + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+int CvPlayer::GetMerchantsTotalTradeBoost() const
+{
+	return m_iMerchantsTotalTradeBoost;
+}
+void CvPlayer::ChangeMerchantsTotalTradeBoost(int iChange)
+{
+	m_iMerchantsTotalTradeBoost = (m_iMerchantsTotalTradeBoost + iChange);
+}
+#endif
 #ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
 int CvPlayer::GetWritersTotalCultureBoost() const
 {
@@ -10082,6 +10120,16 @@ int CvPlayer::GetWritersTotalCultureBoost() const
 void CvPlayer::ChangeWritersTotalCultureBoost(int iChange)
 {
 	m_iWritersTotalCultureBoost = (m_iWritersTotalCultureBoost + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+int CvPlayer::GetMusiciansTotalTourismBoost() const
+{
+	return m_iMusiciansTotalTourismBoost;
+}
+void CvPlayer::ChangeMusiciansTotalTourismBoost(int iChange)
+{
+	m_iMusiciansTotalTourismBoost = (m_iMusiciansTotalTourismBoost + iChange);
 }
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
@@ -24540,8 +24588,17 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
 		kStream >> m_iScientistsTotalScienceBoost;
 #endif
+#ifdef EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
+		kStream >> m_iEngineersTotalHurryBoost;
+#endif
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+		kStream >> m_iMerchantsTotalTradeBoost;
+#endif
 #ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
 		kStream >> m_iWritersTotalCultureBoost;
+#endif
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+		kStream >> m_iMusiciansTotalTourismBoost;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
 		kStream >> m_iNumPopulationLostFromNukes;
@@ -24641,8 +24698,17 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
 		m_iScientistsTotalScienceBoost = 0;
 #endif
+#ifdef EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
+		m_iEngineersTotalHurryBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+		m_iMerchantsTotalTradeBoost = 0;
+#endif
 #ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
 		m_iWritersTotalCultureBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+		m_iMusiciansTotalTourismBoost = 0;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
 		m_iNumPopulationLostFromNukes = 0;
@@ -24740,8 +24806,17 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
 		m_iScientistsTotalScienceBoost = 0;
 #endif
+#ifdef EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
+		m_iEngineersTotalHurryBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+		m_iMerchantsTotalTradeBoost = 0;
+#endif
 #ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
 		m_iWritersTotalCultureBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+		m_iMusiciansTotalTourismBoost = 0;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
 		m_iNumPopulationLostFromNukes = 0;
@@ -24839,8 +24914,17 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
 		m_iScientistsTotalScienceBoost = 0;
 #endif
+#ifdef EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
+		m_iEngineersTotalHurryBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+		m_iMerchantsTotalTradeBoost = 0;
+#endif
 #ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
 		m_iWritersTotalCultureBoost = 0;
+#endif
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+		m_iMusiciansTotalTourismBoost = 0;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
 		m_iNumPopulationLostFromNukes = 0;
@@ -25622,8 +25706,17 @@ void CvPlayer::Write(FDataStream& kStream) const
 #ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
 	kStream << m_iScientistsTotalScienceBoost;
 #endif
+#ifdef EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
+	kStream << m_iEngineersTotalHurryBoost;
+#endif
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+	kStream << m_iMerchantsTotalTradeBoost;
+#endif
 #ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
 	kStream << m_iWritersTotalCultureBoost;
+#endif
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+	kStream << m_iMusiciansTotalTourismBoost;
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
 	kStream << m_iNumPopulationLostFromNukes;
@@ -28398,8 +28491,17 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST"), iGameTurn, GetScientistsTotalScienceBoost());
 #endif
+#ifdef EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_ENGINEERSTOTALHURRYBOOST"), iGameTurn, GetEngineersTotalHurryBoost());
+#endif
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_MERCHANTSTOTALTRADEBOOST"), iGameTurn, GetMerchantsTotalTradeBoost());
+#endif
 #ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_WRITERSTOTALCULTUREBOOST"), iGameTurn, GetWritersTotalCultureBoost());
+#endif
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST"), iGameTurn, GetMusiciansTotalTourismBoost());
 #endif
 #ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_POPULATIONLOSTFROMNUKES"), iGameTurn, GetNumPopulationLostFromNukes());

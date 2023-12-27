@@ -8150,6 +8150,9 @@ bool CvUnit::hurry()
 
 	if(pCity != NULL)
 	{
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+		GET_PLAYER(getOwner()).ChangeEngineersTotalHurryBoost(getHurryProduction(pPlot));
+#endif
 		pCity->changeProduction(getHurryProduction(pPlot));
 	}
 
@@ -8277,6 +8280,9 @@ bool CvUnit::trade()
 		return false;
 
 	int iTradeGold = getTradeGold(pPlot);
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+	GET_PLAYER(getOwner()).ChangeMerchantsTotalTradeBoost(iTradeGold);
+#endif
 	
 	GET_PLAYER(getOwner()).GetTreasury()->ChangeGold(iTradeGold);
 
@@ -9074,6 +9080,9 @@ bool CvUnit::blastTourism()
 	}
 
 	int iTourismBlast = getBlastTourism();
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+	GET_PLAYER(getOwner()).ChangeMusiciansTotalTourismBoost(iTourismBlast);
+#endif
 
 	int iTourismBlastPercentOthers = m_pUnitInfo->GetOneShotTourismPercentOthers();
 	PlayerTypes eOwner = pPlot->getOwner();
