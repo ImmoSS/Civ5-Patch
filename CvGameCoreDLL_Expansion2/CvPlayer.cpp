@@ -10131,33 +10131,21 @@ int CvPlayer::GetNumHappinessFromTradeDeals() const
 	for (int iI = 0; iI < GC.getNumResourceInfos(); iI++)
 	{
 		ResourceTypes eResource = (ResourceTypes)iI;
+
+		int iBaseHappiness = GetHappinessFromLuxury(eResource);
 		ResourceUsageTypes eUsage = GC.getResourceInfo(eResource)->getResourceUsage();
 		if (eUsage == RESOURCEUSAGE_LUXURY)
 		{
-			if (getResourceImport(eResource) > 0 && getNumResourceTotal(eResource) == getResourceImport(eResource))
+			if (iBaseHappiness)
 			{
-				if (eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_NUTMEG", true)
-					|| eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_CLOVES", true)
-					|| eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_PEPPER", true))
+				if (getResourceImport(eResource) > 0 && getNumResourceTotal(eResource) == getResourceImport(eResource))
 				{
-					iHappinessFromTradeDeals += 2;
+					iHappinessFromTradeDeals += iBaseHappiness;
+					iHappinessFromTradeDeals += GetExtraHappinessPerLuxury();
 				}
-				else
+				if (getResourceExport(eResource) > 0 && getNumResourceTotal(eResource) == 0 && GetPlayerTraits()->GetLuxuryHappinessRetention() > 0)
 				{
-					iHappinessFromTradeDeals += 4;
-				}
-			}
-			if (getResourceExport(eResource) > 0 && getNumResourceTotal(eResource) == 0 && GetPlayerTraits()->GetLuxuryHappinessRetention() > 0)
-			{
-				if (eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_NUTMEG", true)
-					|| eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_CLOVES", true)
-					|| eResource == (ResourceTypes)GC.getInfoTypeForString("RESOURCE_PEPPER", true))
-				{
-					iHappinessFromTradeDeals += 1;
-				}
-				else
-				{
-					iHappinessFromTradeDeals += 2;
+					iHappinessFromTradeDeals += (iBaseHappiness * GetPlayerTraits()->GetLuxuryHappinessRetention()) / 100;
 				}
 			}
 		}
