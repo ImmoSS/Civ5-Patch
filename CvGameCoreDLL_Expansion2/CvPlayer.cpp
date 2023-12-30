@@ -6352,7 +6352,6 @@ bool CvPlayer::canReceiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit) 
 		return false;
 	}
 
-	// No XP in first 10 turns
 #ifdef XP_RUINS_FIX
 	if(kGoodyInfo.getExperience() > 0)
 	{
@@ -6364,8 +6363,16 @@ bool CvPlayer::canReceiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit) 
 		{
 			return false;
 		}
+#ifdef EXPIRIENCE_RUIN_SET_MOVEMENT_PROMOTION
+		PromotionTypes eMobility = (PromotionTypes)GC.getInfoTypeForString("PROMOTION_MOBILITY", true);
+		if (pUnit->isHasPromotion(eMobility))
+		{
+			return false;
+		}
+#endif
 	}
 #else
+	// No XP in first 10 turns
 	/*if(kGoodyInfo.getExperience() > 0)
 	{
 		if((pUnit == NULL) || !(pUnit->canAcquirePromotionAny()) || (GC.getGame().getElapsedGameTurns() < 10))
@@ -7005,7 +7012,15 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 	// Experience
 	if(pUnit != NULL)
 	{
+#ifdef EXPIRIENCE_RUIN_SET_MOVEMENT_PROMOTION
+		if (kGoodyInfo.getExperience() > 0)
+		{
+			PromotionTypes eMobility = (PromotionTypes)GC.getInfoTypeForString("PROMOTION_MOBILITY", true);
+			pUnit->setHasPromotion(eMobility, true);
+		}
+#else
 		pUnit->changeExperience(kGoodyInfo.getExperience());
+#endif
 	}
 
 	// Unit Heal
