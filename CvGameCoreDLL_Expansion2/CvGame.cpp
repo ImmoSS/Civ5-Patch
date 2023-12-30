@@ -9831,7 +9831,7 @@ void CvGame::exportReplayEvents()
 {
 	DWORD t1 = timeGetTime();
 	CvString strUTF8DatabasePath = gDLL->GetCacheFolderPath();
-	strUTF8DatabasePath += "_Civ5ReplayEvents.db";
+	strUTF8DatabasePath += "Civ5FinishedGameDatabase.db";
 
 	sqlite3* db;
 	sqlite3_stmt* stmt;
