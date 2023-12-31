@@ -1047,7 +1047,7 @@ local function RefreshCityBannersNow()
 
 				-- Connected to capital?
 				instance.CityIsConnected:SetHide( city:IsCapital() or not cityOwner:IsCapitalConnectedToCity( city ) or city:IsIndustrialRouteToCapital() == 1)
-				instance.CityIsRailConnected:SetHide( city:IsCapital() or not city:IsIndustrialRouteToCapital( city ) )
+				instance.CityIsRailConnected:SetHide( city:IsCapital() or city:IsIndustrialRouteToCapital() ~= 1)
 
 				-- Demand resource / King day ?
 				local resource = GameInfo.Resources[ city:GetResourceDemanded() ]
