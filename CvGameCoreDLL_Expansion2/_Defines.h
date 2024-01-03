@@ -837,7 +837,7 @@
 // 1000: v7.0  (initial)
 // 1001: v7.2  (adds ENHANCED_GRAPHS)
 // 1002: v7.2a (adds maya boost GP counters)
-// 1003: v8.1b (adds secsond banch of ENHANCED_GRAPHS)
+// 1003: v8.1b (adds secsond bunch of ENHANCED_GRAPHS)
 # define BUMP_SAVE_VERSION_PLAYER 1003
 // 1000: v7.0 (initial)
 # define BUMP_SAVE_VERSION_POLICIES 1000
@@ -862,7 +862,7 @@
 #define ENHANCED_GRAPHS
 ///
 #ifdef ENHANCED_GRAPHS
-/// First Banch of Enhanced Graphs
+/// First Bunch of Enhanced Graphs
 ///
 #define EG_REPLAYDATASET_FAITHPERTURN
 #define EG_REPLAYDATASET_TOTALFAITH
@@ -929,7 +929,7 @@
 ///
 #define EG_REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS
 ///
-/// Second Banch of Enhanced Graphs
+/// Second Bunch of Enhanced Graphs
 ///
 #define EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
 #define EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
