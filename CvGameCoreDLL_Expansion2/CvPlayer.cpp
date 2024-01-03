@@ -10213,6 +10213,10 @@ int CvPlayer::GetNumHappinessFromTradeDeals() const
 					iHappinessFromTradeDeals += iBaseHappiness;
 					iHappinessFromTradeDeals += GetExtraHappinessPerLuxury();
 				}
+				if (getResourceExport(eResource) > 0 && getNumResourceTotal(eResource) == 0)
+				{
+					iHappinessFromTradeDeals -= iBaseHappiness;
+				}
 				if (getResourceExport(eResource) > 0 && getNumResourceTotal(eResource) == 0 && GetPlayerTraits()->GetLuxuryHappinessRetention() > 0)
 				{
 					iHappinessFromTradeDeals += (iBaseHappiness * GetPlayerTraits()->GetLuxuryHappinessRetention()) / 100;
