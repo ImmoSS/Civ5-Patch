@@ -23,19 +23,19 @@
 					<Label ID="LengthTest" Anchor="L,C" Font="TwCenMT20" FontStyle="SoftShadow" Hidden="1"/>
 					<Box Anchor="R,C" AnchorSide="O,I" Offset="4,0" Size="341,18" Color="255,255,200,255">
 						<Box Anchor="C,C" Size="339,16" Color="0,0,0,255">
-							<EditBox Offset="1,0" MaxLength="255" Size="339,16" Anchor="C,C" Font="TwCenMT14" ID="ChatEntry" FocusStop="1" KeepFocus="1" />
+							<EditBox Offset="1,0" MaxLength="127" Size="339,16" Anchor="C,C" Font="TwCenMT14" ID="ChatEntry" FocusStop="1" KeepFocus="1" />
 							<Stack ID="DummyStack" />
 						</Box>
 					</Box>
 				</PullDown>
 				<Button ID="EmotePickerButton" Anchor="R,C" String="[ICON_FLOWER]" Offset="5,0" Size="22,30" >
-					<Grid ID="EmotePicker" Style="GridBlack8" AnchorSide="O.O" Anchor="L,T" Offset="0,2" Size="192,100" ConsumeMouse="True" Hidden="True" >
-						<Grid Anchor="C,C" Offset="0,0" Size="196,104" Padding="0,0" Style="Grid9Frame" />
-						<ScrollPanel Anchor="L,T" Offset="8,8" Size="188,84" Vertical="1" ID="EmotesScrollPanel" >
-							<Stack ID="EmoteStack" Anchor="L,T" StackGrowth="Right" WrapWidth="190" WrapGrowth="Down" >
+					<Grid ID="EmotePicker" Style="GridBlack8" AnchorSide="O.O" Anchor="L,T" Offset="0,2" Size="185,130" ConsumeMouse="True" Hidden="True" >
+						<Grid Anchor="C,C" Offset="0,0" Size="189,134" Padding="0,0" Style="Grid9Frame" />
+						<ScrollPanel Anchor="L,T" Offset="8,8" Size="181,114" Vertical="1" ID="EmotesScrollPanel" >
+							<Stack ID="EmoteStack" Anchor="L,T" StackGrowth="Right" WrapWidth="183" WrapGrowth="Down" >
 							</Stack>
 
-							<ScrollBar Offset="0,10" Style="VertSlider" AnchorSide="O.I" Anchor="R,T" Length="64" ConsumeMouse="True" />
+							<ScrollBar Offset="0,10" Style="VertSlider" AnchorSide="O.I" Anchor="R,T" Length="94" ConsumeMouse="True" />
 							<UpButton  Offset="0,-6"  Style="ScrollBarUp" AnchorSide="O.I" Anchor="R,T" />
 							<DownButton Offset="0,-6" Style="ScrollBarDown" AnchorSide="O.I" Anchor="R,B" />
 
@@ -153,7 +153,7 @@
 		</Box>
 	</Instance>
 	<Instance Name="EmoteInstance">
-			<Button ID="EmoteButton" ConsumeMouseOver="1" Anchor="L,T" Size="22,22" >
+			<Button ID="EmoteButton" ConsumeMouseOver="1" Anchor="L,T" Size="28,28" >
 			</Button>
 	</Instance>
 
