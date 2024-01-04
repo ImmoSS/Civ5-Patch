@@ -10216,6 +10216,7 @@ int CvPlayer::GetNumHappinessFromTradeDeals() const
 				if (getResourceExport(eResource) > 0 && getNumResourceTotal(eResource) == 0)
 				{
 					iHappinessFromTradeDeals -= iBaseHappiness;
+					iHappinessFromTradeDeals -= GetExtraHappinessPerLuxury();
 				}
 				if (getResourceExport(eResource) > 0 && getNumResourceTotal(eResource) == 0 && GetPlayerTraits()->GetLuxuryHappinessRetention() > 0)
 				{
