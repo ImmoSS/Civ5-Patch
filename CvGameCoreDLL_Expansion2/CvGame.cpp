@@ -7276,6 +7276,7 @@ void CvGame::setGameState(GameStateTypes eNewValue)
 			saveReplay();
 			showEndGameSequence();
 #ifdef DEV_RECORDING_STATISTICS
+			generateReplayKeys(); // Recreates key tables with up-to-date xml data; may be called just once and then commented out to increase performance
 			exportReplayDatasets();
 # ifdef REPLAY_EVENTS
 			exportReplayEvents();
@@ -9726,12 +9727,6 @@ void CvGame::exportReplayDatasets()
 		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS BuildingClassesChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, BuildingClassID INTEGER NOT NULL, CivID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
 		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS BeliefsChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, BeliefID INTEGER NOT NULL, CivID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
 		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS DataSets (DataSetID INTEGER NOT NULL);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS CivKeys (CivID INTEGER NOT NULL, CivKey TEXT);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS ReplayDataSetKeys (ReplayDataSetID INTEGER NOT NULL, ReplayDataSetKey TEXT);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS PolicyKeys (PolicyID INTEGER NOT NULL, PolicyKey TEXT);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS TechnologyKeys (TechnologyID INTEGER NOT NULL, TechnologyKey TEXT);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS BuildingClassKeys (BuildingClassID INTEGER NOT NULL, BuildingClassKey TEXT);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS BeliefKeys (BeliefID INTEGER NOT NULL, BeliefKey TEXT);", NULL, 0, &err);
 
 		struct QueryFrame {
 			uint uiRangeLeft;
@@ -9817,6 +9812,113 @@ void CvGame::exportReplayDatasets()
 		sqlite3_exec(db, "END TRANSACTION", NULL, 0, &err);
 		sqlite3_close(db);
 		SLOG("export to db DONE in %fs", (float)(timeGetTime() - t1) / 1000);
+	}
+	else
+	{
+		SLOG("ERROR opening db");
+	}
+}
+
+void CvGame::generateReplayKeys()
+{
+	DWORD t1 = timeGetTime();
+	CvString strUTF8DatabasePath = gDLL->GetCacheFolderPath();
+	strUTF8DatabasePath += "Civ5FinishedGameDatabase.db";
+
+	sqlite3* db;
+	char* err = NULL;
+
+	if (sqlite3_open_v2(strUTF8DatabasePath.c_str(), &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, NULL) == SQLITE_OK)
+	{
+		CvString strQuery;
+		CvString::format(strQuery, "ATTACH \"%sCiv5DebugDatabase.db\" AS db2", gDLL->GetCacheFolderPath());
+		sqlite3_exec(db, strQuery.c_str(), NULL, NULL, &err);
+		SLOG("attach %s", err);
+
+		// BeliefKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BeliefKeys;\
+							CREATE TABLE main.BeliefKeys AS\
+							SELECT ID AS BeliefID, ShortDescription AS BeliefKey,\
+							CASE WHEN Pantheon = 1 THEN 0 ELSE\
+							CASE WHEN Founder = 1 THEN 1 ELSE\
+							CASE WHEN Follower = 1 THEN 2 ELSE\
+							CASE WHEN Enhancer = 1 THEN 3 ELSE 4\
+							END END END END AS TypeID\
+							FROM db2.Beliefs;", NULL, 0, &err);
+		SLOG("BeliefKeys %s", err);
+		// BeliefTypes
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BeliefTypes;\
+							CREATE TABLE main.BeliefTypes (TypeID INTEGER NOT NULL, BeliefType TEXT);\
+							INSERT INTO main.BeliefTypes VALUES (0,'Pantheon'),(1,'Founder'),(2,'Follower'),(3,'Enhancer'),(4,'Reformation');", NULL, 0, &err);
+		SLOG("BeliefTypes %s", err);
+		// BuildingClassKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BuildingClassKeys;\
+							CREATE TABLE main.BuildingClassKeys AS\
+							SELECT DISTINCT BuildingClasses.ID AS BuildingClassID, BuildingClasses.Description AS BuildingClassKey,\
+							CASE WHEN MaxGlobalInstances = 1 THEN 2 ELSE\
+							CASE WHEN MaxPlayerInstances = 1 THEN 1 ELSE\
+							CASE WHEN Cost = -1 and UnlockedByBelief = 1 THEN 3 ELSE 0\
+							END END END AS TypeID\
+							FROM db2.BuildingClasses\
+							LEFT JOIN db2.Buildings\
+							ON db2.BuildingClasses.Type = db2.Buildings.BuildingClass\
+							ORDER BY BuildingClasses.ID;", NULL, 0, &err);
+		SLOG("BuildingClassKeys %s", err);
+		// BuildingClassTypes
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BuildingClassTypes;\
+							CREATE TABLE main.BuildingClassTypes (TypeID INTEGER NOT NULL, BuildingClassType TEXT);\
+							INSERT INTO main.BuildingClassTypes VALUES (0,'Common'),(1,'National Wonder'),(2,'World Wonder'),(3,'Religious');", NULL, 0, &err);
+		SLOG("BuildingClassTypes %s", err);
+		// CivKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.CivKeys;\
+							CREATE TABLE main.CivKeys AS\
+							SELECT ID AS CivID, ShortDescription AS CivKey FROM db2.Civilizations;", NULL, 0, &err);
+		SLOG("BuildingClassTypes %s", err);
+		// PolicyBranches
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.PolicyBranches;\
+							CREATE TABLE main.PolicyBranches AS\
+							SELECT ID AS BranchID, Description AS PolicyBranch FROM db2.PolicyBranchTypes;", NULL, 0, &err);
+		SLOG("PolicyBranches %s", err);
+		// PolicyKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.PolicyKeys;\
+							CREATE TABLE main.PolicyKeys AS\
+							SELECT Policies.ID AS PolicyID, Policies.Description AS PolicyKey, PolicyBranchTypes.ID AS BranchID FROM db2.Policies\
+							LEFT JOIN db2.PolicyBranchTypes ON db2.PolicyBranchTypes.FreeFinishingPolicy = db2.Policies.Type\
+							OR db2.PolicyBranchTypes.FreePolicy = db2.Policies.Type\
+							OR PolicyBranchTypes.Type = Policies.PolicyBranchType;", NULL, 0, &err);
+		SLOG("PolicyKeys %s", err);
+		// ReplayDataSetKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.ReplayDataSetKeys;\
+							CREATE TABLE main.ReplayDataSetKeys AS\
+							SELECT ID AS ReplayDataSetID, Description AS ReplayDataSetKey FROM db2.ReplayDataSets;", NULL, 0, &err);
+		SLOG("ReplayDataSetKeys %s", err);
+		// ReplayEventKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.ReplayEventKeys;\
+							CREATE TABLE main.ReplayEventKeys AS\
+							SELECT ID AS ReplayEventID, Category, Description, Num1Type, Num2Type, Num3Type, Num4Type,\
+							Num5Type, Num6Type, Num7Type, Num8Type, Num9Type, Num10Type FROM db2.ReplayEvents;", NULL, 0, &err);
+		SLOG("ReplayEventKeys %s", err);
+		// TechnologyEras
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.TechnologyEras;\
+							CREATE TABLE main.TechnologyEras (EraID INTEGER NOT NULL, EraKey TEXT);\
+							INSERT INTO main.TechnologyEras VALUES (0,'Ancient'),(1,'Classical'),(2,'Medieval'),(3,'Renaissance'),\
+							(4,'Industrial'),(5,'Modern'),(6,'Atomic'),(7,'Information');", NULL, 0, &err);
+		SLOG("TechnologyEras %s", err);
+		// TechnologyKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.TechnologyKeys;\
+							CREATE TABLE main.TechnologyKeys AS\
+							SELECT Technologies.ID AS TechnologyID, Technologies.Description AS TechnologyKey, Eras.ID AS EraID FROM db2.Technologies\
+							LEFT JOIN db2.Eras ON db2.Eras.Type = db2.Technologies.Era", NULL, 0, &err);
+		SLOG("TechnologyKeys %s", err);
+		// WinTypes
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.WinTypes;\
+							CREATE TABLE main.WinTypes (WinID INTEGER NOT NULL, WinType TEXT);\
+							INSERT INTO main.WinTypes VALUES (0,'Lose'),(1,'Time'),(2,'Science'),(3,'Domination'),(4,'Cultural'),(5,'Diplomatic');", NULL, 0, &err);
+		SLOG("WinTypes %s", err);
+
+		sqlite3_exec(db, "DETACH db2", NULL, NULL, &err);
+		sqlite3_close(db);
+		SLOG("generating key tables DONE in %fs", (float)(timeGetTime() - t1) / 1000);
 	}
 	else
 	{
