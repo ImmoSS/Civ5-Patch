@@ -9831,20 +9831,21 @@ void CvGame::generateReplayKeys()
 	if (sqlite3_open_v2(strUTF8DatabasePath.c_str(), &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, NULL) == SQLITE_OK)
 	{
 		CvString strQuery;
-		CvString::format(strQuery, "ATTACH \"%sCiv5DebugDatabase.db\" AS db2", gDLL->GetCacheFolderPath());
+		CvString::format(strQuery, "ATTACH \"%sCiv5DebugDatabase.db\" AS db2; ATTACH \"%sLocalization-Merged.db\" AS db3;", gDLL->GetCacheFolderPath(), gDLL->GetCacheFolderPath());
 		sqlite3_exec(db, strQuery.c_str(), NULL, NULL, &err);
 		SLOG("attach %s", err);
 
 		// BeliefKeys
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BeliefKeys;\
 							CREATE TABLE main.BeliefKeys AS\
-							SELECT ID AS BeliefID, ShortDescription AS BeliefKey,\
+							SELECT ID AS BeliefID, IFNULL(Text, db2.Beliefs.ShortDescription) AS BeliefKey,\
 							CASE WHEN Pantheon = 1 THEN 0 ELSE\
 							CASE WHEN Founder = 1 THEN 1 ELSE\
 							CASE WHEN Follower = 1 THEN 2 ELSE\
 							CASE WHEN Enhancer = 1 THEN 3 ELSE 4\
 							END END END END AS TypeID\
-							FROM db2.Beliefs;", NULL, 0, &err);
+							FROM db2.Beliefs\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Beliefs.ShortDescription;", NULL, 0, &err);
 		SLOG("BeliefKeys %s", err);
 		// BeliefTypes
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BeliefTypes;\
@@ -9854,7 +9855,7 @@ void CvGame::generateReplayKeys()
 		// BuildingClassKeys
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BuildingClassKeys;\
 							CREATE TABLE main.BuildingClassKeys AS\
-							SELECT DISTINCT BuildingClasses.ID AS BuildingClassID, BuildingClasses.Description AS BuildingClassKey,\
+							SELECT DISTINCT BuildingClasses.ID AS BuildingClassID, IFNULL(Text, db2.Buildings.Description) AS BuildingClassKey,\
 							CASE WHEN MaxGlobalInstances = 1 THEN 2 ELSE\
 							CASE WHEN MaxPlayerInstances = 1 THEN 1 ELSE\
 							CASE WHEN Cost = -1 and UnlockedByBelief = 1 THEN 3 ELSE 0\
@@ -9862,6 +9863,7 @@ void CvGame::generateReplayKeys()
 							FROM db2.BuildingClasses\
 							LEFT JOIN db2.Buildings\
 							ON db2.BuildingClasses.Type = db2.Buildings.BuildingClass\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Buildings.Description\
 							ORDER BY BuildingClasses.ID;", NULL, 0, &err);
 		SLOG("BuildingClassKeys %s", err);
 		// BuildingClassTypes
@@ -9872,31 +9874,36 @@ void CvGame::generateReplayKeys()
 		// CivKeys
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.CivKeys;\
 							CREATE TABLE main.CivKeys AS\
-							SELECT ID AS CivID, ShortDescription AS CivKey FROM db2.Civilizations;", NULL, 0, &err);
+							SELECT ID AS CivID, IFNULL(Text, db2.Civilizations.ShortDescription) AS CivKey FROM db2.Civilizations\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Civilizations.ShortDescription;", NULL, 0, &err);
 		SLOG("BuildingClassTypes %s", err);
 		// PolicyBranches
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.PolicyBranches;\
 							CREATE TABLE main.PolicyBranches AS\
-							SELECT ID AS BranchID, Description AS PolicyBranch FROM db2.PolicyBranchTypes;", NULL, 0, &err);
+							SELECT ID AS BranchID, IFNULL(Text, db2.PolicyBranchTypes.Description) AS PolicyBranch FROM db2.PolicyBranchTypes\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.PolicyBranchTypes.Description;", NULL, 0, &err);
 		SLOG("PolicyBranches %s", err);
 		// PolicyKeys
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.PolicyKeys;\
 							CREATE TABLE main.PolicyKeys AS\
-							SELECT Policies.ID AS PolicyID, Policies.Description AS PolicyKey, PolicyBranchTypes.ID AS BranchID FROM db2.Policies\
+							SELECT Policies.ID AS PolicyID, IFNULL(Text, db2.Policies.Description) AS PolicyKey, PolicyBranchTypes.ID AS BranchID FROM db2.Policies\
 							LEFT JOIN db2.PolicyBranchTypes ON db2.PolicyBranchTypes.FreeFinishingPolicy = db2.Policies.Type\
 							OR db2.PolicyBranchTypes.FreePolicy = db2.Policies.Type\
-							OR PolicyBranchTypes.Type = Policies.PolicyBranchType;", NULL, 0, &err);
+							OR PolicyBranchTypes.Type = Policies.PolicyBranchType\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Policies.Description;", NULL, 0, &err);
 		SLOG("PolicyKeys %s", err);
 		// ReplayDataSetKeys
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.ReplayDataSetKeys;\
 							CREATE TABLE main.ReplayDataSetKeys AS\
-							SELECT ID AS ReplayDataSetID, Description AS ReplayDataSetKey FROM db2.ReplayDataSets;", NULL, 0, &err);
+							SELECT ID AS ReplayDataSetID, IFNULL(Text, db2.ReplayDataSets.Description) AS ReplayDataSetKey FROM db2.ReplayDataSets\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.ReplayDataSets.Description;", NULL, 0, &err);
 		SLOG("ReplayDataSetKeys %s", err);
 		// ReplayEventKeys
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.ReplayEventKeys;\
 							CREATE TABLE main.ReplayEventKeys AS\
-							SELECT ID AS ReplayEventID, Category, Description, Num1Type, Num2Type, Num3Type, Num4Type,\
-							Num5Type, Num6Type, Num7Type, Num8Type, Num9Type, Num10Type FROM db2.ReplayEvents;", NULL, 0, &err);
+							SELECT ID AS ReplayEventID, Category, IFNULL(Text, db2.ReplayEvents.Description), Num1Type, Num2Type,\
+							Num3Type, Num4Type, Num5Type, Num6Type, Num7Type, Num8Type, Num9Type, Num10Type FROM db2.ReplayEvents\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.ReplayEvents.Description;", NULL, 0, &err);
 		SLOG("ReplayEventKeys %s", err);
 		// TechnologyEras
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.TechnologyEras;\
@@ -9907,8 +9914,9 @@ void CvGame::generateReplayKeys()
 		// TechnologyKeys
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.TechnologyKeys;\
 							CREATE TABLE main.TechnologyKeys AS\
-							SELECT Technologies.ID AS TechnologyID, Technologies.Description AS TechnologyKey, Eras.ID AS EraID FROM db2.Technologies\
-							LEFT JOIN db2.Eras ON db2.Eras.Type = db2.Technologies.Era", NULL, 0, &err);
+							SELECT Technologies.ID AS TechnologyID, IFNULL(Text, db2.Technologies.Description) AS TechnologyKey, Eras.ID AS EraID FROM db2.Technologies\
+							LEFT JOIN db2.Eras ON db2.Eras.Type = db2.Technologies.Era\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Technologies.Description;", NULL, 0, &err);
 		SLOG("TechnologyKeys %s", err);
 		// WinTypes
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.WinTypes;\
@@ -9916,7 +9924,7 @@ void CvGame::generateReplayKeys()
 							INSERT INTO main.WinTypes VALUES (0,'Lose'),(1,'Time'),(2,'Science'),(3,'Domination'),(4,'Cultural'),(5,'Diplomatic');", NULL, 0, &err);
 		SLOG("WinTypes %s", err);
 
-		sqlite3_exec(db, "DETACH db2", NULL, NULL, &err);
+		sqlite3_exec(db, "DETACH db2; DETACH db3;", NULL, NULL, &err);
 		sqlite3_close(db);
 		SLOG("generating key tables DONE in %fs", (float)(timeGetTime() - t1) / 1000);
 	}
