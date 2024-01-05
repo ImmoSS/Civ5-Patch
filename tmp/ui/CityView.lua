@@ -235,7 +235,7 @@ end
 ---------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------
 
-local workerHeadingOpen = OptionsManager.IsNoCitizenWarning();
+local workerHeadingOpen = true; --OptionsManager.IsNoCitizenWarning();
 local slackerHeadingOpen = true;
 local GPHeadingOpen = true;
 local wonderHeadingOpen = true;
