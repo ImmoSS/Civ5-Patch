@@ -8468,6 +8468,18 @@ void CvGame::updateMoves()
 	// only one human or AI is active at one time and this will process them in order.
 	FStaticVector<PlayerTypes, MAX_PLAYERS, true, c_eCiv5GameplayDLL, 0> playersToProcess;
 
+#ifdef FINISH_KICKED_PLAYER_MOVES
+	int iNumActivePlayers = 0;
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		CvPlayer& player = GET_PLAYER((PlayerTypes)iI);
+		if (player.isAlive() && player.isTurnActive() && player.isHuman())
+		{
+			iNumActivePlayers++;
+		}
+	}
+#endif
+
 	for(iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		CvPlayer& player = GET_PLAYER((PlayerTypes)iI);
@@ -8538,6 +8550,19 @@ void CvGame::updateMoves()
 		GC.getPathFinder().ForceReset();
 		CvPlayer& player = GET_PLAYER((PlayerTypes)*i);
 		int iReadyUnitsBeforeMoves = player.GetCountReadyUnits();
+
+#ifdef FINISH_KICKED_PLAYER_MOVES
+		if (iNumActivePlayers > 0)
+		{
+			for (pLoopUnit = player.firstUnit(&iLoop); pLoopUnit; pLoopUnit = player.nextUnit(&iLoop))
+			{
+				if (!pLoopUnit->isDelayedDeath())
+				{
+					pLoopUnit->finishMoves();
+				}
+			}
+		}
+#endif
 
 		if(player.isAlive())
 		{
