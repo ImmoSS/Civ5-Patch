@@ -9714,7 +9714,7 @@ void CvGame::exportReplayDatasets()
 	sqlite3_stmt* stmt;
 	int rc;
 	char* err = NULL;
-	int iSeed = CvPreGame::mapRandomSeed();
+	uint uiSeed = CvPreGame::mapRandomSeed();
 	int iValue;
 
 	if (sqlite3_open_v2(strUTF8DatabasePath.c_str(), &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, NULL) == SQLITE_OK)
@@ -9757,7 +9757,7 @@ void CvGame::exportReplayDatasets()
 							}
 
 							sqlite3_bind_int(stmt, 1, uiDataSet);
-							sqlite3_bind_int(stmt, 2, iSeed);
+							sqlite3_bind_int(stmt, 2, uiSeed);
 							sqlite3_bind_int(stmt, 3, uiTurn);
 							sqlite3_bind_int(stmt, 4, ID);
 							sqlite3_bind_int(stmt, 5, iLoopPlayer);
@@ -9785,7 +9785,7 @@ void CvGame::exportReplayDatasets()
 		{
 			if (GET_PLAYER((PlayerTypes)iI).isEverAlive())
 			{
-				sqlite3_bind_int(stmt, 1, iSeed);
+				sqlite3_bind_int(stmt, 1, uiSeed);
 				sqlite3_bind_int(stmt, 2, iI);
 				sqlite3_bind_int(stmt, 3, GET_PLAYER((PlayerTypes)iI).getCivilizationType());
 				sqlite3_bind_int(stmt, 4, GET_PLAYER((PlayerTypes)iI).getTeam());
@@ -9809,7 +9809,7 @@ void CvGame::exportReplayDatasets()
 		{
 			if (GET_TEAM((TeamTypes)iI).isEverAlive())
 			{
-				sqlite3_bind_int(stmt, 1, iSeed);
+				sqlite3_bind_int(stmt, 1, uiSeed);
 				sqlite3_bind_int(stmt, 2, iI);
 				sqlite3_bind_int(stmt, 3, GET_TEAM((TeamTypes)iI).getLeaderID());
 				rc = sqlite3_step(stmt);
