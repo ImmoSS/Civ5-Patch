@@ -9714,100 +9714,112 @@ void CvGame::exportReplayDatasets()
 	sqlite3_stmt* stmt;
 	int rc;
 	char* err = NULL;
-	uint uiSeed = (uint)CvPreGame::mapRandomSeed();
+	int iSeed = CvPreGame::mapRandomSeed();
 	int iValue;
 
 	if (sqlite3_open_v2(strUTF8DatabasePath.c_str(), &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, NULL) == SQLITE_OK)
 	{
 		sqlite3_exec(db, "BEGIN TRANSACTION", NULL, NULL, &err);
 
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS ReplayDataSetsChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, ReplayDataSetID INTEGER NOT NULL, CivID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS PoliciesChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, PolicyID INTEGER NOT NULL, CivID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS TechnologiesChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, TechnologyID INTEGER NOT NULL, CivID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS BuildingClassesChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, BuildingClassID INTEGER NOT NULL, CivID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS BeliefsChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, BeliefID INTEGER NOT NULL, CivID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS DataSets (DataSetID INTEGER NOT NULL);", NULL, 0, &err);
+		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS ReplayDataSetsChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, ReplayDataSetID INTEGER NOT NULL, PlayerID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
+		const char* szQuery = "REPLACE INTO ReplayDataSetsChanges (DataSetID, GameSeed, Turn, ReplayDataSetID, PlayerID, Value) VALUES (?, ?, ?, ?, ?, ?);";
 
-		struct QueryFrame {
-			uint uiRangeLeft;
-			uint uiRangeRight;
-			CvString strQuery;
-		};
-		const int iNumDatasetTables = 5;
-		QueryFrame aQueries[iNumDatasetTables] = {
-			{ 0, 71, "REPLACE INTO ReplayDataSetsChanges (DataSetID, GameSeed, Turn, ReplayDataSetID, CivID, Value) VALUES (?, ?, ?, ?, ?, ?);" },
-			{ 71, 182, "REPLACE INTO PoliciesChanges (DataSetID, GameSeed, Turn, PolicyID, CivID, Value) VALUES (?, ?, ?, ?, ?, ?);" },
-			{ 182, 263, "REPLACE INTO TechnologiesChanges (DataSetID, GameSeed, Turn, TechnologyID, CivID, Value) VALUES (?, ?, ?, ?, ?, ?);" },
-			{ 263, 385, "REPLACE INTO BuildingClassesChanges (DataSetID, GameSeed, Turn, BuildingClassID, CivID, Value) VALUES (?, ?, ?, ?, ?, ?);" },
-			{ 385, -1, "REPLACE INTO BeliefsChanges (DataSetID, GameSeed, Turn, BeliefID, CivID, Value) VALUES (?, ?, ?, ?, ?, ?);" }
-		};
-
-		for (int i = 0; i < iNumDatasetTables; i++) {
-			const char* szQuery = aQueries[i].strQuery.c_str();
-			uint uiLeft = aQueries[i].uiRangeLeft;
-			uint uiRight = aQueries[i].uiRangeRight;
-
-			rc = sqlite3_prepare_v2(db, szQuery, -1, &stmt, NULL);
-			if (rc != SQLITE_OK)
+		rc = sqlite3_prepare_v2(db, szQuery, -1, &stmt, NULL);
+		if (rc != SQLITE_OK)
+		{
+			SLOG("prepare failed: %s", sqlite3_errmsg(db));
+		}
+		for (uint uiTurn = (uint)GC.getGame().getStartTurn() + 1; uiTurn < (uint)(GC.getGame().getStartTurn() + GC.getGame().getElapsedGameTurns()); uiTurn++)
+		{
+			for (int iLoopPlayer = 0; iLoopPlayer < MAX_MAJOR_CIVS; iLoopPlayer++)
 			{
-				SLOG("prepare failed: %s", sqlite3_errmsg(db));
-			}
-			for (uint uiTurn = (uint)GC.getGame().getStartTurn() + 1; uiTurn < (uint)(GC.getGame().getStartTurn() + GC.getGame().getElapsedGameTurns()); uiTurn++)
-			{
-				for (int iLoopPlayer = 0; iLoopPlayer < MAX_MAJOR_CIVS; iLoopPlayer++)
+				PlayerTypes ePlayer = (PlayerTypes)iLoopPlayer;
+				CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+				if (kPlayer.isEverAlive())
 				{
-					PlayerTypes ePlayer = (PlayerTypes)iLoopPlayer;
-					CvPlayer& kPlayer = GET_PLAYER(ePlayer);
-					int CivID = (int)GET_PLAYER(ePlayer).getCivilizationType();
-					if (kPlayer.isEverAlive())
+					for (uint uiDataSet = 0; uiDataSet < kPlayer.getNumReplayDataSets(); uiDataSet++)
 					{
-						if (uiRight == -1)
-							uiRight = kPlayer.getNumReplayDataSets();
-						for (uint uiDataSet = uiLeft; uiDataSet < uiRight; uiDataSet++)
+						const CvString& strDataSetName = kPlayer.getReplayDataSetName(uiDataSet);
+						if (strDataSetName != NULL)
 						{
-							const CvString& strDataSetName = kPlayer.getReplayDataSetName(uiDataSet);
-							if (strDataSetName != NULL)
+							int ID = (int)uiDataSet + 1;
+							if (uiTurn == (uint)GC.getGame().getStartTurn() + 1)
 							{
-								int ID;
-								if (i == 0)
-								{
-									ID = (int)uiDataSet + 1;
-								}
-								else
-								{
-									ID = GC.getInfoTypeForString(strDataSetName, true);
-								}
-								if (uiTurn == (uint)GC.getGame().getStartTurn() + 1)
-								{
-									iValue = kPlayer.getReplayDataValue(uiDataSet, uiTurn);
-								}
-								else if (kPlayer.getReplayDataValue(uiDataSet, uiTurn - 1) != kPlayer.getReplayDataValue(uiDataSet, uiTurn))
-								{
-									iValue = kPlayer.getReplayDataValue(uiDataSet, uiTurn) - kPlayer.getReplayDataValue(uiDataSet, uiTurn - 1);
-								}
-								else
-								{
-									continue;
-								}
-
-								sqlite3_bind_int(stmt, 1, uiDataSet);
-								sqlite3_bind_int(stmt, 2, uiSeed);
-								sqlite3_bind_int(stmt, 3, uiTurn);
-								sqlite3_bind_int(stmt, 4, ID);
-								sqlite3_bind_int(stmt, 5, CivID);
-								sqlite3_bind_int(stmt, 6, iValue);
-								rc = sqlite3_step(stmt);
-								if (rc != SQLITE_DONE) {
-									SLOG("execution step failed or has another row ready: %s", sqlite3_errmsg(db));
-								}
-								sqlite3_reset(stmt);
+								iValue = kPlayer.getReplayDataValue(uiDataSet, uiTurn);
 							}
+							else if (kPlayer.getReplayDataValue(uiDataSet, uiTurn - 1) != kPlayer.getReplayDataValue(uiDataSet, uiTurn))
+							{
+								iValue = kPlayer.getReplayDataValue(uiDataSet, uiTurn) - kPlayer.getReplayDataValue(uiDataSet, uiTurn - 1);
+							}
+							else
+							{
+								continue;
+							}
+
+							sqlite3_bind_int(stmt, 1, uiDataSet);
+							sqlite3_bind_int(stmt, 2, iSeed);
+							sqlite3_bind_int(stmt, 3, uiTurn);
+							sqlite3_bind_int(stmt, 4, ID);
+							sqlite3_bind_int(stmt, 5, iLoopPlayer);
+							sqlite3_bind_int(stmt, 6, iValue);
+							rc = sqlite3_step(stmt);
+							if (rc != SQLITE_DONE) {
+								SLOG("execution step failed or has another row ready: %s", sqlite3_errmsg(db));
+							}
+							sqlite3_reset(stmt);
 						}
 					}
 				}
 			}
-			sqlite3_finalize(stmt);
 		}
+		sqlite3_finalize(stmt);
+		
+		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Players (GameSeed INTEGER NOT NULL, PlayerID INTEGER NOT NULL, CivID INTEGER, TeamID INTEGER);", NULL, 0, &err);
+		const char* szQuery2 = "INSERT INTO Players (GameSeed, PlayerID, CivID, TeamID) VALUES (?, ?, ?, ?);";
+		rc = sqlite3_prepare_v2(db, szQuery2, -1, &stmt, NULL);
+		if (rc != SQLITE_OK)
+		{
+			SLOG("prepare failed: %s", sqlite3_errmsg(db));
+		}
+		for (uint iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			if (GET_PLAYER((PlayerTypes)iI).isEverAlive())
+			{
+				sqlite3_bind_int(stmt, 1, iSeed);
+				sqlite3_bind_int(stmt, 2, iI);
+				sqlite3_bind_int(stmt, 3, GET_PLAYER((PlayerTypes)iI).getCivilizationType());
+				sqlite3_bind_int(stmt, 4, GET_PLAYER((PlayerTypes)iI).getTeam());
+				rc = sqlite3_step(stmt);
+				if (rc != SQLITE_DONE) {
+					SLOG("execution step failed or has another row ready: %s", sqlite3_errmsg(db));
+				}
+				sqlite3_reset(stmt);
+			}
+		}
+		sqlite3_finalize(stmt);
+
+		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Teams (GameSeed INTEGER NOT NULL, TeamID INTEGER NOT NULL, LeaderID INTEGER);", NULL, 0, &err);
+		const char* szQuery3 = "INSERT INTO Teams (GameSeed, TeamID, LeaderID) VALUES (?, ?, ?);";
+		rc = sqlite3_prepare_v2(db, szQuery3, -1, &stmt, NULL);
+		if (rc != SQLITE_OK)
+		{
+			SLOG("prepare failed: %s", sqlite3_errmsg(db));
+		}
+		for (uint iI = 0; iI < MAX_TEAMS; iI++)
+		{
+			if (GET_TEAM((TeamTypes)iI).isEverAlive())
+			{
+				sqlite3_bind_int(stmt, 1, iSeed);
+				sqlite3_bind_int(stmt, 2, iI);
+				sqlite3_bind_int(stmt, 3, GET_TEAM((TeamTypes)iI).getLeaderID());
+				rc = sqlite3_step(stmt);
+				if (rc != SQLITE_DONE) {
+					SLOG("execution step failed or has another row ready: %s", sqlite3_errmsg(db));
+				}
+				sqlite3_reset(stmt);
+			}
+		}
+		sqlite3_finalize(stmt);
 
 		sqlite3_exec(db, "END TRANSACTION", NULL, 0, &err);
 		sqlite3_close(db);
