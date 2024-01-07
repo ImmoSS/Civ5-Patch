@@ -9864,6 +9864,19 @@ void CvGame::generateReplayKeys()
 							CREATE TABLE main.BeliefTypes (TypeID INTEGER NOT NULL, BeliefType TEXT);\
 							INSERT INTO main.BeliefTypes VALUES (0,'Pantheon'),(1,'Founder'),(2,'Follower'),(3,'Enhancer'),(4,'Reformation');", NULL, 0, &err);
 		SLOG("BeliefTypes %s", err);
+		// BuildingKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BuildingKeys;\
+							CREATE TABLE main.BuildingKeys AS\
+							SELECT Buildings.ID AS BuildingID, IFNULL(Text, Buildings.Description) AS BuildingKey, BuildingClasses.ID AS BuildingClassID,\
+							CASE WHEN MaxGlobalInstances = 1 THEN 2 ELSE\
+							CASE WHEN MaxPlayerInstances = 1 THEN 1 ELSE\
+							CASE WHEN Cost = -1 and UnlockedByBelief = 1 THEN 3 ELSE 0\
+							END END END AS TypeID\
+							FROM db2.Buildings\
+							LEFT JOIN db2.BuildingClasses\
+							ON db2.BuildingClasses.Type = db2.Buildings.BuildingClass\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Buildings.Description", NULL, 0, &err);
+		SLOG("BuildingKeys %s", err);
 		// BuildingClassKeys
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BuildingClassKeys;\
 							CREATE TABLE main.BuildingClassKeys AS\
