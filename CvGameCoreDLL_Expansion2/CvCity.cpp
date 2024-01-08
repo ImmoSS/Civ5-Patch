@@ -7978,11 +7978,8 @@ int CvCity::getCityAttackRangeModifier() const
 	else
 	{
 		int iTempMod = 0;
-		// CvCity* pWorkingCity = getWorkingCity();
 		ReligionTypes eMajority = GetCityReligions()->GetReligiousMajority();
-		// eSecondaryPantheon = pWorkingCity->GetCityReligions()->GetSecondaryReligionPantheonBelief();
 
-		// Extra yield for religion on this terrain
 		if (eMajority != NO_RELIGION)
 		{
 			const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eMajority, getOwner());
@@ -7992,7 +7989,8 @@ int CvCity::getCityAttackRangeModifier() const
 				for (int iI = 0; iI < pReligion->m_Beliefs.GetNumBeliefs(); iI++)
 				{
 					const BeliefTypes eBelief = pReligion->m_Beliefs.GetBelief(iI);
-					if (eBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_STRATEGY", true))
+					CvBeliefEntry* pEntry = GC.GetGameBeliefs()->GetEntry((int)eBelief);
+					if (pEntry && pEntry->IsPantheonBelief())
 					{
 						pBelief = eBelief;
 						break;
