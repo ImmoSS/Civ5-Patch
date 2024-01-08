@@ -8473,7 +8473,7 @@ void CvGame::updateMoves()
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		CvPlayer& player = GET_PLAYER((PlayerTypes)iI);
-		if (player.isAlive() && player.isTurnActive() && player.isHuman())
+		if (player.isAlive() && player.isTurnActive() && player.isHuman() && GC.getGame().getGameTurn() > 0)
 		{
 			iNumActivePlayers++;
 		}
@@ -8556,7 +8556,7 @@ void CvGame::updateMoves()
 		{
 			for (pLoopUnit = player.firstUnit(&iLoop); pLoopUnit; pLoopUnit = player.nextUnit(&iLoop))
 			{
-				if (!pLoopUnit->isDelayedDeath())
+				if (!player.isHuman() && !pLoopUnit->isDelayedDeath())
 				{
 					pLoopUnit->finishMoves();
 				}
