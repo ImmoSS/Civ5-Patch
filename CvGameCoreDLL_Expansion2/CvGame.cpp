@@ -7276,6 +7276,7 @@ void CvGame::setGameState(GameStateTypes eNewValue)
 			saveReplay();
 			showEndGameSequence();
 #ifdef DEV_RECORDING_STATISTICS
+			generateReplayKeys(); // Recreates key tables with up-to-date xml data; may be called just once and then commented out to increase performance
 			exportReplayDatasets();
 # ifdef REPLAY_EVENTS
 			exportReplayEvents();
@@ -9738,110 +9739,244 @@ void CvGame::exportReplayDatasets()
 	sqlite3_stmt* stmt;
 	int rc;
 	char* err = NULL;
-	uint uiSeed = (uint)CvPreGame::mapRandomSeed();
+	uint uiSeed = CvPreGame::mapRandomSeed();
 	int iValue;
 
 	if (sqlite3_open_v2(strUTF8DatabasePath.c_str(), &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, NULL) == SQLITE_OK)
 	{
 		sqlite3_exec(db, "BEGIN TRANSACTION", NULL, NULL, &err);
 
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS ReplayDataSetsChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, ReplayDataSetID INTEGER NOT NULL, CivID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS PoliciesChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, PolicyID INTEGER NOT NULL, CivID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS TechnologiesChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, TechnologyID INTEGER NOT NULL, CivID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS BuildingClassesChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, BuildingClassID INTEGER NOT NULL, CivID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS BeliefsChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, BeliefID INTEGER NOT NULL, CivID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS DataSets (DataSetID INTEGER NOT NULL);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS CivKeys (CivID INTEGER NOT NULL, CivKey TEXT);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS ReplayDataSetKeys (ReplayDataSetID INTEGER NOT NULL, ReplayDataSetKey TEXT);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS PolicyKeys (PolicyID INTEGER NOT NULL, PolicyKey TEXT);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS TechnologyKeys (TechnologyID INTEGER NOT NULL, TechnologyKey TEXT);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS BuildingClassKeys (BuildingClassID INTEGER NOT NULL, BuildingClassKey TEXT);", NULL, 0, &err);
-		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS BeliefKeys (BeliefID INTEGER NOT NULL, BeliefKey TEXT);", NULL, 0, &err);
+		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS ReplayDataSetsChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, ReplayDataSetID INTEGER NOT NULL, PlayerID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
+		const char* szQuery = "REPLACE INTO ReplayDataSetsChanges (DataSetID, GameSeed, Turn, ReplayDataSetID, PlayerID, Value) VALUES (?, ?, ?, ?, ?, ?);";
 
-		struct QueryFrame {
-			uint uiRangeLeft;
-			uint uiRangeRight;
-			CvString strQuery;
-		};
-		const int iNumDatasetTables = 5;
-		QueryFrame aQueries[iNumDatasetTables] = {
-			{ 0, 71, "REPLACE INTO ReplayDataSetsChanges (DataSetID, GameSeed, Turn, ReplayDataSetID, CivID, Value) VALUES (?, ?, ?, ?, ?, ?);" },
-			{ 71, 182, "REPLACE INTO PoliciesChanges (DataSetID, GameSeed, Turn, PolicyID, CivID, Value) VALUES (?, ?, ?, ?, ?, ?);" },
-			{ 182, 263, "REPLACE INTO TechnologiesChanges (DataSetID, GameSeed, Turn, TechnologyID, CivID, Value) VALUES (?, ?, ?, ?, ?, ?);" },
-			{ 263, 385, "REPLACE INTO BuildingClassesChanges (DataSetID, GameSeed, Turn, BuildingClassID, CivID, Value) VALUES (?, ?, ?, ?, ?, ?);" },
-			{ 385, -1, "REPLACE INTO BeliefsChanges (DataSetID, GameSeed, Turn, BeliefID, CivID, Value) VALUES (?, ?, ?, ?, ?, ?);" }
-		};
-
-		for (int i = 0; i < iNumDatasetTables; i++) {
-			const char* szQuery = aQueries[i].strQuery.c_str();
-			uint uiLeft = aQueries[i].uiRangeLeft;
-			uint uiRight = aQueries[i].uiRangeRight;
-
-			rc = sqlite3_prepare_v2(db, szQuery, -1, &stmt, NULL);
-			if (rc != SQLITE_OK)
+		rc = sqlite3_prepare_v2(db, szQuery, -1, &stmt, NULL);
+		if (rc != SQLITE_OK)
+		{
+			SLOG("prepare failed: %s", sqlite3_errmsg(db));
+		}
+		for (uint uiTurn = (uint)GC.getGame().getStartTurn() + 1; uiTurn < (uint)(GC.getGame().getStartTurn() + GC.getGame().getElapsedGameTurns()); uiTurn++)
+		{
+			for (int iLoopPlayer = 0; iLoopPlayer < MAX_MAJOR_CIVS; iLoopPlayer++)
 			{
-				SLOG("prepare failed: %s", sqlite3_errmsg(db));
-			}
-			for (uint uiTurn = (uint)GC.getGame().getStartTurn() + 1; uiTurn < (uint)(GC.getGame().getStartTurn() + GC.getGame().getElapsedGameTurns()); uiTurn++)
-			{
-				for (int iLoopPlayer = 0; iLoopPlayer < MAX_MAJOR_CIVS; iLoopPlayer++)
+				PlayerTypes ePlayer = (PlayerTypes)iLoopPlayer;
+				CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+				if (kPlayer.isEverAlive())
 				{
-					PlayerTypes ePlayer = (PlayerTypes)iLoopPlayer;
-					CvPlayer& kPlayer = GET_PLAYER(ePlayer);
-					int CivID = (int)GET_PLAYER(ePlayer).getCivilizationType();
-					if (kPlayer.isEverAlive())
+					for (uint uiDataSet = 0; uiDataSet < kPlayer.getNumReplayDataSets(); uiDataSet++)
 					{
-						if (uiRight == -1)
-							uiRight = kPlayer.getNumReplayDataSets();
-						for (uint uiDataSet = uiLeft; uiDataSet < uiRight; uiDataSet++)
+						const CvString& strDataSetName = kPlayer.getReplayDataSetName(uiDataSet);
+						if (strDataSetName != NULL)
 						{
-							const CvString& strDataSetName = kPlayer.getReplayDataSetName(uiDataSet);
-							if (strDataSetName != NULL)
+							int ID = (int)uiDataSet + 1;
+							if (uiTurn == (uint)GC.getGame().getStartTurn() + 1)
 							{
-								int ID;
-								if (i == 0)
-								{
-									ID = (int)uiDataSet + 1;
-								}
-								else
-								{
-									ID = GC.getInfoTypeForString(strDataSetName, true);
-								}
-								if (uiTurn == (uint)GC.getGame().getStartTurn() + 1)
-								{
-									iValue = kPlayer.getReplayDataValue(uiDataSet, uiTurn);
-								}
-								else if (kPlayer.getReplayDataValue(uiDataSet, uiTurn - 1) != kPlayer.getReplayDataValue(uiDataSet, uiTurn))
-								{
-									iValue = kPlayer.getReplayDataValue(uiDataSet, uiTurn) - kPlayer.getReplayDataValue(uiDataSet, uiTurn - 1);
-								}
-								else
-								{
-									continue;
-								}
-
-								sqlite3_bind_int(stmt, 1, uiDataSet);
-								sqlite3_bind_int(stmt, 2, uiSeed);
-								sqlite3_bind_int(stmt, 3, uiTurn);
-								sqlite3_bind_int(stmt, 4, ID);
-								sqlite3_bind_int(stmt, 5, CivID);
-								sqlite3_bind_int(stmt, 6, iValue);
-								rc = sqlite3_step(stmt);
-								if (rc != SQLITE_DONE) {
-									SLOG("execution step failed or has another row ready: %s", sqlite3_errmsg(db));
-								}
-								sqlite3_reset(stmt);
+								iValue = kPlayer.getReplayDataValue(uiDataSet, uiTurn);
 							}
+							else if (kPlayer.getReplayDataValue(uiDataSet, uiTurn - 1) != kPlayer.getReplayDataValue(uiDataSet, uiTurn))
+							{
+								iValue = kPlayer.getReplayDataValue(uiDataSet, uiTurn) - kPlayer.getReplayDataValue(uiDataSet, uiTurn - 1);
+							}
+							else
+							{
+								continue;
+							}
+
+							sqlite3_bind_int(stmt, 1, uiDataSet);
+							sqlite3_bind_int(stmt, 2, uiSeed);
+							sqlite3_bind_int(stmt, 3, uiTurn);
+							sqlite3_bind_int(stmt, 4, ID);
+							sqlite3_bind_int(stmt, 5, iLoopPlayer);
+							sqlite3_bind_int(stmt, 6, iValue);
+							rc = sqlite3_step(stmt);
+							if (rc != SQLITE_DONE) {
+								SLOG("execution step failed or has another row ready: %s", sqlite3_errmsg(db));
+							}
+							sqlite3_reset(stmt);
 						}
 					}
 				}
 			}
-			sqlite3_finalize(stmt);
 		}
+		sqlite3_finalize(stmt);
+		
+		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Players (GameSeed INTEGER NOT NULL, PlayerID INTEGER NOT NULL, CivID INTEGER, TeamID INTEGER);", NULL, 0, &err);
+		const char* szQuery2 = "INSERT INTO Players (GameSeed, PlayerID, CivID, TeamID) VALUES (?, ?, ?, ?);";
+		rc = sqlite3_prepare_v2(db, szQuery2, -1, &stmt, NULL);
+		if (rc != SQLITE_OK)
+		{
+			SLOG("prepare failed: %s", sqlite3_errmsg(db));
+		}
+		for (uint iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			if (GET_PLAYER((PlayerTypes)iI).isEverAlive())
+			{
+				sqlite3_bind_int(stmt, 1, uiSeed);
+				sqlite3_bind_int(stmt, 2, iI);
+				sqlite3_bind_int(stmt, 3, GET_PLAYER((PlayerTypes)iI).getCivilizationType());
+				sqlite3_bind_int(stmt, 4, GET_PLAYER((PlayerTypes)iI).getTeam());
+				rc = sqlite3_step(stmt);
+				if (rc != SQLITE_DONE) {
+					SLOG("execution step failed or has another row ready: %s", sqlite3_errmsg(db));
+				}
+				sqlite3_reset(stmt);
+			}
+		}
+		sqlite3_finalize(stmt);
+
+		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Teams (GameSeed INTEGER NOT NULL, TeamID INTEGER NOT NULL, LeaderID INTEGER);", NULL, 0, &err);
+		const char* szQuery3 = "INSERT INTO Teams (GameSeed, TeamID, LeaderID) VALUES (?, ?, ?);";
+		rc = sqlite3_prepare_v2(db, szQuery3, -1, &stmt, NULL);
+		if (rc != SQLITE_OK)
+		{
+			SLOG("prepare failed: %s", sqlite3_errmsg(db));
+		}
+		for (uint iI = 0; iI < MAX_TEAMS; iI++)
+		{
+			if (GET_TEAM((TeamTypes)iI).isEverAlive())
+			{
+				sqlite3_bind_int(stmt, 1, uiSeed);
+				sqlite3_bind_int(stmt, 2, iI);
+				sqlite3_bind_int(stmt, 3, GET_TEAM((TeamTypes)iI).getLeaderID());
+				rc = sqlite3_step(stmt);
+				if (rc != SQLITE_DONE) {
+					SLOG("execution step failed or has another row ready: %s", sqlite3_errmsg(db));
+				}
+				sqlite3_reset(stmt);
+			}
+		}
+		sqlite3_finalize(stmt);
 
 		sqlite3_exec(db, "END TRANSACTION", NULL, 0, &err);
 		sqlite3_close(db);
 		SLOG("export to db DONE in %fs", (float)(timeGetTime() - t1) / 1000);
+	}
+	else
+	{
+		SLOG("ERROR opening db");
+	}
+}
+
+void CvGame::generateReplayKeys()
+{
+	DWORD t1 = timeGetTime();
+	CvString strUTF8DatabasePath = gDLL->GetCacheFolderPath();
+	strUTF8DatabasePath += "Civ5FinishedGameDatabase.db";
+
+	sqlite3* db;
+	char* err = NULL;
+
+	if (sqlite3_open_v2(strUTF8DatabasePath.c_str(), &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, NULL) == SQLITE_OK)
+	{
+		CvString strQuery;
+		CvString::format(strQuery, "ATTACH \"%sCiv5DebugDatabase.db\" AS db2; ATTACH \"%sLocalization-Merged.db\" AS db3;", gDLL->GetCacheFolderPath(), gDLL->GetCacheFolderPath());
+		sqlite3_exec(db, strQuery.c_str(), NULL, NULL, &err);
+		SLOG("attach %s", err);
+
+		// BeliefKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BeliefKeys;\
+							CREATE TABLE main.BeliefKeys AS\
+							SELECT ID AS BeliefID, IFNULL(Text, db2.Beliefs.ShortDescription) AS BeliefKey,\
+							CASE WHEN Pantheon = 1 THEN 0 ELSE\
+							CASE WHEN Founder = 1 THEN 1 ELSE\
+							CASE WHEN Follower = 1 THEN 2 ELSE\
+							CASE WHEN Enhancer = 1 THEN 3 ELSE 4\
+							END END END END AS TypeID\
+							FROM db2.Beliefs\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Beliefs.ShortDescription;", NULL, 0, &err);
+		SLOG("BeliefKeys %s", err);
+		// BeliefTypes
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BeliefTypes;\
+							CREATE TABLE main.BeliefTypes (TypeID INTEGER NOT NULL, BeliefType TEXT);\
+							INSERT INTO main.BeliefTypes VALUES (0,'Pantheon'),(1,'Founder'),(2,'Follower'),(3,'Enhancer'),(4,'Reformation');", NULL, 0, &err);
+		SLOG("BeliefTypes %s", err);
+		// BuildingKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BuildingKeys;\
+							CREATE TABLE main.BuildingKeys AS\
+							SELECT Buildings.ID AS BuildingID, IFNULL(Text, Buildings.Description) AS BuildingKey, BuildingClasses.ID AS BuildingClassID,\
+							CASE WHEN MaxGlobalInstances = 1 THEN 2 ELSE\
+							CASE WHEN MaxPlayerInstances = 1 THEN 1 ELSE\
+							CASE WHEN Cost = -1 and UnlockedByBelief = 1 THEN 3 ELSE 0\
+							END END END AS TypeID\
+							FROM db2.Buildings\
+							LEFT JOIN db2.BuildingClasses\
+							ON db2.BuildingClasses.Type = db2.Buildings.BuildingClass\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Buildings.Description", NULL, 0, &err);
+		SLOG("BuildingKeys %s", err);
+		// BuildingClassKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BuildingClassKeys;\
+							CREATE TABLE main.BuildingClassKeys AS\
+							SELECT DISTINCT BuildingClasses.ID AS BuildingClassID, IFNULL(Text, db2.Buildings.Description) AS BuildingClassKey,\
+							CASE WHEN MaxGlobalInstances = 1 THEN 2 ELSE\
+							CASE WHEN MaxPlayerInstances = 1 THEN 1 ELSE\
+							CASE WHEN Cost = -1 and UnlockedByBelief = 1 THEN 3 ELSE 0\
+							END END END AS TypeID\
+							FROM db2.BuildingClasses\
+							LEFT JOIN db2.Buildings\
+							ON db2.BuildingClasses.Type = db2.Buildings.BuildingClass\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Buildings.Description\
+							ORDER BY BuildingClasses.ID;", NULL, 0, &err);
+		SLOG("BuildingClassKeys %s", err);
+		// BuildingClassTypes
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.BuildingClassTypes;\
+							CREATE TABLE main.BuildingClassTypes (TypeID INTEGER NOT NULL, BuildingClassType TEXT);\
+							INSERT INTO main.BuildingClassTypes VALUES (0,'Common'),(1,'National Wonder'),(2,'World Wonder'),(3,'Religious');", NULL, 0, &err);
+		SLOG("BuildingClassTypes %s", err);
+		// CivKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.CivKeys;\
+							CREATE TABLE main.CivKeys AS\
+							SELECT ID AS CivID, IFNULL(Text, db2.Civilizations.ShortDescription) AS CivKey FROM db2.Civilizations\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Civilizations.ShortDescription;", NULL, 0, &err);
+		SLOG("BuildingClassTypes %s", err);
+		// PolicyBranches
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.PolicyBranches;\
+							CREATE TABLE main.PolicyBranches AS\
+							SELECT ID AS BranchID, IFNULL(Text, db2.PolicyBranchTypes.Description) AS PolicyBranch FROM db2.PolicyBranchTypes\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.PolicyBranchTypes.Description;", NULL, 0, &err);
+		SLOG("PolicyBranches %s", err);
+		// PolicyKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.PolicyKeys;\
+							CREATE TABLE main.PolicyKeys AS\
+							SELECT Policies.ID AS PolicyID, IFNULL(Text, db2.Policies.Description) AS PolicyKey, PolicyBranchTypes.ID AS BranchID FROM db2.Policies\
+							LEFT JOIN db2.PolicyBranchTypes ON db2.PolicyBranchTypes.FreeFinishingPolicy = db2.Policies.Type\
+							OR db2.PolicyBranchTypes.FreePolicy = db2.Policies.Type\
+							OR PolicyBranchTypes.Type = Policies.PolicyBranchType\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Policies.Description;", NULL, 0, &err);
+		SLOG("PolicyKeys %s", err);
+		// ReplayDataSetKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.ReplayDataSetKeys;\
+							CREATE TABLE main.ReplayDataSetKeys AS\
+							SELECT ID AS ReplayDataSetID, IFNULL(Text, db2.ReplayDataSets.Description) AS ReplayDataSetKey FROM db2.ReplayDataSets\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.ReplayDataSets.Description;", NULL, 0, &err);
+		SLOG("ReplayDataSetKeys %s", err);
+		// ReplayEventKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.ReplayEventKeys;\
+							CREATE TABLE main.ReplayEventKeys AS\
+							SELECT ID AS ReplayEventID, Category, IFNULL(Text, db2.ReplayEvents.Description), Num1Type, Num2Type,\
+							Num3Type, Num4Type, Num5Type, Num6Type, Num7Type, Num8Type, Num9Type, Num10Type FROM db2.ReplayEvents\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.ReplayEvents.Description;", NULL, 0, &err);
+		SLOG("ReplayEventKeys %s", err);
+		// TechnologyEras
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.TechnologyEras;\
+							CREATE TABLE main.TechnologyEras (EraID INTEGER NOT NULL, EraKey TEXT);\
+							INSERT INTO main.TechnologyEras VALUES (0,'Ancient'),(1,'Classical'),(2,'Medieval'),(3,'Renaissance'),\
+							(4,'Industrial'),(5,'Modern'),(6,'Atomic'),(7,'Information');", NULL, 0, &err);
+		SLOG("TechnologyEras %s", err);
+		// TechnologyKeys
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.TechnologyKeys;\
+							CREATE TABLE main.TechnologyKeys AS\
+							SELECT Technologies.ID AS TechnologyID, IFNULL(Text, db2.Technologies.Description) AS TechnologyKey, Eras.ID AS EraID FROM db2.Technologies\
+							LEFT JOIN db2.Eras ON db2.Eras.Type = db2.Technologies.Era\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Technologies.Description;", NULL, 0, &err);
+		SLOG("TechnologyKeys %s", err);
+		// WinTypes
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.WinTypes;\
+							CREATE TABLE main.WinTypes (WinID INTEGER NOT NULL, WinType TEXT);\
+							INSERT INTO main.WinTypes VALUES (0,'Lose'),(1,'Time'),(2,'Science'),(3,'Domination'),(4,'Cultural'),(5,'Diplomatic');", NULL, 0, &err);
+		SLOG("WinTypes %s", err);
+
+		sqlite3_exec(db, "DETACH db2; DETACH db3;", NULL, NULL, &err);
+		sqlite3_close(db);
+		SLOG("generating key tables DONE in %fs", (float)(timeGetTime() - t1) / 1000);
 	}
 	else
 	{

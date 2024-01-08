@@ -459,6 +459,7 @@ public:
 #endif
 #ifdef DEV_RECORDING_STATISTICS
 	void exportReplayDatasets();
+	void generateReplayKeys();
 #endif
 	void clearReplayMessageMap();
 	uint getNumReplayMessages() const;
