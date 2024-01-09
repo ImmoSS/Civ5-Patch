@@ -9719,6 +9719,20 @@ void CvGame::exportReplayDatasets()
 
 	if (sqlite3_open_v2(strUTF8DatabasePath.c_str(), &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, NULL) == SQLITE_OK)
 	{
+		std::vector<CvString> vDatasetNames;
+		std::vector<int> vDatasetIds;
+		Database::Results kResults;
+		if (DB.Execute(kResults, "SELECT ID, Type FROM ReplayDataSets"))
+		{
+			while (kResults.Step())
+			{
+				int ID = kResults.GetInt(0);
+				CvString strDatasetName = kResults.GetText(1);
+				vDatasetIds.push_back(ID);
+				vDatasetNames.push_back(strDatasetName);
+			}
+		}
+
 		sqlite3_exec(db, "BEGIN TRANSACTION", NULL, NULL, &err);
 
 		sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS ReplayDataSetsChanges (DataSetID INTEGER NOT NULL, GameSeed INTEGER NOT NULL, Turn INTEGER NOT NULL, ReplayDataSetID INTEGER NOT NULL, PlayerID INTEGER NOT NULL, Value INTEGER);", NULL, 0, &err);
@@ -9742,31 +9756,37 @@ void CvGame::exportReplayDatasets()
 						const CvString& strDataSetName = kPlayer.getReplayDataSetName(uiDataSet);
 						if (strDataSetName != NULL)
 						{
-							int ID = (int)uiDataSet + 1;
-							if (uiTurn == (uint)GC.getGame().getStartTurn() + 1)
+							int ID;
+							std::vector<CvString>::iterator it = std::find(vDatasetNames.begin(), vDatasetNames.end(), kPlayer.getReplayDataSetName(uiDataSet));
+							if (it != vDatasetNames.end())
 							{
-								iValue = kPlayer.getReplayDataValue(uiDataSet, uiTurn);
-							}
-							else if (kPlayer.getReplayDataValue(uiDataSet, uiTurn - 1) != kPlayer.getReplayDataValue(uiDataSet, uiTurn))
-							{
-								iValue = kPlayer.getReplayDataValue(uiDataSet, uiTurn) - kPlayer.getReplayDataValue(uiDataSet, uiTurn - 1);
-							}
-							else
-							{
-								continue;
-							}
+								ID = vDatasetIds.at(std::distance(vDatasetNames.begin(), it));
 
-							sqlite3_bind_int(stmt, 1, uiDataSet);
-							sqlite3_bind_int(stmt, 2, uiSeed);
-							sqlite3_bind_int(stmt, 3, uiTurn);
-							sqlite3_bind_int(stmt, 4, ID);
-							sqlite3_bind_int(stmt, 5, iLoopPlayer);
-							sqlite3_bind_int(stmt, 6, iValue);
-							rc = sqlite3_step(stmt);
-							if (rc != SQLITE_DONE) {
-								SLOG("execution step failed or has another row ready: %s", sqlite3_errmsg(db));
+								if (uiTurn == (uint)GC.getGame().getStartTurn() + 1)
+								{
+									iValue = kPlayer.getReplayDataValue(uiDataSet, uiTurn);
+								}
+								else if (kPlayer.getReplayDataValue(uiDataSet, uiTurn - 1) != kPlayer.getReplayDataValue(uiDataSet, uiTurn))
+								{
+									iValue = kPlayer.getReplayDataValue(uiDataSet, uiTurn) - kPlayer.getReplayDataValue(uiDataSet, uiTurn - 1);
+								}
+								else
+								{
+									continue;
+								}
+
+								sqlite3_bind_int(stmt, 1, uiDataSet);
+								sqlite3_bind_int(stmt, 2, uiSeed);
+								sqlite3_bind_int(stmt, 3, uiTurn);
+								sqlite3_bind_int(stmt, 4, ID);
+								sqlite3_bind_int(stmt, 5, iLoopPlayer);
+								sqlite3_bind_int(stmt, 6, iValue);
+								rc = sqlite3_step(stmt);
+								if (rc != SQLITE_DONE) {
+									SLOG("execution step failed or has another row ready: %s", sqlite3_errmsg(db));
+								}
+								sqlite3_reset(stmt);
 							}
-							sqlite3_reset(stmt);
 						}
 					}
 				}
