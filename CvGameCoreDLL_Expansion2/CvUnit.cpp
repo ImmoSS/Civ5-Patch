@@ -14773,13 +14773,13 @@ int CvUnit::changeDamage(int iChange, PlayerTypes ePlayer, float fAdditionalText
 #ifdef EG_REPLAYDATASET_DAMAGETAKENBYUNITS
 	if (ePlayer != NO_PLAYER && getUnitCombatType() != NO_UNITCOMBAT && iChange > 0)
 	{
-		GET_PLAYER(getOwner()).ChangeUnitsDamageTaken(iChange);
+		GET_PLAYER(getOwner()).ChangeUnitsDamageTaken(min(iChange, GetCurrHitPoints()));
 	}
 #endif
 #ifdef EG_REPLAYDATASET_DAMAGEDEALTTOUNITS
 	if (ePlayer != NO_PLAYER && getUnitCombatType() != NO_UNITCOMBAT && iChange > 0)
 	{
-		GET_PLAYER(ePlayer).ChangeUnitsDamageDealt(iChange);
+		GET_PLAYER(ePlayer).ChangeUnitsDamageDealt(min(iChange, GetCurrHitPoints()));
 	}
 #endif
 	return setDamage((getDamage() + iChange), ePlayer, fAdditionalTextDelay, pAppendText);
