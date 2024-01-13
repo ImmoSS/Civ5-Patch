@@ -849,12 +849,6 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 				{
 					bBarbarian = pCity->isBarbarian();
 					pCity->changeDamage(iDamage);
-#ifdef EG_REPLAYDATASET_DAMAGETAKENBYCITIES
-					GET_PLAYER(pCity->getOwner()).ChangeCitiesDamageTaken(iDamage);
-#endif
-#ifdef EG_REPLAYDATASET_DAMAGEDEALTTOCITIES
-					GET_PLAYER(pkAttacker->getOwner()).ChangeCitiesDamageDealt(iDamage);
-#endif
 
 					if(pCity->getOwner() == GC.getGame().getActivePlayer())
 					{
@@ -1564,12 +1558,6 @@ void CvUnitCombat::ResolveAirUnitVsCombat(const CvCombatInfo& kCombatInfo, uint 
 				if(pkAttacker)
 				{
 					pCity->changeDamage(iAttackerDamageInflicted);
-#ifdef EG_REPLAYDATASET_DAMAGETAKENBYCITIES
-					GET_PLAYER(pCity->getOwner()).ChangeCitiesDamageTaken(iAttackerDamageInflicted);
-#endif
-#ifdef EG_REPLAYDATASET_DAMAGEDEALTTOCITIES
-					GET_PLAYER(pkAttacker->getOwner()).ChangeCitiesDamageDealt(iAttackerDamageInflicted);
-#endif
 					pkAttacker->changeDamage(iDefenderDamageInflicted, pCity->getOwner());
 
 					//		iUnitDamage = std::max(pCity->getDamage(), pCity->getDamage() + iDamage);

@@ -11412,6 +11412,14 @@ void CvCity::setDamage(int iValue, bool noMessage)
 void CvCity::changeDamage(int iChange)
 {
 	VALIDATE_OBJECT
+#ifdef EG_REPLAYDATASET_DAMAGETAKENBYCITIES
+	if (iChange > 0)
+		GET_PLAYER(getOwner()).ChangeCitiesDamageTaken(min(iChange, GetMaxHitPoints() - getDamage()));
+#endif
+#ifdef EG_REPLAYDATASET_DAMAGEDEALTTOCITIES
+	if (iChange > 0)
+		GET_PLAYER(getOwner()).ChangeCitiesDamageDealt(min(iChange, GetMaxHitPoints() - getDamage()));
+#endif
 	if(0 != iChange)
 	{
 		setDamage(getDamage() + iChange);
