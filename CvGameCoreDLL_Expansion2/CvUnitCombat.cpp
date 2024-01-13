@@ -848,6 +848,12 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 				if(pkAttacker)
 				{
 					bBarbarian = pCity->isBarbarian();
+#ifdef EG_REPLAYDATASET_DAMAGETAKENBYCITIES
+					GET_PLAYER(pCity->getOwner()).ChangeCitiesDamageTaken(min(iDamage, pCity->GetMaxHitPoints() - pCity->getDamage()));
+#endif
+#ifdef EG_REPLAYDATASET_DAMAGEDEALTTOCITIES
+					GET_PLAYER(pkAttacker->getOwner()).ChangeCitiesDamageDealt(min(iDamage, pCity->GetMaxHitPoints() - pCity->getDamage()));
+#endif
 					pCity->changeDamage(iDamage);
 
 					if(pCity->getOwner() == GC.getGame().getActivePlayer())
@@ -1557,6 +1563,12 @@ void CvUnitCombat::ResolveAirUnitVsCombat(const CvCombatInfo& kCombatInfo, uint 
 				pCity->clearCombat();
 				if(pkAttacker)
 				{
+#ifdef EG_REPLAYDATASET_DAMAGETAKENBYCITIES
+					GET_PLAYER(pCity->getOwner()).ChangeCitiesDamageTaken(min(iAttackerDamageInflicted, pCity->GetMaxHitPoints() - pCity->getDamage()));
+#endif
+#ifdef EG_REPLAYDATASET_DAMAGEDEALTTOCITIES
+					GET_PLAYER(pkAttacker->getOwner()).ChangeCitiesDamageDealt(min(iAttackerDamageInflicted, pCity->GetMaxHitPoints() - pCity->getDamage()));
+#endif 
 					pCity->changeDamage(iAttackerDamageInflicted);
 					pkAttacker->changeDamage(iDefenderDamageInflicted, pCity->getOwner());
 
