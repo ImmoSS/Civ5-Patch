@@ -14506,7 +14506,9 @@ void CvCity::doProduction(bool bAllowNoProduction)
 	}
 	else
 	{
+#ifndef PREVENT_UNCAPPED_OVERFLOW
 		changeOverflowProductionTimes100(getCurrentProductionDifferenceTimes100(false, false));
+#endif
 	}
 }
 
