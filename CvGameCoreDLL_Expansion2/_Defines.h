@@ -969,7 +969,7 @@
 // Must be defined only ONCE and account for all ReplayMessageTypes additions
 #define NUM_REPLAY_MESSAGE_TYPES 8
 ///
-//#define DEV_RECORDING_STATISTICS
+// #define DEV_RECORDING_STATISTICS
 // use PreGame.GetNickName with encoded value to retrieve user's SteamId
 #define PREGAMEAPI_GET_NETID
 /*OTHER CHANGES END*/
