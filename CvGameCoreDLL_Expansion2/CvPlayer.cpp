@@ -12994,7 +12994,8 @@ int CvPlayer::GetUnhappinessFromCityForUI(CvCity* pCity) const
 	{
 		int iSpecialistCount = pCity->GetCityCitizens()->GetTotalSpecialistCount() * 100;
 #ifdef UNIVERSAL_SUFFRAGE_TWO_THIRD_UNHAPPINESS
-		iPopulation -= (iSpecialistCount * 2 / 3);
+		iPopulation += 2; // Round up
+		iPopulation -= (iSpecialistCount * 1 / 3);
 #else
 		iPopulation -= (iSpecialistCount / 2);
 #endif
@@ -13220,10 +13221,11 @@ int CvPlayer::GetUnhappinessFromCityPopulation(CvCity* pAssumeCityAnnexed, CvCit
 			if(isHalfSpecialistUnhappiness())
 			{
 				iSpecialistCount = pLoopCity->GetCityCitizens()->GetTotalSpecialistCount();
-				iSpecialistCount++; // Round up
 #ifdef UNIVERSAL_SUFFRAGE_TWO_THIRD_UNHAPPINESS
-				iPopulation -= (iSpecialistCount * 2 / 3);
+				iSpecialistCount += 2; // Round up
+				iPopulation -= (iSpecialistCount * 1 / 3);
 #else
+				iSpecialistCount++; // Round up
 				iPopulation -= (iSpecialistCount / 2);
 #endif
 			}
@@ -13351,10 +13353,11 @@ int CvPlayer::GetUnhappinessFromCitySpecialists(CvCity* pAssumeCityAnnexed, CvCi
 			// No Unhappiness from Specialist Pop? (Policies, etc.)
 			if(isHalfSpecialistUnhappiness())
 			{
-				iPopulation++; // Round up
 #ifdef UNIVERSAL_SUFFRAGE_TWO_THIRD_UNHAPPINESS
-				iPopulation = iPopulation * 2 / 3;
+				iPopulation += 2; // Round up
+				iPopulation = (iPopulation / 3) * 2;
 #else
+				iPopulation++; // Round up
 				iPopulation /= 2;
 #endif
 			}
@@ -13423,10 +13426,11 @@ int CvPlayer::GetUnhappinessFromOccupiedCities(CvCity* pAssumeCityAnnexed, CvCit
 			if(isHalfSpecialistUnhappiness())
 			{
 				iSpecialistCount = pLoopCity->GetCityCitizens()->GetTotalSpecialistCount();
-				iSpecialistCount++; // Round up
 #ifdef UNIVERSAL_SUFFRAGE_TWO_THIRD_UNHAPPINESS
-				iPopulation -= (iSpecialistCount * 2 / 3);
+				iSpecialistCount += 2; // Round up
+				iPopulation -= (iSpecialistCount * 1 / 3);
 #else
+				iSpecialistCount++; // Round up
 				iPopulation -= (iSpecialistCount / 2);
 #endif
 			}
