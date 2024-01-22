@@ -13936,7 +13936,6 @@ void CvCity::Purchase(UnitTypes eUnitType, BuildingTypes eBuildingType, ProjectT
 #ifdef EG_REPLAYDATASET_TOTALNUMOFENGINEERS
 				kPlayer.ChangeNumEngineersTotal(1);
 #endif
-				}
 #endif
 			}
 			else if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_GREAT_GENERAL"))
