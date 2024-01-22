@@ -224,21 +224,21 @@
 ///
 // #define GREAT_SCIENTISTS_NERF
 /// Increasing faith purchase cost of first Great Scientist
-#define FAITH_FOR_THE_FIRST_SCIENTIST
+// #define FAITH_FOR_THE_FIRST_SCIENTIST
 /// Separating great scientists, engineers, merchants and prophets
-#define SEPARATE_GREAT_PEOPLE // NEW: Counts Born Great Presons
+// #define SEPARATE_GREAT_PEOPLE // NEW: Counts Born Great Presons
 /// Free Great person is now actually free
-#define FREE_GREAT_PERSON
+// #define FREE_GREAT_PERSON
 /// Great Scientists now bulb for science at point of birth, not current science
 #define NEW_SCIENTISTS_BULB
 ///
-#define NEW_WRITERS_CULTURE_BOMB
+// #define NEW_WRITERS_CULTURE_BOMB
 ///
-#define DISCOVER_AMONT_SCIENCE_MODIFIER
+// #define DISCOVER_AMONT_SCIENCE_MODIFIER
 /// After second turn of Great Scientist appearance bulb amount slowly decrease to 0 every turn
-#define DECREASE_BULB_AMOUNT_OVER_TIME
+// #define DECREASE_BULB_AMOUNT_OVER_TIME
 /// Increasing hurry production while engineering SS Parts
-#define SPACESHIP_ENGINEERING
+// #define SPACESHIP_ENGINEERING
 /// Separating Great People Counts
 #ifndef SEPARATE_GREAT_PEOPLE
 /// Separating Great Merchant Count
@@ -258,13 +258,13 @@
 ///
 #define UNIT_DIED_BY_NUKING_NOTIFICATIONS
 /// Players can't gain more than 60 exp from combat with AI or Minors
-#define LIMITATION_COMBAT_EXPERIENCE
+// #define LIMITATION_COMBAT_EXPERIENCE
 /// Restriction on paradroping in the second half of timer
 #define CAN_PARADROP_HALF_TIMER
 /// Restriction on setting interseption in the second half of timer
 #define CAN_SET_INTERCEPT_HALF_TIMER
 ///
-#define MARINE_DISEMBARK_FOR_1_MP
+// #define MARINE_DISEMBARK_FOR_1_MP
 /// Civilians haven't defense while embarked like Work Boats
 #define NO_EMBARKED_CIVILIAN_DEFENSE
 /// Disabling autoexploring and autoworking tiles
@@ -274,25 +274,25 @@
 /// Removing some civilans animations for better UI expirience
 #define REMOVE_GAMEPLAY_UNIT_ACTIVATE_ANIMATION
 /// Staring settler have extra move on turn 0
-#define STARTING_SETTLER_EXTRA_MOVE
+// #define STARTING_SETTLER_EXTRA_MOVE
 ///
 #define PROMOTION_INSTA_HEAL_LOCKED
 /// Decreasing Foreign Legion curchase cost
-#define FOREIGN_LEGION_COST_PURCHASE
+// #define FOREIGN_LEGION_COST_PURCHASE
 /// Stop centering camera on turn start or selected unit's death
 #define REMOVE_EXCESS_CAMERA_CENTERING
 ///
 #define DISABLE_BUILD_REPAIR_ON_NON_FRIENDLY_TERRITORY
 ///
-#define FIGHTER_FINISHMOVES_AFTER_INTERCEPTION
+// #define FIGHTER_FINISHMOVES_AFTER_INTERCEPTION
 ///
-#define REBASE_WITH_AIRPORTS
+// #define REBASE_WITH_AIRPORTS
 ///
-#define ATTACK_BONUS_VS_RANGED_MOUNTED
+// #define ATTACK_BONUS_VS_RANGED_MOUNTED
 ///
 #define CAPTURE_RESTRICTION_AFTER_PARADROPPING
 ///
-#define GDR_LESS_NUKING_DAMAGE
+// #define GDR_LESS_NUKING_DAMAGE
 ///
 #define TRADE_UNITS_DO_NOT_CAUSES_REPOSITION
 ///
@@ -313,34 +313,34 @@
 /// Autospending free technologies that was not spent during turn transition
 #define AUTOMATICALLY_SPEND_FREE_TECHNOLOGIES
 ///
-#define RA_LESS_TURNS
+// #define RA_LESS_TURNS
 ///
-#define FUTURE_TECH_RESEARCHING_BONUSES
+// #define FUTURE_TECH_RESEARCHING_BONUSES
 /*TECHNOLOGIES AND RESEARCH CHANGES END*/
 
 
 
 /*POLICIES CHANGES START*/
 /// Free courthouses are no longer removed when puppeting a city
-#define AUI_CITY_FIX_DO_CREATE_PUPPET_FREE_COURTHOUSES_KEPT
+// #define AUI_CITY_FIX_DO_CREATE_PUPPET_FREE_COURTHOUSES_KEPT
 /// Fixing double aqueduct bug
 #define AQUEDUCT_FIX
 ///
 // #define OWED_FOOD_BUILDING
 /// Freedom players can purcahse SS Parts only in cities with 5+ population
-#define SS_PART_PURCHASE_RESTRICTION
+// #define SS_PART_PURCHASE_RESTRICTION
 ///
-#define SHARED_IDEOLOGY_TRADE_CHANGE
+// #define SHARED_IDEOLOGY_TRADE_CHANGE
 /// Gunboat Diplomacy Grants 1 additional Delegate in the World Congress for every allied City-State (up to 6 additional Delegates)
-#define AUTOCRACY_EXTRA_VOTES
+// #define AUTOCRACY_EXTRA_VOTES
 /// Treaty Organization One time increase of 45 Influence with City-States
-#define CS_INFLUENCE_BOOST
+// #define CS_INFLUENCE_BOOST
 /// Adopting all policies in the Liberty tree will decrease Unhappiness from each city by 1.
-#define LIBERTY_FINISER_LESS_UNHAPPINESS_PER_CITY
+// #define LIBERTY_FINISER_LESS_UNHAPPINESS_PER_CITY
 /// Biology, Electrisity, Steam Power and Dynamite triggers ideology choise
 // #define NEW_IDEOLOGY_TRIGGER
 ///
-#define MORE_FREE_IDEOLOGY_TENETS
+// #define MORE_FREE_IDEOLOGY_TENETS
 ///
 #define POLICY_BRANCH_UNLOCKING_TURN
 ///
@@ -348,38 +348,38 @@
 /// The game will now send a “can adopt policy” notification if you get enough culture for a policy mid-turn
 #define UPDATE_CULTURE_NOTIFICATION_DURING_TURN
 ///
-#define PATRONAGE_FINISHER_REWORK
+// #define PATRONAGE_FINISHER_REWORK
 ///
-#define CLAUZEWITZS_LEGACY_RANGE_MODIFIER
+// #define CLAUZEWITZS_LEGACY_RANGE_MODIFIER
 ///
-#define DO_TECH_FROM_CITY_CONQ_FROM_POLICY
+// #define DO_TECH_FROM_CITY_CONQ_FROM_POLICY
 ///
-#define GOLD_PER_CS_FRIENDSHIP
+// #define GOLD_PER_CS_FRIENDSHIP
 ///
-#define GOLDEN_AGE_SCIENCE_MODIFIER
+// #define GOLDEN_AGE_SCIENCE_MODIFIER
 ///
-#define POLICY_ETHICS_REWORK
+// #define POLICY_ETHICS_REWORK
 ///
-#define FIX_POLICY_FREE_RELIGION
+// #define FIX_POLICY_FREE_RELIGION
 ///
-#define CREATIVE_EXPRESSION_SCIENCE_MOD
+// #define CREATIVE_EXPRESSION_SCIENCE_MOD
 ///
-#define MANDATE_OF_HEAVEN_ALL_PURCHASES
+// #define MANDATE_OF_HEAVEN_ALL_PURCHASES
 ///
-#define UNITED_FRONT_ALL_CITIES_GIFT_UNITS
+// #define UNITED_FRONT_ALL_CITIES_GIFT_UNITS
 ///
-#define EXTRA_PLOT_GOLD_FROM_TRADE_ROUTES
+// #define EXTRA_PLOT_GOLD_FROM_TRADE_ROUTES
 ///
-#define NO_PILLAGE_CARGO_TREASURE_FLEETS
+// #define NO_PILLAGE_CARGO_TREASURE_FLEETS
 ///
-#define SCIENCE_FROM_PIETY_FINISHER
+// #define SCIENCE_FROM_PIETY_FINISHER
 #ifdef SCIENCE_FROM_PIETY_FINISHER
 #define X_FOLLOWERS 3
 #endif
 ///
-#define RESETTLEMENT_CHANGE_GLOBAL_POP
+// #define RESETTLEMENT_CHANGE_GLOBAL_POP
 ///
-#define UNIVERSAL_SUFFRAGE_TWO_THIRD_UNHAPPINESS
+// #define UNIVERSAL_SUFFRAGE_TWO_THIRD_UNHAPPINESS
 /*POLICIES CHANGES END*/
 
 
@@ -387,47 +387,47 @@
 /*RELIGION CHANGES START*/
 // Allow lake feature yield boosts from religion - this is a huge cheat so I don't have to code a whole new table for "fake features" which 
 // is what lakes are categorized under. In NQMod, ice has no belief bonuses, and so I'm overriding FEATURE_ICE to be used for lakes instead.
-#define NQ_LAKE_BELIEF_BONUSES
+// #define NQ_LAKE_BELIEF_BONUSES
 ///
-#define BELIEF_PEACE_LOVING_PER_PEACE_FULL_FOLLOWERS
+// #define BELIEF_PEACE_LOVING_PER_PEACE_FULL_FOLLOWERS
 ///
-#define BELIEF_WORLD_CHURCH_PER_FOLLOWERS
+// #define BELIEF_WORLD_CHURCH_PER_FOLLOWERS
 ///
-#define BELIEF_INTERFAITH_DIALOGUE_PER_FOLLOWERS
+// #define BELIEF_INTERFAITH_DIALOGUE_PER_FOLLOWERS
 ///
-#define BELIEF_PILGRIMAGE_PER_CITY
+// #define BELIEF_PILGRIMAGE_PER_CITY
 ///
-#define BELIEF_DANCE_AURORA_NERF
+// #define BELIEF_DANCE_AURORA_NERF
 /// allow religion one-shots (like deus vult, religious settlements, dharma)
-#define NQ_ALLOW_RELIGION_ONE_SHOTS
+// #define NQ_ALLOW_RELIGION_ONE_SHOTS
 /// allow golden ages from beliefs
-#define NQ_GOLDEN_AGE_TURNS_FROM_BELIEF
+// #define NQ_GOLDEN_AGE_TURNS_FROM_BELIEF
 // extra trade routes from beliefs
-#define NQ_EXTRA_TRADE_ROUTES_FROM_BELIEF
+// #define NQ_EXTRA_TRADE_ROUTES_FROM_BELIEF
 ///
-#define PROPHET_CAN_FOUND_EXTRA_RELIGION
+// #define PROPHET_CAN_FOUND_EXTRA_RELIGION
 ///
-#define UNITY_OF_PROPHETS_EXTRA_PROPHETS
+// #define UNITY_OF_PROPHETS_EXTRA_PROPHETS
 ///
-#define REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
+// #define REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
 ///
-#define GP_RATE_MODIFIER_FROM_BELIEF
+// #define GP_RATE_MODIFIER_FROM_BELIEF
 ///
-#define UNDERGROUND_SECT_REWORK
+// #define UNDERGROUND_SECT_REWORK
 ///
-#define BELIEF_TO_GLORY_OF_GOD_ONE_GP_OF_EACH_TYPE
+// #define BELIEF_TO_GLORY_OF_GOD_ONE_GP_OF_EACH_TYPE
 ///
-#define BELIEF_GREAT_WORK_YIELD_CHANGES
+// #define BELIEF_GREAT_WORK_YIELD_CHANGES
 ///
-#define BELIEF_SPECIALIST_YIELD_CHANGES
+// #define BELIEF_SPECIALIST_YIELD_CHANGES
 ///
-#define BELIEF_HURRY_MODIFIERS
+// #define BELIEF_HURRY_MODIFIERS
 ///
-#define BELIEF_MESSENGER_OF_GODS_FIX
+// #define BELIEF_MESSENGER_OF_GODS_FIX
 ///
-#define RELIGIOUS_TOLERANCE_DOUBLES_OWNER_PANTHEON
+// #define RELIGIOUS_TOLERANCE_DOUBLES_OWNER_PANTHEON
 ///
-#define NEW_PAPAL_PRIMACY
+// #define NEW_PAPAL_PRIMACY
 /*RELIGION CHANGES END*/
 
 
@@ -438,58 +438,58 @@
 ///
 // #define BYZANTIUM_CAN_ALWAYS_FOUND_RELIGION
 /// India have 2 extra Happiness
-#define INDIA_HAPPINESS_BONUS
+// #define INDIA_HAPPINESS_BONUS
 ///
-#define NEW_BYZANTIUM_UA
+// #define NEW_BYZANTIUM_UA
 ///
-#define NEW_OTTOMAN_UA
+// #define NEW_OTTOMAN_UA
 /// Adding source for Trait_BuildingClassHappiness table
-#define TRAIT_GET_BUILDING_CLASS_HAPPINESS
+// #define TRAIT_GET_BUILDING_CLASS_HAPPINESS
 ///
-#define NEW_VENICE_UA
+// #define NEW_VENICE_UA
 ///
-#define MOROCCO_UA_REWORK
+// #define MOROCCO_UA_REWORK
 ///
-#define ETHIOPIA_UA_REWORK
+// #define ETHIOPIA_UA_REWORK
 ///
-#define RUSSIA_UA_REWORK
+// #define RUSSIA_UA_REWORK
 ///
-#define PORTUGAL_UA_REWORK
+// #define PORTUGAL_UA_REWORK
 ///
-#define DENMARK_UA_REWORK
+// #define DENMARK_UA_REWORK
 ///
-#define INDONESIA_UA_REWORK
+// #define INDONESIA_UA_REWORK
 ///
-#define CARTHAGE_UA_REWORK
+// #define CARTHAGE_UA_REWORK
 ///
-#define ROME_UA_REWORK
+// #define ROME_UA_REWORK
 ///
-#define CHINA_UA_REWORK
+// #define CHINA_UA_REWORK
 ///
-#define ASSYRIA_UA_REWORK
+// #define ASSYRIA_UA_REWORK
 ///
-#define MONGOL_CS_BULLY
+// #define MONGOL_CS_BULLY
 ///
-#define SWEDEN_UA_REWORK
+// #define SWEDEN_UA_REWORK
 ///
-#define BRAZIL_UA_REWORK
+// #define BRAZIL_UA_REWORK
 ///
-#define SIAM_UA_REWORK
+// #define SIAM_UA_REWORK
 ///
-#define GREECE_UA_REWORK
+// #define GREECE_UA_REWORK
 /// Golden age combat bonus modifier now applies only during attack
-#define GOLDEN_AGE_ATTACK_BONUS_MODIFIER
+// #define GOLDEN_AGE_ATTACK_BONUS_MODIFIER
 /*UA CHANGES END*/
 
 
 
 /*WLTKD CHANGES START*/
 ///
-#define WLKTD_STARTS_IF_NO_VALID_RESOURCES_TO_DEMAND
+// #define WLKTD_STARTS_IF_NO_VALID_RESOURCES_TO_DEMAND
 /// We Love The King Day resource requested changes if it takes too long to fulfill
-#define NQ_WLTKD_RESOURCE_DEMAND_EXPIRES
+// #define NQ_WLTKD_RESOURCE_DEMAND_EXPIRES
 ///
-#define NEW_WLTKD
+// #define NEW_WLTKD
 /*WLTKD CHANGES END*/
 
 
@@ -554,48 +554,48 @@
 // city states will no longer declare peace if influence is less than -50
 // #define NQ_PEACE_BLOCKED_IF_INFLUENCE_TOO_LOW
 ///
-#define DECREASE_INFLUENCE_IF_BULLYING_SOMEONE_WE_ARE_PROTECTING
+// #define DECREASE_INFLUENCE_IF_BULLYING_SOMEONE_WE_ARE_PROTECTING
 ///
-#define NO_FAITH_FROM_MEETING_CS
+// #define NO_FAITH_FROM_MEETING_CS
 ///
-#define PEACE_BLOCKED_WITH_MINORS
+// #define PEACE_BLOCKED_WITH_MINORS
 // coup chances now use base influence instead of effective influence (which would be -60 during war)
-#define NQ_COUP_FORMULA_USES_BASE_FRIENDSHIP_NOT_EFFECTIVE_FRIENDSHIP
+// #define NQ_COUP_FORMULA_USES_BASE_FRIENDSHIP_NOT_EFFECTIVE_FRIENDSHIP
 ///
 #define CANNOT_LIBERATE_GIFTED_CS
 ///
-#define WORKER_BULLY_RESRICTION
+// #define WORKER_BULLY_RESRICTION
 ///
-#define NEW_CITY_STATES_TYPES
+// #define NEW_CITY_STATES_TYPES
 // New City States pseudo-enums
-#define MINOR_CIV_TRAIT_SCIENTIFIC 5
-#define MINOR_CIV_TRAIT_MANUFACTORY 6
+// #define MINOR_CIV_TRAIT_SCIENTIFIC 5
+// #define MINOR_CIV_TRAIT_MANUFACTORY 6
 // IMPORTANT
 // Must be defined only ONCE and account for all MinorCivTraitTypes additions
-#define NUM_MINOR_CIV_TRAIT_TYPES 7
+// #define NUM_MINOR_CIV_TRAIT_TYPES 7
 ///
-#define ALL_QUESTS_GET_END_TURN
+// #define ALL_QUESTS_GET_END_TURN
 /*CITY-STATES CHANGES END*/
 
 
 
 /*GOODIES CHANGES START*/
 ///
-#define XP_RUINS_FIX
+// #define XP_RUINS_FIX
 ///
-#define REMOVE_EARLY_CULTURE_RUINS
+// #define REMOVE_EARLY_CULTURE_RUINS
 /// Goody hut messages now properly appear for all yields, even if there's no popup
 #define AUI_PLAYER_FIX_RECEIVE_GOODY_MESSAGE
 /// If the player receives a yield from a goody hut, floating text appears above the plot indicating the number and type of yields received
 // #define AUI_PLAYER_RECEIVE_GOODY_PLOT_MESSAGE_FOR_YIELD
 ///
-#define INCREASE_NUM_GOODIES_REMEMBERED
+// #define INCREASE_NUM_GOODIES_REMEMBERED
 ///
-#define POP_RUIN_FOOD_NOT_POPULATION
+// #define POP_RUIN_FOOD_NOT_POPULATION
 ///
-#define FLAT_SCIENCE_FROM_TECH_RUIN
+// #define FLAT_SCIENCE_FROM_TECH_RUIN
 ///
-#define EXPIRIENCE_RUIN_SET_MOVEMENT_PROMOTION
+// #define EXPIRIENCE_RUIN_SET_MOVEMENT_PROMOTION
 /*GOODIES CHANGES END*/
 
 
@@ -610,19 +610,19 @@
 /// Recapturing a city originally owned by a player on the same team will properly no longer cause population losses or razed buildings
 #define AUI_PLAYER_FIX_ACQUIRE_CITY_NO_CITY_LOSSES_ON_RECAPTURE
 /// Adds a new field for minimum city yield that adjust said yield when the city is on hills (currently -1)
-#define NQM_YIELD_MIN_CITY_ON_HILLS_ADJUST
+// #define NQM_YIELD_MIN_CITY_ON_HILLS_ADJUST
 /// Time resistance of cities is half than normal
-#define REDUCE_RESISTANCE_TIME
+// #define REDUCE_RESISTANCE_TIME
 /// Oxford University is available before entering Atomic Era
-#define NO_OXFORD_AFTER_ATOM
+// #define NO_OXFORD_AFTER_ATOM
 /// Oxford University and National Intelligence Agency can be build once per game
 #define CAN_BUILD_OU_AND_NIA_ONLY_ONCE
 ///
-#define REMOVE_PRODUCTION_OVERFLOW_INTO_GOLD
+// #define REMOVE_PRODUCTION_OVERFLOW_INTO_GOLD
 /// Removed graphics of Spaceship Parts
-#define SPACESHIP_GRAPHICS
+// #define SPACESHIP_GRAPHICS
 ///
-#define BUILDING_CLASS_YIELD_CHANGES
+// #define BUILDING_CLASS_YIELD_CHANGES
 /// Can't trade damaged cities
 // #define TRADE_CITIES_ONLY_FULL_HP
 /// Puppet cities and cities with automated production will no longer accidentally trigger the production notification
@@ -632,17 +632,17 @@
 ///
 #define FIX_IS_NATIONAL_WONDER_CLASS
 ///
-#define NEW_FACTORIES
+// #define NEW_FACTORIES
 ///
-#define CITY_RANGE_MODIFIER
+// #define CITY_RANGE_MODIFIER
 ///
-#define CITY_EXTRA_HEAL // ToDo: XML Stuff
+// #define CITY_EXTRA_HEAL // ToDo: XML Stuff
 ///
-#define CITY_EXTRA_ATTACK
+// #define CITY_EXTRA_ATTACK
 ///
-#define BUILDING_BARN
+// #define BUILDING_BARN
 ///
-#define LUA_METHOD_IS_INDUSTRIAL_ROUTE_TO_CAPITAL
+// #define LUA_METHOD_IS_INDUSTRIAL_ROUTE_TO_CAPITAL
 ///
 #define PREVENT_UNCAPPED_OVERFLOW
 /*CITIES CHANGES END*/
@@ -714,14 +714,14 @@
 /// move autosave to the end of turn
 #define AUTOSAVE_END_OF_TURN
 /// Game.GetTurnTimeElapsed() returns elapsed time in milliseconds
-#define LUAAPI_GET_TURN_TIME_ELAPSED
+// #define LUAAPI_GET_TURN_TIME_ELAPSED
 /*TURN AND TIMER CHANGES END*/
 
 
 
 /*WONDERS CHANGES START*/
 ///
-#define TEMPLE_ARTEMIS_NO_YIELD_MOD_BUT_GROWTH
+// #define TEMPLE_ARTEMIS_NO_YIELD_MOD_BUT_GROWTH
 /*WONDERS CHANGES END*/
 
 
@@ -734,17 +734,17 @@
 ///
 #define FINISH_LEAGUE_SESSION_EVEN_IF_SOMEONE_HAS_VOTES
 ///
-#define EXTENDED_PLAYER_EMBARGO_EFFECTS
+// #define EXTENDED_PLAYER_EMBARGO_EFFECTS
 ///
 #define ASSIGN_SECOND_PROPOSAL_PRIVILEGE
 ///
 // #define CHANGE_HOST_IF_DISCONNECTED
 ///
-#define LEAGUE_PROJECT_REWARD_TIER_3_THRESHOLD
+// #define LEAGUE_PROJECT_REWARD_TIER_3_THRESHOLD
 ///
-#define PROJECT_COST_PER_PLAYER_ROUND_TO_5
+// #define PROJECT_COST_PER_PLAYER_ROUND_TO_5
 ///
-#define VOTES_FOR_MOST_RELIGION_FOLLOWERS
+// #define VOTES_FOR_MOST_RELIGION_FOLLOWERS
 /*LEAGUE CHANGES END*/
 
 
@@ -756,10 +756,10 @@
 #define BUILD_STEALABLE_TECH_LIST_ONCE_PER_TURN
 #ifdef BUILD_STEALABLE_TECH_LIST_ONCE_PER_TURN
 ///
-#define ESPIONAGE_SYSTEM_REWORK
+// #define ESPIONAGE_SYSTEM_REWORK
 #endif
 ///
-#define NEW_DIPLOMATS_MISSIONS
+// #define NEW_DIPLOMATS_MISSIONS
 #ifdef NEW_DIPLOMATS_MISSIONS
 #define ESPIONAGE_SCHMOOZE_LEVEL_UP_BASE_COST 40
 #endif
@@ -800,24 +800,24 @@
 
 /*OTHER CHANGES START*/
 /// Can't declare war for 20 turns before renaissance and for 10 turns else
-#define NEW_DEFENSIVE_PACT
+// #define NEW_DEFENSIVE_PACT
 ///
-#define DEF_PACT_COUNT
+// #define DEF_PACT_COUNT
 ///
-#define GOLD_FOR_CIRCUMNAVIGATE
+// #define GOLD_FOR_CIRCUMNAVIGATE
 ///
-#define GET_REMOVE_FEATURE_FOOD
+// #define GET_REMOVE_FEATURE_FOOD
 ///
 #define INCLUDE_WATER_IN_LAND_SCORE
 ///
 #define MP_ALWAYS_QUICK_COMBAT_AND_MOVEMENT
 ///
-#define REMOVE_DOF
+// #define REMOVE_DOF
 ///
-#define CREATE_APOLLO_PROGRAM_WITH_CAP_FOUND
+// #define CREATE_APOLLO_PROGRAM_WITH_CAP_FOUND
 // Maintain backwards compatibility with older versions
 // Starting from v7.0
-#define SAVE_BACKWARDS_COMPATIBILITY
+// #define SAVE_BACKWARDS_COMPATIBILITY
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 // Individual read/write components versioning
 //
@@ -863,7 +863,7 @@
 # define BUMP_SAVE_VERSION_REPLAYEVENT 1000
 #endif
 ///
-#define ENHANCED_GRAPHS
+// #define ENHANCED_GRAPHS
 ///
 #ifdef ENHANCED_GRAPHS
 /// First Bunch of Enhanced Graphs
@@ -979,7 +979,7 @@
 
 
 /*DUEL MODE STUFF START*/
-///
+/*///
 #define DUEL_MOVING_SOME_OPTIONS_TO_DUEL_MODE
 ///
 #define DUEL_BLOCK_BATTLESHIP_RANGE_PROMOTION_ON_DUEL_SIZED_WVE
@@ -1008,7 +1008,7 @@
 ///
 #define DUEL_WORLD_WONDERS_SAME_TURN
 ///
-#define DUEL_HALICARNASSUS_GP_EXPENDED_GOLD_SCALE
+#define DUEL_HALICARNASSUS_GP_EXPENDED_GOLD_SCALE*/
 /*DUEL MODE STUFF END*/
 
 /*TOURNAMENT MODE STUFF START*/

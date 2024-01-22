@@ -11660,7 +11660,8 @@ FDataStream& operator>>(FDataStream& loadFrom, CvMPVotingSystem::Proposal& write
 FDataStream& operator<<(FDataStream& saveTo, const CvMPVotingSystem::Proposal& readFrom)
 {
 	SLOG("--- proposal write invoked WTF ---");
-	uint uiVersion = BUMP_SAVE_VERSION_MP_VOTING_SYSTEM;
+	// uint uiVersion = BUMP_SAVE_VERSION_MP_VOTING_SYSTEM;
+	uint uiVersion = 1000;
 	saveTo << uiVersion;
 	saveTo << readFrom.iID;
 	saveTo << readFrom.iUIid;
