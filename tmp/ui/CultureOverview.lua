@@ -117,6 +117,13 @@ g_YourCultureSortOptions = {
 		SortType = "numeric",
 	},
 	{
+		Button = Controls.CathedralButton,
+		Column = "CathedralSort",
+		DefaultDirection = "desc",
+		CurrentDirection = nil,
+		SortType = "numeric",
+	},
+	{
 		Button = Controls.PalaceButton,
 		Column = "PalaceSort",
 		DefaultDirection = "desc",
@@ -607,6 +614,14 @@ function RefreshYourCulture()
 			HighlightIconControlNames = {"BroadcastTowerGreatWorkHL"},
 			GhostIconControlNames = {"BroadcastTowerGreatWorkGhost"},
 			ColumnImageControl = Controls.BroadcastTowerImage,
+		},	
+		BuildingEntry{
+			BuildingClass = "BUILDINGCLASS_CATHEDRAL",
+			BuildingSortColumn = "CathedralSort",
+			IconControlNames = {"CathedralGreatWork"},
+			HighlightIconControlNames = {"CathedralGreatWorkHL"},
+			GhostIconControlNames = {"CathedralGreatWorkGhost"},
+			ColumnImageControl = Controls.CathedralImage,
 		},		
 		BuildingEntry{
 			BuildingClass = "BUILDINGCLASS_PALACE",
