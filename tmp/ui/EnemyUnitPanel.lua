@@ -606,15 +606,6 @@ function UpdateCombatOddsUnitVsCity(pMyUnit, pCity)
 				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 			end
 
-			-- Future Tech bonus
-			local pTeam = Teams[pMyPlayer:GetTeam()];
-			local iModifier = 10 * pTeam:GetTeamTechs():GetTechCount(80);
-			if (iModifier > 0) then
-				controlTable = g_MyCombatDataIM:GetInstance();
-				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_FUTURE_TECH_BONUS");
-				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
-			end
-
 			---------------------------
 			-- AIR INTERCEPT PREVIEW --
 			---------------------------
@@ -973,24 +964,23 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				end
 			end
 			
-			-- Assyria UA Rework
 			-- CombatBonusVsHigherTech
-			-- if (pToPlot:GetOwner() == iMyPlayer) then
+			if (pToPlot:GetOwner() == iMyPlayer) then
 				iModifier = pMyPlayer:GetCombatBonusVsHigherTech();
 
-				if (iModifier ~= 0 and Teams[pMyPlayer:GetTeam()]:GetTeamTechs():GetNumTechsKnown() < Teams[pTheirPlayer:GetTeam()]:GetTeamTechs():GetNumTechsKnown() and not (pTheirPlayer:IsBarbarian() or pTheirPlayer:IsMinorCiv())) then
+				if (iModifier ~= 0 and pTheirUnit:IsHigherTechThan(pMyUnit:GetUnitType())) then
 					controlTable = g_MyCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_TRAIT_LOW_TECH_BONUS" );
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 				end
-			--end
+			end
 					
 			-- CombatBonusVsLargerCiv
 			iModifier = pMyPlayer:GetCombatBonusVsLargerCiv();
-			if (iModifier ~= 0 and pTheirUnit:IsLargerCivThan(pMyUnit) > 0) then
+			if (iModifier ~= 0 and pTheirUnit:IsLargerCivThan(pMyUnit)) then
 				controlTable = g_MyCombatDataIM:GetInstance();
 				controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_TRAIT_SMALL_SIZE_BONUS" );
-				controlTable.Value:SetText( GetFormattedText(strText, pTheirUnit:IsLargerCivThan(pMyUnit) * iModifier, true, true) );
+				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 			end
 					
 			-- CapitalDefenseModifier
@@ -1073,15 +1063,10 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 
 			-- UnitClassModifier
 			iModifier = pMyUnit:GetUnitClassModifier(pTheirUnit:GetUnitClassType());
-			if (iModifier > 0) then
+			if (iModifier ~= 0) then
 				controlTable = g_MyCombatDataIM:GetInstance();
 				local unitClassType = Locale.ConvertTextKey(GameInfo.UnitClasses[pTheirUnit:GetUnitClassType()].Description);
 				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_BONUS_VS_CLASS", unitClassType );
-				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
-			elseif (iModifier < 0) then
-				controlTable = g_MyCombatDataIM:GetInstance();
-				local unitClassType = Locale.ConvertTextKey(GameInfo.UnitClasses[pTheirUnit:GetUnitClassType()].Description);
-				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_PENALTY_VS_CLASS", unitClassType );
 				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 			end
 
@@ -1262,15 +1247,6 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 			if (iModifier ~= 0 and pTheirPlayer:IsMinorCiv()) then
 				controlTable = g_MyCombatDataIM:GetInstance();
 				controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_BONUS_CITY_STATE" );
-				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
-			end
-
-			-- Future Tech bonus
-			local pTeam = Teams[pMyPlayer:GetTeam()];
-			local iModifier = 10 * pTeam:GetTeamTechs():GetTechCount(80);
-			if (iModifier > 0) then
-				controlTable = g_MyCombatDataIM:GetInstance();
-				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_FUTURE_TECH_BONUS");
 				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 			end
 
@@ -1482,11 +1458,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 
 				-- UnitCombatModifier
 				if (pMyUnit:GetUnitCombatType() ~= -1) then
-					if (GameInfo.UnitCombatInfos[pMyUnit:GetUnitCombatType()].ID == 15) then
-						iModifier = 0;
-					else
-						iModifier = pTheirUnit:UnitCombatModifier(pMyUnit:GetUnitCombatType());
-					end
+					iModifier = pTheirUnit:UnitCombatModifier(pMyUnit:GetUnitCombatType());
 
 					if (iModifier ~= 0) then
 						controlTable = g_TheirCombatDataIM:GetInstance();
@@ -1569,10 +1541,10 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				
 				-- CombatBonusVsLargerCiv
 				iModifier = pTheirPlayer:GetCombatBonusVsLargerCiv();
-				if (iModifier ~= 0 and pMyUnit:IsLargerCivThan(pTheirUnit) > 0) then
+				if (iModifier ~= 0 and pMyUnit:IsLargerCivThan(pTheirUnit)) then
 					controlTable = g_TheirCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_TRAIT_SMALL_SIZE_BONUS" );
-					controlTable.Value:SetText( GetFormattedText(strText, pMyUnit:IsLargerCivThan(pTheirUnit) * iModifier, false, true) );
+					controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 				end
 								
 				-- CapitalDefenseModifier
@@ -1661,20 +1633,11 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				--end
 				
 				-- Civ Trait Bonus
-				-- iModifier = pTheirPlayer:GetTraitGoldenAgeCombatModifier();
-				-- if (iModifier ~= 0 and pTheirPlayer:IsGoldenAge()) then
-					-- controlTable = g_TheirCombatDataIM:GetInstance();
-					-- controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
-					-- controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
-				-- end
-
-				-- Future Tech bonus
-				local pTeam = Teams[pTheirPlayer:GetTeam()];
-				local iModifier = 10 * pTeam:GetTeamTechs():GetTechCount(80);
-				if (iModifier > 0) then
+				iModifier = pTheirPlayer:GetTraitGoldenAgeCombatModifier();
+				if (iModifier ~= 0 and pTheirPlayer:IsGoldenAge()) then
 					controlTable = g_TheirCombatDataIM:GetInstance();
-					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_FUTURE_TECH_BONUS");
-					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+					controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
+					controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 				end
 			end
 			
@@ -2038,20 +2001,11 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 		end
 		
 		-- Civ Trait Bonus
-		-- iModifier = theirPlayer:GetTraitGoldenAgeCombatModifier();
-		-- if (iModifier ~= 0 and theirPlayer:IsGoldenAge()) then
-			-- controlTable = g_TheirCombatDataIM:GetInstance();
-			-- controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
-			-- controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
-		-- end
-
-		-- Future Tech bonus
-		local pTeam = Teams[pTheirPlayer:GetTeam()];
-		local iModifier = 10 * pTeam:GetTeamTechs():GetTechCount(80);
-		if (iModifier > 0) then
+		iModifier = theirPlayer:GetTraitGoldenAgeCombatModifier();
+		if (iModifier ~= 0 and theirPlayer:IsGoldenAge()) then
 			controlTable = g_TheirCombatDataIM:GetInstance();
-			controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_FUTURE_TECH_BONUS");
-			controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+			controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
+			controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 		end
 	end
 	
