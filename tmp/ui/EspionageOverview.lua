@@ -55,10 +55,6 @@ local g_ProgressBarStates = {
 		IconOffset = {x = 45,y = 0},
 		ProgressBarTexture = "MeterBarGreatEspionageBlue.dds",
 	},
-	TXT_KEY_SPY_STATE_SCHMOOZING = {
-		IconOffset = {x = 45, y = 0},
-		ProgressBarTexture = "MeterBarGreatPersonGold.dds",
-	},
 }
 	
 -- Agent text color based on agent activity.
@@ -459,13 +455,11 @@ function RelocateAgent(agentID, city)
 		local iFinalChance = iBaseChance;
 		iFinalChance = (iBaseChance * (100 + iRankChance)) / 100;
 		iFinalChance = (iFinalChance * (100 + iPolicyChance)) / 100;
-		--strActivityTT = strActivityTT .. "[NEWLINE]";
-		--strActivityTT = strActivityTT .. Locale.Lookup("TXT_KEY_EO_SPY_COUNTER_INTEL_SUM_TT", iFinalChance);
+		strActivityTT = strActivityTT .. "[NEWLINE]";
+		strActivityTT = strActivityTT .. Locale.Lookup("TXT_KEY_EO_SPY_COUNTER_INTEL_SUM_TT", iFinalChance);
 
 	elseif (agent.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_DEAD")) then
 		strActivityTT = Locale.Lookup("TXT_KEY_EO_SPY_BUTTON_DISABLED_SPY_DEAD_TT", agent.Rank, agent.Name);
-	elseif (agent.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_SCHMOOZING")) then
-		strActivityTT = Locale.Lookup("TXT_KEY_SPY_STATE_SCHMOOZING_TT", agent.Rank, agent.Name, city:GetName());	
 	else
 		print("falling out");
 		print(agent.AgentActivity);
@@ -667,8 +661,8 @@ function RefreshAgents()
 				local iFinalChance = iBaseChance;
 				iFinalChance = (iBaseChance * (100 + iRankChance)) / 100;
 				iFinalChance = (iFinalChance * (100 + iPolicyChance)) / 100;
-				--strActivityTT = strActivityTT .. "[NEWLINE]";
-				--strActivityTT = strActivityTT .. Locale.Lookup("TXT_KEY_EO_SPY_COUNTER_INTEL_SUM_TT", iFinalChance);
+				strActivityTT = strActivityTT .. "[NEWLINE]";
+				strActivityTT = strActivityTT .. Locale.Lookup("TXT_KEY_EO_SPY_COUNTER_INTEL_SUM_TT", iFinalChance);
 			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_DEAD")) then
 				strActivityTT = Locale.Lookup("TXT_KEY_EO_SPY_BUTTON_DISABLED_SPY_DEAD_TT", v.Rank, v.Name);
 			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_MAKING_INTRODUCTIONS")) then
@@ -1409,7 +1403,7 @@ function RefreshTheirCities(selectedAgentIndex, selectedAgentCurrentCityPlayerID
 			local pMyTeam = Teams[Game.GetActiveTeam()]
 			
 			local bCheckDiplomat = false;
-			if (city:IsCapital() and (not Players[v.PlayerID]:IsMinorCiv())) then
+			if (city:IsCapital() and (not Players[v.PlayerID]:IsMinorCiv()) and (not pMyTeam:IsAtWar(city:GetTeam()))) then
 				bCheckDiplomat = true;
 			end 
 
