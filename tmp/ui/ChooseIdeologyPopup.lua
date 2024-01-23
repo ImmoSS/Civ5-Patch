@@ -143,7 +143,7 @@ function RefreshList()
 			local itemInstance = g_ItemManager:GetInstance();
 			itemInstance.Name:LocalizeAndSetText(branch.Description);
 			
-			local iFreePolicies = Game.GetNumFreePolicies(branch.ID, Game.GetActivePlayer());
+			local iFreePolicies = Game.GetNumFreePolicies(branch.ID);
 			local szFreePolicyInfo = Locale.Lookup("TXT_KEY_CHOOSE_IDEOLOGY_NUM_FREE_POLICIES", iFreePolicies);
 			if (iFreePolicies > 0) then
 				szFreePolicyInfo = "[COLOR_POSITIVE_TEXT]" .. szFreePolicyInfo .. "[ENDCOLOR]";
