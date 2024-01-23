@@ -800,9 +800,9 @@
 
 /*OTHER CHANGES START*/
 /// Can't declare war for 20 turns before renaissance and for 10 turns else
-// #define NEW_DEFENSIVE_PACT
+#define NEW_DEFENSIVE_PACT
 ///
-// #define DEF_PACT_COUNT
+#define DEF_PACT_COUNT
 ///
 // #define GOLD_FOR_CIRCUMNAVIGATE
 ///
