@@ -1,8 +1,6 @@
 -------------------------------------------------
 -- Civilopedia screen
 -------------------------------------------------
--- edit: Duel Mode for EUI and vanilla UI
--------------------------------------------------
 include( "InstanceManager" );
 include( "IconSupport" );
 
@@ -3396,12 +3394,7 @@ function SelectBuildingOrWonderArticle( buildingID )
 		UpdateButtonFrame( buttonAdded, Controls.GreatWorksInnerFrame, Controls.GreatWorksFrame );
 
 		-- update the game info
-		if PreGame.GetGameOption("GAMEOPTION_DUEL_STUFF") > 0 and thisBuilding.DuelHelp then
-			-- Don't add text if it's the same as the strategy text
-			if (thisBuilding.DuelHelp ~= thisBuilding.Strategy) then
-				UpdateTextBlock( Locale.ConvertTextKey( thisBuilding.DuelHelp ), Controls.GameInfoLabel, Controls.GameInfoInnerFrame, Controls.GameInfoFrame );
-			end
-		elseif thisBuilding.Help then
+		if thisBuilding.Help then
 			-- Don't add text if it's the same as the strategy text
 			if (thisBuilding.Help ~= thisBuilding.Strategy) then
 				UpdateTextBlock( Locale.ConvertTextKey( thisBuilding.Help ), Controls.GameInfoLabel, Controls.GameInfoInnerFrame, Controls.GameInfoFrame );
