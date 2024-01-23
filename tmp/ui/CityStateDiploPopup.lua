@@ -461,27 +461,12 @@ function OnDisplay()
 	else
 		
 		-- Warmongering player
-		-- NQ_PEACE_BLOCKED_IF_INFLUENCE_TOO_LOW begin
 		if (pPlayer:IsPeaceBlocked(iActiveTeam)) then
-		-- if (pPlayer:IsPeaceBlocked(iActiveTeam) or pPlayer:IsInfluenceTooLowForPeace(iActivePlayer)) then
-		-- NQ_PEACE_BLOCKED_IF_INFLUENCE_TOO_LOW end;
 			strText = Locale.ConvertTextKey("TXT_KEY_CITY_STATE_DIPLO_HELLO_WARMONGER");
 			Controls.PeaceButton:SetHide(true);
 			
 		-- Normal War
 		else
-			if (pPlayer:IsPeaceBlockedWithMinor(iActivePlayer)) then
-				Controls.PeaceAnim:SetHide(true);
-				Controls.PeaceButton:ClearCallback( Mouse.eLClick );
-				Controls.PeaceLabel:SetText("[COLOR_WARNING_TEXT]" .. Locale.ConvertTextKey("TXT_KEY_POP_CSTATE_MAKE_PEACE") .. "[ENDCOLOR]");
-				local iTurnsPeaceBloked = (pPlayer:GetTurnPeaceBlockedWithMinor(iActivePlayer) + 5) - Game.GetGameTurn();
-				Controls.PeaceButton:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_MAKE_PEACE_BLOCKED_TOOLTIP", strShortDescKey, iTurnsPeaceBloked));
-			else
-				Controls.PeaceAnim:SetHide(false)
-				Controls.PeaceButton:RegisterCallback( Mouse.eLClick, OnPeaceButtonClicked )
-				Controls.PeaceLabel:SetText(Locale.ConvertTextKey("TXT_KEY_POP_CSTATE_MAKE_PEACE"));
-				Controls.PeaceButton:SetToolTipString();
-			end
 			strText = Locale.ConvertTextKey("TXT_KEY_CITY_STATE_DIPLO_HELLO_WAR");
 			Controls.PeaceButton:SetHide(false);
 		end
@@ -549,9 +534,9 @@ function OnDisplay()
 		Controls.RevokePledgeButton:SetToolTipString(strRevokeProtectTT);
 	end
 	
-	--if (Game.IsOption(GameOptionTypes.GAMEOPTION_ALWAYS_WAR)) then
-	--	Controls.PeaceButton:SetHide(true);
-	--end
+	if (Game.IsOption(GameOptionTypes.GAMEOPTION_ALWAYS_WAR)) then
+		Controls.PeaceButton:SetHide(true);
+	end
 	if (Game.IsOption(GameOptionTypes.GAMEOPTION_ALWAYS_PEACE)) then
 		Controls.WarButton:SetHide(true);
 	end
