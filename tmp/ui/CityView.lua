@@ -1,13 +1,7 @@
 -------------------------------------------------
 -- Game View 
 -------------------------------------------------
--- edit:
 --     tournament mode
---     WLTKD REWORK
---     NEW FACTORIES
---     enhanced grahps
--- for vanilla UI
--------------------------------------------------
 include( "IconSupport" );
 include( "InstanceManager" );
 include( "SupportFunctions"  );
@@ -72,9 +66,6 @@ end
 -----------------------------------------------------------------
 function CityScreenClosed()
 	
-	-- NEW: enhanced graphs START
-	gPreviousCity = nil;
-	-- enhanced graphs END
 	UI.SetInterfaceMode(InterfaceModeTypes.INTERFACEMODE_SELECTION);
 	OnCityViewUpdate();
 	-- We may get here after a player change, clear the UI if this is not the active player's city
@@ -755,10 +746,6 @@ function OnCityViewUpdate()
 	local pCity = UI.GetHeadSelectedCity();
 	
 	if gPreviousCity ~= pCity then
-		-- NEW: enhanced graphs START
-		print('Entered city:', pCity and pCity:GetName() or 'NO_CITY', 'previous city:', gPreviousCity and gPreviousCity:GetName() or 'NO_CITY');
-		Network.SendGiftUnit(pCity and pCity:Plot():GetPlotIndex() or -1, -9);
-		-- enhanced graphs END
 		gPreviousCity = pCity;
 		specialistTable = {};
 	end
@@ -805,16 +792,6 @@ function OnCityViewUpdate()
 			Controls.BlockadedIcon:SetHide(true);
 		end
 		
---	NEW FACTORIES
-		-- Has Coal
-		if (pCity:IsCityHasCoal()) then
-			Controls.HasCoalIcon:SetHide(false);
-			Controls.HasCoalIcon:LocalizeAndSetToolTip("TXT_KEY_CITY_HAS_COAL");
-		else
-			Controls.HasCoalIcon:SetHide(true);
-		end
---	NEW FACTORIES END
-
 		-- Being Razed
 		if (pCity:IsRazing()) then
 			Controls.RazingIcon:SetHide(false);
@@ -1216,9 +1193,6 @@ function OnCityViewUpdate()
 						strToolTipText = strToolTipText .. " (+" .. math.floor(iGPPChange/100) .. "[ICON_GREAT_PEOPLE])";	
 						if (iPlayerMod > 0) then
 							strToolTipText = strToolTipText .. "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_PLAYER_GP_MOD", iPlayerMod);
-						end	
-						if (iPlayerMod < 0) then
-							strToolTipText = strToolTipText .. "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_PLAYER_NEGATIVE_GP_MOD", iPlayerMod);
 						end
 						if (iPolicyMod > 0) then
 							strToolTipText = strToolTipText .. "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_POLICY_GP_MOD", iPolicyMod);
@@ -1575,32 +1549,22 @@ function OnCityViewUpdate()
 		local szResourceDemanded = "??? (Research Required)";
 		
 		if (pCity:GetResourceDemanded(true) ~= -1) then
-			local iNumTotal = pPlayer:GetNumResourceTotal(pCity:GetResourceDemanded(true), true);
 			local pResourceInfo = GameInfo.Resources[pCity:GetResourceDemanded()];
-			if (iNumTotal > 0) then
-				szResourceDemanded = Locale.ConvertTextKey(pResourceInfo.IconString) .. " " .. "[COLOR_POSITIVE_TEXT]" .. Locale.ConvertTextKey(pResourceInfo.Description) .. "[ENDCOLOR]";
-			else
-				szResourceDemanded = Locale.ConvertTextKey(pResourceInfo.IconString) .. " " .. "[COLOR_NEGATIVE_TEXT]" .. Locale.ConvertTextKey(pResourceInfo.Description) .. "[ENDCOLOR]";
-			end
+			szResourceDemanded = Locale.ConvertTextKey(pResourceInfo.IconString) .. " " .. Locale.ConvertTextKey(pResourceInfo.Description);
 			Controls.ResourceDemandedBox:SetHide(false);
 			
 		else
 			Controls.ResourceDemandedBox:SetHide(true);
 		end
-			
---	WLTKD REWORK	
-		local iNumTurns = pCity:GetResourceDemandedCountdown();
+				
+		local iNumTurns = pCity:GetWeLoveTheKingDayCounter();
 		if (iNumTurns > 0) then
-			-- szText = Locale.ConvertTextKey( "TXT_KEY_CITYVIEW_WLTKD_COUNTER", tostring(iNumTurns) );
-			-- Controls.ResourceDemandedBox:SetToolTipString(Locale.ConvertTextKey( "TXT_KEY_CITYVIEW_RESOURCE_FULFILLED_TT" ) );
-		-- else
-			szText = Locale.ConvertTextKey( "TXT_KEY_CITYVIEW_RESOURCE_DEMANDED", szResourceDemanded );
-			szText = szText .. " (" .. string.format( "%i", iNumTurns ) .. ")";
-			Controls.ResourceDemandedBox:SetToolTipString(Locale.ConvertTextKey( "TXT_KEY_CITYVIEW_RESOURCE_DEMANDED_TT" ) );
+			szText = Locale.ConvertTextKey( "TXT_KEY_CITYVIEW_WLTKD_COUNTER", tostring(iNumTurns) );
+			Controls.ResourceDemandedBox:SetToolTipString(Locale.ConvertTextKey( "TXT_KEY_CITYVIEW_RESOURCE_FULFILLED_TT" ) );
 		else
-			Controls.ResourceDemandedBox:SetHide(true);
+			szText = Locale.ConvertTextKey( "TXT_KEY_CITYVIEW_RESOURCE_DEMANDED", szResourceDemanded );
+			Controls.ResourceDemandedBox:SetToolTipString(Locale.ConvertTextKey( "TXT_KEY_CITYVIEW_RESOURCE_DEMANDED_TT" ) );
 		end
---	WLTKD REWORK END
 		
 		Controls.ResourceDemandedString:SetText(szText);
 		Controls.ResourceDemandedBox:SetSizeX(Controls.ResourceDemandedString:GetSizeX() + 10);
