@@ -1,8 +1,6 @@
 -------------------------------------------------
 -- Help text for Info Objects (Units, Buildings, etc.)
 -------------------------------------------------
--- edit: Duel Mode for EUI and vanilla UI
--------------------------------------------------
 
 
 -- UNIT
@@ -198,18 +196,7 @@ function GetHelpTextForBuilding(iBuildingID, bExcludeName, bExcludeHeader, bNoMa
 	end
 	
 	-- Food
-	-- Barn Yield
-	local count = 0
-	local iFood = 0
-	if (iBuildingID == 162) then
-		-- for city in pActivePlayer:Cities() do
-		--	count = count + city:GetNumBuilding( iBuildingID )
-		-- end
-		iFood = pActivePlayer:CountNumBuildings( iBuildingID )
-	else
-		iFood = Game.GetBuildingYieldChange(iBuildingID, YieldTypes.YIELD_FOOD);
-	end
-	-- Barn Yield End
+	local iFood = Game.GetBuildingYieldChange(iBuildingID, YieldTypes.YIELD_FOOD);
 	if (pCity ~= nil) then
 		iFood = iFood + pCity:GetReligionBuildingClassYieldChange(buildingClassID, YieldTypes.YIELD_FOOD) + pActivePlayer:GetPlayerBuildingClassYieldChange(buildingClassID, YieldTypes.YIELD_FOOD);
 		iFood = iFood + pCity:GetLeagueBuildingClassYieldChange(buildingClassID, YieldTypes.YIELD_FOOD);
@@ -310,16 +297,8 @@ function GetHelpTextForBuilding(iBuildingID, bExcludeName, bExcludeHeader, bNoMa
 	
 	strHelpText = strHelpText .. table.concat(lines, "[NEWLINE]");
 	
-	-- Duel Mode
 	-- Pre-written Help text
-	if (PreGame.GetGameOption("GAMEOPTION_DUEL_STUFF") > 0 and pBuildingInfo.DuelHelp ~= nil) then
-		local strWrittenHelpText = Locale.ConvertTextKey( pBuildingInfo.DuelHelp );
-		if (strWrittenHelpText ~= nil and strWrittenHelpText ~= "") then
-			-- Separator
-			strHelpText = strHelpText .. "[NEWLINE]----------------[NEWLINE]";
-			strHelpText = strHelpText .. strWrittenHelpText;
-		end
-	elseif (pBuildingInfo.Help ~= nil) then
+	if (pBuildingInfo.Help ~= nil) then
 		local strWrittenHelpText = Locale.ConvertTextKey( pBuildingInfo.Help );
 		if (strWrittenHelpText ~= nil and strWrittenHelpText ~= "") then
 			-- Separator
@@ -680,12 +659,6 @@ function GetCultureTooltip(pCity)
 				strCultureToolTip = strCultureToolTip .. "[NEWLINE][NEWLINE]";
 				strCultureToolTip = strCultureToolTip .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_CULTURE_WONDER_BONUS", iAmount);
 			end
-		end
-		-- Future Tech modifier
-		local iAmount = 10 * Teams[Players[pCity:GetOwner()]:GetTeam()]:GetTeamTechs():GetTechCount(80);
-		if (iAmount ~= 0) then
-			strCultureToolTip = strCultureToolTip .. "[NEWLINE][NEWLINE]";
-			strCultureToolTip = strCultureToolTip .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_CULTURE_FUTURE_TECH_BONUS", iAmount);
 		end
 		
 		-- Puppet modifier
