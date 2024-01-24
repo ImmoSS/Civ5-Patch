@@ -1,9 +1,6 @@
 ------------------------------------------------- 
 -- Staging Room Screen
 -------------------------------------------------
--- edit: Duel Mode for EUI and vanilla UI
--- edit: Community Remarks for EUI & vanilla UI
--------------------------------------------------
 include( "IconSupport" );
 include( "SupportFunctions"  );
 include( "InstanceManager" );
@@ -16,9 +13,6 @@ include( "TurnStatusBehavior" ); -- for turn status button behavior
 -------------------------------------------------
 local m_SlotInstances = {};
 local g_ChatInstances = {};
--- NEW: global tables are populated on script load
-local g_CommunityRemarks = {};
-local g_MMRoleTypes = {};
 
 local g_AdvancedOptionIM = InstanceManager:new( "GameOption", "Text", Controls.AdvancedOptions );
 local g_AdvancedOptionsList = {};
@@ -695,24 +689,7 @@ function UpdatePlayer( slotInstance, playerInfo )
         local bCantChangeCiv;		-- Can't change civilization
         local bCantChangeTeam;	-- can't change teams
         
-		local bSlotTypeDisabled;
-
-		-- NEW: check if player has any community remarks
-		local tstrTooltip = {};
-		local netID = GetNetID(playerID);
-		if ( not bIsHotSeat and bIsHuman ) then
-			if g_CommunityRemarks[netID] then
-				table.insert(tstrTooltip, Locale.ConvertTextKey('TXT_KEY_COMMUNITY_REMARKS_HEADLINE'));
-				for _,i in ipairs(g_CommunityRemarks[netID]) do
-					table.insert(tstrTooltip, i.Tooltip);
-				end
-				slotInstance.CommunityRemarkSign:SetHide(false);
-				slotInstance.CommunityRemarkSign:SetToolTipString(table.concat(tstrTooltip, '[ENDCOLOR][NEWLINE]'));
-			end
-		else
-			slotInstance.CommunityRemarkSign:SetHide(true);
-		end
-		-----------------------------------------------------------
+				local bSlotTypeDisabled;
 
         if( bIsHuman ) then	
 					TruncateString(slotInstance.PlayerNameLabel, slotInstance.PlayerNameBox:GetSizeX() - 
@@ -747,9 +724,6 @@ function UpdatePlayer( slotInstance, playerInfo )
 						bSlotTypeDisabled = true;
 						bCantChangeCiv = true;
 						bCantChangeTeam = true;
-
-		
-
           end
           
           if(Network.IsPlayerConnected(playerID)) then 
@@ -991,22 +965,6 @@ function UpdateLocalPlayer( playerInfo )
 	if( not bIsReady ) then
 		m_bLaunchReady = false;
 	end
-
-	-----------------------------------------------------------
-	-- NEW: check if local player has any community remarks
-	local tstrTooltip = {};
-	local netID = GetNetID(Matchmaking.GetLocalID());
-	if g_CommunityRemarks[netID] then
-		table.insert(tstrTooltip, Locale.ConvertTextKey('TXT_KEY_COMMUNITY_REMARKS_HEADLINE'));
-		for _,i in ipairs(g_CommunityRemarks[netID]) do
-			table.insert(tstrTooltip, i.Tooltip);
-		end
-		Controls.LocalCommunityRemarkSign:SetHide(false);
-		Controls.LocalCommunityRemarkSign:SetToolTipString(table.concat(tstrTooltip, '[ENDCOLOR][NEWLINE]'));
-	else
-		Controls.LocalCommunityRemarkSign:SetHide(true);
-	end
-	-----------------------------------------------------------
 	
 	local bCantChangeCiv = bIsReady or (PreGame.GetLoadFileName() ~= "") or bIsObserver or PreGame.GameStarted();
 	local bCantChangeTeam = bIsReady or (PreGame.GetLoadFileName() ~= "") or bIsObserver or PreGame.GameStarted();
@@ -1476,7 +1434,7 @@ function UpdateOptions()
 				turnTimerStr = turnTimerStr .. " " .. secondsStr;
 			end
 		end
-		Controls.TurnTimer:SetText(turnTimerStr);
+		Controls.TurnTimer:SetText(turnTimerStr);	
 	else
 		Controls.TurnTimer:SetHide(true);
 	end
@@ -1575,8 +1533,7 @@ function UpdateOptions()
 		count = count + 1;
     end
     
-    for option in GameInfo.GameOptions{Visible = 1} do
-    	if option.SupportsMultiplayer then
+    for option in GameInfo.GameOptions{Visible = 1} do	
 			if( option.Type ~= "GAMEOPTION_END_TURN_TIMER_ENABLED" 
 					and option.Type ~= "GAMEOPTION_SIMULTANEOUS_TURNS"
 					and option.Type ~= "GAMEOPTION_DYNAMIC_TURNS") then 
@@ -1585,194 +1542,7 @@ function UpdateOptions()
 					local controlTable = g_AdvancedOptionIM:GetInstance();
 					g_AdvancedOptionsList[count] = controlTable;
 					controlTable.Text:LocalizeAndSetText(option.Description);
-					controlTable.Text:LocalizeAndSetToolTip(option.Help);
 					count = count + 1;
-				end
-			end
-		end
-	end
-
--- Duel Mode
-	for dueloption in GameInfo.GameOptions{Type = "GAMEOPTION_DUEL_STUFF"} do
-		local savedValue = PreGame.GetGameOption(dueloption.Type);
-		if(savedValue ~= nil and savedValue == 1) then
-			local controlTable = g_AdvancedOptionIM:GetInstance();
-			g_AdvancedOptionsList[count] = controlTable;
-			controlTable.Text:LocalizeAndSetText(dueloption.Description);
-			controlTable.Text:SetAlpha(0.8);
-			controlTable.Text:LocalizeAndSetToolTip(dueloption.Help);
-			count = count + 1;
-		end
-
-		if PreGame.GetGameOption("GAMEOPTION_DUEL_STUFF") > 0 then
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_DISABLE_OXFORD_UNIVERSITY"} do
-				local savedValue = PreGame.GetGameOption(option.Type);
-				if(savedValue ~= nil and savedValue == 1) then
-					local controlTable = g_AdvancedOptionIM:GetInstance();
-					g_AdvancedOptionsList[count] = controlTable;
-					controlTable.Text:LocalizeAndSetText(option.Description);
-					controlTable.Text:LocalizeAndSetToolTip(option.Help);
-					count = count + 1;
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_NO_LEAGUES"} do
-				local savedValue = PreGame.GetGameOption(option.Type);
-				if(savedValue ~= nil and savedValue == 1) then
-					local controlTable = g_AdvancedOptionIM:GetInstance();
-					g_AdvancedOptionsList[count] = controlTable;
-					controlTable.Text:LocalizeAndSetText(option.Description);
-					controlTable.Text:LocalizeAndSetToolTip(option.Help);
-					count = count + 1;
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_NO_GOODY_HUTS"} do
-				local savedValue = PreGame.GetGameOption(option.Type);
-				if(savedValue ~= nil and savedValue == 1) then
-					local controlTable = g_AdvancedOptionIM:GetInstance();
-					g_AdvancedOptionsList[count] = controlTable;
-					controlTable.Text:LocalizeAndSetText(option.Description);
-					controlTable.Text:LocalizeAndSetToolTip(option.Help);
-					count = count + 1;
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_NO_ESPIONAGE"} do
-				local savedValue = PreGame.GetGameOption(option.Type);
-				if(savedValue ~= nil and savedValue == 1) then
-					local controlTable = g_AdvancedOptionIM:GetInstance();
-					g_AdvancedOptionsList[count] = controlTable;
-					controlTable.Text:LocalizeAndSetText(option.Description);
-					controlTable.Text:LocalizeAndSetToolTip(option.Help);
-					count = count + 1;
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_NO_BARBARIANS"} do
-				local savedValue = PreGame.GetGameOption(option.Type);
-				if(savedValue ~= nil and savedValue == 1) then
-					local controlTable = g_AdvancedOptionIM:GetInstance();
-					g_AdvancedOptionsList[count] = controlTable;
-					controlTable.Text:LocalizeAndSetText(option.Description);
-					controlTable.Text:LocalizeAndSetToolTip(option.Help);
-					count = count + 1;
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_RAGING_BARBARIANS"} do
-				if PreGame.GetGameOption("GAMEOPTION_NO_BARBARIANS") <= 0 then
-					local savedValue = PreGame.GetGameOption(option.Type);
-					if(savedValue ~= nil and savedValue == 1) then
-						local controlTable = g_AdvancedOptionIM:GetInstance();
-						g_AdvancedOptionsList[count] = controlTable;
-						controlTable.Text:LocalizeAndSetText(option.Description);
-						controlTable.Text:LocalizeAndSetToolTip(option.Help);
-						count = count + 1;
-					end
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_BAN_WONDER1"} do
-				if PreGame.GetGameOption("GAMEOPTION_BAN_WORLD_WONDERS") > 0 then
-					local savedValue = PreGame.GetGameOption(option.Type);
-					if(savedValue ~= nil and savedValue > -1) then
-						local controlTable = g_AdvancedOptionIM:GetInstance();
-						g_AdvancedOptionsList[count] = controlTable;
-						controlTable.Text:SetText("[COLOR_NEGATIVE_TEXT]" .. Locale.ConvertTextKey(GameInfo.Buildings[savedValue].Description) .. "[ENDCOLOR]");
-						controlTable.Text:LocalizeAndSetToolTip(GameInfo.Buildings[savedValue].Help);
-						count = count + 1;
-					end
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_BAN_WONDER2"} do
-				if PreGame.GetGameOption("GAMEOPTION_BAN_WORLD_WONDERS") > 0 then
-					local savedValue = PreGame.GetGameOption(option.Type);
-					if(savedValue ~= nil and savedValue > -1) then
-						local controlTable = g_AdvancedOptionIM:GetInstance();
-						g_AdvancedOptionsList[count] = controlTable;
-						controlTable.Text:SetText("[COLOR_NEGATIVE_TEXT]" .. Locale.ConvertTextKey(GameInfo.Buildings[savedValue].Description) .. "[ENDCOLOR]");
-						controlTable.Text:LocalizeAndSetToolTip(GameInfo.Buildings[savedValue].Help);
-						count = count + 1;
-					end
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_BAN_WONDER3"} do
-				if PreGame.GetGameOption("GAMEOPTION_BAN_WORLD_WONDERS") > 0 then
-					local savedValue = PreGame.GetGameOption(option.Type);
-					if(savedValue ~= nil and savedValue > -1) then
-						local controlTable = g_AdvancedOptionIM:GetInstance();
-						g_AdvancedOptionsList[count] = controlTable;
-						controlTable.Text:SetText("[COLOR_NEGATIVE_TEXT]" .. Locale.ConvertTextKey(GameInfo.Buildings[savedValue].Description) .. "[ENDCOLOR]");
-						controlTable.Text:LocalizeAndSetToolTip(GameInfo.Buildings[savedValue].Help);
-						count = count + 1;
-					end
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_BAN_PANTHEON1"} do
-				if PreGame.GetGameOption("GAMEOPTION_BAN_PANTHEONS") > 0 then
-					local savedValue = PreGame.GetGameOption(option.Type);
-					if(savedValue ~= nil and savedValue > -1) then
-						local controlTable = g_AdvancedOptionIM:GetInstance();
-						g_AdvancedOptionsList[count] = controlTable;
-						controlTable.Text:SetText("[COLOR_NEGATIVE_TEXT]" .. Locale.ConvertTextKey(GameInfo.Beliefs[savedValue].ShortDescription) .. "[ENDCOLOR]");
-						controlTable.Text:LocalizeAndSetToolTip(GameInfo.Beliefs[savedValue].Description);
-						count = count + 1;
-					end
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_BAN_PANTHEON2"} do
-				if PreGame.GetGameOption("GAMEOPTION_BAN_PANTHEONS") > 0 then
-					local savedValue = PreGame.GetGameOption(option.Type);
-					if(savedValue ~= nil and savedValue > -1) then
-						local controlTable = g_AdvancedOptionIM:GetInstance();
-						g_AdvancedOptionsList[count] = controlTable;
-						controlTable.Text:SetText("[COLOR_NEGATIVE_TEXT]" .. Locale.ConvertTextKey(GameInfo.Beliefs[savedValue].ShortDescription) .. "[ENDCOLOR]");
-						controlTable.Text:LocalizeAndSetToolTip(GameInfo.Beliefs[savedValue].Description);
-						count = count + 1;
-					end
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_BAN_PANTHEON3"} do
-				if PreGame.GetGameOption("GAMEOPTION_BAN_PANTHEONS") > 0 then
-					local savedValue = PreGame.GetGameOption(option.Type);
-					if(savedValue ~= nil and savedValue > -1) then
-						local controlTable = g_AdvancedOptionIM:GetInstance();
-						g_AdvancedOptionsList[count] = controlTable;
-						controlTable.Text:SetText("[COLOR_NEGATIVE_TEXT]" .. Locale.ConvertTextKey(GameInfo.Beliefs[savedValue].ShortDescription) .. "[ENDCOLOR]");
-						controlTable.Text:LocalizeAndSetToolTip(GameInfo.Beliefs[savedValue].Description);
-						count = count + 1;
-					end
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_BAN_BELIEF1"} do
-				if PreGame.GetGameOption("GAMEOPTION_BAN_RELIGION_BELIEFS") > 0 then
-					local savedValue = PreGame.GetGameOption(option.Type);
-					if(savedValue ~= nil and savedValue > -1) then
-						local controlTable = g_AdvancedOptionIM:GetInstance();
-						g_AdvancedOptionsList[count] = controlTable;
-						controlTable.Text:SetText("[COLOR_NEGATIVE_TEXT]" .. Locale.ConvertTextKey(GameInfo.Beliefs[savedValue].ShortDescription) .. "[ENDCOLOR]");
-						controlTable.Text:LocalizeAndSetToolTip(GameInfo.Beliefs[savedValue].Description);
-						count = count + 1;
-					end
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_BAN_BELIEF2"} do
-				if PreGame.GetGameOption("GAMEOPTION_BAN_RELIGION_BELIEFS") > 0 then
-					local savedValue = PreGame.GetGameOption(option.Type);
-					if(savedValue ~= nil and savedValue > -1) then
-						local controlTable = g_AdvancedOptionIM:GetInstance();
-						g_AdvancedOptionsList[count] = controlTable;
-						controlTable.Text:SetText("[COLOR_NEGATIVE_TEXT]" .. Locale.ConvertTextKey(GameInfo.Beliefs[savedValue].ShortDescription) .. "[ENDCOLOR]");
-						controlTable.Text:LocalizeAndSetToolTip(GameInfo.Beliefs[savedValue].Description);
-						count = count + 1;
-					end
-				end
-			end
-			for option in GameInfo.GameOptions{Type = "GAMEOPTION_BAN_BELIEF3"} do
-				if PreGame.GetGameOption("GAMEOPTION_BAN_RELIGION_BELIEFS") > 0 then
-					local savedValue = PreGame.GetGameOption(option.Type);
-					if(savedValue ~= nil and savedValue > -1) then
-						local controlTable = g_AdvancedOptionIM:GetInstance();
-						g_AdvancedOptionsList[count] = controlTable;
-						controlTable.Text:SetText("[COLOR_NEGATIVE_TEXT]" .. Locale.ConvertTextKey(GameInfo.Beliefs[savedValue].ShortDescription) .. "[ENDCOLOR]");
-						controlTable.Text:LocalizeAndSetToolTip(GameInfo.Beliefs[savedValue].Description);
-						count = count + 1;
-					end
 				end
 			end
 		end
@@ -2257,35 +2027,3 @@ Events.MultiplayerGameAbandoned.Add( OnAbandoned );
 
 -------------------------------------------------
 AdjustScreenSize();
-
-
--- NEW: Community Remarks - populate tables from the database
-for i in GameInfo.PlayerMMRoleTypes() do
-	g_MMRoleTypes[i.ID] =
-		{
-			Type = i.Type,
-			Description = Locale.ConvertTextKey(i.Description),
-			Tooltip = Locale.ConvertTextKey(i.TooltipText),
-		};
-end
-for i in GameInfo.CommunityPlayerRemarks() do
-	local netID = i.PlayerNetID:sub(2);
-	local date = os.date('%d %b %Y ', i.EpochTimestamp);
-	if g_CommunityRemarks[netID] == nil then
-		g_CommunityRemarks[netID] = {};
-	end
-	table.insert(g_CommunityRemarks[netID],
-		{
-			NetID = netID,
-			Name = i.PlayerLastObservedName,
-			Role = g_MMRoleTypes[i.PlayerMMRoleType] and g_MMRoleTypes[i.PlayerMMRoleType].Description or '??',
-			Tooltip = '[ICON_BULLET]' .. date .. Locale.ConvertTextKey('TXT_KEY_COMMUNITY_REMARKS_PLAYERNAME', i.PlayerLastObservedName) .. ': ' .. (g_MMRoleTypes[i.PlayerMMRoleType] and g_MMRoleTypes[i.PlayerMMRoleType].Tooltip or '??'),
-		});
-end
--- real netID from the dll (only for non-local MP games)
-function GetNetID( iPlayerID )
-	if iPlayerID >= 0 and iPlayerID < 2 ^ 28 then
-		local product = (2 ^ 28) + iPlayerID;
-    	return PreGame.GetNickName(product);
-    end
-end

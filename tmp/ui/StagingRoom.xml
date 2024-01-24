@@ -1,6 +1,3 @@
-<!-- edit: Duel Mode for EUI and vanilla UI -->
-<!-- edit: Community Remarks for EUI and vanilla UI -->
-
 <?xml version="1.0" encoding="utf-8"?>
 <Context Font="TwCenMT18" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" >
 
@@ -86,9 +83,6 @@
 
       <!-- Kick Button -->
       <Button Hidden="0" Anchor="R,T" Size="32,32" Offset="5,3" ID="KickButton" Texture="assets/UI/Art/Icons/IconFrame32Delete.DDS" ToolTip="TXT_KEY_MP_KICK_PLAYER" />
-
-	  <!-- NEW: Community Remarks sign -->
-      <AlphaAnim Anchor="R,B" Size="80,80" Offset="-45,0" ID="CommunityRemarkSign" Texture="diplomacyvote.dds" Cycle="Bounce" Speed="1" AlphaStart="1" AlphaEnd=".5" Hidden="1"/>
 
       <!-- Swap Button -->
       <GridButton Style="SmallButton" Hidden="0" Anchor="R,T" Size="42,32" Offset="165,8" ID="SwapButton" String="[ICON_SWAP]" ToolTip="TXT_KEY_MP_SWAP_BUTTON_TT" >
@@ -251,9 +245,6 @@
 
       <!-- Ready Checkbox -->
       <CheckBox Anchor="R,T" String="" Offset="6,6" ID="LocalReadyCheck" ButtonTexture="assets/UI/Art/Icons/IconFrame32CheckOff.DDS" CheckTexture="assets/UI/Art/Icons/IconFrame32Check.DDS" ToolTip="TXT_KEY_MP_READY_CHECK" />
-	  
-	  <!-- NEW: Community Remarks sign -->
-      <AlphaAnim Anchor="R,B" Size="80,80" Offset="0,0" ID="LocalCommunityRemarkSign" Texture="diplomacyvote.dds" Cycle="Bounce" Speed="1" AlphaStart="1" AlphaEnd=".5" Hidden="1"/>
 
       <!-- Edit Button -->
       <Container Anchor="R,B" Size="50,32" Offset="34,5" >
@@ -379,124 +370,8 @@
         <!-- List of Check Boxes -->
         <Stack Anchor="L,T" Offset="20,0" Padding="-7" StackGrowth="Bottom" ID="GameOptionsStack" />
 
-            <!-- Duel Mode Check -->
-            <Box Anchor="L,T" Size="480,25" Offset="30,-7" Color="255,255,255,0" >
-
-              <Stack ID="DuelModeStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right">
-                <Box Anchor="L,C"  Size="200,32" Color="255,255,200,0" >
-                  <CheckBox ButtonTexture="assets/UI/Art/Controls/CheckBox2TheBox.dds" Font="TwCenMT20" Anchor="L,C" TextAnchorSide="Right" TextOffset="40,0" String="TXT_KEY_GAME_OPTION_DUEL_MODE" ToolTip="TXT_KEY_GAME_OPTION_DUEL_MODE_HELP" IsChecked="0" ID="DuelModeCheck" ConsumeMouse="1" />
-                </Box>
-              </Stack>
-            </Box>
-
-
-            <!-- Ban Oxford University -->
-            <Box Hidden="1" Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" ID="BanOxfordUniversityBox" >
-
-              <Stack ID="BanOxfordUniversityStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right">
-                <Box Anchor="L,C"  Size="200,32" Color="255,255,200,0" >
-                  <CheckBox ButtonTexture="assets/UI/Art/Controls/CheckBox2TheBox.dds" Font="TwCenMT20" Anchor="L,C" TextAnchorSide="Right" TextOffset="40,0" String="TXT_KEY_GAME_OPTION_DISABLE_OXFORD_UNIVERSITY" ToolTip="TXT_KEY_GAME_OPTION_DISABLE_OXFORD_UNIVERSITY_HELP" IsChecked="0" ID="BanOxfordUniversityCheck" ConsumeMouse="1" />
-                </Box>
-              </Stack>
-            </Box>
-
-
-            <!-- Disable World Congress -->
-            <Box Hidden="1" Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" ID="DisableWorldCongressBox" >
-
-              <Stack ID="DisableWorldCongressStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right">
-                <Box Anchor="L,C"  Size="200,32" Color="255,255,200,0" >
-                  <CheckBox ButtonTexture="assets/UI/Art/Controls/CheckBox2TheBox.dds" Font="TwCenMT20" Anchor="L,C" TextAnchorSide="Right" TextOffset="40,0" String="TXT_KEY_GAME_OPTION_NO_LEAGUES" ToolTip="TXT_KEY_GAME_OPTION_NO_LEAGUES_HELP" IsChecked="0" ID="DisableWorldCongressCheck" ConsumeMouse="1" />
-                </Box>
-              </Stack>
-            </Box>
-
-
-            <!-- No Ancient Ruins -->
-            <Box Hidden="1" Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" ID="NoAncientRuinsBox" >
-
-              <Stack ID="NoAncientRuinsStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right">
-                <Box Anchor="L,C"  Size="200,32" Color="255,255,200,0" >
-                  <CheckBox ButtonTexture="assets/UI/Art/Controls/CheckBox2TheBox.dds" Font="TwCenMT20" Anchor="L,C" TextAnchorSide="Right" TextOffset="40,0" String="TXT_KEY_GAME_OPTION_NO_GOODY_HUTS" ToolTip="TXT_KEY_GAME_OPTION_NO_GOODY_HUTS_HELP" IsChecked="0" ID="NoAncientRuinsCheck" ConsumeMouse="1" />
-                </Box>
-              </Stack>
-            </Box>
-
-
-            <!-- No Espionage -->
-            <Box Hidden="1" Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" ID="NoEspionageBox" >
-
-              <Stack ID="NoEspionageStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right">
-                <Box Anchor="L,C"  Size="200,32" Color="255,255,200,0" >
-                  <CheckBox ButtonTexture="assets/UI/Art/Controls/CheckBox2TheBox.dds" Font="TwCenMT20" Anchor="L,C" TextAnchorSide="Right" TextOffset="40,0" String="TXT_KEY_GAME_OPTION_NO_ESPIONAGE" ToolTip="TXT_KEY_GAME_OPTION_NO_ESPIONAGE_HELP" IsChecked="0" ID="NoEspionageCheck" ConsumeMouse="1" />
-                </Box>
-              </Stack>
-            </Box>
-
-
-            <!-- No Barbarians -->
-            <Box Hidden="1" Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" ID="NoBarbariansBox" >
-
-              <Stack ID="NoBarbariansStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right">
-                <Box Anchor="L,C"  Size="200,32" Color="255,255,200,0" >
-                  <CheckBox ButtonTexture="assets/UI/Art/Controls/CheckBox2TheBox.dds" Font="TwCenMT20" Anchor="L,C" TextAnchorSide="Right" TextOffset="40,0" String="TXT_KEY_GAME_OPTION_NO_BARBARIANS" ToolTip="TXT_KEY_GAME_OPTION_NO_BARBARIANS_HELP" IsChecked="0" ID="NoBarbariansCheck" ConsumeMouse="1" />
-                </Box>
-              </Stack>
-            </Box>
-
-
-            <!-- Raging Barbarians -->
-            <Box Hidden="1" Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" ID="RagingBarbariansBox" >
-
-              <Stack ID="RagingBarbariansStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right">
-                <Box Anchor="L,C"  Size="200,32" Color="255,255,200,0" >
-                  <CheckBox ButtonTexture="assets/UI/Art/Controls/CheckBox2TheBox.dds" Font="TwCenMT20" Anchor="L,C" TextAnchorSide="Right" TextOffset="40,0" String="TXT_KEY_GAME_OPTION_RAGING_BARBARIANS" ToolTip="TXT_KEY_GAME_OPTION_RAGING_BARBARIANS_HELP" IsChecked="0" ID="RagingBarbariansCheck" ConsumeMouse="1" />
-                </Box>
-              </Stack>
-            </Box>
-
-
-            <!-- Ban World Wonders Check & Edit Container -->
-            <Box Hidden="1" Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" ID="BanWorldWondersBox" >
-
-              <Stack ID="BanWorldWonderStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right">
-                <Box Anchor="L,C"  Size="200,32" Color="255,255,200,0" >
-                  <CheckBox ButtonTexture="assets/UI/Art/Controls/CheckBox2TheBox.dds" Font="TwCenMT20" Anchor="L,C" TextAnchorSide="Right" TextOffset="40,0" String="TXT_KEY_GAME_OPTION_BAN_WORLD_WONDERS_ENABLED" ToolTip="TXT_KEY_GAME_OPTION_BAN_WORLD_WONDERS_ENABLED_HELP" IsChecked="0" ID="BanWorldWonderCheck" ConsumeMouse="1" />
-                </Box>
-                <PullDown Hidden="1" Style="GenericPullDown" ScrollThreshold="400" Offset="5,0" Size="220,25" SpaceForScroll="0" ID="BanWorldWonderPull_1"/>
-                <PullDown Hidden="1" Style="GenericPullDown" ScrollThreshold="400" Offset="4,0" Size="220,25" SpaceForScroll="0" ID="BanWorldWonderPull_2"/>
-                <PullDown Hidden="1" Style="GenericPullDown" ScrollThreshold="400" Offset="4,0" Size="220,25" SpaceForScroll="0" ID="BanWorldWonderPull_3"/>
-              </Stack>
-            </Box>
-
-            <!-- Ban Pantheons Check & Edit Container -->
-            <Box Hidden="1" Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" ID="BanPantheonsBox" >
-
-              <Stack ID="BanPantheonStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right">
-                <Box Anchor="L,C"  Size="200,32" Color="255,255,200,0" >
-                  <CheckBox ButtonTexture="assets/UI/Art/Controls/CheckBox2TheBox.dds" Font="TwCenMT20" Anchor="L,C" TextAnchorSide="Right" TextOffset="40,0" String="TXT_KEY_GAME_OPTION_BAN_PANTHEONS_ENABLED" ToolTip="TXT_KEY_GAME_OPTION_BAN_PANTHEONS_ENABLED_HELP" IsChecked="0" ID="BanPantheonCheck" ConsumeMouse="1" />
-                </Box>
-                <PullDown Hidden="1" Style="GenericPullDown" ScrollThreshold="400" Offset="5,0" Size="220,25" SpaceForScroll="0" ID="BanPantheonPull_1"/>
-                <PullDown Hidden="1" Style="GenericPullDown" ScrollThreshold="400" Offset="4,0" Size="220,25" SpaceForScroll="0" ID="BanPantheonPull_2"/>
-                <PullDown Hidden="1" Style="GenericPullDown" ScrollThreshold="400" Offset="4,0" Size="220,25" SpaceForScroll="0" ID="BanPantheonPull_3"/>
-              </Stack>
-            </Box>
-
-            <!-- Ban Religion Beliefs Check & Edit Container -->
-            <Box Hidden="1" Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" ID="BanReligionBeliefsBox" >
-
-              <Stack ID="BanReligionBeliefStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right">
-                <Box Anchor="L,C"  Size="200,32" Color="255,255,200,0" >
-                  <CheckBox ButtonTexture="assets/UI/Art/Controls/CheckBox2TheBox.dds" Font="TwCenMT20" Anchor="L,C" TextAnchorSide="Right" TextOffset="40,0" String="TXT_KEY_GAME_OPTION_BAN_RELIGION_BELIEFS_ENABLED" ToolTip="TXT_KEY_GAME_OPTION_BAN_RELIGION_BELIEFS_ENABLED_HELP" IsChecked="0" ID="BanReligionBeliefCheck" ConsumeMouse="1" />
-                </Box>
-                <PullDown Hidden="1" Style="GenericPullDown" ScrollThreshold="400" Offset="5,0" Size="220,25" SpaceForScroll="0" ID="BanReligionBeliefPull_1"/>
-                <PullDown Hidden="1" Style="GenericPullDown" ScrollThreshold="400" Offset="4,0" Size="220,25" SpaceForScroll="0" ID="BanReligionBeliefPull_2"/>
-                <PullDown Hidden="1" Style="GenericPullDown" ScrollThreshold="400" Offset="4,0" Size="220,25" SpaceForScroll="0" ID="BanReligionBeliefPull_3"/>
-              </Stack>
-            </Box>
-
         <!-- DLC -->
-        <Box Anchor="C,T" Size="500,30" Offset="0,7" Color="White.0" >
+        <Box Anchor="C,T" Size="500,30" Offset="0,0" Color="White.0" >
           <Image  Anchor="C,T"  Offset="0,0" Texture="bar500x2.dds" Size="500.1" />
           <Label  Anchor="C,B"  Offset="0,5" String="TXT_KEY_DLC_ALLOWED" Font="TwCenMT20" />
           <Image  Anchor="C,B"  Offset="0,0" Texture="bar500x2.dds" Size="500.1" />
