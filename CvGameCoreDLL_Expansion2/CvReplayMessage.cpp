@@ -200,14 +200,14 @@ void CvReplayMessage::read(FDataStream& kStream, unsigned int uiVersion)
 		}
 	}
 #ifdef REPLAY_MESSAGE_EXTENDED
-# ifdef SAVE_BACKWARDS_COMPATIBILITY
+//# ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1001)
 	{
-# endif
+//# endif
 		kStream >> m_iTimeMilliseconds;
 		kStream >> m_iExtraData1;
 		kStream >> m_iExtraData2;
-# ifdef SAVE_BACKWARDS_COMPATIBILITY
+//# ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
 	else if (uiVersion == 1000)
 	{
@@ -221,7 +221,7 @@ void CvReplayMessage::read(FDataStream& kStream, unsigned int uiVersion)
 		m_iExtraData1 = 0;
 		m_iExtraData2 = 0;
 	}
-# endif
+//# endif
 #endif
 
 	kStream >> m_ePlayer;
