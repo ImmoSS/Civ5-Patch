@@ -1,8 +1,6 @@
 -------------------------------------------------
 -- Include file that has handy stuff for the tech tree and other screens that need to show a tech button
 -------------------------------------------------
--- edit: Duel Mode for EUI and vanilla UI
--------------------------------------------------
 include( "IconSupport" );
 include( "InfoTooltipInclude" );
 
@@ -104,23 +102,19 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
  	
  	for thisBuildingInfo in GameInfo.Buildings(string.format("PreReqTech = '%s'", techType)) do
  		-- if this tech grants this player the ability to construct this building
- -- Duel Mode
 		if validBuildingBuilds[thisBuildingInfo.BuildingClass] == thisBuildingInfo.Type then
-			if not (PreGame.GetGameOption("GAMEOPTION_DUEL_STUFF") > 0 and (PreGame.GetGameOption("GAMEOPTION_BAN_WORLD_WONDERS") > 0 
-				and (PreGame.GetGameOption("GAMEOPTION_BAN_WONDER1") == thisBuildingInfo.ID or PreGame.GetGameOption("GAMEOPTION_BAN_WONDER2") == thisBuildingInfo.ID or PreGame.GetGameOption("GAMEOPTION_BAN_WONDER3") == thisBuildingInfo.ID) or 70 == thisBuildingInfo.ID or PreGame.GetGameOption("GAMEOPTION_DISABLE_OXFORD_UNIVERSITY") > 0 and 61 == thisBuildingInfo.ID)) then
-				local buttonName = "B"..tostring(buttonNum);
-				local thisButton = thisTechButtonInstance[buttonName];
-				if thisButton then
-					AdjustArtOnGrantedBuildingButton( thisButton, thisBuildingInfo, textureSize );
-					buttonNum = buttonNum + 1;
-				end
+			local buttonName = "B"..tostring(buttonNum);
+			local thisButton = thisTechButtonInstance[buttonName];
+			if thisButton then
+				AdjustArtOnGrantedBuildingButton( thisButton, thisBuildingInfo, textureSize );
+				buttonNum = buttonNum + 1;
 			end
 		end
  	end
 
  	for thisResourceInfo in GameInfo.Resources(string.format("TechReveal = '%s'", techType)) do
+ 		-- if this tech grants this player the ability to reveal this resource
  		if (thisResourceInfo.ID ~= 39) then
-	 		-- if this tech grants this player the ability to reveal this resource
 			local buttonName = "B"..tostring(buttonNum);
 			local thisButton = thisTechButtonInstance[buttonName];
 			if thisButton then
@@ -409,20 +403,6 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
 			buttonNum = buttonNum + 1;
 		end	
 	end
-
-	playerID = Game.GetActivePlayer();
-	player = Players[playerID];
-	civID = GameInfo.Civilizations[player:GetCivilizationType()].ID;
-	if civID == 43 and (tech.ID == 12 or tech.ID == 31) then
-		local buttonName = "B"..tostring(buttonNum);
-		local thisButton = thisTechButtonInstance[buttonName];
-		if thisButton then
-			IconHookup( 0, textureSize, "GENERIC_FUNC_ATLAS", thisButton );
-			thisButton:SetHide( false );
-			thisButton:SetToolTipString( Locale.ConvertTextKey( "TXT_KEY_ADDITIONAL_INTERNATIONAL_TRADE_ROUTE" ) );
-			buttonNum = buttonNum + 1;
-		end	
-	end
 	
 	
 	if (tech.ScenarioTechButton == 1) then
@@ -527,17 +507,6 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
 			IconHookup( 0, textureSize, "GENERIC_FUNC_ATLAS", thisButton );
 			thisButton:SetHide( false );
 			thisButton:SetToolTipString( Locale.ConvertTextKey( "TXT_KEY_ALLOWS_WORLD_CONGRESS" ) );
-			buttonNum = buttonNum + 1;
-		end
-	end
-	
-	if tech.TriggersIdeology then
-		local buttonName = "B"..tostring(buttonNum);
-		local thisButton = thisTechButtonInstance[buttonName];
-		if thisButton then
-			IconHookup( 0, textureSize, "GENERIC_FUNC_ATLAS", thisButton );
-			thisButton:SetHide( false );
-			thisButton:SetToolTipString( Locale.ConvertTextKey( "TXT_KEY_TRIGGERS_IDEOLOGY" ) );
 			buttonNum = buttonNum + 1;
 		end
 	end
