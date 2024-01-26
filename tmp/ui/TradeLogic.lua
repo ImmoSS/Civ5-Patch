@@ -1075,8 +1075,7 @@ function ResetDisplay()
     if (not bGoldTradeAllowed) then
 	    Controls.UsPocketGold:SetDisabled(true);
 	    Controls.UsPocketGold:GetTextControl():SetColorByName("Gray_Black");
-	    -- Controls.UsPocketGold:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_DIPLO_NEED_DOF_TT_ONE_LINE"));
-	    Controls.UsPocketGold:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_DIPLO_ITEM_EMBARGOED_ONE_LINE"));
+	    Controls.UsPocketGold:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_DIPLO_NEED_DOF_TT_ONE_LINE"));
 	else
 	    Controls.UsPocketGold:SetDisabled(false);
 	    Controls.UsPocketGold:GetTextControl():SetColorByName("Beige_Black");
@@ -1093,8 +1092,7 @@ function ResetDisplay()
     if (not bGoldTradeAllowed) then
 	    Controls.ThemPocketGold:SetDisabled(true);
 	    Controls.ThemPocketGold:GetTextControl():SetColorByName("Gray_Black");
-	    -- Controls.ThemPocketGold:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_DIPLO_NEED_DOF_TT_ONE_LINE"));
-	    Controls.ThemPocketGold:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_DIPLO_ITEM_EMBARGOED_ONE_LINE"));
+	    Controls.ThemPocketGold:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_DIPLO_NEED_DOF_TT_ONE_LINE"));
 	else
 	    Controls.ThemPocketGold:SetDisabled(false);
 	    Controls.ThemPocketGold:GetTextControl():SetColorByName("Beige_Black");
@@ -1115,11 +1113,9 @@ function ResetDisplay()
     if (not bGPTAllowed) then
 	    Controls.UsPocketGoldPerTurn:SetDisabled(true);
 	    Controls.UsPocketGoldPerTurn:GetTextControl():SetColorByName("Gray_Black");
-	    Controls.UsPocketGoldPerTurn:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_DIPLO_ITEM_EMBARGOED_ONE_LINE"));
 	else
 	    Controls.UsPocketGoldPerTurn:SetDisabled(false);
 	    Controls.UsPocketGoldPerTurn:GetTextControl():SetColorByName("Beige_Black");
-	    Controls.UsPocketGoldPerTurn:SetToolTipString(nil);	    
     end
     
     -- Them
@@ -1132,11 +1128,9 @@ function ResetDisplay()
     if (not bGPTAllowed) then
 	    Controls.ThemPocketGoldPerTurn:SetDisabled(true);
 	    Controls.ThemPocketGoldPerTurn:GetTextControl():SetColorByName("Gray_Black");
-	    Controls.ThemPocketGoldPerTurn:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_DIPLO_ITEM_EMBARGOED_ONE_LINE"));
 	else
 	    Controls.ThemPocketGoldPerTurn:SetDisabled(false);
 	    Controls.ThemPocketGoldPerTurn:GetTextControl():SetColorByName("Beige_Black");
-	    Controls.ThemPocketGoldPerTurn:SetToolTipString(nil);	    
     end
 
     ---------------------------------------------------------------------------------- 
@@ -1331,10 +1325,10 @@ function ResetDisplay()
 				strDisabledTT = strDisabledTT .. Locale.ConvertTextKey( "TXT_KEY_DIPLO_BOTH_NEED_EMBASSY_TT" ) ;
 				bEmptyTT = false;
 			end
-			--[[if (not g_pUs:IsDoF(g_iThem) or not g_pThem:IsDoF(g_iUs)) then
+			if (not g_pUs:IsDoF(g_iThem) or not g_pThem:IsDoF(g_iUs)) then
 				strDisabledTT = strDisabledTT .. Locale.ConvertTextKey( "TXT_KEY_DIPLO_NEED_DOF_TT" ) ;
 				bEmptyTT = false;
-			end]]
+			end
 			if (Players[g_iUs]:GetGold() < iCost or Players[g_iThem]:GetGold() < iCost or bEmptyTT) then
 				strDisabledTT = strDisabledTT .. Locale.ConvertTextKey( "TXT_KEY_DIPLO_RESCH_AGREEMENT_NO_AGREEMENT" ) ;
 			end
@@ -1418,7 +1412,7 @@ function ResetDisplay()
     ---------------------------------------------------------------------------------- 
 
 	if ( Controls.UsPocketDoF ~= nil and Controls.ThemPocketDoF ~= nil) then
-		--[[if (g_bPVPTrade) then	-- Only PvP trade, with the AI there is a dedicated interface for this trade.
+		if (g_bPVPTrade) then	-- Only PvP trade, with the AI there is a dedicated interface for this trade.
 		
 			strTooltip = Locale.ConvertTextKey("TXT_KEY_DIPLO_DISCUSS_MESSAGE_DEC_FRIENDSHIP_TT");
 		
@@ -1451,11 +1445,7 @@ function ResetDisplay()
 		else
 			Controls.UsPocketDoF:SetHide(true);
 			Controls.ThemPocketDoF:SetHide(true);
-		end]]
-		-- REMOVE DOF
-		Controls.UsPocketDoF:SetHide(true);
-		Controls.ThemPocketDoF:SetHide(true);
-		-- REMOVE DOF END
+		end
 	end
 	
     ---------------------------------------------------------------------------------- 
