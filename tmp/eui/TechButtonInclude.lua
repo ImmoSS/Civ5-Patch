@@ -1,8 +1,6 @@
 -------------------------------------------------
 -- Include file that has handy stuff for the tech tree and other screens that need to show a tech button
 -------------------------------------------------
--- edit: Duel Mode for EUI and vanilla UI
--------------------------------------------------
 include( "FLuaVector" ) --compatibility with Firaxis scripts
 include( "EUI_utilities" )
 IconLookup = EUI.IconLookup
@@ -423,12 +421,8 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
 
 	-- buildings and wonders unlocked by this tech
 	for row in GameInfo.Buildings( thisPrereqTech ) do
--- Duel Mode
-		if not (PreGame.GetGameOption("GAMEOPTION_DUEL_STUFF") > 0 and (PreGame.GetGameOption("GAMEOPTION_BAN_WORLD_WONDERS") > 0 
-			and (PreGame.GetGameOption("GAMEOPTION_BAN_WONDER1") == row.ID or PreGame.GetGameOption("GAMEOPTION_BAN_WONDER2") == row.ID or PreGame.GetGameOption("GAMEOPTION_BAN_WONDER3") == row.ID) or 70 == row.ID or PreGame.GetGameOption("GAMEOPTION_DISABLE_OXFORD_UNIVERSITY") > 0 and row.ID == 61)) then
-			if validBuildingBuilds[row.BuildingClass] == row.Type and not addSmallArtButton( AdjustArtOnGrantedBuildingButton, row ) then
-				break
-			end
+		if validBuildingBuilds[row.BuildingClass] == row.Type and not addSmallArtButton( AdjustArtOnGrantedBuildingButton, row ) then
+			break
 		end
 	end
 
@@ -574,12 +568,6 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
 		if (internationalTradeRoutesChange or 0) > 0 then
 			addSmallActionButton( GameInfo.Missions.MISSION_ESTABLISH_TRADE_ROUTE, "+"..internationalTradeRoutesChange.."   ", "TXT_KEY_ADDITIONAL_INTERNATIONAL_TRADE_ROUTE" )
 		end
-		g_activePlayerID = Game.GetActivePlayer()
-		g_activePlayer = Players[g_activePlayerID]
-		g_activeCivID = GameInfo.Civilizations[g_activePlayer:GetCivilizationType()].ID
-		if g_activeCivID == 43 and (tech.ID == 12 or tech.ID == 31) then
-			addSmallActionButton( GameInfo.Missions.MISSION_ESTABLISH_TRADE_ROUTE, "+".. 1 .."   ", "TXT_KEY_ADDITIONAL_INTERNATIONAL_TRADE_ROUTE" )
-		end
 
 		for row in GameInfo.Technology_TradeRouteDomainExtraRange( thisTechType ) do
 			if row.TechType == techType and (row.Range or 0) > 0 then
@@ -600,7 +588,6 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
 			addSmallGenericButtonIf( (tonumber(tech.InfluenceSpreadModifier) or 0) > 0 and "TXT_KEY_DOUBLE_TOURISM" )
 
 			addSmallGenericButtonIf( tech.AllowsWorldCongress and "TXT_KEY_ALLOWS_WORLD_CONGRESS" )
-			addSmallGenericButtonIf( tech.TriggersIdeology and "TXT_KEY_TRIGGERS_IDEOLOGY" )
 
 			addSmallGenericButtonIf( (tonumber(tech.ExtraVotesPerDiplomat) or 0) > 0 and "TXT_KEY_EXTRA_VOTES_FROM_DIPLOMATS", tech.ExtraVotesPerDiplomat )
 
