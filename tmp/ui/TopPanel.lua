@@ -449,25 +449,10 @@ function ScienceTipHandler( control )
 			
 			strText = strText .. Locale.ConvertTextKey("TXT_KEY_TP_SCIENCE_FROM_ITR", iScienceFromTrade / 100);
 		end
-
-		-- Science from Religion
-		local iGetSciencePerTurnFromReligion = pPlayer:GetSciencePerTurnFromReligionTimes100();
-		if (iGetSciencePerTurnFromReligion ~= 0) then
-		
-			-- Add separator for non-initial entries
-			if (bFirstEntry) then
-				bFirstEntry = false;
-			else
-				strText = strText .. "[NEWLINE]";
-			end
-
-			strText = strText .. Locale.ConvertTextKey("TXT_KEY_TP_SCIENCE_FROM_RELIGION", iGetSciencePerTurnFromReligion / 100);
-		end
 	
 		-- Science from Other Players
 		local iScienceFromOtherPlayers = pPlayer:GetScienceFromOtherPlayersTimes100();
-		local iSciencePerTurnFromMinorCivs = pPlayer:GetSciencePerTurnFromMinorCivsTimes100();
-		if (iScienceFromOtherPlayers + iSciencePerTurnFromMinorCivs ~= 0) then
+		if (iScienceFromOtherPlayers ~= 0) then
 		
 			-- Add separator for non-initial entries
 			if (bFirstEntry) then
@@ -476,7 +461,7 @@ function ScienceTipHandler( control )
 				strText = strText .. "[NEWLINE]";
 			end
 
-			strText = strText .. Locale.ConvertTextKey("TXT_KEY_TP_SCIENCE_FROM_MINORS", (iScienceFromOtherPlayers + iSciencePerTurnFromMinorCivs) / 100);
+			strText = strText .. Locale.ConvertTextKey("TXT_KEY_TP_SCIENCE_FROM_MINORS", iScienceFromOtherPlayers / 100);
 		end
 	
 		-- Science from Happiness
@@ -541,14 +526,13 @@ function GoldTipHandler( control )
 	end
 	
 	local iGoldPerTurnFromReligion = pPlayer:GetGoldPerTurnFromReligion();
-	local iGoldPerTurnFromPolicies = pPlayer:GetGoldPerTurnFromPolicies();
 
 	local fTradeRouteGold = (pPlayer:GetGoldFromCitiesTimes100() - pPlayer:GetGoldFromCitiesMinusTradeRoutesTimes100()) / 100;
 	local fGoldPerTurnFromCities = pPlayer:GetGoldFromCitiesMinusTradeRoutesTimes100() / 100;
 	local fCityConnectionGold = pPlayer:GetCityConnectionGoldTimes100() / 100;
 	--local fInternationalTradeRouteGold = pPlayer:GetGoldPerTurnFromTradeRoutesTimes100() / 100;
 	local fTraitGold = pPlayer:GetGoldPerTurnFromTraits();
-	local fTotalIncome = fGoldPerTurnFromCities + iGoldPerTurnFromOtherPlayers + fCityConnectionGold + iGoldPerTurnFromReligion + iGoldPerTurnFromPolicies + fTradeRouteGold + fTraitGold;
+	local fTotalIncome = fGoldPerTurnFromCities + iGoldPerTurnFromOtherPlayers + fCityConnectionGold + iGoldPerTurnFromReligion + fTradeRouteGold + fTraitGold;
 	
 	if (pPlayer:IsAnarchy()) then
 		strText = strText .. Locale.ConvertTextKey("TXT_KEY_TP_ANARCHY", pPlayer:GetAnarchyNumTurns());
@@ -573,9 +557,6 @@ function GoldTipHandler( control )
 	end
 	if (iGoldPerTurnFromReligion > 0) then
 		strText = strText .. "[NEWLINE]  [ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_TP_GOLD_FROM_RELIGION", iGoldPerTurnFromReligion);
-	end
-	if (iGoldPerTurnFromPolicies > 0) then
-		strText = strText .. "[NEWLINE]  [ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_TP_GOLD_FROM_POLICIES", iGoldPerTurnFromPolicies);
 	end
 	strText = strText .. "[/COLOR]";
 	
@@ -659,9 +640,8 @@ function HappinessTipHandler( control )
 		local iExtraHappinessPerCity = pPlayer:GetExtraHappinessPerCity() * pPlayer:GetNumCities();
 		local iMinorCivHappiness = pPlayer:GetHappinessFromMinorCivs();
 		local iLeagueHappiness = pPlayer:GetHappinessFromLeagues();
-		local iFutureTechHappiness = 5 * pTeam:GetTeamTechs():GetTechCount(80);
 	
-		local iHandicapHappiness = pPlayer:GetHappiness() - iPoliciesHappiness - iResourcesHappiness - iCityHappiness - iBuildingHappiness - iTradeRouteHappiness - iReligionHappiness - iNaturalWonderHappiness - iMinorCivHappiness - iExtraHappinessPerCity - iLeagueHappiness - iFutureTechHappiness;
+		local iHandicapHappiness = pPlayer:GetHappiness() - iPoliciesHappiness - iResourcesHappiness - iCityHappiness - iBuildingHappiness - iTradeRouteHappiness - iReligionHappiness - iNaturalWonderHappiness - iMinorCivHappiness - iExtraHappinessPerCity - iLeagueHappiness;
 	
 		if (pPlayer:IsEmpireVeryUnhappy()) then
 		
@@ -678,7 +658,7 @@ function HappinessTipHandler( control )
 			strText = strText .. "[COLOR:255:60:60:255]" .. Locale.ConvertTextKey("TXT_KEY_TP_EMPIRE_UNHAPPY") .. "[/COLOR]";
 		end
 	
-		local iTotalHappiness = iPoliciesHappiness + iResourcesHappiness + iCityHappiness + iBuildingHappiness + iMinorCivHappiness + iHandicapHappiness + iTradeRouteHappiness + iReligionHappiness + iNaturalWonderHappiness + iExtraHappinessPerCity + iLeagueHappiness + iFutureTechHappiness;
+		local iTotalHappiness = iPoliciesHappiness + iResourcesHappiness + iCityHappiness + iBuildingHappiness + iMinorCivHappiness + iHandicapHappiness + iTradeRouteHappiness + iReligionHappiness + iNaturalWonderHappiness + iExtraHappinessPerCity + iLeagueHappiness;
 	
 		strText = strText .. "[NEWLINE][NEWLINE]";
 		strText = strText .. "[COLOR:150:255:150:255]";
@@ -754,10 +734,6 @@ function HappinessTipHandler( control )
 		if (iLeagueHappiness ~= 0) then
 			strText = strText .. "[NEWLINE]";
 			strText = strText .. "  [ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_TP_HAPPINESS_LEAGUES", iLeagueHappiness);
-		end
-		if (iFutureTechHappiness ~= 0) then
-			strText = strText .. "[NEWLINE]";
-			strText = strText .. "  [ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_TP_HAPPINESS_FUTURE_TECH", iFutureTechHappiness);
 		end
 		strText = strText .. "[NEWLINE]";
 		strText = strText .. "  [ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_TP_HAPPINESS_DIFFICULTY_LEVEL", iHandicapHappiness);
@@ -863,11 +839,7 @@ function GoldenAgeTipHandler( control )
 		if (pPlayer:IsGoldenAgeCultureBonusDisabled()) then
 			strText = strText ..  Locale.ConvertTextKey("TXT_KEY_TP_GOLDEN_AGE_EFFECT_NO_CULTURE");		
 		else
-			if (pPlayer:GetGoldenAgeTourismModifier() > 0) then
-				strText = strText ..  Locale.ConvertTextKey("TXT_KEY_TP_GOLDEN_AGE_EFFECT_BRAZIL");
-			else
-				strText = strText ..  Locale.ConvertTextKey("TXT_KEY_TP_GOLDEN_AGE_EFFECT");		
-			end
+			strText = strText ..  Locale.ConvertTextKey("TXT_KEY_TP_GOLDEN_AGE_EFFECT");		
 		end
 		
 		if (pPlayer:GetGoldenAgeTurns() > 0 and pPlayer:GetGoldenAgeTourismModifier() > 0) then
