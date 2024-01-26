@@ -187,8 +187,7 @@ local function TechSelected( techID )
 		if g_stealingTechTargetPlayer then
 			if g_activePlayer:CanResearch( techID )
 				and g_activePlayer:GetNumTechsToSteal( g_stealingTechTargetPlayerID ) > 0
-				and g_activePlayer:canStealTech ( g_stealingTechTargetPlayerID, techID )
-				-- and Teams[ g_stealingTechTargetPlayer:GetTeam() ]:IsHasTech( techID )
+				and Teams[ g_stealingTechTargetPlayer:GetTeam() ]:IsHasTech( techID )
 			then
 				Network_SendResearch( techID, 0, g_stealingTechTargetPlayerID, shift )
 				CloseTechTree()
@@ -245,17 +244,12 @@ local function RefreshDisplayOfSpecificTech( tech )
 	elseif g_stealingTechTargetPlayer or g_activePlayer:GetNumFreeTechs() > 0 then
 	-- Stealing a tech or Choosing a free tech
 		if canResearchThisTech and ( 
-			( g_stealingTechTargetPlayer and g_activePlayer:canStealTech ( g_stealingTechTargetPlayerID , techID ) )
+			( g_stealingTechTargetPlayer and Teams[ g_stealingTechTargetPlayer:GetTeam() ]:IsHasTech( techID ) )
 			or (not g_stealingTechTargetPlayer and (not gk_mode or g_activePlayer:CanResearchForFree( techID ))) )
 		then
 			showFreeTech = true
 			turnLabel = thisTechButton.FreeTurns
-			if g_stealingTechTargetPlayer and g_activePlayer:canStealTech ( g_stealingTechTargetPlayerID , techID ) then
-				queueText = string.format("    [COLOR_MENU_BLUE]%i[ENDCOLOR][ICON_RESEARCH]", g_activePlayer:ScienceToStealAmount( g_stealingTechTargetPlayerID, techID ))
-			else
-				queueText = freeString	-- update queue number to say "FREE"
-			end
-
+			queueText = freeString	-- update queue number to say "FREE"
 			isClickable = true
 		else
 			showLocked = true
