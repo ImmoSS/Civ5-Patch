@@ -1588,10 +1588,7 @@ g_toolTipHandler.SciencePerTurn = function()-- control )
 		tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_ITR", ( g_activePlayer:GetScienceFromCitiesTimes100(false) - g_activePlayer:GetScienceFromCitiesTimes100(true) ) / 100 )
 
 		-- Science from Other Players
-		tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_MINORS", (g_activePlayer:GetScienceFromOtherPlayersTimes100() + g_activePlayer:GetSciencePerTurnFromMinorCivsTimes100()) / 100 )
-
-		-- Science from Religion
-		tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_RELIGION", g_activePlayer:GetSciencePerTurnFromReligionTimes100() / 100 )
+		tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_MINORS", g_activePlayer:GetScienceFromOtherPlayersTimes100() / 100 )
 
 		if civ5_mode then
 			-- Science from Happiness
@@ -1716,12 +1713,11 @@ g_toolTipHandler.GoldPerTurn = function()-- control )
 	local goldPerTurnToOtherPlayers = -math_min(0,goldPerTurnFromDiplomacy)
 
 	local goldPerTurnFromReligion = gk_mode and g_activePlayer:GetGoldPerTurnFromReligion() * 100 or 0
-	local goldPerTurnFromPolicies = gk_mode and g_activePlayer:GetGoldPerTurnFromPolicies() * 100 or 0
 	local goldPerTurnFromCities = g_activePlayer:GetGoldFromCitiesTimes100()
 	local cityConnectionGold = g_activePlayer:GetCityConnectionGoldTimes100()
 	local playerTraitGold = 0
 	local tradeRouteGold = 0
-	-- local goldPerTurnFromPolicies = 0
+	local goldPerTurnFromPolicies = 0
 
 	local unitCost = g_activePlayer:CalculateUnitCost()
 	local unitSupply = g_activePlayer:CalculateUnitSupply()
@@ -1743,15 +1739,15 @@ g_toolTipHandler.GoldPerTurn = function()-- control )
 
 	-- Total gold
 	local totalIncome, totalWealth
-	local explicitIncome = goldPerTurnFromCities + goldPerTurnFromOtherPlayers + cityConnectionGold + goldPerTurnFromReligion + goldPerTurnFromPolicies + tradeRouteGold + playerTraitGold
+	local explicitIncome = goldPerTurnFromCities + goldPerTurnFromOtherPlayers + cityConnectionGold + goldPerTurnFromReligion + tradeRouteGold + playerTraitGold
 	if civ5_mode then
 		totalWealth = g_activePlayer:GetGold()
 		totalIncome = explicitIncome
 	else
 		totalWealth = g_activePlayer:GetEnergy()
 		totalIncome = g_activePlayer:CalculateGrossGoldTimes100() + goldPerTurnToOtherPlayers * 100
-		-- goldPerTurnFromPolicies = g_activePlayer:GetGoldPerTurnFromPolicies()
-		-- explicitIncome = explicitIncome + goldPerTurnFromPolicies
+		goldPerTurnFromPolicies = g_activePlayer:GetGoldPerTurnFromPolicies()
+		explicitIncome = explicitIncome + goldPerTurnFromPolicies
 		routeMaintenance = g_activePlayer:GetRouteEnergyMaintenance()
 		beaconEnergyDelta = g_activePlayer:GetBeaconEnergyCostPerTurn()
 	end
@@ -2088,10 +2084,9 @@ if civ5_mode then
 			local naturalWonderHappiness = g_activePlayer:GetHappinessFromNaturalWonders()
 			local extraHappinessPerCity = g_activePlayer:GetExtraHappinessPerCity() * g_activePlayer:GetNumCities()
 			local leagueHappiness = bnw_mode and g_activePlayer:GetHappinessFromLeagues() or 0
-			local FutureTechHappiness = 5 * g_activeTeam:GetTeamTechs():GetTechCount(80);
 			local totalHappiness = g_activePlayer:GetHappiness()
 			local happinessFromVassals = g_activePlayer.GetHappinessFromVassals and g_activePlayer:GetHappinessFromVassals() or 0	-- Compatibility with Putmalk's Civ IV Diplomacy Features Mod
-			local handicapHappiness = totalHappiness - policiesHappiness - resourcesHappiness - cityHappiness - buildingHappiness - garrisonedUnitsHappiness - minorCivHappiness - tradeRouteHappiness - religionHappiness - naturalWonderHappiness - extraHappinessPerCity - leagueHappiness - FutureTechHappiness - happinessFromVassals	-- Compatibility with Putmalk's Civ IV Diplomacy Features Mod
+			local handicapHappiness = totalHappiness - policiesHappiness - resourcesHappiness - cityHappiness - buildingHappiness - garrisonedUnitsHappiness - minorCivHappiness - tradeRouteHappiness - religionHappiness - naturalWonderHappiness - extraHappinessPerCity - leagueHappiness - happinessFromVassals	-- Compatibility with Putmalk's Civ IV Diplomacy Features Mod
 
 			if g_activePlayer:IsEmpireVeryUnhappy() then
 
@@ -2176,7 +2171,6 @@ if civ5_mode then
 			tips:insertLocalizedBulletIfNonZero( "TXT_KEY_TP_HAPPINESS_CITY_COUNT", extraHappinessPerCity )
 			tips:insertLocalizedBulletIfNonZero( "TXT_KEY_TP_HAPPINESS_CITY_STATE_FRIENDSHIP", minorCivHappiness )
 			tips:insertLocalizedBulletIfNonZero( "TXT_KEY_TP_HAPPINESS_LEAGUES", leagueHappiness )
-			tips:insertLocalizedBulletIfNonZero( "TXT_KEY_TP_HAPPINESS_FUTURE_TECH", FutureTechHappiness )
 			tips:insertLocalizedBulletIfNonZero( "TXT_KEY_TP_HAPPINESS_VASSALS", happinessFromVassals )	-- Compatibility with Putmalk's Civ IV Diplomacy Features Mod
 
 			-- Happiness from Luxury Variety
@@ -2442,11 +2436,7 @@ if civ5_mode then
 				if gk_mode and g_activePlayer:IsGoldenAgeCultureBonusDisabled() then
 					tips:insert( L"TXT_KEY_TP_GOLDEN_AGE_EFFECT_NO_CULTURE" )
 				else
-					if g_activePlayer:GetGoldenAgeTourismModifier() > 0 then
-						tips:insert( L"TXT_KEY_TP_GOLDEN_AGE_EFFECT_BRAZIL" )
-					else
-						tips:insert( L"TXT_KEY_TP_GOLDEN_AGE_EFFECT" )
-					end
+					tips:insert( L"TXT_KEY_TP_GOLDEN_AGE_EFFECT" )
 				end
 				if bnw_mode and g_activePlayer:GetGoldenAgeTurns() > 0 and g_activePlayer:GetGoldenAgeTourismModifier() > 0 then
 					tips:insert( "" )
