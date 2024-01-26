@@ -595,8 +595,7 @@ function RefreshDisplayOfSpecificTech( tech )
  		if player:CanResearch( techID ) then
 			opponentPlayer = Players[stealingTechTargetPlayerID];
 			local opponentTeam = Teams[opponentPlayer:GetTeam()];
-			-- if (opponentTeam:IsHasTech(techID)) then
-			if (player:canStealTech(stealingTechTargetPlayerID, techID)) then
+			if (opponentTeam:IsHasTech(techID)) then
 				isAllowedToStealTech = true;
 			end
 		end
@@ -672,11 +671,7 @@ function RefreshDisplayOfSpecificTech( tech )
   			else
   				thisTechButton.FreeTurns:SetHide( true );
   			end
-  			if stealingTechTargetPlayerID ~= -1 and isAllowedToStealTech then
-				thisTechButton.TechQueueLabel:SetText( "    [COLOR_MENU_BLUE]" .. tostring(player:ScienceToStealAmount( stealingTechTargetPlayerID, techID ) ) .. "[END_COLOR][ICON_RESEARCH]" );
-			else
-				thisTechButton.TechQueueLabel:SetText( freeString );
-			end
+			thisTechButton.TechQueueLabel:SetText( freeString );
 			thisTechButton.TechQueue:SetHide( false );
 		else
   			thisTechButton.FreeTech:SetHide( true );
@@ -723,11 +718,7 @@ function RefreshDisplayOfSpecificTech( tech )
   				thisTechButton.FreeTurns:SetHide( true );
   			end
 			-- update queue number to say "FREE"
-  			if stealingTechTargetPlayerID ~= -1 and isAllowedToStealTech then
-				thisTechButton.TechQueueLabel:SetText( "    [COLOR_MENU_BLUE]" .. tostring(player:ScienceToStealAmount( stealingTechTargetPlayerID, techID ) ) .. "[END_COLOR][ICON_RESEARCH]" );
-			else
-				thisTechButton.TechQueueLabel:SetText( freeString );
-			end
+			thisTechButton.TechQueueLabel:SetText( freeString );
 			thisTechButton.TechQueue:SetHide( false );
 		else
  			thisTechButton.FreeTech:SetHide( true );
