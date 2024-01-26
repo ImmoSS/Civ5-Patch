@@ -510,7 +510,7 @@ function PopulateSpaceRace()
 					numApollo = numApollo + 1;
 				end
 			end
-			-- Controls.SpaceInfo:LocalizeAndSetText("TXT_KEY_VP_DIPLO_PROJECT_PLAYERS_COMPLETE", numApollo, "TXT_KEY_PROJECT_APOLLO_PROGRAM");
+			Controls.SpaceInfo:LocalizeAndSetText("TXT_KEY_VP_DIPLO_PROJECT_PLAYERS_COMPLETE", numApollo, "TXT_KEY_PROJECT_APOLLO_PROGRAM");
 		end
 		
 		Controls.ScienceVictoryProgress:SetHide(false);
