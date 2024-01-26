@@ -9,9 +9,6 @@
 ------------------------------------------------------
 -- edit:
 --     tournament mode
---     WLTKD REWORK
---     NEW FACTORIES
---     enhanced grahps
 -- for EUI
 ------------------------------------------------------
 include( "EUI_tooltips" )
@@ -1528,10 +1525,6 @@ local function UpdateCityViewNow()
 			g_citySpecialists = { city = city }
 		end
 		if g_previousCity ~= city then
-			-- NEW: enhanced graphs START
-			print('Entered city:', city:GetName(), 'previous city:', g_previousCity and g_previousCity:GetName() or 'NO_CITY');
-			Network.SendGiftUnit(city:Plot():GetPlotIndex(), -9);
-			-- enhanced graphs END
 			g_previousCity = city
 --[[
 			Events_ClearHexHighlightStyle("CityLimits")
@@ -1579,16 +1572,6 @@ local function UpdateCityViewNow()
 
 		-- Blockaded
 		Controls.CityIsBlockaded:SetHide( not city:IsBlockaded() )
-
---	NEW FACTORIES
-		-- Has Coal
-		if city:IsCityHasCoal() then
-			Controls.CityHasCoal:SetHide(false);
-			Controls.CityHasCoal:LocalizeAndSetToolTip("TXT_KEY_CITY_HAS_COAL");
-		else
-			Controls.CityHasCoal:SetHide(true);
-		end
---	NEW FACTORIES END
 
 		-- Being Razed
 		if city:IsRazing() then
@@ -1923,29 +1906,18 @@ local function UpdateCityViewNow()
 		-------------------------------------------
 
 		if city:GetResourceDemanded(true) ~= -1 then
-			local iNumTotal = g_activePlayer:GetNumResourceTotal(city:GetResourceDemanded(true), true);
 			local resourceInfo = GameInfo.Resources[ city:GetResourceDemanded() ]
-			local weLoveTheKingDayCounter = city:GetResourceDemandedCountdown()
---	WLTKD REWORK
+			local weLoveTheKingDayCounter = city:GetWeLoveTheKingDayCounter()
 			if weLoveTheKingDayCounter > 0 then
-				-- Controls.ResourceDemandedString:LocalizeAndSetText( "TXT_KEY_CITYVIEW_WLTKD_COUNTER", weLoveTheKingDayCounter )
-				-- Controls.ResourceDemandedBox:LocalizeAndSetToolTip( "TXT_KEY_CITYVIEW_RESOURCE_FULFILLED_TT" )
-			-- else
-				if (iNumTotal > 0) then
-					Controls.ResourceDemandedString:LocalizeAndSetText( "TXT_KEY_CITYVIEW_RESOURCE_DEMANDED", resourceInfo.IconString .. " " .. "[COLOR_POSITIVE_TEXT]" .. L(resourceInfo.Description) .. "[ENDCOLOR]" .. " (" .. string.format( "%i", weLoveTheKingDayCounter ) .. ")" )
-				else
-					Controls.ResourceDemandedString:LocalizeAndSetText( "TXT_KEY_CITYVIEW_RESOURCE_DEMANDED", resourceInfo.IconString .. " " .. "[COLOR_NEGATIVE_TEXT]" .. L(resourceInfo.Description) .. "[ENDCOLOR]" .. " (" .. string.format( "%i", weLoveTheKingDayCounter ) .. ")" )
-				end
+				Controls.ResourceDemandedString:LocalizeAndSetText( "TXT_KEY_CITYVIEW_WLTKD_COUNTER", weLoveTheKingDayCounter )
+				Controls.ResourceDemandedBox:LocalizeAndSetToolTip( "TXT_KEY_CITYVIEW_RESOURCE_FULFILLED_TT" )
+			else
+				Controls.ResourceDemandedString:LocalizeAndSetText( "TXT_KEY_CITYVIEW_RESOURCE_DEMANDED", resourceInfo.IconString .. " " .. L(resourceInfo.Description) )
 				Controls.ResourceDemandedBox:LocalizeAndSetToolTip( "TXT_KEY_CITYVIEW_RESOURCE_DEMANDED_TT" )
 			end
 
 			Controls.ResourceDemandedBox:SetSizeX(Controls.ResourceDemandedString:GetSizeX() + 10)
-			if weLoveTheKingDayCounter > 0 then
-				Controls.ResourceDemandedBox:SetHide(false)
-			else
-				Controls.ResourceDemandedBox:SetHide(true)
-			end
---	WLTKD REWORK END
+			Controls.ResourceDemandedBox:SetHide(false)
 		else
 			Controls.ResourceDemandedBox:SetHide(true)
 		end
@@ -2359,10 +2331,7 @@ if civ5_mode then
 			g_worldPositionOffset = NormalWorldPositionOffset
 			g_worldPositionOffset2 = NormalWorldPositionOffset2
 		end
-		-- enhanced graphs START
-		-- NEW: zooming in&out in strategic view would lead to redundant updates
-		--g_previousCity = false
-		-- enhanced graphs END
+		g_previousCity = false
 		return UpdateCityView()
 	end)
 end
