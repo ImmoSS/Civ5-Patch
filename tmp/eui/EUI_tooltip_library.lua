@@ -5,9 +5,6 @@
 -- compatible with Communitas breaking yield types
 -- TODO: lots !
 --print( "Loading EUI tooltips for "..tostring(ContextPtr:GetID()).." context" )
--------------------------------------------------
--- edit: Duel Mode for EUI and vanilla UI
--------------------------------------------------
 
 local civ5_mode = InStrategicView ~= nil
 local civBE_mode = not civ5_mode
@@ -185,13 +182,7 @@ local function SetKey( t, key, value )
 end
 
 local function AddPreWrittenHelpTextAndConcat( tips, row ) -- assumes tips is custom EUI table object
-	-- Duel Mode
-	local tip
-	if PreGame.GetGameOption("GAMEOPTION_DUEL_STUFF") > 0 then
-		tip = row and row.DuelHelp and L( row.DuelHelp ) or row and row.Help and L( row.Help ) or ""
-	else
-		tip = row and row.Help and L( row.Help ) or ""
-	end
+	local tip = row and row.Help and L( row.Help ) or ""
 	if tip ~= "" then
 		tips:insertIf( #tips > 2 and "----------------" )
 		tips:insert( tip )
@@ -665,13 +656,7 @@ local function GetHelpTextForBuilding( buildingID, bExcludeName, bExcludeHeader,
 		thisBuildingAndYieldTypes.YieldType = yield.Type
 
 		if Game and buildingClassID and yieldID < YieldTypes.NUM_YIELD_TYPES then -- weed out strange Communitas yields
-			-- Barn Yield
-			if yieldID == 0 and buildingID == 162 then
-				yieldChange = activePlayer:CountNumBuildings( buildingID )
-			else
-				yieldChange = Game.GetBuildingYieldChange( buildingID, yieldID )
-			end
-			-- Barn Yield End
+			yieldChange = Game.GetBuildingYieldChange( buildingID, yieldID )
 			yieldModifier = Game.GetBuildingYieldModifier( buildingID, yieldID )
 			if activePlayer then
 				if gk_mode then
@@ -1948,8 +1933,6 @@ local function GetCultureTooltip( city )
 		-- Culture Wonders modifier
 		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_CULTURE_WONDER_BONUS", city:GetNumWorldWonders() > 0 and cityOwner and cityOwner:GetCultureWonderMultiplier() or 0 )
 	end
-
-	tips:insertLocalizedBulletIfNonZero( "TXT_KEY_CULTURE_FUTURE_TECH_BONUS", 10 * Teams[cityOwner:GetTeam()]:GetTeamTechs():GetTechCount(80) or 0 )
 
 	-- Puppet modifier
 	local puppetMod = city:IsPuppet() and GameDefines.PUPPET_CULTURE_MODIFIER or 0
