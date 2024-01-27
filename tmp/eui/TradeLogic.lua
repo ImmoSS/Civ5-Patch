@@ -741,33 +741,23 @@ function ResetDisplay( diploMessage )
 	isEnabled = g_Deal:IsPossibleToTradeItem( g_iUs, g_iThem, TradeableItems.TRADE_ITEM_GOLD, 1 ) -- 1 here is 1 Gold, which is the minimum possible
 	SetEnabledAndTextAndToolTip( Controls.UsPocketGold, isEnabled,
 		g_Deal:GetGoldAvailable( g_iUs, -1 ) .. " " .. Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD"), -- This is -1 because we're not changing anything right now
-		bnw_mode and not isEnabled and "[COLOR_WARNING_TEXT]"..Locale.ConvertTextKey("TXT_KEY_DIPLO_ITEM_EMBARGOED_ONE_LINE").."[ENDCOLOR]" )
+		bnw_mode and not isEnabled and "[COLOR_WARNING_TEXT]"..Locale.ConvertTextKey("TXT_KEY_DIPLO_NEED_DOF_TT_ONE_LINE").."[ENDCOLOR]" )
 
 	-- Them pocket Gold
 	isEnabled = g_Deal:IsPossibleToTradeItem( g_iThem, g_iUs, TradeableItems.TRADE_ITEM_GOLD, 1 ) -- 1 here is 1 Gold, which is the minimum possible
 	SetEnabledAndTextAndToolTip( Controls.ThemPocketGold, isEnabled,
 		g_Deal:GetGoldAvailable( g_iThem, -1 ) .. " " .. Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD"), -- This is -1 because we're not changing anything right now
-		bnw_mode and not isEnabled and "[COLOR_WARNING_TEXT]"..Locale.ConvertTextKey("TXT_KEY_DIPLO_ITEM_EMBARGOED_ONE_LINE").."[ENDCOLOR]" )
+		bnw_mode and not isEnabled and "[COLOR_WARNING_TEXT]"..Locale.ConvertTextKey("TXT_KEY_DIPLO_NEED_DOF_TT_ONE_LINE").."[ENDCOLOR]" )
 
 	-- Us pocket Gold Per Turn
-	SetEnabledAndTextAndToolTip( Controls.UsPocketGoldPerTurn,
+	SetEnabledAndText( Controls.UsPocketGoldPerTurn,
 		g_Deal:IsPossibleToTradeItem( g_iUs, g_iThem, TradeableItems.TRADE_ITEM_GOLD_PER_TURN, 1, g_iDealDuration ), -- 1 here is 1 GPT, which is the minimum possible
-		g_pUs:CalculateGoldRate() .. " " .. Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD_PER_TURN"),
-		bnw_mode and not isEnabled and "[COLOR_WARNING_TEXT]"..Locale.ConvertTextKey("TXT_KEY_DIPLO_ITEM_EMBARGOED_ONE_LINE").."[ENDCOLOR]" )
-
-	--[[SetEnabledAndText( Controls.UsPocketGoldPerTurn,
-		g_Deal:IsPossibleToTradeItem( g_iUs, g_iThem, TradeableItems.TRADE_ITEM_GOLD_PER_TURN, 1, g_iDealDuration ), -- 1 here is 1 GPT, which is the minimum possible
-		g_pUs:CalculateGoldRate() .. " " .. Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD_PER_TURN") )]]
+		g_pUs:CalculateGoldRate() .. " " .. Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD_PER_TURN") )
 
 	-- Them pocket Gold Per Turn
 	SetEnabledAndText( Controls.ThemPocketGoldPerTurn,
 		g_Deal:IsPossibleToTradeItem( g_iThem, g_iUs, TradeableItems.TRADE_ITEM_GOLD_PER_TURN, 1, g_iDealDuration ), -- 1 here is 1 GPT, which is the minimum possible
-		g_pThem:CalculateGoldRate() .. " " .. Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD_PER_TURN"),
-		bnw_mode and not isEnabled and "[COLOR_WARNING_TEXT]"..Locale.ConvertTextKey("TXT_KEY_DIPLO_ITEM_EMBARGOED_ONE_LINE").."[ENDCOLOR]" )
-
-	--[[SetEnabledAndText( Controls.ThemPocketGoldPerTurn,
-		g_Deal:IsPossibleToTradeItem( g_iThem, g_iUs, TradeableItems.TRADE_ITEM_GOLD_PER_TURN, 1, g_iDealDuration ), -- 1 here is 1 GPT, which is the minimum possible
-		g_pThem:CalculateGoldRate() .. " " .. Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD_PER_TURN") )]]
+		g_pThem:CalculateGoldRate() .. " " .. Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD_PER_TURN") )
 
 
 	----------------------------------------------------------------------------------
@@ -861,9 +851,9 @@ function ResetDisplay( diploMessage )
 			if not g_pUsTeam:HasEmbassyAtTeam(g_iThemTeam) or not g_pThemTeam:HasEmbassyAtTeam(g_iUsTeam) then
 				toolTip = toolTip .. Locale.ConvertTextKey( "TXT_KEY_DIPLO_BOTH_NEED_EMBASSY_TT" )
 			end
-			--[[if not g_pUs:IsDoF(g_iThem) or not g_pThem:IsDoF(g_iUs) then
+			if not g_pUs:IsDoF(g_iThem) or not g_pThem:IsDoF(g_iUs) then
 				toolTip = toolTip .. Locale.ConvertTextKey( "TXT_KEY_DIPLO_NEED_DOF_TT" )
-			end]]
+			end
 		end
 		local ourCash = g_pUs:GetGold() - researchAgreementCost
 		local theirCach = g_pThem:GetGold() - researchAgreementCost
@@ -907,7 +897,7 @@ function ResetDisplay( diploMessage )
 	----------------------------------------------------------------------------------
 
 	if gk_mode and Controls.UsPocketDoF and Controls.ThemPocketDoF then
-		--[[Controls.UsPocketDoF:SetHide( not g_PVPTrade )
+		Controls.UsPocketDoF:SetHide( not g_PVPTrade )
 		Controls.ThemPocketDoF:SetHide( not g_PVPTrade )
 		if g_PVPTrade then	-- Only PvP trade, with the AI there is a dedicated interface for this trade.
 
@@ -919,11 +909,7 @@ function ResetDisplay( diploMessage )
 			end
 			SetEnabledAndToolTip( Controls.UsPocketDoF, g_Deal:IsPossibleToTradeItem( g_iUs, g_iThem, TradeableItems.TRADE_ITEM_DECLARATION_OF_FRIENDSHIP, g_iDealDuration), toolTip )
 			SetEnabledAndToolTip( Controls.ThemPocketDoF, g_Deal:IsPossibleToTradeItem( g_iThem, g_iUs, TradeableItems.TRADE_ITEM_DECLARATION_OF_FRIENDSHIP, g_iDealDuration), toolTip )
-		end]]
-		-- REMOVE DOF
-		Controls.UsPocketDoF:SetHide( true )
-		Controls.ThemPocketDoF:SetHide( true )
-		-- REMOVE DOF END
+		end
 	end
 
 	-- Pocket Cities
@@ -966,7 +952,6 @@ function ResetDisplay( diploMessage )
 	for resourceID, instance in pairs( g_ThemPocketResources ) do
 		if gk_mode and g_Deal:GetNumResource(g_iThem, resourceID) > 0 or g_pThem:GetNumResourceAvailable( resourceID, false ) > 0 then
 			instance.Button:SetHide( false )
-
 			local resource = GameInfo.Resources[resourceID]
 			instance.Button:SetText( resource.IconString .. Locale.ConvertTextKey(resource.Description) .. " (" .. ( gk_mode and g_Deal:GetNumResource(g_iThem, resourceID) or g_pThem:GetNumResourceAvailable( resourceID, false ) ) .. ")" )
 
