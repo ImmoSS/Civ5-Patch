@@ -1812,15 +1812,8 @@ function ActionToolTipHandler( control )
 			toolTip:insertLocalized( "TXT_KEY_BUILD_FEATURE_CLEARED", feature.Description )
 
 			local featureProduction = plot:GetFeatureProduction(buildID, g_activeTeamID)
-			local featureFood = plot:GetFeatureFood(buildID, g_activeTeamID)
 			if featureProduction > 0 then
 				toolTip:append( L("TXT_KEY_BUILD_FEATURE_PRODUCTION", featureProduction) )
-				local city = plot:GetWorkingCity()
-				if city then
-					toolTip:append( " (".. city:GetName()..")" )
-				end
-			elseif featureFood > 0 then
-				toolTip:append( L("TXT_KEY_BUILD_FEATURE_FOOD", featureFood) )
 				local city = plot:GetWorkingCity()
 				if city then
 					toolTip:append( " (".. city:GetName()..")" )
