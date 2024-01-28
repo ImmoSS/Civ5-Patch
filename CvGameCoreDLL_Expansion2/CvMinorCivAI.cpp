@@ -3486,7 +3486,6 @@ void CvMinorCivAI::DoObsoleteQuestsForPlayer(PlayerTypes ePlayer, MinorCivQuestT
 	}
 #ifdef DECREASE_INFLUENCE_IF_BULLYING_SOMEONE_WE_ARE_PROTECTING
 	if(bQuestRevokedFromBullying && IsPledgeRevokedByMajor(ePlayer))
-#endif
 	{
 		Localization::String strMessage = Localization::Lookup("TXT_KEY_NOTIFICATION_QUEST_ENDED_PLEDGE_REVOKED");
 		Localization::String strSummary = Localization::Lookup("TXT_KEY_NOTIFICATION_SUMMARY_QUEST_ENDED_REVOKED");
@@ -3494,6 +3493,7 @@ void CvMinorCivAI::DoObsoleteQuestsForPlayer(PlayerTypes ePlayer, MinorCivQuestT
 		strSummary << GetPlayer()->getNameKey();
 		AddQuestNotification(strMessage.toUTF8(), strSummary.toUTF8(), ePlayer);
 	}
+#endif
 }
 
 void CvMinorCivAI::DoQuestsCleanup()
