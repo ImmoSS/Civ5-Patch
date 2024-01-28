@@ -263,7 +263,7 @@ local g_cityToolTips = {
 				end
 
 				if cityOwner:IsMinorCiv() then
-					tipText = L("TXT_KEY_MINOR_CITY_OF", city:GetName() ) .. tipText .. "[NEWLINE][NEWLINE]"
+					tipText = L("TXT_KEY_CITY_OF", "", city:GetName() ) .. tipText .. "[NEWLINE][NEWLINE]"
 						.. GetCityStateStatusToolTip( g_activePlayerID, cityOwnerID, true )
 				else
 					tipText = L("TXT_KEY_CITY_OF", cityOwner:GetCivilizationAdjectiveKey(), city:GetName() )
@@ -470,9 +470,6 @@ local g_cityToolTips = {
 			return L"TXT_KEY_CITY_PUPPET".."[NEWLINE][NEWLINE]"..L"TXT_KEY_CITY_ANNEX_TT"
 		end
 	end,
-	CityHasCoal = function( city )
-		return L( "TXT_KEY_CITY_HAS_COAL", city:IsCityHasCoal() )
-	end,
 	CityIsRazing = function( city )
 		return L( "TXT_KEY_CITY_BURNING", city:GetRazingTurns() )
 	end,
@@ -481,18 +478,6 @@ local g_cityToolTips = {
 	end,
 	CityIsConnected = function( city )
 		local connectionTip = L"TXT_KEY_CITY_CONNECTED"
-		local cityOwnerID = city:GetOwner()
-		local cityOwner = Players[ cityOwnerID ]
-		if not cityOwner then
-		elseif cityOwner.GetRouteGoldTimes100 then
-			connectionTip = connectionTip .. S(" (%+g[ICON_GOLD])", cityOwner:GetRouteGoldTimes100( city ) / 100 )
-		elseif cityOwner.GetCityConnectionRouteGoldTimes100 then
-			connectionTip = connectionTip .. S(" (%+g[ICON_GOLD])", cityOwner:GetCityConnectionRouteGoldTimes100( city ) / 100 )
-		end
-		return connectionTip
-	end,
-	CityIsRailConnected = function( city )
-		local connectionTip = L"TXT_KEY_CITY_RAIL_CONNECTED"
 		local cityOwnerID = city:GetOwner()
 		local cityOwner = Players[ cityOwnerID ]
 		if not cityOwner then
@@ -926,7 +911,6 @@ local function RefreshCityBannersNow()
 			local originalCityOwnerID = city:GetOriginalOwner()
 			local originalCityOwner = Players[ originalCityOwnerID ]
 			local otherCivID, otherCivAlpha
-			local hasCoal = city:IsCityHasCoal()
 			local isRazing = city:IsRazing()
 			local isResistance = city:IsResistance()
 			local isPuppet = city:IsPuppet()
@@ -946,11 +930,6 @@ local function RefreshCityBannersNow()
 
 			-- Update population
 			instance.CityPopulation:SetText( city:GetPopulation() )
-
-			if isActiveType then
-				-- Has Coal ?
-				instance.CityHasCoal:SetHide( not hasCoal )
-			end
 
 			-- Being Razed ?
 			instance.CityIsRazing:SetHide( not isRazing )
@@ -1073,8 +1052,7 @@ local function RefreshCityBannersNow()
 				end
 
 				-- Connected to capital?
-				instance.CityIsConnected:SetHide( city:IsCapital() or not cityOwner:IsCapitalConnectedToCity( city ) or city:IsIndustrialRouteToCapital() == 1)
-				instance.CityIsRailConnected:SetHide( city:IsCapital() or city:IsIndustrialRouteToCapital() ~= 1)
+				instance.CityIsConnected:SetHide( city:IsCapital() or not cityOwner:IsCapitalConnectedToCity( city ) )
 
 				-- Demand resource / King day ?
 				local resource = GameInfo.Resources[ city:GetResourceDemanded() ]
