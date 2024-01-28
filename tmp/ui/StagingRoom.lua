@@ -1545,7 +1545,6 @@ function UpdateOptions()
 					count = count + 1;
 				end
 			end
-		end
 	end
 	-- Add empty text to padd the bottom.
 	local controlTable = g_AdvancedOptionIM:GetInstance();
