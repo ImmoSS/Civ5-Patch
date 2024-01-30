@@ -1630,6 +1630,13 @@ public:
 	bool IsAllowedToTradeWith(PlayerTypes eOtherPlayer);
 	// end International Trade
 
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+	int getTurnCSWarAllowing(PlayerTypes ePlayer);
+	void setTurnCSWarAllowing(PlayerTypes ePlayer, int iValue);
+	float getTimeCSWarAllowing(PlayerTypes ePlayer);
+	void setTimeCSWarAllowing(PlayerTypes ePlayer, float fValue);
+#endif
+
 	CvPlayerPolicies* GetPlayerPolicies() const;
 	CvPlayerTraits* GetPlayerTraits() const;
 	CvEconomicAI* GetEconomicAI() const;
@@ -2323,6 +2330,11 @@ protected:
 	friend const CvUnit* GetPlayerUnit(const IDInfo& unit);
 
 	CvPlayerAchievements m_kPlayerAchievements;
+
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+	FAutoVariable<std::vector<int>, CvPlayer> m_paiTurnCSWarAllowing;
+	FAutoVariable<std::vector<float>, CvPlayer> m_pafTimeCSWarAllowing;
+#endif
 };
 
 extern bool CancelActivePlayerEndTurn();

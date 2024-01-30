@@ -542,6 +542,10 @@ CvPlayer::CvPlayer() :
 	, m_iFaithPurchaseIndex(0)
 	, m_bProcessedAutoMoves(false)
 	, m_kPlayerAchievements(*this)
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+	, m_paiTurnCSWarAllowing("CvPlayer::m_paiTurnCSWarAllowing", m_syncArchive)
+	, m_pafTimeCSWarAllowing("CvPlayer::m_pafTimeCSWarAllowing", m_syncArchive)
+#endif
 {
 	m_pPlayerPolicies = FNEW(CvPlayerPolicies, c_eCiv5GameplayDLL, 0);
 	m_pEconomicAI = FNEW(CvEconomicAI, c_eCiv5GameplayDLL, 0);
@@ -802,6 +806,11 @@ void CvPlayer::uninit()
 
 	m_pabLoyalMember.clear();
 	m_pabGetsScienceFromPlayer.clear();
+
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+	m_paiTurnCSWarAllowing.clear();
+	m_pafTimeCSWarAllowing.clear();
+#endif
 
 	m_pPlayerPolicies->Uninit();
 	m_pEconomicAI->Uninit();
@@ -1390,6 +1399,14 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 		m_pabGetsScienceFromPlayer.clear();
 		m_pabGetsScienceFromPlayer.resize(MAX_CIV_PLAYERS, false);
+
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+		m_paiTurnCSWarAllowing.clear();
+		m_paiTurnCSWarAllowing.resize(MAX_CIV_PLAYERS, -1);
+
+		m_pafTimeCSWarAllowing.clear();
+		m_pafTimeCSWarAllowing.resize(MAX_CIV_PLAYERS, 0.f);
+#endif
 
 		m_pEconomicAI->Init(GC.GetGameEconomicAIStrategies(), this);
 		m_pMilitaryAI->Init(GC.GetGameMilitaryAIStrategies(), this, GetDiplomacyAI());
@@ -27488,6 +27505,28 @@ bool CvPlayer::IsAllowedToTradeWith(PlayerTypes eOtherPlayer)
 
 	return true;
 }
+
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+int CvPlayer::getTurnCSWarAllowing(PlayerTypes ePlayer)
+{
+	return m_paiTurnCSWarAllowing[ePlayer];
+}
+
+void CvPlayer::setTurnCSWarAllowing(PlayerTypes ePlayer, int iValue)
+{
+	m_paiTurnCSWarAllowing.setAt(ePlayer, iValue);
+}
+
+float CvPlayer::getTimeCSWarAllowing(PlayerTypes ePlayer)
+{
+	return m_pafTimeCSWarAllowing[ePlayer];
+}
+
+void CvPlayer::setTimeCSWarAllowing(PlayerTypes ePlayer, float fValue)
+{
+	m_pafTimeCSWarAllowing.setAt(ePlayer, fValue);
+}
+#endif
 
 //////////////////////////////////////////////////////////////////////////
 // Tutorial Stuff...
