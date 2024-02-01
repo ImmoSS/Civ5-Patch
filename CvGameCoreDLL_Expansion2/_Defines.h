@@ -446,7 +446,7 @@
 /// Adding source for Trait_BuildingClassHappiness table
 // #define TRAIT_GET_BUILDING_CLASS_HAPPINESS
 ///
-// #define NEW_VENICE_UA
+#define NEW_VENICE_UA
 ///
 // #define MOROCCO_UA_REWORK
 ///
@@ -560,7 +560,7 @@
 ///
 // #define PEACE_BLOCKED_WITH_MINORS
 // coup chances now use base influence instead of effective influence (which would be -60 during war)
-// #define NQ_COUP_FORMULA_USES_BASE_FRIENDSHIP_NOT_EFFECTIVE_FRIENDSHIP
+#define NQ_COUP_FORMULA_USES_BASE_FRIENDSHIP_NOT_EFFECTIVE_FRIENDSHIP
 ///
 #define CANNOT_LIBERATE_GIFTED_CS
 ///
@@ -578,7 +578,7 @@
 ///
 #define CS_ALLYING_WAR_RESCTRICTION
 #ifdef CS_ALLYING_WAR_RESCTRICTION
-#define CS_ALLYING_WAR_RESCTRICTION_TIMER 40.f
+#define CS_ALLYING_WAR_RESCTRICTION_TIMER 60.f
 #endif
 /*CITY-STATES CHANGES END*/
 
@@ -719,7 +719,7 @@
 /// move autosave to the end of turn
 #define AUTOSAVE_END_OF_TURN
 /// Game.GetTurnTimeElapsed() returns elapsed time in milliseconds
-// #define LUAAPI_GET_TURN_TIME_ELAPSED
+#define LUAAPI_GET_TURN_TIME_ELAPSED
 /*TURN AND TIMER CHANGES END*/
 
 
@@ -807,7 +807,7 @@
 /// Can't declare war for 20 turns before renaissance and for 10 turns else
 #define NEW_DEFENSIVE_PACT
 ///
-// #define DEF_PACT_COUNT
+#define DEF_PACT_COUNT
 ///
 // #define GOLD_FOR_CIRCUMNAVIGATE
 ///
