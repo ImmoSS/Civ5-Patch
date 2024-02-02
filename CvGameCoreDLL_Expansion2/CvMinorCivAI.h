@@ -491,7 +491,7 @@ public:
 	// ************************************
 
 	int GetBullyGoldAmount(PlayerTypes eBullyPlayer);
-#ifdef EG_REPLAYDATASET_GOLDFROMBULLING
+#ifdef EG_REPLAYDATASET_GOLDFROMBULLYING
 	int GetBullyGoldAmountTotalByPlayer(PlayerTypes eBullyPlayer);
 	void ChangeBullyGoldAmountTotalByPlayer(PlayerTypes eBullyPlayer, int iChange);
 #endif
@@ -611,7 +611,7 @@ private:
 	int m_iTurnAllied;
 	PlayerTypes m_eMajorBoughtOutBy;
 
-#ifdef EG_REPLAYDATASET_GOLDFROMBULLING
+#ifdef EG_REPLAYDATASET_GOLDFROMBULLYING
 	int m_aiBullyGoldAmountTotalByPlayer[MAX_CIV_PLAYERS];
 #endif
 #ifdef EG_REPLAYDATASET_WORKERSFROMBULLING
