@@ -21972,10 +21972,10 @@ const char* CvPlayer::getReplayDataSetDesc(unsigned int idx) const
 			return Localization::Lookup("TXT_KEY_REPLAY_DATA_NUMOFBOUGHTADMIRALS").toUTF8();
 		if (m_ReplayDataSets[idx] == "REPLAYDATASET_TOTALNUMOFADMIRALS")
 			return Localization::Lookup("TXT_KEY_REPLAY_DATA_TOTALNUMOFADMIRALS").toUTF8();
-		if (m_ReplayDataSets[idx] == "REPLAYDATASET_GOLDFROMBULLING")
-			return Localization::Lookup("TXT_KEY_REPLAY_DATA_GOLDFROMBULLING").toUTF8();
-		if (m_ReplayDataSets[idx] == "REPLAYDATASET_WORKERSFROMBULLING")
-			return Localization::Lookup("TXT_KEY_REPLAY_DATA_WORKERSFROMBULLING").toUTF8();
+		if (m_ReplayDataSets[idx] == "REPLAYDATASET_GOLDFROMBULLYING")
+			return Localization::Lookup("TXT_KEY_REPLAY_DATA_GOLDFROMBULLYING").toUTF8();
+		if (m_ReplayDataSets[idx] == "REPLAYDATASET_WORKERSFROMBULLYING")
+			return Localization::Lookup("TXT_KEY_REPLAY_DATA_WORKERSFROMBULLYING").toUTF8();
 		if (m_ReplayDataSets[idx] == "REPLAYDATASET_NUMTRAINEDUNITS")
 			return Localization::Lookup("TXT_KEY_REPLAY_DATA_NUMTRAINEDUNITS").toUTF8();
 		if (m_ReplayDataSets[idx] == "REPLAYDATASET_NUMLOSTUNITS")
@@ -28469,13 +28469,13 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_TOTALNUMOFPROPHETS"), iGameTurn, GetNumProphetsTotal());
 #endif
 
-#ifdef EG_REPLAYDATASET_GOLDFROMBULLING
+#ifdef EG_REPLAYDATASET_GOLDFROMBULLYING
 		int iBullyGold = 0;
 		for (int iI = MAX_MAJOR_CIVS; iI < MAX_CIV_PLAYERS; iI++)
 		{
 			iBullyGold += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetBullyGoldAmountTotalByPlayer(GetID());
 		}
-		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_GOLDFROMBULLING"), iGameTurn, iBullyGold);
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_GOLDFROMBULLYING"), iGameTurn, iBullyGold);
 #endif
 #ifdef EG_REPLAYDATASET_WORKERSFROMBULLING
 		int iBullyWorkers = 0;

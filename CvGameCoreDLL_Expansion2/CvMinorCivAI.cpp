@@ -1701,7 +1701,7 @@ void CvMinorCivAI::Reset()
 
 		m_abRouteConnectionEstablished[iI] = false;
 
-#ifdef EG_REPLAYDATASET_GOLDFROMBULLING
+#ifdef EG_REPLAYDATASET_GOLDFROMBULLYING
 		m_aiBullyGoldAmountTotalByPlayer[iI] = 0;
 #endif
 #ifdef EG_REPLAYDATASET_WORKERSFROMBULLING
@@ -1804,7 +1804,7 @@ void CvMinorCivAI::Read(FDataStream& kStream)
 
 	kStream >> m_abRouteConnectionEstablished;
 
-#ifdef EG_REPLAYDATASET_GOLDFROMBULLING
+#ifdef EG_REPLAYDATASET_GOLDFROMBULLYING
 	kStream >> m_aiBullyGoldAmountTotalByPlayer;
 #endif
 #ifdef EG_REPLAYDATASET_WORKERSFROMBULLING
@@ -1948,7 +1948,7 @@ void CvMinorCivAI::Write(FDataStream& kStream) const
 
 	kStream << m_abRouteConnectionEstablished;
 
-#ifdef EG_REPLAYDATASET_GOLDFROMBULLING
+#ifdef EG_REPLAYDATASET_GOLDFROMBULLYING
 	kStream << m_aiBullyGoldAmountTotalByPlayer;
 #endif
 #ifdef EG_REPLAYDATASET_WORKERSFROMBULLING
@@ -8767,7 +8767,7 @@ int CvMinorCivAI::GetBullyGoldAmount(PlayerTypes /*eBullyPlayer*/)
 	return iGold;
 }
 
-#ifdef EG_REPLAYDATASET_GOLDFROMBULLING
+#ifdef EG_REPLAYDATASET_GOLDFROMBULLYING
 int CvMinorCivAI::GetBullyGoldAmountTotalByPlayer(PlayerTypes eBullyPlayer)
 {
 	return m_aiBullyGoldAmountTotalByPlayer[eBullyPlayer];
@@ -9362,7 +9362,7 @@ void CvMinorCivAI::DoMajorBullyGold(PlayerTypes eBully, int iGold)
 
 		GET_PLAYER(eBully).GetTreasury()->ChangeGold(iGold);
 		DoBulliedByMajorReaction(eBully, GC.getMINOR_FRIENDSHIP_DROP_BULLY_GOLD_SUCCESS());
-#ifdef EG_REPLAYDATASET_GOLDFROMBULLING
+#ifdef EG_REPLAYDATASET_GOLDFROMBULLYING
 		ChangeBullyGoldAmountTotalByPlayer(eBully, iGold);
 #endif
 	}
