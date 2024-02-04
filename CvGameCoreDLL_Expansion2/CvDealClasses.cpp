@@ -637,6 +637,9 @@ bool CvDeal::IsPossibleToTradeItem(PlayerTypes ePlayer, PlayerTypes eToPlayer, T
 #endif
 #ifdef RES_AGR_COUNT
 		CvGame& kGame = GC.getGame();
+		if (!kGame.isOption("GAMEOPTION_LIMITATION_RA"))
+			return false;
+
 		if(kGame.isOption("GAMEOPTION_LIMITATION_RA") && (pFromTeam->getResearchAgreementCount() > 1 || pToTeam->getResearchAgreementCount() > 1))
 			return false;
 #endif
