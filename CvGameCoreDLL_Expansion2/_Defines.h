@@ -822,7 +822,7 @@
 // #define CREATE_APOLLO_PROGRAM_WITH_CAP_FOUND
 // Maintain backwards compatibility with older versions
 // Starting from v7.0
-// #define SAVE_BACKWARDS_COMPATIBILITY
+#define SAVE_BACKWARDS_COMPATIBILITY
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 // Individual read/write components versioning
 //
