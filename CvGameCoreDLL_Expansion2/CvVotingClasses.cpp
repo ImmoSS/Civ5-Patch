@@ -5242,6 +5242,14 @@ std::vector<CvString> CvLeague::GetCurrentEffectsSummary(PlayerTypes /*eObserver
 		sTemp << effects.iLandmarkCulture;
 		vsEffects.push_back(sTemp.toUTF8());
 	}
+#ifdef SHOW_NUCLEAR_NON_PROLIFERATION_ACTIVE_EFFECT
+	if (effects.bNoTrainingNuclearWeapons)
+	{
+		Localization::String sTemp = Localization::Lookup("TXT_KEY_LEAGUE_OVERVIEW_EFFECT_SUMMARY_NUCLEAR_NON_PROLIFERATION");
+		vsEffects.push_back(sTemp.toUTF8());
+	}
+	
+#endif
 
 	if (vsEffects.empty())
 	{
