@@ -257,7 +257,7 @@
 #define MOBILE_TACTICS_NUKING
 ///
 #define UNIT_DIED_BY_NUKING_NOTIFICATIONS
-/// Players can't gain more than 60 exp from combat with AI or Minors
+/// Players can't gain more than 45 exp from combat with AI or Minors
 #define LIMITATION_COMBAT_EXPERIENCE
 /// Restriction on paradroping in the second half of timer
 #define CAN_PARADROP_HALF_TIMER
