@@ -7811,10 +7811,10 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 			{
 				iYield += kYield.getGoldenAgeYield();
 #ifdef BRAZIL_UA_REWORK
-				if (GET_PLAYER(ePlayer).GetPlayerTraits()->GetGoldenAgeGreatArtistRateModifier() > 0)
+				/*if (GET_PLAYER(ePlayer).GetPlayerTraits()->GetGoldenAgeGreatArtistRateModifier() > 0)
 				{
 					iYield += kYield.getGoldenAgeYield();
-				}
+				}*/
 #endif
 			}
 		}
@@ -10593,10 +10593,10 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 			{
 				iYield += kYield.getGoldenAgeYield();
 #ifdef BRAZIL_UA_REWORK
-				if (GET_PLAYER(ePlayer).GetPlayerTraits()->GetGoldenAgeGreatArtistRateModifier() > 0)
+				/*if (GET_PLAYER(ePlayer).GetPlayerTraits()->GetGoldenAgeGreatArtistRateModifier() > 0)
 				{
 					iYield += kYield.getGoldenAgeYield();
-				}
+				}*/
 #endif
 			}
 		}
