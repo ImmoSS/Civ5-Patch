@@ -7713,7 +7713,7 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 					}
 					else if (eYield == YIELD_FAITH)
 					{
-						iYield += 3;
+						iYield += 2;
 					}
 				}
 			}
