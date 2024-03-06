@@ -1710,6 +1710,9 @@ int CvPlayerEspionage::CalcRequired(int iSpyState, CvCity* pCity, int iSpyIndex)
 			uiMaxTechCostAdjusted /= 100;
 			int iMaxTechCostAdjusted = uiMaxTechCostAdjusted;
 			CvAssertMsg(m_aiMaxTechCost[ePlayer] >= 0, "iMaxTechCostAdjusted is below zero. Overflow!");
+#ifdef DECREASE_GATHERING_INTEL_TIME_LENGTH
+			iMaxTechCostAdjusted * 4 / 5;
+#endif
 			return iMaxTechCostAdjusted;
 		}
 	}
