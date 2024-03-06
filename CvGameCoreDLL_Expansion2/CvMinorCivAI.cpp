@@ -8836,7 +8836,11 @@ int CvMinorCivAI::CalculateBullyMetric(PlayerTypes eBullyPlayer, bool bForUnit, 
 		if(veMilitaryRankings.GetElement(iRanking) == eBullyPlayer)
 		{
 			float fRankRatio = (float)(veMilitaryRankings.size() - iRanking) / (float)(veMilitaryRankings.size());
+#ifdef NEW_BULLY_METRICS
+			iGlobalMilitaryScore = (int)(fRankRatio * 50); // A score between 75*(1 / num majors alive) and 75, with the highest rank major getting 75
+#else
 			iGlobalMilitaryScore = (int)(fRankRatio * 75); // A score between 75*(1 / num majors alive) and 75, with the highest rank major getting 75
+#endif
 			iScore += iGlobalMilitaryScore;
 			break;
 		}
@@ -8911,6 +8915,28 @@ int CvMinorCivAI::CalculateBullyMetric(PlayerTypes eBullyPlayer, bool bForUnit, 
 	}
 	float fLocalPowerRatio = (float)iBullyLocalPower / (float)iMinorLocalPower;
 	int iLocalPowerScore = 0;
+#ifdef NEW_BULLY_METRICS
+	if (fLocalPowerRatio >= 3.0)
+	{
+		iLocalPowerScore += 150;
+	}
+	else if (fLocalPowerRatio >= 2.0)
+	{
+		iLocalPowerScore += 120;
+	}
+	else if (fLocalPowerRatio >= 1.5)
+	{
+		iLocalPowerScore += 90;
+	}
+	else if (fLocalPowerRatio >= 1.0)
+	{
+		iLocalPowerScore += 60;
+	}
+	else if (fLocalPowerRatio >= 0.5)
+	{
+		iLocalPowerScore += 30;
+	}
+#else
 	if(fLocalPowerRatio >= 3.0)
 	{
 		iLocalPowerScore += 125;
@@ -8931,6 +8957,7 @@ int CvMinorCivAI::CalculateBullyMetric(PlayerTypes eBullyPlayer, bool bForUnit, 
 	{
 		iLocalPowerScore += 25;
 	}
+#endif
 	iScore += iLocalPowerScore;
 	
 	if (sTooltipSink)
