@@ -12319,7 +12319,7 @@ int CvUnit::maxXPValue() const
 #ifdef LIMITATION_COMBAT_EXPERIENCE
 	else if(GC.getGame().isOption("GAMEOPTION_LIMITATION_COMBAT_EXPERIENCE") && !GET_PLAYER(getOwner()).isHuman())
 	{
-		iMaxValue = std::min(iMaxValue, 60);
+		iMaxValue = std::min(iMaxValue, 45);
 	}
 #endif
 
