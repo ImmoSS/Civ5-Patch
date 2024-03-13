@@ -124,6 +124,12 @@ struct CvResolutionEffects
 	int iScienceyGreatPersonRateMod;
 	int iGreatPersonTileImprovementCulture;
 	int iLandmarkCulture;
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	int iTradeRouteGoldModifier;
+	int iCSBonuModifier;
+	bool bNoSpiesInCS;
+	bool bDoubleResourceHappiness;
+#endif
 };
 
 FDataStream& operator>>(FDataStream&, CvResolutionEffects&);
@@ -1240,6 +1246,12 @@ public:
 	int GetScienceyGreatPersonRateMod() const;
 	int GetGreatPersonTileImprovementCulture() const;
 	int GetLandmarkCulture() const;
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	int GetTradeRouteGoldModifier() const;
+	int GetCSBonuModifier() const;
+	int GetNoSpiesInCS() const;
+	int GetDoubleResourceHappiness() const;
+#endif
 
 protected:
 	ResolutionDecisionTypes m_eVoterDecision;
@@ -1275,6 +1287,12 @@ protected:
 	int m_iScienceyGreatPersonRateMod;
 	int m_iGreatPersonTileImprovementCulture;
 	int m_iLandmarkCulture;
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	int m_iTradeRouteGoldModifier;
+	int m_iCSBonuModifier;
+	bool m_bNoSpiesInCS;
+	bool m_bDoubleResourceHappiness;
+#endif
 
 private:
 	CvResolutionEntry(const CvResolutionEntry&);

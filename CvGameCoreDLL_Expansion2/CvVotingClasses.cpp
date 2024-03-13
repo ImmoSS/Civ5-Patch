@@ -198,6 +198,12 @@ CvResolutionEffects::CvResolutionEffects(void)
 	iScienceyGreatPersonRateMod = 0;
 	iGreatPersonTileImprovementCulture = 0;
 	iLandmarkCulture = 0;
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iTradeRouteGoldModifier = 0;
+	iCSBonuModifier = 0;
+	bNoSpiesInCS = false;
+	bDoubleResourceHappiness = false;
+#endif
 }
 
 CvResolutionEffects::CvResolutionEffects(ResolutionTypes eType)
@@ -231,6 +237,12 @@ CvResolutionEffects::CvResolutionEffects(ResolutionTypes eType)
 		iScienceyGreatPersonRateMod			= pInfo->GetScienceyGreatPersonRateMod();
 		iGreatPersonTileImprovementCulture	= pInfo->GetGreatPersonTileImprovementCulture();
 		iLandmarkCulture					= pInfo->GetLandmarkCulture();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+		iTradeRouteGoldModifier				= pInfo->GetTradeRouteGoldModifier();
+		iCSBonuModifier						= pInfo->GetCSBonuModifier();
+		bNoSpiesInCS						= pInfo->GetNoSpiesInCS();
+		bDoubleResourceHappiness			= pInfo->GetDoubleResourceHappiness();
+#endif
 	}
 }
 
@@ -297,6 +309,20 @@ bool CvResolutionEffects::HasOngoingEffects() const
 	if (iLandmarkCulture != 0)
 		return true;
 
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	if (iTradeRouteGoldModifier != 0)
+		return true;
+
+	if (iCSBonuModifier != 0)
+		return true;
+
+	if (bNoSpiesInCS)
+		return true;
+
+	if (bDoubleResourceHappiness)
+		return true;
+#endif
+
 	return false;
 }
 
@@ -327,6 +353,12 @@ void CvResolutionEffects::AddOngoingEffects(const CvResolutionEffects* pOtherEff
 	iScienceyGreatPersonRateMod				+= pOtherEffects->iScienceyGreatPersonRateMod;
 	iGreatPersonTileImprovementCulture		+= pOtherEffects->iGreatPersonTileImprovementCulture;
 	iLandmarkCulture						+= pOtherEffects->iLandmarkCulture;
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iTradeRouteGoldModifier					+= pOtherEffects->iTradeRouteGoldModifier;
+	iCSBonuModifier							+= pOtherEffects->iCSBonuModifier;
+	bNoSpiesInCS							|= pOtherEffects->bNoSpiesInCS;
+	bDoubleResourceHappiness				|= pOtherEffects->bDoubleResourceHappiness;
+#endif
 }
 
 // Serialization Read
@@ -428,6 +460,12 @@ FDataStream& operator>>(FDataStream& loadFrom, CvResolutionEffects& writeTo)
 		writeTo.iGreatPersonTileImprovementCulture = 0;
 		writeTo.iLandmarkCulture = 0;
 	}
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	writeTo.iTradeRouteGoldModifier = 0;
+	writeTo.iCSBonuModifier = 0;
+	writeTo.bNoSpiesInCS = false;
+	writeTo.bDoubleResourceHappiness = false;
+#endif
 	
 	return loadFrom;
 }
@@ -463,6 +501,12 @@ FDataStream& operator<<(FDataStream& saveTo, const CvResolutionEffects& readFrom
 	saveTo << readFrom.iScienceyGreatPersonRateMod;
 	saveTo << readFrom.iGreatPersonTileImprovementCulture;
 	saveTo << readFrom.iLandmarkCulture;
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	saveTo << readFrom.iTradeRouteGoldModifier;
+	saveTo << readFrom.iCSBonuModifier;
+	saveTo << readFrom.bNoSpiesInCS;
+	saveTo << readFrom.bDoubleResourceHappiness;
+#endif
 
 	return saveTo;
 }
@@ -1441,6 +1485,8 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 		}
 		// Refresh yield
 	}
+#ifdef NEW_LEAGUE_RESOLUTIONS
+#endif
 
 	m_iTurnEnacted = GC.getGame().getGameTurn();
 }
@@ -1617,6 +1663,8 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 		}
 		// Refresh yield
 	}
+#ifdef NEW_LEAGUE_RESOLUTIONS
+#endif
 
 	m_iTurnEnacted = -1;
 }
@@ -5280,7 +5328,8 @@ std::vector<CvString> CvLeague::GetCurrentEffectsSummary(PlayerTypes /*eObserver
 		Localization::String sTemp = Localization::Lookup("TXT_KEY_LEAGUE_OVERVIEW_EFFECT_SUMMARY_NUCLEAR_NON_PROLIFERATION");
 		vsEffects.push_back(sTemp.toUTF8());
 	}
-	
+#endif
+#ifdef NEW_LEAGUE_RESOLUTIONS
 #endif
 
 	if (vsEffects.empty())
@@ -9780,6 +9829,8 @@ int CvLeagueAI::ScoreVoteChoiceYesNo(CvProposal* pProposal, int iChoice, bool bE
 		}
 		iScore += iTempScore;
 	}
+#ifdef NEW_LEAGUE_RESOLUTIONS
+#endif
 
 	// == Diplomat knowledge, Vote Commitments we secured ==
 
@@ -10709,6 +10760,12 @@ CvResolutionEntry::CvResolutionEntry(void)
 	m_iScienceyGreatPersonRateMod		= 0;
 	m_iGreatPersonTileImprovementCulture= 0;
 	m_iLandmarkCulture					= 0;
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	m_iTradeRouteGoldModifier			= 0;
+	m_iCSBonuModifier					= 0;
+	m_bNoSpiesInCS						= false;
+	m_bDoubleResourceHappiness			= false;
+#endif
 }
 
 CvResolutionEntry::~CvResolutionEntry(void)
@@ -10755,6 +10812,12 @@ bool CvResolutionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtil
 	m_iScienceyGreatPersonRateMod		= kResults.GetInt("ScienceyGreatPersonRateMod");
 	m_iGreatPersonTileImprovementCulture= kResults.GetInt("GreatPersonTileImprovementCulture");
 	m_iLandmarkCulture					= kResults.GetInt("LandmarkCulture");
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	m_iTradeRouteGoldModifier			= kResults.GetInt("TradeRouteGoldModifier");
+	m_iCSBonuModifier					= kResults.GetInt("CSBonuModifier");
+	m_bNoSpiesInCS						= kResults.GetInt("NoSpiesInCS");
+	m_bDoubleResourceHappiness			= kResults.GetInt("DoubleResourceHappiness");
+#endif
 
 	return true;
 }
@@ -10923,6 +10986,28 @@ int CvResolutionEntry::GetLandmarkCulture() const
 {
 	return m_iLandmarkCulture;
 }
+
+#ifdef NEW_LEAGUE_RESOLUTIONS
+int CvResolutionEntry::GetTradeRouteGoldModifier() const
+{
+	return m_iTradeRouteGoldModifier;
+}
+
+int CvResolutionEntry::GetCSBonuModifier() const
+{
+	return m_iCSBonuModifier;
+}
+
+int CvResolutionEntry::GetNoSpiesInCS() const
+{
+	return m_bNoSpiesInCS;
+}
+
+int CvResolutionEntry::GetDoubleResourceHappiness() const
+{
+	return m_bDoubleResourceHappiness;
+}
+#endif
 
 
 // ================================================================================
