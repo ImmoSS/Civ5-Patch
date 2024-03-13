@@ -4109,6 +4109,37 @@ int CvLeague::GetResearchMod(TechTypes eTech)
 			iKnownByMemberMod += it->GetEffects()->iMemberDiscoveredTechMod;
 		}
 	}
+#ifdef NEW_RESOLUTION_MEMBER_DISCOVERED_TECH_DISCOUNT
+	if (iKnownByMemberMod != 0)
+	{
+		int iNumHasTech = 0;
+		int iNumMembers = 0;
+		for (uint i = 0; i < m_vMembers.size(); i++)
+		{
+#ifdef HAS_TECH_BY_HUMAN
+			PlayerTypes eMember = m_vMembers[i].ePlayer;
+			if (GET_PLAYER(eMember).isHuman())
+			{
+				iNumMembers++;
+			}
+			if (GET_TEAM(GET_PLAYER(eMember).getTeam()).GetTeamTechs()->HasTechByHuman(eTech))
+#else
+			iNumMembers = m_vMembers.size();
+			if (GET_TEAM(GET_PLAYER(eMember).getTeam()).GetTeamTechs()->HasTech(eTech))
+#endif
+			{
+				iNumHasTech++;
+			}
+		}
+		if (iNumHasTech > 0)
+		{
+			if ((iNumMembers + 1) / iNumHasTech < 3 || iNumMembers == 2 * iNumHasTech)
+			{
+				iValue += iKnownByMemberMod;
+			}
+		}
+	}
+#else
 	if (iKnownByMemberMod != 0)
 	{
 		// Does any member have this tech?
@@ -4122,6 +4153,7 @@ int CvLeague::GetResearchMod(TechTypes eTech)
 			}
 		}
 	}
+#endif
 
 	return iValue;
 }
