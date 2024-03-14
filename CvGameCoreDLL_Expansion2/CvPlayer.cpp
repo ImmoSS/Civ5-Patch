@@ -297,6 +297,9 @@ CvPlayer::CvPlayer() :
 #ifdef UNITY_OF_PROPHETS_EXTRA_PROPHETS
 	, m_bHasUsedUnityProphets(false)
 #endif
+#ifdef GODDESS_LOVE_FREE_WORKER
+	, m_bHasUsedGoddessLove(false)
+#endif
 #ifdef FREE_GREAT_PERSON
 	, m_iGreatProphetsCreated(0)
 #endif
@@ -1049,6 +1052,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef UNITY_OF_PROPHETS_EXTRA_PROPHETS
 	m_bHasUsedUnityProphets = false;
+#endif
+#ifdef GODDESS_LOVE_FREE_WORKER
+	m_bHasUsedGoddessLove = false;
 #endif
 #ifdef FREE_GREAT_PERSON
 	m_iGreatProphetsCreated = 0;
@@ -11569,8 +11575,11 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 	}
 #endif
 
+#if defined UNITY_OF_PROPHETS_EXTRA_PROPHETS || defined GODDESS_LOVE_FREE_WORKER
+	BeliefTypes pBelief;
+#endif
 #ifdef UNITY_OF_PROPHETS_EXTRA_PROPHETS
-	BeliefTypes pBelief = NO_BELIEF;
+	pBelief = NO_BELIEF;
 	for(int iI = 0; iI < pReligion->m_Beliefs.GetNumBeliefs(); iI++)
 	{
 		const BeliefTypes eBelief = pReligion->m_Beliefs.GetBelief(iI);
@@ -11599,6 +11608,26 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 			// addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_PROPHET"));
 			// addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_PROPHET"));
 		// }
+	}
+#endif
+#ifdef GODDESS_LOVE_FREE_WORKER
+	pBelief = NO_BELIEF;
+	for (int iI = 0; iI < pReligion->m_Beliefs.GetNumBeliefs(); iI++)
+	{
+		const BeliefTypes eBelief = pReligion->m_Beliefs.GetBelief(iI);
+		CvBeliefEntry* pEntry = GC.GetGameBeliefs()->GetEntry((int)eBelief);
+		if (pEntry && pEntry->IsPantheonBelief())
+		{
+			pBelief = eBelief;
+			break;
+		}
+	}
+	if (!m_bHasUsedGoddessLove && pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_LOVE", true))
+	{
+		m_bHasUsedGoddessLove = true;
+
+		CvCity* pSpawnCity = getCapitalCity();
+		pSpawnCity->GetCityCitizens()->DoSpawnGreatPerson((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"), false /*bIncrementCount*/, false);
 	}
 #endif
 
@@ -25056,6 +25085,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef GODDESS_LOVE_FREE_WORKER
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_bHasUsedGoddessLove;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_bHasUsedGoddessLove = false;
+	}
+# endif
+#endif
 #ifdef FREE_GREAT_PERSON
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1000)
@@ -25808,6 +25851,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef UNITY_OF_PROPHETS_EXTRA_PROPHETS
 	kStream << m_bHasUsedUnityProphets;
+#endif
+#ifdef GODDESS_LOVE_FREE_WORKER
+	kStream << m_bHasUsedGoddessLove;
 #endif
 #ifdef FREE_GREAT_PERSON
 	kStream << m_iGreatProphetsCreated;

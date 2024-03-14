@@ -430,6 +430,8 @@
 #define RELIGIOUS_TOLERANCE_DOUBLES_OWNER_PANTHEON
 ///
 #define NEW_PAPAL_PRIMACY
+///
+#define GODDESS_LOVE_FREE_WORKER
 /*RELIGION CHANGES END*/
 
 
@@ -842,14 +844,14 @@
 // bump after any change to the corresponding read/write functions
 // don't forget to mark changes here
 //
-// 1000: v7.0 (initial)
+// 1000: v7.0  (initial)
 # define BUMP_SAVE_VERSION_BELIEFS 1000
-// 1000: v7.0 (initial)
-// 1001: v8.0 (adds CITY_EXTRA_ATTACK)
+// 1000: v7.0  (initial)
+// 1001: v8.0  (adds CITY_EXTRA_ATTACK)
 # define BUMP_SAVE_VERSION_CITY 1001
-// 1000: v7.0 (initial)
+// 1000: v7.0  (initial)
 # define BUMP_SAVE_VERSION_ESPIONAGE 1000
-// 1000: v7.0 (initial)
+// 1000: v7.0  (initial)
 // 1001: v7.3b (adds replay events)
 # define BUMP_SAVE_VERSION_GAME 1001
 // 1000: v7.0 (initial)
@@ -859,21 +861,22 @@
 // 1001: v7.2  (adds ENHANCED_GRAPHS)
 // 1002: v7.2a (adds maya boost GP counters)
 // 1003: v8.1b (adds secsond bunch of ENHANCED_GRAPHS)
-# define BUMP_SAVE_VERSION_PLAYER 1003
-// 1000: v7.0 (initial)
+// 1004: v8.2  (adds GODDESS_LOVE_FREE_WORKER)
+# define BUMP_SAVE_VERSION_PLAYER 1004
+// 1000: v7.0  (initial)
 # define BUMP_SAVE_VERSION_POLICIES 1000
-// 1000: v7.0 (initial)
+// 1000: v7.0  (initial)
 # define BUMP_SAVE_VERSION_TEAM 1000
-// 1000: v7.0 (initial)
+// 1000: v7.0  (initial)
 # define BUMP_SAVE_VERSION_TECHS 1000
-// 1000: v7.0 (initial)
+// 1000: v7.0  (initial)
 # define BUMP_SAVE_VERSION_TRAITS 1000
-// 1000: v7.0 (initial)
-// 1001: v8.0 (adds NEW_WRITERS_CULTURE_BOMB)
+// 1000: v7.0  (initial)
+// 1001: v8.0  (adds NEW_WRITERS_CULTURE_BOMB)
 # define BUMP_SAVE_VERSION_UNIT 1001
-// 1000: v7.1 (starts versioning, adds iCreationTurn) -- incompatible with 7.0 (vanilla is ok though)
+// 1000: v7.1  (starts versioning, adds iCreationTurn) -- incompatible with 7.0 (vanilla is ok though)
 # define BUMP_SAVE_VERSION_MP_VOTING_SYSTEM 1000
-// 1000: v7.2 (initial, adds m_iTimeMilliseconds)
+// 1000: v7.2  (initial, adds m_iTimeMilliseconds)
 // 1001: v7.3b (adds m_iExtraData1, m_iExtraData2)
 # define BUMP_SAVE_VERSION_REPLAYMESSAGE 1001
 // 1000: v7.3b (initial)

@@ -1947,6 +1947,9 @@ protected:
 #ifdef UNITY_OF_PROPHETS_EXTRA_PROPHETS
 	bool m_bHasUsedUnityProphets;
 #endif
+#ifdef GODDESS_LOVE_FREE_WORKER
+	bool m_bHasUsedGoddessLove;
+#endif
 #ifdef FREE_GREAT_PERSON
 	int m_iGreatProphetsCreated;
 #endif
