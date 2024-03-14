@@ -735,6 +735,10 @@ public:
 	bool isGoldenAge() const;
 	void changeGoldenAgeTurns(int iChange);
 	int getGoldenAgeLength() const;
+#ifdef TAJ_MAHAL_STARTS_GA_NEXT_TURN
+	void setBuildingGoldenAgeTurns(int iValue);
+	int getBuildingGoldenAgeTurns() const;
+#endif
 
 	int getNumUnitGoldenAges() const;
 	void changeNumUnitGoldenAges(int iChange);
@@ -1932,6 +1936,9 @@ protected:
 	FAutoVariable<int, CvPlayer> m_iGoldenAgeMeterMod;
 	FAutoVariable<int, CvPlayer> m_iNumGoldenAges;
 	FAutoVariable<int, CvPlayer> m_iGoldenAgeTurns;
+#ifdef TAJ_MAHAL_STARTS_GA_NEXT_TURN
+	FAutoVariable<int, CvPlayer> m_iBuildingGoldenAgeTurns;
+#endif
 	FAutoVariable<int, CvPlayer> m_iNumUnitGoldenAges;
 	FAutoVariable<int, CvPlayer> m_iStrikeTurns;
 	FAutoVariable<int, CvPlayer> m_iGoldenAgeModifier;

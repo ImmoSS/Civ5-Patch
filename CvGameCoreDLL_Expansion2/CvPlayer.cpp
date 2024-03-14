@@ -282,6 +282,10 @@ CvPlayer::CvPlayer() :
 	, m_iGoldenAgeMeterMod("CvPlayer::m_iGoldenAgeMeterMod", m_syncArchive)
 	, m_iNumGoldenAges("CvPlayer::m_iNumGoldenAges", m_syncArchive)
 	, m_iGoldenAgeTurns("CvPlayer::m_iGoldenAgeTurns", m_syncArchive)
+#ifdef TAJ_MAHAL_STARTS_GA_NEXT_TURN
+	, m_iBuildingGoldenAgeTurns("CvPlayer::m_iBuildingGoldenAgeTurns", m_syncArchive)
+		
+#endif
 	, m_iNumUnitGoldenAges("CvPlayer::m_iNumUnitGoldenAges", m_syncArchive)
 	, m_iStrikeTurns("CvPlayer::m_iStrikeTurns", m_syncArchive)
 	, m_iGoldenAgeModifier("CvPlayer::m_iGoldenAgeModifier", m_syncArchive)
@@ -1038,6 +1042,9 @@ void CvPlayer::uninit()
 	m_iGoldenAgeMeterMod = 0;
 	m_iNumGoldenAges = 0;
 	m_iGoldenAgeTurns = 0;
+#ifdef TAJ_MAHAL_STARTS_GA_NEXT_TURN
+	m_iBuildingGoldenAgeTurns = 0;
+#endif
 	m_iNumUnitGoldenAges = 0;
 	m_iStrikeTurns = 0;
 	m_iGoldenAgeModifier = 0;
@@ -9254,7 +9261,11 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst
 		if(pBuildingInfo->IsGoldenAge())
 		{
 			int iGoldenAgeTurns = getGoldenAgeLength();
+#ifdef TAJ_MAHAL_STARTS_GA_NEXT_TURN
+			setBuildingGoldenAgeTurns(iGoldenAgeTurns);
+#else
 			changeGoldenAgeTurns(iGoldenAgeTurns);
+#endif
 		}
 
 		// Global Pop change
@@ -14194,6 +14205,10 @@ void CvPlayer::DoProcessGoldenAge()
 			}
 		}
 	}
+#ifdef TAJ_MAHAL_STARTS_GA_NEXT_TURN
+	changeGoldenAgeTurns(getBuildingGoldenAgeTurns());
+	setBuildingGoldenAgeTurns(0);
+#endif
 }
 
 //	--------------------------------------------------------------------------------
@@ -14400,6 +14415,20 @@ int CvPlayer::getGoldenAgeLength() const
 
 	return iTurns;
 }
+
+#ifdef TAJ_MAHAL_STARTS_GA_NEXT_TURN
+//	--------------------------------------------------------------------------------
+void CvPlayer::setBuildingGoldenAgeTurns(int iValue)
+{
+	m_iBuildingGoldenAgeTurns = iValue;
+}
+
+//	--------------------------------------------------------------------------------
+int CvPlayer::getBuildingGoldenAgeTurns() const
+{
+	return m_iBuildingGoldenAgeTurns;
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 int CvPlayer::getNumUnitGoldenAges() const
@@ -25048,6 +25077,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iGoldenAgeMeterMod;
 	kStream >> m_iNumGoldenAges;
 	kStream >> m_iGoldenAgeTurns;
+#ifdef TAJ_MAHAL_STARTS_GA_NEXT_TURN
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iBuildingGoldenAgeTurns;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iBuildingGoldenAgeTurns = false;
+	}
+# endif
+#endif
 	kStream >> m_iNumUnitGoldenAges;
 	kStream >> m_iStrikeTurns;
 	kStream >> m_iGoldenAgeModifier;
@@ -25837,6 +25880,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iGoldenAgeMeterMod;
 	kStream << m_iNumGoldenAges;
 	kStream << m_iGoldenAgeTurns;
+#ifdef TAJ_MAHAL_STARTS_GA_NEXT_TURN
+	kStream << m_iBuildingGoldenAgeTurns;
+#endif
 	kStream << m_iNumUnitGoldenAges;
 	kStream << m_iStrikeTurns;
 	kStream << m_iGoldenAgeModifier;
