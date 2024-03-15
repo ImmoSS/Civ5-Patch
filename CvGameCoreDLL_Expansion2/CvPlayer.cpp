@@ -21515,12 +21515,24 @@ const CvCity* CvPlayer::getCity(int iID) const
 //	--------------------------------------------------------------------------------
 CvCity* CvPlayer::addCity()
 {
+#ifdef RESETTLEMENT_CHANGE_GLOBAL_POP
+	if (GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_RESETTLEMENT", true)))
+	{
+		ChangeExtraHappinessPerCity(2);
+	}
+#endif
 	return(m_cities.Add());
 }
 
 //	--------------------------------------------------------------------------------
 void CvPlayer::deleteCity(int iID)
 {
+#ifdef RESETTLEMENT_CHANGE_GLOBAL_POP
+	if (GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_RESETTLEMENT", true)))
+	{
+		ChangeExtraHappinessPerCity(-2);
+	}
+#endif
 #ifdef BUILDING_BARN
 	if (getNumCities() > 0)
 	{
@@ -24281,7 +24293,11 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 				{
 					for (pLoopCity = GET_PLAYER((PlayerTypes)iI).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iI).nextCity(&iLoop))
 					{
-						pLoopCity->setPopulation(std::max(1, (pLoopCity->getPopulation() + iChange * pPolicy->GetNewCityExtraPopulation())));
+						if (iChange > 0)
+						{
+							pLoopCity->setPopulation(std::max(1, (pLoopCity->getPopulation() + iChange * pPolicy->GetNewCityExtraPopulation())));
+						}
+						ChangeExtraHappinessPerCity(2 * iChange * getNumCities());
 					}
 				}
 			}
