@@ -7744,6 +7744,16 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 						iYield += GET_PLAYER(ePlayer).GetPlayerTraits()->GetYieldChangeLuxuryResources(eYield);
 					}
 #endif
+#ifdef JAPAN_UA_REWORK
+					else if ((strcmp(pkResourceInfo->GetType(), "RESOURCE_FISH") == 0
+						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_WHALE") == 0
+						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_PEARLS") == 0
+						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_CRAB") == 0)
+						&& eYield == YIELD_CULTURE && (strcmp(GET_PLAYER(getOwner()).getCivilizationTypeKey(), "CIVILIZATION_JAPAN") == 0))
+					{
+						iYield += 1;
+					}
+#endif
 				}
 			}
 		}
@@ -10542,6 +10552,16 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 					else if (pkResourceInfo->getResourceUsage() == RESOURCEUSAGE_LUXURY)
 					{
 						iYield += GET_PLAYER(ePlayer).GetPlayerTraits()->GetYieldChangeLuxuryResources(eYield);
+					}
+#endif
+#ifdef JAPAN_UA_REWORK
+					else if ((strcmp(pkResourceInfo->GetType(), "RESOURCE_FISH") == 0
+						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_WHALE") == 0
+						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_PEARLS") == 0
+						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_CRAB") == 0)
+						&& eYield == YIELD_CULTURE && (strcmp(GET_PLAYER(getOwner()).getCivilizationTypeKey(), "CIVILIZATION_JAPAN") == 0))
+					{
+						iYield += 1;
 					}
 #endif
 				}
