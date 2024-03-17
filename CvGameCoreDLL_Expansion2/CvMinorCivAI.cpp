@@ -6390,12 +6390,24 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		int iCapitalFoodTimes100 = 0;
 		int iOtherCitiesFoodTimes100 = 0;
 
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+		ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+		ReligionTypes eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+		if (eFoundedReligion == eMajority || bFriends)
+#else
 		if(bFriends)	// Friends bonus
+#endif
 		{
 			iCapitalFoodTimes100 += GetFriendsCapitalFoodBonus(ePlayer);
 			iOtherCitiesFoodTimes100 += GetFriendsOtherCityFoodBonus(ePlayer);
 		}
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+		eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+		eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+		if (eFoundedReligion == eMajority || bFriends)
+#else
 		if(bAllies)		// Allies bonus
+#endif
 		{
 			iCapitalFoodTimes100 += GetAlliesCapitalFoodBonus(ePlayer);
 			iOtherCitiesFoodTimes100 += GetAlliesOtherCityFoodBonus(ePlayer);
@@ -6462,12 +6474,24 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		int iCapitalProductionTimes100 = 0;
 		int iOtherCitiesProductionTimes100 = 0;
 
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+		ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+		ReligionTypes eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+		if (eFoundedReligion == eMajority || bFriends)
+#else
 		if (bFriends)	// Friends bonus
+#endif
 		{
 			iCapitalProductionTimes100 += GetFriendsCapitalProductionBonus(ePlayer);
 			iOtherCitiesProductionTimes100 += GetFriendsOtherCityProductionBonus(ePlayer);
 		}
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+		eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+		eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+		if (eFoundedReligion == eMajority || bFriends)
+#else
 		if (bAllies)		// Allies bonus
+#endif
 		{
 			iCapitalProductionTimes100 += GetAlliesCapitalProductionBonus(ePlayer);
 			iOtherCitiesProductionTimes100 += GetAlliesOtherCityProductionBonus(ePlayer);
@@ -7355,7 +7379,13 @@ int CvMinorCivAI::GetCurrentCultureFlatBonus(PlayerTypes ePlayer)
 
 	int iAmount = 0;
 
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+	ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+	ReligionTypes eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+	if (eFoundedReligion == eMajority || IsAllies(ePlayer))
+#else
 	if(IsAllies(ePlayer))
+#endif
 		iAmount += GetCultureFlatAlliesBonus(ePlayer);
 
 	if(IsFriends(ePlayer))
@@ -7406,7 +7436,13 @@ int CvMinorCivAI::GetCurrentCulturePerBuildingBonus(PlayerTypes ePlayer)
 
 	int iAmount = 0;
 
-	if(IsAllies(ePlayer))
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+	ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+	ReligionTypes eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+	if (eFoundedReligion == eMajority || IsAllies(ePlayer))
+#else
+	if (IsAllies(ePlayer))
+#endif
 		iAmount += GetCulturePerBuildingAlliesBonus(ePlayer);
 
 	if(IsFriends(ePlayer))
@@ -7502,7 +7538,13 @@ int CvMinorCivAI::GetCurrentHappinessFlatBonus(PlayerTypes ePlayer)
 		return 0;
 
 	int iAmount = 0;
-	if(IsAllies(ePlayer))
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+	ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+	ReligionTypes eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+	if (eFoundedReligion == eMajority || IsAllies(ePlayer))
+#else
+	if (IsAllies(ePlayer))
+#endif
 		iAmount += GetHappinessFlatAlliesBonus(ePlayer);
 	if(IsFriends(ePlayer))
 		iAmount += GetHappinessFlatFriendshipBonus(ePlayer);
@@ -7747,7 +7789,13 @@ int CvMinorCivAI::GetCurrentFaithFlatBonus(PlayerTypes ePlayer)
 		return 0;
 
 	int iAmount = 0;
-	if(IsAllies(ePlayer))
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+	ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+	ReligionTypes eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+	if (eFoundedReligion == eMajority || IsAllies(ePlayer))
+#else
+	if (IsAllies(ePlayer))
+#endif
 		iAmount += GetFaithFlatAlliesBonus(ePlayer);
 	if(IsFriends(ePlayer))
 		iAmount += GetFaithFlatFriendshipBonus(ePlayer);
@@ -8187,7 +8235,13 @@ void CvMinorCivAI::DoUnitSpawnTurn()
 int CvMinorCivAI::GetSpawnBaseTurns(PlayerTypes ePlayer)
 {
 	// Not friends
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+	ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+	ReligionTypes eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+	if (!IsFriends(ePlayer) && eFoundedReligion != eMajority)
+#else
 	if(!IsFriends(ePlayer))
+#endif
 		return 0;
 
 #ifdef UNITED_FRONT_ALL_CITIES_GIFT_UNITS
@@ -8202,7 +8256,11 @@ int CvMinorCivAI::GetSpawnBaseTurns(PlayerTypes ePlayer)
 	}
 
 	if (iNumTurns > 0)
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+		if (eFoundedReligion == eMajority || IsAllies(ePlayer))
+#else
 		if (IsAllies(ePlayer))
+#endif
 			iNumTurns += /*-3*/ (GC.getALLIES_EXTRA_TURNS_UNIT_SPAWN() * 100);
 #else
 	// This guy isn't militaristic
@@ -8413,7 +8471,13 @@ int CvMinorCivAI::GetCurrentScienceFlatBonus(PlayerTypes ePlayer)
 
 	int iAmount = 0;
 
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+	ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+	ReligionTypes eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+	if (eFoundedReligion == eMajority || IsAllies(ePlayer))
+#else
 	if (IsAllies(ePlayer))
+#endif
 		iAmount += GetScienceFlatAlliesBonus(ePlayer);
 
 	if (IsFriends(ePlayer))

@@ -592,6 +592,8 @@
 #endif
 ///
 #define NEW_BULLY_METRICS
+///
+#define RELIGIOUS_UNITY_CS_BONUS
 /*CITY-STATES CHANGES END*/
 
 
