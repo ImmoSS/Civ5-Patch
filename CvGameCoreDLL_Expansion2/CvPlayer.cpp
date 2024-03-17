@@ -7992,12 +7992,14 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 
 		if(pUnitInfo.GetNukeDamageLevel() != -1)
 		{
+#ifndef NUCLEAR_NON_PROLIFERATION_INCREASE_NUKES_COST
 			if(GC.getGame().GetGameLeagues()->IsNoTrainingNuclearWeapons(GetID()))
 			{
 				GC.getGame().BuildCannotPerformActionHelpText(toolTipSink, "TXT_KEY_NO_ACTION_NUKES_BY_RESOLUTION");
 				if(toolTipSink == NULL)
 					return false;
 			}
+#endif
 		}
 
 		if(pUnitInfo.GetSpecialUnitType() != NO_SPECIALUNIT)
@@ -8793,6 +8795,15 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 	}
 
 	iProductionNeeded += getUnitExtraCost(eUnitClass);
+#ifdef NUCLEAR_NON_PROLIFERATION_INCREASE_NUKES_COST
+	if (GC.getUnitInfo(eUnit)->GetNukeDamageLevel() != -1)
+	{
+		if (GC.getGame().GetGameLeagues()->IsNoTrainingNuclearWeapons(GetID()))
+		{
+			iProductionNeeded *= 3;
+		}
+	}
+#endif
 
 	return std::max(1, iProductionNeeded);
 }
