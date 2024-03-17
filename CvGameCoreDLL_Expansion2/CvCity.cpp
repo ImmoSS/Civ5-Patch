@@ -6031,6 +6031,8 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			}
 		}
 	}
+#endif
+#ifdef GREAT_FIREWALL_DROPS_OUT_SPIES
 	if (eBuilding == (BuildingTypes)GC.getInfoTypeForString("BUILDING_GREAT_FIREWALL", true))
 	{
 		PlayerTypes ePlayer1 = getOwner();

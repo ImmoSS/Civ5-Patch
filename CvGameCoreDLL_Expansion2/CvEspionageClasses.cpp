@@ -1304,7 +1304,7 @@ bool CvPlayerEspionage::CanEverMoveSpyTo(CvCity* pCity)
 		return false;
 	}
 
-#ifdef NEW_DIPLOMATS_MISSIONS
+#ifdef GREAT_FIREWALL_DROPS_OUT_SPIES
 	// check to see if the city finished the Great Firewall
 	if (pCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)GC.getInfoTypeForString("BUILDING_GREAT_FIREWALL", true)) > 0)
 	{
