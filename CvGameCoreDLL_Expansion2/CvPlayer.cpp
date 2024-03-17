@@ -2758,6 +2758,22 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 		}
 	}
 
+#ifdef ASSYRIA_UA_REWORK
+	if (GetPlayerTraits()->GetCombatBonusVsHigherTech() > 0)
+	{
+		int iMod = 3;
+		iMod *= GC.getGame().getGameSpeedInfo().getGreatPeoplePercent();
+		iMod /= 100;
+		if (getGoldenAgeTurns() > 0)
+		{
+			changeGoldenAgeTurns(iMod);
+		}
+		else
+		{
+			ChangeGoldenAgeProgressMeter(iMod * 100);
+		}
+	}
+#endif
 	BuildingTypes eTraitFreeBuilding = GetPlayerTraits()->GetFreeBuildingOnConquest();
 	for(iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
@@ -2796,27 +2812,10 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 							if(!isProductionMaxedBuildingClass(((BuildingClassTypes)(pkBuildingInfo->GetBuildingClassType())), true))
 							{
 								// here would be a good place to put additional checks (for example, influence)
-#ifdef ASSYRIA_UA_REWORK
-								if (GetPlayerTraits()->GetCombatBonusVsHigherTech() > 0)
-								{
-									if (!bConquest || bRecapture || pkLoopBuildingInfo->GetConquestProbability() > 0)
-									{
-										iNum += paiNumRealBuilding[iI];
-									}
-								}
-								else
-								{
-									if (!bConquest || bRecapture || (GC.getGame().getJonRandNum(100, "Capture Probability") < pkLoopBuildingInfo->GetConquestProbability()))
-									{
-										iNum += paiNumRealBuilding[iI];
-									}
-								}
-#else
 								if(!bConquest || bRecapture || (GC.getGame().getJonRandNum(100, "Capture Probability") < pkLoopBuildingInfo->GetConquestProbability()))
 								{
 									iNum += paiNumRealBuilding[iI];
 								}
-#endif
 							}
 						}
 
