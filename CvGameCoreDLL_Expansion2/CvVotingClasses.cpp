@@ -461,10 +461,24 @@ FDataStream& operator>>(FDataStream& loadFrom, CvResolutionEffects& writeTo)
 		writeTo.iLandmarkCulture = 0;
 	}
 #ifdef NEW_LEAGUE_RESOLUTIONS
-	writeTo.iTradeRouteGoldModifier = 0;
-	writeTo.iCSBonuModifier = 0;
-	writeTo.bNoSpiesInCS = false;
-	writeTo.bDoubleResourceHappiness = false;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1000)
+	{
+#endif
+		loadFrom >> writeTo.iTradeRouteGoldModifier;
+		loadFrom >> writeTo.iCSBonuModifier;
+		loadFrom >> writeTo.bNoSpiesInCS;
+		loadFrom >> writeTo.bDoubleResourceHappiness;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		writeTo.iTradeRouteGoldModifier = 0;
+		writeTo.iCSBonuModifier = 0;
+		writeTo.bNoSpiesInCS = false;
+		writeTo.bDoubleResourceHappiness = false;
+	}
+#endif
 #endif
 	
 	return loadFrom;
@@ -475,6 +489,9 @@ FDataStream& operator<<(FDataStream& saveTo, const CvResolutionEffects& readFrom
 {
 	uint uiVersion = 9;
 
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	uiVersion = BUMP_SAVE_VERSION_RESOLUTIONEFFECTS;
+#endif
 	saveTo << uiVersion;
 	saveTo << readFrom.bDiplomaticVictory;
 	saveTo << readFrom.bChangeLeagueHost;
