@@ -12953,6 +12953,13 @@ int CvPlayer::GetHappinessFromLuxury(ResourceTypes eResource) const
 			iBaseHappiness = 0;
 		}
 
+#ifdef NEW_LEAGUE_RESOLUTIONS
+		if (GC.getGame().GetGameLeagues()->IsDoubleResourceHappiness(GetID(), eResource))
+		{
+			iBaseHappiness *= 2;
+		}
+#endif
+
 		// Only look at Luxuries
 		if(pkResourceInfo->getResourceUsage() != RESOURCEUSAGE_LUXURY)
 		{

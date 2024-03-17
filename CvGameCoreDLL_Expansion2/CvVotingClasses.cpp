@@ -1503,6 +1503,58 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 		// Refresh yield
 	}
 #ifdef NEW_LEAGUE_RESOLUTIONS
+	if (GetEffects()->iTradeRouteGoldModifier != 0)
+	{
+	}
+	if (GetEffects()->iCSBonuModifier != 0)
+	{
+	}
+	if (GetEffects()->bNoSpiesInCS)
+	{
+		// Refresh trade routes
+		GC.getGame().GetGameTrade()->ClearAllCityStateTradeRoutes();
+
+		for (int iPlayer1 = MAX_MAJOR_CIVS; iPlayer1 < MAX_MINOR_CIVS; iPlayer1++)
+		{
+			PlayerTypes ePlayer1 = (PlayerTypes)iPlayer1;
+			if (GET_PLAYER(ePlayer1).isAlive())
+			{
+				for (int iPlayer2 = 0; iPlayer2 < MAX_MAJOR_CIVS; iPlayer2++)
+				{
+					PlayerTypes ePlayer2 = (PlayerTypes)iPlayer2;
+					if (GET_PLAYER(ePlayer2).isAlive())
+					{
+						if (GET_PLAYER(ePlayer2).getTeam() == GET_PLAYER(ePlayer1).getTeam())
+						{
+							continue;
+						}
+
+						int iSpyIndex = GET_PLAYER(ePlayer2).GetEspionage()->GetSpyIndexInCity(GET_PLAYER(ePlayer1).getCapitalCity());
+						if (iSpyIndex != -1)
+						{
+							CvNotifications* pNotifications = GET_PLAYER(ePlayer2).GetNotifications();
+							if (pNotifications)
+							{
+								CvPlayerEspionage* pEspionage = GET_PLAYER(ePlayer2).GetEspionage();
+								int iSpyName = pEspionage->m_aSpyList[iSpyIndex].m_iName;
+								CvSpyRank eSpyRank = pEspionage->m_aSpyList[iSpyIndex].m_eRank;
+								Localization::String strSummary = Localization::Lookup("TXT_KEY_NOTIFICATION_SPY_EJECTED_LEAGUE");
+								Localization::String strNotification = Localization::Lookup("TXT_KEY_NOTIFICATION_SPY_EJECTED_LEAGUE_TT");
+								strNotification << pEspionage->GetSpyRankName(eSpyRank);
+								strNotification << GET_PLAYER(ePlayer2).getCivilizationInfo().getSpyNames(iSpyName);
+								strNotification << GET_PLAYER(ePlayer1).getCapitalCity()->getNameKey();
+								pNotifications->Add(NOTIFICATION_SPY_CANT_STEAL_TECH, strNotification.toUTF8(), strSummary.toUTF8(), -1, -1, -1);
+							}
+							GET_PLAYER(ePlayer2).GetEspionage()->ExtractSpyFromCity(iSpyIndex);
+						}
+					}
+				}
+			}
+		}
+	}
+	if (GetEffects()->bDoubleResourceHappiness)
+	{
+	}
 #endif
 
 	m_iTurnEnacted = GC.getGame().getGameTurn();
@@ -4399,6 +4451,58 @@ int CvLeague::GetScienceyGreatPersonRateModifier()
 	}
 	return iMod;
 }
+
+#ifdef NEW_LEAGUE_RESOLUTIONS
+int CvLeague::GetTradeRouteGoldModifier()
+{
+	int iMod = 0;
+	for (ActiveResolutionList::iterator it = m_vActiveResolutions.begin(); it != m_vActiveResolutions.end(); ++it)
+	{
+		if (it->GetEffects()->iTradeRouteGoldModifier != 0)
+		{
+			iMod += it->GetEffects()->iTradeRouteGoldModifier;
+		}
+	}
+	return iMod;
+}
+
+int CvLeague::GetCSBonuModifier()
+{
+	int iMod = 0;
+	for (ActiveResolutionList::iterator it = m_vActiveResolutions.begin(); it != m_vActiveResolutions.end(); ++it)
+	{
+		if (it->GetEffects()->iCSBonuModifier != 0)
+		{
+			iMod += it->GetEffects()->iCSBonuModifier;
+		}
+	}
+	return iMod;
+}
+
+bool CvLeague::IsNoSpiesInCS()
+{
+	for (ActiveResolutionList::iterator it = m_vActiveResolutions.begin(); it != m_vActiveResolutions.end(); it++)
+	{
+		if (it->GetEffects()->bNoSpiesInCS)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool CvLeague::IsDoubleResourceHappiness(ResourceTypes eResource)
+{
+	for (ActiveResolutionList::iterator it = m_vActiveResolutions.begin(); it != m_vActiveResolutions.end(); it++)
+	{
+		if (it->GetEffects()->bDoubleResourceHappiness && it->GetProposerDecision()->GetDecision() == eResource)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+#endif
 
 CvString CvLeague::GetResolutionName(ResolutionTypes eResolution, int iResolutionID, int iProposerChoice, bool bIncludePrefix)
 {
@@ -7659,6 +7763,72 @@ int CvGameLeagues::GetScienceyGreatPersonRateModifier(PlayerTypes ePlayer)
 	return iValue;
 }
 
+#ifdef NEW_LEAGUE_RESOLUTIONS
+int CvGameLeagues::GetTradeRouteGoldModifier(PlayerTypes ePlayer)
+{
+	int iValue = 0;
+	for (LeagueList::iterator it = m_vActiveLeagues.begin(); it != m_vActiveLeagues.end(); ++it)
+	{
+		if (it->IsMember(ePlayer))
+		{
+			int iMod = it->GetTradeRouteGoldModifier();
+			if (iMod != 0)
+			{
+				iValue += iMod;
+			}
+		}
+	}
+	return iValue;
+}
+
+int CvGameLeagues::GetCSBonuModifier(PlayerTypes ePlayer)
+{
+	int iValue = 0;
+	for (LeagueList::iterator it = m_vActiveLeagues.begin(); it != m_vActiveLeagues.end(); ++it)
+	{
+		if (it->IsMember(ePlayer))
+		{
+			int iMod = it->GetCSBonuModifier();
+			if (iMod != 0)
+			{
+				iValue += iMod;
+			}
+		}
+	}
+	return iValue;
+}
+
+bool CvGameLeagues::IsNoSpiesInCS(PlayerTypes ePlayer)
+{
+	for (LeagueList::iterator it = m_vActiveLeagues.begin(); it != m_vActiveLeagues.end(); it++)
+	{
+		if (it->IsMember(ePlayer))
+		{
+			if (it->IsNoSpiesInCS())
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool CvGameLeagues::IsDoubleResourceHappiness(PlayerTypes ePlayer, ResourceTypes eLuxury)
+{
+	for (LeagueList::iterator it = m_vActiveLeagues.begin(); it != m_vActiveLeagues.end(); it++)
+	{
+		if (it->IsMember(ePlayer))
+		{
+			if (it->IsDoubleResourceHappiness(eLuxury))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+#endif
+
 CvString CvGameLeagues::GetLogFileName() const
 {
 	CvString strLogName;
@@ -9846,8 +10016,6 @@ int CvLeagueAI::ScoreVoteChoiceYesNo(CvProposal* pProposal, int iChoice, bool bE
 		}
 		iScore += iTempScore;
 	}
-#ifdef NEW_LEAGUE_RESOLUTIONS
-#endif
 
 	// == Diplomat knowledge, Vote Commitments we secured ==
 

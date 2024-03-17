@@ -1312,6 +1312,13 @@ bool CvPlayerEspionage::CanEverMoveSpyTo(CvCity* pCity)
 	}
 #endif
 
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	if (GET_PLAYER(pCity->getOwner()).isMinorCiv() && GC.getGame().GetGameLeagues()->IsNoSpiesInCS(m_pPlayer->GetID()))
+	{
+		return false;
+	}
+#endif
+
 	return true;
 }
 

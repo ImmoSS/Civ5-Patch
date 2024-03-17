@@ -2262,6 +2262,9 @@ int CvPlayerTrade::GetTradeConnectionValueTimes100 (const TradeConnection& kTrad
 					int iYourBuildingBonus = GetTradeConnectionYourBuildingValueTimes100(kTradeConnection, eYield, bAsOriginPlayer);
 					int iTheirBuildingBonus = GetTradeConnectionTheirBuildingValueTimes100(kTradeConnection, eYield, bAsOriginPlayer);
 					int iTraitBonus = GetTradeConnectionOtherTraitValueTimes100(kTradeConnection, eYield, bAsOriginPlayer);
+#ifdef NEW_LEAGUE_RESOLUTIONS
+					int iLeagueBonus = 100 * GC.getGame().GetGameLeagues()->GetTradeRouteGoldModifier(m_pPlayer->GetID());
+#endif
 
 					int iModifier = 100;
 					int iDomainModifier = GetTradeConnectionDomainValueModifierTimes100(kTradeConnection, eYield);
@@ -2276,6 +2279,9 @@ int CvPlayerTrade::GetTradeConnectionValueTimes100 (const TradeConnection& kTrad
 					iValue += iResourceBonus;
 					iValue += iPolicyBonus;
 					iValue += iTraitBonus;
+#ifdef NEW_LEAGUE_RESOLUTIONS
+					iValue += iLeagueBonus;
+#endif
 
 					iModifier += iDomainModifier;
 					iModifier += iOriginRiverModifier;
