@@ -7363,6 +7363,9 @@ int CvMinorCivAI::GetCurrentCultureFlatBonus(PlayerTypes ePlayer)
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
 	if(iModifier > 0)
 	{
 		iAmount *= (iModifier + 100);
@@ -7411,6 +7414,9 @@ int CvMinorCivAI::GetCurrentCulturePerBuildingBonus(PlayerTypes ePlayer)
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
 	if(iModifier > 0)
 	{
 		iAmount *= (iModifier + 100);
@@ -7501,13 +7507,20 @@ int CvMinorCivAI::GetCurrentHappinessFlatBonus(PlayerTypes ePlayer)
 	if(IsFriends(ePlayer))
 		iAmount += GetHappinessFlatFriendshipBonus(ePlayer);
 
+#if defined SIAM_UA_REWORK || defined NEW_LEAGUE_RESOLUTIONS
+	int iModifier = 0;
+#endif
 #ifdef SIAM_UA_REWORK
-	// Modify the bonus if called for by our trait
-	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+	iModifier += GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#endif
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
+#if defined SIAM_UA_REWORK || defined NEW_LEAGUE_RESOLUTIONS
 	if (iModifier > 0)
 	{
-		iAmount *= (iModifier + 100);
-		iAmount /= 100;
+		iAmount *= 100;
+		iAmount /= (100 + iModifier);
 	}
 #endif
 	return iAmount;
@@ -7741,6 +7754,9 @@ int CvMinorCivAI::GetCurrentFaithFlatBonus(PlayerTypes ePlayer)
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
 	if(iModifier > 0)
 	{
 		iAmount *= (iModifier + 100);
@@ -7781,6 +7797,9 @@ int CvMinorCivAI::GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssu
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
 	if(iModifier > 0)
 	{
 		iBonus *= (iModifier + 100);
@@ -7811,6 +7830,9 @@ int CvMinorCivAI::GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAs
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
 	if(iModifier > 0)
 	{
 		iBonus *= (iModifier + 100);
@@ -7827,6 +7849,9 @@ int CvMinorCivAI::GetAlliesCapitalFoodBonus(PlayerTypes ePlayer)
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
 	if(iModifier > 0)
 	{
 		iBonus *= (iModifier + 100);
@@ -7843,6 +7868,9 @@ int CvMinorCivAI::GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer)
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
 	if(iModifier > 0)
 	{
 		iBonus *= (iModifier + 100);
@@ -8188,9 +8216,16 @@ int CvMinorCivAI::GetSpawnBaseTurns(PlayerTypes ePlayer)
 		iNumTurns += /*-3*/ (GC.getALLIES_EXTRA_TURNS_UNIT_SPAWN() * 100);
 #endif
 
+#if defined SIAM_UA_REWORK || defined NEW_LEAGUE_RESOLUTIONS
+	int iModifier = 0;
+#endif
 #ifdef SIAM_UA_REWORK
-	// Modify the bonus if called for by our trait
-	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+	iModifier += GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#endif
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
+#if defined SIAM_UA_REWORK || defined NEW_LEAGUE_RESOLUTIONS
 	if (iModifier > 0)
 	{
 		iNumTurns *= 100;
@@ -8386,6 +8421,9 @@ int CvMinorCivAI::GetCurrentScienceFlatBonus(PlayerTypes ePlayer)
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
 	if (iModifier > 0)
 	{
 		iAmount *= (iModifier + 100);
@@ -8429,6 +8467,9 @@ int CvMinorCivAI::GetFriendsCapitalProductionBonus(PlayerTypes ePlayer, EraTypes
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
 	if (iModifier > 0)
 	{
 		iBonus *= (iModifier + 100);
@@ -8459,6 +8500,9 @@ int CvMinorCivAI::GetFriendsOtherCityProductionBonus(PlayerTypes ePlayer, EraTyp
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
 	if (iModifier > 0)
 	{
 		iBonus *= (iModifier + 100);
@@ -8475,6 +8519,9 @@ int CvMinorCivAI::GetAlliesCapitalProductionBonus(PlayerTypes ePlayer)
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
 	if (iModifier > 0)
 	{
 		iBonus *= (iModifier + 100);
@@ -8491,6 +8538,9 @@ int CvMinorCivAI::GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer)
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
+#endif
 	if (iModifier > 0)
 	{
 		iBonus *= (iModifier + 100);
