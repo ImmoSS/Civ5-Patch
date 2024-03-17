@@ -1951,6 +1951,9 @@ protected:
 #ifdef NQ_GOLDEN_AGE_TURNS_FROM_BELIEF
 	bool m_bHasUsedDharma;
 #endif
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+	bool m_bHasUsedMissionaryZeal;
+#endif
 #ifdef UNITY_OF_PROPHETS_EXTRA_PROPHETS
 	bool m_bHasUsedUnityProphets;
 #endif
