@@ -21211,6 +21211,12 @@ bool CvUnit::CanWithdrawFromMelee(CvUnit& attacker)
 	VALIDATE_OBJECT
 	int iWithdrawChance = getExtraWithdrawal();
 
+#ifdef FIX_WITHDRAW_WHILE_DEFENDING_CIVILIAN
+	if (plot()->getNumUnits() - plot()->GetNumCombatUnits() > 0)
+	{
+		return false;
+	}
+#endif
 	// Does attacker have a speed greater than 1?
 	int iAttackerMovementRange = attacker.maxMoves() / GC.getMOVE_DENOMINATOR();
 	if(iAttackerMovementRange > 0)
