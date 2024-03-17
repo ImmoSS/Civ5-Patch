@@ -7503,7 +7503,7 @@ int CvMinorCivAI::GetCurrentHappinessFlatBonus(PlayerTypes ePlayer)
 
 #ifdef SIAM_UA_REWORK
 	// Modify the bonus if called for by our trait
-	int iModifier = 2*GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
 	if (iModifier > 0)
 	{
 		iAmount *= (iModifier + 100);
