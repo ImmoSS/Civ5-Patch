@@ -7749,7 +7749,7 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_WHALE") == 0
 						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_PEARLS") == 0
 						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_CRAB") == 0)
-						&& eYield == YIELD_CULTURE && (strcmp(GET_PLAYER(getOwner()).getCivilizationTypeKey(), "CIVILIZATION_JAPAN") == 0))
+						&& eYield == YIELD_CULTURE && getOwner() != NO_PLAYER && strcmp(GET_PLAYER(getOwner()).getCivilizationTypeKey(), "CIVILIZATION_JAPAN") == 0)
 					{
 						iYield += 1;
 					}
@@ -10559,7 +10559,7 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_WHALE") == 0
 						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_PEARLS") == 0
 						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_CRAB") == 0)
-						&& eYield == YIELD_CULTURE && (strcmp(GET_PLAYER(getOwner()).getCivilizationTypeKey(), "CIVILIZATION_JAPAN") == 0))
+						&& eYield == YIELD_CULTURE && getOwner() != NO_PLAYER && strcmp(GET_PLAYER(getOwner()).getCivilizationTypeKey(), "CIVILIZATION_JAPAN") == 0)
 					{
 						iYield += 1;
 					}
