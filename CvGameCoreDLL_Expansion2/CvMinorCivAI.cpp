@@ -6397,7 +6397,7 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		{
 			eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
 		}
-		if (eFoundedReligion == eMajority || bFriends)
+		if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority || bFriends)
 #else
 		if(bFriends)	// Friends bonus
 #endif
@@ -6411,7 +6411,7 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		{
 			eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
 		}
-		if (eFoundedReligion == eMajority || bFriends)
+		if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority || bFriends)
 #else
 		if(bAllies)		// Allies bonus
 #endif
@@ -6488,7 +6488,7 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		{
 			eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
 		}
-		if (eFoundedReligion == eMajority || bFriends)
+		if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority || bFriends)
 #else
 		if (bFriends)	// Friends bonus
 #endif
@@ -6502,7 +6502,7 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		{
 			eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
 		}
-		if (eFoundedReligion == eMajority || bFriends)
+		if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority || bFriends)
 #else
 		if (bAllies)		// Allies bonus
 #endif
@@ -7400,7 +7400,7 @@ int CvMinorCivAI::GetCurrentCultureFlatBonus(PlayerTypes ePlayer)
 	{
 		eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
 	}
-	if (eFoundedReligion == eMajority || IsAllies(ePlayer))
+	if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority || IsAllies(ePlayer))
 #else
 	if(IsAllies(ePlayer))
 #endif
@@ -7461,7 +7461,7 @@ int CvMinorCivAI::GetCurrentCulturePerBuildingBonus(PlayerTypes ePlayer)
 	{
 		eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
 	}
-	if (eFoundedReligion == eMajority || IsAllies(ePlayer))
+	if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority || IsAllies(ePlayer))
 #else
 	if (IsAllies(ePlayer))
 #endif
@@ -7567,7 +7567,7 @@ int CvMinorCivAI::GetCurrentHappinessFlatBonus(PlayerTypes ePlayer)
 	{
 		eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
 	}
-	if (eFoundedReligion == eMajority || IsAllies(ePlayer))
+	if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority || IsAllies(ePlayer))
 #else
 	if (IsAllies(ePlayer))
 #endif
@@ -7822,7 +7822,7 @@ int CvMinorCivAI::GetCurrentFaithFlatBonus(PlayerTypes ePlayer)
 	{
 		eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
 	}
-	if (eFoundedReligion == eMajority || IsAllies(ePlayer))
+	if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority || IsAllies(ePlayer))
 #else
 	if (IsAllies(ePlayer))
 #endif
@@ -8272,7 +8272,7 @@ int CvMinorCivAI::GetSpawnBaseTurns(PlayerTypes ePlayer)
 	{
 		eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
 	}
-	if (!IsFriends(ePlayer) && eFoundedReligion != eMajority)
+	if (!IsFriends(ePlayer) && !(eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority))
 #else
 	if(!IsFriends(ePlayer))
 #endif
@@ -8291,7 +8291,7 @@ int CvMinorCivAI::GetSpawnBaseTurns(PlayerTypes ePlayer)
 
 	if (iNumTurns > 0)
 #ifdef RELIGIOUS_UNITY_CS_BONUS
-		if (eFoundedReligion == eMajority || IsAllies(ePlayer))
+		if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority || IsAllies(ePlayer))
 #else
 		if (IsAllies(ePlayer))
 #endif
@@ -8512,7 +8512,7 @@ int CvMinorCivAI::GetCurrentScienceFlatBonus(PlayerTypes ePlayer)
 	{
 		eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
 	}
-	if (eFoundedReligion == eMajority || IsAllies(ePlayer))
+	if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority || IsAllies(ePlayer))
 #else
 	if (IsAllies(ePlayer))
 #endif
