@@ -9374,7 +9374,11 @@ int CvCity::GetLocalHappiness() const
 			{
 				iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetHappinessPerCity();
 			}
+#ifdef SACRED_WATERS_RIVER_AND_COASTAL
+			if (plot()->isRiver() || plot()->isCoastalLand())
+#else
 			if(plot()->isRiver())
+#endif
 			{
 				iHappinessFromReligion += pReligion->m_Beliefs.GetRiverHappiness();
 				if (eSecondaryPantheon != NO_BELIEF)
