@@ -3529,13 +3529,18 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 			}
 		}
 		iVotes += iCityStateVotes;
+#if defined AUTOCRACY_EXTRA_VOTES || defined PATRONAGE_FINISHER_REWORK
+		int iPolicyVotes = 0;
+#endif
 #ifdef AUTOCRACY_EXTRA_VOTES
+		iPolicyVotes += std::min(6, iExtraAutoVotes);
 		iVotes += std::min(6, iExtraAutoVotes);
 #endif
 #ifdef PATRONAGE_FINISHER_REWORK
 		PolicyTypes ePolicy2 = (PolicyTypes)GC.getInfoTypeForString("POLICY_PATRONAGE_FINISHER", true /*bHideAssert*/);
 		if (GET_PLAYER(ePlayer).GetPlayerPolicies()->HasPolicy(ePolicy2))
 		{
+			iPolicyVotes += 2;
 			iVotes += 2;
 		}
 #endif
@@ -3665,11 +3670,11 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 				sTemp << iWonderVotes;
 				pMember->sVoteSources += sTemp.toUTF8();
 			}
-#ifdef PATRONAGE_FINISHER_REWORK
-			PolicyTypes ePolicy2 = (PolicyTypes)GC.getInfoTypeForString("POLICY_PATRONAGE_FINISHER", true /*bHideAssert*/);
-			if (GET_PLAYER(ePlayer).GetPlayerPolicies()->HasPolicy(ePolicy2))
+#if defined PATRONAGE_FINISHER_REWORK || defined AUTOCRACY_EXTRA_VOTES
+			if (iPolicyVotes > 0)
 			{
 				Localization::String sTemp = Localization::Lookup("TXT_KEY_LEAGUE_OVERVIEW_MEMBER_DETAILS_POLICY_VOTES");
+				sTemp << iPolicyVotes;
 				pMember->sVoteSources += sTemp.toUTF8();
 			}
 #endif
