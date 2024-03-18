@@ -758,10 +758,12 @@ void CvGameReligions::FoundPantheon(PlayerTypes ePlayer, BeliefTypes eBelief)
 	kPlayer.UpdateReligion();
 	kPlayer.ChangeFaith(-GetMinimumFaithNextPantheon());
 
+#ifndef MIN_FAITH_NEXT_PANTHEON_UPDATES_ONCE_PER_TURN
 	int iIncrement = GC.getRELIGION_GAME_FAITH_DELTA_NEXT_PANTHEON();
 	iIncrement *= GC.getGame().getGameSpeedInfo().getTrainPercent();
 	iIncrement /= 100;
 	SetMinimumFaithNextPantheon(GetMinimumFaithNextPantheon() + iIncrement);
+#endif
 
 #ifdef AUI_RELIGION_FIX_FOUND_PANTHEON_NULL_POINTER_DEREFERENCE
 	CvCity* pCapitol = GET_PLAYER(ePlayer).getCapitalCity();
