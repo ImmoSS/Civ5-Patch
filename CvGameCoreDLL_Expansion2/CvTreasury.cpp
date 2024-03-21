@@ -442,46 +442,34 @@ int CvTreasury::GetGoldPerTurnFromReligion() const
 			{
 				iGoldFromReligion += (pReligions->GetNumFollowers(eFoundedReligion) / iGoldPerXFollowers);
 			}
+		}
+	}
 
-#ifdef SACRED_WATERS_RIVER_AND_COASTAL
-			CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
-			int iGoldPerRiverOrCoastalCity = 0;
-
+#ifdef SACRED_WATERS_FRESH_WATER_AND_COASTAL
+	CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
+	int iGoldPerRiverOrCoastalCity = 0;
+	int iLoop = 0;
+	CvCity* pLoopCity;
+	for (pLoopCity = m_pPlayer->firstCity(&iLoop); pLoopCity != NULL; pLoopCity = m_pPlayer->nextCity(&iLoop))
+	{
+		if (pLoopCity->plot()->isFreshWater() || pLoopCity->plot()->isCoastalLand())
+		{
 			for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
 			{
-				if (pReligion->m_Beliefs.HasBelief((BeliefTypes)i))
+				ReligionTypes eMajority = pLoopCity->GetCityReligions()->GetReligiousMajority();
+				if (eMajority != NO_RELIGION && pReligions->GetReligion(eMajority, m_pPlayer->GetID())->m_Beliefs.HasBelief((BeliefTypes)i))
 				{
-					iGoldPerRiverOrCoastalCity += pBeliefs->GetEntry(i)->GetRiverHappiness();
-				}
-			}
-
-			int iTempValue = 0;
-			int iLoop = 0;
-			CvCity* pLoopCity;
-			for (pLoopCity = m_pPlayer->firstCity(&iLoop); pLoopCity != NULL; pLoopCity = m_pPlayer->nextCity(&iLoop))
-			{
-				ReligionInCityList::iterator it;
-				for (it = pLoopCity->GetCityReligions()->m_ReligionStatus.begin(); it != pLoopCity->GetCityReligions()->m_ReligionStatus.end(); it++)
-				{
-					for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
+					if (pBeliefs->GetEntry(i)->GetRiverHappiness() > 0)
 					{
-						ReligionTypes eMajority = pLoopCity->GetCityReligions()->GetReligiousMajority();
-						if (eMajority != NO_RELIGION && pReligions->GetReligion(eMajority, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)i))
-						{
-							if (pBeliefs->GetEntry(i)->GetRiverHappiness() > 0)
-							{
-								iTempValue += 1;
-							}
-						}
+						iGoldPerRiverOrCoastalCity += 1;
 					}
 				}
 			}
-
-			iGoldPerRiverOrCoastalCity *= iTempValue;
-			iGoldFromReligion += iGoldPerRiverOrCoastalCity;
-#endif
 		}
 	}
+
+	iGoldFromReligion += iGoldPerRiverOrCoastalCity;
+#endif
 
 	return iGoldFromReligion;
 }
