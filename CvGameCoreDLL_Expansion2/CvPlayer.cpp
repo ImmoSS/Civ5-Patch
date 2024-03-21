@@ -11567,7 +11567,7 @@ void CvPlayer::ReportYieldFromKill(YieldTypes eYield, int iValue, int iX, int iY
 void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 {
 	bool setUnitReligion = false;
-	const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligion, NO_PLAYER);
+	const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligion, GetID());
 
 #ifdef BELIEF_TO_GLORY_OF_GOD_ONE_GP_OF_EACH_TYPE
 	// const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligion, getOwner());

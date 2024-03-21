@@ -758,6 +758,10 @@ void CvGameReligions::FoundPantheon(PlayerTypes ePlayer, BeliefTypes eBelief)
 	kPlayer.UpdateReligion();
 	kPlayer.ChangeFaith(-GetMinimumFaithNextPantheon());
 
+#ifdef NQ_ALLOW_RELIGION_ONE_SHOTS
+	kPlayer.DoReligionOneShots(RELIGION_PANTHEON);
+#endif
+
 #ifndef MIN_FAITH_NEXT_PANTHEON_UPDATES_ONCE_PER_TURN
 	int iIncrement = GC.getRELIGION_GAME_FAITH_DELTA_NEXT_PANTHEON();
 	iIncrement *= GC.getGame().getGameSpeedInfo().getTrainPercent();
@@ -3692,6 +3696,9 @@ void CvCityReligions::AdoptReligionFully(ReligionTypes eReligion)
 	religion.m_iPressure = religion.m_iFollowers * GC.getRELIGION_ATHEISM_PRESSURE_PER_POP();
 	m_ReligionStatus.push_back(religion);
 
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+	RecomputeFollowers(FOLLOWER_CHANGE_SCRIPTED_CONVERSION, NO_RELIGION);
+#endif
 	m_pCity->UpdateReligion(eReligion);
 }
 
