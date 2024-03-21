@@ -7739,13 +7739,13 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 						iYield += GET_PLAYER(ePlayer).GetPlayerTraits()->GetYieldChangeStrategicResources(eYield);
 					}
 #ifdef PORTUGAL_UA_REWORK
-					else if (pkResourceInfo->getResourceUsage() == RESOURCEUSAGE_LUXURY)
+					if (pkResourceInfo->getResourceUsage() == RESOURCEUSAGE_LUXURY)
 					{
 						iYield += GET_PLAYER(ePlayer).GetPlayerTraits()->GetYieldChangeLuxuryResources(eYield);
 					}
 #endif
 #ifdef JAPAN_UA_REWORK
-					else if ((strcmp(pkResourceInfo->GetType(), "RESOURCE_FISH") == 0
+					if ((strcmp(pkResourceInfo->GetType(), "RESOURCE_FISH") == 0
 						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_WHALE") == 0
 						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_PEARLS") == 0
 						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_CRAB") == 0)
@@ -10549,13 +10549,13 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 					if(pkResourceInfo->getResourceUsage() == RESOURCEUSAGE_STRATEGIC)
 						iYield += GET_PLAYER(ePlayer).GetPlayerTraits()->GetYieldChangeStrategicResources(eYield);
 #ifdef PORTUGAL_UA_REWORK
-					else if (pkResourceInfo->getResourceUsage() == RESOURCEUSAGE_LUXURY)
+					if (pkResourceInfo->getResourceUsage() == RESOURCEUSAGE_LUXURY)
 					{
 						iYield += GET_PLAYER(ePlayer).GetPlayerTraits()->GetYieldChangeLuxuryResources(eYield);
 					}
 #endif
 #ifdef JAPAN_UA_REWORK
-					else if ((strcmp(pkResourceInfo->GetType(), "RESOURCE_FISH") == 0
+					if ((strcmp(pkResourceInfo->GetType(), "RESOURCE_FISH") == 0
 						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_WHALE") == 0
 						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_PEARLS") == 0
 						|| strcmp(pkResourceInfo->GetType(), "RESOURCE_CRAB") == 0)
