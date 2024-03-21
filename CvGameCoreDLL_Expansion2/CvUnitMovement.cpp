@@ -251,7 +251,7 @@ bool CvUnitMovement::ConsumesAllMoves(const CvUnit* pUnit, const CvPlot* pFromPl
 	{
 		// Is the unit from a civ that can disembark for just 1 MP?
 #ifdef MARINE_DISEMBARK_FOR_1_MP
-		if(!pToPlot->isWater() && pFromPlot->isWater() && pUnit->isEmbarked() && (GET_PLAYER(pUnit->getOwner()).GetPlayerTraits()->IsEmbarkedToLandFlatCost() || pUnit->getUnitType() == GC.getInfoTypeForString("UNIT_MARINE", true)))
+		if(!pToPlot->isWater() && pFromPlot->isWater() && (pUnit->isEmbarked() && (GET_PLAYER(pUnit->getOwner()).GetPlayerTraits()->IsEmbarkedToLandFlatCost() || pUnit->getUnitType() == GC.getInfoTypeForString("UNIT_MARINE", true))))
 #else
 		if(!pToPlot->isWater() && pFromPlot->isWater() && pUnit->isEmbarked() && GET_PLAYER(pUnit->getOwner()).GetPlayerTraits()->IsEmbarkedToLandFlatCost())
 #endif
@@ -287,7 +287,7 @@ bool CvUnitMovement::CostsOnlyOne(const CvUnit* pUnit, const CvPlot* pFromPlot, 
 
 	// Is the unit from a civ that can disembark for just 1 MP?
 #ifdef MARINE_DISEMBARK_FOR_1_MP
-	if(!pToPlot->isWater() && pFromPlot->isWater() && (pUnit->isEmbarked() && GET_PLAYER(pUnit->getOwner()).GetPlayerTraits()->IsEmbarkedToLandFlatCost()) || pUnit->getUnitType() == GC.getInfoTypeForString("UNIT_MARINE", true))
+	if(!pToPlot->isWater() && pFromPlot->isWater() && (pUnit->isEmbarked() && GET_PLAYER(pUnit->getOwner()).GetPlayerTraits()->IsEmbarkedToLandFlatCost() || pUnit->getUnitType() == GC.getInfoTypeForString("UNIT_MARINE", true)))
 #else
 	if(!pToPlot->isWater() && pFromPlot->isWater() && pUnit->isEmbarked() && GET_PLAYER(pUnit->getOwner()).GetPlayerTraits()->IsEmbarkedToLandFlatCost())
 #endif
