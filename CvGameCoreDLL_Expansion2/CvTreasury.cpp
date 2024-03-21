@@ -82,7 +82,11 @@ void CvTreasury::DoGold()
 		SetGold(0);
 
 		if(iGoldAfterThisTurn <= /*-5*/ GC.getDEFICIT_UNIT_DISBANDING_THRESHOLD() * 100)
+#ifdef UNIT_DISBAND_REWORK
+			m_pPlayer->DoDeficit(iGoldAfterThisTurn);
+#else
 			m_pPlayer->DoDeficit();
+#endif
 	}
 	else
 	{

@@ -19279,7 +19279,11 @@ void CvPlayer::SetGetsScienceFromPlayer(PlayerTypes ePlayer, bool bNewValue)
 
 //	--------------------------------------------------------------------------------
 /// Player spending too much cash?
+#ifdef UNIT_DISBAND_REWORK
+void CvPlayer::DoDeficit(int iValue)
+#else
 void CvPlayer::DoDeficit()
+#endif
 {
 	int iNumMilitaryUnits = 0;
 
@@ -19294,7 +19298,12 @@ void CvPlayer::DoDeficit()
 	// If the player has more units than cities, start disbanding things
 	if(iNumMilitaryUnits > getNumCities())
 	{
+#ifdef UNIT_DISBAND_REWORK
+		int iRand = GC.getGame().getJonRandNum(100, "Disband rand");
+		if (5 * (iRand + 1) <= -iValue)
+#else
 		if(GC.getGame().getJonRandNum(100, "Disband rand") < 50)
+#endif
 		{
 			UnitHandle pLandUnit;
 			UnitHandle pNavalUnit;

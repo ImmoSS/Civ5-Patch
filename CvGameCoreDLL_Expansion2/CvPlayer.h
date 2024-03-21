@@ -1260,7 +1260,11 @@ public:
 
 	// END Science
 
+#ifdef UNIT_DISBAND_REWORK
+	void DoDeficit(int iValue);
+#else
 	void DoDeficit();
+#endif
 
 	int getSpecialistExtraYield(YieldTypes eIndex) const;
 	void changeSpecialistExtraYield(YieldTypes eIndex, int iChange);
