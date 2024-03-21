@@ -11788,12 +11788,15 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 #ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
 	if (!m_bHasUsedMissionaryZeal)
 	{
-		int iLoop = 0;
-		for (CvCity* pLoopCity = GET_PLAYER(GetID()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(GetID()).nextCity(&iLoop))
+		if (pReligion->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_MISSIONARY_ZEAL")))
 		{
-			pLoopCity->GetCityReligions()->AdoptReligionFully(eReligion);
+			int iLoop = 0;
+			for (CvCity* pLoopCity = GET_PLAYER(GetID()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(GetID()).nextCity(&iLoop))
+			{
+				pLoopCity->GetCityReligions()->AdoptReligionFully(eReligion);
+			}
+			m_bHasUsedMissionaryZeal = true;
 		}
-		m_bHasUsedMissionaryZeal = true;
 	}
 #endif
 
