@@ -466,7 +466,7 @@ int CvTreasury::GetGoldPerTurnFromReligion() const
 					for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
 					{
 						ReligionTypes eMajority = pLoopCity->GetCityReligions()->GetReligiousMajority();
-						if (pReligions->GetReligion(eMajority, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)i))
+						if (eMajority != NO_RELIGION && pReligions->GetReligion(eMajority, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)i))
 						{
 							if (pBeliefs->GetEntry(i)->GetRiverHappiness() > 0)
 							{
