@@ -2248,6 +2248,30 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 		}
 	}
 
+#ifdef ASSYRIA_UA_REWORK
+	if (bConquest)
+	{
+		if (GetPlayerTraits()->GetCombatBonusVsHigherTech() > 0)
+		{
+			// Will this be the first time we have owned this city?
+			if (!pOldCity->isEverOwned(GetID()))
+			{
+				int iMod = 3;
+				iMod *= GC.getGame().getGameSpeedInfo().getGreatPeoplePercent();
+				iMod /= 100;
+				if (getGoldenAgeTurns() > 0)
+				{
+					changeGoldenAgeTurns(iMod);
+				}
+				else
+				{
+					ChangeGoldenAgeProgressMeter(iMod * 100);
+				}
+			}
+		}
+	}
+#endif
+
 	// slewis - warmonger calculations
 	if (bConquest)
 	{
@@ -2778,23 +2802,6 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 			}
 		}
 	}
-
-#ifdef ASSYRIA_UA_REWORK
-	if (GetPlayerTraits()->GetCombatBonusVsHigherTech() > 0)
-	{
-		int iMod = 3;
-		iMod *= GC.getGame().getGameSpeedInfo().getGreatPeoplePercent();
-		iMod /= 100;
-		if (getGoldenAgeTurns() > 0)
-		{
-			changeGoldenAgeTurns(iMod);
-		}
-		else
-		{
-			ChangeGoldenAgeProgressMeter(iMod * 100);
-		}
-	}
-#endif
 	BuildingTypes eTraitFreeBuilding = GetPlayerTraits()->GetFreeBuildingOnConquest();
 	for(iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
