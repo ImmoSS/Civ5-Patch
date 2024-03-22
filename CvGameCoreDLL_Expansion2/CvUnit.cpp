@@ -3157,6 +3157,25 @@ bool CvUnit::jumpToNearestValidPlot()
 	iBestValue = INT_MAX;
 	pBestPlot = NULL;
 
+#ifdef FREE_UNIT_AT_STARTING_PLOT
+	if (plot() && plot()->isValidDomainForLocation(*this))
+	{
+		if (plot()->getNumFriendlyUnitsOfType(this) < GC.getPLOT_UNIT_LIMIT() + 1)
+		{
+			CvAssertMsg(!atPlot(*plot()), "atPlot(pLoopPlot) did not return false as expected");
+
+			if ((getDomainType() != DOMAIN_AIR) || plot()->isFriendlyCity(*this, true))
+			{
+				if (getDomainType() != DOMAIN_SEA || (plot()->isFriendlyCity(*this, true) && plot()->isCoastalLand()) || plot()->isWater())
+				{
+					iBestValue = 0;
+					pBestPlot = plot();
+				}
+			}
+		}
+	}
+#endif
+
 	for(iI = 0; iI < GC.getMap().numPlots(); iI++)
 	{
 		pLoopPlot = GC.getMap().plotByIndexUnchecked(iI);

@@ -1882,7 +1882,22 @@ CvPlot* CvPlayer::addFreeUnit(UnitTypes eUnit, UnitAITypes eUnitAI)
 	{
 		pBestPlot = NULL;
 
+#ifdef FREE_UNIT_AT_STARTING_PLOT
+		if (!pStartingPlot->isImpassable() && !pStartingPlot->isMountain())
+		{
+			if (!(pStartingPlot->isUnit()))
+			{
+				if (!(pStartingPlot->isGoody()))
+				{
+					pBestPlot = pStartingPlot;
+				}
+			}
+		}
+
+		if (isHuman() && pBestPlot == NULL)
+#else
 		if(isHuman())
+#endif
 		{
 			if(!(pkUnitInfo->IsFound()))
 			{
@@ -11654,7 +11669,8 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 		m_bHasUsedGoddessLove = true;
 
 		CvCity* pSpawnCity = getCapitalCity();
-		pSpawnCity->GetCityCitizens()->DoSpawnGreatPerson((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"), false /*bIncrementCount*/, false);
+		addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"));
+		// pSpawnCity->GetCityCitizens()->DoSpawnGreatPerson((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"), false /*bIncrementCount*/, false);
 	}
 #endif
 
