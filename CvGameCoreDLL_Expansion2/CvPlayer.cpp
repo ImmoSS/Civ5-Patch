@@ -11809,7 +11809,8 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 			int iLoop = 0;
 			for (CvCity* pLoopCity = GET_PLAYER(GetID()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(GetID()).nextCity(&iLoop))
 			{
-				pLoopCity->GetCityReligions()->AdoptReligionFully(eReligion);
+				ReligionTypes eOldReligion = pLoopCity->GetCityReligions()->GetReligiousMajority();
+				pLoopCity->GetCityReligions()->AdoptReligionFully(eReligion, eOldReligion);
 			}
 			m_bHasUsedMissionaryZeal = true;
 		}

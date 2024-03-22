@@ -2433,7 +2433,11 @@ int CvLuaCity::lAdoptReligionFully(lua_State* L)
 {
 	CvCity* pkCity = GetInstance(L);
 	ReligionTypes eReligion = (ReligionTypes)lua_tointeger(L, 2);
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+	pkCity->GetCityReligions()->AdoptReligionFully(eReligion, eReligion);
+#else
 	pkCity->GetCityReligions()->AdoptReligionFully(eReligion);
+#endif
 	return 1;
 }
 //------------------------------------------------------------------------------

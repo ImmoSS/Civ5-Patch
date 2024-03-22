@@ -3064,7 +3064,11 @@ ReligionTypes CvCityReligions::GetReligiousMajority()
 	{
 		iTotalFollowers += religionIt->m_iFollowers;
 
+#ifdef FIX_NO_RELIGION_MAJORITY
+		if(religionIt->m_iFollowers > iMostFollowers || religionIt->m_iFollowers == iMostFollowers && (religionIt->m_iPressure > iMostFollowerPressure || eMostFollowers == NO_RELIGION))
+#else
 		if(religionIt->m_iFollowers > iMostFollowers || religionIt->m_iFollowers == iMostFollowers && religionIt->m_iPressure > iMostFollowerPressure)
+#endif
 		{
 			iMostFollowers = religionIt->m_iFollowers;
 			iMostFollowerPressure = religionIt->m_iPressure;
@@ -3676,7 +3680,11 @@ void CvCityReligions::AddSpyPressure(ReligionTypes eReligion, int iBasePressure)
 }
 
 /// Set this city to have all citizens following a religion (mainly for scripting)
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+void CvCityReligions::AdoptReligionFully(ReligionTypes eReligion, ReligionTypes eOldReligion)
+#else
 void CvCityReligions::AdoptReligionFully(ReligionTypes eReligion)
+#endif
 {
 	m_ReligionStatus.clear();
 
@@ -3697,9 +3705,16 @@ void CvCityReligions::AdoptReligionFully(ReligionTypes eReligion)
 	m_ReligionStatus.push_back(religion);
 
 #ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
-	RecomputeFollowers(FOLLOWER_CHANGE_SCRIPTED_CONVERSION, NO_RELIGION);
-#endif
+	if (eReligion != eOldReligion)
+	{
+		CityConvertsReligion(eReligion, eOldReligion, m_pCity->getOwner());
+		GC.GetEngineUserInterface()->setDirty(CityInfo_DIRTY_BIT, true);
+		LogFollowersChange(FOLLOWER_CHANGE_SCRIPTED_CONVERSION);
+	}
+	// RecomputeFollowers(FOLLOWER_CHANGE_SCRIPTED_CONVERSION, NO_RELIGION);
+#else
 	m_pCity->UpdateReligion(eReligion);
+#endif
 }
 
 /// Remove presence of old owner's pantheon (used when a city is conquered)
