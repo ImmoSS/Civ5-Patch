@@ -3711,7 +3711,6 @@ void CvCityReligions::AdoptReligionFully(ReligionTypes eReligion)
 		GC.GetEngineUserInterface()->setDirty(CityInfo_DIRTY_BIT, true);
 		LogFollowersChange(FOLLOWER_CHANGE_SCRIPTED_CONVERSION);
 	}
-	// RecomputeFollowers(FOLLOWER_CHANGE_SCRIPTED_CONVERSION, NO_RELIGION);
 #else
 	m_pCity->UpdateReligion(eReligion);
 #endif
@@ -4024,6 +4023,107 @@ void CvCityReligions::CityConvertsReligion(ReligionTypes eMajority, ReligionType
 
 	m_pCity->UpdateReligion(eMajority);
 
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+	if (GET_PLAYER(m_pCity->getOwner()).isAlive() && GET_PLAYER(m_pCity->getOwner()).isMinorCiv())
+	{
+		if (eOldMajority > RELIGION_PANTHEON && GC.getGame().GetGameReligions()->GetReligion(eOldMajority, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY")))
+		{
+			bool bFriends = GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->IsFriends(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
+			bool bAllies = GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->IsAllies(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
+			MinorCivTraitTypes eTrait = GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetTrait();
+
+			if (eTrait == MINOR_CIV_TRAIT_MARITIME)
+			{
+				int iCapitalFoodTimes100 = 0;
+				int iOtherCitiesFoodTimes100 = 0;
+
+				if (!bFriends)
+				{
+					iCapitalFoodTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetFriendsCapitalFoodBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
+					iOtherCitiesFoodTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetFriendsOtherCityFoodBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
+				}
+				if (!bAllies)
+				{
+					iCapitalFoodTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalFoodBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
+					iOtherCitiesFoodTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
+				}
+
+				GET_PLAYER(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder).ChangeCapitalYieldChange(YIELD_FOOD, iCapitalFoodTimes100);
+				GET_PLAYER(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder).ChangeCityYieldChange(YIELD_FOOD, iOtherCitiesFoodTimes100);
+			}
+
+			if (eTrait == MINOR_CIV_TRAIT_MANUFACTORY)
+			{
+				int iCapitalProductionTimes100 = 0;
+				int iOtherCitiesProductionTimes100 = 0;
+
+				if (!bFriends)
+				{
+					iCapitalProductionTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetFriendsCapitalProductionBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
+					iOtherCitiesProductionTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetFriendsOtherCityProductionBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
+				}
+				if (!bAllies)
+				{
+					iCapitalProductionTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalProductionBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
+					iOtherCitiesProductionTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
+				}
+
+				GET_PLAYER(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder).ChangeCapitalYieldChange(YIELD_PRODUCTION, iCapitalProductionTimes100);
+				GET_PLAYER(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder).ChangeCityYieldChange(YIELD_PRODUCTION, iOtherCitiesProductionTimes100);
+			}
+		}
+		if (eMajority > RELIGION_PANTHEON && GC.getGame().GetGameReligions()->GetReligion(eMajority, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY")))
+		{
+			bool bFriends = GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->IsFriends(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
+			bool bAllies = GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->IsAllies(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
+			MinorCivTraitTypes eTrait = GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetTrait();
+
+			if (eTrait == MINOR_CIV_TRAIT_MARITIME)
+			{
+			int iCapitalFoodTimes100 = 0;
+			int iOtherCitiesFoodTimes100 = 0;
+
+				if (!bFriends)
+				{
+					iCapitalFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetFriendsCapitalFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
+					iOtherCitiesFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetFriendsOtherCityFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
+				}
+				if (!bAllies)
+				{
+					iCapitalFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
+					iOtherCitiesFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
+				}
+
+				GET_PLAYER(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder).ChangeCapitalYieldChange(YIELD_FOOD, iCapitalFoodTimes100);
+				GET_PLAYER(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder).ChangeCityYieldChange(YIELD_FOOD, iOtherCitiesFoodTimes100);
+			}
+
+			if (eTrait == MINOR_CIV_TRAIT_MANUFACTORY)
+			{
+				int iCapitalProductionTimes100 = 0;
+				int iOtherCitiesProductionTimes100 = 0;
+
+				if (!bFriends)
+				{
+					iCapitalProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetFriendsCapitalProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
+					iOtherCitiesProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetFriendsOtherCityProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
+				}
+				if (!bAllies)
+				{
+					iCapitalProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
+					iOtherCitiesProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
+				}
+
+				GET_PLAYER(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder).ChangeCapitalYieldChange(YIELD_PRODUCTION, iCapitalProductionTimes100);
+				GET_PLAYER(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder).ChangeCityYieldChange(YIELD_PRODUCTION, iOtherCitiesProductionTimes100);
+			}
+		}
+		/*if (GET_TEAM(GET_PLAYER(pNewReligion->m_eFounder).getTeam()).isHasMet(GET_PLAYER(m_pCity->getOwner()).getTeam()))
+			GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->ChangeFriendshipWithMajor(pNewReligion->m_eFounder, iInfluenceBoost);
+		SetPaidAdoptionBonus(true);*/
+	}
+#endif
+
 	if(eOldMajority > RELIGION_PANTHEON)
 	{
 		const CvReligion* pOldReligion = pReligions->GetReligion(eOldMajority, NO_PLAYER);
@@ -4034,6 +4134,7 @@ void CvCityReligions::CityConvertsReligion(ReligionTypes eMajority, ReligionType
 	{
 		const CvReligion* pNewReligion = pReligions->GetReligion(eMajority, NO_PLAYER);
 		GET_PLAYER(pNewReligion->m_eFounder).UpdateReligion();
+
 
 		// Pay adoption bonuses (if any)
 		if(!m_bHasPaidAdoptionBonus)

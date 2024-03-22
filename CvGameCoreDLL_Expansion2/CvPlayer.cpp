@@ -11668,9 +11668,7 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 	{
 		m_bHasUsedGoddessLove = true;
 
-		CvCity* pSpawnCity = getCapitalCity();
 		addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"));
-		// pSpawnCity->GetCityCitizens()->DoSpawnGreatPerson((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"), false /*bIncrementCount*/, false);
 	}
 #endif
 
