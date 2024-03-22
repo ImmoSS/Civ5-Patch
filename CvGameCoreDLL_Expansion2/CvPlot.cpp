@@ -3872,7 +3872,7 @@ bool CvPlot::IsActualEnemyUnit(PlayerTypes ePlayer, bool bCombatUnitsOnly) const
 			if(kTeam.isAtWar(pkUnit->getTeam()))
 			{
 #ifdef VISIBLE_NAVAL_CAN_BLOCK_TILES
-				if(!bCombatUnitsOnly || pkUnit->IsCombatUnit() && !pkUnit->IsEmbarkAllWater() && !pkUnit->isInvisible(eTeam, false))
+				if(!bCombatUnitsOnly || pkUnit->IsCombatUnit() && !pkUnit->isEmbarked() && !pkUnit->isInvisible(eTeam, false))
 #endif
 				if(!bCombatUnitsOnly || pkUnit->IsCombatUnit())
 				{
