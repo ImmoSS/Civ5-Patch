@@ -6416,8 +6416,8 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		}
 		if (!(eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))))
 		{
-			GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iCapitalFoodTimes100);
-			GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iOtherCitiesFoodTimes100);
+			GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iCapitalFoodTimes100);
+			GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iOtherCitiesFoodTimes100);
 		}
 #else
 		GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iCapitalFoodTimes100);
@@ -7815,7 +7815,7 @@ int CvMinorCivAI::GetCurrentFaithFlatBonus(PlayerTypes ePlayer)
 	}
 	if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
 		|| IsAllies(ePlayer))
-		iAmount += (ePlayer);
+		iAmount += GetFaithFlatAlliesBonus(ePlayer);
 
 	if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
 		|| IsFriends(ePlayer))
@@ -8077,9 +8077,28 @@ bool CvMinorCivAI::IsUnitSpawningAllowed(PlayerTypes ePlayer)
 	// Must be Militaristic
 	if(GetTrait() != MINOR_CIV_TRAIT_MILITARISTIC)
 #ifdef UNITED_FRONT_ALL_CITIES_GIFT_UNITS
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+	{
+
+		ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+		ReligionTypes eMajority = NO_RELIGION;
+		if (m_pPlayer->getCapitalCity())
+		{
+			eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+		}
+		if (!GET_PLAYER(ePlayer).GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_UNITED_FRONT", true /*bHideAssert*/)) ||
+			!(eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+				|| IsAllies(ePlayer)))
+#else
 		if (!GET_PLAYER(ePlayer).GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_UNITED_FRONT", true /*bHideAssert*/)) || !IsAllies(ePlayer))
 #endif
+#endif
 		return false;
+#ifdef UNITED_FRONT_ALL_CITIES_GIFT_UNITS
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+	}
+#endif
+#endif
 
 	// Can't be at war!
 	if(IsAtWarWithPlayersTeam(ePlayer))
@@ -8263,7 +8282,18 @@ void CvMinorCivAI::DoUnitSpawnTurn()
 int CvMinorCivAI::GetSpawnBaseTurns(PlayerTypes ePlayer)
 {
 	// Not friends
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+	ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+	ReligionTypes eMajority = NO_RELIGION;
+	if (m_pPlayer->getCapitalCity())
+	{
+		eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+	}
+	if (!(eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY")))
+		&& !IsFriends(ePlayer))
+#else
 	if(!IsFriends(ePlayer))
+#endif
 		return 0;
 
 #ifdef UNITED_FRONT_ALL_CITIES_GIFT_UNITS
@@ -8278,7 +8308,12 @@ int CvMinorCivAI::GetSpawnBaseTurns(PlayerTypes ePlayer)
 	}
 
 	if (iNumTurns > 0)
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+		if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+			|| IsAllies(ePlayer))
+#else
 		if (IsAllies(ePlayer))
+#endif
 			iNumTurns += /*-3*/ (GC.getALLIES_EXTRA_TURNS_UNIT_SPAWN() * 100);
 #else
 	// This guy isn't militaristic
@@ -8336,7 +8371,18 @@ int CvMinorCivAI::GetSpawnBaseTurns(PlayerTypes ePlayer)
 int CvMinorCivAI::GetCurrentSpawnEstimate(PlayerTypes ePlayer)
 {
 	// Not friends
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+	ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+	ReligionTypes eMajority = NO_RELIGION;
+	if (m_pPlayer->getCapitalCity())
+	{
+		eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+	}
+	if (!(eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY")))
+		&& !IsFriends(ePlayer))
+#else
 	if(!IsFriends(ePlayer))
+#endif
 		return 0;
 
 #ifndef UNITED_FRONT_ALL_CITIES_GIFT_UNITS
@@ -10280,10 +10326,32 @@ void CvMinorCivAI::DoNowAtWarWithTeam(TeamTypes eTeam)
 		else if (!IsAtWarWithPlayersTeam(ePlayer) && GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isAtWar(eTeam))
 		{
 #ifdef UNITED_FRONT_ALL_CITIES_GIFT_UNITS
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+			ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+			ReligionTypes eMajority = NO_RELIGION;
+			if (m_pPlayer->getCapitalCity())
+			{
+				eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+			}
+			if ((eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+				|| IsFriends(ePlayer)) && GetSpawnBaseTurns(ePlayer) > 0)
+#else
 			if (IsFriends(ePlayer) && GetSpawnBaseTurns(ePlayer) > 0)
+#endif
 #else
 			// If ePlayer is also at war with eTeam, we might shorten the unit spawn timer
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+			ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(m_pPlayer->GetID());
+			ReligionTypes eMajority = NO_RELIGION;
+			if (m_pPlayer->getCapitalCity())
+			{
+				eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+			}
+			if ((eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+				|| IsFriends(ePlayer)) && GetTrait() == MINOR_CIV_TRAIT_MILITARISTIC)
+#else
 			if (IsFriends(ePlayer) && GetTrait() == MINOR_CIV_TRAIT_MILITARISTIC)
+#endif
 #endif
 			{
 				int iBaseSpawnTurns = GetSpawnBaseTurns(ePlayer); // May be significantly less now with common enemy due to social policy

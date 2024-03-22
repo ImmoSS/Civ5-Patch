@@ -4071,6 +4071,13 @@ void CvCityReligions::CityConvertsReligion(ReligionTypes eMajority, ReligionType
 				GET_PLAYER(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder).ChangeCapitalYieldChange(YIELD_PRODUCTION, iCapitalProductionTimes100);
 				GET_PLAYER(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder).ChangeCityYieldChange(YIELD_PRODUCTION, iOtherCitiesProductionTimes100);
 			}
+
+			if (eTrait == MINOR_CIV_TRAIT_MILITARISTIC)
+			{
+				// Seed Counter if it hasn't been done yet in this game. We don't have to undo this at any point because the counter is not processed if we are no longer Friends
+				if (GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetUnitSpawnCounter(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder) == -1)
+					GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->DoSeedUnitSpawnCounter(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, /*bBias*/ true);
+			}
 		}
 		if (eMajority > RELIGION_PANTHEON && GC.getGame().GetGameReligions()->GetReligion(eMajority, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY")))
 		{
