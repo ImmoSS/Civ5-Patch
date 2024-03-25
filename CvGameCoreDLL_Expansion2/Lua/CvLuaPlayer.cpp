@@ -3526,6 +3526,19 @@ int CvLuaPlayer::lGetInternationalTradeRouteOtherTraitBonus(lua_State* L)
 	return 1;	
 }
 
+#ifdef NEW_LEAGUE_RESOLUTIONS
+//------------------------------------------------------------------------------
+int CvLuaPlayer::lGetInternationalTradeRouteLeagueBonus(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	CvPlayerTrade* pPlayerTrade = pkPlayer->GetTrade();
+
+	int iResult = GC.getGame().GetGameLeagues()->GetTradeRouteGoldModifier(pkPlayer->GetID());
+	lua_pushinteger(L, iResult);
+	return 1;
+}
+#endif
+
 //------------------------------------------------------------------------------
 int CvLuaPlayer::lGetInternationalTradeRouteRiverModifier(lua_State* L)
 {

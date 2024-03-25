@@ -4551,12 +4551,9 @@ int CvLeague::GetResearchMod(TechTypes eTech)
 				iNumHasTech++;
 			}
 		}
-		if (iNumHasTech > 0)
+		if (2 * iNumHasTech >= iNumMembers)
 		{
-			if ((iNumMembers + 1) / iNumHasTech < 3 || iNumMembers == 2 * iNumHasTech)
-			{
-				iValue += iKnownByMemberMod;
-			}
+			iValue += iKnownByMemberMod;
 		}
 	}
 #else

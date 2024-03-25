@@ -4224,7 +4224,7 @@ void CvCityReligions::CityConvertsReligion(ReligionTypes eMajority, ReligionType
 				{
 #ifdef NEW_LEAGUE_RESOLUTIONS
 					bool bAssuneLeague = false;
-					if (GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder) != 0)
+					if (GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder) != 0)
 						bAssuneLeague = true;
 					iCapitalFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetFriendsCapitalFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, NO_ERA, bAssuneLeague);
 					iOtherCitiesFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetFriendsOtherCityFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, NO_ERA, bAssuneLeague);
@@ -4237,7 +4237,7 @@ void CvCityReligions::CityConvertsReligion(ReligionTypes eMajority, ReligionType
 				{
 #ifdef NEW_LEAGUE_RESOLUTIONS
 					bool bAssuneLeague = false;
-					if (GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder) != 0)
+					if (GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder) != 0)
 						bAssuneLeague = true;
 					iCapitalFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, bAssuneLeague);
 					iOtherCitiesFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, bAssuneLeague);
@@ -4260,7 +4260,7 @@ void CvCityReligions::CityConvertsReligion(ReligionTypes eMajority, ReligionType
 				{
 #ifdef NEW_LEAGUE_RESOLUTIONS
 					bool bAssuneLeague = false;
-					if (GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder) != 0)
+					if (GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder) != 0)
 						bAssuneLeague = true;
 					iCapitalProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetFriendsCapitalProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, NO_ERA, bAssuneLeague);
 					iOtherCitiesProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetFriendsOtherCityProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, NO_ERA, bAssuneLeague);
@@ -4273,7 +4273,7 @@ void CvCityReligions::CityConvertsReligion(ReligionTypes eMajority, ReligionType
 				{
 #ifdef NEW_LEAGUE_RESOLUTIONS
 					bool bAssuneLeague = false;
-					if (GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder) != 0)
+					if (GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder) != 0)
 						bAssuneLeague = true;
 					iCapitalProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, bAssuneLeague);
 					iOtherCitiesProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, bAssuneLeague);
