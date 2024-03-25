@@ -3531,7 +3531,6 @@ int CvLuaPlayer::lGetInternationalTradeRouteOtherTraitBonus(lua_State* L)
 int CvLuaPlayer::lGetInternationalTradeRouteLeagueBonus(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);
-	CvPlayerTrade* pPlayerTrade = pkPlayer->GetTrade();
 
 	int iResult = GC.getGame().GetGameLeagues()->GetTradeRouteGoldModifier(pkPlayer->GetID());
 	lua_pushinteger(L, iResult);

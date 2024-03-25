@@ -441,10 +441,10 @@ public:
 
 	// Food bonuses
 #ifdef NEW_LEAGUE_RESOLUTIONS
-	int GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, bool bAssumeLeague = false);
-	int GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, bool bAssumeLeague = false);
-	int GetAlliesCapitalFoodBonus(PlayerTypes ePlayer, bool bAssumeLeague = false);
-	int GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer, bool bAssumeLeague = false);
+	int GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);
+	int GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);
+	int GetAlliesCapitalFoodBonus(PlayerTypes ePlayer, int iLeagueMod = 0);
+	int GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer, int iLeagueMod = 0);
 #else
 	int GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
 	int GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
@@ -476,10 +476,10 @@ public:
 
 	// Production bonuses
 #ifdef NEW_LEAGUE_RESOLUTIONS
-	int GetFriendsCapitalProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, bool bAssumeLeague = false);
-	int GetFriendsOtherCityProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, bool bAssumeLeague = false);
-	int GetAlliesCapitalProductionBonus(PlayerTypes ePlayer, bool bAssumeLeague = false);
-	int GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer, bool bAssumeLeague = false);
+	int GetFriendsCapitalProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);
+	int GetFriendsOtherCityProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);
+	int GetAlliesCapitalProductionBonus(PlayerTypes ePlayer, int iLeagueMod = 0);
+	int GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer, int iLeagueMod = 0);
 #else
 	int GetFriendsCapitalProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
 	int GetFriendsOtherCityProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
