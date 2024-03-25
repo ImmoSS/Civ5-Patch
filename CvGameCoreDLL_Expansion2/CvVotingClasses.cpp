@@ -1538,7 +1538,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					// Capital
 					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalFoodBonus(ePlayer);
-					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalFoodBonus(ePlayer, NO_ERA, true);
+					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalFoodBonus(ePlayer, NO_ERA, GetEffects()->iCSBonuModifier);
 
 					if (iOldFood != iNewFood)
 					{
@@ -1547,7 +1547,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					// Other Cities
 					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityFoodBonus(ePlayer);
-					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityFoodBonus(ePlayer, NO_ERA, true);
+					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityFoodBonus(ePlayer, NO_ERA, GetEffects()->iCSBonuModifier);
 
 					if (iOldFood != iNewFood)
 					{
@@ -1567,7 +1567,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					// Capital
 					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer);
-					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer, true);
+					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer, GetEffects()->iCSBonuModifier);
 
 					if (iOldFood != iNewFood)
 					{
@@ -1576,7 +1576,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					// Other Cities
 					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer);
-					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer, true);
+					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer, GetEffects()->iCSBonuModifier);
 
 					if (iOldFood != iNewFood)
 					{
@@ -1606,7 +1606,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					// Capital
 					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalProductionBonus(ePlayer);
-					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalProductionBonus(ePlayer, NO_ERA, true);
+					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalProductionBonus(ePlayer, NO_ERA, GetEffects()->iCSBonuModifier);
 
 					if (iOldProduction != iNewProduction)
 					{
@@ -1615,7 +1615,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					// Other Cities
 					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityProductionBonus(ePlayer);
-					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityProductionBonus(ePlayer, NO_ERA, true);
+					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityProductionBonus(ePlayer, NO_ERA, GetEffects()->iCSBonuModifier);
 
 					if (iOldProduction != iNewProduction)
 					{
@@ -1635,7 +1635,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					// Capital
 					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer);
-					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer, true);
+					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer, GetEffects()->iCSBonuModifier);
 
 					if (iOldProduction != iNewProduction)
 					{
@@ -1644,7 +1644,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					// Other Cities
 					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer);
-					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer, true);
+					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer, GetEffects()->iCSBonuModifier);
 
 					if (iOldProduction != iNewProduction)
 					{
@@ -1656,10 +1656,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 	}
 	if (GetEffects()->bNoSpiesInCS)
 	{
-		// Refresh trade routes
-		GC.getGame().GetGameTrade()->ClearAllCityStateTradeRoutes();
-
-		for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_MINOR_CIVS; iMinor++)
+		for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_CIV_PLAYERS; iMinor++)
 		{
 			PlayerTypes eMinor = (PlayerTypes)iMinor;
 			if (GET_PLAYER(eMinor).isAlive())
