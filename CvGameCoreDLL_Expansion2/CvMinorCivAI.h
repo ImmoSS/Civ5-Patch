@@ -440,10 +440,17 @@ public:
 	int GetCurrentFaithBonus(PlayerTypes ePlayer);
 
 	// Food bonuses
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	int GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, bool bAssumeLeague = false);
+	int GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, bool bAssumeLeague = false);
+	int GetAlliesCapitalFoodBonus(PlayerTypes ePlayer, bool bAssumeLeague = false);
+	int GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer, bool bAssumeLeague = false);
+#else
 	int GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
 	int GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
 	int GetAlliesCapitalFoodBonus(PlayerTypes ePlayer);
 	int GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer);
+#endif
 	int GetCurrentCapitalFoodBonus(PlayerTypes ePlayer);
 	int GetCurrentOtherCityFoodBonus(PlayerTypes ePlayer);
 
@@ -468,10 +475,17 @@ public:
 	int GetCurrentScienceBonus(PlayerTypes ePlayer);
 
 	// Production bonuses
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	int GetFriendsCapitalProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, bool bAssumeLeague = false);
+	int GetFriendsOtherCityProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, bool bAssumeLeague = false);
+	int GetAlliesCapitalProductionBonus(PlayerTypes ePlayer, bool bAssumeLeague = false);
+	int GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer, bool bAssumeLeague = false);
+#else
 	int GetFriendsCapitalProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
 	int GetFriendsOtherCityProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
 	int GetAlliesCapitalProductionBonus(PlayerTypes ePlayer);
 	int GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer);
+#endif
 	int GetCurrentCapitalProductionBonus(PlayerTypes ePlayer);
 	int GetCurrentOtherCityProductionBonus(PlayerTypes ePlayer);
 #endif

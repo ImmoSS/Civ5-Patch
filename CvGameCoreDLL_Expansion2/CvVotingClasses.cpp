@@ -1508,45 +1508,186 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 	}
 	if (GetEffects()->iCSBonuModifier != 0)
 	{
+		for (int iMinorLoop = MAX_MAJOR_CIVS; iMinorLoop < MAX_CIV_PLAYERS; iMinorLoop++)
+		{
+			PlayerTypes eLoopMinor = (PlayerTypes)iMinorLoop;
+
+			// Minor not alive
+			if (!GET_PLAYER(eLoopMinor).isAlive())
+				continue;
+			
+			MinorCivTraitTypes eTrait = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetTrait();
+			// MARITIME
+			if (eTrait == MINOR_CIV_TRAIT_MARITIME)
+			{
+				// Friends
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+				ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(ePlayer);
+				ReligionTypes eMajority = NO_RELIGION;
+				if (GET_PLAYER(eLoopMinor).getCapitalCity())
+				{
+					eMajority = GET_PLAYER(eLoopMinor).getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+				}
+				if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+					|| GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsFriends(ePlayer))
+#else
+				if (GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsFriends(ePlayer))
+#endif
+				{
+					int iOldFood, iNewFood;
+
+					// Capital
+					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalFoodBonus(ePlayer);
+					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalFoodBonus(ePlayer, NO_ERA, true);
+
+					if (iOldFood != iNewFood)
+					{
+						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+					}
+
+					// Other Cities
+					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityFoodBonus(ePlayer);
+					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityFoodBonus(ePlayer, NO_ERA, true);
+
+					if (iOldFood != iNewFood)
+					{
+						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+					}
+				}
+
+				// Allies
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+				if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+					|| GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsAllies(ePlayer))
+#else
+				if (GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsAllies(ePlayer))
+#endif
+				{
+					int iOldFood, iNewFood;
+
+					// Capital
+					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer);
+					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer, true);
+
+					if (iOldFood != iNewFood)
+					{
+						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+					}
+
+					// Other Cities
+					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer);
+					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer, true);
+
+					if (iOldFood != iNewFood)
+					{
+						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+					}
+				}
+			}
+
+			// MANUFACTORY
+			if (eTrait == MINOR_CIV_TRAIT_MANUFACTORY)
+			{
+				// Friends
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+				ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(ePlayer);
+				ReligionTypes eMajority = NO_RELIGION;
+				if (GET_PLAYER(eLoopMinor).getCapitalCity())
+				{
+					eMajority = GET_PLAYER(eLoopMinor).getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+				}
+				if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+					|| GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsFriends(ePlayer))
+#else
+				if (GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsFriends(ePlayer))
+#endif
+				{
+					int iOldProduction, iNewProduction;
+
+					// Capital
+					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalProductionBonus(ePlayer);
+					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalProductionBonus(ePlayer, NO_ERA, true);
+
+					if (iOldProduction != iNewProduction)
+					{
+						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+					}
+
+					// Other Cities
+					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityProductionBonus(ePlayer);
+					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityProductionBonus(ePlayer, NO_ERA, true);
+
+					if (iOldProduction != iNewProduction)
+					{
+						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+					}
+				}
+
+				// Allies
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+				if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+					|| GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsAllies(ePlayer))
+#else
+				if (GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsAllies(ePlayer))
+#endif
+				{
+					int iOldProduction, iNewProduction;
+
+					// Capital
+					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer);
+					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer, true);
+
+					if (iOldProduction != iNewProduction)
+					{
+						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+					}
+
+					// Other Cities
+					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer);
+					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer, true);
+
+					if (iOldProduction != iNewProduction)
+					{
+						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+					}
+				}
+			}
+		}
 	}
 	if (GetEffects()->bNoSpiesInCS)
 	{
 		// Refresh trade routes
 		GC.getGame().GetGameTrade()->ClearAllCityStateTradeRoutes();
 
-		for (int iPlayer1 = MAX_MAJOR_CIVS; iPlayer1 < MAX_MINOR_CIVS; iPlayer1++)
+		for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_MINOR_CIVS; iMinor++)
 		{
-			PlayerTypes ePlayer1 = (PlayerTypes)iPlayer1;
-			if (GET_PLAYER(ePlayer1).isAlive())
+			PlayerTypes eMinor = (PlayerTypes)iMinor;
+			if (GET_PLAYER(eMinor).isAlive())
 			{
-				for (int iPlayer2 = 0; iPlayer2 < MAX_MAJOR_CIVS; iPlayer2++)
+				if (GET_PLAYER(ePlayer).isAlive())
 				{
-					PlayerTypes ePlayer2 = (PlayerTypes)iPlayer2;
-					if (GET_PLAYER(ePlayer2).isAlive())
+					if (GET_PLAYER(ePlayer).getTeam() == GET_PLAYER(eMinor).getTeam())
 					{
-						if (GET_PLAYER(ePlayer2).getTeam() == GET_PLAYER(ePlayer1).getTeam())
-						{
-							continue;
-						}
+						continue;
+					}
 
-						int iSpyIndex = GET_PLAYER(ePlayer2).GetEspionage()->GetSpyIndexInCity(GET_PLAYER(ePlayer1).getCapitalCity());
-						if (iSpyIndex != -1)
+					int iSpyIndex = GET_PLAYER(ePlayer).GetEspionage()->GetSpyIndexInCity(GET_PLAYER(eMinor).getCapitalCity());
+					if (iSpyIndex != -1)
+					{
+						CvNotifications* pNotifications = GET_PLAYER(ePlayer).GetNotifications();
+						if (pNotifications)
 						{
-							CvNotifications* pNotifications = GET_PLAYER(ePlayer2).GetNotifications();
-							if (pNotifications)
-							{
-								CvPlayerEspionage* pEspionage = GET_PLAYER(ePlayer2).GetEspionage();
-								int iSpyName = pEspionage->m_aSpyList[iSpyIndex].m_iName;
-								CvSpyRank eSpyRank = pEspionage->m_aSpyList[iSpyIndex].m_eRank;
-								Localization::String strSummary = Localization::Lookup("TXT_KEY_NOTIFICATION_SPY_EJECTED_LEAGUE");
-								Localization::String strNotification = Localization::Lookup("TXT_KEY_NOTIFICATION_SPY_EJECTED_LEAGUE_TT");
-								strNotification << pEspionage->GetSpyRankName(eSpyRank);
-								strNotification << GET_PLAYER(ePlayer2).getCivilizationInfo().getSpyNames(iSpyName);
-								strNotification << GET_PLAYER(ePlayer1).getCapitalCity()->getNameKey();
-								pNotifications->Add(NOTIFICATION_SPY_CANT_STEAL_TECH, strNotification.toUTF8(), strSummary.toUTF8(), -1, -1, -1);
-							}
-							GET_PLAYER(ePlayer2).GetEspionage()->ExtractSpyFromCity(iSpyIndex);
+							CvPlayerEspionage* pEspionage = GET_PLAYER(ePlayer).GetEspionage();
+							int iSpyName = pEspionage->m_aSpyList[iSpyIndex].m_iName;
+							CvSpyRank eSpyRank = pEspionage->m_aSpyList[iSpyIndex].m_eRank;
+							Localization::String strSummary = Localization::Lookup("TXT_KEY_NOTIFICATION_SPY_EJECTED_LEAGUE");
+							Localization::String strNotification = Localization::Lookup("TXT_KEY_NOTIFICATION_SPY_EJECTED_LEAGUE_TT");
+							strNotification << pEspionage->GetSpyRankName(eSpyRank);
+							strNotification << GET_PLAYER(ePlayer).getCivilizationInfo().getSpyNames(iSpyName);
+							strNotification << GET_PLAYER(eMinor).getCapitalCity()->getNameKey();
+							pNotifications->Add(NOTIFICATION_SPY_CANT_STEAL_TECH, strNotification.toUTF8(), strSummary.toUTF8(), -1, -1, -1);
 						}
+						GET_PLAYER(ePlayer).GetEspionage()->ExtractSpyFromCity(iSpyIndex);
 					}
 				}
 			}
@@ -1733,6 +1874,163 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 		// Refresh yield
 	}
 #ifdef NEW_LEAGUE_RESOLUTIONS
+	if (GetEffects()->iTradeRouteGoldModifier != 0)
+	{
+	}
+	if (GetEffects()->iCSBonuModifier != 0)
+	{
+		for (int iMinorLoop = MAX_MAJOR_CIVS; iMinorLoop < MAX_CIV_PLAYERS; iMinorLoop++)
+		{
+			PlayerTypes eLoopMinor = (PlayerTypes)iMinorLoop;
+
+			// Minor not alive
+			if (!GET_PLAYER(eLoopMinor).isAlive())
+				continue;
+
+			MinorCivTraitTypes eTrait = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetTrait();
+			// MARITIME
+			if (eTrait == MINOR_CIV_TRAIT_MARITIME)
+			{
+				// Friends
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+				ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(ePlayer);
+				ReligionTypes eMajority = NO_RELIGION;
+				if (GET_PLAYER(eLoopMinor).getCapitalCity())
+				{
+					eMajority = GET_PLAYER(eLoopMinor).getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+				}
+				if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+					|| GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsFriends(ePlayer))
+#else
+				if (GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsFriends(ePlayer))
+#endif
+				{
+					int iOldFood, iNewFood;
+
+					// Capital
+					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalFoodBonus(ePlayer, NO_ERA, true);
+					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalFoodBonus(ePlayer);
+
+					if (iOldFood != iNewFood)
+					{
+						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+					}
+
+					// Other Cities
+					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityFoodBonus(ePlayer, NO_ERA, true);
+					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityFoodBonus(ePlayer);
+
+					if (iOldFood != iNewFood)
+					{
+						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+					}
+				}
+
+				// Allies
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+				if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+					|| GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsAllies(ePlayer))
+#else
+				if (GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsAllies(ePlayer))
+#endif
+				{
+					int iOldFood, iNewFood;
+
+					// Capital
+					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer, true);
+					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer);
+
+					if (iOldFood != iNewFood)
+					{
+						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+					}
+
+					// Other Cities
+					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer, true);
+					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer);
+
+					if (iOldFood != iNewFood)
+					{
+						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+					}
+				}
+			}
+
+			// MANUFACTORY
+			if (eTrait == MINOR_CIV_TRAIT_MANUFACTORY)
+			{
+				// Friends
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+				ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(ePlayer);
+				ReligionTypes eMajority = NO_RELIGION;
+				if (GET_PLAYER(eLoopMinor).getCapitalCity())
+				{
+					eMajority = GET_PLAYER(eLoopMinor).getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+				}
+				if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+					|| GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsFriends(ePlayer))
+#else
+				if (GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsFriends(ePlayer))
+#endif
+				{
+					int iOldProduction, iNewProduction;
+
+					// Capital
+					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalProductionBonus(ePlayer, NO_ERA, true);
+					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsCapitalProductionBonus(ePlayer);
+
+					if (iOldProduction != iNewProduction)
+					{
+						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+					}
+
+					// Other Cities
+					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityProductionBonus(ePlayer, NO_ERA, true);
+					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetFriendsOtherCityProductionBonus(ePlayer);
+
+					if (iOldProduction != iNewProduction)
+					{
+						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+					}
+				}
+
+				// Allies
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+				if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+					|| GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsAllies(ePlayer))
+#else
+				if (GET_PLAYER(eLoopMinor).GetMinorCivAI()->IsAllies(ePlayer))
+#endif
+				{
+					int iOldProduction, iNewProduction;
+
+					// Capital
+					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer, true);
+					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer);
+
+					if (iOldProduction != iNewProduction)
+					{
+						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+					}
+
+					// Other Cities
+					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer, true);
+					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer);
+
+					if (iOldProduction != iNewProduction)
+					{
+						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+					}
+				}
+			}
+		}
+		if (GetEffects()->bNoSpiesInCS)
+		{
+		}
+		if (GetEffects()->bDoubleResourceHappiness)
+		{
+		}
+	}
 #endif
 
 	m_iTurnEnacted = -1;
