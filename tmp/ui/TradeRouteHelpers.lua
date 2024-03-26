@@ -76,8 +76,14 @@ function BuildTradeRouteGoldToolTipString (pOriginCity, pTargetCity, eDomain)
 	local iDomainModifier = pPlayer:GetInternationalTradeRouteDomainModifier(eDomain);
 	if (iDomainModifier ~= 0) then
 		if (eDomain == DomainTypes.DOMAIN_SEA) then
-			strDomainModifier = Locale.ConvertTextKey("TXT_KEY_CHOOSE_INTERNATIONAL_TRADE_ROUTE_ITEM_DOMAIN_SEA_MODIFIER", (iDomainModifier + 100) / 100);
+			strDomainModifier = Locale.ConvertTextKey("TXT_KEY_CHOOSE_INTERNATIONAL_TRADE_ROUTE_ITEM_DOMAIN_SEA_MODIFIER", iDomainModifier);
 		end
+	end
+
+	local strLeagueModifier = "";
+	local iLeagueModifier = pPlayer:GetInternationalTradeRouteLeagueBonus(pPlayer);
+	if (iLeagueModifier ~= 0) then
+		strLeagueModifier = Locale.ConvertTextKey("TXT_KEY_CHOOSE_INTERNATIONAL_TRADE_ROUTE_ITEM_LEAGUE_MODIFIER", iLeagueModifier);
 	end
 
 	local strTotal = Locale.ConvertTextKey("TXT_KEY_CHOOSE_INTERNATIONAL_TRADE_ROUTE_ITEM_TT_TOTAL", pPlayer:GetInternationalTradeRouteTotal(pOriginCity, pTargetCity, eDomain, true) / 100);
@@ -109,6 +115,11 @@ function BuildTradeRouteGoldToolTipString (pOriginCity, pTargetCity, eDomain)
 		
 		if (strDomainModifier ~= "") then
 			strOtherTotal = strOtherTotal .. strDomainModifier;
+			strOtherTotal = strOtherTotal .. "[NEWLINE]";
+		end
+		
+		if (strLeagueModifier ~= "") then
+			strOtherTotal = strOtherTotal .. strLeagueModifier;
 			strOtherTotal = strOtherTotal .. "[NEWLINE]";
 		end
 		
@@ -165,12 +176,19 @@ function BuildTradeRouteGoldToolTipString (pOriginCity, pTargetCity, eDomain)
 	
 	if (strRiverModifier ~= "") then
 		strResult = strResult .. strRiverModifier;
+		strResult = strResult .. "[NEWLINE]";
 	end
 	
 	if (strDomainModifier ~= "") then
 		strResult = strResult .. strDomainModifier;
+		strResult = strResult .. "[NEWLINE]";
 	end
-	strResult = strResult .. "[NEWLINE]";
+	
+	if (strLeagueModifier ~= "") then
+		strResult = strResult .. strLeagueModifier;
+		strResult = strResult .. "[NEWLINE]";
+	end
+
 	strResult = strResult .. strTotal;
 	strResult = strResult .. "[NEWLINE]";
 	

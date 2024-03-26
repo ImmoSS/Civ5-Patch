@@ -49,6 +49,7 @@ ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\UnitList.lua" "%cd%\%patchfolder
 ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\UnitList.xml" "%cd%\%patchfolder%\UI\UnitList.xml"
 ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\Highlights.xml" "%cd%\%patchfolder%\UI\Highlights.xml"
 ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\NetworkKickedPopup.lua" "%cd%\%patchfolder%\UI\NetworkKickedPopup.lua"
+ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\TradeRouteHelpers.lua" "%cd%\%patchfolder%\UI\TradeRouteHelpers.lua"
 
 REM -------------------------------------------------
 set text="-- destroy: check fix for need to update plot & cargo & airbase"
