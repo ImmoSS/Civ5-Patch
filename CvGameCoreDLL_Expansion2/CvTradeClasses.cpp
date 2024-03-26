@@ -2283,7 +2283,7 @@ int CvPlayerTrade::GetTradeConnectionValueTimes100 (const TradeConnection& kTrad
 					iModifier += iDomainModifier;
 					iModifier += iOriginRiverModifier;
 #ifdef NEW_LEAGUE_RESOLUTIONS
-					iValue += iLeagueModifier;
+					iModifier += iLeagueModifier;
 #endif
 
 					iValue *= iModifier;
