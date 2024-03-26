@@ -10436,11 +10436,15 @@ int CvPlayer::calculateResearchModifier(TechTypes eTech)
 
 	// Leagues mod
 	int iLeaguesMod = GC.getGame().GetGameLeagues()->GetResearchMod(GetID(), eTech);
+#ifdef NEW_RESOLUTION_MEMBER_DISCOVERED_TECH_DISCOUNT
+	iModifier += iLeaguesMod;
+#else
 	if (iLeaguesMod != 0)
 	{
 		iModifier *= (100 + iLeaguesMod);
 		iModifier /= 100;
 	}
+#endif
 
 	return iModifier;
 }
