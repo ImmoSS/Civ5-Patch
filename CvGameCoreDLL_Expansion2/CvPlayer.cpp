@@ -19361,7 +19361,9 @@ void CvPlayer::DoDeficit()
 	}
 
 	// If the player has more units than cities, start disbanding things
+#ifndef UNIT_DISBAND_REWORK
 	if(iNumMilitaryUnits > getNumCities())
+#endif
 	{
 #ifdef UNIT_DISBAND_REWORK
 		int iRand = GC.getGame().getJonRandNum(100, "Disband rand");
@@ -19376,13 +19378,17 @@ void CvPlayer::DoDeficit()
 			int iNavalScore = MAX_INT;
 
 			// Look for obsolete land units if in deficit or have sufficient units
+#ifndef UNIT_DISBAND_REWORK
 			if(GetMilitaryAI()->GetLandDefenseState() <= DEFENSE_STATE_NEUTRAL)
+#endif
 			{
 				pLandUnit = GetMilitaryAI()->FindBestUnitToScrap(true /*bLand*/, true /*bDeficitForcedDisband*/, iLandScore);
 			}
 
 			// Look for obsolete naval units if in deficit or have sufficient units
+#ifndef UNIT_DISBAND_REWORK
 			if(GetMilitaryAI()->GetNavalDefenseState() <= DEFENSE_STATE_NEUTRAL)
+#endif
 			{
 				pNavalUnit = GetMilitaryAI()->FindBestUnitToScrap(false/*bNaval*/, true /*bDeficitForcedDisband*/, iNavalScore);
 			}
