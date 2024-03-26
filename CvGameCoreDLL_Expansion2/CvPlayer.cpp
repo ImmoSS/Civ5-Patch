@@ -19322,7 +19322,7 @@ void CvPlayer::DoDeficit()
 	{
 #ifdef UNIT_DISBAND_REWORK
 		int iRand = GC.getGame().getJonRandNum(100, "Disband rand");
-		if (5 * (iRand + 1) <= -iValue)
+		if ((1 + (int)GC.getGame().getCurrentEra()) * (iRand + 1) <= -2 * iValue)
 #else
 		if(GC.getGame().getJonRandNum(100, "Disband rand") < 50)
 #endif

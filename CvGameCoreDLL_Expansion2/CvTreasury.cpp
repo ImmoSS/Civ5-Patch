@@ -81,10 +81,12 @@ void CvTreasury::DoGold()
 	{
 		SetGold(0);
 
-		if(iGoldAfterThisTurn <= /*-5*/ GC.getDEFICIT_UNIT_DISBANDING_THRESHOLD() * 100)
 #ifdef UNIT_DISBAND_REWORK
+		if (iGoldAfterThisTurn <= /*-5*/ -(1 + (int)GC.getGame().getCurrentEra()) * 50)
 			m_pPlayer->DoDeficit(iGoldAfterThisTurn);
+		
 #else
+		if (iGoldAfterThisTurn <= /*-5*/ GC.getDEFICIT_UNIT_DISBANDING_THRESHOLD() * 100)
 			m_pPlayer->DoDeficit();
 #endif
 	}
