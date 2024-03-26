@@ -2916,6 +2916,41 @@ bool CvLeague::CanProposeEnact(ResolutionTypes eResolution, PlayerTypes ePropose
 			}
 			bValid = false;
 		}
+
+#ifdef NEW_LEAGUE_RESOLUTIONS
+		for (uint i = 0; i < m_vEnactProposals.size(); i++)
+		{
+			if (pInfo->GetProposerDecision() == RESOLUTION_DECISION_ANY_LUXURY_RESOURCE && GC.getResolutionInfo(m_vEnactProposals[i].GetType())->GetProposerDecision() == RESOLUTION_DECISION_ANY_LUXURY_RESOURCE)
+			{
+				if (m_vEnactProposals[i].GetProposerDecision()->GetDecision() == iChoice)
+				{
+					if (sTooltipSink != NULL)
+					{
+						(*sTooltipSink) += "[NEWLINE][NEWLINE][COLOR_WARNING_TEXT]";
+						(*sTooltipSink) += Localization::Lookup("TXT_KEY_LEAGUE_OVERVIEW_INVALID_RESOLUTION_ALREADY_PROPOSED").toUTF8();
+						(*sTooltipSink) += "[ENDCOLOR]";
+					}
+					bValid = false;
+				}
+			}
+		}
+		for (uint i = 0; i < m_vActiveResolutions.size(); i++)
+		{
+			if (pInfo->GetProposerDecision() == RESOLUTION_DECISION_ANY_LUXURY_RESOURCE && GC.getResolutionInfo(m_vActiveResolutions[i].GetType())->GetProposerDecision() == RESOLUTION_DECISION_ANY_LUXURY_RESOURCE)
+			{
+				if (m_vActiveResolutions[i].GetProposerDecision()->GetDecision() == iChoice)
+				{
+					if (sTooltipSink != NULL)
+					{
+						(*sTooltipSink) += "[NEWLINE][NEWLINE][COLOR_WARNING_TEXT]";
+						(*sTooltipSink) += Localization::Lookup("TXT_KEY_LEAGUE_OVERVIEW_INVALID_RESOLUTION_ALREADY_ENACTED").toUTF8();
+						(*sTooltipSink) += "[ENDCOLOR]";
+					}
+					bValid = false;
+				}
+			}
+		}
+#endif
 	}
 
 	// Prereq tech
@@ -4535,9 +4570,13 @@ int CvLeague::GetResearchMod(TechTypes eTech)
 		{
 #ifdef HAS_TECH_BY_HUMAN
 			PlayerTypes eMember = m_vMembers[i].ePlayer;
-			if (GET_PLAYER(eMember).isHuman())
+			if (GC.getGame().isNetworkMultiPlayer() && GET_PLAYER(eMember).isHuman())
 			{
 				iNumMembers++;
+			}
+			else
+			{
+				iNumMembers = m_vMembers.size();
 			}
 			if (GET_TEAM(GET_PLAYER(eMember).getTeam()).GetTeamTechs()->HasTechByHuman(eTech))
 #else

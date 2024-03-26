@@ -979,6 +979,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(GetInternationalTradeRouteTheirBuildingBonus);
 	Method(GetInternationalTradeRoutePolicyBonus);
 	Method(GetInternationalTradeRouteOtherTraitBonus);
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	Method(GetInternationalTradeRouteLeagueBonus);
+#endif
 	Method(GetInternationalTradeRouteRiverModifier);
 	Method(GetInternationalTradeRouteDomainModifier);
 	Method(GetInternationalTradeRouteTotal);
