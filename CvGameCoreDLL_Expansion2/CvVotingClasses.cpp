@@ -5544,6 +5544,9 @@ std::vector<CvString> CvLeague::GetCurrentEffectsSummary(PlayerTypes /*eObserver
 	PolicyBranchTypes eWorldIdeology = NO_POLICY_BRANCH_TYPE;
 	FStaticVector<PlayerTypes, MAX_MAJOR_CIVS, true, c_eCiv5GameplayDLL> veEmbargoedPlayers;
 	FStaticVector<ResourceTypes, 32, true, c_eCiv5GameplayDLL> veBannedResources;
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	FStaticVector<ResourceTypes, 32, true, c_eCiv5GameplayDLL> veDoubledResources;
+#endif
 	CvResolutionEffects effects;
 	for (ActiveResolutionList::iterator it = m_vActiveResolutions.begin(); it != m_vActiveResolutions.end(); ++it)
 	{
@@ -5583,6 +5586,15 @@ std::vector<CvString> CvLeague::GetCurrentEffectsSummary(PlayerTypes /*eObserver
 			CvAssert(eWorldIdeology == NO_POLICY_BRANCH_TYPE);
 			eWorldIdeology = eIdeology;
 		}
+
+#ifdef NEW_LEAGUE_RESOLUTIONS
+		if (it->GetEffects()->bDoubleResourceHappiness)
+		{
+			ResourceTypes eDoubledResource = (ResourceTypes)it->GetProposerDecision()->GetDecision();
+			CvAssert(eDoubledResource != NO_RESOURCE);
+			veDoubledResources.push_back(eDoubledResource);
+		}
+#endif
 	}
 	if (eWorldReligion != NO_RELIGION)
 	{
@@ -5787,6 +5799,45 @@ std::vector<CvString> CvLeague::GetCurrentEffectsSummary(PlayerTypes /*eObserver
 	}
 #endif
 #ifdef NEW_LEAGUE_RESOLUTIONS
+	if (effects.iTradeRouteGoldModifier != 0)
+	{
+		Localization::String sTemp = Localization::Lookup("TXT_KEY_LEAGUE_OVERVIEW_EFFECT_SUMMARY_WORLD_TRADE_ORGANISATION");
+		vsEffects.push_back(sTemp.toUTF8());
+	}
+	if (effects.iCSBonuModifier != 0)
+	{
+		Localization::String sTemp = Localization::Lookup("TXT_KEY_LEAGUE_OVERVIEW_EFFECT_SUMMARY_TREATY_OF_FRIENDSHIP");
+		vsEffects.push_back(sTemp.toUTF8());
+	}
+	if (effects.bNoSpiesInCS)
+	{
+		Localization::String sTemp = Localization::Lookup("TXT_KEY_LEAGUE_OVERVIEW_EFFECT_SUMMARY_NON_ALIGN_MOVEMENT");
+		vsEffects.push_back(sTemp.toUTF8());
+	}
+	if (effects.bDoubleResourceHappiness)
+	{
+		CvAssert(!veDoubledResources.empty());
+		Localization::String sTemp = Localization::Lookup("TXT_KEY_LEAGUE_OVERVIEW_EFFECT_SUMMARY_INVEST_IN_LUXURY");
+		CvString sEntries = "";
+		for (uint i = 0; i < veDoubledResources.size(); i++)
+		{
+			Localization::String sTempEntry = Localization::Lookup("TXT_KEY_LEAGUE_OVERVIEW_EFFECT_SUMMARY_INVEST_IN_LUXURY_ENTRY");
+			CvResourceInfo* pInfo = GC.getResourceInfo(veDoubledResources[i]);
+			CvAssert(pInfo);
+			if (pInfo)
+			{
+				if (i != 0)
+				{
+					sEntries += ", ";
+				}
+				sTempEntry << pInfo->GetDescriptionKey();
+				sEntries += pInfo->GetIconString();
+				sEntries += sTempEntry.toUTF8();
+			}
+		}
+		sTemp << sEntries;
+		vsEffects.push_back(sTemp.toUTF8());
+	}
 #endif
 
 	if (vsEffects.empty())
