@@ -556,6 +556,9 @@ CvPlayer::CvPlayer() :
 	, m_paiTurnCSWarAllowing("CvPlayer::m_paiTurnCSWarAllowing", m_syncArchive)
 	, m_pafTimeCSWarAllowing("CvPlayer::m_pafTimeCSWarAllowing", m_syncArchive)
 #endif
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+	, m_bIsDelayedPolicy(false)
+#endif
 {
 	m_pPlayerPolicies = FNEW(CvPlayerPolicies, c_eCiv5GameplayDLL, 0);
 	m_pEconomicAI = FNEW(CvEconomicAI, c_eCiv5GameplayDLL, 0);
@@ -1245,6 +1248,9 @@ void CvPlayer::uninit()
 	m_iFaithPurchaseIndex = 0;
 	m_iMaxEffectiveCities = 1;
 	m_iLastSliceMoved = 0;
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+	m_bIsDelayedPolicy = false;
+#endif
 
 	m_bHasBetrayedMinorCiv = false;
 #ifdef CAN_BUILD_OU_AND_NIA_ONLY_ONCE
@@ -4915,6 +4921,12 @@ void CvPlayer::doTurnPostDiplomacy()
 			if(isHuman() || getNextPolicyCost() < 1000 || !GC.getGame().isOption("GAMEOPTION_AI_TWEAKS"))
 			{
 				changeJONSCulture(GetTotalJONSCulturePerTurn());
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+				if (GetNumFreePolicies() <= 0)
+				{
+					setIsDelayedPolicy(false);
+				}
+#endif
 #ifdef POLICY_BRANCH_NOTIFICATION_LOCKED
 				if(GetNumFreePolicies() <= 0)
 				{
@@ -4930,6 +4942,15 @@ void CvPlayer::doTurnPostDiplomacy()
 #endif
 			}
 		}
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+		else if (getJONSCulture() >= getNextPolicyCost() || GetNumFreePolicies() > 0)
+		{
+			if (isHuman())
+			{
+				setIsDelayedPolicy(true);
+			}
+		}
+#endif
 #ifdef POLICY_BRANCH_NOTIFICATION_LOCKED
 		else if(getJONSCulture() >= getNextPolicyCost() || GetNumFreePolicies() > 0)
 		{
@@ -10435,7 +10456,11 @@ int CvPlayer::calculateGoldRate() const
 int CvPlayer::calculateGoldRateTimes100() const
 {
 	// If we're in anarchy, then no Gold is collected!
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+	if (IsAnarchy() || IsDelayedPolicy())
+#else
 	if(IsAnarchy())
+#endif
 	{
 		return 0;
 	}
@@ -10841,7 +10866,11 @@ int CvPlayer::GetTotalJONSCulturePerTurn() const
 	}
 
 	// No culture during Anarchy
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+	if (IsAnarchy() || IsDelayedPolicy())
+#else
 	if(IsAnarchy())
+#endif
 	{
 		return 0;
 	}
@@ -11905,7 +11934,11 @@ int CvPlayer::GetTotalFaithPerTurn() const
 	int iFaithPerTurn = 0;
 
 	// If we're in anarchy, then no Faith is generated!
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+	if (IsAnarchy() || IsDelayedPolicy())
+#else
 	if(IsAnarchy())
+#endif
 		return 0;
 
 	// Faith per turn from Cities
@@ -14059,6 +14092,12 @@ void CvPlayer::doAdoptPolicy(PolicyTypes ePolicy)
 	// Update cost if trying to buy another policy this turn
 	DoUpdateNextPolicyCost();
 
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+	if (!(getJONSCulture() >= getNextPolicyCost() || GetNumFreePolicies() > 0))
+	{
+		setIsDelayedPolicy(false);
+	}
+#endif
 #ifdef POLICY_BRANCH_NOTIFICATION_LOCKED
 	if(!(getJONSCulture() >= getNextPolicyCost() || GetNumFreePolicies() > 0))
 	{
@@ -19017,7 +19056,11 @@ int CvPlayer::GetScience() const
 int CvPlayer::GetScienceTimes100() const
 {
 	// If we're in anarchy, then no Research is done!
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+	if (IsAnarchy() || IsDelayedPolicy())
+#else
 	if(IsAnarchy())
+#endif
 		return 0;
 
 	int iValue = 0;
@@ -25524,6 +25567,21 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_bIsDelayedPolicy;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_bIsDelayedPolicy = false;
+	}
+# endif
+	, m_bIsDelayedPolicy(false)
+#endif
 	kStream >> m_bAlive;
 	kStream >> m_bEverAlive;
 	kStream >> m_bBeingResurrected;
@@ -26160,6 +26218,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #ifdef CAN_BUILD_OU_AND_NIA_ONLY_ONCE
 	kStream << m_bOxfordUniversityWasEverBuilt;
 	kStream << m_bNationalIntelligenceAgencyWasEverBuilt;
+#endif
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+	kStream << m_bIsDelayedPolicy;
 #endif
 	kStream << m_bAlive;
 	kStream << m_bEverAlive;
@@ -27698,6 +27759,18 @@ float CvPlayer::getTimeCSWarAllowing(PlayerTypes ePlayer)
 void CvPlayer::setTimeCSWarAllowing(PlayerTypes ePlayer, float fValue)
 {
 	m_pafTimeCSWarAllowing.setAt(ePlayer, fValue);
+}
+#endif
+
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+bool CvPlayer::IsDelayedPolicy() const
+{
+	return m_bIsDelayedPolicy;
+}
+
+void CvPlayer::setIsDelayedPolicy(bool bValue)
+{
+	m_bIsDelayedPolicy = bValue;
 }
 #endif
 
