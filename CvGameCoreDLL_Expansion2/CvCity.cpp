@@ -4656,37 +4656,17 @@ int CvCity::GetPurchaseCost(UnitTypes eUnit)
 		return -1;
 	}
 
-	int iCost = GetPurchaseCostFromProduction(getProductionNeeded(eUnit));
 #ifdef NUCLEAR_NON_PROLIFERATION_INCREASE_NUKES_COST
+	int iCost = GetPurchaseCostFromProduction(getProductionNeeded(eUnit));
 	if (GC.getUnitInfo(eUnit)->GetNukeDamageLevel() != -1)
 	{
 		if (GC.getGame().GetGameLeagues()->IsNoTrainingNuclearWeapons(getOwner()))
 		{
-			// Cost ramps up
-			int iPurchaseCost = (int)pow(3.0, (double) /*0.75f*/ GC.getHURRY_GOLD_PRODUCTION_EXPONENT());
-
-			// Hurry Mod (Policies, etc.)
-			HurryTypes eHurry = (HurryTypes)GC.getInfoTypeForString("HURRY_GOLD");
-
-			if (eHurry != NO_HURRY)
-			{
-				int iHurryMod = GET_PLAYER(getOwner()).getHurryModifier(eHurry);
-
-				if (iHurryMod != 0)
-				{
-					iPurchaseCost *= (100 + iHurryMod);
-					iPurchaseCost /= 100;
-				}
-			}
-
-			// Game Speed modifier
-			iPurchaseCost *= GC.getGame().getGameSpeedInfo().getHurryPercent();
-			iPurchaseCost /= 100;
-
-			iCost /= iPurchaseCost;
-			iCost *= 3;
+			iCost = 3 * GetPurchaseCostFromProduction(getProductionNeeded(eUnit) / 3);
 		}
 	}
+#else
+	int iCost = GetPurchaseCostFromProduction(getProductionNeeded(eUnit));
 #endif
 	iCost *= (100 + iModifier);
 	iCost /= 100;
