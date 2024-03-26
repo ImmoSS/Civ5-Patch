@@ -118,6 +118,11 @@ function BuildTradeRouteGoldToolTipString (pOriginCity, pTargetCity, eDomain)
 			strOtherTotal = strOtherTotal .. "[NEWLINE]";
 		end
 		
+		if (strLeagueModifier ~= "") then
+			strOtherTotal = strOtherTotal .. strLeagueModifier;
+			strOtherTotal = strOtherTotal .. "[NEWLINE]";
+		end
+		
 		local iOtherBuildingBonus = pOtherPlayer:GetInternationalTradeRouteTheirBuildingBonus(pOriginCity, pTargetCity, eDomain, false);
 		if (iOtherBuildingBonus ~= 0) then
 			strOtherTotal = strOtherTotal .. Locale.ConvertTextKey("TXT_KEY_CHOOSE_INTERNATIONAL_TRADE_ROUTE_ITEM_TT_BUILDING", pTargetCity:GetNameKey(), iOtherBuildingBonus / 100);
