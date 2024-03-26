@@ -25695,6 +25695,25 @@ void CvPlayer::Read(FDataStream& kStream)
 
 	kStream >> m_pabGetsScienceFromPlayer;
 
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_paiTurnCSWarAllowing;
+		kStream >> m_pafTimeCSWarAllowing;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_paiTurnCSWarAllowing.clear();
+		m_paiTurnCSWarAllowing.resize(MAX_PLAYERS, -1);
+		m_pafTimeCSWarAllowing.clear();
+		m_pafTimeCSWarAllowing.resize(MAX_PLAYERS, 0.f);
+	}
+# endif
+#endif
+
 	m_pPlayerPolicies->Read(kStream);
 	m_pEconomicAI->Read(kStream);
 	m_pCitySpecializationAI->Read(kStream);
@@ -26301,6 +26320,11 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_pabLoyalMember;
 
 	kStream << m_pabGetsScienceFromPlayer;
+
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+	kStream << m_paiTurnCSWarAllowing;
+	kStream << m_pafTimeCSWarAllowing;
+#endif
 
 	m_pPlayerPolicies->Write(kStream);
 	m_pEconomicAI->Write(kStream);
