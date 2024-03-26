@@ -25580,7 +25580,6 @@ void CvPlayer::Read(FDataStream& kStream)
 		m_bIsDelayedPolicy = false;
 	}
 # endif
-	, m_bIsDelayedPolicy(false)
 #endif
 	kStream >> m_bAlive;
 	kStream >> m_bEverAlive;
