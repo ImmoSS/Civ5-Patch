@@ -5525,7 +5525,7 @@ int CvCity::getProductionDifference(int /*iProductionNeeded*/, int /*iProduction
 	VALIDATE_OBJECT
 	// If we're in anarchy, then no Production is done!
 #ifdef PENALTY_FOR_DELAYING_POLICIES
-	if (GET_PLAYER(getOwner()).IsAnarchy() || GET_PLAYER(getOwner()).IsDelayedPolicy())
+	if (GET_PLAYER(getOwner()).IsAnarchy() || GET_PLAYER(getOwner()).IsDelayedPolicy() && GET_PLAYER(getOwner()).IsDelayedPolicy(true))
 #else
 	if(GET_PLAYER(getOwner()).IsAnarchy())
 #endif
@@ -5579,7 +5579,7 @@ int CvCity::getProductionDifferenceTimes100(int /*iProductionNeeded*/, int /*iPr
 	VALIDATE_OBJECT
 	// If we're in anarchy, then no Production is done!
 #ifdef PENALTY_FOR_DELAYING_POLICIES
-	if (GET_PLAYER(getOwner()).IsAnarchy() || GET_PLAYER(getOwner()).IsDelayedPolicy())
+	if (GET_PLAYER(getOwner()).IsAnarchy() || GET_PLAYER(getOwner()).IsDelayedPolicy() && GET_PLAYER(getOwner()).IsDelayedPolicy(true))
 #else
 	if(GET_PLAYER(getOwner()).IsAnarchy())
 #endif

@@ -2947,11 +2947,7 @@ bool CvUnit::canMoveInto(const CvPlot& plot, byte bMoveFlags) const
 bool CvUnit::canMoveOrAttackInto(const CvPlot& plot, byte bMoveFlags) const
 {
 	VALIDATE_OBJECT
-#ifdef PENALTY_FOR_DELAYING_POLICIES
-	return (!GET_PLAYER(getOwner()).IsAnarchy() && (canMoveInto(plot, bMoveFlags & ~(MOVEFLAG_ATTACK)) || canMoveInto(plot, bMoveFlags | MOVEFLAG_ATTACK)));
-#else
 	return (canMoveInto(plot, bMoveFlags & ~(MOVEFLAG_ATTACK)) || canMoveInto(plot, bMoveFlags | MOVEFLAG_ATTACK));
-#endif
 }
 
 

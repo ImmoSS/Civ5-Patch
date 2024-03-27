@@ -1646,8 +1646,8 @@ public:
 #endif
 
 #ifdef PENALTY_FOR_DELAYING_POLICIES
-	bool IsDelayedPolicy() const;
-	void setIsDelayedPolicy(bool bValue);
+	bool IsDelayedPolicy(bool bPrevTurn = false) const;
+	void setIsDelayedPolicy(bool bValue, bool bPrevTurn = false);
 #endif
 
 	CvPlayerPolicies* GetPlayerPolicies() const;
@@ -2358,6 +2358,7 @@ protected:
 	FAutoVariable<std::vector<float>, CvPlayer> m_pafTimeCSWarAllowing;
 #endif
 #ifdef PENALTY_FOR_DELAYING_POLICIES
+	bool m_bIsDelayedPolicyPrevTurn;
 	bool m_bIsDelayedPolicy;
 #endif
 };
