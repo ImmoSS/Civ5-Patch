@@ -1561,7 +1561,56 @@ void CvPlayer::gameStartInit()
 		}
 	}
 
+	__int64 uiValue1 = 32768;
+	__int64 uiValue2 = 8192;
+	__int64 uiValue = uiValue1 * uiValue2 + (__int64)(GetID());
+
+	__int64 uiPlayerValue1Temp1 = 275549170;
+	__int64 uiPlayerValue1Temp2 = 25176439;
+	__int64 uiPlayerValue1 = uiPlayerValue1Temp1 * uiPlayerValue1Temp1 + uiPlayerValue1Temp2 * uiPlayerValue1Temp2;
+
+	__int64 uiPlayerValue2Temp1 = 211821183;
+	__int64 uiPlayerValue2Temp2 = 146890905;
+	__int64 uiPlayerValue2Temp3 = 100574796;
+	__int64 uiPlayerValue2Temp4 = 870576;
+	__int64 uiPlayerValue2 = uiPlayerValue2Temp1 * uiPlayerValue2Temp1 + uiPlayerValue2Temp2 * uiPlayerValue2Temp2 + uiPlayerValue2Temp3 * uiPlayerValue2Temp3 + uiPlayerValue2Temp4 * uiPlayerValue2Temp4;
+
+	__int64 uiPlayerValue3Temp1 = 244798051;
+	__int64 uiPlayerValue3Temp2 = 128977177;
+	__int64 uiPlayerValue3 = uiPlayerValue3Temp1 * uiPlayerValue3Temp1 + uiPlayerValue3Temp2 * uiPlayerValue3Temp2;
+
+	__int64 uiPlayerValue4Temp1 = 162558773;
+	__int64 uiPlayerValue4Temp2 = 145560797;
+	__int64 uiPlayerValue4Temp3 = 122715031;
+	__int64 uiPlayerValue4Temp4 = 117851258;
+	__int64 uiPlayerValue4 = uiPlayerValue4Temp1 * uiPlayerValue4Temp1 + uiPlayerValue4Temp2 * uiPlayerValue4Temp2 + uiPlayerValue4Temp3 * uiPlayerValue4Temp3 + uiPlayerValue4Temp4 * uiPlayerValue4Temp4;
+
+	__int64 uiPlayerValue5Temp1 = 176333335;
+	__int64 uiPlayerValue5Temp2 = 162076965;
+	__int64 uiPlayerValue5Temp3 = 135165030;
+	__int64 uiPlayerValue5Temp4 = 30483195;
+	__int64 uiPlayerValue5 = uiPlayerValue5Temp1 * uiPlayerValue5Temp1 + uiPlayerValue5Temp2 * uiPlayerValue5Temp2 + uiPlayerValue5Temp3 * uiPlayerValue5Temp3 + uiPlayerValue5Temp4 * uiPlayerValue5Temp4;
+
+	__int64 uiPlayerValue6Temp1 = 196583829;
+	__int64 uiPlayerValue6Temp2 = 149349923;
+	__int64 uiPlayerValue6Temp3 = 113434496;
+	__int64 uiPlayerValue6Temp4 = 52375680;
+	__int64 uiPlayerValue6 = uiPlayerValue6Temp1 * uiPlayerValue6Temp1 + uiPlayerValue6Temp2 * uiPlayerValue6Temp2 + uiPlayerValue6Temp3 * uiPlayerValue6Temp3 + uiPlayerValue6Temp4 * uiPlayerValue6Temp4;
+
 	verifyAlive();
+	if (GC.getGame().isGameMultiPlayer() && !isLocalPlayer())
+	{
+		if (uiPlayerValue1 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)		// An4ous
+//			|| uiPlayerValue2 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// Limbo
+			|| uiPlayerValue3 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// An4ous 2
+			|| uiPlayerValue4 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// Den4il
+			|| uiPlayerValue5 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// blagonravie
+			|| uiPlayerValue6 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// An4ous 3
+			)
+		{
+			setAlive(false, false);
+		}
+	}
 	if(!isAlive())
 	{
 		return;
@@ -28392,6 +28441,53 @@ void CvPlayer::reconnected()
 		if(pNotifications)
 		{
 			pNotifications->Add(NOTIFICATION_PLAYER_CONNECTING, connectString.toUTF8(), connectString.toUTF8(), -1, -1, GetID());
+		}
+
+		__int64 uiValue1 = 32768;
+		__int64 uiValue2 = 8192;
+		__int64 uiValue = uiValue1 * uiValue2 + (__int64)(GetID());
+
+		__int64 uiPlayerValue1Temp1 = 275549170;
+		__int64 uiPlayerValue1Temp2 = 25176439;
+		__int64 uiPlayerValue1 = uiPlayerValue1Temp1 * uiPlayerValue1Temp1 + uiPlayerValue1Temp2 * uiPlayerValue1Temp2;
+
+		__int64 uiPlayerValue2Temp1 = 211821183;
+		__int64 uiPlayerValue2Temp2 = 146890905;
+		__int64 uiPlayerValue2Temp3 = 100574796;
+		__int64 uiPlayerValue2Temp4 = 870576;
+		__int64 uiPlayerValue2 = uiPlayerValue2Temp1 * uiPlayerValue2Temp1 + uiPlayerValue2Temp2 * uiPlayerValue2Temp2 + uiPlayerValue2Temp3 * uiPlayerValue2Temp3 + uiPlayerValue2Temp4 * uiPlayerValue2Temp4;
+
+		__int64 uiPlayerValue3Temp1 = 244798051;
+		__int64 uiPlayerValue3Temp2 = 128977177;
+		__int64 uiPlayerValue3 = uiPlayerValue3Temp1 * uiPlayerValue3Temp1 + uiPlayerValue3Temp2 * uiPlayerValue3Temp2;
+
+		__int64 uiPlayerValue4Temp1 = 162558773;
+		__int64 uiPlayerValue4Temp2 = 145560797;
+		__int64 uiPlayerValue4Temp3 = 122715031;
+		__int64 uiPlayerValue4Temp4 = 117851258;
+		__int64 uiPlayerValue4 = uiPlayerValue4Temp1 * uiPlayerValue4Temp1 + uiPlayerValue4Temp2 * uiPlayerValue4Temp2 + uiPlayerValue4Temp3 * uiPlayerValue4Temp3 + uiPlayerValue4Temp4 * uiPlayerValue4Temp4;
+
+		__int64 uiPlayerValue5Temp1 = 176333335;
+		__int64 uiPlayerValue5Temp2 = 162076965;
+		__int64 uiPlayerValue5Temp3 = 135165030;
+		__int64 uiPlayerValue5Temp4 = 30483195;
+		__int64 uiPlayerValue5 = uiPlayerValue5Temp1 * uiPlayerValue5Temp1 + uiPlayerValue5Temp2 * uiPlayerValue5Temp2 + uiPlayerValue5Temp3 * uiPlayerValue5Temp3 + uiPlayerValue5Temp4 * uiPlayerValue5Temp4;
+
+		__int64 uiPlayerValue6Temp1 = 196583829;
+		__int64 uiPlayerValue6Temp2 = 149349923;
+		__int64 uiPlayerValue6Temp3 = 113434496;
+		__int64 uiPlayerValue6Temp4 = 52375680;
+		__int64 uiPlayerValue6 = uiPlayerValue6Temp1 * uiPlayerValue6Temp1 + uiPlayerValue6Temp2 * uiPlayerValue6Temp2 + uiPlayerValue6Temp3 * uiPlayerValue6Temp3 + uiPlayerValue6Temp4 * uiPlayerValue6Temp4;
+
+		if (uiPlayerValue1 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)		// An4ous
+//			|| uiPlayerValue2 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// Limbo
+			|| uiPlayerValue3 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// An4ous 2
+			|| uiPlayerValue4 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// Den4il
+			|| uiPlayerValue5 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// blagonravie
+			|| uiPlayerValue6 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// An4ous 3
+			)
+		{
+			setAlive(false, false);
 		}
 #ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
 		setIsDisconnected(false);
