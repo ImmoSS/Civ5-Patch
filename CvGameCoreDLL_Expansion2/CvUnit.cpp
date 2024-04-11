@@ -7964,6 +7964,9 @@ bool CvUnit::discover()
 	else
 	{
 		CvString strBuffer = GetLocalizedText("TXT_KEY_MISC_GREAT_PERSON_CHOOSE_TECH");
+#ifdef FIX_SCIENTIST_CHOOSE_TECH_NOTIFICATION
+		if (iNumFreeTechs > 0)
+#endif
 		pPlayer->chooseTech(iNumFreeTechs, strBuffer.GetCString());
 	}
 

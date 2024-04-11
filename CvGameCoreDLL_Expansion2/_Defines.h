@@ -717,6 +717,8 @@
 #define CORRECT_ATTACK_CITY_STRENGTH
 /// Vanilla typo
 #define FIX_CVTEAM_BITWISE_OR_MISUSE
+/// Don't show the "choose tech" notification every time the active player bulbs a scientist (setHasTech still does that whenever is needed)
+#define FIX_SCIENTIST_CHOOSE_TECH_NOTIFICATION
 /*BUGS FIXES END*/
 
 
