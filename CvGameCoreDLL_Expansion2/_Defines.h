@@ -348,7 +348,7 @@
 /// Biology, Electrisity, Steam Power and Dynamite triggers ideology choise
 // #define NEW_IDEOLOGY_TRIGGER
 ///
-// #define MORE_FREE_IDEOLOGY_TENETS
+#define MORE_FREE_IDEOLOGY_TENETS
 ///
 #define POLICY_BRANCH_UNLOCKING_TURN
 ///
