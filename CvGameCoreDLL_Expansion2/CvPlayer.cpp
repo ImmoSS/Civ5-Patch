@@ -12766,6 +12766,13 @@ int CvPlayer::GetHappinessFromPolicies() const
 		}
 	}
 
+#ifdef FINE_ARTS_HAPPINESS_FROM_GREAT_WORKS
+	if (GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_FINE_ARTS", true)))
+	{
+		iHappiness += GetCulture()->GetNumGreatWorks();
+	}
+#endif
+
 	return iHappiness;
 }
 

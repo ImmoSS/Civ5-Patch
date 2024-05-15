@@ -1739,6 +1739,9 @@ bool CvPlayerCulture::FillBuilding(vector<CvGreatWorkBuildingInMyEmpire>::const_
 		}
 		works2 = tempWorks;
 	}
+#ifdef FINE_ARTS_HAPPINESS_FROM_GREAT_WORKS
+	m_pPlayer->DoUpdateHappiness();
+#endif
 	return true;
 }
 
