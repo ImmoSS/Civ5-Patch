@@ -3378,7 +3378,18 @@ int CvCityReligions::GetPressurePerTurn(ReligionTypes eReligion, int& iNumTradeR
 		iPressure += iHolyCityPressure;
 	}
 
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+	if (GC.getGame().GetGameReligions()->GetReligion(eReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_MISSIONARY_ZEAL")))
+	{
+		return iPressure / 2;
+	}
+	else
+	{
+		return iPressure;
+	}
+#else
 	return iPressure;
+#endif
 }
 
 /// How many trade routes are applying pressure to this city
@@ -3777,14 +3788,18 @@ void CvCityReligions::AdoptReligionFully(ReligionTypes eReligion)
 	CvReligionInCity religion;
 
 	// Add 1 pop of Atheism (needed in case other religions wiped out by an Inquisitor/Prophet
+#ifndef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
 	religion.m_bFoundedHere = false;
+#endif
 	religion.m_eReligion = NO_RELIGION;
 	religion.m_iFollowers = 1;
 	religion.m_iPressure = religion.m_iFollowers * GC.getRELIGION_ATHEISM_PRESSURE_PER_POP();
 	m_ReligionStatus.push_back(religion);
 
 	// Now add full pop of this religion
+#ifndef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
 	religion.m_bFoundedHere = false;
+#endif
 	religion.m_eReligion = eReligion;
 	religion.m_iFollowers = m_pCity->getPopulation();
 	religion.m_iPressure = religion.m_iFollowers * GC.getRELIGION_ATHEISM_PRESSURE_PER_POP();
