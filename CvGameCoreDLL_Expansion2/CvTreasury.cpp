@@ -452,7 +452,7 @@ int CvTreasury::GetGoldPerTurnFromReligion() const
 	}
 
 #ifdef SACRED_WATERS_FRESH_WATER_AND_COASTAL
-	CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
+	/*CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
 	int iGoldPerRiverOrCoastalCity = 0;
 	int iLoop = 0;
 	CvCity* pLoopCity;
@@ -474,7 +474,7 @@ int CvTreasury::GetGoldPerTurnFromReligion() const
 		}
 	}
 
-	iGoldFromReligion += iGoldPerRiverOrCoastalCity;
+	iGoldFromReligion += iGoldPerRiverOrCoastalCity;*/
 #endif
 
 	return iGoldFromReligion;
