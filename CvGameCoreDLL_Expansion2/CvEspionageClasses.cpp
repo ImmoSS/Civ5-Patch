@@ -221,7 +221,10 @@ void CvPlayerEspionage::DoTurn()
 				{
 					m_pPlayer->GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom].pop_back();
 				}
-				m_pPlayer->GetEspionage()->m_aiNumTechsToStealList[ePlayerToStealFrom]--;
+				if (m_pPlayer->GetEspionage()->m_aiNumTechsToStealList[ePlayerToStealFrom] > 0)
+				{
+					m_pPlayer->GetEspionage()->m_aiNumTechsToStealList[ePlayerToStealFrom]--;
+				}
 			}
 			else
 			{
@@ -4990,7 +4993,10 @@ void CvEspionageAI::StealTechnology()
 					pEspionage->m_aaPlayerScienceToStealList[uiDefendingPlayer].pop_back();
 				}
 #endif
-				pEspionage->m_aiNumTechsToStealList[uiDefendingPlayer]--;
+				if (pEspionage->m_aiNumTechsToStealList[uiDefendingPlayer] > 0)
+				{
+					pEspionage->m_aiNumTechsToStealList[uiDefendingPlayer]--;
+				}
 			}
 			else
 			{

@@ -1665,7 +1665,10 @@ void CvDllNetMessageHandler::ResponseResearch(PlayerTypes ePlayer, TechTypes eTe
 #else
 				kTeam.setHasTech(eTech, true, ePlayer, true, true);
 #endif
-				kPlayer.GetEspionage()->m_aiNumTechsToStealList[ePlayerToStealFrom]--;
+				if (kPlayer.GetEspionage()->m_aiNumTechsToStealList[ePlayerToStealFrom] > 0)
+				{
+					kPlayer.GetEspionage()->m_aiNumTechsToStealList[ePlayerToStealFrom]--;
+				}
 			}
 #else
 			kTeam.setHasTech(eTech, true, ePlayer, true, true);
