@@ -1887,7 +1887,14 @@ int CvPlayerEspionage::SurveillanceSightRange(CvCity* pCity)
 		{
 			if (m_aSpyList[uiSpy].m_bIsDiplomat)
 			{
+				if (m_aSpyList[uiSpy].m_eRank > 0)
+				{
 					return m_aSpyList[uiSpy].m_eRank - pCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)GC.getInfoTypeForString("BUILDING_POLICE_STATION", true)) + 1;
+				}
+				else
+				{
+					return m_aSpyList[uiSpy].m_eRank + 1;
+				}
 			}
 			else
 			{
