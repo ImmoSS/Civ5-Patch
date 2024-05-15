@@ -7928,6 +7928,15 @@ void CvGame::doTurn()
 	setHasReceivedFirstMission(false);
 #endif
 
+#ifdef MIN_FAITH_NEXT_PANTHEON_UPDATES_ONCE_PER_TURN
+	int iValue = GC.getRELIGION_GAME_FAITH_DELTA_NEXT_PANTHEON();
+	iValue *= GC.getGame().GetGameReligions()->GetNumPantheonsCreated();
+	iValue += GC.getRELIGION_MIN_FAITH_FIRST_PANTHEON();
+	iValue *= GC.getGame().getGameSpeedInfo().getTrainPercent();
+	iValue /= 100;
+	GC.getGame().GetGameReligions()->SetMinimumFaithNextPantheon(iValue);
+#endif
+
 	incrementGameTurn();
 	incrementElapsedGameTurns();
 
@@ -8847,16 +8856,22 @@ void CvGame::updateMoves()
 			for (int iJ = 0; iJ < MAX_PLAYERS; iJ++)
 			{
 				iI = aiShuffle[iJ];
-#else
-			for(iI = 0; iI < MAX_PLAYERS; iI++)
-			{
-#endif
 				CvPlayer& player = GET_PLAYER((PlayerTypes)iI);
-				if(!player.isTurnActive() && player.isHuman() && player.isAlive() && player.isSimultaneousTurns())
+				if (!player.isTurnActive() && player.isHuman() && player.isAlive() && player.isSimultaneousTurns())
 				{
 					player.setTurnActive(true);
 				}
 			}
+#else
+			for(iI = 0; iI < MAX_PLAYERS; iI++)
+			{
+				CvPlayer& player = GET_PLAYER((PlayerTypes)iI);
+				if (!player.isTurnActive() && player.isHuman() && player.isAlive() && player.isSimultaneousTurns())
+				{
+					player.setTurnActive(true);
+				}
+			}
+#endif
 		}
 #ifdef DO_TURN_CHANGE_ORDER
 		for (iI = 0; iI < MAX_PLAYERS; iI++)
@@ -8873,14 +8888,6 @@ void CvGame::updateMoves()
 #endif
 #ifdef DO_TURN_CHANGE_ORDER
 		m_kGameDeals.DoTurn();
-#endif
-#ifdef MIN_FAITH_NEXT_PANTHEON_UPDATES_ONCE_PER_TURN
-		int iValue = GC.getRELIGION_GAME_FAITH_DELTA_NEXT_PANTHEON();
-		iValue *= GC.getGame().GetGameReligions()->GetNumPantheonsCreated();
-		iValue += GC.getRELIGION_MIN_FAITH_FIRST_PANTHEON();
-		iValue *= GC.getGame().getGameSpeedInfo().getTrainPercent();
-		iValue /= 100;
-		GC.getGame().GetGameReligions()->SetMinimumFaithNextPantheon(iValue);
 #endif
 	}
 }
