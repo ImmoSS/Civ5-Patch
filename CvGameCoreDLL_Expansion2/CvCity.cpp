@@ -5282,6 +5282,22 @@ int CvCity::getProductionModifier(UnitTypes eUnit, CvString* toolTipSink) const
 	if(eUnitCombatType != NO_UNITCOMBAT)
 	{
 		iTempMod = getUnitCombatProductionModifier(eUnitCombatType);
+#ifdef KREMLIN_GLOBAL_MOD
+		int iLoop = 0;
+		bool bHasKremlin = false;
+		for (CvCity* pLoopCity = GET_PLAYER(getOwner()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwner()).nextCity(&iLoop))
+		{
+			if (pLoopCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)GC.getInfoTypeForString("BUILDING_KREMLIN", true)) > 0)
+			{
+				bHasKremlin = true;
+				break;
+			}
+		}
+		if (bHasKremlin)
+		{
+			iTempMod += GC.getBuildingInfo((BuildingTypes)GC.getInfoTypeForString("BUILDING_KREMLIN", true))->GetUnitCombatProductionModifier((int)eUnitCombatType);
+		}
+#endif
 		iMultiplier += iTempMod;
 		if(toolTipSink && iTempMod)
 		{
@@ -6660,6 +6676,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			if(pkUnitCombatClassInfo)
 			{
 				changeUnitCombatFreeExperience(eUnitCombatClass, pBuildingInfo->GetUnitCombatFreeExperience(iI) * iChange);
+#ifdef KREMLIN_GLOBAL_MOD
+				if (eBuilding != (BuildingTypes)GC.getInfoTypeForString("BUILDING_KREMLIN", true))
+#endif
 				changeUnitCombatProductionModifier(eUnitCombatClass, pBuildingInfo->GetUnitCombatProductionModifier(iI) * iChange);
 			}
 		}
