@@ -902,6 +902,9 @@ void CvGameReligions::FoundReligion(PlayerTypes ePlayer, ReligionTypes eReligion
 
 	// Inform the holy city
 	pkHolyCity->GetCityReligions()->DoReligionFounded(kReligion.m_eReligion);
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+	pkHolyCity->setFoundedReligion(eReligion);
+#endif
 
 	// Update game systems
 	kPlayer.UpdateReligion();
@@ -3047,6 +3050,12 @@ bool CvCityReligions::IsReligionInCity()
 /// Is this the holy city for a specific religion?
 bool CvCityReligions::IsHolyCityForReligion(ReligionTypes eReligion)
 {
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+	if (m_pCity->getFoundedReligion() == eReligion && eReligion > NO_RELIGION)
+	{
+		return true;
+	}
+#else
 	ReligionInCityList::iterator religionIt;
 
 	// Find the religion in the list
@@ -3057,6 +3066,7 @@ bool CvCityReligions::IsHolyCityForReligion(ReligionTypes eReligion)
 			return religionIt->m_bFoundedHere;
 		}
 	}
+#endif
 
 	return false;
 }
@@ -3064,6 +3074,12 @@ bool CvCityReligions::IsHolyCityForReligion(ReligionTypes eReligion)
 /// Is this the holy city for any religion?
 bool CvCityReligions::IsHolyCityAnyReligion()
 {
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+	if (m_pCity->getFoundedReligion() > NO_RELIGION)
+	{
+		return true;
+	}
+#else
 	ReligionInCityList::iterator religionIt;
 	for(religionIt = m_ReligionStatus.begin(); religionIt != m_ReligionStatus.end(); ++religionIt)
 	{
@@ -3072,6 +3088,7 @@ bool CvCityReligions::IsHolyCityAnyReligion()
 			return true;
 		}
 	}
+#endif
 
 	return false;
 }
@@ -3379,17 +3396,13 @@ int CvCityReligions::GetPressurePerTurn(ReligionTypes eReligion, int& iNumTradeR
 	}
 
 #ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
-	if (GC.getGame().GetGameReligions()->GetReligion(eReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_MISSIONARY_ZEAL")))
+	if (eReligion > RELIGION_PANTHEON && GC.getGame().GetGameReligions()->GetReligion(eReligion, NO_PLAYER) != NULL && GC.getGame().GetGameReligions()->GetReligion(eReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_MISSIONARY_ZEAL")))
 	{
-		return iPressure / 2;
+		iPressure /= 2;
 	}
-	else
-	{
-		return iPressure;
-	}
-#else
-	return iPressure;
 #endif
+
+	return iPressure;
 }
 
 /// How many trade routes are applying pressure to this city
@@ -3503,15 +3516,29 @@ void CvCityReligions::AddProphetSpread(ReligionTypes eReligion, int iPressure, P
 		else if (eReligion == it->m_eReligion)
 		{
 			iReligionPressure = it->m_iPressure;
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+			if (m_pCity->getFoundedReligion() == eReligion)
+			{
+				bProphetsReligionFoundedHere = true;
+			}
+#else
 			if (it->m_bFoundedHere)
 			{
 				bProphetsReligionFoundedHere = true;
 			}
+#endif
 		}
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+		else if (m_pCity->getFoundedReligion() == eReligion)
+		{
+			eHolyCityReligion = it->m_eReligion;
+		}
+#else
 		else if (it->m_bFoundedHere)
 		{
 			eHolyCityReligion = it->m_eReligion;
 		}
+#endif
 
 		if (it->m_eReligion > RELIGION_PANTHEON &&  it->m_eReligion != eReligion)
 		{
@@ -3731,6 +3758,17 @@ void CvCityReligions::AddHolyCityPressure()
 	ReligionInCityList::iterator it;
 	for(it = m_ReligionStatus.begin(); it != m_ReligionStatus.end(); it++)
 	{
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+		if (m_pCity->getFoundedReligion() > NO_RELIGION && m_pCity->getFoundedReligion() == it->m_eReligion)
+		{
+			int iPressure = GC.getGame().getGameSpeedInfo().getReligiousPressureAdjacentCity();
+			iPressure *= GC.getRELIGION_PER_TURN_FOUNDING_CITY_PRESSURE();
+			it->m_iPressure += iPressure;
+
+			// Found it, so we're done
+			bRecompute = true;
+		}
+#else
 		if(it->m_bFoundedHere)
 		{
 			int iPressure = GC.getGame().getGameSpeedInfo().getReligiousPressureAdjacentCity();
@@ -3740,6 +3778,7 @@ void CvCityReligions::AddHolyCityPressure()
 			// Found it, so we're done
 			bRecompute = true;
 		}
+#endif
 	}
 
 	// Didn't find it, add new entry
@@ -3788,18 +3827,14 @@ void CvCityReligions::AdoptReligionFully(ReligionTypes eReligion)
 	CvReligionInCity religion;
 
 	// Add 1 pop of Atheism (needed in case other religions wiped out by an Inquisitor/Prophet
-#ifndef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
 	religion.m_bFoundedHere = false;
-#endif
 	religion.m_eReligion = NO_RELIGION;
 	religion.m_iFollowers = 1;
 	religion.m_iPressure = religion.m_iFollowers * GC.getRELIGION_ATHEISM_PRESSURE_PER_POP();
 	m_ReligionStatus.push_back(religion);
 
 	// Now add full pop of this religion
-#ifndef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
 	religion.m_bFoundedHere = false;
-#endif
 	religion.m_eReligion = eReligion;
 	religion.m_iFollowers = m_pCity->getPopulation();
 	religion.m_iPressure = religion.m_iFollowers * GC.getRELIGION_ATHEISM_PRESSURE_PER_POP();
