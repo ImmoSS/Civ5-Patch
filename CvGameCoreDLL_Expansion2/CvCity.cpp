@@ -262,6 +262,9 @@ CvCity::CvCity() :
 #ifdef OWED_FOOD_BUILDING
 	, m_bOwedFoodBuilding(false)
 #endif
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+	, eReligionFoundedHere(NO_RELIGION)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -746,6 +749,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_bOwedCultureBuilding = false;
 #ifdef OWED_FOOD_BUILDING
 	m_bOwedFoodBuilding = false;
+#endif
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+	eReligionFoundedHere = NO_RELIGION;
 #endif
 
 	m_eOwner = eOwner;
@@ -6951,6 +6957,20 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 
 	GET_PLAYER(getOwner()).UpdateReligion();
 }
+
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+//	--------------------------------------------------------------------------------
+ReligionTypes CvCity::getFoundedReligion() const
+{
+	return eReligionFoundedHere;
+}
+
+//	--------------------------------------------------------------------------------
+void CvCity::setFoundedReligion(ReligionTypes eReligion)
+{
+	eReligionFoundedHere = eReligion;
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 /// Culture from eSpecialist
@@ -15080,6 +15100,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1002)
+	{
+# endif
+		kStream >> eReligionFoundedHere;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		eReligionFoundedHere = NO_RELIGION;
+	}
+# endif
+#endif
 
 	m_pCityStrategyAI->Read(kStream);
 	if(m_eOwner != NO_PLAYER)
@@ -15341,6 +15375,9 @@ void CvCity::write(FDataStream& kStream) const
 	kStream << m_bOwedCultureBuilding;
 #ifdef OWED_FOOD_BUILDING
 	kStream << m_bOwedFoodBuilding;
+#endif
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+	kStream << eReligionFoundedHere;
 #endif
 
 	m_pCityStrategyAI->Write(kStream);
