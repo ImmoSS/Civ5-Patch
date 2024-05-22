@@ -28363,10 +28363,55 @@ void CvPlayer::disconnected()
 				setIsDisconnected(false); // kicked players should unpause the game
 				if (GC.getGame().getPausePlayer() == GetID())
 					GC.getGame().setPausePlayer(NO_PLAYER);
+				// JAR : First pass, automatically fall back to CPU so the
+				// game can continue. Todo : add popup on host asking whether
+				// the AI should take over or everyone should wait for the
+				// player to reconnect
+				CvPreGame::setSlotStatus(GetID(), SS_COMPUTER);
+				CvPreGame::VerifyHandicap(GetID());	//Changing the handicap because we're switching to AI
+
+				// Load leaderhead for this new AI player
+				gDLL->NotifySpecificAILeaderInGame(GetID());
+
+				if (!GC.getGame().isOption(GAMEOPTION_DYNAMIC_TURNS) && GC.getGame().isOption(GAMEOPTION_SIMULTANEOUS_TURNS))
+				{//When in fully simultaneous turn mode, having a player disconnect might trigger the automove phase for all human players.
+					checkRunAutoMovesForEveryone();
+				}
+#ifdef DO_CANCEL_DEALS_WITH_AI
+				GC.getGame().GetGameTrade()->ClearAllCivTradeRoutes(GetID());
+				for (int iLoopTeam = 0; iLoopTeam < MAX_CIV_TEAMS; iLoopTeam++)
+				{
+					TeamTypes eTeam = (TeamTypes)iLoopTeam;
+					if (getTeam() != eTeam && GET_TEAM(eTeam).isAlive() && GET_TEAM(eTeam).isHuman())
+					{
+						GC.getGame().GetGameDeals()->DoCancelDealsBetweenTeams(GET_PLAYER(GetID()).getTeam(), (TeamTypes)iLoopTeam);
+						GET_TEAM(getTeam()).CloseEmbassyAtTeam(eTeam);
+						GET_TEAM(eTeam).CloseEmbassyAtTeam(getTeam());
+						GET_TEAM(getTeam()).CancelResearchAgreement(eTeam);
+						GET_TEAM(eTeam).CancelResearchAgreement(getTeam());
+						GET_TEAM(getTeam()).EvacuateDiplomatsAtTeam(eTeam);
+						GET_TEAM(eTeam).EvacuateDiplomatsAtTeam(getTeam());
+
+						// Bump Units out of places they shouldn't be
+						GC.getMap().verifyUnitValidPlot();
+					}
+				}
+#endif
+#ifdef CHANGE_HOST_IF_DISCONNECTED
+				CvLeague* pLeague = GC.getGame().GetGameLeagues()->GetActiveLeague();
+				if (pLeague != NULL)
+				{
+					// Check host
+					if (pLeague->IsHostMember(GetID()))
+					{
+						pLeague->AssignNewHost();
+					}
+				}
+#endif
+	}
 #else
 		if(!isObserver() && (!CvPreGame::isPitBoss() || gDLL->IsPlayerKicked(GetID())))
 		{
-#endif
 			// JAR : First pass, automatically fall back to CPU so the
 			// game can continue. Todo : add popup on host asking whether
 			// the AI should take over or everyone should wait for the
@@ -28376,14 +28421,14 @@ void CvPlayer::disconnected()
 
 			// Load leaderhead for this new AI player
 			gDLL->NotifySpecificAILeaderInGame(GetID());
-			
-			if(!GC.getGame().isOption(GAMEOPTION_DYNAMIC_TURNS) && GC.getGame().isOption(GAMEOPTION_SIMULTANEOUS_TURNS))
+
+			if (!GC.getGame().isOption(GAMEOPTION_DYNAMIC_TURNS) && GC.getGame().isOption(GAMEOPTION_SIMULTANEOUS_TURNS))
 			{//When in fully simultaneous turn mode, having a player disconnect might trigger the automove phase for all human players.
 				checkRunAutoMovesForEveryone();
 			}
 #ifdef DO_CANCEL_DEALS_WITH_AI
 			GC.getGame().GetGameTrade()->ClearAllCivTradeRoutes(GetID());
-			for(int iLoopTeam = 0; iLoopTeam < MAX_CIV_TEAMS; iLoopTeam++)
+			for (int iLoopTeam = 0; iLoopTeam < MAX_CIV_TEAMS; iLoopTeam++)
 			{
 				TeamTypes eTeam = (TeamTypes)iLoopTeam;
 				if (getTeam() != eTeam && GET_TEAM(eTeam).isAlive() && GET_TEAM(eTeam).isHuman())
@@ -28413,6 +28458,7 @@ void CvPlayer::disconnected()
 			}
 #endif
 		}
+#endif
 #ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
 			else if (/*GC.getGame().isOption("GAMEOPTION_AUTOPAUSE_ON_ACTIVE_DISCONNECT")*/ true && isAlive() && isTurnActive() &&
 				(GC.getGame().isOption(GAMEOPTION_DYNAMIC_TURNS) || GC.getGame().isOption(GAMEOPTION_SIMULTANEOUS_TURNS)) && !gDLL->IsPlayerKicked(GetID()))

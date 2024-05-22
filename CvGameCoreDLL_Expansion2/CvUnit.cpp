@@ -2861,32 +2861,35 @@ bool CvUnit::canMoveInto(const CvPlot& plot, byte bMoveFlags) const
 				{
 					return false;
 				}
+				for (int iUnitLoop = 0; iUnitLoop < plot.getNumUnits(); iUnitLoop++)
+				{
+					CvUnit* loopUnit = plot.getUnitByIndex(iUnitLoop);
+
+					if (loopUnit && !loopUnit->IsDead() && (GET_TEAM(getTeam()).isAtWar(loopUnit->getTeam()) || loopUnit->isAlwaysHostile(plot)) && !loopUnit->canCoexistWithEnemyUnit(getTeam()))
+						return false;
+				}
+			}
 #else
 			bool bPlotContainsCombat = false;
 			if(plot.getNumUnits())
 			{
-#endif
-				for(int iUnitLoop = 0; iUnitLoop < plot.getNumUnits(); iUnitLoop++)
+				for (int iUnitLoop = 0; iUnitLoop < plot.getNumUnits(); iUnitLoop++)
 				{
 					CvUnit* loopUnit = plot.getUnitByIndex(iUnitLoop);
 
-#ifdef AUI_UNIT_FIX_RADAR
-					if (loopUnit && !loopUnit->IsDead() && (GET_TEAM(getTeam()).isAtWar(loopUnit->getTeam()) || loopUnit->isAlwaysHostile(plot)) && !loopUnit->canCoexistWithEnemyUnit(getTeam()))
-						return false;
-#else
-					if(loopUnit && GET_TEAM(getTeam()).isAtWar(plot.getUnitByIndex(iUnitLoop)->getTeam()))
+					if (loopUnit && GET_TEAM(getTeam()).isAtWar(plot.getUnitByIndex(iUnitLoop)->getTeam()))
 					{
 						bEnemyUnitPresent = true;
-						if(!loopUnit->IsDead() && loopUnit->isInCombat())
+						if (!loopUnit->IsDead() && loopUnit->isInCombat())
 						{
-							if(loopUnit->getCombatUnit() != this)
+							if (loopUnit->getCombatUnit() != this)
 								bPlotContainsCombat = true;
 						}
 						break;
 					}
-#endif
 				}
 			}
+#endif
 #ifndef AUI_UNIT_FIX_RADAR
 
 			if(bPlotContainsCombat)
