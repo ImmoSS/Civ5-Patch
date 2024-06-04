@@ -532,7 +532,11 @@ function UpdateGameOptionsDisplay(bUpdateOnly)
 	else
 		local info = GameInfo.Beliefs[ PreGame.GetGameOption("GAMEOPTION_BAN_PANTHEON1") ];
 		Controls.BanPantheonPull_1:GetButton():LocalizeAndSetText( info.ShortDescription );
-		Controls.BanPantheonPull_1:GetButton():LocalizeAndSetToolTip( info.Description );
+		if (info.DuelDescription ~= nil) then
+			Controls.BanPantheonPull_1:GetButton():LocalizeAndSetToolTip( info.DuelDescription );
+		else
+			Controls.BanPantheonPull_1:GetButton():LocalizeAndSetToolTip( info.Description );
+		end
 		Controls.BanPantheonPull_1:SetDisabled( not bCanEdit );
 	end
 	if PreGame.GetGameOption("GAMEOPTION_BAN_PANTHEON2") == -1 then
@@ -542,7 +546,11 @@ function UpdateGameOptionsDisplay(bUpdateOnly)
 	else
 		local info = GameInfo.Beliefs[ PreGame.GetGameOption("GAMEOPTION_BAN_PANTHEON2") ];
 		Controls.BanPantheonPull_2:GetButton():LocalizeAndSetText( info.ShortDescription );
-		Controls.BanPantheonPull_2:GetButton():LocalizeAndSetToolTip( info.Description );
+		if (info.DuelDescription ~= nil) then
+			Controls.BanPantheonPull_2:GetButton():LocalizeAndSetToolTip( info.DuelDescription );
+		else
+			Controls.BanPantheonPull_2:GetButton():LocalizeAndSetToolTip( info.Description );
+		end
 		Controls.BanPantheonPull_2:SetDisabled( not bCanEdit );
 	end
 	if PreGame.GetGameOption("GAMEOPTION_BAN_PANTHEON3") == -1 then
@@ -552,7 +560,11 @@ function UpdateGameOptionsDisplay(bUpdateOnly)
 	else
 		local info = GameInfo.Beliefs[ PreGame.GetGameOption("GAMEOPTION_BAN_PANTHEON3") ];
 		Controls.BanPantheonPull_3:GetButton():LocalizeAndSetText( info.ShortDescription );
-		Controls.BanPantheonPull_3:GetButton():LocalizeAndSetToolTip( info.Description );
+		if (info.DuelDescription ~= nil) then
+			Controls.BanPantheonPull_3:GetButton():LocalizeAndSetToolTip( info.DuelDescription );
+		else
+			Controls.BanPantheonPull_3:GetButton():LocalizeAndSetToolTip( info.Description );
+		end
 		Controls.BanPantheonPull_3:SetDisabled( not bCanEdit );
 	end
 
@@ -1198,7 +1210,11 @@ function UpdateDuelModePulls()
 			Controls.BanPantheonPull_1:BuildEntry( "InstanceOne", controlTable );
 
 			controlTable.Button:LocalizeAndSetText(info.ShortDescription);
-			controlTable.Button:LocalizeAndSetToolTip(info.Description);
+			if info.DuelDescription then
+				controlTable.Button:LocalizeAndSetToolTip(info.DuelDescription);
+			else
+				controlTable.Button:LocalizeAndSetToolTip(info.Description);
+			end
 			controlTable.Button:SetVoid1( info.ID );
 		end
 	end   
@@ -1217,7 +1233,11 @@ function UpdateDuelModePulls()
 			Controls.BanPantheonPull_2:BuildEntry( "InstanceOne", controlTable );
 
 			controlTable.Button:LocalizeAndSetText(info.ShortDescription);
-			controlTable.Button:LocalizeAndSetToolTip(info.Description);
+			if info.DuelDescription then
+				controlTable.Button:LocalizeAndSetToolTip(info.DuelDescription);
+			else
+				controlTable.Button:LocalizeAndSetToolTip(info.Description);
+			end
 			controlTable.Button:SetVoid1( info.ID );
 		end
 	end   
@@ -1236,7 +1256,11 @@ function UpdateDuelModePulls()
 			Controls.BanPantheonPull_3:BuildEntry( "InstanceOne", controlTable );
 
 			controlTable.Button:LocalizeAndSetText(info.ShortDescription);
-			controlTable.Button:LocalizeAndSetToolTip(info.Description);
+			if info.DuelDescription then
+				controlTable.Button:LocalizeAndSetToolTip(info.DuelDescription);
+			else
+				controlTable.Button:LocalizeAndSetToolTip(info.Description);
+			end
 			controlTable.Button:SetVoid1( info.ID );
 		end
 	end   
