@@ -11490,7 +11490,7 @@ void CvPlayer::DoYieldBonusFromKill(YieldTypes eYield, UnitTypes eAttackingUnitT
 		int iCombatStrength = max(pkKilledUnitInfo->GetCombat(), pkKilledUnitInfo->GetRangedCombat());
 		if(iCombatStrength > 0)
 		{	
-			switch(eYield)
+			switch (eYield)
 			{
 			case YIELD_FOOD:
 			case YIELD_PRODUCTION:
@@ -11502,6 +11502,32 @@ void CvPlayer::DoYieldBonusFromKill(YieldTypes eYield, UnitTypes eAttackingUnitT
 				break;
 
 			case YIELD_CULTURE:
+#ifdef DUEL_HONOR_CHANGE
+				if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+				{
+					iValue += GetPlayerTraits()->GetCultureFromKills();
+					iValue += GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CULTURE_FROM_BARBARIAN_KILLS);
+
+					// Do we get it for barbarians?
+					if (bWasBarbarian)
+					{
+						iValue += GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CULTURE_FROM_KILLS);
+					}
+					break;
+				}
+				else
+				{
+					iValue += GetPlayerTraits()->GetCultureFromKills();
+					iValue += GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CULTURE_FROM_KILLS);
+
+					// Do we get it for barbarians?
+					if (bWasBarbarian)
+					{
+						iValue += GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CULTURE_FROM_BARBARIAN_KILLS);
+					}
+					break;
+				}
+#else
 				iValue += GetPlayerTraits()->GetCultureFromKills();
 				iValue += GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CULTURE_FROM_KILLS);
 
@@ -11511,6 +11537,7 @@ void CvPlayer::DoYieldBonusFromKill(YieldTypes eYield, UnitTypes eAttackingUnitT
 					iValue += GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CULTURE_FROM_BARBARIAN_KILLS);
 				}
 				break;
+#endif
 
 			case YIELD_FAITH:
 				iValue += GetPlayerTraits()->GetFaithFromKills();
@@ -11768,7 +11795,14 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 	{
 		m_bHasUsedGoddessLove = true;
 
+#ifdef DUEL_GODDESS_LOVE_CHANGE
+		if (!(GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF")))
+		{
+			addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"));
+		}
+#else
 		addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"));
+#endif
 	}
 #endif
 

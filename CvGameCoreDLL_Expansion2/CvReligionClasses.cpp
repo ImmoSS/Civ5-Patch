@@ -1064,6 +1064,17 @@ CvGameReligions::FOUNDING_RESULT CvGameReligions::CanFoundReligion(PlayerTypes e
 			if(kReligion.m_eReligion == (*it).m_eReligion)
 				return FOUNDING_RELIGION_IN_USE;
 
+#ifdef DUEL_ALLOW_SAMETURN_BELIEFS
+			if (eBelief1 != NO_BELIEF && IsInSomeReligion(eBelief1))
+				return FOUNDING_BELIEF_IN_USE;
+			if (eBelief2 != NO_BELIEF && IsInSomeReligion(eBelief2))
+				return FOUNDING_BELIEF_IN_USE;
+			if (eBelief3 != NO_BELIEF && IsInSomeReligion(eBelief3))
+				return FOUNDING_BELIEF_IN_USE;
+			if (eBelief4 != NO_BELIEF && IsInSomeReligion(eBelief4))
+				return FOUNDING_BELIEF_IN_USE;
+#endif
+
 			for(int iSrcBelief = (*it).m_Beliefs.GetNumBeliefs(); iSrcBelief--;)
 			{
 				BeliefTypes eSrcBelief = (*it).m_Beliefs.GetBelief(iSrcBelief);
@@ -1072,7 +1083,11 @@ CvGameReligions::FOUNDING_RESULT CvGameReligions::CanFoundReligion(PlayerTypes e
 					for(int iDestBelief = kReligion.m_Beliefs.GetNumBeliefs(); iDestBelief--;)
 					{
 						BeliefTypes eDestBelief = kReligion.m_Beliefs.GetBelief(iDestBelief);
-						if(eDestBelief != NO_BELIEF && eDestBelief == eSrcBelief)
+#ifdef DUEL_ALLOW_SAMETURN_BELIEFS
+						if (eDestBelief != NO_BELIEF && eDestBelief == eSrcBelief && kReligion.m_Beliefs.m_paiBeliefAdoptionTurn[eDestBelief] > 0 && !(kReligion.m_Beliefs.m_paiBeliefAdoptionTurn[eDestBelief] < GC.getGame().getGameTurn()))
+#else
+						if (eDestBelief != NO_BELIEF && eDestBelief == eSrcBelief)
+#endif
 							return FOUNDING_BELIEF_IN_USE;
 					}
 				}
@@ -1449,7 +1464,35 @@ bool CvGameReligions::IsInSomeReligion(BeliefTypes eBelief) const
 	{
 		if(it->m_Beliefs.HasBelief(eBelief))
 		{
+#ifdef DUEL_ALLOW_SAMETURN_BELIEFS
+			int iOption = -1;
+			CvPreGame::GetGameOption("GAMEOPTION_DUEL_STUFF", iOption);
+			if (iOption == 0)
+			{
+				return true;
+			}
+			/*else if (iOption == 1)
+			{
+				CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+				CvBeliefEntry* pEntry = pkBeliefs->GetEntry((int)eBelief);
+				if (pEntry->IsPantheonBelief())
+				{
+					if (it->m_Beliefs.m_paiBeliefAdoptionTurn[eBelief] > 0 && it->m_Beliefs.m_paiBeliefAdoptionTurn[eBelief] < GC.getGame().getGameTurn())
+						return true;
+				}
+				else
+				{
+					return true;
+				}
+			}*/
+			else if (iOption == 1)
+			{
+				if (it->m_Beliefs.m_paiBeliefAdoptionTurn[eBelief] > 0 && it->m_Beliefs.m_paiBeliefAdoptionTurn[eBelief] < GC.getGame().getGameTurn())
+					return true;
+			}
+#else
 			return true;
+#endif
 		}
 	}
 
@@ -2375,6 +2418,9 @@ bool CvGameReligions::CheckSpawnGreatProphet(CvPlayer& kPlayer)
 
 	int iChance = GC.getRELIGION_BASE_CHANCE_PROPHET_SPAWN();
 	iChance += (iFaith - iCost);
+#ifdef DUEL_NO_RANDOM_PROPHET
+	iChance = 1000;
+#endif
 
 	int iRand = GC.getGame().getJonRandNum(100, "Religion: spawn Great Prophet roll.");
 	if(iRand >= iChance)
@@ -2391,7 +2437,12 @@ bool CvGameReligions::CheckSpawnGreatProphet(CvPlayer& kPlayer)
 	if(pSpawnCity != NULL && pSpawnCity->getOwner() == kPlayer.GetID())
 	{
 		pSpawnCity->GetCityCitizens()->DoSpawnGreatPerson(eUnit, false /*bIncrementCount*/, true);
+#ifdef DUEL_NO_RANDOM_PROPHET
+		if (eUnit != NO_UNIT)
+			kPlayer.ChangeFaith(-iCost);
+#else
 		kPlayer.SetFaith(0);
+#endif
 	}
 	else
 	{
@@ -2399,7 +2450,12 @@ bool CvGameReligions::CheckSpawnGreatProphet(CvPlayer& kPlayer)
 		if(pSpawnCity != NULL)
 		{
 			pSpawnCity->GetCityCitizens()->DoSpawnGreatPerson(eUnit, false /*bIncrementCount*/, true);
+#ifdef DUEL_NO_RANDOM_PROPHET
+			if (eUnit != NO_UNIT)
+				kPlayer.ChangeFaith(-iCost);
+#else
 			kPlayer.SetFaith(0);
+#endif
 		}
 	}
 

@@ -454,6 +454,9 @@ public:
 	bool IsFaithBuyingEnabled(EraTypes eEra) const;
 	bool IsConvertsBarbarians() const;
 	bool IsFaithPurchaseAllGreatPeople() const;
+#ifdef DUEL_ALLOW_SAMETURN_BELIEFS
+	int* m_paiBeliefAdoptionTurn;
+#endif
 
 	// Serialization
 	void Read(FDataStream& kStream);

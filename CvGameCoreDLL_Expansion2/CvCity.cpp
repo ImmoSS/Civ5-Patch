@@ -1496,7 +1496,7 @@ void CvCity::doTurn()
 		iHitsHealed /= 2;
 		if (m_pCityBuildings->GetNumBuilding((BuildingTypes)GC.getInfoTypeForString("BUILDING_CASTLE")) > 0 || m_pCityBuildings->GetNumBuilding((BuildingTypes)GC.getInfoTypeForString("BUILDING_MUGHAL_FORT")) > 0)
 		{
-			iHitsHealed *= 3;
+			iHitsHealed *= 2;
 		}
 #endif
 		changeDamage(-iHitsHealed);
@@ -6388,6 +6388,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 		}
 #endif
 #ifdef CITY_RANGE_MODIFIER
+#ifdef DUEL_WALL_CHANGE
+		if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF") && !(strcmp(pBuildingInfo->GetType(), "BUILDING_WALL") == 0 || strcmp(pBuildingInfo->GetType(), "BUILDING_WALLS_OF_BABYLON") == 0))
+#endif
 		changeCityAttackRangeModifier(pBuildingInfo->getCityAttackRangeModifier() * iChange);
 #endif
 #ifdef CITY_EXTRA_ATTACK
@@ -8050,18 +8053,23 @@ int CvCity::getCityAttackRangeModifier() const
 						break;
 					}
 				}
-				if (pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_STRATEGY", true))
+#ifdef DUEL_GODDESS_STRATEGY_CHANGE
+				if (!GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
 				{
-					iTempMod++;
-					if (eMajority > RELIGION_PANTHEON)
+					if (pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_STRATEGY", true))
 					{
-						ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(getOwner());
-						if (eFoundedReligion == eMajority && GET_PLAYER(getOwner()).IsSecondReligionPantheon())
+						iTempMod++;
+						if (eMajority > RELIGION_PANTHEON)
 						{
-							iTempMod++;
+							ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(getOwner());
+							if (eFoundedReligion == eMajority && GET_PLAYER(getOwner()).IsSecondReligionPantheon())
+							{
+								iTempMod++;
+							}
 						}
 					}
 				}
+#endif
 			}
 		}
 		return m_iCityAttackRangeModifier + iTempMod;
@@ -9427,10 +9435,31 @@ int CvCity::GetLocalHappiness() const
 				iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetHappinessPerCity();
 			}
 #ifdef SACRED_WATERS_FRESH_WATER_AND_COASTAL
-			if (plot()->isFreshWater() || plot()->isCoastalLand())
+#ifdef DUEL_SACRED_WATERS_CHANGE
+			if (GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+			{
+				if (plot()->isRiver())
+				{
+					iHappinessFromReligion += pReligion->m_Beliefs.GetRiverHappiness();
+					if (eSecondaryPantheon != NO_BELIEF)
+					{
+						iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetRiverHappiness();
+					}
+				}
+			}
+			else
+			{
+				if (plot()->isFreshWater() || plot()->isCoastalLand())
+				{
+					iHappinessFromReligion += pReligion->m_Beliefs.GetRiverHappiness();
+					if (eSecondaryPantheon != NO_BELIEF)
+					{
+						iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetRiverHappiness();
+					}
+				}
+			}
 #else
-			if(plot()->isRiver())
-#endif
+			if (plot()->isFreshWater() || plot()->isCoastalLand())
 			{
 				iHappinessFromReligion += pReligion->m_Beliefs.GetRiverHappiness();
 				if (eSecondaryPantheon != NO_BELIEF)
@@ -9438,6 +9467,17 @@ int CvCity::GetLocalHappiness() const
 					iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetRiverHappiness();
 				}
 			}
+#endif
+#else
+			if(plot()->isRiver())
+			{
+				iHappinessFromReligion += pReligion->m_Beliefs.GetRiverHappiness();
+				if (eSecondaryPantheon != NO_BELIEF)
+				{
+					iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetRiverHappiness();
+				}
+			}
+#endif
 
 			// Buildings
 			for(int jJ = 0; jJ < GC.getNumBuildingClassInfos(); jJ++)
@@ -10112,11 +10152,11 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 	}
 
 #ifdef CREATIVE_EXPRESSION_SCIENCE_MOD
-	if (getPopulation() >= 22)
+	if (getPopulation() >= 20)
 	{
 		if (eIndex == YIELD_SCIENCE && GET_PLAYER(getOwner()).GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_CREATIVE_EXPRESSION", true)))
 		{
-			iTempMod = 22;
+			iTempMod = getPopulation();
 			iModifier += iTempMod;
 			if (toolTipSink)
 				GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_LARGEPOP_SCIENCEMOD", iTempMod);
