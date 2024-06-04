@@ -6389,9 +6389,20 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #endif
 #ifdef CITY_RANGE_MODIFIER
 #ifdef DUEL_WALL_CHANGE
-		if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF") && !(strcmp(pBuildingInfo->GetType(), "BUILDING_WALL") == 0 || strcmp(pBuildingInfo->GetType(), "BUILDING_WALLS_OF_BABYLON") == 0))
-#endif
+		if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+		{
+			if (!(strcmp(pBuildingInfo->GetType(), "BUILDING_WALLS") == 0 || strcmp(pBuildingInfo->GetType(), "BUILDING_WALLS_OF_BABYLON") == 0))
+			{
+				changeCityAttackRangeModifier(pBuildingInfo->getCityAttackRangeModifier() * iChange);
+			}
+		}
+		else
+		{
+			changeCityAttackRangeModifier(pBuildingInfo->getCityAttackRangeModifier() * iChange);
+		}
+#else
 		changeCityAttackRangeModifier(pBuildingInfo->getCityAttackRangeModifier() * iChange);
+#endif
 #endif
 #ifdef CITY_EXTRA_ATTACK
 		changeCityExtraAttack(pBuildingInfo->GetCityExtraAttack() * iChange);
@@ -15660,6 +15671,10 @@ bool CvCity::CanRangeStrikeNow() const
 	}
 
 	int iRange = GC.getCITY_ATTACK_RANGE();
+#ifdef DUEL_WALL_CHANGE
+	if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+		iRange += 1;
+#endif
 #ifdef CITY_RANGE_MODIFIER
 	iRange += getCityAttackRangeModifier();
 #endif
@@ -15774,6 +15789,10 @@ bool CvCity::canRangeStrikeAt(int iX, int iY) const
 	}
 
 	int iAttackRange = GC.getCITY_ATTACK_RANGE();
+#ifdef DUEL_WALL_CHANGE
+	if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+		iAttackRange += 1;
+#endif
 #ifdef CITY_RANGE_MODIFIER
 	iAttackRange += getCityAttackRangeModifier();
 #endif
@@ -16075,6 +16094,10 @@ void CvCity::DoNearbyEnemy()
 		return;
 
 	int iSearchRange = GC.getCITY_ATTACK_RANGE();
+#ifdef DUEL_WALL_CHANGE
+	if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+		iSearchRange += 1;
+#endif
 #ifdef CITY_RANGE_MODIFIER
 	iSearchRange += getCityAttackRangeModifier();
 #endif

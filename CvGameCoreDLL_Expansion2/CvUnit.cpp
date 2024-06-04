@@ -14373,19 +14373,24 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 #ifdef CITY_RANGE_MODIFIER
 	for (int iI = 1; iI <= 3; iI++)
 	{
-		int iAttackRange = iI * GC.getCITY_ATTACK_RANGE();
-		for (int iDX = -iAttackRange; iDX <= iAttackRange; iDX++)
+		int iRing = iI;
+		int iAttackRange = GC.getCITY_ATTACK_RANGE();
+#ifdef DUEL_WALL_CHANGE
+		if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+			iAttackRange += 1;
+#endif
+		for (int iDX = -iRing; iDX <= iRing; iDX++)
 		{
-			for (int iDY = -iAttackRange; iDY <= iAttackRange; iDY++)
+			for (int iDY = -iRing; iDY <= iRing; iDY++)
 			{
-				CvPlot* pTargetPlot = plotXYWithRangeCheck(getX(), getY(), iDX, iDY, iAttackRange);
+				CvPlot* pTargetPlot = plotXYWithRangeCheck(getX(), getY(), iDX, iDY, iRing);
 				if (pTargetPlot && pTargetPlot->isCity())
 				{
 					if (isEnemy(pTargetPlot->getTeam()))
 					{
 						// do it
 						CvCity* pkPlotCity = pTargetPlot->getPlotCity();
-						if (iAttackRange == GC.getCITY_ATTACK_RANGE() + pkPlotCity->getCityAttackRangeModifier())
+						if (iRing == iAttackRange + pkPlotCity->getCityAttackRangeModifier())
 						{
 							auto_ptr<ICvCity1> pPlotCity = GC.WrapCityPointer(pkPlotCity);
 							DLLUI->SetSpecificCityInfoDirty(pPlotCity.get(), CITY_UPDATE_TYPE_ENEMY_IN_RANGE);
