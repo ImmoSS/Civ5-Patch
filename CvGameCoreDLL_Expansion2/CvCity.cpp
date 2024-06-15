@@ -8065,7 +8065,7 @@ int CvCity::getCityAttackRangeModifier() const
 					}
 				}
 #ifdef DUEL_GODDESS_STRATEGY_CHANGE
-				if (!GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+				if (!(GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF")))
 				{
 					if (pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_STRATEGY", true))
 					{

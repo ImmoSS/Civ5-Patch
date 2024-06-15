@@ -1033,6 +1033,7 @@ CvGameReligions::FOUNDING_RESULT CvGameReligions::CanFoundReligion(PlayerTypes e
 
 	CvReligion kReligion(eReligion, ePlayer, pkHolyCity, false);
 
+#ifndef DUEL_ALLOW_SAMETURN_BELIEFS
 	// Copy over belief from your pantheon
 	BeliefTypes eBelief = GC.getGame().GetGameReligions()->GetBeliefInPantheon(kPlayer.GetID());
 	if(eBelief != NO_BELIEF)
@@ -1055,6 +1056,7 @@ CvGameReligions::FOUNDING_RESULT CvGameReligions::CanFoundReligion(PlayerTypes e
 	{
 		strcpy_s(kReligion.m_szCustomName, szCustomName);
 	}
+#endif
 
 	// Now see if there are any conflicts.
 	for(ReligionList::const_iterator it = m_CurrentReligions.begin(); it != m_CurrentReligions.end(); it++)

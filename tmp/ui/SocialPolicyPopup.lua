@@ -472,9 +472,9 @@ function UpdateDisplay()
 			-- Duel Mode
 			local strToolTip
 			if (PreGame.GetGameOption("GAMEOPTION_DUEL_STUFF") > 0 and policyInfo.DuelHelp ~= nil) then
-				strToolTip = Locale.ConvertTextKey(policyInfo.DuelHelp);
+				strTooltip = Locale.ConvertTextKey(policyInfo.DuelHelp);
 			else
-				strToolTip = Locale.ConvertTextKey(policyInfo.Help);
+				strTooltip = Locale.ConvertTextKey(policyInfo.Help);
 			end
 			
 			-- Player already has Policy

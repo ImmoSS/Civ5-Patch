@@ -295,7 +295,7 @@
 						<Box Size="190,290 " Anchor="C,T" Color="0,0,0,0">
 							<Image Anchor="C,T" Offset="0,0" TextureOffset="0,0" Size="190,290" Color="255,255,255,255" Texture="SocialPoliciesRationalism.dds" ToolTip="TXT_KEY_POLICY_BRANCH_RATIONALISM_HELP"/>
 							<!-- Policy Branch Image -->
-							<Image Anchor="C,T" Offset="0,0" TextureOffset="0,0" Size="190,90" Texture="SocialPoliciesRationalism.dds" ID="BranchBack5" ToolTip="TXT_KEY_POLICY_BRANCH_RATIONALISM_HELP"/>
+							<Image Anchor="C,T" Offset="0,0" TextureOffset="0,0" Size="190,90" Texture="SocialPoliciesRationalism.dds" ID="BranchBack8" ToolTip="TXT_KEY_POLICY_BRANCH_RATIONALISM_HELP"/>
 							<Image ID="ImageMask8" Anchor="C,T" Offset="0,0" Size="190,290" Color="255,255,255,200" Texture="Assets/UI/Art/Icons/SocialPoliciesBranchBlackMask.dds"/>
 							<Box ID="DisabledMask8" Size="190,290" Offset="0,0" Anchor="C,T" Color="0,0,0,200"/>
 							<Image Anchor="C,T" Offset="0,0" Size="190,290" Texture="Assets/UI/Art/Icons/SocialPoliciesTrim.dds">
@@ -331,7 +331,7 @@
 						<Box Size="190,290 " Anchor="C,T" Color="0,0,0,0">
 							<Image Anchor="C,T" Offset="0,0" TextureOffset="0,0" Size="190,290" Color="255,255,255,255" Texture="PolicyBranch_Exploration.dds" ToolTip="TXT_KEY_POLICY_BRANCH_EXPLORATION_HELP"/>
 							<!-- Policy Branch Image -->
-							<Image Anchor="C,T" Offset="0,0" TextureOffset="0,0" Size="190,90" Texture="PolicyBranch_Exploration.dds" ID="BranchBack6" ToolTip="TXT_KEY_POLICY_BRANCH_EXPLORATION_HELP"/>
+							<Image Anchor="C,T" Offset="0,0" TextureOffset="0,0" Size="190,90" Texture="PolicyBranch_Exploration.dds" ID="BranchBack7" ToolTip="TXT_KEY_POLICY_BRANCH_EXPLORATION_HELP"/>
 							<Image ID="ImageMask7" Anchor="C,T" Offset="0,0" Size="190,290" Color="255,255,255,200" Texture="Assets/UI/Art/Icons/SocialPoliciesBranchBlackMask.dds"/>
 							<Box ID="DisabledMask7" Size="190,290" Offset="0,0" Anchor="C,T" Color="0,0,0,200"/>
 							<Image Anchor="C,T" Offset="0,0" Size="190,290" Texture="Assets/UI/Art/Icons/SocialPoliciesTrim.dds">
@@ -367,7 +367,7 @@
 						<Box Size="190,290 " Anchor="C,T" Color="0,0,0,0">
 							<Image Anchor="C,T" Offset="0,0" TextureOffset="0,0" Size="190,290" Color="255,255,255,255" Texture="SocialPoliciesCommerce.dds" ToolTip="TXT_KEY_POLICY_BRANCH_COMMERCE_HELP"/>
 							<!-- Policy Branch Image -->
-							<Image Anchor="C,T" Offset="0,0" TextureOffset="0,0" Size="190,90" Texture="SocialPoliciesCommerce.dds" ID="BranchBack7" ToolTip="TXT_KEY_POLICY_BRANCH_COMMERCE_HELP"/>
+							<Image Anchor="C,T" Offset="0,0" TextureOffset="0,0" Size="190,90" Texture="SocialPoliciesCommerce.dds" ID="BranchBack6" ToolTip="TXT_KEY_POLICY_BRANCH_COMMERCE_HELP"/>
 							<Image ID="ImageMask6" Anchor="C,T" Offset="0,0" Size="190,290" Color="255,255,255,200" Texture="Assets/UI/Art/Icons/SocialPoliciesBranchBlackMask.dds"/>
 							<Box ID="DisabledMask6" Size="190,290" Offset="0,0" Anchor="C,T" Color="0,0,0,200"/>
 							<Image Anchor="C,T" Offset="0,0" Size="190,290" Texture="Assets/UI/Art/Icons/SocialPoliciesTrim.dds">
@@ -403,7 +403,7 @@
 						<Box Size="190,290 " Anchor="C,T" Color="0,0,0,0">
 							<Image Anchor="C,T" Offset="0,0" TextureOffset="0,0" Size="190,290" Color="255,255,255,255" Texture="PolicyBranch_Aesthetics.dds" ToolTip="TXT_KEY_POLICY_BRANCH_AESTHETICS_HELP"/>
 							<!-- Policy Branch Image -->
-							<Image Anchor="C,T" Offset="0,0" TextureOffset="0,0" Size="190,90" Texture="PolicyBranch_Aesthetics.dds" ID="BranchBack8" ToolTip="TXT_KEY_POLICY_BRANCH_AESTHETICS_HELP"/>
+							<Image Anchor="C,T" Offset="0,0" TextureOffset="0,0" Size="190,90" Texture="PolicyBranch_Aesthetics.dds" ID="BranchBack5" ToolTip="TXT_KEY_POLICY_BRANCH_AESTHETICS_HELP"/>
 							<Image ID="ImageMask5" Anchor="C,T" Offset="0,0" Size="190,290" Color="255,255,255,200" Texture="Assets/UI/Art/Icons/SocialPoliciesBranchBlackMask.dds"/>
 							<Box ID="DisabledMask5" Size="190,290" Offset="0,0" Anchor="C,T" Color="0,0,0,200"/>
 							<Image Anchor="C,T" Offset="0,0" Size="190,290" Texture="Assets/UI/Art/Icons/SocialPoliciesTrim.dds">
