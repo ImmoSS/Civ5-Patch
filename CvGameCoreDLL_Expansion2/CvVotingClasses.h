@@ -1346,6 +1346,7 @@ enum MPVotingSystemProposalTypes
 	PROPOSAL_IRR,
 	PROPOSAL_CC,
 	PROPOSAL_SCRAP,
+	PROPOSAL_REMAP,
 
 	NUM_PROPOSAL_TYPES
 };
@@ -1435,6 +1436,7 @@ private:
 	const static int IRR_THRESHOLD_TIMES_100 = 80;  // 80% of total support is enough for irr. 100% during tournament competition. 
 	const static int MAX_ACTIVE_RESOLUTIONS = MAX_MAJOR_CIVS + 2;  // 1 irr x players, 1 cc and 1 scrap
 	const static int PROPOSAL_COOLDOWN = 10;
+	const static int REMAP_PROPOSAL_REVEAL_TURN = 10;
 
 	void DoCheckVoters(int iProposalID);
 	void DoUpdateProposalStatus(int iProposalID);

@@ -231,6 +231,7 @@ g_NameTable[ NotificationTypes.NOTIFICATION_LEAGUE_PROJECT_PROGRESS ] = "LeagueP
 g_NameTable[ NotificationTypes.NOTIFICATION_MP_IRR_PROPOSAL ] = "MPVotingSystemProposal";
 g_NameTable[ NotificationTypes.NOTIFICATION_MP_CC_PROPOSAL ] = "MPVotingSystemProposal";
 g_NameTable[ NotificationTypes.NOTIFICATION_MP_SCRAP_PROPOSAL ] = "MPVotingSystemProposal";
+g_NameTable[ NotificationTypes.NOTIFICATION_MP_REMAP_PROPOSAL ] = "MPVotingSystemProposal";
 g_NameTable[ NotificationTypes.NOTIFICATION_MP_PROPOSAL_RESULT ] = "MPVotingSystemResult";
 
 ------------------------------------------------------------------------------------
@@ -242,10 +243,10 @@ g_NameTable[ NotificationTypes.NOTIFICATION_MP_PROPOSAL_RESULT ] = "MPVotingSyst
 -------------------------------------------------
 -------------------------------------------------
 function OnNotificationAdded( Id, type, toolTip, strSummary, iGameValue, iExtraGameData, ePlayer )
-	print('------new notification-------')
-	print('UI_id', Id)
-	print('type', type)
-	print('-----------------------------')
+	--print('------new notification-------')
+	--print('UI_id', Id)
+	--print('type', type)
+	--print('-----------------------------')
 
 	if(g_ActiveNotifications[ Id ] ~= nil) then
         return;
@@ -316,8 +317,8 @@ function OnNotificationAdded( Id, type, toolTip, strSummary, iGameValue, iExtraG
 			or type == NotificationTypes.NOTIFICATION_MP_CC_PROPOSAL
 			or type == NotificationTypes.NOTIFICATION_MP_SCRAP_PROPOSAL
 			then
-			print('irr/cc/scrap notification setup')
-			print('icon hookup for proposal owner:', iGameValue)
+			--print('irr/cc/scrap notification setup')
+			--print('icon hookup for proposal owner:', iGameValue)
 			local playerID = iGameValue
 
 			if type == NotificationTypes.NOTIFICATION_MP_IRR_PROPOSAL then
@@ -332,6 +333,11 @@ function OnNotificationAdded( Id, type, toolTip, strSummary, iGameValue, iExtraG
 			
 			LuaEvents.OnProposalCreated()
 			CivIconHookup( playerID, 45, instance.CivIcon, instance.CivIconBG, instance.CivIconShadow, false, true );
+		elseif type == NotificationTypes.NOTIFICATION_MP_REMAP_PROPOSAL then
+			instance.StatusFrame:SetText('[ICON_FLOWER]')
+			LuaEvents.OnProposalCreated();
+			instance.SmallCivFrame:SetHide(true);
+			return CivIconHookup( 0, 45, instance.CivIcon, instance.CivIconBG, instance.CivIconShadow, false, true );
 		elseif type == NotificationTypes.NOTIFICATION_MP_PROPOSAL_RESULT then
 			if iExtraGameData == 1 then
 				instance.MPVotingSystemResultCancelImage:SetHide(true)  -- hide cancel frame

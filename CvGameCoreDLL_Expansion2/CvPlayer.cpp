@@ -1611,6 +1611,12 @@ void CvPlayer::gameStartInit()
 			setAlive(false, false);
 		}
 	}
+#ifdef MP_PLAYERS_VOTING_SYSTEM
+	if (GetID() == GC.getGame().getActivePlayer())
+	{
+		GC.getGame().GetMPVotingSystem()->Init();
+	}
+#endif
 	if(!isAlive())
 	{
 		return;
