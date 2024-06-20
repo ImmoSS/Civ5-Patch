@@ -11646,7 +11646,8 @@ void CvMPVotingSystem::Init()
 	{
 		if (GC.getGame().isOption("GAMEOPTION_ENABLE_REMAP_VOTE"))
 		{
-			AddProposal(PROPOSAL_REMAP, NO_PLAYER, NO_PLAYER);
+			if (!IsAnyActiveProposalType(PROPOSAL_REMAP))
+				AddProposal(PROPOSAL_REMAP, NO_PLAYER, NO_PLAYER);
 		}
 	}
 }

@@ -1836,6 +1836,20 @@ bool CvNotifications::IsNotificationExpired(int iIndex)
 		}
 	}
 	break;
+#ifdef MP_PLAYERS_VOTING_SYSTEM
+
+	case NOTIFICATION_MP_IRR_PROPOSAL:
+	case NOTIFICATION_MP_CC_PROPOSAL:
+	case NOTIFICATION_MP_SCRAP_PROPOSAL:
+	case NOTIFICATION_MP_REMAP_PROPOSAL:
+	{
+		if (GC.getGame().GetMPVotingSystem()->GetProposalCompletion(m_aNotifications[iIndex].m_iGameDataIndex))
+		{
+			return true;
+		}
+	}
+	break;
+#endif
 
 	default:	// don't expire
 	{
