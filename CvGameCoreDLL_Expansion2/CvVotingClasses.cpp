@@ -12225,7 +12225,7 @@ void CvMPVotingSystem::DoUpdateProposalStatus(int iProposalID)
 			SetProposalStatus(iProposalID, STATUS_INVALID);
 	}
 	else if (eType == PROPOSAL_REMAP) {
-		if (GC.getGame().getElapsedGameTurns() < REMAP_PROPOSAL_REVEAL_TURN)
+		if (GetProposalExpirationCounter(iProposalID) >= 0)
 		{
 			if (totalVotes < maxVoters)
 				SetProposalStatus(iProposalID, STATUS_ACTIVE);
