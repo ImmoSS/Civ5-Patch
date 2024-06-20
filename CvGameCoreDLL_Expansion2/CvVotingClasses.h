@@ -1421,7 +1421,6 @@ public:
 	void DoTurn();
 	void AddProposal(MPVotingSystemProposalTypes eProposalType, PlayerTypes eProposalOwner, PlayerTypes eProposalSubject);
 	void DoVote(int iProposalID, PlayerTypes ePlayerID, bool bVote);
-	void ResendActiveProposals();
 	void SetProposalUIid(int iProposalID, int iId);
 	void SetProposalType(int iProposalID, MPVotingSystemProposalTypes eType);
 	void SetProposalExpirationCounter(int iProposalID, int iValue);

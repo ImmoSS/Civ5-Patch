@@ -319,7 +319,7 @@ function OnNotificationAdded( Id, type, toolTip, strSummary, iGameValue, iExtraG
 			then
 			--print('irr/cc/scrap notification setup')
 			--print('icon hookup for proposal owner:', iGameValue)
-			local playerID = iGameValue
+			local playerID = Game.GetProposalOwner( iGameValue )
 
 			if type == NotificationTypes.NOTIFICATION_MP_IRR_PROPOSAL then
 				instance.StatusFrame:SetText('[ICON_TEAM_1]')
@@ -337,9 +337,9 @@ function OnNotificationAdded( Id, type, toolTip, strSummary, iGameValue, iExtraG
 			instance.StatusFrame:SetText('[ICON_FLOWER]')
 			LuaEvents.OnProposalCreated();
 			instance.SmallCivFrame:SetHide(true);
-			return CivIconHookup( 0, 45, instance.CivIcon, instance.CivIconBG, instance.CivIconShadow, false, true );
+			CivIconHookup( 0, 45, instance.CivIcon, instance.CivIconBG, instance.CivIconShadow, false, true );
 		elseif type == NotificationTypes.NOTIFICATION_MP_PROPOSAL_RESULT then
-			if iExtraGameData == 1 then
+			if Game.GetProposalStatus( iGameValue ) == 1 then
 				instance.MPVotingSystemResultCancelImage:SetHide(true)  -- hide cancel frame
 			else
 				instance.MPVotingSystemResultCancelImage:SetHide(false)  -- show cancel frame

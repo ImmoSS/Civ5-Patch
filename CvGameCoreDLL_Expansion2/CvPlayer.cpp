@@ -1612,7 +1612,7 @@ void CvPlayer::gameStartInit()
 		}
 	}
 #ifdef MP_PLAYERS_VOTING_SYSTEM
-	if (GetID() == GC.getGame().getActivePlayer())
+	if (isLocalPlayer())
 	{
 		GC.getGame().GetMPVotingSystem()->Init();
 	}
@@ -28588,12 +28588,6 @@ void CvPlayer::reconnected()
 		// Game pauses during a reconnection and will unpause when the reconnect is finished, so there's no need to insert unpause code here
 #endif
 	}
-#ifdef MP_PLAYERS_VOTING_SYSTEM
-	if (isMultiplayer && isLocalPlayer())
-	{
-		GC.getGame().GetMPVotingSystem()->ResendActiveProposals();
-	}
-#endif
 }
 //	-----------------------------------------------------------------------------------------------
 bool CvPlayer::hasBusyUnitUpdatesRemaining() const

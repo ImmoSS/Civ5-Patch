@@ -1124,9 +1124,9 @@ void CvNotifications::Activate(Notification& notification)
 		if (notification.m_iGameDataIndex >= 0)
 		{
 			CvMPVotingSystem* pkMPVotingSystem = GC.getGame().GetMPVotingSystem();
-			int iUI_id = notification.m_iLookupIndex;
-			int iStatus = (int)pkMPVotingSystem->GetProposalStatus(pkMPVotingSystem->GetProposalIDbyUIid(iUI_id));
-			CvPopupInfo kPopup(BUTTONPOPUP_MODDER_0, iUI_id, iStatus);
+			int iId = notification.m_iGameDataIndex;
+			int iStatus = (int)pkMPVotingSystem->GetProposalStatus(iId);
+			CvPopupInfo kPopup(BUTTONPOPUP_MODDER_0, iId, iStatus);
 			GC.GetEngineUserInterface()->AddPopup(kPopup);
 		}
 		break;
