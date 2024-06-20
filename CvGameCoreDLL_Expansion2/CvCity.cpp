@@ -15672,8 +15672,10 @@ bool CvCity::CanRangeStrikeNow() const
 
 	int iRange = GC.getCITY_ATTACK_RANGE();
 #ifdef DUEL_WALL_CHANGE
-	if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+	if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF") && !GET_PLAYER(getOwner()).isMinorCiv())
+	{
 		iRange += 1;
+	}
 #endif
 #ifdef CITY_RANGE_MODIFIER
 	iRange += getCityAttackRangeModifier();
@@ -15790,8 +15792,10 @@ bool CvCity::canRangeStrikeAt(int iX, int iY) const
 
 	int iAttackRange = GC.getCITY_ATTACK_RANGE();
 #ifdef DUEL_WALL_CHANGE
-	if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+	if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF") && !GET_PLAYER(getOwner()).isMinorCiv())
+	{
 		iAttackRange += 1;
+	}
 #endif
 #ifdef CITY_RANGE_MODIFIER
 	iAttackRange += getCityAttackRangeModifier();
