@@ -11692,23 +11692,6 @@ CvMPVotingSystem::Proposal* CvMPVotingSystem::GetProposalByID(int iProposalID)
 	return NULL;
 }
 
-
-int CvMPVotingSystem::GetProposalIDbyUIid(int iProposalUIid)
-{
-	for (ProposalList::iterator it = m_vProposals.begin(); it != m_vProposals.end(); ++it)
-	{
-		if (it->iUIid == iProposalUIid)
-			return it->iID;
-	}
-	return -1;
-}
-
-int CvMPVotingSystem::GetProposalUIid(int iProposalID)
-{
-	return m_vProposals.at(iProposalID).iUIid;
-}
-
-
 int CvMPVotingSystem::GetProposalExpirationCounter(int iProposalID)
 {
 	return m_vProposals.at(iProposalID).iExpirationCounter;
@@ -12066,11 +12049,6 @@ void CvMPVotingSystem::DoVote(int iProposalID, PlayerTypes ePlayerID, bool bVote
 		DoCheckVoters(iProposalID);
 		DoUpdateProposalStatus(iProposalID);
 	}
-}
-
-void CvMPVotingSystem::SetProposalUIid(int iProposalID, int iId)
-{
-	m_vProposals.at(iProposalID).iUIid = iId;
 }
 
 void CvMPVotingSystem::SetProposalExpirationCounter(int iProposalID, int iValue)
