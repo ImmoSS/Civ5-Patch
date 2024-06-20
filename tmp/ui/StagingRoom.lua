@@ -723,7 +723,7 @@ function UpdatePlayer( slotInstance, playerInfo )
         local bCantChangeTeam;	-- can't change teams
         
 		local bSlotTypeDisabled;
-		local bCantChangeRemapToken = bIsObserver or PreGame.GameStarted() or PreGame.GetGameOption("GAMEOPTION_ENABLE_REMAP_VOTE") <= 0;
+		local bCantChangeRemapToken = bIsObserver or PreGame.GameStarted() or (PreGame.GetLoadFileName() ~= "");
 
 		-- NEW: check if player has any community remarks
 		local tstrTooltip = {};
@@ -799,6 +799,7 @@ function UpdatePlayer( slotInstance, playerInfo )
 					bCantChangeCiv = true;
 					bCantChangeTeam = true;
 					bSlotTypeDisabled = true;
+					bCantChangeRemapToken = true;
 				end
         
 				-- You can't auto launch the game if someone isn't ready.
@@ -853,8 +854,9 @@ function UpdatePlayer( slotInstance, playerInfo )
 			if( bIsHotSeat ) then
 				slotInstance.KickButton:SetHide( true );
 				slotInstance.EditButton:SetHide( bIsDisabled or not bIsHuman );				
-				slotInstance.RemapTokenCheck:SetHide( bCantChangeRemapToken or not bIsHuman );
-				slotInstance.RemapTokenCheck:SetDisabled( bIsDisabled );
+				slotInstance.RemapTokenCheck:SetHide( PreGame.GetGameOption("GAMEOPTION_ENABLE_REMAP_VOTE") <= 0 or not bIsHuman );
+				slotInstance.RemapTokenCheck:SetDisabled( bCantChangeRemapToken );
+				slotInstance.RemapTokenCheck:SetCheck( IsHasRemapToken(playerID) );
 				--slotInstance.EnableCheck:SetHide( false );
 				slotInstance.PingTimeLabel:SetHide( true );
 				slotInstance.LockCheck:SetHide( true );				
@@ -863,15 +865,16 @@ function UpdatePlayer( slotInstance, playerInfo )
 				slotInstance.LockCheck:SetHide( bIsHuman or bCantChangeCiv );
 				slotInstance.KickButton:SetHide( not bIsHuman and not Network.IsPlayerConnected(playerID));
 				slotInstance.EditButton:SetHide( true );
-				slotInstance.RemapTokenCheck:SetHide( bCantChangeRemapToken or not bIsHuman and not Network.IsPlayerConnected(playerID));
-				slotInstance.RemapTokenCheck:SetDisabled( bIsDisabled );
+				slotInstance.RemapTokenCheck:SetHide( PreGame.GetGameOption("GAMEOPTION_ENABLE_REMAP_VOTE") <= 0 or not bIsHuman and not Network.IsPlayerConnected(playerID));
+				slotInstance.RemapTokenCheck:SetDisabled( bCantChangeRemapToken );
+				slotInstance.RemapTokenCheck:SetCheck( IsHasRemapToken(playerID) );
 			end
 		else
 			--slotInstance.EnableCheck:SetHide( true );
 			slotInstance.LockCheck:SetHide( true );
 			slotInstance.KickButton:SetHide( true );
 			slotInstance.EditButton:SetHide( true );
-			slotInstance.RemapTokenCheck:SetHide( bCantChangeRemapToken or not bIsHuman );
+			slotInstance.RemapTokenCheck:SetHide( PreGame.GetGameOption("GAMEOPTION_ENABLE_REMAP_VOTE") <= 0 or not bIsHuman );
 			slotInstance.RemapTokenCheck:SetDisabled( true );
 			slotInstance.RemapTokenCheck:SetCheck( IsHasRemapToken(playerID) );
 		end
@@ -1046,7 +1049,7 @@ function UpdateLocalPlayer( playerInfo )
 	local bCantChangeCiv = bIsReady or (PreGame.GetLoadFileName() ~= "") or bIsObserver or PreGame.GameStarted();
 	local bCantChangeTeam = bIsReady or (PreGame.GetLoadFileName() ~= "") or bIsObserver or PreGame.GameStarted();
 	local bSlotTypeDisabled = bIsReady or (PreGame.GetLoadFileName() ~= "") or bIsHotSeat or Network.IsDedicatedServer() or PreGame.GameStarted();
-	local bCantChangeRemapToken = (PreGame.GetLoadFileName() ~= "") or bIsObserver or PreGame.GameStarted() or PreGame.GetGameOption("GAMEOPTION_ENABLE_REMAP_VOTE") <= 0;
+	local bCantChangeRemapToken = (PreGame.GetLoadFileName() ~= "") or bIsObserver or PreGame.GameStarted();
 
 	-- Hide Civ/Team/Handicap labels for observers
   Controls.TeamLabel:SetHide(bIsObserver);
@@ -1064,11 +1067,9 @@ function UpdateLocalPlayer( playerInfo )
 	Controls.SlotTypePulldown:SetHide( bSlotTypeDisabled );
 	Controls.HandicapPulldown:SetHide( bCantChangeCiv );
   Controls.HostIcon:SetHide( Matchmaking.GetLocalID() ~= m_HostID );
-	Controls.RemapTokenCheck:SetHide( bCantChangeRemapToken );
-	Controls.RemapTokenCheck:SetDisabled( Matchmaking.GetLocalID() ~= m_HostID );
-	if (Matchmaking.GetLocalID() ~= m_HostID) then
-		Controls.RemapTokenCheck:SetCheck( IsHasRemapToken(Matchmaking.GetLocalID()) );
-	end
+	Controls.RemapTokenCheck:SetHide( PreGame.GetGameOption("GAMEOPTION_ENABLE_REMAP_VOTE") <= 0 );
+	Controls.RemapTokenCheck:SetDisabled( bCantChangeRemapToken or Matchmaking.GetLocalID() ~= m_HostID );
+	Controls.RemapTokenCheck:SetCheck( IsHasRemapToken(Matchmaking.GetLocalID()) );
 	---------------------------------------------------------
 	
 end

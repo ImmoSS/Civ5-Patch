@@ -32,6 +32,9 @@ local function onProposalResult( Id, expires, OwnerId, SubjectId, iType, Status)
 	local sSummary = ''
 	iType = iType + 1001
 	if (pActivePlayer ~= nil) then
+		if Id == g_MPVotingSystemLastId then
+			OnClose();
+		end
 		if (Status == 1) then
 			if iType == 1001 then
 				-- defeat screen comes with NetworkKickedPopup
@@ -46,8 +49,14 @@ local function onProposalResult( Id, expires, OwnerId, SubjectId, iType, Status)
 				Game.SetWinner(Players[Game.GetActivePlayer()]:GetTeam(), GameInfoTypes.VICTORY_SCRAP);
 			end
 		end
-		if Id == g_MPVotingSystemLastId then
-			OnClose();
+		if iType == 1004 then
+			if ContextPtr:IsHidden() == true then
+				Events.SerialEventGameMessagePopup{ 
+					Type = ButtonPopupTypes.BUTTONPOPUP_MODDER_0,
+					Data1 = Id,
+					Data2 = Status
+				};
+			end
 		end
 	end
 end
@@ -332,7 +341,7 @@ function UpdateAndSort(Id, iResult)
 	else
 		Controls.ProposalStartedBy:LocalizeAndSetText(" ");
 	end
-	Controls.Expiration:SetText(Game.GetElapsedGameTurns() + Game.GetProposalExpirationCounter(Id))
+	Controls.Expiration:SetText(Game.GetElapsedGameTurns() + Game.GetProposalExpirationCounter(Id) - (Game.GetProposalCompletion(Id) and 1 or 0))
 	local MaxVotes = Game.GetMaxVotes(Id)
 	local YesVotes = Game.GetYesVotes(Id)
 	local NoVotes = Game.GetNoVotes(Id)
@@ -411,10 +420,10 @@ function OnPopup( popupInfo )
 	--print('OnPopup start')
 	if( popupInfo.Type == ButtonPopupTypes.BUTTONPOPUP_MODDER_0 ) then
 		m_PopupInfo = popupInfo;
+		UpdateAndSort(m_PopupInfo.Data1, m_PopupInfo.Data2)
         if ( ContextPtr:IsHidden() == true ) then
 			--print('OnPopup received Id:', m_PopupInfo.Data1)
 			--print('OnPopup result:', m_PopupInfo.Data2)
-			UpdateAndSort(m_PopupInfo.Data1, m_PopupInfo.Data2)
         	UIManager:QueuePopup( ContextPtr, PopupPriority.InGameUtmost );
         end
 	end
@@ -455,5 +464,5 @@ ContextPtr:SetInputHandler( InputHandler );
 BuildStaticTeamsList();
 BuildControls();
 
-Controls.VoteYesButton:RegisterCallback( Mouse.eLClick, function() Network.SendGiftUnit(Game.GetProposalIDbyUIid(g_MPVotingSystemLastId), -5); end );  -- Yes
-Controls.VoteNoButton:RegisterCallback( Mouse.eLClick, function() Network.SendGiftUnit(Game.GetProposalIDbyUIid(g_MPVotingSystemLastId), -6); end );  -- No
+Controls.VoteYesButton:RegisterCallback( Mouse.eLClick, function() Network.SendGiftUnit(g_MPVotingSystemLastId, -5); end );  -- Yes
+Controls.VoteNoButton:RegisterCallback( Mouse.eLClick, function() Network.SendGiftUnit(g_MPVotingSystemLastId, -6); end );  -- No
