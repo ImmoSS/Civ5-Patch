@@ -568,11 +568,6 @@
         <GridButton Anchor="R,B"  Style="SmallButton" Size="150,32"  Offset="0,0" StateOffsetIncrement="0,0" ID="SaveButton" Hidden="0" >
           <Label Anchor="C,C"  Offset="0,0"  String="TXT_KEY_ACTION_SAVE_NORMAL" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"  />
         </GridButton>
-		
-		<!-- NEW: DRAFT BUTTON -->
-        <GridButton Anchor="R,B"  Style="SmallButton" Size="150,32"  Offset="0,0" StateOffsetIncrement="0,0" ID="DraftButton" Hidden="0" >
-          <Label Anchor="C,C"  Offset="0,0"  String="DRAFTS" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"  />
-        </GridButton>
 
         <!-- Strategic View Button  -->
         <Button ConsumeMouseOver="1" Anchor="C,T" Offset="0,0" Size="45.45" Texture="assets\UI\Art\Icons\MainStrategicButton.dds" ID="StrategicViewButton" Hidden="1" ToolTip="TXT_KEY_POP_STRATEGIC_VIEW_TT" >
