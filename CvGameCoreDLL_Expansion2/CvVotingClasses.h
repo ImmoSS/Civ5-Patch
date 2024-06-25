@@ -1398,8 +1398,6 @@ public:
 
 	int GetLastProposalID();
 	Proposal* GetProposalByID(int iProposalID);
-	int GetProposalUIid(int iProposalID);
-	int GetProposalIDbyUIid(int iProposalUIid);
 	int GetProposalExpirationCounter(int iProposalID);
 	int GetProposalTypeCooldownResetTurn(MPVotingSystemProposalTypes eType, PlayerTypes ePlayerID);
 	MPVotingSystemProposalTypes GetProposalType(int iProposalID);
@@ -1421,7 +1419,6 @@ public:
 	void DoTurn();
 	void AddProposal(MPVotingSystemProposalTypes eProposalType, PlayerTypes eProposalOwner, PlayerTypes eProposalSubject);
 	void DoVote(int iProposalID, PlayerTypes ePlayerID, bool bVote);
-	void SetProposalUIid(int iProposalID, int iId);
 	void SetProposalType(int iProposalID, MPVotingSystemProposalTypes eType);
 	void SetProposalExpirationCounter(int iProposalID, int iValue);
 	void SetProposalStatus(int iProposalID, MPVotingSystemProposalStatus eStatus);

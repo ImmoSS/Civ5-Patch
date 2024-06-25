@@ -44,18 +44,18 @@ local function onProposalResult( Id, expires, OwnerId, SubjectId, iType, Status)
 			elseif iType == 1002 then
 				--Events.EndGameShow(EndGameTypes.Diplomatic, Players[SubjectId]:GetTeam())
 				Game.SetWinner(Players[SubjectId]:GetTeam(), GameInfoTypes.VICTORY_DIPLOMATIC); 
-			elseif iType == 1003 or iType == 1004 then
+			elseif iType == 1003 then
 				--Events.EndGameShow(-1, Players[Game.GetActivePlayer()]:GetTeam())  -- scrap screen
 				Game.SetWinner(Players[Game.GetActivePlayer()]:GetTeam(), GameInfoTypes.VICTORY_SCRAP);
-			end
-		end
-		if iType == 1004 then
-			if ContextPtr:IsHidden() == true then
-				Events.SerialEventGameMessagePopup{ 
-					Type = ButtonPopupTypes.BUTTONPOPUP_MODDER_0,
-					Data1 = Id,
-					Data2 = Status
-				};
+			elseif iType == 1004 then
+				Game.SetWinner(Players[Game.GetActivePlayer()]:GetTeam(), GameInfoTypes.VICTORY_SCRAP);
+				if ContextPtr:IsHidden() == true then
+					Events.SerialEventGameMessagePopup{ 
+						Type = ButtonPopupTypes.BUTTONPOPUP_MODDER_0,
+						Data1 = Id,
+						Data2 = Status
+					};
+				end
 			end
 		end
 	end
