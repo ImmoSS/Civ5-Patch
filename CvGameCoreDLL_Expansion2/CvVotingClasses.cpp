@@ -11941,9 +11941,12 @@ void CvMPVotingSystem::DoTurn()
 					CvNotifications* pNotifications = kPlayer.GetNotifications();
 					if (kPlayer.isAlive())
 					{
-						if (pNotifications)
+						if ((it->eType != PROPOSAL_REMAP) || CvPreGame::IsHasRemapToken((PlayerTypes)iNotifyLoop))
 						{
-							pNotifications->Add(eType, sMessage, sSummary, -1, -1, it->iID);
+							if (pNotifications)
+							{
+								pNotifications->Add(eType, sMessage, sSummary, -1, -1, it->iID);
+							}
 						}
 					}
 				}
@@ -12019,9 +12022,12 @@ void CvMPVotingSystem::AddProposal(MPVotingSystemProposalTypes eProposalType, Pl
 		CvNotifications* pNotifications = kPlayer.GetNotifications();
 		if (kPlayer.isAlive())
 		{
-			if (pNotifications)
+			if ((eProposalType != PROPOSAL_REMAP) || CvPreGame::IsHasRemapToken((PlayerTypes)iNotifyLoop))
 			{
-				pNotifications->Add(eType, sMessage, sSummary, -1, -1, ID);
+				if (pNotifications)
+				{
+					pNotifications->Add(eType, sMessage, sSummary, -1, -1, ID);
+				}
 			}
 		}
 	}

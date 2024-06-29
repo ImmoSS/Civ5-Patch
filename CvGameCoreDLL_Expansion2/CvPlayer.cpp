@@ -1612,7 +1612,7 @@ void CvPlayer::gameStartInit()
 		}
 	}
 #ifdef MP_PLAYERS_VOTING_SYSTEM
-	if (isLocalPlayer() && CvPreGame::IsHasRemapToken(GetID()))
+	if (isLocalPlayer())
 	{
 		GC.getGame().GetMPVotingSystem()->Init();
 	}
