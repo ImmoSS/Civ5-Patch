@@ -11986,8 +11986,6 @@ void CvMPVotingSystem::AddProposal(MPVotingSystemProposalTypes eProposalType, Pl
 	if (eProposalSubject != NO_PLAYER)
 		proposal.vIsEligible.at(eProposalSubject) = false;  // subject can't vote
 
-	m_vProposals.push_back(proposal);
-
 	CvString sMessage, sSummary;
 	NotificationTypes eType = NO_NOTIFICATION_TYPE;
 
@@ -12011,11 +12009,20 @@ void CvMPVotingSystem::AddProposal(MPVotingSystemProposalTypes eProposalType, Pl
 	}
 	else if (eProposalType == PROPOSAL_REMAP)
 	{
-		m_vProposals.at(ID).iExpirationCounter = REMAP_PROPOSAL_REVEAL_TURN;
+		proposal.iExpirationCounter = REMAP_PROPOSAL_REVEAL_TURN;
+		for (int i = 0; i < MAX_MAJOR_CIVS; i++)
+		{
+			if (!CvPreGame::IsHasRemapToken((PlayerTypes)i))
+			{
+				proposal.vIsEligible.at(i) = false; 
+			}
+		}
 		eType = (NotificationTypes)NOTIFICATION_MP_REMAP_PROPOSAL;
 		sMessage = GetLocalizedText("TXT_KEY_MP_MESSAGE_PROPOSED_REMAP");
 		sSummary = GetLocalizedText("TXT_KEY_NOTIFICATION_SUMMARY_MP_REMAP_PROPOSAL");
 	}
+
+	m_vProposals.push_back(proposal);
 
 	for (int iNotifyLoop = 0; iNotifyLoop < MAX_MAJOR_CIVS; ++iNotifyLoop) {
 		CvPlayerAI& kPlayer = GET_PLAYER((PlayerTypes)iNotifyLoop);
