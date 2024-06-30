@@ -449,6 +449,7 @@ function OnNotificationAdded( Id, type, toolTip, strSummary, iGameValue, iExtraG
     
     ProcessStackSizes();
 
+    return 1
 end
 Events.NotificationAdded.Add( OnNotificationAdded );
 
