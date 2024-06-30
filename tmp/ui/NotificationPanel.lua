@@ -1,5 +1,6 @@
 -------------------------------------------------
 -- edit: MP voting system for vanilla UI
+-- edit: FIX Events.NotificationRemoved missing PlayerID argument 
 -------------------------------------------------
 -- Action Info Panel
 -------------------------------------------------
@@ -501,6 +502,7 @@ end
 
 -------------------------------------------------
 -------------------------------------------------
+-- edit: FIX Events.NotificationRemoved missing PlayerID argument 
 function NotificationRemoved( Id, PlayerID )
 
     --print( "removing Notification " .. Id .. " " .. tostring( g_ActiveNotifications[ Id ] ) .. " " .. tostring( g_NameTable[ g_ActiveNotifications[ Id ] ] ) );

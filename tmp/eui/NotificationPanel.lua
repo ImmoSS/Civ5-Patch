@@ -7,6 +7,7 @@
 -------------------------------------------------
 -- edit: MP voting system for EUI
 -- edit: Diplomacy stack left/right switch option for EUI
+-- edit: FIX Events.NotificationRemoved missing PlayerID argument 
 -------------------------------------------------
 include( "EUI_tooltips" )
 
@@ -758,6 +759,7 @@ local function RemoveNotificationID( Id )
 	end
 end
 
+-- edit: FIX Events.NotificationRemoved missing PlayerID argument 
 Events.NotificationRemoved.Add(
 function( Id, playerID )
 
