@@ -574,8 +574,6 @@ local function SetupNotification( instance, sequence, Id, type, toolTip, strSumm
 			end
 		end
 	end
-
-    return 1
 end
 
 -------------------------------------------------
