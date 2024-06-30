@@ -759,12 +759,14 @@ local function RemoveNotificationID( Id )
 end
 
 Events.NotificationRemoved.Add(
-function( Id )
+function( Id, playerID )
 
 --print( "removing Notification " .. Id .. " " .. tostring( g_ActiveNotifications[ Id ] ) .. " " .. tostring( g_notificationNames[ g_ActiveNotifications[ Id ] ] ) )
 
-	RemoveNotificationID( Id )
-	ProcessStackSizes()
+	if (playerID == g_activePlayerID) then
+		RemoveNotificationID( Id )
+		ProcessStackSizes()
+	end
 
 end)
 

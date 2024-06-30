@@ -501,12 +501,14 @@ end
 
 -------------------------------------------------
 -------------------------------------------------
-function NotificationRemoved( Id )
+function NotificationRemoved( Id, PlayerID )
 
     --print( "removing Notification " .. Id .. " " .. tostring( g_ActiveNotifications[ Id ] ) .. " " .. tostring( g_NameTable[ g_ActiveNotifications[ Id ] ] ) );
         
-	RemoveNotificationID( Id );	
-    ProcessStackSizes();
+	if (PlayerID == Game.GetActivePlayer()) then
+		RemoveNotificationID( Id );	
+		ProcessStackSizes();
+	end
 
 end
 Events.NotificationRemoved.Add( NotificationRemoved );
