@@ -6123,6 +6123,12 @@ void CvGame::setWinner(TeamTypes eNewWinner, VictoryTypes eNewVictory)
 
 				Localization::String localizedText = Localization::Lookup("TXT_KEY_GAME_WON");
 				localizedText << GET_TEAM(getWinner()).getName().GetCString() << szVictoryTextKey;
+#ifdef MP_PLAYERS_VOTING_SYSTEM
+				if (strcmp(pkVictoryInfo->GetType(), "VICTORY_SCRAP") == 0)
+				{
+					localizedText = Localization::Lookup(pkVictoryInfo->GetDescriptionKey());
+				}
+#endif
 				addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, winningTeamLeaderID, localizedText.toUTF8(), -1, -1);
 
 				//Notify everyone of the victory
@@ -6131,6 +6137,13 @@ void CvGame::setWinner(TeamTypes eNewWinner, VictoryTypes eNewVictory)
 
 				Localization::String localizedSummary = Localization::Lookup("TXT_KEY_NOTIFICATION_SUMMARY_VICTORY_WINNER");
 				localizedSummary << szWinningTeamLeaderNameKey;
+#ifdef MP_PLAYERS_VOTING_SYSTEM
+				if (strcmp(pkVictoryInfo->GetType(), "VICTORY_SCRAP") == 0)
+				{
+					localizedText = Localization::Lookup(pkVictoryInfo->GetDescriptionKey());
+					localizedSummary = Localization::Lookup(pkVictoryInfo->GetTextKey());
+				}
+#endif
 
 				for(int iNotifyLoop = 0; iNotifyLoop < MAX_MAJOR_CIVS; ++iNotifyLoop){
 					PlayerTypes eNotifyPlayer = (PlayerTypes) iNotifyLoop;
