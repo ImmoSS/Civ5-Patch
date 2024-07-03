@@ -1413,6 +1413,7 @@ public:
 	int GetMaxVotes(int iProposalID);
 	bool IsPlayerHasActiveProposal(PlayerTypes ePlayerID);
 	bool IsAnyActiveProposalType(MPVotingSystemProposalTypes eType);
+	bool IsAnyProposalType(MPVotingSystemProposalTypes eType);
 	bool IsProposalTypeOnCooldown(MPVotingSystemProposalTypes eType, PlayerTypes ePlayerID);
 	bool IsProposalTypeAvailable(MPVotingSystemProposalTypes eType);
 

@@ -11646,7 +11646,7 @@ void CvMPVotingSystem::Init()
 	{
 		if (GC.getGame().isOption("GAMEOPTION_ENABLE_REMAP_VOTE"))
 		{
-			if (!IsAnyActiveProposalType(PROPOSAL_REMAP))
+			if (!IsAnyProposalType(PROPOSAL_REMAP))
 				AddProposal(PROPOSAL_REMAP, NO_PLAYER, NO_PLAYER);
 		}
 	}
@@ -11810,6 +11810,18 @@ bool CvMPVotingSystem::IsAnyActiveProposalType(MPVotingSystemProposalTypes eType
 	for (ProposalList::iterator it = m_vProposals.begin(); it != m_vProposals.end(); ++it)
 	{
 		if (!it->bComplete && (it->eType == eType))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool CvMPVotingSystem::IsAnyProposalType(MPVotingSystemProposalTypes eType)
+{
+	for (ProposalList::iterator it = m_vProposals.begin(); it != m_vProposals.end(); ++it)
+	{
+		if (it->eType == eType)
 		{
 			return true;
 		}
