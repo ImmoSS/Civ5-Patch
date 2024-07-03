@@ -11916,10 +11916,10 @@ void CvMPVotingSystem::DoTurn()
 		NotificationTypes eType = NO_NOTIFICATION_TYPE;
 		if (!it->bComplete)
 		{
-			if (it->iExpirationCounter > 0)
-			{
-				SetProposalExpirationCounter(it->iID, it->iExpirationCounter - 1);
+			SetProposalExpirationCounter(it->iID, it->iExpirationCounter - 1);
 
+			if (it->iExpirationCounter >= 0)
+			{
 				if (it->eType == PROPOSAL_IRR)  // first create matching notification
 				{
 					eType = (NotificationTypes)NOTIFICATION_MP_IRR_PROPOSAL;

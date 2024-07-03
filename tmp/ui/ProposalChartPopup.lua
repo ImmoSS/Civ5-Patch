@@ -341,7 +341,7 @@ function UpdateAndSort(Id, iResult)
 	else
 		Controls.ProposalStartedBy:LocalizeAndSetText(" ");
 	end
-	Controls.Expiration:SetText(Game.GetElapsedGameTurns() + Game.GetProposalExpirationCounter(Id) - (Game.GetProposalCompletion(Id) and 1 or 0))
+	Controls.Expiration:SetText(Game.GetElapsedGameTurns() + Game.GetProposalExpirationCounter(Id) + 1)
 	local MaxVotes = Game.GetMaxVotes(Id)
 	local YesVotes = Game.GetYesVotes(Id)
 	local NoVotes = Game.GetNoVotes(Id)
