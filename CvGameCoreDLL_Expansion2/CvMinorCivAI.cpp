@@ -1704,7 +1704,7 @@ void CvMinorCivAI::Reset()
 #ifdef EG_REPLAYDATASET_GOLDFROMBULLYING
 		m_aiBullyGoldAmountTotalByPlayer[iI] = 0;
 #endif
-#ifdef EG_REPLAYDATASET_WORKERSFROMBULLING
+#ifdef EG_REPLAYDATASET_WORKERSFROMBULLYING
 		m_aiBullyWorkersAmountTotalByPlayer[iI] = 0;
 #endif
 
@@ -1807,7 +1807,7 @@ void CvMinorCivAI::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_GOLDFROMBULLYING
 	kStream >> m_aiBullyGoldAmountTotalByPlayer;
 #endif
-#ifdef EG_REPLAYDATASET_WORKERSFROMBULLING
+#ifdef EG_REPLAYDATASET_WORKERSFROMBULLYING
 	kStream >> m_aiBullyWorkersAmountTotalByPlayer;
 #endif
 
@@ -1951,7 +1951,7 @@ void CvMinorCivAI::Write(FDataStream& kStream) const
 #ifdef EG_REPLAYDATASET_GOLDFROMBULLYING
 	kStream << m_aiBullyGoldAmountTotalByPlayer;
 #endif
-#ifdef EG_REPLAYDATASET_WORKERSFROMBULLING
+#ifdef EG_REPLAYDATASET_WORKERSFROMBULLYING
 	kStream << m_aiBullyWorkersAmountTotalByPlayer;
 #endif
 
@@ -9182,7 +9182,7 @@ void CvMinorCivAI::ChangeBullyGoldAmountTotalByPlayer(PlayerTypes eBullyPlayer, 
 	m_aiBullyGoldAmountTotalByPlayer[eBullyPlayer] = m_aiBullyGoldAmountTotalByPlayer[eBullyPlayer] + iChange;
 }
 #endif
-#ifdef EG_REPLAYDATASET_WORKERSFROMBULLING
+#ifdef EG_REPLAYDATASET_WORKERSFROMBULLYING
 int CvMinorCivAI::GetBullyWorkersAmountTotalByPlayer(PlayerTypes eBullyPlayer)
 {
 	return m_aiBullyWorkersAmountTotalByPlayer[eBullyPlayer];
@@ -9845,7 +9845,7 @@ void CvMinorCivAI::DoMajorBullyUnit(PlayerTypes eBully, UnitTypes eUnitType)
 		}
 		else
 			pNewUnit->kill(false);	// Could not find a spot for the unit!
-#ifdef EG_REPLAYDATASET_WORKERSFROMBULLING
+#ifdef EG_REPLAYDATASET_WORKERSFROMBULLYING
 		ChangeBullyWorkersAmountTotalByPlayer(eBully, 1);
 #endif
 #ifdef WORKER_BULLY_RESRICTION

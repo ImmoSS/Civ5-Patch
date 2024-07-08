@@ -28960,13 +28960,13 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		}
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_GOLDFROMBULLYING"), iGameTurn, iBullyGold);
 #endif
-#ifdef EG_REPLAYDATASET_WORKERSFROMBULLING
+#ifdef EG_REPLAYDATASET_WORKERSFROMBULLYING
 		int iBullyWorkers = 0;
 		for (int iI = MAX_MAJOR_CIVS; iI < MAX_CIV_PLAYERS; iI++)
 		{
 			iBullyWorkers += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetBullyWorkersAmountTotalByPlayer(GetID());
 		}
-		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_WORKERSFROMBULLING"), iGameTurn, iBullyWorkers);
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_WORKERSFROMBULLYING"), iGameTurn, iBullyWorkers);
 #endif
 
 #ifdef EG_REPLAYDATASET_NUMTRAINEDUNITS
