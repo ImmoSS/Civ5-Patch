@@ -348,8 +348,13 @@ function UpdateAndSort(Id, iResult)
 	local ReceivedVotes = YesVotes + NoVotes
 	local MissingVotes = MaxVotes - YesVotes - NoVotes
 	Controls.MaxVoters:SetText(MaxVotes)
-	Controls.ReceivedVotes:SetText(ReceivedVotes)
-	Controls.MissingVotes:SetText(MissingVotes)
+	if proposalType ~= 3 then
+		Controls.ReceivedVotes:SetText(ReceivedVotes)
+		Controls.MissingVotes:SetText(MissingVotes)
+	else
+		Controls.ReceivedVotes:SetText('--')
+		Controls.MissingVotes:SetText('--')
+	end
 
     for iPlayer, controlTable in pairs( g_PlayerEntries ) do
 		UpdatePlayerData( Players[ iPlayer ], controlTable, Id );
