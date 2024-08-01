@@ -7889,6 +7889,13 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 		return false;
 	}
 
+#ifdef CS_CANT_BUILD_EARLY_WORKERS
+	if (isMinorCiv() && GC.getGame().getGameTurn() < 10 && eUnit == (UnitTypes)GC.getInfoTypeForString("UNIT_WORKER", true /*bHideAssert*/))
+	{
+		return false;
+	}
+#endif
+
 	// Should we check whether this Unit has been blocked out by the civ XML?
 	if(!bIgnoreUniqueUnitStatus)
 	{

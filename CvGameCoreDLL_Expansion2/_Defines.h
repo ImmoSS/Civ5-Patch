@@ -610,6 +610,8 @@
 #endif
 ///
 #define NEW_BULLY_METRICS
+///
+#define CS_CANT_BUILD_EARLY_WORKERS
 /*CITY-STATES CHANGES END*/
 
 
