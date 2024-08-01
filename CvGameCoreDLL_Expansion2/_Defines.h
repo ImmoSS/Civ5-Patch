@@ -344,7 +344,7 @@
 /// Treaty Organization One time increase of 45 Influence with City-States
 #define CS_INFLUENCE_BOOST
 /// Adopting all policies in the Liberty tree will decrease Unhappiness from each city by 1.
-#define LIBERTY_FINISER_LESS_UNHAPPINESS_PER_CITY
+// #define LIBERTY_FINISER_LESS_UNHAPPINESS_PER_CITY
 /// Biology, Electrisity, Steam Power and Dynamite triggers ideology choise
 // #define NEW_IDEOLOGY_TRIGGER
 ///
@@ -387,7 +387,7 @@
 ///
 #define RESETTLEMENT_CHANGE_GLOBAL_POP
 ///
-#define UNIVERSAL_SUFFRAGE_TWO_THIRD_UNHAPPINESS
+// #define UNIVERSAL_SUFFRAGE_TWO_THIRD_UNHAPPINESS
 ///
 // #define PENALTY_FOR_DELAYING_POLICIES
 ///
