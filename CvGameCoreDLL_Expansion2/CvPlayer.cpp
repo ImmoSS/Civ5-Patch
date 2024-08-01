@@ -24526,7 +24526,7 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 				pLoopCity->setPopulation(std::max(1, (pLoopCity->getPopulation() + iChange * pPolicy->GetNewCityExtraPopulation())));
 			}
 		}
-		ChangeExtraHappinessPerCity(iChange * pPolicy->GetNewCityExtraPopulation());
+		ChangeExtraHappinessPerCity(iChange * pPolicy->GetNewCityExtraPopulation() / 2);
 	}
 #endif
 
