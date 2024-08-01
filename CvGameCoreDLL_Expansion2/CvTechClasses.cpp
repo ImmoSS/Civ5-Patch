@@ -1446,6 +1446,25 @@ int CvPlayerTechs::GetResearchCost(TechTypes eTech) const
 #else
 	iMod = iMod * m_pPlayer->GetMaxEffectiveCities(/*bIncludePuppets*/ true);
 #endif
+#ifdef NEW_NUM_CITIES_RESEARCH_COST_MODIFIER
+	int iMaxEffectiveCities = m_pPlayer->GetMaxEffectiveCities(/*bIncludePuppets*/ true);
+	if (iMaxEffectiveCities == 1)
+	{
+		iMod = 5;
+	}
+	else if (iMaxEffectiveCities == 2)
+	{
+		iMod = 8;
+	}
+	else if (iMaxEffectiveCities == 3)
+	{
+		iMod = 13;
+	}
+	else
+	{
+		iMod = 7 * iMaxEffectiveCities - 8;
+	}
+#endif
 	iResearchCost = iResearchCost * (100 + iMod) / 100;
 
 	// We're going to round up so that the user wont get confused when the research progress seems to be equal to the research cost, but it is not acutally done.
