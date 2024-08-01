@@ -15265,6 +15265,9 @@ void CvPlayer::DoGreatPersonExpended(UnitTypes eGreatPersonUnit)
 				iFaith *= GC.getGame().getGameSpeedInfo().getTrainPercent();
 				iFaith /= 100;
 				ChangeFaith(iFaith);
+#ifdef RELIQUARY_REWORK
+				changeJONSCulture(iFaith);
+#endif
 			}
 		}
 	}
