@@ -2520,7 +2520,11 @@ int CvPlayerCulture::GetInfluencePerTurn(PlayerTypes ePlayer) const
 			{
 				int iInfluenceWithoutModifier = pLoopCity->GetCityCulture()->GetBaseTourismBeforeModifiers();
 				int iInfluenceWithTechModifier = iInfluenceWithoutModifier * iTechSpreadModifier;
+#ifdef GREAT_FIREWALL_REDUCE_HALF_INTERNET_BONUS
+				iInfluenceToAdd -= (iInfluenceWithTechModifier / 50);
+#else
 				iInfluenceToAdd -= (iInfluenceWithTechModifier / 100);
+#endif
 			}
 			
 			iRtnValue += iInfluenceToAdd;
