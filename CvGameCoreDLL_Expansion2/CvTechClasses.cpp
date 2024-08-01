@@ -1026,6 +1026,12 @@ void CvPlayerTechs::SetLocalePriorities()
 						{
 							// Find the tech associated with this build and increment its multiplier
 							int iTech = GC.getBuildInfo(eCorrectBuild)->getTechPrereq();
+#ifdef MINES_ON_LUXES_AFTER_BRONZE_WORKING
+							if (strcmp(GC.getBuildInfo(eCorrectBuild)->GetType(), "BUILD_MINE") == 0 && pLoopPlot->getResourceType() != NO_RESOURCE && !GET_TEAM(m_pPlayer->getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getInfoTypeForString("TECH_BRONZE_WORKING", true)))
+							{
+								iTech = GC.getInfoTypeForString("TECH_BRONZE_WORKING", true);
+							}
+#endif
 							CvAssert(iTech < m_pTechs->GetNumTechs());		// Just assert on a value off the top end, a -1 is ok to just skip silently
 							if (iTech >= 0 && iTech < m_pTechs->GetNumTechs())
 							{

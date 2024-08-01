@@ -9721,6 +9721,12 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, b
 
 	if(GC.getBuildInfo(eBuild)->getTechPrereq() != NO_TECH)
 	{
+#ifdef MINES_ON_LUXES_AFTER_BRONZE_WORKING
+		if (strcmp(GC.getBuildInfo(eBuild)->GetType(), "BUILD_MINE") == 0 && pPlot->getResourceType() != NO_RESOURCE && !GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getInfoTypeForString("TECH_BRONZE_WORKING", true)))
+		{
+			return false;
+		}
+#endif
 		if(!(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getBuildInfo(eBuild)->getTechPrereq())))
 		{
 			if((!bTestEra && !bTestVisible) || ((GetCurrentEra() + 1) < GC.getTechInfo((TechTypes) GC.getBuildInfo(eBuild)->getTechPrereq())->GetEra()))

@@ -232,7 +232,7 @@
 			<RemoveRoute>false</RemoveRoute> 
 			<Water>false</Water> 
 			<CanBeEmbarked>false</CanBeEmbarked> 
-			<PrereqTech>TECH_BRONZE_WORKING</PrereqTech> 
+			<PrereqTech>TECH_AGRICULTURE</PrereqTech> 
 			<ImprovementType>IMPROVEMENT_MINE</ImprovementType> 
 			<EntityEvent>ENTITY_EVENT_MINE</EntityEvent> 
 			<IconIndex>22</IconIndex> 
