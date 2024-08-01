@@ -9445,7 +9445,7 @@ int CvCity::GetLocalHappiness() const
 			{
 				iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetHappinessPerCity();
 			}
-#ifdef SACRED_WATERS_FRESH_WATER_AND_COASTAL
+#ifdef SACRED_WATERS_FRESH_WATER
 #ifdef DUEL_SACRED_WATERS_CHANGE
 			if (GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
 			{
@@ -9460,7 +9460,7 @@ int CvCity::GetLocalHappiness() const
 			}
 			else
 			{
-				if (plot()->isFreshWater() || plot()->isCoastalLand())
+				if (plot()->isFreshWater())
 				{
 					iHappinessFromReligion += pReligion->m_Beliefs.GetRiverHappiness();
 					if (eSecondaryPantheon != NO_BELIEF)
