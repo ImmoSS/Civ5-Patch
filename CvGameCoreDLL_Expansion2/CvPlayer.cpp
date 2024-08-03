@@ -11590,7 +11590,11 @@ void CvPlayer::DoYieldBonusFromKill(YieldTypes eYield, UnitTypes eAttackingUnitT
 					GetTreasury()->ChangeGold(iValue);
 					break;
 				case YIELD_CULTURE:
+#ifdef HONOR_CULTURE_CAP
+					changeJONSCulture(min(iValue, CULTURE_CAP + GetPlayerTraits()->GetCultureFromKills() * iCombatStrength / 100));
+#else
 					changeJONSCulture(iValue);
+#endif
 #ifdef UPDATE_CULTURE_NOTIFICATION_DURING_TURN
 					// if this is the human player, have the popup come up so that he can choose a new policy
 					if(isAlive() && isHuman() && getNumCities() > 0)
