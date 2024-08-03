@@ -10865,7 +10865,11 @@ long CvPlayer::getRealPopulation() const
 
 	for(pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
+#ifdef SHOW_ACTUAL_POPULATION
+		iTotalPopulation += pLoopCity->getPopulation();
+#else
 		iTotalPopulation += pLoopCity->getRealPopulation();
+#endif
 	}
 
 	if(iTotalPopulation > INT_MAX)

@@ -1051,6 +1051,8 @@
 // #define DEV_RECORDING_STATISTICS
 // use PreGame.GetNickName with encoded value to retrieve user's SteamId
 #define PREGAMEAPI_GET_NETID
+///
+#define SHOW_ACTUAL_POPULATION
 /*OTHER CHANGES END*/
 
 
