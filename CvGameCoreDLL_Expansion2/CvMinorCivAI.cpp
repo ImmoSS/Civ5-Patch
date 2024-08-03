@@ -9241,7 +9241,7 @@ int CvMinorCivAI::CalculateBullyMetric(PlayerTypes eBullyPlayer, bool bForUnit, 
 		{
 			float fRankRatio = (float)(veMilitaryRankings.size() - iRanking) / (float)(veMilitaryRankings.size());
 #ifdef NEW_BULLY_METRICS
-			iGlobalMilitaryScore = (int)(fRankRatio * 50); // A score between 75*(1 / num majors alive) and 75, with the highest rank major getting 75
+			iGlobalMilitaryScore = (int)(fRankRatio * 50);
 #else
 			iGlobalMilitaryScore = (int)(fRankRatio * 75); // A score between 75*(1 / num majors alive) and 75, with the highest rank major getting 75
 #endif
