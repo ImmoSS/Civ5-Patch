@@ -2119,6 +2119,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 	int iI;
 	FFastSmallFixedList<IDInfo, 25, true, c_eCiv5GameplayDLL > oldUnits;
 	CvCityReligions tempReligions;
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+	ReligionTypes eFoundedReligion = pOldCity->getFoundedReligion();
+#endif
 	bool bIsMinorCivBuyout = (pOldCity->GetPlayer()->isMinorCiv() && bGift && (IsAbleToAnnexCityStates() || GetPlayerTraits()->IsNoAnnexing())); // Austria and Venice UA
 
 	pCityPlot = pOldCity->plot();
@@ -2698,6 +2701,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 	}
 
 	pNewCity->SetJONSCultureLevel(iOldCultureLevel);
+#ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+	pNewCity->setFoundedReligion(eFoundedReligion);
+#endif
 	pNewCity->GetCityReligions()->Copy(&tempReligions);
 	pNewCity->GetCityReligions()->RemoveFormerPantheon();
 
