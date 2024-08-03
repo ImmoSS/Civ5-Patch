@@ -4806,8 +4806,10 @@ int CvCityCulture::GetThemingBonus(BuildingClassTypes eBuildingClass) const
 				int iBonus = pkBuilding->GetThemingBonusInfo(iIndex)->GetBonus();
 				int iModifier = kPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_THEMING_BONUS);
 				iRtnValue = iBonus * (100 + iModifier) / 100;
+#ifndef FRANCE_UA_REWORK
 				if (m_pCity->isCapital())
 				{
+#endif
 					iModifier = kPlayer.GetPlayerTraits()->GetCapitalThemingBonusModifier();
 					if (iModifier > 0)
 					{
@@ -4818,7 +4820,9 @@ int CvCityCulture::GetThemingBonus(BuildingClassTypes eBuildingClass) const
 							gDLL->UnlockAchievement(ACHIEVEMENT_XP2_40);
 						}
 					}
+#ifndef FRANCE_UA_REWORK
 				}
+#endif
 			}
 		}
 	}
