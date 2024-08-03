@@ -2070,6 +2070,21 @@ CvCity* CvPlayer::initCity(int iX, int iY, bool bBumpUnits, bool bInitialFoundin
 	return pCity;
 }
 
+#ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
+//	--------------------------------------------------------------------------------
+bool BuildingCostSort(BuildingTypes eBuilding1, BuildingTypes eBuilding2)
+{
+	if (eBuilding1 != NO_BUILDING && eBuilding2 != NO_BUILDING)
+	{
+		return GC.getBuildingInfo(eBuilding1)->GetProductionCost() > GC.getBuildingInfo(eBuilding2)->GetProductionCost();
+	}
+	else
+	{
+		return eBuilding1 > eBuilding2;
+	}
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 // NOTE: bGift set to true if the city is given as a gift, as in the case for trades and Austria UA of annexing city-states
 void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
@@ -2363,6 +2378,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 	std::vector<int> paiNumRealBuilding(iNumBuildingInfos, 0);
 	std::vector<int> paiBuildingOriginalOwner(iNumBuildingInfos, 0);
 	std::vector<int> paiBuildingOriginalTime(iNumBuildingInfos, 0);
+#ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
+	std::vector<BuildingTypes> paiBuildingCost(iNumBuildingInfos, NO_BUILDING);
+#endif
 	struct CopyGreatWorkData
 	{
 		int m_iGreatWork;
@@ -2413,6 +2431,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 		paiNumRealBuilding[iI] = pOldCity->GetCityBuildings()->GetNumRealBuilding((BuildingTypes)iI);
 		paiBuildingOriginalOwner[iI] = pOldCity->GetCityBuildings()->GetBuildingOriginalOwner((BuildingTypes)iI);
 		paiBuildingOriginalTime[iI] = pOldCity->GetCityBuildings()->GetBuildingOriginalTime((BuildingTypes)iI);
+#ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
+		paiBuildingCost[iI] = (BuildingTypes)iI;
+#endif
 
 		if (pOldCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)iI) > 0)
 		{
@@ -2865,11 +2886,42 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 			}
 		}
 	}
+#ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
+	std::sort(paiBuildingCost.begin(), paiBuildingCost.end(), BuildingCostSort);
+#endif
 	BuildingTypes eTraitFreeBuilding = GetPlayerTraits()->GetFreeBuildingOnConquest();
 	for(iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
+#ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
+		const BuildingTypes eLoopBuilding = paiBuildingCost[iI];
+		int iNumBuildingsToDestroy = 0;
+		if (GetCurrentEra() < GC.getInfoTypeForString("ERA_MEDIEVAL"))
+		{
+			iNumBuildingsToDestroy = 0;
+		}
+		else if (GetCurrentEra() < GC.getInfoTypeForString("ERA_RENAISSANCE"))
+		{
+			iNumBuildingsToDestroy = 1;
+		}
+		else if (GetCurrentEra() < GC.getInfoTypeForString("ERA_INDUSTRIAL"))
+		{
+			iNumBuildingsToDestroy = 2;
+		}
+		else if (GetCurrentEra() < GC.getInfoTypeForString("ERA_MODERN"))
+		{
+			iNumBuildingsToDestroy = 3;
+		}
+		else
+		{
+			iNumBuildingsToDestroy = 4;
+		}
+#else
 		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
+#endif
 		CvBuildingEntry* pkLoopBuildingInfo = GC.getBuildingInfo(eLoopBuilding);
+#ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
+		int iCountBuildingToDestroy = 0;
+#endif
 		if(pkLoopBuildingInfo)
 		{
 			const CvBuildingClassInfo& kLoopBuildingClassInfo = pkLoopBuildingInfo->GetBuildingClassInfo();
@@ -2905,7 +2957,22 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 								// here would be a good place to put additional checks (for example, influence)
 								if(!bConquest || bRecapture || (GC.getGame().getJonRandNum(100, "Capture Probability") < pkLoopBuildingInfo->GetConquestProbability()))
 								{
+#ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
+									if (isWorldWonderClass(pkLoopBuildingInfo->GetBuildingClassInfo()))
+									{
+										iNum += paiNumRealBuilding[iI];
+									}
+									else if (iCountBuildingToDestroy < iNumBuildingsToDestroy)
+									{
+										iCountBuildingToDestroy++;
+									}
+									else
+									{
+										iNum += paiNumRealBuilding[iI];
+									}
+#else
 									iNum += paiNumRealBuilding[iI];
+#endif
 								}
 							}
 						}
