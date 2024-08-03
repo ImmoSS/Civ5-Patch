@@ -264,7 +264,7 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function GetLandValue( iPlayer )
-    return Players[iPlayer]:GetNumPlots() * 10000;
+    return Players[iPlayer]:GetNumPlots();
 end
 
 
@@ -299,7 +299,8 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function GetArmyValue( iPlayer )
-    return math.sqrt( Players[iPlayer]:GetMilitaryMight() ) * 2000;
+    -- return math.sqrt( Players[iPlayer]:GetMilitaryMight() ) * 2000;
+    return Players[iPlayer]:GetMilitaryMight();
 end
 
 
@@ -398,7 +399,7 @@ function GetLiteracyValue( iPlayer )
 	    end
 	end
 	
-	return 100 * iCount / #GameInfo.Technologies;
+	return iCount;
 end
 
 
@@ -410,17 +411,17 @@ function BuildLiteracyEntry( iPlayer )
     
     instance.Name:LocalizeAndSetText( "TXT_KEY_DEMOGRAPHICS_LITERACY" );
     
-    instance.Value:SetText( Locale.ToNumber(m_LiteracyTable[ iPlayer ], "#'%'" ));
+    instance.Value:SetText( Locale.ToNumber(m_LiteracyTable[ iPlayer ], "#" ));
    
     local best = GetBest( m_LiteracyTable, iPlayer );
     SetIcon(best[2], instance.BestIcon, instance.BestIconBG, instance.BestIconShadow);
-    instance.Best:SetText( Locale.ToNumber(best[1], "#'%'") );
+    instance.Best:SetText( Locale.ToNumber(best[1], "#") );
 	
-    instance.Average:SetText( Locale.ToNumber( GetAverage( m_LiteracyTable, iPlayer ), "#'%'" ) );
+    instance.Average:SetText( Locale.ToNumber( GetAverage( m_LiteracyTable, iPlayer ), "#" ) );
     
     local worst = GetWorst( m_LiteracyTable, iPlayer );
     SetIcon(worst[2], instance.WorstIcon, instance.WorstIconBG, instance.WorstIconShadow);
-    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#'%'" ) );
+    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#" ) );
     
     instance.Rank:SetText( Locale.ToNumber(GetRank( m_LiteracyTable, iPlayer ), "#") );
 end
