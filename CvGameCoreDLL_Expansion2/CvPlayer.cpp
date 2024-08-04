@@ -2074,13 +2074,13 @@ CvCity* CvPlayer::initCity(int iX, int iY, bool bBumpUnits, bool bInitialFoundin
 //	--------------------------------------------------------------------------------
 bool BuildingCostSort(BuildingTypes eBuilding1, BuildingTypes eBuilding2)
 {
-	if (eBuilding1 != NO_BUILDING && eBuilding2 != NO_BUILDING)
+	if (GC.getBuildingInfo(eBuilding1) && GC.getBuildingInfo(eBuilding2))
 	{
 		return GC.getBuildingInfo(eBuilding1)->GetProductionCost() > GC.getBuildingInfo(eBuilding2)->GetProductionCost();
 	}
 	else
 	{
-		return eBuilding1 > eBuilding2;
+		return false;
 	}
 }
 #endif
