@@ -10167,10 +10167,10 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_YIELD_CAPITAL", iTempMod);
 	}
 
-#ifdef CREATIVE_EXPRESSION_SCIENCE_MOD
+#ifdef LEARNED_SOCIETY_SCIENCE_MOD
 	if (getPopulation() >= 20)
 	{
-		if (eIndex == YIELD_SCIENCE && GET_PLAYER(getOwner()).GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_CREATIVE_EXPRESSION", true)))
+		if (eIndex == YIELD_SCIENCE && GET_PLAYER(getOwner()).GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_ECONOMIC_UNION", true)))
 		{
 			iTempMod = getPopulation();
 			iModifier += iTempMod;
