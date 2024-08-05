@@ -161,7 +161,7 @@ public:
 	int GetHappinessToScience() const;
 	int GetNumCitiesFreeCultureBuilding() const;
 	int GetNumCitiesFreeFoodBuilding() const;
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 	int GetNumCitiesFreeDefensiveBuilding() const;
 #endif
 	bool IsHalfSpecialistUnhappiness() const;
@@ -364,7 +364,7 @@ private:
 	int m_iHappinessToScience;
 	int m_iNumCitiesFreeCultureBuilding;
 	int m_iNumCitiesFreeFoodBuilding;
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 	int m_iNumCitiesFreeDefensiveBuilding;
 #endif
 

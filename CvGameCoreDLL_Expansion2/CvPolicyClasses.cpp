@@ -155,7 +155,7 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_iHappinessToScience(0),
 	m_iNumCitiesFreeCultureBuilding(0),
 	m_iNumCitiesFreeFoodBuilding(0),
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 	m_iNumCitiesFreeDefensiveBuilding(0),
 #endif
 	m_bHalfSpecialistUnhappiness(false),
@@ -334,7 +334,7 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iHappinessToScience = kResults.GetInt("HappinessToScience");
 	m_iNumCitiesFreeCultureBuilding = kResults.GetInt("NumCitiesFreeCultureBuilding");
 	m_iNumCitiesFreeFoodBuilding = kResults.GetInt("NumCitiesFreeFoodBuilding");
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 	m_iNumCitiesFreeDefensiveBuilding = kResults.GetInt("NumCitiesFreeDefensiveBuilding");
 #endif
 	m_bHalfSpecialistUnhappiness = kResults.GetBool("HalfSpecialistUnhappiness");
@@ -1364,7 +1364,7 @@ int CvPolicyEntry::GetNumCitiesFreeFoodBuilding() const
 	return m_iNumCitiesFreeFoodBuilding;
 }
 
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 /// Cities that receive a free defensive building
 int CvPolicyEntry::GetNumCitiesFreeDefensiveBuilding() const
 {

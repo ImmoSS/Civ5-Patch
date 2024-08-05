@@ -523,7 +523,7 @@ public:
 	void ChangeNumCitiesFreeCultureBuilding(int iChange);
 	int GetNumCitiesFreeFoodBuilding() const;
 	void ChangeNumCitiesFreeFoodBuilding(int iChange);
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 	int GetNumCitiesFreeDefensiveBuilding() const;
 	void ChangeNumCitiesFreeDefensiveBuilding(int iChange);
 #endif
@@ -2122,7 +2122,7 @@ protected:
 	int m_iGarrisonFreeMaintenanceCount;
 	int m_iNumCitiesFreeCultureBuilding;
 	int m_iNumCitiesFreeFoodBuilding;
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 	int m_iNumCitiesFreeDevensiveBuilding;
 #endif
 	FAutoVariable<int, CvPlayer> m_iUnitPurchaseCostModifier;

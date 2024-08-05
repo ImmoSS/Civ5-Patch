@@ -448,7 +448,7 @@ CvPlayer::CvPlayer() :
 	, m_iGarrisonFreeMaintenanceCount(0)
 	, m_iNumCitiesFreeCultureBuilding(0)
 	, m_iNumCitiesFreeFoodBuilding(0)
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 	, m_iNumCitiesFreeDevensiveBuilding(0)
 #endif
 	, m_iUnitPurchaseCostModifier("CvPlayer::m_iUnitPurchaseCostModifier", m_syncArchive)
@@ -1225,7 +1225,7 @@ void CvPlayer::uninit()
 	m_iGarrisonFreeMaintenanceCount = 0;
 	m_iNumCitiesFreeCultureBuilding = 0;
 	m_iNumCitiesFreeFoodBuilding = 0;
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 	m_iNumCitiesFreeDevensiveBuilding = 0;
 #endif
 	m_iUnitPurchaseCostModifier = 0;
@@ -11644,7 +11644,7 @@ void CvPlayer::ChangeNumCitiesFreeFoodBuilding(int iChange)
 		m_iNumCitiesFreeFoodBuilding += iChange;
 }
 
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 //	--------------------------------------------------------------------------------
 int CvPlayer::GetNumCitiesFreeDefensiveBuilding() const
 {
@@ -24226,7 +24226,7 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 	// How many cities get free culture buildings?
 	int iNumCitiesFreeCultureBuilding = pPolicy->GetNumCitiesFreeCultureBuilding();
 	int iNumCitiesFreeFoodBuilding = pPolicy->GetNumCitiesFreeFoodBuilding();
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 	int iNumCitiesFreeDefensiveBuilding = pPolicy->GetNumCitiesFreeDefensiveBuilding();
 #endif
 
@@ -24283,7 +24283,7 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 			iNumCitiesFreeFoodBuilding--;
 		}
 
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 		if (iNumCitiesFreeDefensiveBuilding > 0)
 		{
 			BuildingTypes eDefensiveBuilding = NO_BUILDING;
@@ -25854,7 +25854,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iGarrisonedCityRangeStrikeModifier;
 	kStream >> m_iNumCitiesFreeCultureBuilding;
 	kStream >> m_iNumCitiesFreeFoodBuilding;
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1005)
 	{
@@ -26570,7 +26570,7 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iGarrisonedCityRangeStrikeModifier;
 	kStream << m_iNumCitiesFreeCultureBuilding;
 	kStream << m_iNumCitiesFreeFoodBuilding;
-#ifdef FREE_DEFENSIVE_BUILDINGS
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 	kStream << m_iNumCitiesFreeDevensiveBuilding;
 #endif
 	kStream << m_iUnitPurchaseCostModifier;
