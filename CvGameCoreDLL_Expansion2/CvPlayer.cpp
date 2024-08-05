@@ -2072,11 +2072,18 @@ CvCity* CvPlayer::initCity(int iX, int iY, bool bBumpUnits, bool bInitialFoundin
 
 #ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
 //	--------------------------------------------------------------------------------
-bool BuildingCostSort(BuildingTypes eBuilding1, BuildingTypes eBuilding2)
+bool BuildingCostSort(int iBuilding1, int iBuilding2)
 {
-	if (GC.getBuildingInfo(eBuilding1) && GC.getBuildingInfo(eBuilding2))
+	if (GC.getBuildingInfo((BuildingTypes)iBuilding1) && GC.getBuildingInfo((BuildingTypes)iBuilding2))
 	{
-		return GC.getBuildingInfo(eBuilding1)->GetProductionCost() > GC.getBuildingInfo(eBuilding2)->GetProductionCost();
+		if (GC.getBuildingInfo((BuildingTypes)iBuilding1)->GetProductionCost() == GC.getBuildingInfo((BuildingTypes)iBuilding2)->GetProductionCost())
+		{
+			return GC.getGame().getJonRandNum(2, "");
+		}
+		else
+		{
+			return GC.getBuildingInfo((BuildingTypes)iBuilding1)->GetProductionCost() > GC.getBuildingInfo((BuildingTypes)iBuilding2)->GetProductionCost();
+		}
 	}
 	else
 	{
@@ -2382,7 +2389,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 	std::vector<int> paiBuildingOriginalOwner(iNumBuildingInfos, 0);
 	std::vector<int> paiBuildingOriginalTime(iNumBuildingInfos, 0);
 #ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
-	std::vector<BuildingTypes> paiBuildingCost(iNumBuildingInfos, NO_BUILDING);
+	std::vector<int> paiBuildingCost(iNumBuildingInfos, 0);
 #endif
 	struct CopyGreatWorkData
 	{
@@ -2435,7 +2442,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 		paiBuildingOriginalOwner[iI] = pOldCity->GetCityBuildings()->GetBuildingOriginalOwner((BuildingTypes)iI);
 		paiBuildingOriginalTime[iI] = pOldCity->GetCityBuildings()->GetBuildingOriginalTime((BuildingTypes)iI);
 #ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
-		paiBuildingCost[iI] = (BuildingTypes)iI;
+		paiBuildingCost[iI] = iI;
 #endif
 
 		if (pOldCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)iI) > 0)
@@ -2892,14 +2899,13 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 			}
 		}
 	}
+	BuildingTypes eTraitFreeBuilding = GetPlayerTraits()->GetFreeBuildingOnConquest();
 #ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
 	std::sort(paiBuildingCost.begin(), paiBuildingCost.end(), BuildingCostSort);
-#endif
-	BuildingTypes eTraitFreeBuilding = GetPlayerTraits()->GetFreeBuildingOnConquest();
-	for(iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+	int iCountBuildingToDestroy = 0;
+	for (std::vector<int>::iterator it = paiBuildingCost.begin(); it != paiBuildingCost.end(); ++it)
 	{
-#ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
-		const BuildingTypes eLoopBuilding = paiBuildingCost[iI];
+		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(*it);
 		int iNumBuildingsToDestroy = 0;
 		if (GetCurrentEra() < GC.getInfoTypeForString("ERA_MEDIEVAL"))
 		{
@@ -2921,28 +2927,22 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 		{
 			iNumBuildingsToDestroy = 4;
 		}
-#else
-		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
-#endif
 		CvBuildingEntry* pkLoopBuildingInfo = GC.getBuildingInfo(eLoopBuilding);
-#ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
-		int iCountBuildingToDestroy = 0;
-#endif
-		if(pkLoopBuildingInfo)
+		if (pkLoopBuildingInfo)
 		{
 			const CvBuildingClassInfo& kLoopBuildingClassInfo = pkLoopBuildingInfo->GetBuildingClassInfo();
 
 			int iNum = 0;
 
-			if(eTraitFreeBuilding == pkLoopBuildingInfo->GetID())
+			if (eTraitFreeBuilding == pkLoopBuildingInfo->GetID())
 			{
 				pNewCity->GetCityBuildings()->SetNumFreeBuilding(eTraitFreeBuilding, 1);
 			}
 
-			else if(paiNumRealBuilding[iI] > 0)
+			else if (paiNumRealBuilding[*it] > 0)
 			{
 				const BuildingClassTypes eBuildingClass = (BuildingClassTypes)pkLoopBuildingInfo->GetBuildingClassType();
-				if(::isWorldWonderClass(kLoopBuildingClassInfo))
+				if (::isWorldWonderClass(kLoopBuildingClassInfo))
 				{
 					eBuilding = eLoopBuilding;
 				}
@@ -2951,66 +2951,62 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 					eBuilding = (BuildingTypes)playerCivilizationInfo.getCivilizationBuildings(eBuildingClass);
 				}
 
-				if(eBuilding != NO_BUILDING)
+				if (eBuilding != NO_BUILDING)
 				{
 					CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eBuilding);
-					if(pkBuildingInfo)
+					if (pkBuildingInfo)
 					{
-						if(!pkLoopBuildingInfo->IsNeverCapture())
+						if (!pkLoopBuildingInfo->IsNeverCapture())
 						{
-							if(!isProductionMaxedBuildingClass(((BuildingClassTypes)(pkBuildingInfo->GetBuildingClassType())), true))
+							if (!isProductionMaxedBuildingClass(((BuildingClassTypes)(pkBuildingInfo->GetBuildingClassType())), true))
 							{
 								// here would be a good place to put additional checks (for example, influence)
-								if(!bConquest || bRecapture || (GC.getGame().getJonRandNum(100, "Capture Probability") < pkLoopBuildingInfo->GetConquestProbability()))
+								if (!bConquest || bRecapture || (GC.getGame().getJonRandNum(100, "Capture Probability") < pkLoopBuildingInfo->GetConquestProbability()))
 								{
-#ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
 									if (isWorldWonderClass(pkLoopBuildingInfo->GetBuildingClassInfo()))
 									{
-										iNum += paiNumRealBuilding[iI];
+										iNum += paiNumRealBuilding[*it];
 									}
-									else if (iCountBuildingToDestroy < iNumBuildingsToDestroy)
+									else if (paiNumRealBuilding[*it] > 0 && iCountBuildingToDestroy < iNumBuildingsToDestroy)
 									{
 										iCountBuildingToDestroy++;
 									}
 									else
 									{
-										iNum += paiNumRealBuilding[iI];
+										iNum += paiNumRealBuilding[*it];
 									}
-#else
-									iNum += paiNumRealBuilding[iI];
-#endif
 								}
 							}
 						}
 
 						// Check for Tomb Raider Achievement
-						if(bConquest && !GC.getGame().isGameMultiPlayer() && pkLoopBuildingInfo->GetType() && _stricmp(pkLoopBuildingInfo->GetType(), "BUILDING_BURIAL_TOMB") == 0 && isHuman())
+						if (bConquest && !GC.getGame().isGameMultiPlayer() && pkLoopBuildingInfo->GetType() && _stricmp(pkLoopBuildingInfo->GetType(), "BUILDING_BURIAL_TOMB") == 0 && isHuman())
 						{
-							if(iCaptureGold > 0)  //Need to actually pillage something from the 'tomb'
+							if (iCaptureGold > 0)  //Need to actually pillage something from the 'tomb'
 							{
 								gDLL->UnlockAchievement(ACHIEVEMENT_SPECIAL_TOMBRAIDER);
 							}
 						}
 
 						// Check for Rome conquering Statue of Zeus Achievement
-						if(bConquest && !GC.getGame().isGameMultiPlayer() && pkLoopBuildingInfo->GetType() && _stricmp(pkLoopBuildingInfo->GetType(), "BUILDING_STATUE_ZEUS") == 0 && isHuman())
+						if (bConquest && !GC.getGame().isGameMultiPlayer() && pkLoopBuildingInfo->GetType() && _stricmp(pkLoopBuildingInfo->GetType(), "BUILDING_STATUE_ZEUS") == 0 && isHuman())
 						{
 							const char* pkCivKey = getCivilizationTypeKey();
-							if(pkCivKey && strcmp(pkCivKey, "CIVILIZATION_ROME") == 0)
+							if (pkCivKey && strcmp(pkCivKey, "CIVILIZATION_ROME") == 0)
 							{
 								gDLL->UnlockAchievement(ACHIEVEMENT_SPECIAL_ROME_GETS_ZEUS);
 							}
 						}
 
-						pNewCity->GetCityBuildings()->SetNumRealBuildingTimed(eBuilding, iNum, false, ((PlayerTypes)(paiBuildingOriginalOwner[iI])), paiBuildingOriginalTime[iI]);
+						pNewCity->GetCityBuildings()->SetNumRealBuildingTimed(eBuilding, iNum, false, ((PlayerTypes)(paiBuildingOriginalOwner[*it])), paiBuildingOriginalTime[*it]);
 
 						if (iNum > 0)
 						{
 							if (pkBuildingInfo->GetGreatWorkCount() > 0)
 							{
-								for (unsigned int jJ=0; jJ < paGreatWorkData.size(); jJ++)
+								for (unsigned int jJ = 0; jJ < paGreatWorkData.size(); jJ++)
 								{
-									if (paGreatWorkData[jJ].m_eBuildingType == iI)
+									if (paGreatWorkData[jJ].m_eBuildingType == *it)
 									{
 										pNewCity->GetCityBuildings()->SetBuildingGreatWork(eBuildingClass, paGreatWorkData[jJ].m_iSlot, paGreatWorkData[jJ].m_iGreatWork);
 										paGreatWorkData[jJ].m_bTransferred = true;
@@ -3024,6 +3020,93 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 			}
 		}
 	}
+#else
+	for(iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+	{
+		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
+		CvBuildingEntry* pkLoopBuildingInfo = GC.getBuildingInfo(eLoopBuilding);
+		if (pkLoopBuildingInfo)
+		{
+			const CvBuildingClassInfo& kLoopBuildingClassInfo = pkLoopBuildingInfo->GetBuildingClassInfo();
+
+			int iNum = 0;
+
+			if (eTraitFreeBuilding == pkLoopBuildingInfo->GetID())
+			{
+				pNewCity->GetCityBuildings()->SetNumFreeBuilding(eTraitFreeBuilding, 1);
+			}
+
+			else if (paiNumRealBuilding[iI] > 0)
+			{
+				const BuildingClassTypes eBuildingClass = (BuildingClassTypes)pkLoopBuildingInfo->GetBuildingClassType();
+				if (::isWorldWonderClass(kLoopBuildingClassInfo))
+				{
+					eBuilding = eLoopBuilding;
+				}
+				else
+				{
+					eBuilding = (BuildingTypes)playerCivilizationInfo.getCivilizationBuildings(eBuildingClass);
+				}
+
+				if (eBuilding != NO_BUILDING)
+				{
+					CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eBuilding);
+					if (pkBuildingInfo)
+					{
+						if (!pkLoopBuildingInfo->IsNeverCapture())
+						{
+							if (!isProductionMaxedBuildingClass(((BuildingClassTypes)(pkBuildingInfo->GetBuildingClassType())), true))
+							{
+								// here would be a good place to put additional checks (for example, influence)
+								if (!bConquest || bRecapture || (GC.getGame().getJonRandNum(100, "Capture Probability") < pkLoopBuildingInfo->GetConquestProbability()))
+								{
+									iNum += paiNumRealBuilding[iI];
+								}
+							}
+						}
+
+						// Check for Tomb Raider Achievement
+						if (bConquest && !GC.getGame().isGameMultiPlayer() && pkLoopBuildingInfo->GetType() && _stricmp(pkLoopBuildingInfo->GetType(), "BUILDING_BURIAL_TOMB") == 0 && isHuman())
+						{
+							if (iCaptureGold > 0)  //Need to actually pillage something from the 'tomb'
+							{
+								gDLL->UnlockAchievement(ACHIEVEMENT_SPECIAL_TOMBRAIDER);
+							}
+						}
+
+						// Check for Rome conquering Statue of Zeus Achievement
+						if (bConquest && !GC.getGame().isGameMultiPlayer() && pkLoopBuildingInfo->GetType() && _stricmp(pkLoopBuildingInfo->GetType(), "BUILDING_STATUE_ZEUS") == 0 && isHuman())
+						{
+							const char* pkCivKey = getCivilizationTypeKey();
+							if (pkCivKey && strcmp(pkCivKey, "CIVILIZATION_ROME") == 0)
+							{
+								gDLL->UnlockAchievement(ACHIEVEMENT_SPECIAL_ROME_GETS_ZEUS);
+							}
+						}
+
+						pNewCity->GetCityBuildings()->SetNumRealBuildingTimed(eBuilding, iNum, false, ((PlayerTypes)(paiBuildingOriginalOwner[iI])), paiBuildingOriginalTime[iI]);
+
+						if (iNum > 0)
+						{
+							if (pkBuildingInfo->GetGreatWorkCount() > 0)
+							{
+								for (unsigned int jJ = 0; jJ < paGreatWorkData.size(); jJ++)
+								{
+									if (paGreatWorkData[jJ].m_eBuildingType == iI)
+									{
+										pNewCity->GetCityBuildings()->SetBuildingGreatWork(eBuildingClass, paGreatWorkData[jJ].m_iSlot, paGreatWorkData[jJ].m_iGreatWork);
+										paGreatWorkData[jJ].m_bTransferred = true;
+										iCaptureGreatWorks++;
+									}
+								}
+							}
+						}
+							}
+						}
+					}
+				}
+			}
+#endif
 
 	for(std::vector<BuildingYieldChange>::iterator it = aBuildingYieldChange.begin(); it != aBuildingYieldChange.end(); ++it)
 	{
