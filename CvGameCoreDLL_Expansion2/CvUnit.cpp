@@ -9102,7 +9102,9 @@ int CvUnit::getBlastTourism()
 	}
 
 	int iTourismBlast = GetTourismBlastStrength();
+#ifndef NO_SPEED_MOD_FOR_TOURISM_BLAST
 	iTourismBlast = iTourismBlast * GC.getGame().getGameSpeedInfo().getCulturePercent() / 100;
+#endif
 
 	return iTourismBlast;
 }
