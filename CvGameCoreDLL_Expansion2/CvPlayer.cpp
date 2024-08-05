@@ -448,6 +448,9 @@ CvPlayer::CvPlayer() :
 	, m_iGarrisonFreeMaintenanceCount(0)
 	, m_iNumCitiesFreeCultureBuilding(0)
 	, m_iNumCitiesFreeFoodBuilding(0)
+#ifdef FREE_DEFENSIVE_BUILDINGS
+	, m_iNumCitiesFreeDevensiveBuilding(0)
+#endif
 	, m_iUnitPurchaseCostModifier("CvPlayer::m_iUnitPurchaseCostModifier", m_syncArchive)
 	, m_iAllFeatureProduction("CvPlayer::m_iAllFeatureProduction", m_syncArchive)
 	, m_iCityDistanceHighwaterMark("CvPlayer::m_iCityDistanceHighwaterMark", m_syncArchive)
@@ -1222,6 +1225,9 @@ void CvPlayer::uninit()
 	m_iGarrisonFreeMaintenanceCount = 0;
 	m_iNumCitiesFreeCultureBuilding = 0;
 	m_iNumCitiesFreeFoodBuilding = 0;
+#ifdef FREE_DEFENSIVE_BUILDINGS
+	m_iNumCitiesFreeDevensiveBuilding = 0;
+#endif
 	m_iUnitPurchaseCostModifier = 0;
 	m_iAllFeatureProduction = 0;
 	m_iCityDistanceHighwaterMark = 1;
@@ -11637,6 +11643,21 @@ void CvPlayer::ChangeNumCitiesFreeFoodBuilding(int iChange)
 	if(iChange != 0)
 		m_iNumCitiesFreeFoodBuilding += iChange;
 }
+
+#ifdef FREE_DEFENSIVE_BUILDINGS
+//	--------------------------------------------------------------------------------
+int CvPlayer::GetNumCitiesFreeDefensiveBuilding() const
+{
+	return m_iNumCitiesFreeDevensiveBuilding;
+}
+
+//	--------------------------------------------------------------------------------
+void CvPlayer::ChangeNumCitiesFreeDefensiveBuilding(int iChange)
+{
+	if (iChange != 0)
+		m_iNumCitiesFreeDevensiveBuilding += iChange;
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 /// Handle earning yields from a combat win
@@ -24205,6 +24226,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 	// How many cities get free culture buildings?
 	int iNumCitiesFreeCultureBuilding = pPolicy->GetNumCitiesFreeCultureBuilding();
 	int iNumCitiesFreeFoodBuilding = pPolicy->GetNumCitiesFreeFoodBuilding();
+#ifdef FREE_DEFENSIVE_BUILDINGS
+	int iNumCitiesFreeDefensiveBuilding = pPolicy->GetNumCitiesFreeDefensiveBuilding();
+#endif
 
 	// Loop through Cities
 	int iLoop;
@@ -24258,6 +24282,35 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 			// Decrement cities left to get free food building (at end of loop we'll set the remainder)
 			iNumCitiesFreeFoodBuilding--;
 		}
+
+#ifdef FREE_DEFENSIVE_BUILDINGS
+		if (iNumCitiesFreeDefensiveBuilding > 0)
+		{
+			BuildingTypes eDefensiveBuilding = NO_BUILDING;
+			if (GetPlayerTraits()->GetGreatScientistRateModifier() > 0)
+			{
+				eDefensiveBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_WALLS_OF_BABYLON");
+			}
+			else
+			{
+				eDefensiveBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_WALLS");
+			}
+			if (eDefensiveBuilding != NO_BUILDING)
+			{
+				pLoopCity->GetCityBuildings()->SetNumRealBuilding(eDefensiveBuilding, 0);
+				pLoopCity->GetCityBuildings()->SetNumFreeBuilding(eDefensiveBuilding, 1);
+
+				if (pLoopCity->getFirstBuildingOrder(eDefensiveBuilding) == 0)
+				{
+					pLoopCity->clearOrderQueue();
+					pLoopCity->chooseProduction();		// Send a notification to the user that what they were building was given to them, and they need to produce something else.
+				}
+			}
+
+			// Decrement cities left to get free culture building (at end of loop we'll set the remainder)
+			iNumCitiesFreeDefensiveBuilding--;
+		}
+#endif
 
 		// Free Culture-per-turn in every City
 		int iCityCultureChange = pPolicy->GetCulturePerCity() * iChange;
@@ -25801,6 +25854,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iGarrisonedCityRangeStrikeModifier;
 	kStream >> m_iNumCitiesFreeCultureBuilding;
 	kStream >> m_iNumCitiesFreeFoodBuilding;
+#ifdef FREE_DEFENSIVE_BUILDINGS
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1005)
+	{
+# endif
+		kStream >> m_iNumCitiesFreeDevensiveBuilding;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iNumCitiesFreeDevensiveBuilding = 0;
+	}
+# endif
+#endif
 	kStream >> m_iUnitPurchaseCostModifier;
 	kStream >> m_iAllFeatureProduction;
 	kStream >> m_iCityDistanceHighwaterMark;
@@ -26503,6 +26570,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iGarrisonedCityRangeStrikeModifier;
 	kStream << m_iNumCitiesFreeCultureBuilding;
 	kStream << m_iNumCitiesFreeFoodBuilding;
+#ifdef FREE_DEFENSIVE_BUILDINGS
+	kStream << m_iNumCitiesFreeDevensiveBuilding;
+#endif
 	kStream << m_iUnitPurchaseCostModifier;
 	kStream << m_iAllFeatureProduction;
 	kStream << m_iCityDistanceHighwaterMark;
