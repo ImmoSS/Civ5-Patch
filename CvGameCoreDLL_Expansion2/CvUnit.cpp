@@ -9085,10 +9085,17 @@ bool CvUnit::canBlastTourism(const CvPlot* pPlot, bool bTestVisible) const
 	}
 
 	CvPlayer &kTileOwner = GET_PLAYER(eOwner);
+#ifdef BLAST_TOURISM_ON_OWNERS_LAND
+	if (kTileOwner.isAlive() && !kTileOwner.isMinorCiv())
+	{
+		return true;
+	}
+#else
 	if (kTileOwner.isAlive() && !kTileOwner.isMinorCiv() && eOwner != getOwner())
 	{
 		return true;
 	}
+#endif
 
 	return false;
 }
