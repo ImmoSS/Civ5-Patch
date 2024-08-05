@@ -8325,9 +8325,14 @@ int CvCity::getJONSCulturePerTurn() const
 	// Player modifier
 	iModifier += GET_PLAYER(getOwner()).GetJONSCultureCityModifier();
 
+#ifdef FLOURISHING_OF_ARTS_REWORK
+	if (getNumWorldWonders() > 0)
+		iModifier += GET_PLAYER(getOwner()).GetCultureWonderMultiplier() * GET_PLAYER(getOwner()).GetCulture()->GetNumGreatWorks();
+#else
 	// Wonder here?
 	if(getNumWorldWonders() > 0)
 		iModifier += GET_PLAYER(getOwner()).GetCultureWonderMultiplier();
+#endif
 
 #ifdef FUTURE_TECH_RESEARCHING_BONUSES
 	iModifier += 10 * GET_TEAM(getTeam()).GetTeamTechs()->GetTechCount((TechTypes)GC.getInfoTypeForString("TECH_FUTURE_TECH", true));
