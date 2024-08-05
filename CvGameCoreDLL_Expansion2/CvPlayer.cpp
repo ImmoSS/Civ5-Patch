@@ -13007,7 +13007,7 @@ int CvPlayer::GetHappinessFromPolicies() const
 #ifdef FINE_ARTS_HAPPINESS_FROM_GREAT_WORKS
 	if (GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_FINE_ARTS", true)))
 	{
-		iHappiness += 2 * GetCulture()->GetNumGreatWorks();
+		iHappiness += 1 * GetCulture()->GetNumGreatWorks();
 	}
 #endif
 
