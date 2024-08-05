@@ -512,6 +512,9 @@
 #define ASSYRIA_UA_REWORK
 ///
 #define MONGOL_CS_BULLY
+#ifdef MONGOL_CS_BULLY
+#define MONGOL_CS_BULLY_MOD 30
+#endif
 ///
 #define SWEDEN_UA_REWORK
 ///

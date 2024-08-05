@@ -9400,7 +9400,7 @@ int CvMinorCivAI::CalculateBullyMetric(PlayerTypes eBullyPlayer, bool bForUnit, 
 	int iTraitsScore = 0;
 	int iTraitsMod = 0;
 	if(strcmp(GET_PLAYER(eBullyPlayer).getCivilizationTypeKey(), "CIVILIZATION_MONGOL") == 0)
-		iTraitsMod = 25;
+		iTraitsMod = MONGOL_CS_BULLY_MOD;
 	if (iTraitsMod != 0)
 	{
 		iTraitsScore += iGlobalMilitaryScore;
