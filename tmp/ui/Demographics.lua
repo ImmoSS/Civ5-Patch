@@ -299,8 +299,7 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function GetArmyValue( iPlayer )
-    -- return math.sqrt( Players[iPlayer]:GetMilitaryMight() ) * 2000;
-    return Players[iPlayer]:GetMilitaryMight();
+    return math.sqrt( Players[iPlayer]:GetMilitaryMight() ) * 2000;
 end
 
 
@@ -364,17 +363,17 @@ function BuildApprovalEntry( iPlayer )
         
     instance.Name:LocalizeAndSetText( "TXT_KEY_DEMOGRAPHICS_APPROVAL" );
     
-    instance.Value:SetText( Locale.ToNumber(m_ApprovalTable[ iPlayer ], "#'%'" ));
+    instance.Value:SetText( Locale.ToNumber(m_ApprovalTable[ iPlayer ], "#" ));
    
     local best = GetBest( m_ApprovalTable, iPlayer );
     SetIcon(best[2], instance.BestIcon, instance.BestIconBG, instance.BestIconShadow);
-    instance.Best:SetText( Locale.ToNumber(best[1], "#'%'") );
+    instance.Best:SetText( Locale.ToNumber(best[1], "#") );
 	
-    instance.Average:SetText( Locale.ToNumber( GetAverage( m_ApprovalTable, iPlayer ), "#'%'" ) );
+    instance.Average:SetText( Locale.ToNumber( GetAverage( m_ApprovalTable, iPlayer ), "#" ) );
     
     local worst = GetWorst( m_ApprovalTable, iPlayer );
     SetIcon(worst[2], instance.WorstIcon, instance.WorstIconBG, instance.WorstIconShadow);
-    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#'%'" ) );
+    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#" ) );
     
     instance.Rank:SetText( Locale.ToNumber(GetRank( m_ApprovalTable, iPlayer ), "#") );
 end
