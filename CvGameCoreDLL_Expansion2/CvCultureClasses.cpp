@@ -2732,6 +2732,7 @@ int CvPlayerCulture::GetInfluenceTradeRouteScienceBonus(PlayerTypes ePlayer) con
 {
 	int iRtnValue = 0;
 
+#ifndef TOURISM_NO_SCIENCE_FROM_TRADE_ROUTES
 	if (ePlayer < MAX_MAJOR_CIVS)
 	{
 		InfluenceLevelTypes eLevel = GetInfluenceLevel(ePlayer);
@@ -2751,6 +2752,7 @@ int CvPlayerCulture::GetInfluenceTradeRouteScienceBonus(PlayerTypes ePlayer) con
 			break;
 		}
 	}
+#endif
 
 #ifdef SCIENCE_FROM_INFLUENCED_CIVS
 /// Get extra science from influenced civs based on current influence level
