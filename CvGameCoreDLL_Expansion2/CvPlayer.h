@@ -1247,6 +1247,10 @@ public:
 	int GetSciencePerTurnFromMinorTimes100(PlayerTypes eMinor) const;
 #endif
 
+#ifdef SCIENCE_FROM_INFLUENCED_CIVS
+	int GetSciencePerTurnFromInfluencedCivsTimes100() const;
+#endif
+
 #ifdef BELIEF_INTERFAITH_DIALOGUE_PER_FOLLOWERS
 	int GetSciencePerTurnFromReligionTimes100() const;
 #endif

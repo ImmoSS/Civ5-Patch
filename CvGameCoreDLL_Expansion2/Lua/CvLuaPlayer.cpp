@@ -669,6 +669,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 #ifdef NEW_CITY_STATES_TYPES
 	Method(GetSciencePerTurnFromMinorCivsTimes100);
 #endif
+#ifdef SCIENCE_FROM_INFLUENCED_CIVS
+	Method(GetSciencePerTurnFromInfluencedCivsTimes100);
+#endif
 	Method(GetScienceFromCitiesTimes100);
 	Method(GetScienceFromOtherPlayersTimes100);
 	Method(GetScienceFromHappinessTimes100);
@@ -6945,6 +6948,13 @@ int CvLuaPlayer::lGetSciencePerTurnFromReligionTimes100(lua_State* L)
 int CvLuaPlayer::lGetSciencePerTurnFromMinorCivsTimes100(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvPlayerAI::GetSciencePerTurnFromMinorCivsTimes100);
+}
+#endif
+#ifdef SCIENCE_FROM_INFLUENCED_CIVS
+//int GetSciencePerTurnFromInfluencedCivsTimes100();
+int CvLuaPlayer::lGetSciencePerTurnFromInfluencedCivsTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::GetSciencePerTurnFromInfluencedCivsTimes100);
 }
 #endif
 //int GetScienceFromCitiesTimes100();

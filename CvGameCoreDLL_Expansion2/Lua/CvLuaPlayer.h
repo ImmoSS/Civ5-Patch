@@ -656,6 +656,9 @@ protected:
 #ifdef NEW_CITY_STATES_TYPES
 	static int lGetSciencePerTurnFromMinorCivsTimes100(lua_State* L);
 #endif
+#ifdef SCIENCE_FROM_INFLUENCED_CIVS
+	static int lGetSciencePerTurnFromInfluencedCivsTimes100(lua_State* L);
+#endif
 	static int lGetScienceFromCitiesTimes100(lua_State* L);
 	static int lGetScienceFromOtherPlayersTimes100(lua_State* L);
 	static int lGetScienceFromHappinessTimes100(lua_State* L);

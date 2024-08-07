@@ -2752,6 +2752,39 @@ int CvPlayerCulture::GetInfluenceTradeRouteScienceBonus(PlayerTypes ePlayer) con
 		}
 	}
 
+#ifdef SCIENCE_FROM_INFLUENCED_CIVS
+/// Get extra science from influenced civs based on current influence level
+int CvPlayerCulture::GetInfluencedCivScienceBonus(PlayerTypes ePlayer) const
+{
+	int iRtnValue = 0;
+
+	if (ePlayer < MAX_MAJOR_CIVS)
+	{
+		InfluenceLevelTypes eLevel = GetInfluenceLevel(ePlayer);
+		switch (eLevel)
+		{
+		case INFLUENCE_LEVEL_EXOTIC:
+			iRtnValue = 2;
+			break;
+		case INFLUENCE_LEVEL_FAMILIAR:
+			iRtnValue = 4;
+			break;
+		case INFLUENCE_LEVEL_POPULAR:
+			iRtnValue = 8;
+			break;
+		case INFLUENCE_LEVEL_INFLUENTIAL:
+			iRtnValue = 12;
+			break;
+		case INFLUENCE_LEVEL_DOMINANT:
+			iRtnValue = 20;
+			break;
+		}
+	}
+
+	return iRtnValue;
+}
+#endif
+
 	return iRtnValue;
 }
 

@@ -1611,6 +1611,9 @@ g_toolTipHandler.SciencePerTurn = function()-- control )
 			-- Science from Research Agreements
 			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_RESEARCH_AGREEMENTS", g_activePlayer:GetScienceFromResearchAgreementsTimes100() / 100 )
 
+		-- Scince from influenced civs
+			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_INFLUENCED_CIVS", g_activePlayer:GetSciencePerTurnFromInfluencedCivsTimes100() / 100 )
+
 			-- Show Research Agreements
 
 			local itemType, duration, finalTurn, data1, data2, data3, flag1, fromPlayerID

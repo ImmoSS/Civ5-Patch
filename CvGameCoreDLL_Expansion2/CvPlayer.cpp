@@ -19401,6 +19401,10 @@ int CvPlayer::GetScienceTimes100() const
 	iValue += GetSciencePerTurnFromMinorCivsTimes100();
 #endif
 
+#ifdef SCIENCE_FROM_INFLUENCED_CIVS
+	iValue += GetSciencePerTurnFromInfluencedCivsTimes100();
+#endif
+
 	return max(iValue, 0);
 }
 
@@ -19431,6 +19435,45 @@ int CvPlayer::GetSciencePerTurnFromMinorTimes100(PlayerTypes eMinor) const
 		// Includes flat bonus and any bonus from scientific buildings
 		iAmount += GET_PLAYER(eMinor).GetMinorCivAI()->GetCurrentScienceBonus(GetID());
 		iAmount *= 100;
+	}
+
+	return iAmount;
+}
+#endif
+
+#ifdef SCIENCE_FROM_INFLUENCED_CIVS
+//	--------------------------------------------------------------------------------
+// Science per turn from a influenced civ
+int CvPlayer::GetSciencePerTurnFromInfluencedCivsTimes100() const
+{
+	int iAmount = 0;
+
+	PlayerTypes ePlayer;
+	int iScienceFromPlayer;
+	for (int iPlayerLoop = 0; iPlayerLoop < MAX_MAJOR_CIVS; iPlayerLoop++)
+	{
+		ePlayer = (PlayerTypes)iPlayerLoop;
+
+		if (ePlayer == GetID())
+			continue;
+
+		iScienceFromPlayer = 0;
+
+		iScienceFromPlayer += GET_PLAYER(ePlayer).GetScienceFromCitiesTimes100(false);
+		iScienceFromPlayer += GET_PLAYER(ePlayer).GetScienceFromOtherPlayersTimes100();
+		iScienceFromPlayer += GET_PLAYER(ePlayer).GetScienceFromHappinessTimes100();
+		iScienceFromPlayer += GET_PLAYER(ePlayer).GetScienceFromResearchAgreementsTimes100();
+		iScienceFromPlayer += GET_PLAYER(ePlayer).GetScienceFromBudgetDeficitTimes100();
+#ifdef BELIEF_INTERFAITH_DIALOGUE_PER_FOLLOWERS
+		iScienceFromPlayer += GET_PLAYER(ePlayer).GetSciencePerTurnFromReligionTimes100();
+#endif
+#ifdef NEW_CITY_STATES_TYPES
+		iScienceFromPlayer += GET_PLAYER(ePlayer).GetSciencePerTurnFromMinorCivsTimes100();
+#endif
+		iScienceFromPlayer *= GetCulture()->GetInfluencedCivScienceBonus(ePlayer);
+		iScienceFromPlayer /= 100;
+
+		iAmount += iScienceFromPlayer;
 	}
 
 	return iAmount;
