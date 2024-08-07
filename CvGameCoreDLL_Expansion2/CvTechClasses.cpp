@@ -1427,6 +1427,28 @@ CvTechXMLEntries* CvPlayerTechs::GetTechs() const
 	return m_pTechs;
 }
 
+#ifdef NEW_NUM_CITIES_RESEARCH_COST_MODIFIER
+int CvPlayerTechs::GetNumCitiesResearchCostModifier(int iNumCities) const
+{
+	if (iNumCities == 1)
+	{
+		return 5;
+	}
+	else if (iNumCities == 2)
+	{
+		return 8;
+	}
+	else if (iNumCities == 3)
+	{
+		return 13;
+	}
+	else
+	{
+		return 7 * iNumCities - 8;
+	}
+}
+#endif
+
 //	----------------------------------------------------------------------------
 /// Return the research cost for a tech for this player.  This will be different from the team research cost as it will
 /// include the player's research adjustment
@@ -1447,23 +1469,7 @@ int CvPlayerTechs::GetResearchCost(TechTypes eTech) const
 	iMod = iMod * m_pPlayer->GetMaxEffectiveCities(/*bIncludePuppets*/ true);
 #endif
 #ifdef NEW_NUM_CITIES_RESEARCH_COST_MODIFIER
-	int iMaxEffectiveCities = m_pPlayer->GetMaxEffectiveCities(/*bIncludePuppets*/ true);
-	if (iMaxEffectiveCities == 1)
-	{
-		iMod = 5;
-	}
-	else if (iMaxEffectiveCities == 2)
-	{
-		iMod = 8;
-	}
-	else if (iMaxEffectiveCities == 3)
-	{
-		iMod = 13;
-	}
-	else
-	{
-		iMod = 7 * iMaxEffectiveCities - 8;
-	}
+	iMod = GetNumCitiesResearchCostModifier(m_pPlayer->GetMaxEffectiveCities(/*bIncludePuppets*/ true));
 #endif
 	iResearchCost = iResearchCost * (100 + iMod) / 100;
 

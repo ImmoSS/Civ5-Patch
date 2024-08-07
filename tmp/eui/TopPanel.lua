@@ -1681,7 +1681,7 @@ g_toolTipHandler.SciencePerTurn = function()-- control )
 		-- Let people know that building more cities makes techs harder to get
 		if bnw_mode and g_isBasicHelp then
 			tips:insert( "" )
-			tips:insert( L( "TXT_KEY_TP_TECH_CITY_COST", Game.GetNumCitiesTechCostMod() * ( 100 + ( civBE_mode and g_activePlayer:GetNumCitiesResearchCostDiscount() or 0 ) ) / 100 ) )
+			tips:insert( L( "TXT_KEY_TP_TECH_CITY_COST", g_activePlayer:GetNumCitiesResearchCostModifier() * ( 100 + ( civBE_mode and g_activePlayer:GetNumCitiesResearchCostDiscount() or 0 ) ) / 100 ) )
 		end
 	end
 

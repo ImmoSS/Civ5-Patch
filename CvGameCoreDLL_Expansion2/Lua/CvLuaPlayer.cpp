@@ -161,6 +161,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(IsCurrentResearchRepeat);
 	Method(IsNoResearchAvailable);
 	Method(GetResearchTurnsLeft);
+#ifdef NEW_NUM_CITIES_RESEARCH_COST_MODIFIER
+	Method(GetNumCitiesResearchCostModifier);
+#endif
 	Method(GetResearchCost);
 	Method(GetResearchProgress);
 
@@ -1953,6 +1956,19 @@ int CvLuaPlayer::lGetResearchTurnsLeft(lua_State* L)
 	lua_pushinteger(L, iResult);
 	return 1;
 }
+
+#ifdef NEW_NUM_CITIES_RESEARCH_COST_MODIFIER
+//------------------------------------------------------------------------------
+//int GetNumCitiesResearchCostModifier(int  iNumCities);
+int CvLuaPlayer::lGetNumCitiesResearchCostModifier(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+
+	const int iResult = pkPlayer->GetPlayerTechs()->GetNumCitiesResearchCostModifier(pkPlayer->GetMaxEffectiveCities(/*bIncludePuppets*/ true));
+	lua_pushinteger(L, iResult);
+	return 1;
+}
+#endif
 
 //------------------------------------------------------------------------------
 //int GetResearchCost(TechTypes  eTech);

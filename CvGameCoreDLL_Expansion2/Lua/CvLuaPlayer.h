@@ -154,6 +154,9 @@ protected:
 	static int lIsCurrentResearchRepeat(lua_State* L);
 	static int lIsNoResearchAvailable(lua_State* L);
 	static int lGetResearchTurnsLeft(lua_State* L);
+#ifdef NEW_NUM_CITIES_RESEARCH_COST_MODIFIER
+	static int lGetNumCitiesResearchCostModifier(lua_State* L);
+#endif
 	static int lGetResearchCost(lua_State* L);
 	static int lGetResearchProgress(lua_State* L);
 
