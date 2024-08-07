@@ -9907,10 +9907,16 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, b
 	if(GC.getBuildInfo(eBuild)->getTechPrereq() != NO_TECH)
 	{
 #ifdef MINES_ON_LUXES_AFTER_BRONZE_WORKING
-		if (strcmp(GC.getBuildInfo(eBuild)->GetType(), "BUILD_MINE") == 0 && GC.getResourceInfo(pPlot->getResourceType()) && GC.getResourceInfo(pPlot->getResourceType())->getResourceUsage() == RESOURCEUSAGE_LUXURY && !GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getInfoTypeForString("TECH_BRONZE_WORKING", true)))
+		if (strcmp(GC.getBuildInfo(eBuild)->GetType(), "BUILD_MINE") == 0 && GC.getResourceInfo(pPlot->getResourceType()) && GC.getResourceInfo(pPlot->getResourceType())->getResourceUsage() == RESOURCEUSAGE_LUXURY)
 		{
-			return false;
-		}
+			if (!GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getInfoTypeForString("TECH_BRONZE_WORKING", true)))
+			{
+				if ((!bTestEra && !bTestVisible) || ((GetCurrentEra() + 1) < GC.getTechInfo((TechTypes)GC.getInfoTypeForString("TECH_BRONZE_WORKING", true))->GetEra()))
+				{
+					return false;
+				}
+			}
+		} else
 #endif
 		if(!(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getBuildInfo(eBuild)->getTechPrereq())))
 		{
