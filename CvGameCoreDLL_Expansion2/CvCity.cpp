@@ -8326,7 +8326,7 @@ int CvCity::getJONSCulturePerTurn() const
 	iModifier += GET_PLAYER(getOwner()).GetJONSCultureCityModifier();
 
 #ifdef FLOURISHING_OF_ARTS_REWORK
-	if (getNumWorldWonders() > 0)
+	if (GetCityCulture()->GetNumGreatWorks() > 0)
 		iModifier += GET_PLAYER(getOwner()).GetCultureWonderMultiplier() * GetCityCulture()->GetNumGreatWorks();
 #else
 	// Wonder here?
