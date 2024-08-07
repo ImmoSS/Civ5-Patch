@@ -419,6 +419,11 @@
 
 
 
+/*TOURISM CHANGES START*/
+/*TOURISM CHANGES END*/
+
+
+
 /*RELIGION CHANGES START*/
 // Allow lake feature yield boosts from religion - this is a huge cheat so I don't have to code a whole new table for "fake features" which 
 // is what lakes are categorized under. In NQMod, ice has no belief bonuses, and so I'm overriding FEATURE_ICE to be used for lakes instead.
