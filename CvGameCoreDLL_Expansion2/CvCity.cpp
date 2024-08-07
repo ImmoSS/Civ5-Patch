@@ -6312,7 +6312,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 					if(pBuildingInfo->IsScienceBuilding())
 					{
 						int iMedianTechResearch = owningPlayer.GetPlayerTechs()->GetMedianTechResearch();
+#ifdef MEDIAN_TECH_PERCENTAGE_DOES_NOT_AFFECTS_KOREA
 						iMedianTechResearch = (iMedianTechResearch * owningPlayer.GetMedianTechPercentage()) / 100;
+#endif
 
 						TechTypes eCurrentTech = owningPlayer.GetPlayerTechs()->GetCurrentResearch();
 						if(eCurrentTech == NO_TECH)
