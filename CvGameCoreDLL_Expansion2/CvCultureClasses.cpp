@@ -2993,11 +2993,13 @@ int CvPlayerCulture::GetTourismModifierWith(PlayerTypes ePlayer) const
 	PolicyBranchTypes eMyIdeology = m_pPlayer->GetPlayerPolicies()->GetLateGamePolicyTree();
 	PolicyBranchTypes eTheirIdeology = kPlayer.GetPlayerPolicies()->GetLateGamePolicyTree();
 
+#ifndef NO_OPEN_BOARDERS_TOURISM_MOD
 	// Open borders with this player
 	if (kTeam.IsAllowsOpenBordersToTeam(m_pPlayer->getTeam()))
 	{
 		iMultiplier += GetTourismModifierOpenBorders();
 	}
+#endif
 
 	// Trade route to one of this player's cities from here
 	if (GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(m_pPlayer->GetID(), ePlayer))
@@ -3082,11 +3084,13 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 
 	// POSITIVE MODIFIERS
 
+#ifndef NO_OPEN_BOARDERS_TOURISM_MOD
 	// Open borders with this player
 	if (kTeam.IsAllowsOpenBordersToTeam(m_pPlayer->getTeam()))
 	{
 		szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_OPEN_BORDERS", GetTourismModifierOpenBorders()) + "[ENDCOLOR]";
 	}
+#endif
 
 	// Trade route to one of this player's cities from here
 	if (GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(m_pPlayer->GetID(), ePlayer))
@@ -3153,10 +3157,12 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 	}
 
 	// NEUTRAL MODIFIERS
+#ifndef NO_OPEN_BOARDERS_TOURISM_MOD
 	if (!kTeam.IsAllowsOpenBordersToTeam(m_pPlayer->getTeam()))
 	{
 		szRtnValue += "[COLOR_GREY]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_OPEN_BORDERS", 0) + "[ENDCOLOR]";		
 	}
+#endif
 	if (!GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(m_pPlayer->GetID(), ePlayer))
 	{
 		szRtnValue += "[COLOR_GREY]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_TRADE_ROUTE", 0) + "[ENDCOLOR]";		
@@ -4404,6 +4410,7 @@ int CvCityCulture::GetTourismMultiplier(PlayerTypes ePlayer, bool bIgnoreReligio
 	}
 
 	if (!bIgnoreOpenBorders)
+#ifndef NO_OPEN_BOARDERS_TOURISM_MOD
 	{
 		// Open borders with this player
 		if (kTeam.IsAllowsOpenBordersToTeam(kCityPlayer.getTeam()))
@@ -4411,6 +4418,7 @@ int CvCityCulture::GetTourismMultiplier(PlayerTypes ePlayer, bool bIgnoreReligio
 			iMultiplier += kCityPlayer.GetCulture()->GetTourismModifierOpenBorders();
 		}
 	}
+#endif
 
 	if (!bIgnoreTrade)
 	{
@@ -4748,6 +4756,7 @@ CvString CvCityCulture::GetTourismTooltip()
 			szTemp = GetLocalizedText("TXT_KEY_CO_CITY_TOURISM_RELIGION_BONUS", kCityPlayer.GetCulture()->GetTourismModifierSharedReligion());
 			szRtnValue += szTemp + sharedReligionCivs;
 		}
+#ifndef NO_OPEN_BOARDERS_TOURISM_MOD
 		if (openBordersCivs.length() > 0)
 		{
 			if (szRtnValue.length() > 0)
@@ -4757,6 +4766,7 @@ CvString CvCityCulture::GetTourismTooltip()
 			szTemp = GetLocalizedText("TXT_KEY_CO_CITY_TOURISM_OPEN_BORDERS_BONUS", kCityPlayer.GetCulture()->GetTourismModifierOpenBorders());
 			szRtnValue += szTemp + openBordersCivs;
 		}
+#endif
 		if (tradeRouteCivs.length() > 0)
 		{
 			if (szRtnValue.length() > 0)
