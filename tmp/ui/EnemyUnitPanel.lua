@@ -1540,6 +1540,14 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 
 					--strString.append(GetLocalizedText("TXT_KEY_COMBAT_PLOT_MOD_VS_TYPE", iModifier, kDomainInfo.GetDescription()));
 				end
+		
+				-- Cultural Influence Defense Modifier
+				local iModifier = pTheirUnit:GetCulturalInfluenceDefenseModifier(pMyUnit:GetOwner());
+				if (iModifier ~= 0) then
+					controlTable = g_TheirCombatDataIM:GetInstance();
+					controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_CULTURAL_INFLUENCE_BONUS" );
+					controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
+				end
 				
 				-- HillsDefenseModifier
 				if (pToPlot:IsHills()) then
@@ -2007,6 +2015,14 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 				end
 			end
+		end
+		
+		-- Cultural Influence Defense Modifier
+		local iModifier = pTheirUnit:GetCulturalInfluenceDefenseModifier(pMyUnit:GetOwner());
+		if (iModifier ~= 0) then
+			controlTable = g_TheirCombatDataIM:GetInstance();
+			controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_CULTURAL_INFLUENCE_BONUS" );
+			controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 		end
 		
 		-- BarbarianBonuses

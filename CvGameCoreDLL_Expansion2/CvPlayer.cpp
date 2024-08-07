@@ -7855,6 +7855,29 @@ void CvPlayer::AwardFreeBuildings(CvCity* pCity)
 #endif
 
 		ChangeNumCitiesFreeFoodBuilding(-1);
+
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
+		int iNumCitiesFreeDefensiveBuilding = GetNumCitiesFreeDefensiveBuilding();
+		if (iNumCitiesFreeDefensiveBuilding > 0)
+		{
+			BuildingTypes eDefensiveBuilding = NO_BUILDING;
+			if (GetPlayerTraits()->GetGreatScientistRateModifier() > 0)
+			{
+				eDefensiveBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_WALLS_OF_BABYLON");
+			}
+			else
+			{
+				eDefensiveBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_WALLS");
+			}
+			if (eDefensiveBuilding != NO_BUILDING)
+			{
+				pCity->GetCityBuildings()->SetNumRealBuilding(eDefensiveBuilding, 1);
+				// pCity->GetCityBuildings()->SetNumFreeBuilding(eDefensiveBuilding, 1);
+			}
+
+			ChangeNumCitiesFreeDefensiveBuilding(-1);
+		}
+#endif
 	}
 }
 

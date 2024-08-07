@@ -2754,6 +2754,9 @@ int CvPlayerCulture::GetInfluenceTradeRouteScienceBonus(PlayerTypes ePlayer) con
 	}
 #endif
 
+	return iRtnValue;
+}
+
 #ifdef SCIENCE_FROM_INFLUENCED_CIVS
 /// Get extra science from influenced civs based on current influence level
 int CvPlayerCulture::GetInfluencedCivScienceBonus(PlayerTypes ePlayer) const
@@ -2787,8 +2790,38 @@ int CvPlayerCulture::GetInfluencedCivScienceBonus(PlayerTypes ePlayer) const
 }
 #endif
 
+#ifdef DEFENSE_AGAINST_INFLUENCED_CIVS
+/// Get extra defense bonus against influenced civs based on current influence level
+int CvPlayerCulture::GetDefenseAgainstInfluencedCiv(PlayerTypes ePlayer) const
+{
+	int iRtnValue = 0;
+
+	if (ePlayer < MAX_MAJOR_CIVS)
+	{
+		InfluenceLevelTypes eLevel = GetInfluenceLevel(ePlayer);
+		switch (eLevel)
+		{
+		case INFLUENCE_LEVEL_EXOTIC:
+			iRtnValue = 10;
+			break;
+		case INFLUENCE_LEVEL_FAMILIAR:
+			iRtnValue = 20;
+			break;
+		case INFLUENCE_LEVEL_POPULAR:
+			iRtnValue = 30;
+			break;
+		case INFLUENCE_LEVEL_INFLUENTIAL:
+			iRtnValue = 42;
+			break;
+		case INFLUENCE_LEVEL_DOMINANT:
+			iRtnValue = 50;
+			break;
+		}
+	}
+
 	return iRtnValue;
 }
+#endif
 
 /// Get reduction in conquest times and population loss based on current influence level
 int CvPlayerCulture::GetInfluenceCityConquestReduction(PlayerTypes ePlayer) const

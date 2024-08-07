@@ -11338,6 +11338,15 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 				iModifier += iTempModifier;
 			}
 		}
+
+#ifdef DEFENSE_AGAINST_INFLUENCED_CIVS
+		// Tourism Defense
+		if (pAttacker != NULL)
+		{
+			iTempModifier = GET_PLAYER(getOwner()).GetCulture()->GetDefenseAgainstInfluencedCiv(pAttacker->getOwner());
+			iModifier += iTempModifier;
+		}
+#endif
 	}
 
 	////////////////////////
