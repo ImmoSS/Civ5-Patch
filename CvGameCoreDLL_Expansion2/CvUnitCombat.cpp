@@ -243,6 +243,13 @@ void CvUnitCombat::GenerateMeleeCombatInfo(CvUnit& kAttacker, CvUnit* pkDefender
 		pkCombatInfo->setAttackIsRanged(false);
 
 		bool bAdvance = true;
+#ifdef PRIZE_SHIPS_ALWAYS_CAPTURE
+		if (iAttackerTotalDamageInflicted >= iMaxHP && kAttacker.IsCaptureDefeatedEnemy() && kAttacker.AreUnitsOfSameType(*pkDefender))
+		{
+			bAdvance = false;
+			pkCombatInfo->setDefenderCaptured(true);
+		}
+#else
 		if(plot.getNumDefenders(pkDefender->getOwner()) > 1)
 		{
 			bAdvance = false;
@@ -257,6 +264,7 @@ void CvUnitCombat::GenerateMeleeCombatInfo(CvUnit& kAttacker, CvUnit* pkDefender
 				pkCombatInfo->setDefenderCaptured(true);
 			}
 		}
+#endif
 		else if (kAttacker.IsCanHeavyCharge() && !pkDefender->isDelayedDeath() && (iAttackerDamageInflicted > iDefenderDamageInflicted) )
 		{
 			bAdvance = true;
