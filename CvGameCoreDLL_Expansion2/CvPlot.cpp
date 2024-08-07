@@ -4105,7 +4105,7 @@ bool CvPlot::isValidRoute(const CvUnit* pUnit) const
 	if((RouteTypes)m_eRouteType != NO_ROUTE && !m_bRoutePillaged)
 	{
 #ifdef CHINA_UA_REWORK
-		if(!pUnit->isEnemy(getTeam(), this) || GET_PLAYER(pUnit->getOwner()).GetPlayerTraits()->GetGreatGeneralRateModifier() > 0 || pUnit->isEnemyRoute())
+		if(!pUnit->isEnemy(getTeam(), this) || GET_PLAYER(pUnit->getOwner()).GetPlayerTraits()->GetGreatGeneralRateModifier() > 0 && GET_TEAM(GET_PLAYER(pUnit->getOwner()).getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getInfoTypeForString("TECH_ECONOMICS")) || pUnit->isEnemyRoute())
 #else
 		if(!pUnit->isEnemy(getTeam(), this) || pUnit->isEnemyRoute())
 #endif
