@@ -548,6 +548,11 @@
 #define JAPAN_UA_REWORK
 ///
 #define FRANCE_UA_REWORK
+///
+#define AUSTRIA_UA_REWORK
+#ifdef AUSTRIA_UA_REWORK
+#define AUSTRIA_UA_CONTACT_GOLD 40
+#endif
 /// Golden age combat bonus modifier now applies only during attack
 #define GOLDEN_AGE_ATTACK_BONUS_MODIFIER
 /*UA CHANGES END*/

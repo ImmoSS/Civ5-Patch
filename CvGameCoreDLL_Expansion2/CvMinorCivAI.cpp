@@ -2305,6 +2305,12 @@ void CvMinorCivAI::DoFirstContactWithMajor(TeamTypes eTeam, bool bSuppressMessag
 			if(GET_PLAYER(ePlayer).getTeam() == eTeam)
 			{
 				// Gold gift
+#ifdef AUSTRIA_UA_REWORK
+				if (GET_PLAYER(ePlayer).GetPlayerTraits()->IsAbleToAnnexCityStates())
+				{
+					iGoldGift = AUSTRIA_UA_CONTACT_GOLD;
+				}
+#endif
 				GET_PLAYER(ePlayer).GetTreasury()->ChangeGold(iGoldGift);
 
 				// Faith gift
