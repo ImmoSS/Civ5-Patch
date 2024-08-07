@@ -8503,6 +8503,7 @@ int CvMinorCivAI::GetSpawnBaseTurns(PlayerTypes ePlayer)
 	// Modify for policies
 	CvPlayer& kPlayer = GET_PLAYER(ePlayer);
 	int iPolicyMod = kPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_UNIT_FREQUENCY_MODIFIER);
+#ifndef UNITED_FRONT_ALL_CITIES_GIFT_UNITS
 	if(iPolicyMod > 0)
 	{
 #ifdef UNITED_FRONT_ALL_CITIES_GIFT_UNITS
@@ -8515,6 +8516,7 @@ int CvMinorCivAI::GetSpawnBaseTurns(PlayerTypes ePlayer)
 			iNumTurns /= (100 + iPolicyMod);
 		}
 	}
+#endif
 
 	return iNumTurns / 100;
 }
