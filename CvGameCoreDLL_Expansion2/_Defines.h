@@ -772,6 +772,8 @@
 #define FIX_SCIENTIST_CHOOSE_TECH_NOTIFICATION
 /// Adds missing sanity checks for some city tasks
 #define NET_FIX_EXPLOITABLE_CITY_TASKS
+///
+#define FIX_AIR_ATTACK_VS_EMBARKED
 /*BUGS FIXES END*/
 
 
