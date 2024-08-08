@@ -12067,7 +12067,7 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 			addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORK_BOAT"));
 		}
 #else
-		addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORK_BOAT"));
+		addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORKBOAT"));
 #endif
 	}
 #endif
