@@ -307,6 +307,9 @@ CvPlayer::CvPlayer() :
 #ifdef GODDESS_LOVE_FREE_WORKER
 	, m_bHasUsedGoddessLove(false)
 #endif
+#ifdef GOD_SEA_FREE_WORK_BOAT
+	, m_bHasUsedGodSea(false)
+#endif
 #ifdef FREE_GREAT_PERSON
 	, m_iGreatProphetsCreated(0)
 #endif
@@ -1075,6 +1078,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef GODDESS_LOVE_FREE_WORKER
 	m_bHasUsedGoddessLove = false;
+#endif
+#ifdef GOD_SEA_FREE_WORK_BOAT
+	m_bHasUsedGodSea = false;
 #endif
 #ifdef FREE_GREAT_PERSON
 	m_iGreatProphetsCreated = 0;
@@ -11977,7 +11983,7 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 	}
 #endif
 
-#if defined UNITY_OF_PROPHETS_EXTRA_PROPHETS || defined GODDESS_LOVE_FREE_WORKER
+#if defined UNITY_OF_PROPHETS_EXTRA_PROPHETS || defined GODDESS_LOVE_FREE_WORKER || defined GOD_SEA_FREE_WORK_BOAT
 	BeliefTypes pBelief;
 #endif
 #ifdef UNITY_OF_PROPHETS_EXTRA_PROPHETS
@@ -12035,6 +12041,32 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 		}
 #else
 		addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"));
+#endif
+	}
+#endif
+#ifdef GOD_SEA_FREE_WORK_BOAT
+	pBelief = NO_BELIEF;
+	for (int iI = 0; iI < pReligion->m_Beliefs.GetNumBeliefs(); iI++)
+	{
+		const BeliefTypes eBelief = pReligion->m_Beliefs.GetBelief(iI);
+		CvBeliefEntry* pEntry = GC.GetGameBeliefs()->GetEntry((int)eBelief);
+		if (pEntry && pEntry->IsPantheonBelief())
+		{
+			pBelief = eBelief;
+			break;
+		}
+	}
+	if (!m_bHasUsedGoddessLove && pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GOD_SEA", true))
+	{
+		m_bHasUsedGodSea = true;
+
+#ifdef DUEL_GOD_SEA_CHANGE
+		if (!(GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF")))
+		{
+			addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORK_BOAT"));
+		}
+#else
+		addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORK_BOAT"));
 #endif
 	}
 #endif
@@ -25692,6 +25724,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef GOD_SEA_FREE_WORK_BOAT
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1005)
+	{
+# endif
+		kStream >> m_bHasUsedGodSea;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_bHasUsedGodSea = false;
+	}
+# endif
+#endif
 #ifdef FREE_GREAT_PERSON
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1000)
@@ -26502,6 +26548,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef GODDESS_LOVE_FREE_WORKER
 	kStream << m_bHasUsedGoddessLove;
+#endif
+#ifdef GOD_SEA_FREE_WORK_BOAT
+	kStream << m_bHasUsedGodSea;
 #endif
 #ifdef FREE_GREAT_PERSON
 	kStream << m_iGreatProphetsCreated;

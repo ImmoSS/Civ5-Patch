@@ -1977,6 +1977,9 @@ protected:
 #ifdef GODDESS_LOVE_FREE_WORKER
 	bool m_bHasUsedGoddessLove;
 #endif
+#ifdef GOD_SEA_FREE_WORK_BOAT
+	bool m_bHasUsedGodSea;
+#endif
 #ifdef FREE_GREAT_PERSON
 	int m_iGreatProphetsCreated;
 #endif
