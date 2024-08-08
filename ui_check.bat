@@ -31,6 +31,7 @@ ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\MPTurnPanel.xml" "%cd%\%patchfol
 ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\CivilopediaScreen.lua" "%cd%\%patchfolder%\UI\CivilopediaScreen.lua"
 ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\GameMenu.lua" "%cd%\%patchfolder%\UI\GameMenu.lua"
 ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\Demographics.lua" "%cd%\%patchfolder%\UI\Demographics.lua"
+ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\Demographics.xml" "%cd%\%patchfolder%\UI\Demographics.xml"
 ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\Bombardment.lua" "%cd%\%patchfolder%\UI\Bombardment.lua"
 ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\ChoosePantheonPopup.lua" "%cd%\%patchfolder%\UI\ChoosePantheonPopup.lua"
 ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\ChooseReligionPopup.lua" "%cd%\%patchfolder%\UI\ChooseReligionPopup.lua"
