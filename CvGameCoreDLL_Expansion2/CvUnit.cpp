@@ -12401,11 +12401,27 @@ int CvUnit::GetAirStrikeDefenseDamage(const CvUnit* pAttacker, bool bIncludeRand
 	int iAttackerStrength = pAttacker->GetMaxRangedCombatStrength(this, /*pCity*/ NULL, true, /*bForRangedAttack*/ false);
 	int iDefenderStrength = 0;
 
+#ifdef FIX_AIR_ATTACK_VS_EMBARKED
+	// If this is a defenseless unit, do a fixed amount of damage
+	if (!IsCanDefend())
+		return /*4*/ GC.getNONCOMBAT_UNIT_RANGED_DAMAGE();
+
+	if (isEmbarked())
+	{
+		iDefenderStrength = GetEmbarkedUnitDefense();;
+	}
+	// Use Ranged combat value for defender, UNLESS it's a boat
+	else if (GetMaxRangedCombatStrength(this, /*pCity*/ NULL, false, false) > 0 && !getDomainType() == DOMAIN_SEA)
+		iDefenderStrength = GetMaxRangedCombatStrength(pAttacker, /*pCity*/ NULL, false, false);
+	else
+		iDefenderStrength = GetMaxDefenseStrength(plot(), pAttacker);
+#else
 	// Use Ranged combat value for defender, UNLESS it's a boat
 	if(GetMaxRangedCombatStrength(this, /*pCity*/ NULL, false, false) > 0 && !getDomainType() == DOMAIN_SEA)
 		iDefenderStrength = GetMaxRangedCombatStrength(pAttacker, /*pCity*/ NULL, false, false);
 	else
 		iDefenderStrength = GetMaxDefenseStrength(plot(), pAttacker);
+#endif
 
 	if(iDefenderStrength == 0)
 		return 0;
