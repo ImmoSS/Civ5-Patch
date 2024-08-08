@@ -3010,7 +3010,7 @@ int CvPlayerCulture::GetTourismModifierWith(PlayerTypes ePlayer) const
 	if (eMyIdeology != NO_POLICY_BRANCH_TYPE && eTheirIdeology != NO_POLICY_BRANCH_TYPE && eMyIdeology != eTheirIdeology)
 	{
 #ifdef AESTHETICS_FINISHER_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
-		if (!kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_AESTHETICS_FINISHER")))
+		if (!m_pPlayer->GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_AESTHETICS_FINISHER")))
 		{
 			iMultiplier += GC.getTOURISM_MODIFIER_DIFFERENT_IDEOLOGIES();
 		}
@@ -3191,7 +3191,7 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 	if (eMyIdeology != NO_POLICY_BRANCH_TYPE && eTheirIdeology != NO_POLICY_BRANCH_TYPE && eMyIdeology != eTheirIdeology)
 	{
 #ifdef AESTHETICS_FINISHER_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
-		if (!kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_AESTHETICS_FINISHER")))
+		if (!m_pPlayer->GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_AESTHETICS_FINISHER")))
 		{
 			szRtnValue += "[COLOR_NEGATIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_DIFFERENT_IDEOLOGIES", GC.getTOURISM_MODIFIER_DIFFERENT_IDEOLOGIES()) + "[ENDCOLOR]";
 		}
@@ -4446,7 +4446,7 @@ int CvCityCulture::GetTourismMultiplier(PlayerTypes ePlayer, bool bIgnoreReligio
 		if (eMyIdeology != NO_POLICY_BRANCH_TYPE && eTheirIdeology != NO_POLICY_BRANCH_TYPE && eMyIdeology != eTheirIdeology)
 		{
 #ifdef AESTHETICS_FINISHER_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
-			if (!kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_AESTHETICS_FINISHER")))
+			if (!kCityPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_AESTHETICS_FINISHER")))
 			{
 				iMultiplier += GC.getTOURISM_MODIFIER_DIFFERENT_IDEOLOGIES();
 			}
