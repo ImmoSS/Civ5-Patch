@@ -15946,6 +15946,16 @@ int CvCity::rangeCombatUnitDefense(const CvUnit* pDefender) const
 		iDefenderStrength = pDefender->GetEmbarkedUnitDefense();;
 	}
 
+#ifdef DEFENSE_AGAINST_INFLUENCED_CIVS
+	else if (!pDefender->isRangedSupportFire() && !pDefender->getDomainType() == DOMAIN_SEA && pDefender->GetMaxRangedCombatStrength(NULL, /*pCity*/ NULL, false, false, getOwner()) > 0)
+	{
+		iDefenderStrength = pDefender->GetMaxRangedCombatStrength(NULL, /*pCity*/ NULL, false, false, getOwner());
+
+		// Ranged units take less damage from one another
+		iDefenderStrength *= /*125*/ GC.getRANGE_ATTACK_RANGED_DEFENDER_MOD();
+		iDefenderStrength /= 100;
+	}
+#else
 	else if(!pDefender->isRangedSupportFire() && !pDefender->getDomainType() == DOMAIN_SEA && pDefender->GetMaxRangedCombatStrength(NULL, /*pCity*/ NULL, false, false) > 0)
 	{
 		iDefenderStrength = pDefender->GetMaxRangedCombatStrength(NULL, /*pCity*/ NULL, false, false);
@@ -15954,9 +15964,14 @@ int CvCity::rangeCombatUnitDefense(const CvUnit* pDefender) const
 		iDefenderStrength *= /*125*/ GC.getRANGE_ATTACK_RANGED_DEFENDER_MOD();
 		iDefenderStrength /= 100;
 	}
+#endif
 	else
 	{
+#ifdef DEFENSE_AGAINST_INFLUENCED_CIVS
+		iDefenderStrength = pDefender->GetMaxDefenseStrength(pDefender->plot(), NULL, /*bFromRangedAttack*/ true, getOwner());
+#else
 		iDefenderStrength = pDefender->GetMaxDefenseStrength(pDefender->plot(), NULL, /*bFromRangedAttack*/ true);
+#endif
 	}
 
 	return iDefenderStrength;
