@@ -1211,6 +1211,34 @@
 			<ShowInPedia>true</ShowInPedia> 
 			<ShowInTechTree>true</ShowInTechTree> 
 		</Row>
+		<Row> 
+			<ID>36</ID> 
+			<Type>BUILD_LUXURY_MINE</Type> 
+			<Description>TXT_KEY_BUILD_LUXURY_MINE</Description> 
+			<HotKey>KB_N</HotKey> 
+			<HotKeyPriority>0</HotKeyPriority> 
+			<HotKeyPriorityAlt>0</HotKeyPriorityAlt> 
+			<OrderPriority>96</OrderPriority> 
+			<AltDown>false</AltDown> 
+			<AltDownAlt>false</AltDownAlt> 
+			<ShiftDown>false</ShiftDown> 
+			<ShiftDownAlt>false</ShiftDownAlt> 
+			<CtrlDown>false</CtrlDown> 
+			<CtrlDownAlt>false</CtrlDownAlt> 
+			<Time>700</Time> 
+			<Cost>0</Cost> 
+			<CostIncreasePerImprovement>0</CostIncreasePerImprovement> 
+			<Kill>false</Kill> 
+			<Repair>false</Repair> 
+			<RemoveRoute>false</RemoveRoute> 
+			<Water>false</Water> 
+			<CanBeEmbarked>false</CanBeEmbarked> 
+			<PrereqTech>TECH_BRONZE_WORKING</PrereqTech> 
+			<IconIndex>0</IconIndex> 
+			<IconAtlas>UNIT_ACTION_ATLAS_MOD</IconAtlas> 
+			<ShowInPedia>false</ShowInPedia> 
+			<ShowInTechTree>true</ShowInTechTree> 
+		</Row>
 	</Builds> 
 
 	<Table name="Commands">
