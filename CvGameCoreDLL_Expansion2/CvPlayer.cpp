@@ -11807,7 +11807,8 @@ void CvPlayer::DoYieldBonusFromKill(YieldTypes eYield, UnitTypes eAttackingUnitT
 					break;
 				case YIELD_CULTURE:
 #ifdef HONOR_CULTURE_CAP
-					changeJONSCulture(min(iValue, CULTURE_CAP + GetPlayerTraits()->GetCultureFromKills() * iCombatStrength / 100));
+					iValue = min(iValue, CULTURE_CAP);
+					changeJONSCulture(iValue);
 #else
 					changeJONSCulture(iValue);
 #endif
