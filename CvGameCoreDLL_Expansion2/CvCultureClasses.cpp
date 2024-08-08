@@ -3492,8 +3492,13 @@ void CvPlayerCulture::DoPublicOpinion()
 		}
 
 		// Compute effects of dissatisfaction
+#ifdef REWORK_PUBLIC_OPINION
+		int iPerCityUnhappy = 100;
+		int iUnhappyPerXPop = 40;
+#else
 		int iPerCityUnhappy = 1;
 		int iUnhappyPerXPop = 10;
+#endif
 		if (m_eOpinion != PUBLIC_OPINION_CONTENT)
 		{
 			if (iDissatisfaction < 3)
@@ -3592,8 +3597,21 @@ void CvPlayerCulture::DoPublicOpinion()
 			locText = Localization::Lookup("TXT_KEY_CO_OPINION_TT_UNHAPPINESS_LINE2");
 			m_strOpinionUnhappinessTooltip += locText.toUTF8();
 
+#ifdef REWORK_PUBLIC_OPINION
+			if (100 / iPerCityUnhappy == 1)
+			{
+				locText = Localization::Lookup("TXT_KEY_CO_OPINION_TT_UNHAPPINESS_LINE3_1");
+				locText << 100 / iPerCityUnhappy;
+			}
+			else
+			{
+				locText = Localization::Lookup("TXT_KEY_CO_OPINION_TT_UNHAPPINESS_LINE3");
+				locText << 100 / iPerCityUnhappy;
+			}
+#else
 			locText = Localization::Lookup("TXT_KEY_CO_OPINION_TT_UNHAPPINESS_LINE3");
 			locText << iPerCityUnhappy;
+#endif
 			m_strOpinionUnhappinessTooltip += locText.toUTF8();
 
 			locText = Localization::Lookup("TXT_KEY_CO_OPINION_TT_UNHAPPINESS_LINE4");
@@ -3697,8 +3715,13 @@ int CvPlayerCulture::ComputeHypotheticalPublicOpinionUnhappiness(PolicyBranchTyp
 		}
 	}
 
+#ifdef REWORK_PUBLIC_OPINION
+	int iPerCityUnhappy = 25;
+	int iUnhappyPerXPop = 40;
+#else
 	int iPerCityUnhappy = 1;
 	int iUnhappyPerXPop = 10;
+#endif
 
 	if (iDissatisfaction == 0)
 	{
@@ -3798,6 +3821,25 @@ int CvPlayerCulture::GetTotalThemingBonuses() const
 /// Compute effects of dissatisfaction
 int CvPlayerCulture::ComputePublicOpinionUnhappiness(int iDissatisfaction, int &iPerCityUnhappy, int &iUnhappyPerXPop)
 {
+#ifdef REWORK_PUBLIC_OPINION
+	if (iDissatisfaction < 3)
+	{
+		iPerCityUnhappy = 25;
+		iUnhappyPerXPop = 40;
+	}
+	else if (iDissatisfaction < 5)
+	{
+		iPerCityUnhappy = 50;
+		iUnhappyPerXPop = 20;
+	}
+	else
+	{
+		iPerCityUnhappy = 100;
+		iUnhappyPerXPop = 10;
+	}
+
+	return max(m_pPlayer->getNumCities() * iPerCityUnhappy / 100, m_pPlayer->getTotalPopulation() / iUnhappyPerXPop);
+#else
 	if (iDissatisfaction < 3)
 	{
 		iPerCityUnhappy = 1;
@@ -3815,6 +3857,7 @@ int CvPlayerCulture::ComputePublicOpinionUnhappiness(int iDissatisfaction, int &
 	}
 
 	return max(m_pPlayer->getNumCities() * iPerCityUnhappy, m_pPlayer->getTotalPopulation() / iUnhappyPerXPop);
+#endif
 }
 
 // LOGGING FUNCTIONS
