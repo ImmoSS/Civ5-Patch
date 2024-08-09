@@ -8951,7 +8951,22 @@ void CvCity::changeFoodKept(int iChange)
 int CvCity::getMaxFoodKeptPercent() const
 {
 	VALIDATE_OBJECT
+#ifdef POLICY_BUILDING_CLASS_FOOD_KEPT
+	int iPolicyBuildingClassFoodKept = 0;
+	for (int iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
+	{
+		BuildingClassTypes eLoopBuildingClass = (BuildingClassTypes)iI;
+		if (GC.getBuildingClassInfo(eLoopBuildingClass))
+		{
+			BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType())->getCivilizationBuildings(eLoopBuildingClass);
+			iPolicyBuildingClassFoodKept += GetCityBuildings()->GetNumBuilding(eBuilding) * GET_PLAYER(getOwner()).GetPlayerPolicies()->GetBuildingClassFoodKept(eLoopBuildingClass);
+		}
+	}
+
+	return m_iMaxFoodKeptPercent + iPolicyBuildingClassFoodKept;
+#else
 	return m_iMaxFoodKeptPercent;
+#endif
 }
 
 
