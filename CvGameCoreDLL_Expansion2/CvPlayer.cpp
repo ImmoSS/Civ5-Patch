@@ -7877,8 +7877,8 @@ void CvPlayer::AwardFreeBuildings(CvCity* pCity)
 			}
 			if (eDefensiveBuilding != NO_BUILDING)
 			{
-				pCity->GetCityBuildings()->SetNumRealBuilding(eDefensiveBuilding, 1);
-				// pCity->GetCityBuildings()->SetNumFreeBuilding(eDefensiveBuilding, 1);
+				pCity->GetCityBuildings()->SetNumRealBuilding(eDefensiveBuilding, 0);
+				pCity->GetCityBuildings()->SetNumFreeBuilding(eDefensiveBuilding, 1);
 			}
 
 			ChangeNumCitiesFreeDefensiveBuilding(-1);
@@ -24485,6 +24485,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 	// Store off number of newly built cities that will get a free building
 	ChangeNumCitiesFreeCultureBuilding(iNumCitiesFreeCultureBuilding);
 	ChangeNumCitiesFreeFoodBuilding(iNumCitiesFreeFoodBuilding);
+#ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
+	ChangeNumCitiesFreeDefensiveBuilding(iNumCitiesFreeDefensiveBuilding);
+#endif
 
 	// Not really techs but this is what we use (for now)
 	for(iI = 0; iI < GC.getNUM_AND_TECH_PREREQS(); iI++)
