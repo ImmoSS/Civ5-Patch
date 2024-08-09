@@ -3022,13 +3022,14 @@ int CvPlayerCulture::GetTourismModifierWith(PlayerTypes ePlayer) const
 			iMultiplier += GC.getTOURISM_MODIFIER_DIPLOMAT();
 		}
 #endif
-#ifdef TOURISM_BONUS_DIPLOMAT
-		if (m_pPlayer->GetEspionage()->IsMyDiplomatVisitingThem(ePlayer))
-		{
-			iMultiplier += GC.getTOURISM_MODIFIER_DIPLOMAT();
-		}
-#endif
 	}
+
+#ifdef TOURISM_BONUS_DIPLOMAT
+	if (m_pPlayer->GetEspionage()->IsMyDiplomatVisitingThem(ePlayer))
+	{
+		iMultiplier += GC.getTOURISM_MODIFIER_DIPLOMAT();
+	}
+#endif
 
 	int iLessHappyMod = m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_LESS_HAPPY);
 	if (iLessHappyMod > 0)
@@ -3162,6 +3163,13 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 		szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_CARNIVAL", m_pPlayer->GetPlayerTraits()->GetGoldenAgeTourismModifier()) + "[ENDCOLOR]";
 	}
 
+#ifdef TOURISM_BONUS_DIPLOMAT
+	if (m_pPlayer->GetEspionage()->IsMyDiplomatVisitingThem(ePlayer))
+	{
+		szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_PROPAGANDA", GC.getTOURISM_MODIFIER_DIPLOMAT()) + "[ENDCOLOR]";
+	}
+#endif
+
 	// NEUTRAL MODIFIERS
 #ifndef NO_OPEN_BOARDERS_TOURISM_MOD
 	if (!kTeam.IsAllowsOpenBordersToTeam(m_pPlayer->getTeam()))
@@ -3186,6 +3194,12 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 		}
 	}
 #endif
+#ifdef TOURISM_BONUS_DIPLOMAT
+	if (!m_pPlayer->GetEspionage()->IsMyDiplomatVisitingThem(ePlayer))
+	{
+		szRtnValue += "[COLOR_GREY]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_PROPAGANDA", 0) + "[ENDCOLOR]";
+	}
+#endif
 
 	// NEGATIVE MODIFIERS
 	if (eMyIdeology != NO_POLICY_BRANCH_TYPE && eTheirIdeology != NO_POLICY_BRANCH_TYPE && eMyIdeology != eTheirIdeology)
@@ -3199,12 +3213,6 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 		szRtnValue += "[COLOR_NEGATIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_DIFFERENT_IDEOLOGIES", GC.getTOURISM_MODIFIER_DIFFERENT_IDEOLOGIES()) + "[ENDCOLOR]";
 #endif
 	}
-#ifdef TOURISM_BONUS_DIPLOMAT
-	if (!m_pPlayer->GetEspionage()->IsMyDiplomatVisitingThem(ePlayer))
-	{
-		szRtnValue += "[COLOR_GREY]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_PROPAGANDA", 0) + "[ENDCOLOR]";
-	}
-#endif
 
 	return szRtnValue;
 }
@@ -4502,13 +4510,14 @@ int CvCityCulture::GetTourismMultiplier(PlayerTypes ePlayer, bool bIgnoreReligio
 			}
 #endif
 		}
-#ifdef TOURISM_BONUS_DIPLOMAT
-		if (kCityPlayer.GetEspionage()->IsMyDiplomatVisitingThem(ePlayer))
-		{
-			iMultiplier += GC.getTOURISM_MODIFIER_DIPLOMAT();
-		}
-#endif
 	}
+
+#ifdef TOURISM_BONUS_DIPLOMAT
+	if (kCityPlayer.GetEspionage()->IsMyDiplomatVisitingThem(ePlayer))
+	{
+		iMultiplier += GC.getTOURISM_MODIFIER_DIPLOMAT();
+	}
+#endif
 
 	if (!bIgnorePolicies)
 	{
@@ -4907,7 +4916,7 @@ CvString CvCityCulture::GetTourismTooltip()
 				szRtnValue += "[NEWLINE][NEWLINE]";
 			}
 			szTemp = GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_PROPAGANDA", GC.getTOURISM_MODIFIER_DIPLOMAT());
-			szRtnValue += szTemp + differentIdeologyCivs;
+			szRtnValue += szTemp + diplomatVisitingCivs;
 		}
 #endif
 	}
