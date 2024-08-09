@@ -7289,7 +7289,31 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 				const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eMajority, pWorkingCity->getOwner());
 				if(pReligion)
 				{
+#ifdef REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
+					int iReligionChange = 0;
+					CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
+					int iYieldFromBuilding = 0;
+
+					for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
+					{
+						if (pReligion->m_Beliefs.HasBelief((BeliefTypes)i))
+						{
+							if (pBeliefs->GetEntry(i)->IsReformationBelief())
+							{
+								if (pReligion->m_eFounder == getOwner())
+								{
+									iReligionChange = pReligion->m_Beliefs.GetResourceYieldChange(eResource, eYield);
+								}
+							}
+							else
+							{
+								iReligionChange = pReligion->m_Beliefs.GetResourceYieldChange(eResource, eYield);
+							}
+						}
+					}
+#else
 					int iReligionChange = pReligion->m_Beliefs.GetResourceYieldChange(eResource, eYield);
+#endif
 					if (eSecondaryPantheon != NO_BELIEF)
 					{
 						iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetResourceYieldChange(eResource, eYield);
