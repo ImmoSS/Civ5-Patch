@@ -2066,6 +2066,9 @@ CvPlot* CvPlayer::addFreeUnit(UnitTypes eUnit, UnitAITypes eUnitAI)
 			}
 		}
 		pReturnValuePlot = pNewUnit->plot();
+#ifdef FREE_UNIT_AT_STARTING_PLOT
+		pNewUnit->jumpToNearestValidPlot();
+#endif
 	}
 
 	return pReturnValuePlot;
@@ -12020,9 +12023,6 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 #ifdef EG_REPLAYDATASET_TOTALNUMOFPROPHETS
 			ChangeNumProphetsTotal(2);
 #endif
-			// addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_PROPHET"));
-			// addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_PROPHET"));
-		// }
 	}
 #endif
 #ifdef GODDESS_LOVE_FREE_WORKER
@@ -12063,7 +12063,7 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 			break;
 		}
 	}
-	if (!m_bHasUsedGoddessLove && pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GOD_SEA", true))
+	if (!m_bHasUsedGodSea && pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GOD_SEA", true))
 	{
 		m_bHasUsedGodSea = true;
 
