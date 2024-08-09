@@ -298,6 +298,9 @@ CvPlayer::CvPlayer() :
 #ifdef NQ_GOLDEN_AGE_TURNS_FROM_BELIEF
 	, m_bHasUsedDharma(false)
 #endif
+#ifdef UNDERGROUND_SECT_REWORK
+	, m_bHasUsedUndergroundSect(false)
+#endif
 #ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
 	, m_bHasUsedMissionaryZeal(false)
 #endif
@@ -1069,6 +1072,9 @@ void CvPlayer::uninit()
 	m_iGreatMusiciansCreated = 0;
 #ifdef NQ_GOLDEN_AGE_TURNS_FROM_BELIEF
 	m_bHasUsedDharma = false;
+#endif
+#ifdef UNDERGROUND_SECT_REWORK
+	m_bHasUsedUndergroundSect = false;
 #endif
 #ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
 	m_bHasUsedMissionaryZeal = false;
@@ -12195,6 +12201,26 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 			}
 			iGoldenAgeTurns = iGoldenAgeTurns * GC.getGame().getGameSpeedInfo().getGoldenAgePercent() / 100; // Game Speed mod
 			changeGoldenAgeTurns(iGoldenAgeTurns);
+		}
+	}
+#endif
+
+#ifdef UNDERGROUND_SECT_REWORK
+	if (!m_bHasUsedUndergroundSect)
+	{
+		int iSpyPressure = pReligion->m_Beliefs.GetSpyPressure();
+		if (iSpyPressure > 0)
+		{
+			m_bHasUsedUndergroundSect = true;
+			CvPlayerEspionage* pEspionage = GetEspionage();
+			CvAssertMsg(pEspionage, "pEspionage is null! What's up with that?!");
+			if (pEspionage)
+			{
+				for (int i = 0; i < iSpyPressure; i++)
+				{
+					pEspionage->CreateSpy();
+				}
+			}
 		}
 	}
 #endif
@@ -25686,6 +25712,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef UNDERGROUND_SECT_REWORK
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1005)
+	{
+# endif
+		kStream >> m_bHasUsedUndergroundSect;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_bHasUsedUndergroundSect = false;
+	}
+# endif
+#endif
 #ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1004)
@@ -26543,6 +26583,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iGreatMusiciansCreated;
 #ifdef NQ_GOLDEN_AGE_TURNS_FROM_BELIEF
 	kStream << m_bHasUsedDharma;
+#endif
+#ifdef UNDERGROUND_SECT_REWORK
+	kStream << m_bHasUsedUndergroundSect;
 #endif
 #ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
 	kStream << m_bHasUsedMissionaryZeal;

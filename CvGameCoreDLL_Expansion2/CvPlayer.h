@@ -1968,6 +1968,9 @@ protected:
 #ifdef NQ_GOLDEN_AGE_TURNS_FROM_BELIEF
 	bool m_bHasUsedDharma;
 #endif
+#ifdef UNDERGROUND_SECT_REWORK
+	bool m_bHasUsedUndergroundSect;
+#endif
 #ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
 	bool m_bHasUsedMissionaryZeal;
 #endif

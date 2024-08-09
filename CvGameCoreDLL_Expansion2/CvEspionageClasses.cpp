@@ -518,7 +518,11 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 					iCounterspyRank++;
 				iCounterspyRank++;
 			}
+#ifdef UNDERGROUND_SECT_REWORK
 			int iSpyRankDifference = (pSpy->m_eRank + GET_PLAYER(ePlayer).GetReligions()->GetSpyPressure() + 1) - iCounterspyRank + 1;
+#else
+			int iSpyRankDifference = pSpy->m_eRank - iCounterspyRank + 1;
+#endif
 
 			bool bSpyUpgrade = false;
 			bool bCounterSpyUpgrade = false;
