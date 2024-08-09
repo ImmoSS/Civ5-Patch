@@ -83,12 +83,17 @@ void CvTreasury::DoGold()
 
 #ifdef DUEL_NO_DISBAND
 		if (!GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+			if (iGoldAfterThisTurn <= /*-5*/ GC.getDEFICIT_UNIT_DISBANDING_THRESHOLD() * 100)
 #ifdef UNIT_DISBAND_REWORK
-		if (iGoldAfterThisTurn < 0)
-			m_pPlayer->DoDeficit(iGoldAfterThisTurn);
-		
+				m_pPlayer->DoDeficit(iGoldAfterThisTurn);
+#else
+				m_pPlayer->DoDeficit();
+#endif
 #else
 		if (iGoldAfterThisTurn <= /*-5*/ GC.getDEFICIT_UNIT_DISBANDING_THRESHOLD() * 100)
+#ifdef UNIT_DISBAND_REWORK
+			m_pPlayer->DoDeficit(iGoldAfterThisTurn);
+#else
 			m_pPlayer->DoDeficit();
 #endif
 #endif
