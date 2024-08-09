@@ -3600,13 +3600,11 @@ void CvPlayerCulture::DoPublicOpinion()
 #ifdef REWORK_PUBLIC_OPINION
 			if (iPerCityUnhappy == 100)
 			{
-				SLOG("iPerCityUnhappy = %d", iPerCityUnhappy);
 				locText = Localization::Lookup("TXT_KEY_CO_OPINION_TT_UNHAPPINESS_LINE3");
 				locText << 100 / iPerCityUnhappy;
 			}
 			else
 			{
-				SLOG("iPerCityUnhappy = %d", iPerCityUnhappy);
 				locText = Localization::Lookup("TXT_KEY_CO_OPINION_TT_UNHAPPINESS_LINE5");
 				locText << 100 / iPerCityUnhappy;
 			}
