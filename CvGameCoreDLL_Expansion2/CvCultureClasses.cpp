@@ -3598,14 +3598,16 @@ void CvPlayerCulture::DoPublicOpinion()
 			m_strOpinionUnhappinessTooltip += locText.toUTF8();
 
 #ifdef REWORK_PUBLIC_OPINION
-			if (100 / iPerCityUnhappy == 1)
+			if (iPerCityUnhappy == 100)
 			{
-				locText = Localization::Lookup("TXT_KEY_CO_OPINION_TT_UNHAPPINESS_LINE3_1");
+				SLOG("iPerCityUnhappy = %d", iPerCityUnhappy);
+				locText = Localization::Lookup("TXT_KEY_CO_OPINION_TT_UNHAPPINESS_LINE3");
 				locText << 100 / iPerCityUnhappy;
 			}
 			else
 			{
-				locText = Localization::Lookup("TXT_KEY_CO_OPINION_TT_UNHAPPINESS_LINE3");
+				SLOG("iPerCityUnhappy = %d", iPerCityUnhappy);
+				locText = Localization::Lookup("TXT_KEY_CO_OPINION_TT_UNHAPPINESS_LINE5");
 				locText << 100 / iPerCityUnhappy;
 			}
 #else
