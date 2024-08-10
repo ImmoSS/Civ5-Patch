@@ -61,6 +61,9 @@ CvBeliefEntry::CvBeliefEntry() :
 	m_iGreatPersonExpendedGoldenAge(0),
 	m_iGoldenAgeCombatMod(0),
 #endif
+#ifdef BELIEF_NO_TITLE
+	m_bAllowPolicyWonders(false),
+#endif
 	m_iCityStateMinimumInfluence(0),
 	m_iCityStateInfluenceModifier(0),
 	m_iOtherReligionPressureErosion(0),
@@ -344,10 +347,18 @@ int CvBeliefEntry::GetGreatPersonExpendedGoldenAge() const
 	return m_iGreatPersonExpendedGoldenAge;
 }
 
-/// Accessor: golden age turns for each GP expended
+/// Accessor: golden age combat modifier
 int CvBeliefEntry::GetGoldenAgeCombatMod() const
 {
 	return m_iGoldenAgeCombatMod;
+}
+#endif
+
+#ifdef BELIEF_NO_TITLE
+///
+bool CvBeliefEntry::IsAllowPolicyWonders() const
+{
+	return m_bAllowPolicyWonders;
 }
 #endif
 
@@ -724,6 +735,9 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iGreatPersonExpendedGoldenAge	  = kResults.GetInt("GreatPersonExpendedGoldenAge");
 	m_iGoldenAgeCombatMod             =	kResults.GetInt("GoldenAgeCombatMod");
 #endif
+#ifdef BELIEF_NO_TITLE
+	m_bAllowPolicyWonders             = kResults.GetInt("AllowPolicyWonders");
+#endif
 	m_iCityStateMinimumInfluence      = kResults.GetInt("CityStateMinimumInfluence");
 	m_iCityStateInfluenceModifier     = kResults.GetInt("CityStateInfluenceModifier");
 	m_iOtherReligionPressureErosion   = kResults.GetInt("OtherReligionPressureErosion");
@@ -1014,6 +1028,9 @@ CvReligionBeliefs::CvReligionBeliefs(const CvReligionBeliefs& source)
 	m_iGreatPersonExpendedGoldenAge = source.m_iGreatPersonExpendedGoldenAge;
 	m_iGoldenAgeCombatMod = source.m_iGoldenAgeCombatMod;
 #endif
+#ifdef BELIEF_NO_TITLE
+	m_bAllowPolicyWonders = source.m_bAllowPolicyWonders;
+#endif
 	m_iCityStateMinimumInfluence = source.m_iCityStateMinimumInfluence;
 	m_iCityStateInfluenceModifier = source.m_iCityStateInfluenceModifier;
 	m_iOtherReligionPressureErosion = source.m_iOtherReligionPressureErosion;
@@ -1095,6 +1112,9 @@ void CvReligionBeliefs::Reset()
 	m_iGreatPersonExpendedGoldenAge = 0;
 	m_iGoldenAgeCombatMod = 0;
 #endif
+#ifdef BELIEF_NO_TITLE
+	m_bAllowPolicyWonders = false;
+#endif
 	m_iCityStateMinimumInfluence = 0;
 	m_iCityStateInfluenceModifier = 0;
 	m_iOtherReligionPressureErosion = 0;
@@ -1175,6 +1195,9 @@ void CvReligionBeliefs::AddBelief(BeliefTypes eBelief)
 #ifdef GP_EXPENDED_GA
 	m_iGreatPersonExpendedGoldenAge += belief->GetGreatPersonExpendedGoldenAge();
 	m_iGoldenAgeCombatMod += belief->GetGoldenAgeCombatMod();
+#endif
+#ifdef BELIEF_NO_TITLE
+	m_bAllowPolicyWonders += belief->IsAllowPolicyWonders();
 #endif
 	m_iCityStateMinimumInfluence += belief->GetCityStateMinimumInfluence();
 	m_iCityStateInfluenceModifier += belief->GetCityStateInfluenceModifier();
@@ -1971,6 +1994,20 @@ void CvReligionBeliefs::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BELIEF_NO_TITLE
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1001)
+	{
+# endif
+		kStream >> m_bAllowPolicyWonders;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_bAllowPolicyWonders = false;
+	}
+# endif
+#endif
 	kStream >> m_iCityStateMinimumInfluence;
 	kStream >> m_iCityStateInfluenceModifier;
 	kStream >> m_iOtherReligionPressureErosion;
@@ -2080,6 +2117,9 @@ void CvReligionBeliefs::Write(FDataStream& kStream) const
 #ifdef GP_EXPENDED_GA
 	kStream << m_iGreatPersonExpendedGoldenAge;
 	kStream << m_iGoldenAgeCombatMod;
+#endif
+#ifdef BELIEF_NO_TITLE
+	kStream << m_bAllowPolicyWonders;
 #endif
 	kStream << m_iCityStateMinimumInfluence;
 	kStream << m_iCityStateInfluenceModifier;

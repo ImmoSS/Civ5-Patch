@@ -8474,10 +8474,27 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 	PolicyBranchTypes eBranch = (PolicyBranchTypes)pBuildingInfo.GetPolicyBranchType();
 	if (eBranch != NO_POLICY_BRANCH_TYPE)
 	{
+#ifdef BELIEF_NO_TITLE
+		ReligionTypes eReligionFounded = GetReligions()->GetReligionCreatedByPlayer();
+		bool bReligionAllowsPolicyWonders = false;
+		if (eReligionFounded > RELIGION_PANTHEON)
+		{
+			const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligionFounded, GetID());
+			if (pReligion && pReligion->m_Beliefs.IsAllowPolicyWonders())
+			{
+				bReligionAllowsPolicyWonders = true;
+			}
+		}
+		if (!GetPlayerPolicies()->IsPolicyBranchUnlocked(eBranch) && !bReligionAllowsPolicyWonders)
+		{
+			return false;
+		}
+#else
 		if (!GetPlayerPolicies()->IsPolicyBranchUnlocked(eBranch))
 		{
 			return false;
 		}
+#endif
 	}
 
 	if(!(currentTeam.GetTeamTechs()->HasTech((TechTypes)(pBuildingInfo.GetPrereqAndTech()))))
