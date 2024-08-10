@@ -2056,6 +2056,17 @@ CvPlot* CvPlayer::addFreeUnit(UnitTypes eUnit, UnitAITypes eUnitAI)
 #endif
 
 		// Don't stack any units
+#ifdef FREE_UNIT_AT_STARTING_PLOT
+		if (pBestPlot->getNumUnits() > 1 || !pBestPlot->isWater() && !(pBestPlot->isCoastalLand() && pBestPlot->getPlotCity() && pBestPlot->getPlotCity()->getOwner() == GetID()) && pNewUnit->getDomainType() == DOMAIN_SEA)
+		{
+			if (!pNewUnit->jumpToNearestValidPlot())
+			{
+				// Could not find a spot for the unit
+				pNewUnit->kill(false);
+				return NULL;
+			}
+		}
+#else
 		if(pBestPlot->getNumUnits() > 1)
 		{
 			if (!pNewUnit->jumpToNearestValidPlot())
@@ -2065,10 +2076,8 @@ CvPlot* CvPlayer::addFreeUnit(UnitTypes eUnit, UnitAITypes eUnitAI)
 				return NULL;
 			}
 		}
-		pReturnValuePlot = pNewUnit->plot();
-#ifdef FREE_UNIT_AT_STARTING_PLOT
-		pNewUnit->jumpToNearestValidPlot();
 #endif
+		pReturnValuePlot = pNewUnit->plot();
 	}
 
 	return pReturnValuePlot;
