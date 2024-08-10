@@ -10862,36 +10862,10 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvUnit* pOtherUnit, const CvPlot
 			int iGoldenAgeTurns = pReligion->m_Beliefs.GetGreatPersonExpendedGoldenAge();
 			if (iGoldenAgeTurns > 0)
 			{
-#ifdef REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
-				CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
-				int iYieldFromBuilding = 0;
-
-				for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
-				{
-					if (pReligion->m_Beliefs.HasBelief((BeliefTypes)i))
-					{
-						if (isGoldenAge())
-						{
-							if (pBeliefs->GetEntry(i)->IsReformationBelief())
-							{
-								if (pReligion->m_eFounder == GetID())
-								{
-									iModifier += pReligion->m_Beliefs.GetGoldenAgeCombatMod();
-								}
-							}
-							else
-							{
-								iModifier += pReligion->m_Beliefs.GetGoldenAgeCombatMod();
-							}
-						}
-					}
-				}
-#else
 				if (isGoldenAge())
 				{
 					iModifier += pReligion->m_Beliefs.GetGoldenAgeCombatMod();
 				}
-#endif
 			}
 		}
 	}

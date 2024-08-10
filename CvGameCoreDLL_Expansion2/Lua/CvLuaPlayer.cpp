@@ -2789,36 +2789,10 @@ int CvLuaPlayer::lGetFoundedReligionGoldenAgeCombatMod(lua_State* L)
 		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligionFounded, pkPlayer->GetID());
 		if (pReligion)
 		{
-#ifdef REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
-			CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
-			int iYieldFromBuilding = 0;
-
-			for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
-			{
-				if (pReligion->m_Beliefs.HasBelief((BeliefTypes)i))
-				{
-					if (pkPlayer->isGoldenAge())
-					{
-						if (pBeliefs->GetEntry(i)->IsReformationBelief())
-						{
-							if (pReligion->m_eFounder == pkPlayer->GetID())
-							{
-								iRtnValue = pReligion->m_Beliefs.GetGoldenAgeCombatMod();
-							}
-						}
-						else
-						{
-							iRtnValue = pReligion->m_Beliefs.GetGoldenAgeCombatMod();
-						}
-					}
-				}
-			}
-#else
-			if (isGoldenAge())
+			if (pkPlayer->isGoldenAge())
 			{
 				iRtnValue = pReligion->m_Beliefs.GetGoldenAgeCombatMod();
 			}
-#endif
 		}
 	}
 

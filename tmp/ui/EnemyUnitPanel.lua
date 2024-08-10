@@ -1695,7 +1695,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				-- end
 			
 				iModifier = pTheirPlayer:GetFoundedReligionGoldenAgeCombatMod();
-				if (iModifier ~= 0 pTheirPlayer:IsGoldenAge()) then
+				if (iModifier ~= 0 and pTheirPlayer:IsGoldenAge()) then
 					controlTable = g_TheirCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
@@ -2079,7 +2079,7 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 		-- end
 			
 		iModifier = theirPlayer:GetFoundedReligionGoldenAgeCombatMod();
-		if (iModifier ~= 0 theirPlayer:IsGoldenAge()) then
+		if (iModifier ~= 0 and theirPlayer:IsGoldenAge()) then
 			controlTable = g_TheirCombatDataIM:GetInstance();
 			controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
 			controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
