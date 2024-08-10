@@ -15560,7 +15560,7 @@ void CvPlayer::DoGreatPersonExpended(UnitTypes eGreatPersonUnit)
 
 #ifdef GP_EXPENDED_GA
 	// Golden Age gained
-	ReligionTypes eReligionFounded = GetReligions()->GetReligionCreatedByPlayer();
+	// ReligionTypes eReligionFounded = GetReligions()->GetReligionCreatedByPlayer();
 	if (eReligionFounded > RELIGION_PANTHEON)
 	{
 		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligionFounded, GetID());
