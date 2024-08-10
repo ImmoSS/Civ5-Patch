@@ -153,6 +153,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(CalculateGrossGoldTimes100);
 	Method(CalculateInflatedCosts);
 	Method(CalculateResearchModifier);
+#ifdef UI_TECH_KNOWN_COUNT
+	Method(TechKnownCount);
+#endif
 	Method(IsResearch);
 	Method(CanEverResearch);
 	Method(CanResearch);
@@ -1869,6 +1872,38 @@ int CvLuaPlayer::lCalculateResearchModifier(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvPlayerAI::calculateResearchModifier);
 }
+#ifdef UI_TECH_KNOWN_COUNT
+//------------------------------------------------------------------------------
+//int TechKnownCount(TechTypes  eTech);
+int CvLuaPlayer::lTechKnownCount(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	const TechTypes eTech = (TechTypes)lua_tointeger(L, 2);
+
+	int iKnownCount = 0;
+	for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
+	{
+		CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iI);
+		if (kLoopTeam.isAlive() && !kLoopTeam.isMinorCiv())
+		{
+			if (GET_TEAM(pkPlayer->getTeam()).isHasMet((TeamTypes)iI))
+			{
+#ifdef HAS_TECH_BY_HUMAN
+				if (kLoopTeam.GetTeamTechs()->HasTechByHuman(eTech))
+#else
+				if (kLoopTeam.GetTeamTechs()->HasTech(eTech))
+#endif
+				{
+					iKnownCount++;
+				}
+			}
+		}
+	}
+
+	lua_pushinteger(L, iKnownCount);
+	return 1;
+}
+#endif
 //------------------------------------------------------------------------------
 //bool isResearch();
 int CvLuaPlayer::lIsResearch(lua_State* L)

@@ -229,6 +229,12 @@
         <Label Anchor="C,C" Offset="0,0" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_LOCKED" ID="TechQueueLabel" />
       </Grid>
 
+      <!--Was researched number-->
+      <Grid Anchor="R,C" Offset="3,0"  AnchorSide="O.I" Size="32,30" Color="255,255,255,230" Style="GridBlack8" Hidden="0" ID="WasResearched">
+        <Grid Anchor="C,C" Offset="0,0" Size="35,34" Padding="0,0" Style="Grid9Frame" Hidden="0" />
+        <Label Anchor="C,C" Offset="0,0" Font="TwCenMT14" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="0" ID="WasResearchedLabel" />
+      </Grid>
+
       <!--The tech image-->
       <Image Anchor="L,C" Offset="0,0" Texture="TechnologyAtlas512.dds" Size="64,64" ID="TechPortrait"/>
 

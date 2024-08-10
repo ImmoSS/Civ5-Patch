@@ -146,6 +146,9 @@ protected:
 	static int lCalculateGrossGoldTimes100(lua_State* L);
 	static int lCalculateInflatedCosts(lua_State* L);
 	static int lCalculateResearchModifier(lua_State* L);
+#ifdef UI_TECH_KNOWN_COUNT
+	static int lTechKnownCount(lua_State* L);
+#endif
 	static int lIsResearch(lua_State* L);
 	static int lCanEverResearch(lua_State* L);
 	static int lCanResearch(lua_State* L);
