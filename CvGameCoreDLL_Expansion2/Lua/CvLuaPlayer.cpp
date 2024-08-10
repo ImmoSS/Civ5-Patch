@@ -281,6 +281,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(CanCreatePantheon);
 	Method(GetReligionCreatedByPlayer);
 	Method(GetFoundedReligionEnemyCityCombatMod);
+#ifdef GP_EXPENDED_GA
+	Method(GetFoundedReligionGoldenAgeCombatMod);
+#endif
 	Method(GetFoundedReligionFriendlyCityCombatMod);
 	Method(GetMinimumFaithNextGreatProphet);
 	Method(HasReligionInMostCities);
@@ -2772,6 +2775,58 @@ int CvLuaPlayer::lGetFoundedReligionEnemyCityCombatMod(lua_State* L)
 
 	return 1;
 }
+#ifdef GP_EXPENDED_GA
+//------------------------------------------------------------------------------
+//bool GetFoundedReligionGoldenAgeCombatMod();
+int CvLuaPlayer::lGetFoundedReligionGoldenAgeCombatMod(lua_State* L)
+{
+	int iRtnValue = 0;
+
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	ReligionTypes eReligionFounded = pkPlayer->GetReligions()->GetReligionCreatedByPlayer();
+	if (eReligionFounded > RELIGION_PANTHEON)
+	{
+		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligionFounded, pkPlayer->GetID());
+		if (pReligion)
+		{
+#ifdef REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
+			CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
+			int iYieldFromBuilding = 0;
+
+			for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
+			{
+				if (pReligion->m_Beliefs.HasBelief((BeliefTypes)i))
+				{
+					if (pkPlayer->isGoldenAge())
+					{
+						if (pBeliefs->GetEntry(i)->IsReformationBelief())
+						{
+							if (pReligion->m_eFounder == pkPlayer->GetID())
+							{
+								iRtnValue = 10;
+							}
+						}
+						else
+						{
+							iRtnValue = 10;
+						}
+					}
+				}
+			}
+#else
+			if (isGoldenAge())
+			{
+				iRtnValue = 10;
+			}
+#endif
+		}
+	}
+
+	lua_pushinteger(L, iRtnValue);
+
+	return 1;
+}
+#endif
 //------------------------------------------------------------------------------
 //bool GetFoundedReligionFriendlyCityCombatMod();
 int CvLuaPlayer::lGetFoundedReligionFriendlyCityCombatMod(lua_State* L)

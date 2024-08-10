@@ -10851,6 +10851,51 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvUnit* pOtherUnit, const CvPlot
 	if(kPlayer.isGoldenAge())
 		iModifier += kPlayer.GetPlayerTraits()->GetGoldenAgeCombatModifier();
 #endif
+#ifdef GP_EXPENDED_GA
+	// Golden Age gained
+	ReligionTypes eReligionFounded = kPlayer.GetReligions()->GetReligionCreatedByPlayer();
+	if (eReligionFounded > RELIGION_PANTHEON)
+	{
+		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligionFounded, kPlayer.GetID());
+		if (pReligion)
+		{
+			int iGoldenAgeTurns = pReligion->m_Beliefs.GetGreatPersonExpendedGoldenAge();
+			if (iGoldenAgeTurns > 0)
+			{
+#ifdef REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
+				CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
+				int iYieldFromBuilding = 0;
+
+				for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
+				{
+					if (pReligion->m_Beliefs.HasBelief((BeliefTypes)i))
+					{
+						if (isGoldenAge())
+						{
+							if (pBeliefs->GetEntry(i)->IsReformationBelief())
+							{
+								if (pReligion->m_eFounder == GetID())
+								{
+									iModifier += 10;
+								}
+							}
+							else
+							{
+								iModifier += 10;
+							}
+						}
+					}
+				}
+#else
+				if (isGoldenAge())
+				{
+					iModifier += 10;
+				}
+#endif
+			}
+		}
+	}
+#endif
 
 #ifdef FUTURE_TECH_RESEARCHING_BONUSES
 	iModifier += 10 * GET_TEAM(kPlayer.getTeam()).GetTeamTechs()->GetTechCount((TechTypes)GC.getInfoTypeForString("TECH_FUTURE_TECH", true));

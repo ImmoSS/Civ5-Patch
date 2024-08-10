@@ -67,6 +67,9 @@ public:
 	int GetMissionaryCostModifier() const;
 	int GetFriendlyCityStateSpreadModifier() const;
 	int GetGreatPersonExpendedFaith() const;
+#ifdef GP_EXPENDED_GA
+	int GetGreatPersonExpendedGoldenAge() const;
+#endif
 	int GetCityStateMinimumInfluence() const;
 	int GetCityStateInfluenceModifier() const;
 	int GetOtherReligionPressureErosion() const;
@@ -168,6 +171,9 @@ protected:
 	int m_iMissionaryCostModifier;
 	int m_iFriendlyCityStateSpreadModifier;
 	int m_iGreatPersonExpendedFaith;
+#ifdef GP_EXPENDED_GA
+	int m_iGreatPersonExpendedGoldenAge;
+#endif
 	int m_iCityStateMinimumInfluence;
 	int m_iCityStateInfluenceModifier;
 	int m_iOtherReligionPressureErosion;
@@ -363,6 +369,12 @@ public:
 	{
 		return m_iGreatPersonExpendedFaith;
 	};
+#ifdef GP_EXPENDED_GA
+	int GetGreatPersonExpendedGoldenAge() const
+	{
+		return m_iGreatPersonExpendedGoldenAge;
+	};
+#endif
 	int GetCityStateMinimumInfluence() const
 	{
 		return m_iCityStateMinimumInfluence;
@@ -487,6 +499,9 @@ private:
 	int m_iMissionaryCostModifier;
 	int m_iFriendlyCityStateSpreadModifier;
 	int m_iGreatPersonExpendedFaith;
+#ifdef GP_EXPENDED_GA
+	int m_iGreatPersonExpendedGoldenAge;
+#endif
 	int m_iCityStateMinimumInfluence;
 	int m_iCityStateInfluenceModifier;
 	int m_iOtherReligionPressureErosion;

@@ -468,7 +468,7 @@ function UpdateCombatOddsUnitVsCity(pMyUnit, pCity)
 			end
 						
 			-- Civ Trait Bonus
-			iModifier = pMyPlayer:GetTraitGoldenAgeCombatModifier();
+			iModifier = pMyPlayer:GetTraitGoldenAgeCombatModifier() + pMyPlayer:GetFoundedReligionGoldenAgeCombatMod();
 			if (iModifier ~= 0 and pMyPlayer:IsGoldenAge()) then
 				controlTable = g_MyCombatDataIM:GetInstance();
 				controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
@@ -1256,7 +1256,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 			end
 
 			-- Civ Trait Bonus
-			iModifier = pMyPlayer:GetTraitGoldenAgeCombatModifier();
+			iModifier = pMyPlayer:GetTraitGoldenAgeCombatModifier() + pMyPlayer:GetFoundedReligionGoldenAgeCombatMod();
 			if (iModifier ~= 0 and pMyPlayer:IsGoldenAge()) then
 				controlTable = g_MyCombatDataIM:GetInstance();
 				controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
@@ -1693,6 +1693,13 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 					-- controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
 					-- controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 				-- end
+			
+				iModifier = pTheirPlayer:GetFoundedReligionGoldenAgeCombatMod();
+				if (iModifier ~= 0 pTheirPlayer:IsGoldenAge()) then
+					controlTable = g_TheirCombatDataIM:GetInstance();
+					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
+					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+				end
 
 			end
 			
@@ -2070,6 +2077,13 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 			-- controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
 			-- controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 		-- end
+			
+		iModifier = theirPlayer:GetFoundedReligionGoldenAgeCombatMod();
+		if (iModifier ~= 0 theirPlayer:IsGoldenAge()) then
+			controlTable = g_TheirCombatDataIM:GetInstance();
+			controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
+			controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+		end
 
 		-- Future Tech bonus
 		local pTeam = Teams[pTheirPlayer:GetTeam()];

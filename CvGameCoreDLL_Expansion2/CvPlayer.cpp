@@ -15499,7 +15499,7 @@ void CvPlayer::DoGreatPersonExpended(UnitTypes eGreatPersonUnit)
 	int iExpendGold;
 	if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
 	{
-		iExpendGold =  GetGreatPersonExpendGold() * GC.getGame().getGameSpeedInfo().getTrainPercent() / 100;
+		iExpendGold = GetGreatPersonExpendGold() * GC.getGame().getGameSpeedInfo().getTrainPercent() / 100;
 	}
 	else
 	{
@@ -15557,6 +15557,58 @@ void CvPlayer::DoGreatPersonExpended(UnitTypes eGreatPersonUnit)
 			}
 		}
 	}
+
+#ifdef GP_EXPENDED_GA
+	// Golden Age gained
+	ReligionTypes eReligionFounded = GetReligions()->GetReligionCreatedByPlayer();
+	if (eReligionFounded > RELIGION_PANTHEON)
+	{
+		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligionFounded, GetID());
+		if (pReligion)
+		{
+			int iGoldenAgeTurns = pReligion->m_Beliefs.GetGreatPersonExpendedGoldenAge();
+			if (iGoldenAgeTurns > 0)
+			{
+#ifdef REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
+				CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
+				int iYieldFromBuilding = 0;
+
+				for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
+				{
+					if (pReligion->m_Beliefs.HasBelief((BeliefTypes)i))
+					{
+						if (pBeliefs->GetEntry(i)->IsReformationBelief())
+						{
+							if (pReligion->m_eFounder == GetID())
+							{
+								if (!isGoldenAge())
+								{
+									ChangeNumGoldenAges(-1);
+								}
+								changeGoldenAgeTurns(iGoldenAgeTurns);
+							}
+						}
+						else
+						{
+							if (!isGoldenAge())
+							{
+								ChangeNumGoldenAges(-1);
+							}
+							changeGoldenAgeTurns(iGoldenAgeTurns);
+						}
+					}
+				}
+#else
+				if (!isGoldenAge())
+				{
+					ChangeNumGoldenAges(-1);
+				}
+				changeGoldenAgeTurns(iGoldenAgeTurns);
+#endif
+			}
+		}
+	}
+#endif
 
 	ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
 	if (pkScriptSystem)

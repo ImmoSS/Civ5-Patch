@@ -270,6 +270,9 @@ protected:
 	static int lHasCreatedReligion(lua_State* L);
 	static int lGetReligionCreatedByPlayer(lua_State* L);
 	static int lGetFoundedReligionEnemyCityCombatMod(lua_State* L);
+#ifdef GP_EXPENDED_GA
+	static int lGetFoundedReligionGoldenAgeCombatMod(lua_State* L);
+#endif
 	static int lGetFoundedReligionFriendlyCityCombatMod(lua_State* L);
 	static int lGetMinimumFaithNextGreatProphet(lua_State* L);
 	static int lHasReligionInMostCities(lua_State* L);

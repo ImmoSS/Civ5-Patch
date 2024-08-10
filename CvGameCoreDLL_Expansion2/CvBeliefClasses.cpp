@@ -57,6 +57,9 @@ CvBeliefEntry::CvBeliefEntry() :
 	m_iMissionaryCostModifier(0),
 	m_iFriendlyCityStateSpreadModifier(0),
 	m_iGreatPersonExpendedFaith(0),
+#ifdef GP_EXPENDED_GA
+	m_iGreatPersonExpendedGoldenAge(0),
+#endif
 	m_iCityStateMinimumInfluence(0),
 	m_iCityStateInfluenceModifier(0),
 	m_iOtherReligionPressureErosion(0),
@@ -332,6 +335,14 @@ int CvBeliefEntry::GetGreatPersonExpendedFaith() const
 {
 	return m_iGreatPersonExpendedFaith;
 }
+
+#ifdef GP_EXPENDED_GA
+/// Accessor: golden age turns for each GP expended
+int CvBeliefEntry::GetGreatPersonExpendedGoldenAge() const
+{
+	return m_iGreatPersonExpendedGoldenAge;
+}
+#endif
 
 /// Accessor: minimum influence with city states of a shared religion
 int CvBeliefEntry::GetCityStateMinimumInfluence() const
@@ -702,6 +713,9 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iMissionaryCostModifier         = kResults.GetInt("MissionaryCostModifier");
 	m_iFriendlyCityStateSpreadModifier= kResults.GetInt("FriendlyCityStateSpreadModifier");
 	m_iGreatPersonExpendedFaith       = kResults.GetInt("GreatPersonExpendedFaith");
+#ifdef GP_EXPENDED_GA
+	m_iGreatPersonExpendedGoldenAge = kResults.GetInt("GreatPersonExpendedGoldenAge");
+#endif
 	m_iCityStateMinimumInfluence      = kResults.GetInt("CityStateMinimumInfluence");
 	m_iCityStateInfluenceModifier     = kResults.GetInt("CityStateInfluenceModifier");
 	m_iOtherReligionPressureErosion   = kResults.GetInt("OtherReligionPressureErosion");
@@ -988,6 +1002,9 @@ CvReligionBeliefs::CvReligionBeliefs(const CvReligionBeliefs& source)
 	m_iMissionaryCostModifier = source.m_iMissionaryCostModifier;
 	m_iFriendlyCityStateSpreadModifier = source.m_iFriendlyCityStateSpreadModifier;
 	m_iGreatPersonExpendedFaith = source.m_iGreatPersonExpendedFaith;
+#ifdef GP_EXPENDED_GA
+	m_iGreatPersonExpendedGoldenAge = source.m_iGreatPersonExpendedGoldenAge;
+#endif
 	m_iCityStateMinimumInfluence = source.m_iCityStateMinimumInfluence;
 	m_iCityStateInfluenceModifier = source.m_iCityStateInfluenceModifier;
 	m_iOtherReligionPressureErosion = source.m_iOtherReligionPressureErosion;
@@ -1065,6 +1082,9 @@ void CvReligionBeliefs::Reset()
 	m_iMissionaryCostModifier = 0;
 	m_iFriendlyCityStateSpreadModifier = 0;
 	m_iGreatPersonExpendedFaith = 0;
+#ifdef GP_EXPENDED_GA
+	m_iGreatPersonExpendedGoldenAge = 0;
+#endif
 	m_iCityStateMinimumInfluence = 0;
 	m_iCityStateInfluenceModifier = 0;
 	m_iOtherReligionPressureErosion = 0;
@@ -1142,6 +1162,9 @@ void CvReligionBeliefs::AddBelief(BeliefTypes eBelief)
 	m_iMissionaryCostModifier += belief->GetMissionaryCostModifier();
 	m_iFriendlyCityStateSpreadModifier += belief->GetFriendlyCityStateSpreadModifier();
 	m_iGreatPersonExpendedFaith += belief->GetGreatPersonExpendedFaith();
+#ifdef GP_EXPENDED_GA
+	m_iGreatPersonExpendedGoldenAge += belief->GetGreatPersonExpendedGoldenAge();
+#endif
 	m_iCityStateMinimumInfluence += belief->GetCityStateMinimumInfluence();
 	m_iCityStateInfluenceModifier += belief->GetCityStateInfluenceModifier();
 	m_iOtherReligionPressureErosion += belief->GetOtherReligionPressureErosion();
@@ -1921,6 +1944,20 @@ void CvReligionBeliefs::Read(FDataStream& kStream)
 	kStream >> m_iMissionaryCostModifier;
 	kStream >> m_iFriendlyCityStateSpreadModifier;
 	kStream >> m_iGreatPersonExpendedFaith;
+#ifdef GP_EXPENDED_GA
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1001)
+	{
+# endif
+		kStream >> m_iGreatPersonExpendedGoldenAge;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iGreatPersonExpendedGoldenAge = 0;
+	}
+# endif
+#endif
 	kStream >> m_iCityStateMinimumInfluence;
 	kStream >> m_iCityStateInfluenceModifier;
 	kStream >> m_iOtherReligionPressureErosion;
@@ -2027,6 +2064,9 @@ void CvReligionBeliefs::Write(FDataStream& kStream) const
 	kStream << m_iMissionaryCostModifier;
 	kStream << m_iFriendlyCityStateSpreadModifier;
 	kStream << m_iGreatPersonExpendedFaith;
+#ifdef GP_EXPENDED_GA
+	kStream << m_iGreatPersonExpendedGoldenAge;
+#endif
 	kStream << m_iCityStateMinimumInfluence;
 	kStream << m_iCityStateInfluenceModifier;
 	kStream << m_iOtherReligionPressureErosion;
