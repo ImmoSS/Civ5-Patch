@@ -715,7 +715,7 @@
 /// Oxford University and National Intelligence Agency can be build once per game
 #define CAN_BUILD_OU_AND_NIA_ONLY_ONCE
 ///
-#define REMOVE_PRODUCTION_OVERFLOW_INTO_GOLD
+#define PRODUCTION_OVERFLOW_INTO_GOLD
 /// Removed graphics of Spaceship Parts
 #define SPACESHIP_GRAPHICS
 ///
