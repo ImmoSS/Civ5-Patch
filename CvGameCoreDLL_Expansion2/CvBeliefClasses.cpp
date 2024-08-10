@@ -59,6 +59,7 @@ CvBeliefEntry::CvBeliefEntry() :
 	m_iGreatPersonExpendedFaith(0),
 #ifdef GP_EXPENDED_GA
 	m_iGreatPersonExpendedGoldenAge(0),
+	m_iGoldenAgeCombatMod(0),
 #endif
 	m_iCityStateMinimumInfluence(0),
 	m_iCityStateInfluenceModifier(0),
@@ -341,6 +342,12 @@ int CvBeliefEntry::GetGreatPersonExpendedFaith() const
 int CvBeliefEntry::GetGreatPersonExpendedGoldenAge() const
 {
 	return m_iGreatPersonExpendedGoldenAge;
+}
+
+/// Accessor: golden age turns for each GP expended
+int CvBeliefEntry::GetGoldenAgeCombatMod() const
+{
+	return m_iGoldenAgeCombatMod;
 }
 #endif
 
@@ -714,7 +721,8 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iFriendlyCityStateSpreadModifier= kResults.GetInt("FriendlyCityStateSpreadModifier");
 	m_iGreatPersonExpendedFaith       = kResults.GetInt("GreatPersonExpendedFaith");
 #ifdef GP_EXPENDED_GA
-	m_iGreatPersonExpendedGoldenAge = kResults.GetInt("GreatPersonExpendedGoldenAge");
+	m_iGreatPersonExpendedGoldenAge	  = kResults.GetInt("GreatPersonExpendedGoldenAge");
+	m_iGoldenAgeCombatMod             =	kResults.GetInt("GoldenAgeCombatMod");
 #endif
 	m_iCityStateMinimumInfluence      = kResults.GetInt("CityStateMinimumInfluence");
 	m_iCityStateInfluenceModifier     = kResults.GetInt("CityStateInfluenceModifier");
@@ -1004,6 +1012,7 @@ CvReligionBeliefs::CvReligionBeliefs(const CvReligionBeliefs& source)
 	m_iGreatPersonExpendedFaith = source.m_iGreatPersonExpendedFaith;
 #ifdef GP_EXPENDED_GA
 	m_iGreatPersonExpendedGoldenAge = source.m_iGreatPersonExpendedGoldenAge;
+	m_iGoldenAgeCombatMod = source.m_iGoldenAgeCombatMod;
 #endif
 	m_iCityStateMinimumInfluence = source.m_iCityStateMinimumInfluence;
 	m_iCityStateInfluenceModifier = source.m_iCityStateInfluenceModifier;
@@ -1084,6 +1093,7 @@ void CvReligionBeliefs::Reset()
 	m_iGreatPersonExpendedFaith = 0;
 #ifdef GP_EXPENDED_GA
 	m_iGreatPersonExpendedGoldenAge = 0;
+	m_iGoldenAgeCombatMod = 0;
 #endif
 	m_iCityStateMinimumInfluence = 0;
 	m_iCityStateInfluenceModifier = 0;
@@ -1164,6 +1174,7 @@ void CvReligionBeliefs::AddBelief(BeliefTypes eBelief)
 	m_iGreatPersonExpendedFaith += belief->GetGreatPersonExpendedFaith();
 #ifdef GP_EXPENDED_GA
 	m_iGreatPersonExpendedGoldenAge += belief->GetGreatPersonExpendedGoldenAge();
+	m_iGoldenAgeCombatMod += belief->GetGoldenAgeCombatMod();
 #endif
 	m_iCityStateMinimumInfluence += belief->GetCityStateMinimumInfluence();
 	m_iCityStateInfluenceModifier += belief->GetCityStateInfluenceModifier();
@@ -1950,11 +1961,13 @@ void CvReligionBeliefs::Read(FDataStream& kStream)
 	{
 # endif
 		kStream >> m_iGreatPersonExpendedGoldenAge;
+		kStream >> m_iGoldenAgeCombatMod;
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
 	else
 	{
 		m_iGreatPersonExpendedGoldenAge = 0;
+		m_iGoldenAgeCombatMod = 0;
 	}
 # endif
 #endif
@@ -2066,6 +2079,7 @@ void CvReligionBeliefs::Write(FDataStream& kStream) const
 	kStream << m_iGreatPersonExpendedFaith;
 #ifdef GP_EXPENDED_GA
 	kStream << m_iGreatPersonExpendedGoldenAge;
+	kStream << m_iGoldenAgeCombatMod;
 #endif
 	kStream << m_iCityStateMinimumInfluence;
 	kStream << m_iCityStateInfluenceModifier;

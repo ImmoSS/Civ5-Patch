@@ -69,6 +69,7 @@ public:
 	int GetGreatPersonExpendedFaith() const;
 #ifdef GP_EXPENDED_GA
 	int GetGreatPersonExpendedGoldenAge() const;
+	int GetGoldenAgeCombatMod() const;
 #endif
 	int GetCityStateMinimumInfluence() const;
 	int GetCityStateInfluenceModifier() const;
@@ -173,6 +174,7 @@ protected:
 	int m_iGreatPersonExpendedFaith;
 #ifdef GP_EXPENDED_GA
 	int m_iGreatPersonExpendedGoldenAge;
+	int m_iGoldenAgeCombatMod;
 #endif
 	int m_iCityStateMinimumInfluence;
 	int m_iCityStateInfluenceModifier;
@@ -374,6 +376,10 @@ public:
 	{
 		return m_iGreatPersonExpendedGoldenAge;
 	};
+	int GetGoldenAgeCombatMod() const
+	{
+		return m_iGoldenAgeCombatMod;
+	};
 #endif
 	int GetCityStateMinimumInfluence() const
 	{
@@ -501,6 +507,7 @@ private:
 	int m_iGreatPersonExpendedFaith;
 #ifdef GP_EXPENDED_GA
 	int m_iGreatPersonExpendedGoldenAge;
+	int m_iGoldenAgeCombatMod;
 #endif
 	int m_iCityStateMinimumInfluence;
 	int m_iCityStateInfluenceModifier;

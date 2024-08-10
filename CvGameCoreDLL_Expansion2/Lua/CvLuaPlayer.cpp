@@ -2803,12 +2803,12 @@ int CvLuaPlayer::lGetFoundedReligionGoldenAgeCombatMod(lua_State* L)
 						{
 							if (pReligion->m_eFounder == pkPlayer->GetID())
 							{
-								iRtnValue = 10;
+								iRtnValue = pReligion->m_Beliefs.GetGoldenAgeCombatMod();
 							}
 						}
 						else
 						{
-							iRtnValue = 10;
+							iRtnValue = pReligion->m_Beliefs.GetGoldenAgeCombatMod();
 						}
 					}
 				}
@@ -2816,7 +2816,7 @@ int CvLuaPlayer::lGetFoundedReligionGoldenAgeCombatMod(lua_State* L)
 #else
 			if (isGoldenAge())
 			{
-				iRtnValue = 10;
+				iRtnValue = pReligion->m_Beliefs.GetGoldenAgeCombatMod();
 			}
 #endif
 		}

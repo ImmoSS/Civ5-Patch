@@ -10876,12 +10876,12 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvUnit* pOtherUnit, const CvPlot
 							{
 								if (pReligion->m_eFounder == GetID())
 								{
-									iModifier += 10;
+									iModifier += pReligion->m_Beliefs.GetGoldenAgeCombatMod();
 								}
 							}
 							else
 							{
-								iModifier += 10;
+								iModifier += pReligion->m_Beliefs.GetGoldenAgeCombatMod();
 							}
 						}
 					}
@@ -10889,7 +10889,7 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvUnit* pOtherUnit, const CvPlot
 #else
 				if (isGoldenAge())
 				{
-					iModifier += 10;
+					iModifier += pReligion->m_Beliefs.GetGoldenAgeCombatMod();
 				}
 #endif
 			}
