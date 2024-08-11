@@ -13455,7 +13455,8 @@ int CvPlayer::GetHappinessFromLuxury(ResourceTypes eResource) const
 #ifdef NEW_LEAGUE_RESOLUTIONS
 		if (GC.getGame().GetGameLeagues()->IsDoubleResourceHappiness(GetID(), eResource))
 		{
-			iBaseHappiness *= 2;
+			iBaseHappiness *= 3;
+			iBaseHappiness /= 2;
 		}
 #endif
 
