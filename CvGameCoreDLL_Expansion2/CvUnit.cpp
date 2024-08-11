@@ -10859,13 +10859,9 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvUnit* pOtherUnit, const CvPlot
 		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligionFounded, kPlayer.GetID());
 		if (pReligion)
 		{
-			int iGoldenAgeTurns = pReligion->m_Beliefs.GetGreatPersonExpendedGoldenAge();
-			if (iGoldenAgeTurns > 0)
+			if (kPlayer.isGoldenAge())
 			{
-				if (isGoldenAge())
-				{
-					iModifier += pReligion->m_Beliefs.GetGoldenAgeCombatMod();
-				}
+				iModifier += pReligion->m_Beliefs.GetGoldenAgeCombatMod();
 			}
 		}
 	}
