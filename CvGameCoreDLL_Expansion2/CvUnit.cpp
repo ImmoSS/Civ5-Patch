@@ -7769,6 +7769,112 @@ bool CvUnit::DoRemoveHeresy()
 	return false;
 }
 
+#ifdef BELIEF_HOLY_ORDER_EXPANSION
+//	--------------------------------------------------------------------------------
+bool CvUnit::CanDoReligiousExpansion() const
+{
+	VALIDATE_OBJECT
+		CvCity* pCity;
+
+	if (!m_pUnitInfo->IsRemoveHeresy())
+	{
+		return false;
+	}
+
+	if (GetReligionData()->GetReligion() == NO_RELIGION)
+	{
+		return false;
+	}
+
+	ReligionTypes eReligionFounded = GET_PLAYER(getOwner()).GetReligions()->GetReligionCreatedByPlayer();
+	bool bAllowReligiousExpansion = false;
+	if (eReligionFounded > RELIGION_PANTHEON)
+	{
+		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligionFounded, getOwner());
+		if (pReligion && pReligion->m_Beliefs.GetMissionaryCostModifier() != 0)
+		{
+			bAllowReligiousExpansion = true;
+		}
+	}
+	if (!bAllowReligiousExpansion)
+	{
+		return false;
+	}
+
+	// Can't be inside someone else's territory
+	if (plot()->getOwner() != NO_PLAYER)
+		return false;
+
+	// We have to be in or next to friendly territory
+	bool bFoundAdjacent = false;
+
+	CvPlot* pLoopPlot;
+	for (int iI = 0; iI < NUM_DIRECTION_TYPES; iI++)
+	{
+		pLoopPlot = plotDirection(plot()->getX(), plot()->getY(), ((DirectionTypes)iI));
+
+		if (pLoopPlot != NULL)
+		{
+			if (pLoopPlot->getOwner() == getOwner())
+			{
+				bFoundAdjacent = true;
+				break;
+			}
+		}
+	}
+
+	if (!bFoundAdjacent)
+		return false;
+
+	if (isDelayedDeath())
+	{
+		return false;
+	}
+
+	return true;
+}
+
+//	--------------------------------------------------------------------------------
+bool CvUnit::DoReligiousExpansion()
+{
+	// can we actually do this?
+	CvPlot* pThisPlot = plot();
+	if (!CanDoReligiousExpansion())
+		return false;
+
+	CvUnitEntry* pkUnitEntry = GC.getUnitInfo(getUnitType());
+	if (pkUnitEntry)
+	{
+		// Cooldown
+		int iCooldown = /*10*/ GC.getCULTURE_BOMB_COOLDOWN();
+
+		CvPlayerAI& kPlayer = GET_PLAYER(getOwner());
+		kPlayer.changeCultureBombTimer(iCooldown);
+
+		PerformCultureBomb(pkUnitEntry->GetCultureBombRadius());
+
+		if (pThisPlot->isActiveVisible(false))
+		{
+#ifndef REMOVE_GAMEPLAY_UNIT_ACTIVATE_ANIMATION
+			auto_ptr<ICvUnit1> pDllUnit(new CvDllUnit(this));
+			gDLL->GameplayUnitActivate(pDllUnit.get());
+#endif
+		}
+
+		if (IsGreatPerson())
+		{
+			kPlayer.DoGreatPersonExpended(getUnitType());
+		}
+
+		kill(true);
+
+		return true;
+	}
+
+	return false;
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 int CvUnit::GetNumFollowersAfterSpread() const
 {

@@ -4173,6 +4173,30 @@
 			<IconIndex>0</IconIndex> 
 			<IconAtlas>UNIT_ACTION_CHANGE_HOME_CITY</IconAtlas> 
 		</Row>
+		<Row> 
+			<ID>58</ID> 
+			<Type>MISSION_RELIGIOUS_EXPANSION</Type> 
+			<Description>TXT_KEY_MISSION_RELIGIOUS_EXPANSION</Description> 
+			<Help>TXT_KEY_MISSION_RELIGIOUS_EXPANSION_HELP</Help> 
+			<DisabledHelp>TXT_KEY_RELIGIOUS_EXPANSION_DISABLED_HELP</DisabledHelp> 
+			<HotKeyPriority>0</HotKeyPriority> 
+			<HotKeyPriorityAlt>0</HotKeyPriorityAlt> 
+			<OrderPriority>199</OrderPriority> 
+			<AltDown>false</AltDown> 
+			<AltDownAlt>false</AltDownAlt> 
+			<ShiftDown>false</ShiftDown> 
+			<ShiftDownAlt>false</ShiftDownAlt> 
+			<CtrlDown>false</CtrlDown> 
+			<CtrlDownAlt>false</CtrlDownAlt> 
+			<Visible>true</Visible> 
+			<Time>20</Time> 
+			<Target>false</Target> 
+			<Build>false</Build> 
+			<Sound>false</Sound> 
+			<EntityEventType>ENTITY_EVENT_GREAT_EVENT</EntityEventType> 
+			<IconIndex>1</IconIndex> 
+			<IconAtlas>UNIT_ACTION_ATLAS_RELIGION</IconAtlas> 
+		</Row>
 	</Missions> 
 
 	<Table name="UnitPromotions">

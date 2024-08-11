@@ -325,6 +325,11 @@ public:
 	bool CanRemoveHeresy(const CvPlot* pPlot) const;
 	bool DoRemoveHeresy();
 
+#ifdef BELIEF_HOLY_ORDER_EXPANSION
+	bool CanDoReligiousExpansion() const;
+	bool DoReligiousExpansion();
+#endif
+
 	int GetNumFollowersAfterSpread() const;
 	ReligionTypes GetMajorityReligionAfterSpread() const;
 	CvCity *GetSpreadReligionTargetCity() const;
