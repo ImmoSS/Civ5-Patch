@@ -64,6 +64,13 @@ function GetHelpTextForTech( iTechID )
 		strHelpText = strHelpText .. Locale.ConvertTextKey("TXT_KEY_TECH_HELP_LEADS_TO", strLeadsTo);
 	end
 
+
+	local iTechKnownCount = pActivePlayer:TechKnownCount( iTechID );
+	if iTechKnownCount > 0 then
+		strHelpText = strHelpText .. "[NEWLINE]";
+		strHelpText = strHelpText .. Locale.ConvertTextKey("TXT_KEY_TECH_HELP_WAS_RESEARCHED", iTechKnownCount);
+	end
+
 	-- Pre-written help text
 	strHelpText = strHelpText .. "[NEWLINE]-------------------------[NEWLINE]";
 	strHelpText = strHelpText .. Locale.ConvertTextKey( pTechInfo.Help );

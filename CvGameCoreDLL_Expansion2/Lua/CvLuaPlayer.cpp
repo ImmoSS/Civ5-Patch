@@ -1886,7 +1886,7 @@ int CvLuaPlayer::lTechKnownCount(lua_State* L)
 		CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iI);
 		if (kLoopTeam.isAlive() && !kLoopTeam.isMinorCiv())
 		{
-			if (GET_TEAM(pkPlayer->getTeam()).isHasMet((TeamTypes)iI))
+			if (GET_TEAM(pkPlayer->getTeam()).isHasMet((TeamTypes)iI) && pkPlayer->getTeam() != (TeamTypes)iI)
 			{
 #ifdef HAS_TECH_BY_HUMAN
 				if (kLoopTeam.GetTeamTechs()->HasTechByHuman(eTech))
