@@ -135,20 +135,20 @@ function BuildPopulationEntry( iPlayer )
     
     instance.Name:LocalizeAndSetText( "TXT_KEY_DEMOGRAPHICS_POPULATION" );
     
-    instance.Value:SetText( Locale.ToNumber(m_PopulationTable[ iPlayer ], "#,###,###,### [ICON_CITIZEN]" ));
+    instance.Value:SetText( Locale.ToNumber(m_PopulationTable[ iPlayer ], "[ICON_CITIZEN] #,###,###,###" ));
     instance.ValueTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_POPULATION_MEASURE") );
    
     local best = GetBest( m_PopulationTable, iPlayer );
     SetIcon(best[2], instance.BestIcon, instance.BestIconBG, instance.BestIconShadow);
-    instance.Best:SetText( Locale.ToNumber(best[1], "#,###,###,### [ICON_CITIZEN") );
+    instance.Best:SetText( Locale.ToNumber(best[1], "#,###,###,###") );
     instance.BestTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_POPULATION_MEASURE") );
 	
-    instance.Average:SetText( Locale.ToNumber( GetAverage( m_PopulationTable, iPlayer ), "#,###,###,### [ICON_CITIZEN" ) );
+    instance.Average:SetText( Locale.ToNumber( GetAverage( m_PopulationTable, iPlayer ), "#,###,###,###" ) );
     instance.AverageTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_POPULATION_MEASURE") );
     
     local worst = GetWorst( m_PopulationTable, iPlayer );
     SetIcon(worst[2], instance.WorstIcon, instance.WorstIconBG, instance.WorstIconShadow);
-    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#,###,###,### [ICON_CITIZEN" ) );
+    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#,###,###,###" ) );
     instance.WorstTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_POPULATION_MEASURE") );
     
     instance.Rank:SetText( Locale.ToNumber(GetRank( m_PopulationTable, iPlayer ), "#") );
@@ -170,20 +170,20 @@ function BuildFoodEntry( iPlayer )
     
     instance.Name:LocalizeAndSetText( "TXT_KEY_DEMOGRAPHICS_FOOD" );
     
-    instance.Value:SetText( Locale.ToNumber(m_FoodTable[ iPlayer ], "#,###,###,### [ICON_FOOD]" ));
+    instance.Value:SetText( Locale.ToNumber(m_FoodTable[ iPlayer ], "[ICON_FOOD] #,###,###,###" ));
     instance.ValueTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_FOOD_MEASURE") );
    
     local best = GetBest( m_FoodTable, iPlayer );
     SetIcon(best[2], instance.BestIcon, instance.BestIconBG, instance.BestIconShadow);
-    instance.Best:SetText( Locale.ToNumber(best[1], "#,###,###,### [ICON_FOOD]") );
+    instance.Best:SetText( Locale.ToNumber(best[1], "#,###,###,###") );
     instance.BestTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_FOOD_MEASURE") );
 	
-    instance.Average:SetText( Locale.ToNumber( GetAverage( m_FoodTable, iPlayer ), "#,###,###,### [ICON_FOOD]" ) );
+    instance.Average:SetText( Locale.ToNumber( GetAverage( m_FoodTable, iPlayer ), "#,###,###,###" ) );
     instance.AverageTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_FOOD_MEASURE") );
     
     local worst = GetWorst( m_FoodTable, iPlayer );
     SetIcon(worst[2], instance.WorstIcon, instance.WorstIconBG, instance.WorstIconShadow);
-    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#,###,###,### [ICON_FOOD]" ) );
+    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#,###,###,###" ) );
     instance.WorstTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_FOOD_MEASURE") );
     
     instance.Rank:SetText( Locale.ToNumber(GetRank( m_FoodTable, iPlayer ), "#") );
@@ -205,20 +205,20 @@ function BuildProductionEntry( iPlayer )
     
     instance.Name:LocalizeAndSetText( "TXT_KEY_DEMOGRAPHICS_PRODUCTION" );
     
-    instance.Value:SetText( Locale.ToNumber(m_ProductionTable[ iPlayer ], "#,###,###,### [ICON_PRODUCTION]" ));
+    instance.Value:SetText( Locale.ToNumber(m_ProductionTable[ iPlayer ], "[ICON_PRODUCTION] #,###,###,###" ));
     instance.ValueTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_PRODUCTION_MEASURE") );
    
     local best = GetBest( m_ProductionTable, iPlayer );
     SetIcon(best[2], instance.BestIcon, instance.BestIconBG, instance.BestIconShadow);
-    instance.Best:SetText( Locale.ToNumber(best[1], "#,###,###,### [ICON_PRODUCTION]") );
+    instance.Best:SetText( Locale.ToNumber(best[1], "#,###,###,###") );
     instance.BestTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_PRODUCTION_MEASURE") );
 	
-    instance.Average:SetText( Locale.ToNumber( GetAverage( m_ProductionTable, iPlayer ), "#,###,###,### [ICON_PRODUCTION]" ) );
+    instance.Average:SetText( Locale.ToNumber( GetAverage( m_ProductionTable, iPlayer ), "#,###,###,###" ) );
     instance.AverageTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_PRODUCTION_MEASURE") );
     
     local worst = GetWorst( m_ProductionTable, iPlayer );
     SetIcon(worst[2], instance.WorstIcon, instance.WorstIconBG, instance.WorstIconShadow);
-    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#,###,###,### [ICON_PRODUCTION]" ) );
+    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#,###,###,###" ) );
     instance.WorstTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_PRODUCTION_MEASURE") );
     
     instance.Rank:SetText( Locale.ToNumber(GetRank( m_ProductionTable, iPlayer ), "#") );
@@ -241,20 +241,20 @@ function BuildGoldEntry( iPlayer )
     
     instance.Name:LocalizeAndSetText( "TXT_KEY_DEMOGRAPHICS_GOLD" );
     
-    instance.Value:SetText( Locale.ToNumber(m_GoldTable[ iPlayer ], "#,###,###,### [ICON_GOLD]" ));
+    instance.Value:SetText( Locale.ToNumber(m_GoldTable[ iPlayer ], "[ICON_GOLD] #,###,###,###" ));
     instance.ValueTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_GOLD_MEASURE") );
    
     local best = GetBest( m_GoldTable, iPlayer );
     SetIcon(best[2], instance.BestIcon, instance.BestIconBG, instance.BestIconShadow);
-    instance.Best:SetText( Locale.ToNumber(best[1], "#,###,###,### [ICON_GOLD]") );
+    instance.Best:SetText( Locale.ToNumber(best[1], "#,###,###,###") );
     instance.BestTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_GOLD_MEASURE") );
 	
-    instance.Average:SetText( Locale.ToNumber( GetAverage( m_GoldTable, iPlayer ), "#,###,###,### [ICON_GOLD]" ) );
+    instance.Average:SetText( Locale.ToNumber( GetAverage( m_GoldTable, iPlayer ), "#,###,###,###" ) );
     instance.AverageTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_GOLD_MEASURE") );
     
     local worst = GetWorst( m_GoldTable, iPlayer );
     SetIcon(worst[2], instance.WorstIcon, instance.WorstIconBG, instance.WorstIconShadow);
-    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#,###,###,### [ICON_GOLD]" ) );
+    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#,###,###,###" ) );
     instance.WorstTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_GOLD_MEASURE") );
     
     instance.Rank:SetText( Locale.ToNumber(GetRank( m_GoldTable, iPlayer ), "#") );
@@ -276,20 +276,20 @@ function BuildLandEntry( iPlayer )
     
     instance.Name:LocalizeAndSetText( "TXT_KEY_DEMOGRAPHICS_LAND" );
     
-    instance.Value:SetText( Locale.ToNumber(m_LandTable[ iPlayer ], "#,###,###,### [ICON_CAPITAL]" ));
+    instance.Value:SetText( Locale.ToNumber(m_LandTable[ iPlayer ], "[ICON_CAPITAL] #,###,###,###" ));
     instance.ValueTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_LAND_MEASURE") );
    
     local best = GetBest( m_LandTable, iPlayer );
     SetIcon(best[2], instance.BestIcon, instance.BestIconBG, instance.BestIconShadow);
-    instance.Best:SetText( Locale.ToNumber(best[1], "#,###,###,### [ICON_CAPITAL]") );
+    instance.Best:SetText( Locale.ToNumber(best[1], "#,###,###,###") );
     instance.BestTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_LAND_MEASURE") );
 	
-    instance.Average:SetText( Locale.ToNumber( GetAverage( m_LandTable, iPlayer ), "#,###,###,### [ICON_CAPITAL]" ) );
+    instance.Average:SetText( Locale.ToNumber( GetAverage( m_LandTable, iPlayer ), "#,###,###,###" ) );
     instance.AverageTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_LAND_MEASURE") );
     
     local worst = GetWorst( m_LandTable, iPlayer );
     SetIcon(worst[2], instance.WorstIcon, instance.WorstIconBG, instance.WorstIconShadow);
-    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#,###,###,### [ICON_CAPITAL]" ) );
+    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#,###,###,###" ) );
     instance.WorstTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_LAND_MEASURE") );
     
     instance.Rank:SetText( Locale.ToNumber(GetRank( m_LandTable, iPlayer ), "#") );
@@ -311,20 +311,20 @@ function BuildArmyEntry( iPlayer )
     
     instance.Name:LocalizeAndSetText( "TXT_KEY_DEMOGRAPHICS_ARMY" );
     
-    instance.Value:SetText( Locale.ToNumber(m_ArmyTable[ iPlayer ], "#,###,###,### [ICON_STRENGTH]" ));
+    instance.Value:SetText( Locale.ToNumber(m_ArmyTable[ iPlayer ], "[ICON_STRENGTH] #,###,###,###" ));
     instance.ValueTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_ARMY_MEASURE") );
    
     local best = GetBest( m_ArmyTable, iPlayer );
     SetIcon(best[2], instance.BestIcon, instance.BestIconBG, instance.BestIconShadow);
-    instance.Best:SetText( Locale.ToNumber(best[1], "#,###,###,### [ICON_STRENGTH]") );
+    instance.Best:SetText( Locale.ToNumber(best[1], "#,###,###,###") );
     instance.BestTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_ARMY_MEASURE") );
 	
-    instance.Average:SetText( Locale.ToNumber( GetAverage( m_ArmyTable, iPlayer ), "#,###,###,### [ICON_STRENGTH]" ) );
+    instance.Average:SetText( Locale.ToNumber( GetAverage( m_ArmyTable, iPlayer ), "#,###,###,###" ) );
     instance.AverageTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_ARMY_MEASURE") );
     
     local worst = GetWorst( m_ArmyTable, iPlayer );
     SetIcon(worst[2], instance.WorstIcon, instance.WorstIconBG, instance.WorstIconShadow);
-    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#,###,###,### [ICON_STRENGTH]") );
+    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#,###,###,###") );
     instance.WorstTT:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_DEMOGRAPHICS_ARMY_MEASURE") );
     
     instance.Rank:SetText( Locale.ToNumber(GetRank( m_ArmyTable, iPlayer ), "#") );
@@ -363,33 +363,17 @@ function BuildApprovalEntry( iPlayer )
         
     instance.Name:LocalizeAndSetText( "TXT_KEY_DEMOGRAPHICS_APPROVAL" );
     
-    if (m_ApprovalTable[ iPlayer ] >= 0) then
-        instance.Value:SetText( Locale.ToNumber( m_ApprovalTable[ iPlayer ], "#" ) .. " [ICON_HAPPINESS_1]");
-    else
-        instance.Value:SetText( Locale.ToNumber( -m_ApprovalTable[ iPlayer ], "#" ) .. " [ICON_HAPPINESS_4]");
-    end
+    instance.Value:SetText( "[ICON_HAPPINESS_1] " .. Locale.ToNumber( m_ApprovalTable[ iPlayer ], "#" ) );
    
     local best = GetBest( m_ApprovalTable, iPlayer );
     SetIcon(best[2], instance.BestIcon, instance.BestIconBG, instance.BestIconShadow);
-    if (best[1] >= 0) then
-        instance.Best:SetText( Locale.ToNumber( best[1], "#" ) .. " [ICON_HAPPINESS_1]");
-    else
-        instance.Best:SetText( Locale.ToNumber( -best[1], "#" ) .. " [ICON_HAPPINESS_4]");
-    end
+    instance.Best:SetText( Locale.ToNumber( best[1], "#" ) );
 	
-    if (GetAverage( m_ApprovalTable, iPlayer ) >= 0) then
-        instance.Average:SetText( Locale.ToNumber( GetAverage( m_ApprovalTable, iPlayer ), "#" ) .. " [ICON_HAPPINESS_1]");
-    else
-        instance.Average:SetText( Locale.ToNumber( GetAverage( -m_ApprovalTable, iPlayer ), "#" ) .. " [ICON_HAPPINESS_4]");
-    end
+    instance.Average:SetText( Locale.ToNumber( GetAverage( m_ApprovalTable, iPlayer ), "#" ) );
     
     local worst = GetWorst( m_ApprovalTable, iPlayer );
     SetIcon(worst[2], instance.WorstIcon, instance.WorstIconBG, instance.WorstIconShadow);
-    if (worst[1] >= 0) then
-        instance.Worst:SetText( Locale.ToNumber( worst[1], "#" ) .. " [ICON_HAPPINESS_1]");
-    else
-        instance.Worst:SetText( Locale.ToNumber( -worst[1], "#" ) .. " [ICON_HAPPINESS_4]");
-    end
+    instance.Worst:SetText( Locale.ToNumber( worst[1], "#" ) );
     
     instance.Rank:SetText( Locale.ToNumber(GetRank( m_ApprovalTable, iPlayer ), "#") );
 end
@@ -426,17 +410,17 @@ function BuildLiteracyEntry( iPlayer )
     
     instance.Name:LocalizeAndSetText( "TXT_KEY_DEMOGRAPHICS_LITERACY" );
     
-    instance.Value:SetText( Locale.ToNumber(m_LiteracyTable[ iPlayer ], "# [ICON_RESEARCH]" ));
+    instance.Value:SetText( Locale.ToNumber(m_LiteracyTable[ iPlayer ], "[ICON_RESEARCH] #" ));
    
     local best = GetBest( m_LiteracyTable, iPlayer );
     SetIcon(best[2], instance.BestIcon, instance.BestIconBG, instance.BestIconShadow);
-    instance.Best:SetText( Locale.ToNumber(best[1], "# [ICON_RESEARCH]") );
+    instance.Best:SetText( Locale.ToNumber(best[1], "#") );
 	
-    instance.Average:SetText( Locale.ToNumber( GetAverage( m_LiteracyTable, iPlayer ), "# [ICON_RESEARCH]" ) );
+    instance.Average:SetText( Locale.ToNumber( GetAverage( m_LiteracyTable, iPlayer ), "#" ) );
     
     local worst = GetWorst( m_LiteracyTable, iPlayer );
     SetIcon(worst[2], instance.WorstIcon, instance.WorstIconBG, instance.WorstIconShadow);
-    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "# [ICON_RESEARCH]" ) );
+    instance.Worst:LocalizeAndSetText( Locale.ToNumber(worst[1], "#" ) );
     
     instance.Rank:SetText( Locale.ToNumber(GetRank( m_LiteracyTable, iPlayer ), "#") );
 end
