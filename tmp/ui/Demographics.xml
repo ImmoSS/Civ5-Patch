@@ -90,10 +90,10 @@
         </Box>
 
         <Box Anchor="L,C" Size="150,54" ID="BestTT" Color="White.0" >
-          <Image ID="BestIconBG" Size="32.32" Anchor="L,C" Offset="36,0" TextureOffset="32,0" Texture="CivIconBGSizes.dds" />
-          <Image ID="BestIconShadow" Size="24.24" Anchor="L,C" Offset="1,1" Texture="CivSymbolAtlas16.dds" Color="Black.128"/>
-          <Image ID="BestIcon" Size="24.24" Offset="12,0"  Anchor="L,C" Texture="CivSymbolsColor256.dds" />
-          <Label Anchor="L,C" ID="Best" Offset="72,0" WrapWidth="150" Color0="0.200.0.255" Color1="Black" />
+          <Image ID="BestIconBG" Size="32.32" Anchor="C,C" Offset="0,-12" TextureOffset="32,0" Texture="CivIconBGSizes.dds" />
+          <Image ID="BestIconShadow" Size="24.24" Anchor="C,C" Offset="1,-11" Texture="CivSymbolAtlas16.dds" Color="Black.128"/>
+          <Image ID="BestIcon" Size="24.24" Offset="0,-12"  Anchor="C,C" Texture="CivSymbolsColor256.dds" />
+          <Label Anchor="C,C" ID="Best" Offset="0,12" WrapWidth="150" Color0="0.200.0.255" Color1="Black" />
 
         </Box>
 
@@ -103,10 +103,10 @@
         </Box>
 
         <Box Anchor="L,C" Size="150,54" ID="WorstTT"  Color="White.0" >
-          <Image ID="WorstIconBG" Size="32.32" Anchor="L,C" Offset="36,0" TextureOffset="32,0" Texture="CivIconBGSizes.dds" />
-          <Image ID="WorstIconShadow" Size="24.24" Anchor="L,C" Offset="1,1" Texture="CivSymbolAtlas32.dds" Color="Black.128"/>
-          <Image ID="WorstIcon" Size="24.24" Offset="12,0"  Anchor="L,C" Texture="CivSymbolsColor256.dds" />
-          <Label Anchor="L,C" ID="Worst" Offset="72,0" WrapWidth="150" Color0="200.0.0.255" Color1="Black" />
+          <Image ID="WorstIconBG" Size="32.32" Anchor="C,C" Offset="0,-12" TextureOffset="32,0" Texture="CivIconBGSizes.dds" />
+          <Image ID="WorstIconShadow" Size="24.24" Anchor="C,C" Offset="1,-11" Texture="CivSymbolAtlas32.dds" Color="Black.128"/>
+          <Image ID="WorstIcon" Size="24.24" Offset="0,-12"  Anchor="C,C" Texture="CivSymbolsColor256.dds" />
+          <Label Anchor="C,C" ID="Worst" Offset="0,12" WrapWidth="150" Color0="200.0.0.255" Color1="Black" />
 
         </Box>
 
