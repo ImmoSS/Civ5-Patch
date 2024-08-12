@@ -71,7 +71,7 @@ public:
 	int GetGreatPersonExpendedGoldenAge() const;
 	int GetGoldenAgeCombatMod() const;
 #endif
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 	bool IsAllowPolicyWonders() const;
 #endif
 	int GetCityStateMinimumInfluence() const;
@@ -179,7 +179,7 @@ protected:
 	int m_iGreatPersonExpendedGoldenAge;
 	int m_iGoldenAgeCombatMod;
 #endif
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 	bool m_bAllowPolicyWonders;
 #endif
 	int m_iCityStateMinimumInfluence;
@@ -387,7 +387,7 @@ public:
 		return m_iGoldenAgeCombatMod;
 	};
 #endif
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 	bool IsAllowPolicyWonders() const
 	{
 		return m_bAllowPolicyWonders;
@@ -521,7 +521,7 @@ private:
 	int m_iGreatPersonExpendedGoldenAge;
 	int m_iGoldenAgeCombatMod;
 #endif
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 	bool m_bAllowPolicyWonders;
 #endif
 	int m_iCityStateMinimumInfluence;

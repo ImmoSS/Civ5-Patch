@@ -507,7 +507,7 @@
 ///
 #define GP_EXPENDED_GA
 ///
-#define BELIEF_NO_TITLE
+#define NEW_BELIEF_PROPHECY
 ///
 #define BELIEF_HOLY_ORDER_EXPANSION
 /*RELIGION CHANGES END*/
@@ -960,7 +960,7 @@
 // don't forget to mark changes here
 //
 // 1000: v7.0  (initial)
-// 1001: v10.0 (adds GP_EXPENDED_GA, BELIEF_NO_TITLE)
+// 1001: v10.0 (adds GP_EXPENDED_GA, NEW_BELIEF_PROPHECY)
 # define BUMP_SAVE_VERSION_BELIEFS 1001
 // 1000: v7.0  (initial)
 // 1001: v8.0  (adds CITY_EXTRA_ATTACK)

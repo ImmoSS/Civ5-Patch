@@ -61,7 +61,7 @@ CvBeliefEntry::CvBeliefEntry() :
 	m_iGreatPersonExpendedGoldenAge(0),
 	m_iGoldenAgeCombatMod(0),
 #endif
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 	m_bAllowPolicyWonders(false),
 #endif
 	m_iCityStateMinimumInfluence(0),
@@ -354,7 +354,7 @@ int CvBeliefEntry::GetGoldenAgeCombatMod() const
 }
 #endif
 
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 ///
 bool CvBeliefEntry::IsAllowPolicyWonders() const
 {
@@ -735,7 +735,7 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iGreatPersonExpendedGoldenAge	  = kResults.GetInt("GreatPersonExpendedGoldenAge");
 	m_iGoldenAgeCombatMod             =	kResults.GetInt("GoldenAgeCombatMod");
 #endif
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 	m_bAllowPolicyWonders             = kResults.GetInt("AllowPolicyWonders");
 #endif
 	m_iCityStateMinimumInfluence      = kResults.GetInt("CityStateMinimumInfluence");
@@ -1028,7 +1028,7 @@ CvReligionBeliefs::CvReligionBeliefs(const CvReligionBeliefs& source)
 	m_iGreatPersonExpendedGoldenAge = source.m_iGreatPersonExpendedGoldenAge;
 	m_iGoldenAgeCombatMod = source.m_iGoldenAgeCombatMod;
 #endif
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 	m_bAllowPolicyWonders = source.m_bAllowPolicyWonders;
 #endif
 	m_iCityStateMinimumInfluence = source.m_iCityStateMinimumInfluence;
@@ -1112,7 +1112,7 @@ void CvReligionBeliefs::Reset()
 	m_iGreatPersonExpendedGoldenAge = 0;
 	m_iGoldenAgeCombatMod = 0;
 #endif
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 	m_bAllowPolicyWonders = false;
 #endif
 	m_iCityStateMinimumInfluence = 0;
@@ -1196,7 +1196,7 @@ void CvReligionBeliefs::AddBelief(BeliefTypes eBelief)
 	m_iGreatPersonExpendedGoldenAge += belief->GetGreatPersonExpendedGoldenAge();
 	m_iGoldenAgeCombatMod += belief->GetGoldenAgeCombatMod();
 #endif
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 	m_bAllowPolicyWonders += belief->IsAllowPolicyWonders();
 #endif
 	m_iCityStateMinimumInfluence += belief->GetCityStateMinimumInfluence();
@@ -1994,7 +1994,7 @@ void CvReligionBeliefs::Read(FDataStream& kStream)
 	}
 # endif
 #endif
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1001)
 	{
@@ -2118,7 +2118,7 @@ void CvReligionBeliefs::Write(FDataStream& kStream) const
 	kStream << m_iGreatPersonExpendedGoldenAge;
 	kStream << m_iGoldenAgeCombatMod;
 #endif
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 	kStream << m_bAllowPolicyWonders;
 #endif
 	kStream << m_iCityStateMinimumInfluence;

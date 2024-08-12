@@ -8474,7 +8474,7 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 	PolicyBranchTypes eBranch = (PolicyBranchTypes)pBuildingInfo.GetPolicyBranchType();
 	if (eBranch != NO_POLICY_BRANCH_TYPE)
 	{
-#ifdef BELIEF_NO_TITLE
+#ifdef NEW_BELIEF_PROPHECY
 		ReligionTypes eReligionFounded = GetReligions()->GetReligionCreatedByPlayer();
 		bool bReligionAllowsPolicyWonders = false;
 		if (eReligionFounded > RELIGION_PANTHEON)
