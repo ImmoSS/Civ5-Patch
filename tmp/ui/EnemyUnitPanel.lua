@@ -1727,6 +1727,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				local iChance;
 				iChance = pMyUnit:GetCaptureChance(pTheirUnit);
 				if (iChance > 0) then
+						iChance = 100;
 						controlTable = g_TheirCombatDataIM:GetInstance();
 						controlTable.Text:LocalizeAndSetText("TXT_KEY_EUPANEL_CAPTURE_CHANCE", iChance);
 						controlTable.Value:SetText("");
