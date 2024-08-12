@@ -16,7 +16,15 @@ function ShowHideHandler( bIsHide, bIsInit )
 ---------- Temudjin END
 
     if not bIsHide then
-        Controls.AtlasLogo:SetTexture( "CivilzationVAtlas.dds" );
+        --Controls.AtlasLogo:SetTexture( "CivilzationVAtlas.dds" );
+        local rand = math.random(3);
+        if (rand == 3) then
+            Controls.AtlasLogo:SetTexture( string.format("3_loading_%d.dds", math.random(24)) );
+        elseif (rand == 2) then
+            Controls.AtlasLogo:SetTexture( string.format("2_loading_%d.dds", math.random(18)) );
+        else
+            Controls.AtlasLogo:SetTexture( string.format("1_loading_%d.dds", math.random(20)) );
+        end
     	UIManager:SetUICursor( 0 );
         UIManager:QueuePopup( Controls.MainMenu, PopupPriority.MainMenu );
     else

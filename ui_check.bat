@@ -67,6 +67,12 @@ FIND %text% "%cd%\UI_bc1\UnitFlagManager\UnitFlagManager.lua" && (
   ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\UnitFlagManager.lua" "%cd%\%patchfolder%\UI\UnitFlagManager.lua"
 )
 REM -------------------------------------------------
+IF EXIST "%cd%\UI_bc1\FrontEnd\FrontEnd.lua" (
+  ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\eui\FrontEnd.lua" "%cd%\%patchfolder%\UI\FrontEnd.lua"
+) ELSE (
+  ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\ui\FrontEnd.lua" "%cd%\%patchfolder%\UI\FrontEnd.lua"
+)
+REM -------------------------------------------------
 IF EXIST "%cd%\UI_bc1\Improvements\SocialPolicyPopup.lua" (
   ECHO F | xcopy /s /y "%cd%\%patchfolder%\tmp\eui\SocialPolicyPopup.lua" "%cd%\%patchfolder%\UI\SocialPolicyPopup.lua"
 ) ELSE (
