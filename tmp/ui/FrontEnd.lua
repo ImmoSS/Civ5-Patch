@@ -16,7 +16,7 @@ function ShowHideHandler( bIsHide, bIsInit )
         UIManager:SetUICursor( 0 );
         UIManager:QueuePopup( Controls.MainMenu, PopupPriority.MainMenu );
         --Controls.AtlasLogo:SetTexture( "CivilzationVAtlas.dds" );
-        Controls.AtlasLogo:SetTexture( string.format("loading_%d.dds", math.random(14)) );
+        Controls.AtlasLogo:SetTexture( string.format("mod_loading_%d.dds", math.random(14)) );
     else
         Controls.AtlasLogo:UnloadTexture();
     end
