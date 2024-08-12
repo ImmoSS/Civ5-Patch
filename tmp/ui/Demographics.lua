@@ -380,7 +380,7 @@ function BuildApprovalEntry( iPlayer )
     if (GetAverage( m_ApprovalTable, iPlayer ) >= 0) then
         instance.Average:SetText( Locale.ToNumber( GetAverage( m_ApprovalTable, iPlayer ), "#" ) .. " [ICON_HAPPINESS_1]");
     else
-        instance.Average:SetText( Locale.ToNumber( GetAverage( -m_ApprovalTable, iPlayer ), "#" ) .. " [ICON_HAPPINESS_4]");
+        instance.Average:SetText( Locale.ToNumber( -GetAverage( m_ApprovalTable, iPlayer ), "#" ) .. " [ICON_HAPPINESS_4]");
     end
     
     local worst = GetWorst( m_ApprovalTable, iPlayer );
