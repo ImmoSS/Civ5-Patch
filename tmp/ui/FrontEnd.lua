@@ -16,14 +16,7 @@ function ShowHideHandler( bIsHide, bIsInit )
         UIManager:SetUICursor( 0 );
         UIManager:QueuePopup( Controls.MainMenu, PopupPriority.MainMenu );
         --Controls.AtlasLogo:SetTexture( "CivilzationVAtlas.dds" );
-        local rand = math.random(3);
-        if (rand == 3) then
-            Controls.AtlasLogo:SetTexture( string.format("3_loading_%d.dds", math.random(18)) );
-        elseif (rand == 2) then
-            Controls.AtlasLogo:SetTexture( string.format("2_loading_%d.dds", math.random(12)) );
-        else
-            Controls.AtlasLogo:SetTexture( string.format("1_loading_%d.dds", math.random(20)) );
-        end
+        Controls.AtlasLogo:SetTexture( string.format("loading_%d.dds", math.random(14)) );
     else
         Controls.AtlasLogo:UnloadTexture();
     end
