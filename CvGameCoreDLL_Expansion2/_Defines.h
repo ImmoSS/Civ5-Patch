@@ -246,10 +246,6 @@
 #endif
 /// Restriction on Great People gifts
 #define CANT_GIFT_GP
-///
-#define NO_SPEED_MOD_FOR_TOURISM_BLAST
-///
-#define BLAST_TOURISM_ON_OWNERS_LAND
 /*GP CHAGES END*/
 
 
@@ -440,6 +436,10 @@
 #define TOURISM_BONUS_DIPLOMAT
 ///
 #define REWORK_PUBLIC_OPINION
+///
+#define NO_SPEED_MOD_FOR_TOURISM_BLAST
+///
+#define BLAST_TOURISM_ON_OWNERS_LAND
 /*TOURISM CHANGES END*/
 
 
