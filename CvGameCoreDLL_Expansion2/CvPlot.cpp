@@ -7292,7 +7292,6 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 #ifdef REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
 					int iReligionChange = 0;
 					CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
-					int iYieldFromBuilding = 0;
 
 					for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
 					{
@@ -7300,14 +7299,14 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 						{
 							if (pBeliefs->GetEntry(i)->IsReformationBelief())
 							{
-								if (pReligion->m_eFounder == getOwner())
+								if (pReligion->m_eFounder == pWorkingCity->getOwner())
 								{
-									iReligionChange = pBeliefs->GetEntry(i)->GetResourceYieldChange(eResource, eYield);
+									iReligionChange += pBeliefs->GetEntry(i)->GetResourceYieldChange(eResource, eYield);
 								}
 							}
 							else
 							{
-								iReligionChange = pBeliefs->GetEntry(i)->GetResourceYieldChange(eResource, eYield);
+								iReligionChange += pBeliefs->GetEntry(i)->GetResourceYieldChange(eResource, eYield);
 							}
 						}
 					}
