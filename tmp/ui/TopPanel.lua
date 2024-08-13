@@ -518,7 +518,7 @@ function ScienceTipHandler( control )
 				strText = strText .. "[NEWLINE]";
 			end
 	
-			strText = strText .. Locale.ConvertTextKey("TXT_KEY_TP_SCIENCE_FROM_INFLUENCED_CIVS", iScienceFromIC / 100);
+			strText = strText .. Locale.ConvertTextKey("TXT_KEY_TP_SCIENCE_FROM_INFLUENCED_CIVS", iScienceFromICs / 100);
 		end
 		
 		-- Let people know that building more cities makes techs harder to get
