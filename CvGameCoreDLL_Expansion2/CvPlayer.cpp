@@ -24654,12 +24654,6 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 	}
 
 	ChangeMedianTechPercentage(pPolicy->GetMedianTechPercentChange());
-#ifdef RES_AGR_COUNT
-	if (pPolicy->GetMedianTechPercentChange())
-	{
-		GET_TEAM(getTeam()).incrementResearchAgreementCount();
-	}
-#endif
 
 	// Free Policies
 	int iNumFreePolicies = pPolicy->GetNumFreePolicies() * iChange;
