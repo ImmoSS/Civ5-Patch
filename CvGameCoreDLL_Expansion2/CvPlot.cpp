@@ -7302,12 +7302,12 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 							{
 								if (pReligion->m_eFounder == getOwner())
 								{
-									iReligionChange = pReligion->m_Beliefs.GetResourceYieldChange(eResource, eYield);
+									iReligionChange = pBeliefs->GetEntry(i)->GetResourceYieldChange(eResource, eYield);
 								}
 							}
 							else
 							{
-								iReligionChange = pReligion->m_Beliefs.GetResourceYieldChange(eResource, eYield);
+								iReligionChange = pBeliefs->GetEntry(i)->GetResourceYieldChange(eResource, eYield);
 							}
 						}
 					}
