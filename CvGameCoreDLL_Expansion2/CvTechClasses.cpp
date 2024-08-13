@@ -2162,6 +2162,9 @@ void CvTeamTechs::SetResearchProgressTimes100(TechTypes eIndex, int iNewValue, P
 #else
 		iNumCitiesMod = iNumCitiesMod * GET_PLAYER(ePlayer).GetMaxEffectiveCities(/*bIncludePuppets*/ true);
 #endif
+#ifdef NEW_NUM_CITIES_RESEARCH_COST_MODIFIER
+		iNumCitiesMod = GET_PLAYER(ePlayer).GetMaxEffectiveCities(/*bIncludePuppets*/ true);
+#endif
 		iResearchCost = iResearchCost * (100 + iNumCitiesMod) / 100;
 		
 		int iOverflow = iResearchProgress - iResearchCost;
