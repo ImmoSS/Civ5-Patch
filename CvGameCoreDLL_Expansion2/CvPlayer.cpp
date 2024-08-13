@@ -19595,7 +19595,6 @@ int CvPlayer::GetSciencePerTurnFromInfluencedCivsTimes100() const
 		iScienceFromPlayer = 0;
 
 		iScienceFromPlayer += GET_PLAYER(ePlayer).GetScienceFromCitiesTimes100(false);
-		iScienceFromPlayer += GET_PLAYER(ePlayer).GetScienceFromOtherPlayersTimes100();
 		iScienceFromPlayer += GET_PLAYER(ePlayer).GetScienceFromHappinessTimes100();
 		iScienceFromPlayer += GET_PLAYER(ePlayer).GetScienceFromResearchAgreementsTimes100();
 		iScienceFromPlayer += GET_PLAYER(ePlayer).GetScienceFromBudgetDeficitTimes100();
