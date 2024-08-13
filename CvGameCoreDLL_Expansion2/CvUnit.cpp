@@ -12313,10 +12313,6 @@ int CvUnit::GetAirCombatDamage(const CvUnit* pDefender, CvCity* pCity, bool bInc
 	if(pCity == NULL)
 	{
 #ifdef FIX_AIR_ATTACK_VS_EMBARKED
-		// If this is a defenseless unit, do a fixed amount of damage
-		if (!pDefender->IsCanDefend())
-			return /*4*/ GC.getNONCOMBAT_UNIT_RANGED_DAMAGE();
-
 		if (pDefender->isEmbarked())
 		{
 			iDefenderStrength = pDefender->GetEmbarkedUnitDefense();;
@@ -12523,10 +12519,6 @@ int CvUnit::GetAirStrikeDefenseDamage(const CvUnit* pAttacker, bool bIncludeRand
 	int iDefenderStrength = 0;
 
 #ifdef FIX_AIR_ATTACK_VS_EMBARKED
-	// If this is a defenseless unit, do a fixed amount of damage
-	if (!IsCanDefend())
-		return /*4*/ GC.getNONCOMBAT_UNIT_RANGED_DAMAGE();
-
 	if (isEmbarked())
 	{
 		iDefenderStrength = GetEmbarkedUnitDefense();;
