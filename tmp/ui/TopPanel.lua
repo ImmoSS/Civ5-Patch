@@ -622,6 +622,10 @@ function GoldTipHandler( control )
 	if (fTotalIncome + iTotalGold < 0) then
 		strText = strText .. "[NEWLINE][COLOR:255:60:60:255]" .. Locale.ConvertTextKey("TXT_KEY_TP_LOSING_SCIENCE_FROM_DEFICIT") .. "[/COLOR]";
 	end
+
+	if (pPlayer:CalculateGoldRate() + pPlayer:GetGold() <= -5) then
+		strText = strText .. "[NEWLINE][NEWLINE][COLOR:255:60:60:255]" .. Locale.ConvertTextKey("TXT_KEY_TP_UNIT_DISBAND_CHANCE", pPlayer:GetUnitDisbandChance()) .. "[/COLOR]";
+	end
 	
 	-- Basic explanation of Happiness
 	if (not OptionsManager.IsNoBasicHelp()) then

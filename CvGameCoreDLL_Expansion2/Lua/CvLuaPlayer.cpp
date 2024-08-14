@@ -209,6 +209,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(GetGoldPerTurnFromTradeRoutes);
 	Method(GetGoldPerTurnFromTradeRoutesTimes100);
 	Method(GetGoldPerTurnFromTraits);
+#ifdef UNIT_DISBAND_REWORK
+	Method(GetUnitDisbandChance);
+#endif
 
 	// Culture
 
@@ -2286,6 +2289,27 @@ int CvLuaPlayer::lGetGoldPerTurnFromTraits(lua_State* L)
 	lua_pushinteger(L, pkPlayer->GetTreasury()->GetGoldPerTurnFromTraits());
 	return 1;
 }
+#ifdef UNIT_DISBAND_REWORK
+//------------------------------------------------------------------------------
+//int GetUnitDisbandChance();
+int CvLuaPlayer::lGetUnitDisbandChance(lua_State* L)
+{
+	int iUnitDisbandChance = 0;
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	int iGoldAfterThisTurn = pkPlayer->calculateGoldRateTimes100() + pkPlayer->GetTreasury()->GetGoldTimes100();
+#ifdef DUEL_NO_DISBAND
+	if (!GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+		if (iGoldAfterThisTurn <= /*-5*/ GC.getDEFICIT_UNIT_DISBANDING_THRESHOLD() * 100)
+			iUnitDisbandChance = -2 * iGoldAfterThisTurn / 100 / (1 + (int)GC.getGame().getCurrentEra());
+#else
+	if (iGoldAfterThisTurn <= /*-5*/ GC.getDEFICIT_UNIT_DISBANDING_THRESHOLD() * 100)
+		iUnitDisbandChance = -2 * iGoldAfterThisTurn / 100 / (1 + (int)GC.getGame().getCurrentEra());
+#endif
+
+	lua_pushinteger(L, min(100, iUnitDisbandChance));
+	return 1;
+}
+#endif
 //------------------------------------------------------------------------------
 //int GetTotalJONSCulturePerTurn();
 int CvLuaPlayer::lGetTotalJONSCulturePerTurn(lua_State* L)
