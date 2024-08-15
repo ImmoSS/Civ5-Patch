@@ -2421,7 +2421,10 @@ bool CvGameReligions::CheckSpawnGreatProphet(CvPlayer& kPlayer)
 	int iChance = GC.getRELIGION_BASE_CHANCE_PROPHET_SPAWN();
 	iChance += (iFaith - iCost);
 #ifdef DUEL_NO_RANDOM_PROPHET
-	iChance = 1000;
+	if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+	{
+		iChance = 1000;
+	}
 #endif
 
 	int iRand = GC.getGame().getJonRandNum(100, "Religion: spawn Great Prophet roll.");
@@ -2440,8 +2443,17 @@ bool CvGameReligions::CheckSpawnGreatProphet(CvPlayer& kPlayer)
 	{
 		pSpawnCity->GetCityCitizens()->DoSpawnGreatPerson(eUnit, false /*bIncrementCount*/, true);
 #ifdef DUEL_NO_RANDOM_PROPHET
-		if (eUnit != NO_UNIT)
-			kPlayer.ChangeFaith(-iCost);
+		if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+		{
+			if (eUnit != NO_UNIT)
+			{
+				kPlayer.ChangeFaith(-iCost);
+			}
+		}
+		else
+		{
+			kPlayer.SetFaith(0);
+		}
 #else
 		kPlayer.SetFaith(0);
 #endif
@@ -2453,8 +2465,17 @@ bool CvGameReligions::CheckSpawnGreatProphet(CvPlayer& kPlayer)
 		{
 			pSpawnCity->GetCityCitizens()->DoSpawnGreatPerson(eUnit, false /*bIncrementCount*/, true);
 #ifdef DUEL_NO_RANDOM_PROPHET
-			if (eUnit != NO_UNIT)
-				kPlayer.ChangeFaith(-iCost);
+			if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+			{
+				if (eUnit != NO_UNIT)
+				{
+					kPlayer.ChangeFaith(-iCost);
+				}
+			}
+			else
+			{
+				kPlayer.SetFaith(0);
+			}
 #else
 			kPlayer.SetFaith(0);
 #endif
