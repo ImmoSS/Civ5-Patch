@@ -1029,7 +1029,9 @@ CvGameReligions::FOUNDING_RESULT CvGameReligions::CanFoundReligion(PlayerTypes e
 	if(HasCreatedReligion(ePlayer))
 		return FOUNDING_PLAYER_ALREADY_CREATED_RELIGION;
 
+#ifndef DUEL_ALLOW_SAMETURN_BELIEFS
 	CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+#endif
 
 	CvReligion kReligion(eReligion, ePlayer, pkHolyCity, false);
 

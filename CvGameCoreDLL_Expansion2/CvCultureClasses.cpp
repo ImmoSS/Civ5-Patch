@@ -2989,7 +2989,9 @@ int CvPlayerCulture::GetTourismModifierWith(PlayerTypes ePlayer) const
 {
 	int iMultiplier = 0;
 	CvPlayer &kPlayer = GET_PLAYER(ePlayer);
+#ifndef NO_OPEN_BOARDERS_TOURISM_MOD
 	CvTeam &kTeam = GET_TEAM(kPlayer.getTeam());
+#endif
 	PolicyBranchTypes eMyIdeology = m_pPlayer->GetPlayerPolicies()->GetLateGamePolicyTree();
 	PolicyBranchTypes eTheirIdeology = kPlayer.GetPlayerPolicies()->GetLateGamePolicyTree();
 
@@ -3085,7 +3087,9 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 {
 	CvString szRtnValue = "";
 	CvPlayer &kPlayer = GET_PLAYER(ePlayer);
+#ifndef NO_OPEN_BOARDERS_TOURISM_MOD
 	CvTeam &kTeam = GET_TEAM(kPlayer.getTeam());
+#endif
 	PolicyBranchTypes eMyIdeology = m_pPlayer->GetPlayerPolicies()->GetLateGamePolicyTree();
 	PolicyBranchTypes eTheirIdeology = kPlayer.GetPlayerPolicies()->GetLateGamePolicyTree();
 
@@ -4457,7 +4461,9 @@ int CvCityCulture::GetTourismMultiplier(PlayerTypes ePlayer, bool bIgnoreReligio
 {
 	int iMultiplier = 0;
 	CvPlayer &kPlayer = GET_PLAYER(ePlayer);
+#ifndef NO_OPEN_BOARDERS_TOURISM_MOD
 	CvTeam &kTeam = GET_TEAM(kPlayer.getTeam());
+#endif
 	CvPlayer &kCityPlayer = GET_PLAYER(m_pCity->getOwner());
 	PolicyBranchTypes eMyIdeology = kCityPlayer.GetPlayerPolicies()->GetLateGamePolicyTree();
 	PolicyBranchTypes eTheirIdeology = kPlayer.GetPlayerPolicies()->GetLateGamePolicyTree();

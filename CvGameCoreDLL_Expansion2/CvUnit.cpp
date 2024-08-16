@@ -7774,7 +7774,6 @@ bool CvUnit::DoRemoveHeresy()
 bool CvUnit::CanDoReligiousExpansion() const
 {
 	VALIDATE_OBJECT
-		CvCity* pCity;
 
 	if (!m_pUnitInfo->IsRemoveHeresy())
 	{
