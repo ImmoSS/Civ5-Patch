@@ -401,7 +401,7 @@
 ///
 // #define UNIVERSAL_SUFFRAGE_TWO_THIRD_UNHAPPINESS
 ///
-// #define PENALTY_FOR_DELAYING_POLICIES
+#define PENALTY_FOR_DELAYING_POLICIES
 ///
 #define FINE_ARTS_HAPPINESS_FROM_GREAT_WORKS
 ///
@@ -959,45 +959,46 @@
 // bump after any change to the corresponding read/write functions
 // don't forget to mark changes here
 //
-// 1000: v7.0  (initial)
-// 1001: v10.0 (adds GP_EXPENDED_GA, NEW_BELIEF_PROPHECY)
+// 1000: v7.0   (initial)
+// 1001: v10.0  (adds GP_EXPENDED_GA, NEW_BELIEF_PROPHECY)
 # define BUMP_SAVE_VERSION_BELIEFS 1001
-// 1000: v7.0  (initial)
-// 1001: v8.0  (adds CITY_EXTRA_ATTACK)
-// 1002: v8.2  (adds eReligionFoundedHere for MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD)
+// 1000: v7.0   (initial)
+// 1001: v8.0   (adds CITY_EXTRA_ATTACK)
+// 1002: v8.2   (adds eReligionFoundedHere for MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD)
 # define BUMP_SAVE_VERSION_CITY 1002
-// 1000: v7.0  (initial)
+// 1000: v7.0   (initial)
 # define BUMP_SAVE_VERSION_ESPIONAGE 1000
-// 1000: v7.0  (initial)
-// 1001: v7.3b (adds replay events)
+// 1000: v7.0   (initial)
+// 1001: v7.3b  (adds replay events)
 # define BUMP_SAVE_VERSION_GAME 1001
-// 1000: v7.0 (initial)
-// 1001: v7.3 (adds Workers Bully Turn)
+// 1000: v7.0   (initial)
+// 1001: v7.3   (adds Workers Bully Turn)
 # define BUMP_SAVE_VERSION_MINORAI 1001
-// 1000: v7.0  (initial)
-// 1001: v7.2  (adds ENHANCED_GRAPHS)
-// 1002: v7.2a (adds maya boost GP counters)
-// 1003: v8.1b (adds second bunch of ENHANCED_GRAPHS)
-// 1004: v9.0  (adds GODDESS_LOVE_FREE_WORKER, TAJ_MAHAL_STARTS_GA_NEXT_TURN, PENALTY_FOR_DELAYING_POLICIES, CS_ALLYING_WAR_RESCTRICTION)
-// 1005: v10.0 (adds POLICY_FREE_DEFENSIVE_BUILDINGS, GOD_SEA_FREE_WORK_BOAT, UNDERGROUND_SECT_REWORK)
-# define BUMP_SAVE_VERSION_PLAYER 1005
-// 1000: v7.0  (initial)
+// 1000: v7.0   (initial)
+// 1001: v7.2   (adds ENHANCED_GRAPHS)
+// 1002: v7.2a  (adds maya boost GP counters)
+// 1003: v8.1b  (adds second bunch of ENHANCED_GRAPHS)
+// 1004: v9.0   (adds GODDESS_LOVE_FREE_WORKER, TAJ_MAHAL_STARTS_GA_NEXT_TURN, CS_ALLYING_WAR_RESCTRICTION)
+// 1005: v10.0  (adds POLICY_FREE_DEFENSIVE_BUILDINGS, GOD_SEA_FREE_WORK_BOAT, UNDERGROUND_SECT_REWORK)
+// 1006: v10.0g (adds PENALTY_FOR_DELAYING_POLICIES)
+# define BUMP_SAVE_VERSION_PLAYER 1006
+// 1000: v7.0   (initial)
 # define BUMP_SAVE_VERSION_POLICIES 1000
-// 1000: v7.0  (initial)
+// 1000: v7.0   (initial)
 # define BUMP_SAVE_VERSION_TEAM 1000
-// 1000: v7.0  (initial)
+// 1000: v7.0   (initial)
 # define BUMP_SAVE_VERSION_TECHS 1000
-// 1000: v7.0  (initial)
+// 1000: v7.0   (initial)
 # define BUMP_SAVE_VERSION_TRAITS 1000
-// 1000: v7.0  (initial)
-// 1001: v8.0  (adds NEW_WRITERS_CULTURE_BOMB)
+// 1000: v7.0   (initial)
+// 1001: v8.0   (adds NEW_WRITERS_CULTURE_BOMB)
 # define BUMP_SAVE_VERSION_UNIT 1001
-// 1000: v7.1  (starts versioning, adds iCreationTurn) -- incompatible with 7.0 (vanilla is ok though)
+// 1000: v7.1   (starts versioning, adds iCreationTurn) -- incompatible with 7.0 (vanilla is ok though)
 # define BUMP_SAVE_VERSION_MP_VOTING_SYSTEM 1000
-// 1000: v7.2  (initial, adds m_iTimeMilliseconds)
-// 1001: v7.3b (adds m_iExtraData1, m_iExtraData2)
+// 1000: v7.2   (initial, adds m_iTimeMilliseconds)
+// 1001: v7.3b  (adds m_iExtraData1, m_iExtraData2)
 # define BUMP_SAVE_VERSION_REPLAYMESSAGE 1001
-// 1000: v7.3b (initial)
+// 1000: v7.3b  (initial)
 # define BUMP_SAVE_VERSION_REPLAYEVENT 1000
 // 1000: v8.2   (initial)
 # define BUMP_SAVE_VERSION_RESOLUTIONEFFECTS 1000

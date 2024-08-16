@@ -566,7 +566,6 @@ CvPlayer::CvPlayer() :
 	, m_pafTimeCSWarAllowing("CvPlayer::m_pafTimeCSWarAllowing", m_syncArchive)
 #endif
 #ifdef PENALTY_FOR_DELAYING_POLICIES
-	, m_bIsDelayedPolicyPrevTurn(false)
 	, m_bIsDelayedPolicy(false)
 #endif
 {
@@ -1268,7 +1267,6 @@ void CvPlayer::uninit()
 	m_iMaxEffectiveCities = 1;
 	m_iLastSliceMoved = 0;
 #ifdef PENALTY_FOR_DELAYING_POLICIES
-	m_bIsDelayedPolicyPrevTurn = false;
 	m_bIsDelayedPolicy = false;
 #endif
 
@@ -5023,24 +5021,16 @@ void CvPlayer::doTurnPostDiplomacy()
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 	if (kGame.isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
 	{
-		if (getJONSCulture() < getNextPolicyCost())
+		if (getJONSCulture() >= getNextPolicyCost() || GetNumFreePolicies() > 0)
 		{
 			if (isHuman())
 			{
-				if (GetNumFreePolicies() <= 0)
-				{
-					setIsDelayedPolicy(false, true);
-					setIsDelayedPolicy(false);
-				}
-			}
-		}
-		else if (getJONSCulture() >= getNextPolicyCost() || GetNumFreePolicies() > 0)
-		{
-			if (isHuman())
-			{
-				setIsDelayedPolicy(IsDelayedPolicy(), true);
 				setIsDelayedPolicy(true);
 			}
+		}
+		else
+		{
+			setIsDelayedPolicy(false);
 		}
 	}
 #endif
@@ -10772,7 +10762,7 @@ int CvPlayer::calculateGoldRateTimes100() const
 {
 	// If we're in anarchy, then no Gold is collected!
 #ifdef PENALTY_FOR_DELAYING_POLICIES
-	if (IsAnarchy() || IsDelayedPolicy() && IsDelayedPolicy(true))
+	if (IsAnarchy() || IsDelayedPolicy())
 #else
 	if(IsAnarchy())
 #endif
@@ -11186,7 +11176,7 @@ int CvPlayer::GetTotalJONSCulturePerTurn() const
 
 	// No culture during Anarchy
 #ifdef PENALTY_FOR_DELAYING_POLICIES
-	if (IsAnarchy() || IsDelayedPolicy() && IsDelayedPolicy(true))
+	if (IsAnarchy() || IsDelayedPolicy())
 #else
 	if(IsAnarchy())
 #endif
@@ -12352,7 +12342,7 @@ int CvPlayer::GetTotalFaithPerTurn() const
 
 	// If we're in anarchy, then no Faith is generated!
 #ifdef PENALTY_FOR_DELAYING_POLICIES
-	if (IsAnarchy() || IsDelayedPolicy() && IsDelayedPolicy(true))
+	if (IsAnarchy() || IsDelayedPolicy())
 #else
 	if(IsAnarchy())
 #endif
@@ -14517,13 +14507,6 @@ void CvPlayer::doAdoptPolicy(PolicyTypes ePolicy)
 	// Update cost if trying to buy another policy this turn
 	DoUpdateNextPolicyCost();
 
-#ifdef PENALTY_FOR_DELAYING_POLICIES
-	if (!(getJONSCulture() >= getNextPolicyCost() || GetNumFreePolicies() > 0))
-	{
-		setIsDelayedPolicy(false, true);
-		setIsDelayedPolicy(false);
-	}
-#endif
 #ifdef POLICY_BRANCH_NOTIFICATION_LOCKED
 	if(!(getJONSCulture() >= getNextPolicyCost() || GetNumFreePolicies() > 0))
 	{
@@ -19506,7 +19489,7 @@ int CvPlayer::GetScienceTimes100() const
 {
 	// If we're in anarchy, then no Research is done!
 #ifdef PENALTY_FOR_DELAYING_POLICIES
-	if (IsAnarchy() || IsDelayedPolicy() && IsDelayedPolicy(true))
+	if (IsAnarchy() || IsDelayedPolicy())
 #else
 	if(IsAnarchy())
 #endif
@@ -26143,16 +26126,14 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= 1004)
+	if (uiVersion >= 1006)
 	{
 # endif
-		kStream >> m_bIsDelayedPolicyPrevTurn;
 		kStream >> m_bIsDelayedPolicy;
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
 	else
 	{
-		m_bIsDelayedPolicyPrevTurn = false;
 		m_bIsDelayedPolicy = false;
 	}
 # endif
@@ -26823,7 +26804,6 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_bNationalIntelligenceAgencyWasEverBuilt;
 #endif
 #ifdef PENALTY_FOR_DELAYING_POLICIES
-	kStream << m_bIsDelayedPolicyPrevTurn;
 	kStream << m_bIsDelayedPolicy;
 #endif
 	kStream << m_bAlive;
@@ -28383,20 +28363,14 @@ void CvPlayer::setTimeCSWarAllowing(PlayerTypes ePlayer, float fValue)
 #endif
 
 #ifdef PENALTY_FOR_DELAYING_POLICIES
-bool CvPlayer::IsDelayedPolicy(bool bPrevTurn) const
+bool CvPlayer::IsDelayedPolicy() const
 {
-	if (bPrevTurn)
-		return m_bIsDelayedPolicyPrevTurn;
-	else
-		return m_bIsDelayedPolicy;
+	return m_bIsDelayedPolicy;
 }
 
-void CvPlayer::setIsDelayedPolicy(bool bValue, bool bPrevTurn)
+void CvPlayer::setIsDelayedPolicy(bool bValue)
 {
-	if (bPrevTurn)
-		m_bIsDelayedPolicyPrevTurn = bValue;
-	else
-		m_bIsDelayedPolicy = bValue;
+	m_bIsDelayedPolicy = bValue;
 }
 #endif
 
