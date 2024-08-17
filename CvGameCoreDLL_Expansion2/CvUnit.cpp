@@ -11905,8 +11905,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 		// Ranged DEFENSE
 		else
 		{
+#ifndef FIX_RANGE_DEFENSE_MOD
 			// Ranged Defense Mod
 			iModifier += rangedDefenseModifier();
+#endif
 
 			// Unit Class Defense Mod
 			iModifier += unitClassDefenseModifier(pOtherUnit->getUnitClassType());
@@ -11960,7 +11962,6 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 
 		iModifier += getDefenseModifier();
 
-#ifdef DEFENSE_AGAINST_INFLUENCED_CIVS
 		// Tourism Defense
 		if (pOtherUnit != NULL)
 		{
@@ -11971,6 +11972,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			iTempModifier = GET_PLAYER(getOwner()).GetCulture()->GetDefenseAgainstInfluencedCiv(ePlayer);
 		}
 		iModifier += iTempModifier;
+
+#ifdef FIX_RANGE_DEFENSE_MOD
+		// Ranged Defense Mod
+		iModifier += rangedDefenseModifier();
 #endif
 	}
 
@@ -12200,8 +12205,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 		// Ranged DEFENSE
 		else
 		{
+#ifndef FIX_RANGE_DEFENSE_MOD
 			// Ranged Defense Mod
 			iModifier += rangedDefenseModifier();
+#endif
 
 			// Unit Class Defense Mod
 			iModifier += unitClassDefenseModifier(pOtherUnit->getUnitClassType());
@@ -12254,6 +12261,11 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			iModifier += iTempModifier;
 
 		iModifier += getDefenseModifier();
+
+#ifdef FIX_RANGE_DEFENSE_MOD
+		// Ranged Defense Mod
+		iModifier += rangedDefenseModifier();
+#endif
 	}
 
 	// Unit can't drop below 10% strength

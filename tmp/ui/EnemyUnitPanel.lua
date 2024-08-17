@@ -1541,8 +1541,18 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 					--strString.append(GetLocalizedText("TXT_KEY_COMBAT_PLOT_MOD_VS_TYPE", iModifier, kDomainInfo.GetDescription()));
 				end
 		
+				-- Range Defense Modifier
+				if (bRanged)
+					iModifier = pTheirUnit:RangedDefenseModifier();
+					if (iModifier ~= 0) then
+						controlTable = g_TheirCombatDataIM:GetInstance();
+						controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_RANGE_DEFENSE_BONUS" );
+						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
+					end
+				end
+		
 				-- Cultural Influence Defense Modifier
-				local iModifier = pTheirUnit:GetCulturalInfluenceDefenseModifier(pMyUnit:GetOwner());
+				iModifier = pTheirUnit:GetCulturalInfluenceDefenseModifier(pMyUnit:GetOwner());
 				if (iModifier ~= 0) then
 					controlTable = g_TheirCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_CULTURAL_INFLUENCE_BONUS" );
@@ -2025,8 +2035,18 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 			end
 		end
 		
+		-- Range Defense Modifier
+		if (bRanged)
+			iModifier = theirUnit:RangedDefenseModifier();
+			if (iModifier ~= 0) then
+				controlTable = g_TheirCombatDataIM:GetInstance();
+				controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_RANGE_DEFENSE_BONUS" );
+				controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
+			end
+		end
+		
 		-- Cultural Influence Defense Modifier
-		local iModifier = theirUnit:GetCulturalInfluenceDefenseModifier(myCity:GetOwner());
+		iModifier = theirUnit:GetCulturalInfluenceDefenseModifier(myCity:GetOwner());
 		if (iModifier ~= 0) then
 			controlTable = g_TheirCombatDataIM:GetInstance();
 			controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_CULTURAL_INFLUENCE_BONUS" );
