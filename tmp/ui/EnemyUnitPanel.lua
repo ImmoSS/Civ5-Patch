@@ -1542,7 +1542,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				end
 		
 				-- Range Defense Modifier
-				if (bRanged)
+				if (bRanged) then
 					iModifier = pTheirUnit:RangedDefenseModifier();
 					if (iModifier ~= 0) then
 						controlTable = g_TheirCombatDataIM:GetInstance();
@@ -2036,7 +2036,7 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 		end
 		
 		-- Range Defense Modifier
-		if (bRanged)
+		if (bRanged) then
 			iModifier = theirUnit:RangedDefenseModifier();
 			if (iModifier ~= 0) then
 				controlTable = g_TheirCombatDataIM:GetInstance();
