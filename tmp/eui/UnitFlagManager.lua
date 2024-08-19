@@ -787,7 +787,7 @@ function( playerID, unitID, isVisible, checkFlag )--, blendTime )
 		local flag = g_UnitFlags[ playerID ][ unitID ]
 		if flag then
 			flag.m_IsInvisibleToActiveTeam = not isVisible
-			flag.Anchor:SetHide( not isVisible or flag.m_IsInvisibleToActiveTeamm_IsHiddenByFog )
+			flag.Anchor:SetHide( not isVisible or flag.m_IsHiddenByFog )
 		end
 	end
 end)

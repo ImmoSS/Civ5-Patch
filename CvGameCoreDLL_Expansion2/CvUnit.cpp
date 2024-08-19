@@ -3988,9 +3988,6 @@ void CvUnit::unload()
 	}
 
 	setTransportUnit(NULL);
-#ifdef INVISIBILITY_OF_NUCLEAR_MISSILESS_ON_SUBMARINES
-	setInvisibleType(NO_INVISIBLE);
-#endif
 }
 
 
@@ -14330,6 +14327,9 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 			if(!(pTransportUnit->atPlot(*pNewPlot)))
 			{
 				setTransportUnit(NULL);
+#ifdef INVISIBILITY_OF_NUCLEAR_MISSILESS_ON_SUBMARINES
+				setInvisibleType(NO_INVISIBLE);
+#endif
 			}
 		}
 
@@ -17962,6 +17962,12 @@ void CvUnit::setInvisibleType(InvisibleTypes InvisibleType)
 	if(m_eInvisibleType != InvisibleType)
 	{
 		m_eInvisibleType = InvisibleType;
+		const TeamTypes eActiveTeam = GC.getGame().getActiveTeam();
+		if (eActiveTeam != NO_TEAM)
+		{
+			auto_ptr<ICvUnit1> pDllUnit(new CvDllUnit(this));
+			gDLL->GameplayUnitVisibility(pDllUnit.get(), isInvisible(eActiveTeam, false));
+		}
 	}
 }
 
