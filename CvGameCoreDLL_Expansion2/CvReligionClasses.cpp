@@ -2204,11 +2204,19 @@ int CvGameReligions::GetAdjacentCityReligiousPressure (ReligionTypes eReligion, 
 			TechTypes eDoublingTech = pReligion->m_Beliefs.GetSpreadModifierDoublingTech();
 			if(eDoublingTech != NO_TECH)
 			{
+#ifdef SPREAD_MODIFIER_AFTER_TECH
+				CvPlayer& kPlayer = GET_PLAYER(pReligion->m_eFounder);
+				if (!GET_TEAM(kPlayer.getTeam()).GetTeamTechs()->HasTech(eDoublingTech))
+				{
+					iStrengthMod = 0;
+				}
+#else
 				CvPlayer& kPlayer = GET_PLAYER(pReligion->m_eFounder);
 				if(GET_TEAM(kPlayer.getTeam()).GetTeamTechs()->HasTech(eDoublingTech))
 				{
 					iStrengthMod *= 2;
 				}
+#endif
 			}
 			iPressure *= (100 + iStrengthMod);
 			iPressure /= 100;
