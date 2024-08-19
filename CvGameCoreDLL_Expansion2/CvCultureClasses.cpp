@@ -4519,7 +4519,7 @@ int CvCityCulture::GetTourismMultiplier(PlayerTypes ePlayer, bool bIgnoreReligio
 	}
 
 #ifdef TOURISM_BONUS_DIPLOMAT
-	if (kCityPlayer.GetEspionage()->IsMyDiplomatVisitingThem(ePlayer))
+	if (kCityPlayer.GetEspionage() && kCityPlayer.GetEspionage()->IsMyDiplomatVisitingThem(ePlayer))
 	{
 		iMultiplier += GC.getTOURISM_MODIFIER_DIPLOMAT();
 	}
