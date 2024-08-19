@@ -2769,16 +2769,16 @@ int CvPlayerCulture::GetInfluencedCivScienceBonus(PlayerTypes ePlayer) const
 		switch (eLevel)
 		{
 		case INFLUENCE_LEVEL_EXOTIC:
-			iRtnValue = 2;
+			iRtnValue = 1;
 			break;
 		case INFLUENCE_LEVEL_FAMILIAR:
-			iRtnValue = 4;
+			iRtnValue = 3;
 			break;
 		case INFLUENCE_LEVEL_POPULAR:
-			iRtnValue = 8;
+			iRtnValue = 6;
 			break;
 		case INFLUENCE_LEVEL_INFLUENTIAL:
-			iRtnValue = 12;
+			iRtnValue = 10;
 			break;
 		case INFLUENCE_LEVEL_DOMINANT:
 			iRtnValue = 20;
@@ -2802,19 +2802,19 @@ int CvPlayerCulture::GetDefenseAgainstInfluencedCiv(PlayerTypes ePlayer) const
 		switch (eLevel)
 		{
 		case INFLUENCE_LEVEL_EXOTIC:
-			iRtnValue = 10;
+			iRtnValue = 5;
 			break;
 		case INFLUENCE_LEVEL_FAMILIAR:
-			iRtnValue = 20;
+			iRtnValue = 10;
 			break;
 		case INFLUENCE_LEVEL_POPULAR:
-			iRtnValue = 30;
+			iRtnValue = 20;
 			break;
 		case INFLUENCE_LEVEL_INFLUENTIAL:
 			iRtnValue = 40;
 			break;
 		case INFLUENCE_LEVEL_DOMINANT:
-			iRtnValue = 50;
+			iRtnValue = 30;
 			break;
 		}
 	}
