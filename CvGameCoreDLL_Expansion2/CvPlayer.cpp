@@ -11832,8 +11832,11 @@ void CvPlayer::DoYieldBonusFromKill(YieldTypes eYield, UnitTypes eAttackingUnitT
 					break;
 				case YIELD_CULTURE:
 #ifdef HONOR_CULTURE_CAP
-					iValue = min(GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CULTURE_FROM_KILLS) * iCombatStrength, 100 * CULTURE_CAP) + GetPlayerTraits()->GetCultureFromKills() * iCombatStrength;
-					iValue /= 100;
+					if (!GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_HONOR_FINISHER")))
+					{
+						iValue = min(GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CULTURE_FROM_KILLS) * iCombatStrength, 100 * CULTURE_CAP) + GetPlayerTraits()->GetCultureFromKills() * iCombatStrength;
+						iValue /= 100;
+					}
 					changeJONSCulture(iValue);
 #else
 					changeJONSCulture(iValue);
