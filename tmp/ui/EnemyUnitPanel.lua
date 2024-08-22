@@ -1708,7 +1708,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				if (iModifier ~= 0 and pTheirPlayer:IsGoldenAge()) then
 					controlTable = g_TheirCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
-					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+					controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 				end
 
 			end
@@ -2103,7 +2103,7 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 		if (iModifier ~= 0 and theirPlayer:IsGoldenAge()) then
 			controlTable = g_TheirCombatDataIM:GetInstance();
 			controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_BONUS_GOLDEN_AGE" );
-			controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+			controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 		end
 
 		-- Future Tech bonus
