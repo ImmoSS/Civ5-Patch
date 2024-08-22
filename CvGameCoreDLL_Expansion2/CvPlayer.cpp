@@ -9688,6 +9688,21 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst
 					pEspionage->LevelUpSpy(ui);
 				}
 			}
+#ifdef NEW_DIPLOMATS_MISSIONS
+			if (pEspionage)
+			{
+				for (uint ui = 0; ui < pEspionage->m_aSpyList.size(); ui++)
+				{
+					CvCity* pCity = pEspionage->GetCityWithSpy(ui);
+					int iSurveillanceSightRange = GetEspionage()->SurveillanceSightRange(pCity);
+					if (iSurveillanceSightRange > 0)
+					{
+						pCity->plot()->changeSightInRing(getTeam(), iSurveillanceSightRange - iChange, false, NO_INVISIBLE);
+						pCity->plot()->changeSightInRing(getTeam(), iSurveillanceSightRange, true, NO_INVISIBLE);
+					}
+				}
+			}
+#endif
 		}
 
 		if(pBuildingInfo->GetSpyRankChange() > 0)
