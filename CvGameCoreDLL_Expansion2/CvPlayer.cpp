@@ -7699,6 +7699,44 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 			}
 		}
 	}
+
+#ifdef NEW_RUIN_EXPANSION
+	// Population
+	if (kGoodyInfo.getNumExpanse() > 0)
+	{
+		int iDistance;
+		int iBestCityDistance = -1;
+		CvCity* pBestCity = NULL;
+
+		CvCity* pLoopCity;
+		int iLoop;
+		// Find the closest City to us to add a Pop point to
+		for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+		{
+			iDistance = plotDistance(pPlot->getX(), pPlot->getY(), pLoopCity->getX(), pLoopCity->getY());
+
+			if (iBestCityDistance == -1 || iDistance < iBestCityDistance)
+			{
+				iBestCityDistance = iDistance;
+				pBestCity = pLoopCity;
+			}
+		}
+
+		if (pBestCity != NULL)
+		{
+			for (int iI = 0; iI < kGoodyInfo.getNumExpanse(); iI++)
+			{
+				CvPlot* pPlotToAcquire = pBestCity->GetNextBuyablePlot();
+
+				// maybe the player owns ALL of the plots or there are none avaialable?
+				if (pPlotToAcquire)
+				{
+					pBestCity->DoAcquirePlot(pPlotToAcquire->getX(), pPlotToAcquire->getY());
+				}
+			}
+		}
+	}
+#endif
 #ifdef REPLAY_EVENTS
 	if (isHuman())
 	{
