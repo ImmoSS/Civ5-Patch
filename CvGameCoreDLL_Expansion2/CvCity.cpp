@@ -9369,6 +9369,12 @@ void CvCity::DoCreatePuppet()
 
 			if(pLoopPlot != NULL)
 			{
+#ifdef CITIZENS_CITY_OVERRIDE_BUG_FIX
+				if (pLoopPlot->getWorkingCity()->GetCityCitizens()->IsForcedWorkingPlot(pLoopPlot))
+				{
+					pLoopPlot->getWorkingCity()->GetCityCitizens()->SetForcedWorkingPlot(pLoopPlot, false);
+				}
+#endif
 				pLoopPlot->setWorkingCityOverride(this);
 			}
 		}
