@@ -990,6 +990,11 @@ local function GetHelpTextForBuilding( buildingID, bExcludeName, bExcludeHeader,
 	end
 
 	items = {}
+	for row in GameInfo.Policy_BuildingClassFoodKept( thisBuildingClassType ) do
+		if row.PolicyType and (row.FoodKept or 0)~=0 then
+			items[row.PolicyType] = S( "%s %+i%%[ICON_FOOD] " .. L"TXT_KEY_TRAIT_POPULATION_GROWTH_SHORT", items[row.PolicyType] or "", row.FoodKept )
+		end
+	end
 	-- Yields enhanced by Policy
 	for row in GameInfo.Policy_BuildingClassYieldChanges( thisBuildingClassType ) do
 		if row.PolicyType and (row.YieldChange or 0)~=0 then
