@@ -9654,6 +9654,12 @@ int CvLuaPlayer::lGetPolicyBuildingClassYieldChange(lua_State* L)
 	if(pkPlayer)
 	{
 		int modifier = pkPlayer->GetPlayerPolicies()->GetBuildingClassYieldChange(eBuildingClass, eYieldType);
+#ifdef FIX_POLICY_BUILDING_CLASS_CULTURE_CHANGE_UI
+		if (eYieldType == YIELD_CULTURE)
+		{
+			modifier += pkPlayer->GetPlayerPolicies()->GetBuildingClassCultureChange(eBuildingClass);
+		}
+#endif
 		lua_pushinteger(L, modifier);
 
 		return 1;
