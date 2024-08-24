@@ -1171,6 +1171,12 @@ bool CvNotifications::IsNotificationRedundant(Notification& notification)
 						return true;
 				}
 			}
+#ifdef FIX_REDUNDANT_CHOOSE_TECH_NOTIFICATION
+			if (m_aNotifications[iIndex].m_eNotificationType == NOTIFICATION_FREE_TECH)
+			{
+				return true;
+			}
+#endif
 
 
 			iIndex++;
