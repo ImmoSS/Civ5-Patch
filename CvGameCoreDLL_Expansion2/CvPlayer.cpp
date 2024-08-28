@@ -29383,7 +29383,11 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMBEROFWORKERS"), iGameTurn, iWorkerCount);
 
 
+#ifdef GRAPHS_REAL_MILITARY_MIGHT
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_MILITARYMIGHT"), iGameTurn, (int)sqrt((double)GetMilitaryMight()) * 2000);
+#else
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_MILITARYMIGHT"), iGameTurn, GetMilitaryMight());
+#endif
 
 		/// First Bunch of Enhanced Graphs
 #ifdef EG_REPLAYDATASET_FAITHPERTURN

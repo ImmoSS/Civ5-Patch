@@ -1121,6 +1121,8 @@
 ///
 #define GRAPHS_REAL_TOTAL_CULTURE
 ///
+#define GRAPHS_REAL_MILITARY_MIGHT
+///
 // A more flexible alternative to Replay Messages; primarily for statistics purposes
 #define REPLAY_EVENTS
 
