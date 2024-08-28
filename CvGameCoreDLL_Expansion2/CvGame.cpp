@@ -4841,6 +4841,16 @@ int CvGame::getMaxTurnLen()
 		{
 			if(GET_PLAYER((PlayerTypes)i).isAlive())
 			{
+#ifdef GAME_UPDATE_TURN_TIMER_ONCE_PER_TURN
+				if (GET_PLAYER((PlayerTypes)i).isHuman() && GET_PLAYER((PlayerTypes)i).getNumUnits() > iMaxUnits)
+				{
+					iMaxUnits = GET_PLAYER((PlayerTypes)i).getNumUnits();
+				}
+				if (GET_PLAYER((PlayerTypes)i).isHuman() && GET_PLAYER((PlayerTypes)i).getNumCities() > iMaxCities)
+				{
+					iMaxCities = GET_PLAYER((PlayerTypes)i).getNumCities();
+				}
+#else
 				if(GET_PLAYER((PlayerTypes)i).getNumUnits() > iMaxUnits)
 				{
 					iMaxUnits = GET_PLAYER((PlayerTypes)i).getNumUnits();
@@ -4849,6 +4859,7 @@ int CvGame::getMaxTurnLen()
 				{
 					iMaxCities = GET_PLAYER((PlayerTypes)i).getNumCities();
 				}
+#endif
 			}
 		}
 
