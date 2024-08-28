@@ -2811,10 +2811,10 @@ int CvPlayerCulture::GetDefenseAgainstInfluencedCiv(PlayerTypes ePlayer) const
 			iRtnValue = 20;
 			break;
 		case INFLUENCE_LEVEL_INFLUENTIAL:
-			iRtnValue = 40;
+			iRtnValue = 30;
 			break;
 		case INFLUENCE_LEVEL_DOMINANT:
-			iRtnValue = 30;
+			iRtnValue = 50;
 			break;
 		}
 	}
