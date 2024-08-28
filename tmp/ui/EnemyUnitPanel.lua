@@ -2036,13 +2036,11 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 		end
 		
 		-- Range Defense Modifier
-		if (bRanged) then
-			iModifier = theirUnit:RangedDefenseModifier();
-			if (iModifier ~= 0) then
-				controlTable = g_TheirCombatDataIM:GetInstance();
-				controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_RANGE_DEFENSE_BONUS" );
-				controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
-			end
+		iModifier = theirUnit:RangedDefenseModifier();
+		if (iModifier ~= 0) then
+			controlTable = g_TheirCombatDataIM:GetInstance();
+			controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_RANGE_DEFENSE_BONUS" );
+			controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 		end
 		
 		-- Cultural Influence Defense Modifier
