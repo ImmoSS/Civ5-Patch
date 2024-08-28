@@ -8127,7 +8127,7 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 	}
 
 #ifdef CS_CANT_BUILD_EARLY_WORKERS
-	if (isMinorCiv() && GC.getGame().getGameTurn() < 10 && eUnit == (UnitTypes)GC.getInfoTypeForString("UNIT_WORKER", true /*bHideAssert*/))
+	if (isMinorCiv() && GC.getGame().getGameTurn() < CS_EARLY_WORKERS_TURN && eUnit == (UnitTypes)GC.getInfoTypeForString("UNIT_WORKER", true /*bHideAssert*/))
 	{
 		return false;
 	}
