@@ -3291,7 +3291,11 @@ ReligionTypes CvCityReligions::GetSimulatedReligiousMajority()
 	{
 		iTotalFollowers += religionIt->m_iFollowers;
 
+#ifdef FIX_NO_RELIGION_MAJORITY
+		if (religionIt->m_iFollowers > iMostFollowers || religionIt->m_iFollowers == iMostFollowers && (religionIt->m_iPressure > iMostFollowerPressure || eMostFollowers == NO_RELIGION))
+#else
 		if(religionIt->m_iFollowers > iMostFollowers || religionIt->m_iFollowers == iMostFollowers && religionIt->m_iPressure > iMostFollowerPressure)
+#endif
 		{
 			iMostFollowers = religionIt->m_iFollowers;
 			iMostFollowerPressure = religionIt->m_iPressure;
