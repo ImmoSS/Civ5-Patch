@@ -19672,6 +19672,11 @@ int CvPlayer::GetSciencePerTurnFromInfluencedCivsTimes100() const
 		iScienceFromPlayer *= GetCulture()->GetInfluencedCivScienceBonus(ePlayer);
 		iScienceFromPlayer /= 100;
 
+		if (GC.getGame().isOption("GAMEOPTION_AI_TWEAKS"))
+		{
+			iScienceFromPlayer /= 2;
+		}
+
 		iAmount += iScienceFromPlayer;
 	}
 
