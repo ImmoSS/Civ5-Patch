@@ -29685,6 +29685,14 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PERCENTSPECIALISTCITIZENS"), iGameTurn, iPercentSpecialistCitizens);
 #endif
 
+#ifdef  EG_REPLAYDATASET_EFFECTIVESCIENCEPERTURN
+		int iEffectiveSciencePerTurn = GetScience();
+		int iMod = GetPlayerTechs()->GetNumCitiesResearchCostModifier(GetMaxEffectiveCities(/*bIncludePuppets*/ true));
+		iEffectiveSciencePerTurn *= (100 + GetPlayerTechs()->GetNumCitiesResearchCostModifier(1));
+		iEffectiveSciencePerTurn /= (100 + iMod);
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVESCIENCEPERTURN"), iGameTurn, iEffectiveSciencePerTurn);
+#endif
+
 /*#ifdef ENHANCED_GRAPHS
 		const char* szDataSetName;
 		for (int iI = 0; iI < GC.getNumPolicyInfos(); iI++)

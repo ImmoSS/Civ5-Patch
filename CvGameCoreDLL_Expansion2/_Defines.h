@@ -1114,6 +1114,9 @@
 #define EG_REPLAYDATASET_TOTALSPECIALISTCITIZENS
 #define EG_REPLAYDATASET_PERCENTSPECIALISTCITIZENS // TODO: Fix aesthetics
 ///
+///
+/// 
+#define EG_REPLAYDATASET_EFFECTIVESCIENCEPERTURN
 #endif
 ///
 // A more flexible alternative to Replay Messages; primarily for statistics purposes
