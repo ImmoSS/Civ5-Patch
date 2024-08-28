@@ -1119,6 +1119,8 @@
 #define EG_REPLAYDATASET_EFFECTIVESCIENCEPERTURN
 #endif
 ///
+#define GRAPHS_REAL_TOTAL_CULTURE
+///
 // A more flexible alternative to Replay Messages; primarily for statistics purposes
 #define REPLAY_EVENTS
 

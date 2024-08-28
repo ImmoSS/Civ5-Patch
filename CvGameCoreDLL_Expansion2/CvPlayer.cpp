@@ -29292,7 +29292,11 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		// or is disabled, CvPlayer::GetScienceYieldFromPreviousTurns must also change.
 
 		// 	Total Culture
+#ifdef GRAPHS_REAL_TOTAL_CULTURE
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_TOTALCULTURE"), iGameTurn, GetJONSCultureEverGenerated());
+#else
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_TOTALCULTURE"), iGameTurn, getJONSCulture());
+#endif
 
 		// 	Culture per turn
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CULTUREPERTURN"), iGameTurn, GetTotalJONSCulturePerTurn());
