@@ -1951,8 +1951,7 @@ local function GetCultureTooltip( city )
 		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_CULTURE_CITY_MOD", city:GetCultureRateModifier())
 
 		-- Culture Wonders modifier
-		-- tips:insertLocalizedBulletIfNonZero( "TXT_KEY_CULTURE_WONDER_BONUS", city:GetNumWorldWonders() > 0 and cityOwner and cityOwner:GetCultureWonderMultiplier() or 0 )
-		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_CULTURE_WONDER_BONUS", city:GetNumGreatWorks() > 0 and cityOwner and city:GetNumGreatWorks() * cityOwner:GetCultureWonderMultiplier() or 0 )
+		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_CULTURE_WONDER_BONUS", city:GetNumWorldWonders() > 0 and cityOwner and cityOwner:GetCultureWonderMultiplier() or 0 )
 	end
 
 	tips:insertLocalizedBulletIfNonZero( "TXT_KEY_CULTURE_FUTURE_TECH_BONUS", 10 * Teams[cityOwner:GetTeam()]:GetTeamTechs():GetTechCount(80) or 0 )

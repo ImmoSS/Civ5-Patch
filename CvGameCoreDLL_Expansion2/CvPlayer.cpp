@@ -29381,7 +29381,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_MILITARYMIGHT"), iGameTurn, GetMilitaryMight());
 
-		/// First Banch of Enhanced Graphs
+		/// First Bunch of Enhanced Graphs
 #ifdef EG_REPLAYDATASET_FAITHPERTURN
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FAITHPERTURN"), iGameTurn, GetTotalFaithPerTurn());
 #endif
@@ -29576,7 +29576,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS"), iGameTurn, GetNumTimesOpenedDemographics());
 #endif
 
-		/// Second Banch of Enhanced Graphs
+		/// Second Bunch of Enhanced Graphs
 #ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST"), iGameTurn, GetScientistsTotalScienceBoost());
 #endif
