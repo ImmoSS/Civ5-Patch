@@ -691,7 +691,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				if (pTheirUnit:IsEmbarked()) then
 					iTheirStrength = pTheirUnit:GetEmbarkedUnitDefense();
 				else
-					iTheirStrength = pTheirUnit:GetMaxRangedCombatStrength(pMyUnit, nil, false, true);
+					iTheirStrength = pTheirUnit:GetMaxRangedCombatStrength(pMyUnit, nil, false, false);
 				end
 				
 				if (iTheirStrength == 0 or pTheirUnit:GetDomainType() == DomainTypes.DOMAIN_SEA or pTheirUnit:IsRangedSupportFire()) then
@@ -1361,7 +1361,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 
 				-- FortifyModifier
 				iModifier = pTheirUnit:FortifyModifier();
-				if (iModifier ~= 0) then
+				if (iModifier ~= 0 and not (pTheirUnit:IsRanged() and pMyUnit:IsRanged())) then
 					controlTable = g_TheirCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_FORTIFICATION_BONUS" );
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
