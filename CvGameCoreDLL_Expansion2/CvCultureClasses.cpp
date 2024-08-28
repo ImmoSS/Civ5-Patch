@@ -2772,13 +2772,13 @@ int CvPlayerCulture::GetInfluencedCivScienceBonus(PlayerTypes ePlayer) const
 			iRtnValue = 1;
 			break;
 		case INFLUENCE_LEVEL_FAMILIAR:
-			iRtnValue = 3;
+			iRtnValue = 2;
 			break;
 		case INFLUENCE_LEVEL_POPULAR:
-			iRtnValue = 6;
+			iRtnValue = 4;
 			break;
 		case INFLUENCE_LEVEL_INFLUENTIAL:
-			iRtnValue = 10;
+			iRtnValue = 8;
 			break;
 		case INFLUENCE_LEVEL_DOMINANT:
 			iRtnValue = 20;
