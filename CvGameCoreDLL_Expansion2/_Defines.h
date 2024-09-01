@@ -311,6 +311,8 @@
 #define NO_PILLAGE_HEAL_ON_NEUTRAL_LAND
 ///
 #define PRIZE_SHIPS_ALWAYS_CAPTURE
+///
+#define ALLOW_HELICOPTER_WATERWALK
 /*UNITS CHANGES END*/
 
 
@@ -813,7 +815,7 @@
 ///
 #define FIX_MAX_EFFECTIVE_CITIES
 ///
-#define FIX_RANGE_COMBAT_MOD
+#define FIX_RANGE_DEFENSE_MOD
 /// if free tech notification is present, mark choose tech notification as redundant
 #define FIX_REDUNDANT_CHOOSE_TECH_NOTIFICATION
 /*BUGS FIXES END*/
