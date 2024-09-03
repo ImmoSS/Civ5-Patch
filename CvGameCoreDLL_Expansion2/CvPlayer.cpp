@@ -19685,7 +19685,10 @@ int CvPlayer::GetSciencePerTurnFromInfluencedCivsTimes100() const
 
 		if (GC.getGame().isOption("GAMEOPTION_AI_TWEAKS"))
 		{
-			iScienceFromPlayer /= 2;
+			if (!GET_PLAYER(ePlayer).isHuman())
+			{
+				iScienceFromPlayer /= 2;
+			}
 		}
 
 		iAmount += iScienceFromPlayer;
