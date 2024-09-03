@@ -6910,6 +6910,17 @@ bool CvPlayer::canReceiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit) 
 		}
 	}
 
+#ifdef NEW_RUIN_EXPANSION
+	// Expansion
+	if (kGoodyInfo.getNumExpanse() > 0)
+	{
+		if (getNumCities() == 0)
+		{
+			return false;
+		}
+	}
+#endif
+
 	///////////////////////////////////////
 	///////////////////////////////////////
 	// Bad Goodies follow beneath this line
@@ -7701,7 +7712,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 	}
 
 #ifdef NEW_RUIN_EXPANSION
-	// Population
+	// Expansion
 	if (kGoodyInfo.getNumExpanse() > 0)
 	{
 		int iDistance;
