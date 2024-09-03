@@ -5783,6 +5783,10 @@ ResourceTypes CvPlot::getResourceType(TeamTypes eTeam) const
 			if (eTeam == OBSERVER_TEAM)
 				bDebug = true;
 #endif
+#ifdef REVEAL_MAP_GAME_OVER
+			if (GC.getGame().getGameState() == GAMESTATE_OVER)
+				bDebug = true;
+#endif
 
 			int iPolicyReveal = GC.getResourceInfo((ResourceTypes)m_eResourceType)->getPolicyReveal();
 			if (!bDebug && iPolicyReveal != NO_POLICY)

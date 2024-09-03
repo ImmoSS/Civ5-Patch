@@ -966,6 +966,8 @@
 #define REMOVE_DOF
 ///
 #define CREATE_APOLLO_PROGRAM_WITH_CAP_FOUND
+///
+#define REVEAL_MAP_GAME_OVER
 // Maintain backwards compatibility with older versions
 // Starting from v7.0
 #define SAVE_BACKWARDS_COMPATIBILITY
