@@ -6888,8 +6888,10 @@ void CvTeam::SetCurrentEra(EraTypes eNewValue)
 					CvPlayerAI& kPlayer = GET_PLAYER(ePlayer);
 					if(kPlayer.isAlive() && kPlayer.getTeam() == GetID() && !kPlayer.isMinorCiv() && !kPlayer.isBarbarian())
 					{
+#ifndef UNDERGROUND_SECT_REWORK
 						// provide the player with the extra spies according to their trait when they get their first spy
 						if (kPlayer.GetEspionage()->GetNumSpies() == 0)
+#endif
 						{
 							int iNumTraitSpies = kPlayer.GetPlayerTraits()->GetExtraSpies();
 							for (int i = 0; i < iNumTraitSpies; i++)
