@@ -2296,9 +2296,9 @@ function OnMouseOverHex( hexX, hexY )
 									-- No air units
 									--if (pUnit:GetDomainType() ~= DomainTypes.DOMAIN_AIR) then
 										
-										-- Other guy must be same domain, OR we must be ranged OR we must be naval and he is embarked
-										if (pHeadUnit:GetDomainType() == pUnit:GetDomainType() or pHeadUnit:IsRanged() or (pHeadUnit:GetDomainType() == DomainTypes.DOMAIN_SEA and pUnit:IsEmbarked())) then
-										
+										-- Other guy must be same domain, OR we must be ranged OR we must be naval and he is embarked or someone is helicopter
+										if (pHeadUnit:GetDomainType() == pUnit:GetDomainType() or pHeadUnit:IsRanged() or (pHeadUnit:GetDomainType() == DomainTypes.DOMAIN_SEA and pUnit:IsEmbarked()) or pHeadUnit:IsHoveringUnit() or pUnit:IsHoveringUnit()) then
+										print(pHeadUnit:GetID())
 											 if (pUnit:GetBaseCombatStrength() > 0 or pHeadUnit:IsRanged()) then
 												UpdateUnitPortrait(pUnit);
 												UpdateUnitPromotions(pUnit);

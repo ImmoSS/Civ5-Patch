@@ -234,6 +234,9 @@ void CvLuaUnit::PushMethods(lua_State* L, int t)
 	Method(ImmuneToFirstStrikes);
 	Method(NoDefensiveBonus);
 	Method(IgnoreBuildingDefense);
+#ifdef ALLOW_HELICOPTER_WATERWALK
+	Method(IsHoveringUnit);
+#endif
 	Method(CanMoveImpassable);
 	Method(CanMoveAllTerrain);
 	Method(FlatMovementCost);
@@ -2439,6 +2442,18 @@ int CvLuaUnit::lIgnoreBuildingDefense(lua_State* L)
 	lua_pushboolean(L, bResult);
 	return 1;
 }
+#ifdef ALLOW_HELICOPTER_WATERWALK
+//------------------------------------------------------------------------------
+//bool IsHoveringUnit();
+int CvLuaUnit::lIsHoveringUnit(lua_State* L)
+{
+	CvUnit* pkUnit = GetInstance(L);
+	const bool bResult = pkUnit->IsHoveringUnit();
+
+	lua_pushboolean(L, bResult);
+	return 1;
+}
+#endif
 //------------------------------------------------------------------------------
 //bool canMoveImpassable();
 int CvLuaUnit::lCanMoveImpassable(lua_State* L)
