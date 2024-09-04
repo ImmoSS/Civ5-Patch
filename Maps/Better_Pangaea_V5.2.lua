@@ -16,12 +16,23 @@ include("TerrainGenerator");
 function GetMapScriptInfo()
 	local world_age, temperature, rainfall, sea_level, resources = GetCoreMapOptions()
 	return {
-		Name = "Better Pangaea".." V5.1e",
+		Name = "Better Pangaea".." V5.2",
 		Description = "TXT_KEY_MAP_PANGAEA_HELP",
 		IsAdvancedMap = false,
 		IconIndex = 0,
 		SortIndex = 2,
-		CustomOptions = {world_age, temperature, rainfall, sea_level,
+		CustomOptions = {world_age, temperature, rainfall,
+			{
+				Name = "TXT_KEY_MAP_OPTION_SEA_LEVEL",
+				Values = {
+					"TXT_KEY_MAP_OPTION_LOW",
+					"TXT_KEY_MAP_OPTION_MEDIUM",
+					"TXT_KEY_MAP_OPTION_HIGH",
+					"TXT_KEY_MAP_OPTION_RANDOM",
+				},
+				DefaultValue = 1,
+				SortPriority = -96,
+			},
 			{
 				Name = "TXT_KEY_MAP_OPTION_RESOURCES",	-- Customizing the Resource setting to Default to Strategic Balance.
 				Values = {
@@ -35,7 +46,51 @@ function GetMapScriptInfo()
 				},
 				DefaultValue = 6,
 				SortPriority = -95,
-			},},
+			},
+			{
+				Name = "More Rivers",
+				Values = {
+					"TXT_KEY_YES_BUTTON",
+					"TXT_KEY_NO_BUTTON",
+				},
+				DefaultValue = 1,
+				SortPriority = -94,
+			},
+			{
+				Name = "Extra Resources",
+				Values = {
+					"1",
+					"2",
+					"3",
+					"4",
+					"5",
+					"6",
+					"7",
+					"8",
+					"9",
+					"10",
+					"11",
+					"12",
+				},
+				DefaultValue = 5,
+				SortPriority = -93,
+			},
+			{
+				Name = "Max Mountains",
+				Values = {
+					"3",
+					"4",
+					"5",
+					"6",
+					"7",
+					"8",
+					"9",
+					"Uncapped",
+				},
+				DefaultValue = 4,
+				SortPriority = -92,
+			},
+		},
 	}
 end
 ------------------------------------------------------------------------------
@@ -263,6 +318,24 @@ function PangaeaFractalWorld:GeneratePlotTypes(args)
 			local val = self.continentsFrac:GetHeight(x, y);
 			local mountainVal = self.mountainsFrac:GetHeight(x, y);
 			local hillVal = self.hillsFrac:GetHeight(x, y);
+			local iMountainsCap = 0;
+			if Map.GetCustomOption(8) == 1 then
+				iMountainsCap = 3;
+			elseif Map.GetCustomOption(8) == 2 then
+				iMountainsCap = 4;
+			elseif Map.GetCustomOption(8) == 3 then
+				iMountainsCap = 5;
+			elseif Map.GetCustomOption(8) == 4 then
+				iMountainsCap = 6;
+			elseif Map.GetCustomOption(8) == 5 then
+				iMountainsCap = 7;
+			elseif Map.GetCustomOption(8) == 6 then
+				iMountainsCap = 8;
+			elseif Map.GetCustomOption(8) == 7 then
+				iMountainsCap = 9;
+			else
+				iMountainsCap = 1000;
+			end
 	
 			if(val <= iWaterThreshold) then
 				self.plotTypes[i] = PlotTypes.PLOT_OCEAN;
@@ -279,7 +352,7 @@ function PangaeaFractalWorld:GeneratePlotTypes(args)
 					
 			else
 				if (mountainVal >= iMountainThreshold) then
-					if (hillVal >= (iPassThreshold)--[[*63/100]] or iNumMountains >= 3) then -- Mountain Pass though the ridgeline - Brian
+					if (hillVal >= (iPassThreshold) or iNumMountains >= iMountainsCap) then -- Mountain Pass though the ridgeline - Brian
 						if ((hillVal >= iHillsBottom1 and hillVal <= iHillsTop1) or (hillVal >= iHillsBottom2 and hillVal <= iHillsTop2)) then
 							self.plotTypes[i] = PlotTypes.PLOT_HILLS;
 						else
@@ -1844,7 +1917,6 @@ function NormalizePlotAreas(AssignStartingPlots)
 				local nearRiver = false;
 				local nearMountain = false;
 				local res = Map.GetCustomOption(5);
-				-- local start = Map.GetCustomOption(7);
 			
 				-- Check start plot to see if it's adjacent to saltwater.
 				if AssignStartingPlots.plotDataIsCoastal[plotIndex] == true then
@@ -1944,7 +2016,7 @@ function NormalizePlotAreas(AssignStartingPlots)
 	end
 
 	--Placintg Bonuses to Balance Areas
-	for iRunCounter = 1, 10 do
+	for iRunCounter = 1, 12 do
 		randomized_map_plots_data = GetShuffledCopyOfTable(map_plots_data);
 		for loop, plot_data in ipairs(randomized_map_plots_data) do
 			local x, y = plot_data[1], plot_data[2];
@@ -1964,7 +2036,6 @@ function NormalizePlotAreas(AssignStartingPlots)
 				local nearRiver = false;
 				local nearMountain = false;
 				local res = Map.GetCustomOption(5);
-				-- local start = Map.GetCustomOption(7);
 			
 				-- Check start plot to see if it's adjacent to saltwater.
 				if AssignStartingPlots.plotDataIsCoastal[plotIndex] == true then
@@ -2005,6 +2076,7 @@ function NormalizePlotAreas(AssignStartingPlots)
 				local earlyScore = earlyFoodScore + earlyHammerScore;
 				local midScore = midFoodScore + midHammerScore;
 				local placedBonus, placedOasis, resource_ID = false, false, -1;
+				local iMaxBonuses = Map.GetCustomOption(7);
 
 				--print("x = "..tostring(x)..", y = "..tostring(y));
 				--print("AvgearlyScore = "..tostring(earlyScore/(36 - iNumEarlyBadTiles))..", AvgMidScore = "..tostring(midScore/(36 - iNumMidBadTiles)))
@@ -2012,7 +2084,7 @@ function NormalizePlotAreas(AssignStartingPlots)
 				attempt = 1;
 				if iNumHabitableTiles > 12 then
 					while (earlyScore/(36 - iNumEarlyBadTiles) < (2 + iRunCounter/36)--[[ or midScore/(36 - iNumMidBadTiles) < (3 + 6/18 + iRunCounter/18)]]) and
-						attempt < 36 and not placedBonus and iNumBonuses < 8 do
+						attempt < 36 and not placedBonus and iNumBonuses < iMaxBonuses do
 						local plot_adjustments = randomized_search_table[attempt];
 						local searchX, searchY = AssignStartingPlots:ApplyHexAdjustment(x, y, plot_adjustments)
 						-- Attempt to place a Bonus at the currently chosen plot.
@@ -2985,70 +3057,123 @@ function AddRivers()
 	
 	print("Map Generation - Adding Rivers");
 
-	local passConditions = {
-		
-		function(plot)
-			local startFoodScore, earlyFoodScore, midFoodScore, lateFoodScore, startHammerScore, earlyHammerScore, midHammerScore, lateHammerScore, fastHammerScore,
-						iNumStartBadTiles, iNumEarlyBadTiles, iNumMidBadTiles, iNumLateBadTiles, iNumBadDesert, iNumMountains, bAllowOasis, iNumLandTiles, iNumHillTiles, iNumHabitableTiles, iNumBonuses = AreaAnalyzer(plot, AssignStartingPlots:Create(), false);
-			local area = plot:Area();
-			local plotsPerRiverEdge = GameDefines["PLOTS_PER_RIVER_EDGE"];
-			plotsPerRiverEdge =  4;
-			return (iNumBadDesert > 1);
-		end,
-		function(plot)
-			return plot:IsHills() or plot:IsMountain();
-		end,
-		
-		function(plot)
-			return (not plot:IsCoastalLand()) and (Map.Rand(8, "MapGenerator AddRivers") == 0);
-		end,
-		
-		function(plot)
-			local area = plot:Area();
-			local plotsPerRiverEdge = GameDefines["PLOTS_PER_RIVER_EDGE"];
-			--plotsPerRiverEdge =  8;
-			return (plot:IsHills() or plot:IsMountain()) and (area:GetNumRiverEdges() <	((area:GetNumTiles() / plotsPerRiverEdge) + 1));
-		end,
-		
-		function(plot)
-			local area = plot:Area();
-			local plotsPerRiverEdge = GameDefines["PLOTS_PER_RIVER_EDGE"];
-			--plotsPerRiverEdge =  8;
-			return (area:GetNumRiverEdges() < (area:GetNumTiles() / plotsPerRiverEdge) + 1);
-		end
-	}
-	
-	for iPass, passCondition in ipairs(passConditions) do
-		
-		local riverSourceRange;
-		local seaWaterRange;
-
-		if (iPass == 2 or iPass == 3) then
-			riverSourceRange = GameDefines["RIVER_SOURCE_MIN_RIVER_RANGE"];
-			seaWaterRange = GameDefines["RIVER_SOURCE_MIN_SEAWATER_RANGE"];
-		elseif (iPsss == 1) then
-			riverSourceRange = 0;
-			seaWaterRange = 0;
-		else
-			riverSourceRange = (GameDefines["RIVER_SOURCE_MIN_RIVER_RANGE"] / 2);
-			seaWaterRange = (GameDefines["RIVER_SOURCE_MIN_SEAWATER_RANGE"] / 2);
-		end
+	if Map.GetCustomOption(6) == 1 then
+		local passConditions = {
 			
-		for i, plot in Plots() do 
-			if(not plot:IsWater()) then
-				if(passCondition(plot)) then
-					if (not Map.FindWater(plot, riverSourceRange, true)) then
-						if (not Map.FindWater(plot, seaWaterRange, false)) then
-							local inlandCorner = plot:GetInlandCorner();
-							if(inlandCorner) then
-								DoRiver(inlandCorner);
+			function(plot)
+				local startFoodScore, earlyFoodScore, midFoodScore, lateFoodScore, startHammerScore, earlyHammerScore, midHammerScore, lateHammerScore, fastHammerScore,
+							iNumStartBadTiles, iNumEarlyBadTiles, iNumMidBadTiles, iNumLateBadTiles, iNumBadDesert, iNumMountains, bAllowOasis, iNumLandTiles, iNumHillTiles, iNumHabitableTiles, iNumBonuses = AreaAnalyzer(plot, AssignStartingPlots:Create(), false);
+				local area = plot:Area();
+				local plotsPerRiverEdge = GameDefines["PLOTS_PER_RIVER_EDGE"];
+				plotsPerRiverEdge =  4;
+				return (iNumBadDesert > 1);
+			end,
+			function(plot)
+				return plot:IsHills() or plot:IsMountain();
+			end,
+			
+			function(plot)
+				return (not plot:IsCoastalLand()) and (Map.Rand(8, "MapGenerator AddRivers") == 0);
+			end,
+			
+			function(plot)
+				local area = plot:Area();
+				local plotsPerRiverEdge = GameDefines["PLOTS_PER_RIVER_EDGE"];
+				--plotsPerRiverEdge =  8;
+				return (plot:IsHills() or plot:IsMountain()) and (area:GetNumRiverEdges() <	((area:GetNumTiles() / plotsPerRiverEdge) + 1));
+			end,
+			
+			function(plot)
+				local area = plot:Area();
+				local plotsPerRiverEdge = GameDefines["PLOTS_PER_RIVER_EDGE"];
+				--plotsPerRiverEdge =  8;
+				return (area:GetNumRiverEdges() < (area:GetNumTiles() / plotsPerRiverEdge) + 1);
+			end
+		}
+		
+		for iPass, passCondition in ipairs(passConditions) do
+			
+			local riverSourceRange;
+			local seaWaterRange;
+
+			if (iPass == 2 or iPass == 3) then
+				riverSourceRange = GameDefines["RIVER_SOURCE_MIN_RIVER_RANGE"];
+				seaWaterRange = GameDefines["RIVER_SOURCE_MIN_SEAWATER_RANGE"];
+			elseif (iPsss == 1) then
+				riverSourceRange = 0;
+				seaWaterRange = 0;
+			else
+				riverSourceRange = (GameDefines["RIVER_SOURCE_MIN_RIVER_RANGE"] / 2);
+				seaWaterRange = (GameDefines["RIVER_SOURCE_MIN_SEAWATER_RANGE"] / 2);
+			end
+				
+			for i, plot in Plots() do 
+				if(not plot:IsWater()) then
+					if(passCondition(plot)) then
+						if (not Map.FindWater(plot, riverSourceRange, true)) then
+							if (not Map.FindWater(plot, seaWaterRange, false)) then
+								local inlandCorner = plot:GetInlandCorner();
+								if(inlandCorner) then
+									DoRiver(inlandCorner);
+								end
 							end
 						end
-					end
-				end			
+					end			
+				end
 			end
-		end
-	end		
+		end	
+	else
+		local passConditions = {
+			function(plot)
+				return plot:IsHills() or plot:IsMountain();
+			end,
+			
+			function(plot)
+				return (not plot:IsCoastalLand()) and (Map.Rand(8, "MapGenerator AddRivers") == 0);
+			end,
+			
+			function(plot)
+				local area = plot:Area();
+				local plotsPerRiverEdge = GameDefines["PLOTS_PER_RIVER_EDGE"];
+				return (plot:IsHills() or plot:IsMountain()) and (area:GetNumRiverEdges() <	((area:GetNumTiles() / plotsPerRiverEdge) + 1));
+			end,
+			
+			function(plot)
+				local area = plot:Area();
+				local plotsPerRiverEdge = GameDefines["PLOTS_PER_RIVER_EDGE"];
+				return (area:GetNumRiverEdges() < (area:GetNumTiles() / plotsPerRiverEdge) + 1);
+			end
+		}
+		
+		for iPass, passCondition in ipairs(passConditions) do
+			
+			local riverSourceRange;
+			local seaWaterRange;
+				
+			if (iPass <= 2) then
+				riverSourceRange = GameDefines["RIVER_SOURCE_MIN_RIVER_RANGE"];
+				seaWaterRange = GameDefines["RIVER_SOURCE_MIN_SEAWATER_RANGE"];
+			else
+				riverSourceRange = (GameDefines["RIVER_SOURCE_MIN_RIVER_RANGE"] / 2);
+				seaWaterRange = (GameDefines["RIVER_SOURCE_MIN_SEAWATER_RANGE"] / 2);
+			end
+				
+			for i, plot in Plots() do 
+				if(not plot:IsWater()) then
+					if(passCondition(plot)) then
+						if (not Map.FindWater(plot, riverSourceRange, true)) then
+							if (not Map.FindWater(plot, seaWaterRange, false)) then
+								local inlandCorner = plot:GetInlandCorner();
+								if(inlandCorner) then
+									DoRiver(inlandCorner);
+								end
+							end
+						end
+					end			
+				end
+			end
+		end		
+	end
 end
 ------------------------------------------------------------------------------
 function AssignStartingPlots:FixSugarJungles()
