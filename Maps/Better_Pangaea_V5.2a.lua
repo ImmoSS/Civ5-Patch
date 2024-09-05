@@ -16,7 +16,7 @@ include("TerrainGenerator");
 function GetMapScriptInfo()
 	local world_age, temperature, rainfall, sea_level, resources = GetCoreMapOptions()
 	return {
-		Name = "Better Pangaea".." V5.2",
+		Name = "Better Pangaea".." V5.2a",
 		Description = "TXT_KEY_MAP_PANGAEA_HELP",
 		IsAdvancedMap = false,
 		IconIndex = 0,
@@ -48,7 +48,7 @@ function GetMapScriptInfo()
 				SortPriority = -95,
 			},
 			{
-				Name = "More Rivers",
+				Name = "TXT_KEY_MAP_OPTION_MORE_RIVERS",
 				Values = {
 					"TXT_KEY_YES_BUTTON",
 					"TXT_KEY_NO_BUTTON",
@@ -57,7 +57,7 @@ function GetMapScriptInfo()
 				SortPriority = -94,
 			},
 			{
-				Name = "Extra Resources",
+				Name = "TXT_KEY_MAP_OPTION_EXTRA_RESOURCES",
 				Values = {
 					"1",
 					"2",
@@ -76,7 +76,7 @@ function GetMapScriptInfo()
 				SortPriority = -93,
 			},
 			{
-				Name = "Max Mountains",
+				Name = "TXT_KEY_MAP_OPTION_MAX_MOUNTAINS",
 				Values = {
 					"3",
 					"4",
@@ -1640,8 +1640,8 @@ function AssignStartingPlots:AddStrategicBalanceResources(region_number)
 	local odd = self.firstRingYIsOdd;
 	local even = self.firstRingYIsEven;
 	local nextX, nextY, plot_adjustments;
-	local iron_list, horse_list, oil_list, coal_list = {}, {}, {}, {};
-	local iron_fallback, horse_fallback, oil_fallback, coal_fallback = {}, {}, {}, {};
+	local iron_list, horse_list, oil_list, coal_list, alum_list = {}, {}, {}, {}, {};
+	local iron_fallback, horse_fallback, oil_fallback, coal_fallback, alum_fallback = {}, {}, {}, {}, {};
 	local radius = 3;
 	local res = Map.GetCustomOption(5);
 	
@@ -1783,32 +1783,42 @@ function AssignStartingPlots:AddStrategicBalanceResources(region_number)
 								if terrainType == TerrainTypes.TERRAIN_TUNDRA or terrainType == TerrainTypes.TERRAIN_DESERT then
 									if ripple_radius < 6 then
 										table.insert(coal_list, plotIndex)
+										table.insert(alum_list, plotIndex)
 									else
 										table.insert(coal_fallback, plotIndex)
+										table.insert(alum_fallback, plotIndex)
 									end
 								elseif terrainType == TerrainTypes.TERRAIN_PLAINS or terrainType == TerrainTypes.TERRAIN_GRASS then
 									if ripple_radius < 6 then
 										table.insert(coal_list, plotIndex)
+										table.insert(alum_list, plotIndex)
 									else
 										table.insert(coal_fallback, plotIndex)
+										table.insert(alum_fallback, plotIndex)
 									end
 								elseif terrainType == TerrainTypes.TERRAIN_SNOW then
 									if ripple_radius < 6 then
 										table.insert(coal_list, plotIndex)
+										table.insert(alum_list, plotIndex)
 									else
 										table.insert(coal_fallback, plotIndex)
+										table.insert(alum_fallback, plotIndex)
 									end
 								end
 							elseif featureType == FeatureTypes.FEATURE_MARSH then		
 								if ripple_radius < 4 then
 									table.insert(coal_list, plotIndex)
+									table.insert(alum_list, plotIndex)
 								else
 									table.insert(coal_fallback, plotIndex)
+									table.insert(alum_fallback, plotIndex)
 								end
 							elseif featureType == FeatureTypes.FEATURE_FLOOD_PLAINS then
 								table.insert(coal_fallback, plotIndex)
+								table.insert(alum_fallback, plotIndex)
 							elseif featureType == FeatureTypes.FEATURE_JUNGLE or featureType == FeatureTypes.FEATURE_FOREST then
 								table.insert(coal_fallback, plotIndex)
+								table.insert(alum_fallback, plotIndex)
 							end
 						end
 						currentX, currentY = nextX, nextY;
@@ -1820,8 +1830,9 @@ function AssignStartingPlots:AddStrategicBalanceResources(region_number)
 
 	local uran_amt, horse_amt, oil_amt, iron_amt, coal_amt, alum_amt = self:GetMajorStrategicResourceQuantityValues()
 	coal_amt = 3;
+	alum_amt = 3;
 	local shuf_list;
-	local placed_iron, placed_horse, placed_oil, placed_coal = false, false, false, false;
+	local placed_iron, placed_horse, placed_oil_1, placed_oil_2, placed_coal, placed_alum = false, false, false, false, false, false;
 
 	if table.maxn(iron_list) > 0 then
 		shuf_list = GetShuffledCopyOfTable(iron_list)
@@ -1841,16 +1852,30 @@ function AssignStartingPlots:AddStrategicBalanceResources(region_number)
 		shuf_list = GetShuffledCopyOfTable(oil_list)
 		iNumLeftToPlace = self:PlaceSpecificNumberOfResources(self.oil_ID, oil_amt, 1, 1, -1, 0, 0, shuf_list);
 		if iNumLeftToPlace == 0 then
-			placed_oil = true;
+			placed_oil_1 = true;
 		end
 	end
 	
 	if res == 6 then
+		if table.maxn(oil_list) > 0 then
+			shuf_list = GetShuffledCopyOfTable(oil_list)
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(self.oil_ID, 3, 1, 1, -1, 0, 0, shuf_list);
+			if iNumLeftToPlace == 0 then
+				placed_oil_2 = true;
+			end
+		end
 		if table.maxn(coal_list) > 0 then
 			shuf_list = GetShuffledCopyOfTable(coal_list)
 			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(self.coal_ID, coal_amt, 1, 1, -1, 0, 0, shuf_list);
 			if iNumLeftToPlace == 0 then
 				placed_coal = true;
+			end
+		end
+		if table.maxn(alum_list) > 0 then
+			shuf_list = GetShuffledCopyOfTable(alum_list)
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(self.aluminum_ID, alum_amt, 1, 1, -1, 0, 0, shuf_list);
+			if iNumLeftToPlace == 0 then
+				placed_alum = true;
 			end
 		end
 	end
@@ -1865,20 +1890,22 @@ function AssignStartingPlots:AddStrategicBalanceResources(region_number)
 		shuf_list = GetShuffledCopyOfTable(horse_fallback)
 		iNumLeftToPlace = self:PlaceSpecificNumberOfResources(self.horse_ID, horse_amt, 1, 1, -1, 0, 0, shuf_list);
 	end
-	if placed_oil == false and table.maxn(oil_fallback) > 0 then
+	if placed_oil_1 == false and table.maxn(oil_fallback) > 0 then
 		shuf_list = GetShuffledCopyOfTable(oil_fallback)
 		iNumLeftToPlace = self:PlaceSpecificNumberOfResources(self.oil_ID, oil_amt, 1, 1, -1, 0, 0, shuf_list);
-		print("Fallback Used");
-		if iNumLeftToPlace == 0 then
-			print("All Oil Placed 2nd Attempt");
-		else
-			--print("Not All Oil Placed");
-		end
 	end
 	if res == 6 then
+		if placed_oil_2 == false and table.maxn(oil_fallback) > 0 then
+			shuf_list = GetShuffledCopyOfTable(oil_fallback)
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(self.oil_ID, 3, 1, 1, -1, 0, 0, shuf_list);
+		end
 		if placed_coal == false and table.maxn(coal_fallback) > 0 then
 			shuf_list = GetShuffledCopyOfTable(coal_fallback)
 			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(self.coal_ID, coal_amt, 1, 1, -1, 0, 0, shuf_list);
+		end
+		if placed_alum == false and table.maxn(alum_fallback) > 0 then
+			shuf_list = GetShuffledCopyOfTable(alum_fallback)
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(self.aluminum_ID, alum_amt, 1, 1, -1, 0, 0, shuf_list);
 		end
 	end
 end
