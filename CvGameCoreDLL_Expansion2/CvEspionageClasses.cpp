@@ -2702,6 +2702,13 @@ bool CvPlayerEspionage::IsMyDiplomatVisitingThem(PlayerTypes ePlayer, bool bIncl
 		return false;
 	}
 
+#ifdef TOURISM_BONUS_DIPLOMAT
+	if (m_aSpyList[iSpyIndex] == NULL)
+	{
+		return false;
+	}
+#endif
+
 	if (!m_aSpyList[iSpyIndex].m_bIsDiplomat)
 	{
 		return false;
