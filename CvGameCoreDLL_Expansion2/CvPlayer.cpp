@@ -30030,8 +30030,11 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_UNITSFROMCS"), iGameTurn, GetNumUnitsFromMinors());
 #endif
 
+#if defined EG_REPLAYDATASET_TOURISMPERTURN || defined EG_REPLAYDATASET_NUMWORLDWONDERS
+		int iLoopCity;
+#endif
 #ifdef EG_REPLAYDATASET_TOURISMPERTURN
-		int iLoopCity = 0;
+		iLoopCity = 0;
 		int iInfluencePerTurn = 0;
 		for (CvCity *pLoopCity = firstCity(&iLoopCity); pLoopCity != NULL; pLoopCity = nextCity(&iLoopCity))
 		{
@@ -30064,6 +30067,16 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 			}
 		}
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMLUXURY"), iGameTurn, iLuxuryTiles);
+#endif
+
+#ifdef EG_REPLAYDATASET_NUMWORLDWONDERS
+		iLoopCity = 0;
+		int iNumWorldWonders = 0;
+		for (CvCity* pLoopCity = firstCity(&iLoopCity); pLoopCity != NULL; pLoopCity = nextCity(&iLoopCity))
+		{
+			iNumWorldWonders += pLoopCity->getNumWorldWonders();
+		}
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMWORLDWONDERS"), iGameTurn, iNumWorldWonders);
 #endif
 
 /*#ifdef ENHANCED_GRAPHS
