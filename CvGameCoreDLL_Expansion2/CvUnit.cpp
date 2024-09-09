@@ -14343,7 +14343,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 #ifdef INVISIBILITY_OF_NUCLEAR_MISSILESS_ON_SUBMARINES
 				setInvisibleType(NO_INVISIBLE);
 				auto_ptr<ICvUnit1> pDllUnit(new CvDllUnit(this));
-				gDLL->GameplayUnitVisibility(pDllUnit.get(), NO_INVISIBLE, true);
+				gDLL->GameplayUnitVisibility(pDllUnit.get(), false, true);
 #endif
 			}
 		}
