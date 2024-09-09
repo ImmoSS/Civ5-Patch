@@ -439,6 +439,10 @@ public:
 	int GetNumCreatedWorldWonders() const;
 	void ChangeNumCreatedWorldWonders(int iChange);
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONBUILDINGBUYS
+	int GetNumGoldSpentOnBuildingBuys() const;
+	void ChangeNumGoldSpentOnBuildingBuys(int iChange);
+#endif
 
 	int GetNumUnitsOutOfSupply() const;
 
@@ -1985,6 +1989,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
 	int m_iNumCreatedWorldWonders;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONBUILDINGBUYS
+	int m_iNumGoldSpentOnBuildingBuys;
 #endif
 	int m_iExtraLeagueVotes;
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
