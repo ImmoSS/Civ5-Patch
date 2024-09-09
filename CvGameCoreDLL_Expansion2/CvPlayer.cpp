@@ -2186,6 +2186,10 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 		}
 	}
 
+#ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
+	int iTurnsSinceAcquire = GC.getGame().getGameTurn() - pOldCity->getGameTurnAcquired();
+#endif
+
 	if(bConquest)
 	{
 		CvNotifications* pNotifications = GET_PLAYER(pOldCity->getOwner()).GetNotifications();
@@ -2995,7 +2999,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 									{
 										iNum += paiNumRealBuilding[*it];
 									}
-									else if (paiNumRealBuilding[*it] > 0 && iCountBuildingToDestroy < iNumBuildingsToDestroy)
+									else if (!bRecapture  && iTurnsSinceAcquire <= 0 && paiNumRealBuilding[*it] > 0 && iCountBuildingToDestroy < iNumBuildingsToDestroy)
 									{
 										iCountBuildingToDestroy++;
 									}
