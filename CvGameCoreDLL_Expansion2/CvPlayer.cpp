@@ -271,6 +271,9 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 	, m_iProductionFromMinorsTimes100(0)
 #endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+	, m_iNumUnitsFromMinors(0)
+#endif
 	, m_iExtraLeagueVotes(0)
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
@@ -1051,6 +1054,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 	m_iProductionFromMinorsTimes100 = 0;
+#endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+	m_iNumUnitsFromMinors = 0;
 #endif
 	m_iExtraLeagueVotes = 0;
 	m_iSpecialPolicyBuildingHappiness = 0;
@@ -10720,6 +10726,16 @@ int CvPlayer::GetProductionFromMinorsTimes100() const
 void CvPlayer::ChangeProductionFromMinorsTimes100(int iChange)
 {
 	m_iProductionFromMinorsTimes100 = (m_iProductionFromMinorsTimes100 + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+int CvPlayer::GetNumUnitsFromMinors() const
+{
+	return m_iNumUnitsFromMinors;
+}
+void CvPlayer::ChangeNumUnitsFromMinors(int iChange)
+{
+	m_iNumUnitsFromMinors = (m_iNumUnitsFromMinors + iChange);
 }
 #endif
 
@@ -25482,6 +25498,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 		kStream >> m_iProductionFromMinorsTimes100;
 #endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+		kStream >> m_iNumUnitsFromMinors;
+#endif
 # endif
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
@@ -25598,6 +25617,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 		m_iProductionFromMinorsTimes100 = 0;
 #endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+		m_iNumUnitsFromMinors = 0;
+#endif
 	}
 	else if (uiVersion == 1002)
 	{
@@ -25711,6 +25733,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 		m_iProductionFromMinorsTimes100 = 0;
+#endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+		m_iNumUnitsFromMinors = 0;
 #endif
 	}
 	else if (uiVersion == 1001)
@@ -25826,6 +25851,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 		m_iProductionFromMinorsTimes100 = 0;
 #endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+		m_iNumUnitsFromMinors = 0;
+#endif
 	}
 	else
 	{
@@ -25939,6 +25967,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 		m_iProductionFromMinorsTimes100 = 0;
+#endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+		m_iNumUnitsFromMinors = 0;
 #endif
 	}
 #endif
@@ -26854,6 +26885,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 	kStream << m_iProductionFromMinorsTimes100;
+#endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+	kStream << m_iNumUnitsFromMinors;
 #endif
 	kStream << m_iExtraLeagueVotes;
 	kStream << m_iSpecialPolicyBuildingHappiness;
@@ -29914,6 +29948,9 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 #ifdef  EG_REPLAYDATASET_HAPPINESSFROMCS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_HAPPINESSFROMCS"), iGameTurn, GetHappinessFromMinorCivs());
+#endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_UNITSFROMCS"), iGameTurn, GetNumUnitsFromMinors());
 #endif
 
 /*#ifdef ENHANCED_GRAPHS

@@ -423,6 +423,10 @@ public:
 	int GetProductionFromMinorsTimes100() const;
 	void ChangeProductionFromMinorsTimes100(int iChange);
 #endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+	int GetNumUnitsFromMinors() const;
+	void ChangeNumUnitsFromMinors(int iChange);
+#endif
 
 	int GetNumUnitsOutOfSupply() const;
 
@@ -1957,6 +1961,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 	int m_iProductionFromMinorsTimes100;
+#endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+	int m_iNumUnitsFromMinors;
 #endif
 	int m_iExtraLeagueVotes;
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;

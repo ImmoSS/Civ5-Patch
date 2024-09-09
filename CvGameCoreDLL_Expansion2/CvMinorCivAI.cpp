@@ -8416,6 +8416,9 @@ void CvMinorCivAI::DoSpawnUnit(PlayerTypes eMajor)
 				strSummary << GetPlayer()->getNameKey();
 
 				AddNotification(strMessage.toUTF8(), strSummary.toUTF8(), eMajor, pNewUnit->getX(), pNewUnit->getY());
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+				GET_PLAYER(eMajor).ChangeNumUnitsFromMinors(1);
+#endif
 			}
 			else
 				pNewUnit->kill(false);	// Could not find a spot!
