@@ -265,6 +265,9 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 	, m_iTimesEnteredCityScreen(0)
 #endif
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+	, m_iNumDiedSpies(0)
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 	, m_iFoodFromMinorsTimes100(0)
 #endif
@@ -1048,6 +1051,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 	m_iTimesEnteredCityScreen = 0;
+#endif
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+	m_iNumDiedSpies = 0;
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 	m_iFoodFromMinorsTimes100 = 0;
@@ -10706,6 +10712,16 @@ int CvPlayer::GetNumHappinessFromTradeDeals() const
 		}
 	}
 	return iHappinessFromTradeDeals;
+}
+#endif
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+int CvPlayer::GetNumDiedSpies() const
+{
+	return m_iNumDiedSpies;
+}
+void CvPlayer::ChangeNumDiedSpies(int iChange)
+{
+	m_iNumDiedSpies = (m_iNumDiedSpies + iChange);
 }
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
@@ -25492,6 +25508,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 		kStream >> m_iTimesEnteredCityScreen;
 #endif
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+		kStream >> m_iNumDiedSpies;
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 		kStream >> m_iFoodFromMinorsTimes100;
 #endif
@@ -25611,6 +25630,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 		kStream >> m_iTimesEnteredCityScreen;
 #endif
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+		m_iNumDiedSpies = 0;
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 		m_iFoodFromMinorsTimes100 = 0;
 #endif
@@ -25727,6 +25749,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 		m_iTimesEnteredCityScreen = 0;
+#endif
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+		m_iNumDiedSpies = 0;
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 		m_iFoodFromMinorsTimes100 = 0;
@@ -25845,6 +25870,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 		m_iTimesEnteredCityScreen = 0;
 #endif
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+		m_iNumDiedSpies = 0;
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 		m_iFoodFromMinorsTimes100 = 0;
 #endif
@@ -25961,6 +25989,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 		m_iTimesEnteredCityScreen = 0;
+#endif
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+		m_iNumDiedSpies = 0;
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 		m_iFoodFromMinorsTimes100 = 0;
@@ -26879,6 +26910,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 	kStream << m_iTimesEnteredCityScreen;
+#endif
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+	kStream << m_iNumDiedSpies;
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 	kStream << m_iFoodFromMinorsTimes100;
@@ -29929,24 +29963,28 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVESCIENCEPERTURN"), iGameTurn, iEffectiveSciencePerTurn);
 #endif
 
-#ifdef  EG_REPLAYDATASET_FOODFROMCS
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_DIEDSPIES"), iGameTurn, GetNumDiedSpies());
+#endif
+
+#ifdef EG_REPLAYDATASET_FOODFROMCS
 		int iFoodFromMinersTimes100 = GetFoodFromMinorsTimes100() / 1024 + getNumCities() * (GetFoodFromMinorsTimes100() % 1024);
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FOODFROMCS"), iGameTurn, iFoodFromMinersTimes100 / 100);
 #endif
-#ifdef  EG_REPLAYDATASET_PRODUCTIONFROMCS
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 		int iProductionFromMinersTimes100 = GetProductionFromMinorsTimes100() / 1024 + getNumCities() * (GetProductionFromMinorsTimes100() % 1024);
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PRODUCTIONFROMCS"), iGameTurn, iProductionFromMinersTimes100 / 100);
 #endif
-#ifdef  EG_REPLAYDATASET_CULTUREFROMCS
+#ifdef EG_REPLAYDATASET_CULTUREFROMCS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CULTUREFROMCS"), iGameTurn, GetCulturePerTurnFromMinorCivs());
 #endif
-#ifdef  EG_REPLAYDATASET_SCIENCEFROMCS
+#ifdef EG_REPLAYDATASET_SCIENCEFROMCS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENCEFROMCS"), iGameTurn, GetSciencePerTurnFromMinorCivsTimes100() / 100);
 #endif
-#ifdef  EG_REPLAYDATASET_FAITHFROMCS
+#ifdef EG_REPLAYDATASET_FAITHFROMCS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FAITHFROMCS"), iGameTurn, GetFaithPerTurnFromMinorCivs());
 #endif
-#ifdef  EG_REPLAYDATASET_HAPPINESSFROMCS
+#ifdef EG_REPLAYDATASET_HAPPINESSFROMCS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_HAPPINESSFROMCS"), iGameTurn, GetHappinessFromMinorCivs());
 #endif
 #ifdef EG_REPLAYDATASET_UNITSFROMCS

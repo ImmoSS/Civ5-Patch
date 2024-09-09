@@ -415,6 +415,10 @@ public:
 #ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
 	int GetNumHappinessFromTradeDeals() const;
 #endif
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+	int GetNumDiedSpies() const;
+	void ChangeNumDiedSpies(int iChange);
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 	int GetFoodFromMinorsTimes100() const;
 	void ChangeFoodFromMinorsTimes100(int iChange);
@@ -1955,6 +1959,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 	int m_iTimesEnteredCityScreen;
+#endif
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+	int m_iNumDiedSpies;
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 	int m_iFoodFromMinorsTimes100;
