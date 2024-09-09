@@ -6437,6 +6437,9 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		{
 			GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iCapitalFoodTimes100);
 			GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iOtherCitiesFoodTimes100);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+			GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * iCapitalFoodTimes100 + iOtherCitiesFoodTimes100);
+#endif
 		}
 #else
 		GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iCapitalFoodTimes100);
@@ -7096,6 +7099,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			{
 				bSomethingChanged = true;
 				GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+				GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * (iNewFood - iOldFood));
+#endif
 			}
 
 			// Other Cities
@@ -7106,6 +7112,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			{
 				bSomethingChanged = true;
 				GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+				GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(iNewFood - iOldFood);
+#endif
 			}
 		}
 
@@ -7127,6 +7136,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			{
 				bSomethingChanged = true;
 				GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+				GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * (iNewFood - iOldFood));
+#endif
 			}
 
 			// Other Cities
@@ -7137,6 +7149,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			{
 				bSomethingChanged = true;
 				GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+				GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(iNewFood - iOldFood);
+#endif
 			}
 		}
 	}

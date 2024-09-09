@@ -1126,6 +1126,8 @@
 #define EG_REPLAYDATASET_EFFECTIVESCIENCEPERTURN
 ///
 /// Third Bunch of Enhanced Graphs
+///
+#define EG_REPLAYDATASET_FOODFROMCS
 #endif
 ///
 #define GRAPHS_REAL_TOTAL_CULTURE

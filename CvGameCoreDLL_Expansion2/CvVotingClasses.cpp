@@ -1543,6 +1543,9 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 					if (iOldFood != iNewFood)
 					{
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * (iNewFood - iOldFood));
+#endif
 					}
 
 					// Other Cities
@@ -1552,6 +1555,9 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 					if (iOldFood != iNewFood)
 					{
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(iNewFood - iOldFood);
+#endif
 					}
 				}
 
@@ -1572,6 +1578,9 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 					if (iOldFood != iNewFood)
 					{
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * (iNewFood - iOldFood));
+#endif
 					}
 
 					// Other Cities
@@ -1581,6 +1590,9 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 					if (iOldFood != iNewFood)
 					{
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(iNewFood - iOldFood);
+#endif
 					}
 				}
 			}
@@ -1911,6 +1923,9 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 					if (iOldFood != iNewFood)
 					{
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * (iNewFood - iOldFood));
+#endif
 					}
 
 					// Other Cities
@@ -1920,6 +1935,9 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 					if (iOldFood != iNewFood)
 					{
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(iNewFood - iOldFood);
+#endif
 					}
 				}
 
@@ -1940,6 +1958,9 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 					if (iOldFood != iNewFood)
 					{
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * (iNewFood - iOldFood));
+#endif
 					}
 
 					// Other Cities
@@ -1949,6 +1970,9 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 					if (iOldFood != iNewFood)
 					{
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(iNewFood - iOldFood);
+#endif
 					}
 				}
 			}

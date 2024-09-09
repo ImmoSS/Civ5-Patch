@@ -415,6 +415,10 @@ public:
 #ifdef EG_REPLAYDATASET_HAPPINESSFROMTRADEDEALS
 	int GetNumHappinessFromTradeDeals() const;
 #endif
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+	int GetFoodFromMinorsTimes100() const;
+	void ChangeFoodFromMinorsTimes100(int iChange);
+#endif
 
 	int GetNumUnitsOutOfSupply() const;
 
@@ -1943,6 +1947,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 	int m_iTimesEnteredCityScreen;
+#endif
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+	int m_iFoodFromMinorsTimes100;
 #endif
 	int m_iExtraLeagueVotes;
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;

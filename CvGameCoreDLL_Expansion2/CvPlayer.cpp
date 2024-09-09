@@ -265,6 +265,9 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 	, m_iTimesEnteredCityScreen(0)
 #endif
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+	, m_iFoodFromMinorsTimes100(0)
+#endif
 	, m_iExtraLeagueVotes(0)
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
@@ -1039,6 +1042,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 	m_iTimesEnteredCityScreen = 0;
+#endif
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+	m_iFoodFromMinorsTimes100 = 0;
 #endif
 	m_iExtraLeagueVotes = 0;
 	m_iSpecialPolicyBuildingHappiness = 0;
@@ -10688,6 +10694,16 @@ int CvPlayer::GetNumHappinessFromTradeDeals() const
 		}
 	}
 	return iHappinessFromTradeDeals;
+}
+#endif
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+int CvPlayer::GetFoodFromMinorsTimes100() const
+{
+	return m_iFoodFromMinorsTimes100;
+}
+void CvPlayer::ChangeFoodFromMinorsTimes100(int iChange)
+{
+	m_iFoodFromMinorsTimes100 = (m_iFoodFromMinorsTimes100 + iChange);
 }
 #endif
 
@@ -25444,6 +25460,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 		kStream >> m_iTimesEnteredCityScreen;
 #endif
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+		kStream >> m_iFoodFromMinorsTimes100;
+#endif
 # endif
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
@@ -25554,6 +25573,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 		kStream >> m_iTimesEnteredCityScreen;
 #endif
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+		m_iFoodFromMinorsTimes100 = 0;
+#endif
 	}
 	else if (uiVersion == 1002)
 	{
@@ -25661,6 +25683,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 		m_iTimesEnteredCityScreen = 0;
+#endif
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+		m_iFoodFromMinorsTimes100 = 0;
 #endif
 	}
 	else if (uiVersion == 1001)
@@ -25770,6 +25795,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 		m_iTimesEnteredCityScreen = 0;
 #endif
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+		m_iFoodFromMinorsTimes100 = 0;
+#endif
 	}
 	else
 	{
@@ -25877,6 +25905,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 		m_iTimesEnteredCityScreen = 0;
+#endif
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+		m_iFoodFromMinorsTimes100 = 0;
 #endif
 	}
 #endif
@@ -26786,6 +26817,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 	kStream << m_iTimesEnteredCityScreen;
+#endif
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+	kStream << m_iFoodFromMinorsTimes100;
 #endif
 	kStream << m_iExtraLeagueVotes;
 	kStream << m_iSpecialPolicyBuildingHappiness;
@@ -29827,6 +29861,10 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVESCIENCEPERTURN"), iGameTurn, iEffectiveSciencePerTurn);
 #endif
 
+#ifdef  EG_REPLAYDATASET_FOODFROMCS
+		int iFoodFromMinersTimes100 = GetFoodFromMinorsTimes100() / 1024 + getNumCities() * (GetFoodFromMinorsTimes100() % 1024);
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FOODFROMCS"), iGameTurn, iFoodFromMinersTimes100 / 100);
+#endif
 /*#ifdef ENHANCED_GRAPHS
 		const char* szDataSetName;
 		for (int iI = 0; iI < GC.getNumPolicyInfos(); iI++)
