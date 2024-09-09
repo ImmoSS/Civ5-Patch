@@ -29903,6 +29903,9 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		int iProductionFromMinersTimes100 = GetProductionFromMinorsTimes100() / 1024 + getNumCities() * (GetProductionFromMinorsTimes100() % 1024);
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PRODUCTIONFROMCS"), iGameTurn, iProductionFromMinersTimes100 / 100);
 #endif
+#ifdef  EG_REPLAYDATASET_CULTUREFROMCS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CULTUREFROMCS"), iGameTurn, GetCulturePerTurnFromMinorCivs());
+#endif
 /*#ifdef ENHANCED_GRAPHS
 		const char* szDataSetName;
 		for (int iI = 0; iI < GC.getNumPolicyInfos(); iI++)
