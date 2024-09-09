@@ -30028,6 +30028,16 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_UNITSFROMCS"), iGameTurn, GetNumUnitsFromMinors());
 #endif
 
+#ifdef EG_REPLAYDATASET_TOURISMPERTURN
+		int iLoopCity = 0;
+		int iInfluencePerTurn = 0;
+		for (CvCity *pLoopCity = firstCity(&iLoopCity); pLoopCity != NULL; pLoopCity = nextCity(&iLoopCity))
+		{
+			iInfluencePerTurn += pLoopCity->GetCityCulture()->GetBaseTourism();
+		}
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_TOURISMPERTURN"), iGameTurn, iInfluencePerTurn);
+#endif
+
 /*#ifdef ENHANCED_GRAPHS
 		const char* szDataSetName;
 		for (int iI = 0; iI < GC.getNumPolicyInfos(); iI++)
