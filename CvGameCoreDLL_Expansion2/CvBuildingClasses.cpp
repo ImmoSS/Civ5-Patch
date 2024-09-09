@@ -2700,6 +2700,9 @@ void CvCityBuildings::SetNumRealBuildingTimed(BuildingTypes eIndex, int iNewValu
 			if(isWorldWonderClass(kBuildingClassInfo))
 			{
 				m_pCity->changeNumWorldWonders(iChangeNumRealBuilding);
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+				GET_PLAYER(m_pCity->getOwner()).ChangeNumCreatedWorldWonders(iChangeNumRealBuilding);
+#endif
 				pPlayer->ChangeNumWonders(iChangeNumRealBuilding);
 			}
 			else if(isTeamWonderClass(kBuildingClassInfo))

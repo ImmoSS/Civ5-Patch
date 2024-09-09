@@ -435,6 +435,10 @@ public:
 	int GetNumUnitsFromMinors() const;
 	void ChangeNumUnitsFromMinors(int iChange);
 #endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+	int GetNumCreatedWorldWonders() const;
+	void ChangeNumCreatedWorldWonders(int iChange);
+#endif
 
 	int GetNumUnitsOutOfSupply() const;
 
@@ -1978,6 +1982,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_UNITSFROMCS
 	int m_iNumUnitsFromMinors;
+#endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+	int m_iNumCreatedWorldWonders;
 #endif
 	int m_iExtraLeagueVotes;
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;

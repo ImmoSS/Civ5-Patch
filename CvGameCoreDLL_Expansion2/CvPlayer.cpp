@@ -280,6 +280,9 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_UNITSFROMCS
 	, m_iNumUnitsFromMinors(0)
 #endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+	, m_iNumCreatedWorldWonders(0)
+#endif
 	, m_iExtraLeagueVotes(0)
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
@@ -1069,6 +1072,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_UNITSFROMCS
 	m_iNumUnitsFromMinors = 0;
+#endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+	m_iNumCreatedWorldWonders = 0;
 #endif
 	m_iExtraLeagueVotes = 0;
 	m_iSpecialPolicyBuildingHappiness = 0;
@@ -10768,6 +10774,16 @@ int CvPlayer::GetNumUnitsFromMinors() const
 void CvPlayer::ChangeNumUnitsFromMinors(int iChange)
 {
 	m_iNumUnitsFromMinors = (m_iNumUnitsFromMinors + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+int CvPlayer::GetNumCreatedWorldWonders() const
+{
+	return m_iNumCreatedWorldWonders;
+}
+void CvPlayer::ChangeNumCreatedWorldWonders(int iChange)
+{
+	m_iNumCreatedWorldWonders = (m_iNumCreatedWorldWonders + iChange);
 }
 #endif
 
@@ -25539,6 +25555,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_UNITSFROMCS
 		kStream >> m_iNumUnitsFromMinors;
 #endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+		kStream >> m_iNumCreatedWorldWonders;
+#endif
 # endif
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
@@ -25664,6 +25683,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_UNITSFROMCS
 		m_iNumUnitsFromMinors = 0;
 #endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+		m_iNumCreatedWorldWonders = 0;
+#endif
 	}
 	else if (uiVersion == 1002)
 	{
@@ -25786,6 +25808,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_UNITSFROMCS
 		m_iNumUnitsFromMinors = 0;
+#endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+		m_iNumCreatedWorldWonders = 0;
 #endif
 	}
 	else if (uiVersion == 1001)
@@ -25910,6 +25935,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_UNITSFROMCS
 		m_iNumUnitsFromMinors = 0;
 #endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+		m_iNumCreatedWorldWonders = 0;
+#endif
 	}
 	else
 	{
@@ -26032,6 +26060,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_UNITSFROMCS
 		m_iNumUnitsFromMinors = 0;
+#endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+		m_iNumCreatedWorldWonders = 0;
 #endif
 	}
 #endif
@@ -26956,6 +26987,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_UNITSFROMCS
 	kStream << m_iNumUnitsFromMinors;
+#endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+	kStream << m_iNumCreatedWorldWonders;
 #endif
 	kStream << m_iExtraLeagueVotes;
 	kStream << m_iSpecialPolicyBuildingHappiness;
@@ -30077,6 +30111,9 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 			iNumWorldWonders += pLoopCity->getNumWorldWonders();
 		}
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMWORLDWONDERS"), iGameTurn, iNumWorldWonders);
+#endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMCREATEDWORLDWONDERS"), iGameTurn, GetNumCreatedWorldWonders());
 #endif
 
 /*#ifdef ENHANCED_GRAPHS
