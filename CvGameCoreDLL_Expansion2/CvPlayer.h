@@ -419,6 +419,10 @@ public:
 	int GetNumDiedSpies() const;
 	void ChangeNumDiedSpies(int iChange);
 #endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+	int GetNumKilledSpies() const;
+	void ChangeNumKilledSpies(int iChange);
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 	int GetFoodFromMinorsTimes100() const;
 	void ChangeFoodFromMinorsTimes100(int iChange);
@@ -1962,6 +1966,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_DIEDSPIES
 	int m_iNumDiedSpies;
+#endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+	int m_iNumKilledSpies;
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 	int m_iFoodFromMinorsTimes100;

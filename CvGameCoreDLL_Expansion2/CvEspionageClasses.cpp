@@ -669,6 +669,13 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 #ifdef EG_REPLAYDATASET_DIEDSPIES
 				m_pPlayer->ChangeNumDiedSpies(1);
 #endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+				if (!GET_PLAYER(eCityOwner).isMinorCiv())
+				{
+					GET_PLAYER(eCityOwner).ChangeNumKilledSpies(1);
+				}
+#endif
+
 				CvEspionageAI* pEspionageAI = m_pPlayer->GetEspionageAI();
 				CvAssertMsg(pEspionageAI, "pEspionageAI is null");
 				if(pEspionageAI)

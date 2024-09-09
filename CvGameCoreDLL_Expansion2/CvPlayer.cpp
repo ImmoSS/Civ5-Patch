@@ -268,6 +268,9 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_DIEDSPIES
 	, m_iNumDiedSpies(0)
 #endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+	, m_iNumKilledSpies(0)
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 	, m_iFoodFromMinorsTimes100(0)
 #endif
@@ -1054,6 +1057,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_DIEDSPIES
 	m_iNumDiedSpies = 0;
+#endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+	m_iNumKilledSpies = 0;
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 	m_iFoodFromMinorsTimes100 = 0;
@@ -10722,6 +10728,16 @@ int CvPlayer::GetNumDiedSpies() const
 void CvPlayer::ChangeNumDiedSpies(int iChange)
 {
 	m_iNumDiedSpies = (m_iNumDiedSpies + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+int CvPlayer::GetNumKilledSpies() const
+{
+	return m_iNumKilledSpies;
+}
+void CvPlayer::ChangeNumKilledSpies(int iChange)
+{
+	m_iNumKilledSpies = (m_iNumKilledSpies + iChange);
 }
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
@@ -25511,6 +25527,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_DIEDSPIES
 		kStream >> m_iNumDiedSpies;
 #endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+		kStream >> m_iNumKilledSpies;
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 		kStream >> m_iFoodFromMinorsTimes100;
 #endif
@@ -25633,6 +25652,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_DIEDSPIES
 		m_iNumDiedSpies = 0;
 #endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+		m_iNumKilledSpies = 0;
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 		m_iFoodFromMinorsTimes100 = 0;
 #endif
@@ -25752,6 +25774,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_DIEDSPIES
 		m_iNumDiedSpies = 0;
+#endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+		m_iNumKilledSpies = 0;
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 		m_iFoodFromMinorsTimes100 = 0;
@@ -25873,6 +25898,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_DIEDSPIES
 		m_iNumDiedSpies = 0;
 #endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+		m_iNumKilledSpies = 0;
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 		m_iFoodFromMinorsTimes100 = 0;
 #endif
@@ -25992,6 +26020,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_DIEDSPIES
 		m_iNumDiedSpies = 0;
+#endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+		m_iNumKilledSpies = 0;
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 		m_iFoodFromMinorsTimes100 = 0;
@@ -26913,6 +26944,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_DIEDSPIES
 	kStream << m_iNumDiedSpies;
+#endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+	kStream << m_iNumKilledSpies;
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 	kStream << m_iFoodFromMinorsTimes100;
@@ -29965,6 +29999,9 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 
 #ifdef EG_REPLAYDATASET_DIEDSPIES
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_DIEDSPIES"), iGameTurn, GetNumDiedSpies());
+#endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_KILLEDSPIES"), iGameTurn, GetNumKilledSpies());
 #endif
 
 #ifdef EG_REPLAYDATASET_FOODFROMCS
