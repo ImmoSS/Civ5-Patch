@@ -30037,6 +30037,9 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		}
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_TOURISMPERTURN"), iGameTurn, iInfluencePerTurn);
 #endif
+#ifdef EG_REPLAYDATASET_NUMGREATWORKSANDARTIFACTS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMGREATWORKSANDARTIFACTS"), iGameTurn, GetCulture()->GetNumGreatWorks());
+#endif
 
 /*#ifdef ENHANCED_GRAPHS
 		const char* szDataSetName;
