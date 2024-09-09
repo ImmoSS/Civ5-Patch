@@ -29857,7 +29857,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMBUILTWONDERS"), iGameTurn, GetNumWonders());
 #endif
 
-#if defined EG_REPLAYDATASET_NUMREVEALEDTILES || defined EG_REPLAYDATASET_NUMLUXURY
+#if defined EG_REPLAYDATASET_NUMREVEALEDTILES || defined EG_REPLAYDATASET_NUMLUXURY || defined EG_REPLAYDATASET_NUMGPIMPROVEMENT
 		CvPlot* pLoopPlot;
 #endif
 #ifdef EG_REPLAYDATASET_NUMREVEALEDTILES
@@ -30114,6 +30114,28 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 #ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMCREATEDWORLDWONDERS"), iGameTurn, GetNumCreatedWorldWonders());
+#endif
+
+#ifdef EG_REPLAYDATASET_NUMGPIMPROVEMENT
+		int iGPImprovementTiles = 0;
+		for (int iLoopPlot = 0; iLoopPlot < GC.getMap().numPlots(); iLoopPlot++)
+		{
+			pLoopPlot = GC.getMap().plotByIndexUnchecked(iLoopPlot);
+			if (pLoopPlot)
+			{
+				if (pLoopPlot->getOwner() == GetID())
+				{
+					if (pLoopPlot->getImprovementType() != NO_IMPROVEMENT)
+					{
+						if (GC.getImprovementInfo(pLoopPlot->getImprovementType())->IsCreatedByGreatPerson())
+						{
+							iGPImprovementTiles++;
+						}
+					}
+				}
+			}
+		}
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMGPIMPROVEMENT"), iGameTurn, iGPImprovementTiles);
 #endif
 
 /*#ifdef ENHANCED_GRAPHS
