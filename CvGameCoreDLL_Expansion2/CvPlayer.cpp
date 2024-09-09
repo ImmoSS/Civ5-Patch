@@ -29909,6 +29909,9 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #ifdef  EG_REPLAYDATASET_SCIENCEFROMCS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENCEFROMCS"), iGameTurn, GetSciencePerTurnFromMinorCivsTimes100() / 100);
 #endif
+#ifdef  EG_REPLAYDATASET_FAITHFROMCS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FAITHFROMCS"), iGameTurn, GetFaithPerTurnFromMinorCivs());
+#endif
 /*#ifdef ENHANCED_GRAPHS
 		const char* szDataSetName;
 		for (int iI = 0; iI < GC.getNumPolicyInfos(); iI++)
