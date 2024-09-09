@@ -29823,10 +29823,12 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMBUILTWONDERS"), iGameTurn, GetNumWonders());
 #endif
 
+#if defined EG_REPLAYDATASET_NUMREVEALEDTILES || defined EG_REPLAYDATASET_NUMLUXURY
+		CvPlot* pLoopPlot;
+#endif
 #ifdef EG_REPLAYDATASET_NUMREVEALEDTILES
 		// revealed tiles
 		int iRevealedTiles = 0;
-		CvPlot* pLoopPlot;
 		for (int iLoopPlot = 0; iLoopPlot < GC.getMap().numPlots(); iLoopPlot++)
 		{
 			pLoopPlot = GC.getMap().plotByIndexUnchecked(iLoopPlot);
@@ -30039,6 +30041,29 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 #ifdef EG_REPLAYDATASET_NUMGREATWORKSANDARTIFACTS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMGREATWORKSANDARTIFACTS"), iGameTurn, GetCulture()->GetNumGreatWorks());
+#endif
+
+#ifdef EG_REPLAYDATASET_NUMLUXURY
+		// luxury tiles
+		int iLuxuryTiles = 0;
+		for (int iLoopPlot = 0; iLoopPlot < GC.getMap().numPlots(); iLoopPlot++)
+		{
+			pLoopPlot = GC.getMap().plotByIndexUnchecked(iLoopPlot);
+			if (pLoopPlot)
+			{
+				if (pLoopPlot->getOwner() == GetID())
+				{
+					if (pLoopPlot->getResourceType() != NO_RESOURCE)
+					{
+						if (GC.getResourceInfo(pLoopPlot->getResourceType())->getResourceUsage() == RESOURCEUSAGE_LUXURY)
+						{
+							iLuxuryTiles++;
+						}
+					}
+				}
+			}
+		}
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMLUXURY"), iGameTurn, iLuxuryTiles);
 #endif
 
 /*#ifdef ENHANCED_GRAPHS
