@@ -1446,8 +1446,6 @@ int CvPlayerTechs::GetNumCitiesResearchCostModifier(int iNumCities) const
 	{
 		return 7 * iNumCities - 8;
 	}
-	
-	return 0;
 }
 #endif
 
