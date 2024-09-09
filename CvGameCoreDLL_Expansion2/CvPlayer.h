@@ -447,6 +447,10 @@ public:
 	int GetNumGoldSpentOnUnitBuys() const;
 	void ChangeNumGoldSpentOnUnitBuys(int iChange);
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+	int GetNumGoldSpentOnUgrades() const;
+	void ChangeNumGoldSpentOnUgrades(int iChange);
+#endif
 
 	int GetNumUnitsOutOfSupply() const;
 
@@ -1999,6 +2003,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
 	int m_iNumGoldSpentOnUnitBuys;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+	int m_iNumGoldSpentOnUgrades;
 #endif
 	int m_iExtraLeagueVotes;
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;

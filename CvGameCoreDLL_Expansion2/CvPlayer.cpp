@@ -289,6 +289,9 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
 	, m_iNumGoldSpentOnUnitBuys(0)
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+	, m_iNumGoldSpentOnUgrades(0)
+#endif
 	, m_iExtraLeagueVotes(0)
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
@@ -1087,6 +1090,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
 	m_iNumGoldSpentOnUnitBuys = 0;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+	m_iNumGoldSpentOnUgrades = 0;
 #endif
 	m_iExtraLeagueVotes = 0;
 	m_iSpecialPolicyBuildingHappiness = 0;
@@ -10816,6 +10822,16 @@ int CvPlayer::GetNumGoldSpentOnUnitBuys() const
 void CvPlayer::ChangeNumGoldSpentOnUnitBuys(int iChange)
 {
 	m_iNumGoldSpentOnUnitBuys = (m_iNumGoldSpentOnUnitBuys + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+int CvPlayer::GetNumGoldSpentOnUgrades() const
+{
+	return m_iNumGoldSpentOnUgrades;
+}
+void CvPlayer::ChangeNumGoldSpentOnUgrades(int iChange)
+{
+	m_iNumGoldSpentOnUgrades = (m_iNumGoldSpentOnUgrades + iChange);
 }
 #endif
 
@@ -25596,6 +25612,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
 		kStream >> m_iNumGoldSpentOnUnitBuys;
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+		kStream >> m_iNumGoldSpentOnUgrades;
+#endif
 # endif
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
@@ -25730,6 +25749,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
 		m_iNumGoldSpentOnUnitBuys = 0;
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+		m_iNumGoldSpentOnUgrades = 0;
+#endif
 	}
 	else if (uiVersion == 1002)
 	{
@@ -25861,6 +25883,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
 		m_iNumGoldSpentOnUnitBuys = 0;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+		m_iNumGoldSpentOnUgrades = 0;
 #endif
 	}
 	else if (uiVersion == 1001)
@@ -25994,6 +26019,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
 		m_iNumGoldSpentOnUnitBuys = 0;
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+		m_iNumGoldSpentOnUgrades = 0;
+#endif
 	}
 	else
 	{
@@ -26125,6 +26153,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
 		m_iNumGoldSpentOnUnitBuys = 0;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+		m_iNumGoldSpentOnUgrades = 0;
 #endif
 	}
 #endif
@@ -27058,6 +27089,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
 	kStream << m_iNumGoldSpentOnUnitBuys;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+	kStream << m_iNumGoldSpentOnUgrades;
 #endif
 	kStream << m_iExtraLeagueVotes;
 	kStream << m_iSpecialPolicyBuildingHappiness;
@@ -30212,6 +30246,10 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMGOLDONUNITBUYS"), iGameTurn, GetNumGoldSpentOnUnitBuys());
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMGOLDONUPGRADES"), iGameTurn, GetNumGoldSpentOnUgrades());
+#endif
+
 /*#ifdef ENHANCED_GRAPHS
 		const char* szDataSetName;
 		for (int iI = 0; iI < GC.getNumPolicyInfos(); iI++)

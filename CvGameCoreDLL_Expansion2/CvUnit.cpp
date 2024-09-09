@@ -10131,6 +10131,9 @@ CvUnit* CvUnit::DoUpgrade()
 
 	// Gold Cost
 	int iUpgradeCost = upgradePrice(eUnitType);
+#ifdef EG_REPLAYDATASET_NUMGOLDONBUILDINGBUYS
+	GET_PLAYER(getOwner()).ChangeNumGoldSpentOnUgrades(iUpgradeCost);
+#endif
 	CvPlayerAI& thisPlayer = GET_PLAYER(getOwner());
 	thisPlayer.GetTreasury()->LogExpenditure(getUnitInfo().GetText(), iUpgradeCost, 3);
 	thisPlayer.GetTreasury()->ChangeGold(-iUpgradeCost);
