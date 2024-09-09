@@ -1623,6 +1623,9 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 					if (iOldProduction != iNewProduction)
 					{
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * (iNewProduction - iOldProduction));
+#endif
 					}
 
 					// Other Cities
@@ -1632,6 +1635,9 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 					if (iOldProduction != iNewProduction)
 					{
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(iNewProduction - iOldProduction);
+#endif
 					}
 				}
 
@@ -1652,6 +1658,9 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 					if (iOldProduction != iNewProduction)
 					{
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * (iNewProduction - iOldProduction));
+#endif
 					}
 
 					// Other Cities
@@ -1661,6 +1670,9 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 					if (iOldProduction != iNewProduction)
 					{
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(iNewProduction - iOldProduction);
+#endif
 					}
 				}
 			}
@@ -2003,6 +2015,9 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 					if (iOldProduction != iNewProduction)
 					{
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * (iNewProduction - iOldProduction));
+#endif
 					}
 
 					// Other Cities
@@ -2012,6 +2027,9 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 					if (iOldProduction != iNewProduction)
 					{
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(iNewProduction - iOldProduction);
+#endif
 					}
 				}
 
@@ -2032,6 +2050,9 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 					if (iOldProduction != iNewProduction)
 					{
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * (iNewProduction - iOldProduction));
+#endif
 					}
 
 					// Other Cities
@@ -2041,6 +2062,9 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 					if (iOldProduction != iNewProduction)
 					{
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(iNewProduction - iOldProduction);
+#endif
 					}
 				}
 			}

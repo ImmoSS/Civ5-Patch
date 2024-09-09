@@ -6539,6 +6539,9 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		{
 			GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iCapitalProductionTimes100);
 			GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iOtherCitiesProductionTimes100);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+			GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * iCapitalProductionTimes100 + iOtherCitiesProductionTimes100);
+#endif
 		}
 #else
 		GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iCapitalProductionTimes100);
@@ -7291,6 +7294,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			{
 				bSomethingChanged = true;
 				GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+				GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * (iNewProduction - iOldProduction));
+#endif
 			}
 
 			// Other Cities
@@ -7301,6 +7307,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			{
 				bSomethingChanged = true;
 				GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+				GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(iNewProduction - iOldProduction);
+#endif
 			}
 		}
 
@@ -7317,6 +7326,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			{
 				bSomethingChanged = true;
 				GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+				GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * (iNewProduction - iOldProduction));
+#endif
 			}
 
 			// Other Cities
@@ -7327,6 +7339,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			{
 				bSomethingChanged = true;
 				GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+				GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(iNewProduction - iOldProduction);
+#endif
 			}
 		}
 	}

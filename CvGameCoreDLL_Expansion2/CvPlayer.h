@@ -419,6 +419,10 @@ public:
 	int GetFoodFromMinorsTimes100() const;
 	void ChangeFoodFromMinorsTimes100(int iChange);
 #endif
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+	int GetProductionFromMinorsTimes100() const;
+	void ChangeProductionFromMinorsTimes100(int iChange);
+#endif
 
 	int GetNumUnitsOutOfSupply() const;
 
@@ -1950,6 +1954,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 	int m_iFoodFromMinorsTimes100;
+#endif
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+	int m_iProductionFromMinorsTimes100;
 #endif
 	int m_iExtraLeagueVotes;
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;

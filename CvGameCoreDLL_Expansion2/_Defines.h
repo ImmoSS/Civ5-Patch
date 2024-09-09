@@ -1128,6 +1128,7 @@
 /// Third Bunch of Enhanced Graphs
 ///
 #define EG_REPLAYDATASET_FOODFROMCS
+#define EG_REPLAYDATASET_PRODUCTIONFROMCS
 #endif
 ///
 #define GRAPHS_REAL_TOTAL_CULTURE
