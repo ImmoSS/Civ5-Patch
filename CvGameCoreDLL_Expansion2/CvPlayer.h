@@ -443,6 +443,10 @@ public:
 	int GetNumGoldSpentOnBuildingBuys() const;
 	void ChangeNumGoldSpentOnBuildingBuys(int iChange);
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
+	int GetNumGoldSpentOnUnitBuys() const;
+	void ChangeNumGoldSpentOnUnitBuys(int iChange);
+#endif
 
 	int GetNumUnitsOutOfSupply() const;
 
@@ -1992,6 +1996,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONBUILDINGBUYS
 	int m_iNumGoldSpentOnBuildingBuys;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
+	int m_iNumGoldSpentOnUnitBuys;
 #endif
 	int m_iExtraLeagueVotes;
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;

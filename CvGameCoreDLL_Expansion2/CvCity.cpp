@@ -13747,6 +13747,9 @@ void CvCity::Purchase(UnitTypes eUnitType, BuildingTypes eBuildingType, ProjectT
 			{
 				kPlayer.GetTreasury()->LogExpenditure((CvString)pGameUnit->GetText(), iGoldCost, 2);
 			}
+#ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
+			kPlayer.ChangeNumGoldSpentOnUnitBuys(iGoldCost);
+#endif
 		// Building
 		}else if(eBuildingType != NO_BUILDING){
 			iGoldCost = GetPurchaseCost(eBuildingType);
