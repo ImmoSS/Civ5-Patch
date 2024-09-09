@@ -2005,7 +2005,11 @@ int CvLuaPlayer::lGetNumCitiesResearchCostModifier(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);
 
+#ifdef NO_PUPPET_TECH_COST_MOD
+	const int iResult = pkPlayer->GetPlayerTechs()->GetNumCitiesResearchCostModifier(pkPlayer->GetMaxEffectiveCities());
+#else
 	const int iResult = pkPlayer->GetPlayerTechs()->GetNumCitiesResearchCostModifier(pkPlayer->GetMaxEffectiveCities(/*bIncludePuppets*/ true));
+#endif
 	lua_pushinteger(L, iResult);
 	return 1;
 }

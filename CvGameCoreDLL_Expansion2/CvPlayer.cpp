@@ -30129,7 +30129,11 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 
 #ifdef  EG_REPLAYDATASET_EFFECTIVESCIENCEPERTURN
 		int iEffectiveSciencePerTurn = GetScience();
+#ifdef NO_PUPPET_TECH_COST_MOD
+		int iMod = GetPlayerTechs()->GetNumCitiesResearchCostModifier(GetMaxEffectiveCities());
+#else
 		int iMod = GetPlayerTechs()->GetNumCitiesResearchCostModifier(GetMaxEffectiveCities(/*bIncludePuppets*/ true));
+#endif
 		iEffectiveSciencePerTurn *= (100 + GetPlayerTechs()->GetNumCitiesResearchCostModifier(1));
 		iEffectiveSciencePerTurn /= (100 + iMod);
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVESCIENCEPERTURN"), iGameTurn, iEffectiveSciencePerTurn);

@@ -1463,13 +1463,18 @@ int CvPlayerTechs::GetResearchCost(TechTypes eTech) const
 
 	// Mod for City Count
 	int iMod = GC.getMap().getWorldInfo().GetNumCitiesTechCostMod();	// Default is 40, gets smaller on larger maps
+#ifdef NEW_NUM_CITIES_RESEARCH_COST_MODIFIER
+#ifdef NO_PUPPET_TECH_COST_MOD
+	iMod = GetNumCitiesResearchCostModifier(m_pPlayer->GetMaxEffectiveCities());
+#else
+	iMod = GetNumCitiesResearchCostModifier(m_pPlayer->GetMaxEffectiveCities(/*bIncludePuppets*/ true));
+#endif
+#else
 #ifdef NO_PUPPET_TECH_COST_MOD
 	iMod = iMod * m_pPlayer->GetMaxEffectiveCities();
 #else
 	iMod = iMod * m_pPlayer->GetMaxEffectiveCities(/*bIncludePuppets*/ true);
 #endif
-#ifdef NEW_NUM_CITIES_RESEARCH_COST_MODIFIER
-	iMod = GetNumCitiesResearchCostModifier(m_pPlayer->GetMaxEffectiveCities(/*bIncludePuppets*/ true));
 #endif
 	iResearchCost = iResearchCost * (100 + iMod) / 100;
 
@@ -2157,13 +2162,18 @@ void CvTeamTechs::SetResearchProgressTimes100(TechTypes eIndex, int iNewValue, P
 		int iResearchMod = std::max(1, GET_PLAYER(ePlayer).calculateResearchModifier(eIndex));
 		iResearchCost = (iResearchCost * 100) / iResearchMod;
 		int iNumCitiesMod = GC.getMap().getWorldInfo().GetNumCitiesTechCostMod();	// Default is 40, gets smaller on larger maps
+#ifdef NEW_NUM_CITIES_RESEARCH_COST_MODIFIER
+#ifdef NO_PUPPET_TECH_COST_MOD
+		iNumCitiesMod = GET_PLAYER(ePlayer).GetPlayerTechs()->GetNumCitiesResearchCostModifier(GET_PLAYER(ePlayer).GetMaxEffectiveCities());
+#else
+		iNumCitiesMod = GET_PLAYER(ePlayer).GetPlayerTechs()->GetNumCitiesResearchCostModifier(GET_PLAYER(ePlayer).GetMaxEffectiveCities(/*bIncludePuppets*/ true));
+#endif
+#else
 #ifdef NO_PUPPET_TECH_COST_MOD
 		iNumCitiesMod = iNumCitiesMod * GET_PLAYER(ePlayer).GetMaxEffectiveCities();
 #else
 		iNumCitiesMod = iNumCitiesMod * GET_PLAYER(ePlayer).GetMaxEffectiveCities(/*bIncludePuppets*/ true);
 #endif
-#ifdef NEW_NUM_CITIES_RESEARCH_COST_MODIFIER
-		iNumCitiesMod = GET_PLAYER(ePlayer).GetPlayerTechs()->GetNumCitiesResearchCostModifier(GET_PLAYER(ePlayer).GetMaxEffectiveCities(/*bIncludePuppets*/ true));
 #endif
 		iResearchCost = iResearchCost * (100 + iNumCitiesMod) / 100;
 		

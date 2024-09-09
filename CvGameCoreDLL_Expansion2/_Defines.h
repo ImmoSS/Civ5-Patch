@@ -321,7 +321,7 @@
 ///
 #define RES_AGR_COUNT
 ///
-// #define NO_PUPPET_TECH_COST_MOD
+#define NO_PUPPET_TECH_COST_MOD
 /// The discount to tech cost awarded for other teams already owning a specific tech can now be toggled via an in-game option
 // #define AUI_TECH_TOGGLEABLE_ALREADY_KNOWN_TECH_COST_DISCOUNT
 /// AI does not increase already known tech cost discount
