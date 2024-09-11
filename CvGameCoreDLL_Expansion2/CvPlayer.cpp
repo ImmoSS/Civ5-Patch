@@ -30139,6 +30139,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVESCIENCEPERTURN"), iGameTurn, iEffectiveSciencePerTurn);
 #endif
 
+		/// Third Bunch of Enhanced Graphs
 #ifdef EG_REPLAYDATASET_DIEDSPIES
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_DIEDSPIES"), iGameTurn, GetNumDiedSpies());
 #endif
