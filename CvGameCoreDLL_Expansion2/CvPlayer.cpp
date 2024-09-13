@@ -30240,7 +30240,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 				{
 					if (pLoopPlot->getImprovementType() != NO_IMPROVEMENT)
 					{
-						if (GC.getImprovementInfo(pLoopPlot->getImprovementType())->IsCreatedByGreatPerson())
+						if (GC.getImprovementInfo(pLoopPlot->getImprovementType())->IsCreatedByGreatPerson() || GC.getImprovementInfo(pLoopPlot->getImprovementType())->IsIgnoreOwnership() && GC.getImprovementInfo(pLoopPlot->getImprovementType())->IsRequiresImprovement())
 						{
 							iGPImprovementTiles++;
 						}
