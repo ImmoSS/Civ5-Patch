@@ -574,24 +574,24 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
 	//ImprovementYieldChanges
 	{
-		kUtility.Initialize2DArray(m_ppaiImprovementYieldChange, "Improvement", "Yields");
+		kUtility.Initialize2DArray(m_ppaiImprovementYieldChange, "Improvements", "Yields");
 
 		std::string strKey("Building_ImprovementYieldChanges");
 		Database::Results* pResults = kUtility.GetResults(strKey);
 		if (pResults == NULL)
 		{
-			pResults = kUtility.PrepareResults(strKey, "select Improvement.ID as ImprovementID, Yields.ID as YieldID, Yield from Building_ImprovementYieldChanges inner join Improvements on Improvements.Type = ImprovementType inner join Yields on Yields.Type = YieldType where BuildingType = ?");
+			pResults = kUtility.PrepareResults(strKey, "select Improvements.ID as ImprovementID, Yields.ID as YieldID, Yield from Building_ImprovementYieldChanges inner join Improvements on Improvements.Type = ImprovementType inner join Yields on Yields.Type = YieldType where BuildingType = ?");
 		}
 
 		pResults->Bind(1, szBuildingType);
 
 		while (pResults->Step())
 		{
-			const int TerrainID = pResults->GetInt(0);
+			const int ImprovementID = pResults->GetInt(0);
 			const int YieldID = pResults->GetInt(1);
 			const int yield = pResults->GetInt(2);
 
-			m_ppaiImprovementYieldChange[TerrainID][YieldID] = yield;
+			m_ppaiImprovementYieldChange[ImprovementID][YieldID] = yield;
 		}
 	}
 #endif
