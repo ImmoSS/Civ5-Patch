@@ -118,6 +118,11 @@ public:
 	int GetTerrainExtraYield(TerrainTypes eTerrain, YieldTypes eYield) const;
 	void ChangeTerrainExtraYield(TerrainTypes eTerrain, YieldTypes eYield, int iChange);
 
+#ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
+	int GetImprovementExtraYield(ImprovementTypes eImprovement, YieldTypes eYield) const;
+	void ChangeImprovementExtraYield(ImprovementTypes eImprovement, YieldTypes eYield, int iChange);
+#endif
+
 	bool IsHasResourceLocal(ResourceTypes eResource, bool bTestVisible) const;
 	void ChangeNumResourceLocal(ResourceTypes eResource, int iChange);
 
@@ -993,6 +998,9 @@ protected:
 	int** m_ppaiResourceYieldChange;
 	int** m_ppaiFeatureYieldChange;
 	int** m_ppaiTerrainYieldChange;
+#ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
+	int** m_ppaiImprovementYieldChange;
+#endif
 
 	CvCityBuildings* m_pCityBuildings;
 	CvCityStrategyAI* m_pCityStrategyAI;

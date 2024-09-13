@@ -7747,6 +7747,17 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 #endif
 		}
 
+#ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
+		// Extra yield for improvements
+		if (getImprovementType() != NO_IMPROVEMENT)
+		{
+			if (pWorkingCity != NULL)
+			{
+				iYield += pWorkingCity->GetImprovementExtraYield(getImprovementType(), eYield);
+			}
+		}
+#endif
+
 		ResourceTypes eResource = getResourceType(GET_PLAYER(ePlayer).getTeam());
 		if(eResource != NO_RESOURCE)
 		{
@@ -10559,6 +10570,17 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 				iYield += pWorkingCity->GetTerrainExtraYield(getTerrainType(), eYield);
 			}
 		}
+
+#ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
+		// Extra yield for improvements
+		if (getImprovementType() != NO_IMPROVEMENT)
+		{
+			if (pWorkingCity != NULL)
+			{
+				iYield += pWorkingCity->GetImprovementExtraYield(getImprovementType(), eYield);
+			}
+		}
+#endif
 
 		ResourceTypes eResource = getResourceType(GET_PLAYER(ePlayer).getTeam());
 		if(eResource != NO_RESOURCE)

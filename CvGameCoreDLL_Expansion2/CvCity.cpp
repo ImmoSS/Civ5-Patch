@@ -244,6 +244,9 @@ CvCity::CvCity() :
 	, m_ppaiResourceYieldChange(0)
 	, m_ppaiFeatureYieldChange(0)
 	, m_ppaiTerrainYieldChange(0)
+#ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
+	, m_ppaiImprovementYieldChange(0)
+#endif
 	, m_pCityBuildings(FNEW(CvCityBuildings, c_eCiv5GameplayDLL, 0))
 	, m_pCityStrategyAI(FNEW(CvCityStrategyAI, c_eCiv5GameplayDLL, 0))
 	, m_pCityCitizens(FNEW(CvCityCitizens, c_eCiv5GameplayDLL, 0))
@@ -637,6 +640,18 @@ void CvCity::uninit()
 	}
 	SAFE_DELETE_ARRAY(m_ppaiTerrainYieldChange);
 
+#ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
+	if (m_ppaiImprovementYieldChange)
+	{
+		for (int i = 0; i < GC.getNumImprovementInfos(); i++)
+		{
+			SAFE_DELETE_ARRAY(m_ppaiImprovementYieldChange[i]);
+		}
+	}
+	SAFE_DELETE_ARRAY(m_ppaiImprovementYieldChange);
+	
+#endif
+
 	m_pCityBuildings->Uninit();
 	m_pCityStrategyAI->Uninit();
 	m_pCityCitizens->Uninit();
@@ -983,6 +998,22 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 				m_ppaiTerrainYieldChange[iI][iJ] = 0;
 			}
 		}
+
+#ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
+		// int iNumImprovementInfos = GC.getNumImprovementInfos();
+		CvAssertMsg(m_ppaiImprovementYieldChange == NULL, "about to leak memory, CvCity::m_ppaiImprovementYieldChange");
+		m_ppaiImprovementYieldChange = FNEW(int* [iNumImprovementInfos], c_eCiv5GameplayDLL, 0);
+		for (iI = 0; iI < iNumImprovementInfos; iI++)
+		{
+			m_ppaiImprovementYieldChange[iI] = FNEW(int[NUM_YIELD_TYPES], c_eCiv5GameplayDLL, 0);
+			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+			{
+				m_ppaiImprovementYieldChange[iI][iJ] = 0;
+			}
+		}
+
+		
+#endif
 	}
 
 	if(!bConstructorCall)
@@ -2954,6 +2985,34 @@ void CvCity::ChangeTerrainExtraYield(TerrainTypes eTerrain, YieldTypes eYield, i
 		updateYield();
 	}
 }
+
+#ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
+//	--------------------------------------------------------------------------------
+/// Extra yield for a Improvement this city is working?
+int CvCity::GetImprovementExtraYield(ImprovementTypes eImprovement, YieldTypes eYield) const
+{
+	VALIDATE_OBJECT
+	CvAssertMsg(eImprovement > -1 && eImprovement < GC.getNumImprovementInfos(), "Invalid Improvement index.");
+	CvAssertMsg(eYield > -1 && eYield < NUM_YIELD_TYPES, "Invalid yield index.");
+
+	return m_ppaiImprovementYieldChange[eImprovement][eYield];
+}
+
+//	--------------------------------------------------------------------------------
+void CvCity::ChangeImprovementExtraYield(ImprovementTypes eImprovement, YieldTypes eYield, int iChange)
+{
+	VALIDATE_OBJECT
+	CvAssertMsg(eImprovement > -1 && eImprovement < GC.getNumImprovementInfos(), "Invalid Improvement index.");
+	CvAssertMsg(eYield > -1 && eYield < NUM_YIELD_TYPES, "Invalid yield index.");
+
+	if (iChange != 0)
+	{
+		m_ppaiImprovementYieldChange[eImprovement][eYield] += iChange;
+
+		updateYield();
+	}
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 /// Does this City have eResource nearby?
@@ -6648,6 +6707,13 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			{
 				ChangeTerrainExtraYield(((TerrainTypes)iJ), eYield, (GC.getBuildingInfo(eBuilding)->GetTerrainYieldChange(iJ, eYield) * iChange));
 			}
+
+#ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
+			for (int iJ = 0; iJ < GC.getNumImprovementInfos(); iJ++)
+			{
+				ChangeImprovementExtraYield(((ImprovementTypes)iJ), eYield, (GC.getBuildingInfo(eBuilding)->GetImprovementYieldChange(iJ, eYield) * iChange));
+			}
+#endif
 
 			if(pBuildingInfo->GetEnhancedYieldTech() != NO_TECH)
 			{
@@ -15156,6 +15222,10 @@ void CvCity::read(FDataStream& kStream)
 
 	CvInfosSerializationHelper::ReadHashedDataArray(kStream, m_ppaiTerrainYieldChange, NUM_YIELD_TYPES, GC.getNumTerrainInfos());
 
+#ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
+	CvInfosSerializationHelper::ReadHashedDataArray(kStream, m_ppaiImprovementYieldChange, NUM_YIELD_TYPES, GC.getNumImprovementInfos());
+#endif
+
 	kStream >> m_iPopulationRank;
 	kStream >> m_bPopulationRankValid;
 	kStream >> m_aiBaseYieldRank;
@@ -15445,6 +15515,10 @@ void CvCity::write(FDataStream& kStream) const
 	CvInfosSerializationHelper::WriteHashedDataArray<FeatureTypes>(kStream, m_ppaiFeatureYieldChange, NUM_YIELD_TYPES, GC.getNumFeatureInfos());
 
 	CvInfosSerializationHelper::WriteHashedDataArray<TerrainTypes>(kStream, m_ppaiTerrainYieldChange, NUM_YIELD_TYPES, GC.getNumTerrainInfos());
+
+#ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
+	CvInfosSerializationHelper::WriteHashedDataArray<TerrainTypes>(kStream, m_ppaiImprovementYieldChange, NUM_YIELD_TYPES, GC.getNumImprovementInfos());
+#endif
 
 	kStream << m_iPopulationRank;
 	kStream << m_bPopulationRankValid;
