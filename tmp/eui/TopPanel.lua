@@ -1679,10 +1679,10 @@ g_toolTipHandler.SciencePerTurn = function()-- control )
 		end
 
 		-- Let people know that building more cities makes techs harder to get
-		if bnw_mode and g_isBasicHelp then
+		-- if bnw_mode and g_isBasicHelp then
 			tips:insert( "" )
 			tips:insert( L( "TXT_KEY_TP_TECH_CITY_COST", g_activePlayer:GetNumCitiesResearchCostModifier() * ( 100 + ( civBE_mode and g_activePlayer:GetNumCitiesResearchCostDiscount() or 0 ) ) / 100 ) )
-		end
+		-- end
 	end
 
 	tipControls.Text:SetText( tips:concat( "[NEWLINE]" ) )
@@ -2778,9 +2778,9 @@ g_toolTipHandler.CultureString = function()-- control )
 
 		-- Let people know that building more cities makes policies harder to get
 
-		if g_isBasicHelp then
+		-- if g_isBasicHelp then
 			tips:insert( "" )
-		end
+			tips:insert( L("TXT_KEY_TP_CULTURE_CITY_COST", g_activePlayer:GetNumCitiesPolicyCostMod()) )
 		-- end
 	end
 
