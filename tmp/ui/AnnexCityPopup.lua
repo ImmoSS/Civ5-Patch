@@ -1,3 +1,6 @@
+-------------------------------------------------
+-- edit: Add Raze button for puppet cities
+-------------------------------------------------
 
 -- ANNEX CITY POPUP
 -- This popup occurs when a player clicks on a puppeted City
@@ -29,6 +32,20 @@ PopupLayouts[ButtonPopupTypes.BUTTONPOPUP_ANNEX_CITY] = function(popupInfo)
 	
 	local buttonText = Locale.ConvertTextKey("TXT_KEY_POPUP_DONT_ANNEX_CITY");
 	AddButton(buttonText);
+	
+	-- Initialize 'Raze the City!' button.
+	local bRaze = activePlayer:CanRaze(newCity);
+	print ("Test CanRaze");
+	if (bRaze) then
+		print ("CanRaze");
+		local OnRazeClicked = function()
+			Network.SendDoTask(cityID, TaskTypes.TASK_RAZE, -1, -1, false, false, false, false);
+			Network.SendDoTask(cityID, TaskTypes.TASK_ANNEX_PUPPET, -1, -1, false, false, false, false);
+		end
+		
+		buttonText = Locale.ConvertTextKey("TXT_KEY_POPUP_RAZE_CAPTURED_CITY");
+		AddButton(buttonText, OnRazeClicked);
+	end
 	
 	-- Initialize 'View City' button.
 	local OnViewCityClicked = function()
