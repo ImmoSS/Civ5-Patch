@@ -15223,7 +15223,22 @@ void CvCity::read(FDataStream& kStream)
 	CvInfosSerializationHelper::ReadHashedDataArray(kStream, m_ppaiTerrainYieldChange, NUM_YIELD_TYPES, GC.getNumTerrainInfos());
 
 #ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
-	CvInfosSerializationHelper::ReadHashedDataArray(kStream, m_ppaiImprovementYieldChange, NUM_YIELD_TYPES, GC.getNumImprovementInfos());
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1003)
+	{
+# endif
+		CvInfosSerializationHelper::ReadHashedDataArray(kStream, m_ppaiImprovementYieldChange, NUM_YIELD_TYPES, GC.getNumImprovementInfos());
+	}
+	else
+	{
+		for (uint iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+		{
+			for (int iJ = 0; iJ < NUM_YIELD_TYPES; ++iJ)
+			{
+				m_ppaiImprovementYieldChange[iI][iJ] = 0;
+			}
+		}
+	}
 #endif
 
 	kStream >> m_iPopulationRank;
