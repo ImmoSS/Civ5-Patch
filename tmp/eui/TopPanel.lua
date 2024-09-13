@@ -2780,8 +2780,8 @@ g_toolTipHandler.CultureString = function()-- control )
 
 		if g_isBasicHelp then
 			tips:insert( "" )
-			tips:insert( L("TXT_KEY_TP_CULTURE_CITY_COST", Game.GetNumCitiesPolicyCostMod() * ( 100 + ( civBE_mode and g_activePlayer:GetNumCitiesPolicyCostDiscount() or 0 ) ) / 100 ) )
 		end
+		-- end
 	end
 
 	return setTextToolTip( tips:concat( "[NEWLINE]" ) )

@@ -1068,8 +1068,8 @@ function CultureTipHandler( control )
 		-- Let people know that building more cities makes policies harder to get
 		if (not OptionsManager.IsNoBasicHelp()) then
 			strText = strText .. "[NEWLINE][NEWLINE]";
-			strText = strText .. Locale.ConvertTextKey("TXT_KEY_TP_CULTURE_CITY_COST", Game.GetNumCitiesPolicyCostMod());
 		end
+			strText = strText .. Locale.ConvertTextKey("TXT_KEY_TP_CULTURE_CITY_COST", pPlayer:GetNumCitiesPolicyCostMod());
 	end
 	
 	tipControlTable.TooltipLabel:SetText( strText );
