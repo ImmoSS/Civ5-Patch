@@ -6597,10 +6597,17 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 						{
 							if(pLoopPlot == plot() || (pLoopPlot->getImprovementType() != NO_IMPROVEMENT && GC.getImprovementInfo(pLoopPlot->getImprovementType())->IsImprovementResourceTrade(eLoopResource)))
 							{
+#ifdef FIX_BAZAAR_DOUBLE_RESOURCE_ONCE
+								if (pLoopPlot->GetResourceLinkedCity() == this && !pLoopPlot->IsResourceLinkedCityActive())
+								{
+									owningPlayer.changeNumResourceTotal(pLoopPlot->getResourceType(), -pLoopPlot->getNumResourceForPlayer(getOwner()), /*bIgnoreResourceWarning*/ true);
+								}
+#else
 								if(!pLoopPlot->IsImprovementPillaged())
 								{
 									owningPlayer.changeNumResourceTotal(pLoopPlot->getResourceType(), -pLoopPlot->getNumResourceForPlayer(getOwner()), /*bIgnoreResourceWarning*/ true);
 								}
+#endif
 							}
 						}
 					}

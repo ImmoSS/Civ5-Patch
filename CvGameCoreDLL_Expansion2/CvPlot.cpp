@@ -5939,7 +5939,11 @@ int CvPlot::getNumResourceForPlayer(PlayerTypes ePlayer) const
 
 				else if(pkResource->getResourceUsage() == RESOURCEUSAGE_LUXURY)
 				{
+#ifdef FIX_BAZAAR_DOUBLE_RESOURCE_ONCE
+					CvCity* pCity = GetResourceLinkedCity();
+#else
 					CvCity* pCity = getWorkingCity();
+#endif
 					if(pCity)
 					{
 						if(pCity->IsExtraLuxuryResources())
