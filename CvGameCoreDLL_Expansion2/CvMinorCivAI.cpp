@@ -1805,10 +1805,38 @@ void CvMinorCivAI::Read(FDataStream& kStream)
 	kStream >> m_abRouteConnectionEstablished;
 
 #ifdef EG_REPLAYDATASET_GOLDFROMBULLYING
-	kStream >> m_aiBullyGoldAmountTotalByPlayer;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1002)
+	{
+#endif
+		kStream >> m_aiBullyGoldAmountTotalByPlayer;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		for (uint iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+		{
+			m_aiBullyGoldAmountTotalByPlayer[iI] = 0;
+		}
+	}
+#endif
 #endif
 #ifdef EG_REPLAYDATASET_WORKERSFROMBULLYING
-	kStream >> m_aiBullyWorkersAmountTotalByPlayer;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1002)
+	{
+#endif
+		kStream >> m_aiBullyWorkersAmountTotalByPlayer;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		for (uint iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+		{
+			m_aiBullyWorkersAmountTotalByPlayer[iI] = 0;
+		}
+	}
+#endif
 #endif
 
 	kStream >> m_aiFriendshipWithMajorTimes100;

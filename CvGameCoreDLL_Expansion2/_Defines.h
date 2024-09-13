@@ -990,7 +990,8 @@
 //
 // 1000: v7.0   (initial)
 // 1001: v10.0  (adds GP_EXPENDED_GA, NEW_BELIEF_PROPHECY)
-# define BUMP_SAVE_VERSION_BELIEFS 1001
+// 1002: v10.2  (adds ENHANCED_GRAPHS)
+# define BUMP_SAVE_VERSION_BELIEFS 1002
 // 1000: v7.0   (initial)
 // 1001: v8.0   (adds CITY_EXTRA_ATTACK)
 // 1002: v8.2   (adds eReligionFoundedHere for MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD)
@@ -1003,7 +1004,8 @@
 # define BUMP_SAVE_VERSION_GAME 1001
 // 1000: v7.0   (initial)
 // 1001: v7.3   (adds Workers Bully Turn)
-# define BUMP_SAVE_VERSION_MINORAI 1001
+// 1002: v10.2  (adds ENHANCED_GRAPHS)
+# define BUMP_SAVE_VERSION_MINORAI 1002
 // 1000: v7.0   (initial)
 // 1001: v7.2   (adds ENHANCED_GRAPHS)
 // 1002: v7.2a  (adds maya boost GP counters)
