@@ -638,6 +638,10 @@ public:
 
 	int getProductionToYieldModifier(YieldTypes eIndex) const;
 	void changeProductionToYieldModifier(YieldTypes eIndex, int iChange);
+#ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
+	int getProcessOverflowProductionTimes100() const;
+	void setProcessOverflowProductionTimes100(int iValue);
+#endif
 
 	int GetTradeYieldModifier(YieldTypes eIndex, CvString* toolTipSink = NULL) const;
 
@@ -953,6 +957,9 @@ protected:
 	FAutoVariable<std::vector<int>, CvCity> m_aiResourceYieldRateModifier;
 	FAutoVariable<std::vector<int>, CvCity> m_aiExtraSpecialistYield;
 	FAutoVariable<std::vector<int>, CvCity> m_aiProductionToYieldModifier;
+#ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
+	int m_iProcessOverflowProductionTimes100;
+#endif
 	FAutoVariable<std::vector<int>, CvCity> m_aiDomainFreeExperience;
 	FAutoVariable<std::vector<int>, CvCity> m_aiDomainProductionModifier;
 

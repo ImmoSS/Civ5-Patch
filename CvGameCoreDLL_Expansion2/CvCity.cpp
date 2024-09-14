@@ -214,6 +214,9 @@ CvCity::CvCity() :
 	, m_aiResourceYieldRateModifier("CvCity::m_aiResourceYieldRateModifier", m_syncArchive)
 	, m_aiExtraSpecialistYield("CvCity::m_aiExtraSpecialistYield", m_syncArchive)
 	, m_aiProductionToYieldModifier("CvCity::m_aiProductionToYieldModifier", m_syncArchive)
+#ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
+	, m_iProcessOverflowProductionTimes100(0)
+#endif
 	, m_aiDomainFreeExperience("CvCity::m_aiDomainFreeExperience", m_syncArchive)
 	, m_aiDomainProductionModifier("CvCity::m_aiDomainProductionModifier", m_syncArchive)
 	, m_abEverOwned("CvCity::m_abEverOwned", m_syncArchive)
@@ -810,6 +813,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_aiExtraSpecialistYield.setAt(iI, 0);
 		m_aiProductionToYieldModifier.setAt(iI, 0);
 	}
+#ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
+	m_iProcessOverflowProductionTimes100 = 0;
+#endif
 
 	m_aiDomainFreeExperience.resize(NUM_DOMAIN_TYPES);
 	m_aiDomainProductionModifier.resize(NUM_DOMAIN_TYPES);
@@ -10427,7 +10433,7 @@ int CvCity::getYieldRateTimes100(YieldTypes eIndex, bool bIgnoreTrade) const
 		CvAssertMsg(eIndex != YIELD_PRODUCTION, "GAMEPLAY: should not be trying to convert Production into Production via process.");
 
 #ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
-		iProcessYield = (getYieldRateTimes100(YIELD_PRODUCTION, false) + getOverflowProductionTimes100()) * getProductionToYieldModifier(eIndex) / 100;
+		iProcessYield = (getYieldRateTimes100(YIELD_PRODUCTION, false) + getProcessOverflowProductionTimes100()) * getProductionToYieldModifier(eIndex) / 100;
 #else
 		iProcessYield = getYieldRateTimes100(YIELD_PRODUCTION, false) * getProductionToYieldModifier(eIndex) / 100;
 #endif
@@ -10872,6 +10878,24 @@ void CvCity::changeProductionToYieldModifier(YieldTypes eIndex, int iChange)
 		m_aiProductionToYieldModifier.setAt(eIndex, m_aiProductionToYieldModifier[eIndex] + iChange);
 	}
 }
+
+#ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
+//	--------------------------------------------------------------------------------
+int CvCity::getProcessOverflowProductionTimes100() const
+{
+	return m_iProcessOverflowProductionTimes100;
+}
+
+
+//	--------------------------------------------------------------------------------
+void CvCity::setProcessOverflowProductionTimes100(int iValue)
+{
+	if (iValue != 0)
+	{
+		m_iProcessOverflowProductionTimes100 = iValue;
+	}
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 int CvCity::GetTradeYieldModifier(YieldTypes eIndex, CvString* toolTipSink) const
@@ -14715,6 +14739,16 @@ void CvCity::doProduction(bool bAllowNoProduction)
 
 		changeProductionTimes100(getCurrentProductionDifferenceTimes100(false, true));
 
+#ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
+		for (int iI = 0; iI < GC.getNUM_YIELD_TYPES(); iI++)
+		{
+			if (getProductionToYieldModifier((YieldTypes)iI) != 0)
+			{
+				setProcessOverflowProductionTimes100(getOverflowProductionTimes100());
+			}
+		}
+
+#endif
 		setOverflowProduction(0);
 		setFeatureProduction(0);
 
@@ -15085,6 +15119,18 @@ void CvCity::read(FDataStream& kStream)
 	kStream >> m_aiResourceYieldRateModifier;
 	kStream >> m_aiExtraSpecialistYield;
 	kStream >> m_aiProductionToYieldModifier;
+#ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1003)
+	{
+# endif
+		kStream >> m_iProcessOverflowProductionTimes100;
+	}
+	else
+	{
+		m_iProcessOverflowProductionTimes100 = 0;
+	}
+#endif
 	kStream >> m_aiDomainFreeExperience;
 	kStream >> m_aiDomainProductionModifier;
 
@@ -15455,6 +15501,9 @@ void CvCity::write(FDataStream& kStream) const
 	kStream << m_aiResourceYieldRateModifier;
 	kStream << m_aiExtraSpecialistYield;
 	kStream << m_aiProductionToYieldModifier;
+#ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
+	kStream << m_iProcessOverflowProductionTimes100;
+#endif
 	kStream << m_aiDomainFreeExperience;
 	kStream << m_aiDomainProductionModifier;
 
