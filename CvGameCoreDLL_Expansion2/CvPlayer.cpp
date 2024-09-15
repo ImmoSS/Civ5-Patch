@@ -3053,7 +3053,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 									{
 										iNum += paiNumRealBuilding[*it];
 									}
-									else if (!bRecapture  && iTurnsSinceAcquire <= 0 && paiNumRealBuilding[*it] > 0 && iCountBuildingToDestroy < iNumBuildingsToDestroy)
+									else if (!bRecapture && iTurnsSinceAcquire > 0 && paiNumRealBuilding[*it] > 0 && iCountBuildingToDestroy < iNumBuildingsToDestroy)
 									{
 										iCountBuildingToDestroy++;
 									}
