@@ -5430,6 +5430,16 @@ void CvPlayer::doTurnPostDiplomacy()
 	// Gold
 	GetTreasury()->DoGold();
 #endif
+#ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
+	if (getNumCities() > 0)
+	{
+		int iLoop = 0;
+		for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+		{
+			pLoopCity->setProcessOverflowProductionTimes100(0);
+		}
+	}
+#endif
 
 	GetEspionage()->DoTurn();
 

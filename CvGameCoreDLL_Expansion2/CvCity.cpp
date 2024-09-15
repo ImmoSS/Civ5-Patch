@@ -10433,7 +10433,7 @@ int CvCity::getYieldRateTimes100(YieldTypes eIndex, bool bIgnoreTrade) const
 		CvAssertMsg(eIndex != YIELD_PRODUCTION, "GAMEPLAY: should not be trying to convert Production into Production via process.");
 
 #ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
-		iProcessYield = (getYieldRateTimes100(YIELD_PRODUCTION, false) + getProcessOverflowProductionTimes100()) * getProductionToYieldModifier(eIndex) / 100;
+		iProcessYield = (getYieldRateTimes100(YIELD_PRODUCTION, false) + getOverflowProductionTimes100() + getProcessOverflowProductionTimes100()) * getProductionToYieldModifier(eIndex) / 100;
 #else
 		iProcessYield = getYieldRateTimes100(YIELD_PRODUCTION, false) * getProductionToYieldModifier(eIndex) / 100;
 #endif
@@ -10890,10 +10890,7 @@ int CvCity::getProcessOverflowProductionTimes100() const
 //	--------------------------------------------------------------------------------
 void CvCity::setProcessOverflowProductionTimes100(int iValue)
 {
-	if (iValue != 0)
-	{
-		m_iProcessOverflowProductionTimes100 = iValue;
-	}
+	m_iProcessOverflowProductionTimes100 = iValue;
 }
 #endif
 
