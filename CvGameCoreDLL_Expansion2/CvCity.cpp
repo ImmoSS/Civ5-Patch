@@ -15284,7 +15284,7 @@ void CvCity::read(FDataStream& kStream)
 	}
 	else
 	{
-		for (uint iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+		for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
 		{
 			for (int iJ = 0; iJ < NUM_YIELD_TYPES; ++iJ)
 			{
