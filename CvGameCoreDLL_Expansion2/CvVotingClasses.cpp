@@ -7104,6 +7104,7 @@ void CvLeague::DoProjectReward(PlayerTypes ePlayer, LeagueProjectTypes eLeaguePr
 		{
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 			GET_PLAYER(ePlayer).ChangeNumFreePolicies(1024 * pRewardInfo->GetFreeSocialPolicies());
+			GET_PLAYER(ePlayer).ChangeNumFreePoliciesEver(-1024 * pRewardInfo->GetFreeSocialPolicies());
 #else
 			GET_PLAYER(ePlayer).ChangeNumFreePolicies(pRewardInfo->GetFreeSocialPolicies());
 #endif
