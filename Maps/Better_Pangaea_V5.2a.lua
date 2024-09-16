@@ -3356,7 +3356,10 @@ function AssignStartingPlots:PlaceLuxuries()
 	local iW, iH = Map.GetGridSize();
 	local res = Map.GetCustomOption(5);
 	-- Place Luxuries at civ start locations.
-	local placedInCap = 0;
+	local placedInCap = {};
+	for loop, reg_data in ipairs(self.regions_sorted_by_type) do
+		placedInCap[reg_data[1]] = 0;
+	end
 	for loop, reg_data in ipairs(self.regions_sorted_by_type) do
 		local region_number = reg_data[1];
 		local this_region_luxury = reg_data[2];
@@ -3414,7 +3417,7 @@ function AssignStartingPlots:PlaceLuxuries()
 			-- regional process, later, will attempt to place this remainder somewhere in the region.
 			self.luxury_low_fert_compensation[this_region_luxury] = self.luxury_low_fert_compensation[this_region_luxury] - iNumLeftToPlace;
 			self.region_low_fert_compensation[region_number] = self.region_low_fert_compensation[region_number] - iNumLeftToPlace;
-			placedInCap = iNumLeftToPlace;
+			placedInCap[region_number] = iNumLeftToPlace;
 		end
 		if iNumLeftToPlace > 0 and self.iNumTypesRandom > 0 then
 			-- We'll attempt to place one source of a Luxury type assigned to random distribution.
@@ -3559,7 +3562,7 @@ function AssignStartingPlots:PlaceLuxuries()
 		-- present. The amount of lux per region should be at its highest when the 
 		-- number of civs in the game is closest to "default" for that map size.
 		local target_list = self:GetRegionLuxuryTargetNumbers()
-		local targetNum = target_list[self.iNumCivs] - placedInCap;
+		local targetNum = target_list[self.iNumCivs] + placedInCap[region_number];
 		-- Adjust target number according to Resource Setting.
 		if res == 1 then
 			targetNum = targetNum - 1;
