@@ -16,7 +16,7 @@ include("TerrainGenerator");
 function GetMapScriptInfo()
 	local world_age, temperature, rainfall, sea_level, resources = GetCoreMapOptions()
 	return {
-		Name = "Better Pangaea".." V5.2a",
+		Name = "TXT_KEY_MAP_OPTION_BETTER_PANGAEA".." V5.2b",
 		Description = "TXT_KEY_MAP_PANGAEA_HELP",
 		IsAdvancedMap = false,
 		IconIndex = 0,
@@ -3218,6 +3218,16 @@ function AssignStartingPlots:FixSugarJungles()
 					end
 				end
 			end
+			if plot:GetResourceType(-1) == self.gold_ID then
+				if plot:GetPlotType() ~= PlotTypes.PLOT_HILLS then
+					plot:SetPlotType(PlotTypes.PLOT_HILLS, false, true)
+				end
+			end
+			if plot:GetResourceType(-1) == self.fur_ID or plot:GetResourceType(-1) == self.dye_ID or plot:GetResourceType(-1) == self.spices_ID or plot:GetResourceType(-1) == self.silk_ID or plot:GetResourceType(-1) == self.citrus_ID or plot:GetResourceType(-1) == self.truffles_ID or plot:GetResourceType(-1) == self.cocoa_ID then
+				if plot:GetTerrainType() ~= TerrainTypes.TERRAIN_TUNDRA and plot:GetFeatureType() == FeatureTypes.NO_FEATURE then
+					plot:SetFeatureType(FeatureTypes.FEATURE_FOREST, -1)
+				end
+			end
 		end
 	end
 end
@@ -3362,7 +3372,7 @@ function AssignStartingPlots:GetIndicesForLuxuryType(resource_ID)
 	elseif resource_ID == self.pearls_ID then
 		primary = 1;
 	elseif resource_ID == self.gold_ID then
-		primary, secondary, tertiary = 4, 10, 5;
+		primary, secondary, tertiary, quaternary, quinternary = 4, 10, 5, 11, 12;
 	elseif resource_ID == self.silver_ID then
 		primary, secondary, tertiary, quaternary = 4, 5, 14, 12;
 	elseif resource_ID == self.gems_ID then
@@ -3370,17 +3380,17 @@ function AssignStartingPlots:GetIndicesForLuxuryType(resource_ID)
 	elseif resource_ID == self.marble_ID then
 		primary, secondary, tertiary, quaternary = 12, 10, 11, 4;
 	elseif resource_ID == self.ivory_ID then
-		primary, secondary = 11, 12;
+		primary, secondary, tertiary = 11, 12, 13;
 	elseif resource_ID == self.fur_ID then
-		primary, secondary = 14, 15;
+		primary, secondary, tertiary, quaternary = 14, 15, 11, 12;
 	elseif resource_ID == self.dye_ID then
-		primary, secondary, tertiary = 9, 8, 2;
+		primary, secondary, tertiary, quaternary, quinternary = 9, 8, 2, 11, 12;
 	elseif resource_ID == self.spices_ID then
-		primary, secondary, tertiary = 8, 15, 2;
+		primary, secondary, tertiary, quaternary, quinternary = 8, 15, 2, 11, 12;
 	elseif resource_ID == self.silk_ID then
-		primary, secondary = 15, 8;
+		primary, secondary, tertiary, quaternary, quinternary = 15, 8, 11, 12, 13;
 	elseif resource_ID == self.sugar_ID then
-		primary, secondary, tertiary, quaternary = 2, 8, 3, 13;
+		primary, secondary, tertiary, quaternary, quinternary = 2, 8, 3, 13, 12;
 	elseif resource_ID == self.cotton_ID then
 		primary, secondary, tertiary = 3, 13, 12;
 	elseif resource_ID == self.wine_ID then
@@ -3392,13 +3402,13 @@ function AssignStartingPlots:GetIndicesForLuxuryType(resource_ID)
 	elseif resource_ID == self.salt_ID then
 		primary, secondary, tertiary, quaternary = 11, 10, 14, 9;
 	elseif resource_ID == self.citrus_ID then
-		primary, secondary, tertiary, quaternary = 8, 6, 15, 3;
+		primary, secondary, tertiary, quaternary, quinternary, sexternary = 8, 6, 15, 3, 11, 12;
 	elseif resource_ID == self.truffles_ID then
-		primary, secondary, tertiary, quaternary = 15, 8, 2, 5;
+		primary, secondary, tertiary, quaternary, quinternary, sexternary = 15, 8, 2, 5, 11, 12;
 	elseif resource_ID == self.crab_ID then
 		primary = 1;
 	elseif resource_ID == self.cocoa_ID then
-		primary, secondary, tertiary = 8, 6, 15;
+		primary, secondary, tertiary, quaternary, quinternary, sexternary = 8, 6, 15, 11, 12, 13;
 	end
 	--print("Found indices of", primary, secondary, tertiary, quaternary);
 	return primary, secondary, tertiary, quaternary, quinternary, sexternary;
@@ -3425,8 +3435,8 @@ function AssignStartingPlots:PlaceLuxuries()
 			iNumToPlace = 3;
 		end
 		-- Obtain plot lists appropriate to this luxury type.
-		local primary, secondary, tertiary, quaternary, luxury_plot_lists, shuf_list;
-		primary, secondary, tertiary, quaternary = self:GetIndicesForLuxuryType(this_region_luxury);
+		local primary, secondary, tertiary, quaternary, quinternary, sexternary, luxury_plot_lists, shuf_list;
+		primary, secondary, tertiary, quaternary, quinternary, sexternary = self:GetIndicesForLuxuryType(this_region_luxury);
 		luxury_plot_lists = self:GenerateLuxuryPlotListsAtCitySite(x, y, 2, false)
 
 		-- First pass, checking only first two rings with a 50% ratio.
@@ -3442,6 +3452,14 @@ function AssignStartingPlots:PlaceLuxuries()
 		end
 		if iNumLeftToPlace > 0 and quaternary > 0 then
 			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(this_region_luxury, 1, iNumLeftToPlace, 0.5, -1, 0, 0, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and quinternary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(this_region_luxury, 1, iNumLeftToPlace, 0.5, -1, 0, 0, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and sexternary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
 			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(this_region_luxury, 1, iNumLeftToPlace, 0.5, -1, 0, 0, shuf_list);
 		end
 
@@ -3462,6 +3480,14 @@ function AssignStartingPlots:PlaceLuxuries()
 				shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
 				iNumLeftToPlace = self:PlaceSpecificNumberOfResources(this_region_luxury, 1, iNumLeftToPlace, 1, -1, 0, 0, shuf_list);
 			end
+			if iNumLeftToPlace > 0 and quinternary > 0 then
+				shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
+				iNumLeftToPlace = self:PlaceSpecificNumberOfResources(this_region_luxury, 1, iNumLeftToPlace, 1, -1, 0, 0, shuf_list);
+			end
+			if iNumLeftToPlace > 0 and sexternary > 0 then
+				shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
+				iNumLeftToPlace = self:PlaceSpecificNumberOfResources(this_region_luxury, 1, iNumLeftToPlace, 1, -1, 0, 0, shuf_list);
+			end
 		end
 
 		if iNumLeftToPlace > 0 then
@@ -3476,7 +3502,7 @@ function AssignStartingPlots:PlaceLuxuries()
 			-- We'll attempt to place one source of a Luxury type assigned to random distribution.
 			local randoms_to_place = 1;
 			for loop, random_res in ipairs(self.resourceIDs_assigned_to_random) do
-		 		primary, secondary, tertiary, quaternary = self:GetIndicesForLuxuryType(random_res);
+		 		primary, secondary, tertiary, quaternary, quinternary, sexternary = self:GetIndicesForLuxuryType(random_res);
 		 		if randoms_to_place > 0 then
 					shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
 					randoms_to_place = self:PlaceSpecificNumberOfResources(random_res, 1, 1, 1, -1, 0, 0, shuf_list);
@@ -3491,6 +3517,14 @@ function AssignStartingPlots:PlaceLuxuries()
 				end
 				if randoms_to_place > 0 and quaternary > 0 then
 					shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
+					randoms_to_place = self:PlaceSpecificNumberOfResources(random_res, 1, 1, 1, -1, 0, 0, shuf_list);
+				end
+				if randoms_to_place > 0 and quinternary > 0 then
+					shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
+					randoms_to_place = self:PlaceSpecificNumberOfResources(random_res, 1, 1, 1, -1, 0, 0, shuf_list);
+				end
+				if randoms_to_place > 0 and sexternary > 0 then
+					shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
 					randoms_to_place = self:PlaceSpecificNumberOfResources(random_res, 1, 1, 1, -1, 0, 0, shuf_list);
 				end
 			end
@@ -3578,8 +3612,8 @@ function AssignStartingPlots:PlaceLuxuries()
 				end
 				print("-"); print("-"); print("-Assigned Luxury Type", use_this_ID, "to City State#", city_state);
 				-- Place luxury.
-				local primary, secondary, tertiary, quaternary, luxury_plot_lists, shuf_list;
-				primary, secondary, tertiary, quaternary = self:GetIndicesForLuxuryType(use_this_ID);
+				local primary, secondary, tertiary, quaternary, quinternary, sexternary, luxury_plot_lists, shuf_list;
+				primary, secondary, tertiary, quaternary, quinternary, sexternary = self:GetIndicesForLuxuryType(use_this_ID);
 				luxury_plot_lists = self:GenerateLuxuryPlotListsAtCitySite(x, y, 2, false)
 				shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
 				local iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
@@ -3595,6 +3629,14 @@ function AssignStartingPlots:PlaceLuxuries()
 					shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
 					iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
 				end
+				if iNumLeftToPlace > 0 and quinternary > 0 then
+					shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
+					iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+				end
+				if iNumLeftToPlace > 0 and sexternary > 0 then
+					shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
+					iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+				end
 				--if iNumLeftToPlace == 0 then
 					--print("-"); print("Placed Luxury ID#", use_this_ID, "at City State#", city_state, "in Region#", region_number, "located at Plot", x, y);
 				--end
@@ -3607,8 +3649,8 @@ function AssignStartingPlots:PlaceLuxuries()
 		print("-"); print("- - -"); print("Attempting to place regional luxury #", res_ID, "in Region#", region_number);
 		local iNumAlreadyPlaced = self.amounts_of_resources_placed[res_ID + 1];
 		local assignment_split = self.luxury_assignment_count[res_ID];
-		local primary, secondary, tertiary, quaternary, luxury_plot_lists, shuf_list, iNumLeftToPlace;
-		primary, secondary, tertiary, quaternary = self:GetIndicesForLuxuryType(res_ID);
+		local primary, secondary, tertiary, quaternary, quinternary, sexternary, luxury_plot_lists, shuf_list, iNumLeftToPlace;
+		primary, secondary, tertiary, quaternary, quinternary, sexternary = self:GetIndicesForLuxuryType(res_ID);
 		luxury_plot_lists = GenerateLuxuryPlotListsInRegionOrRange(self, region_number, 7);
 
 		-- Calibrate number of luxuries per region to world size and number of civs
@@ -3641,6 +3683,14 @@ function AssignStartingPlots:PlaceLuxuries()
 			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
 			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 2, 0, 2, shuf_list);
 		end
+		if iNumLeftToPlace > 0 and quinternary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 2, 0, 2, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and sexternary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 2, 0, 2, shuf_list);
+		end
 		luxury_plot_lists = GenerateLuxuryPlotListsInRegionOrRange(self, region_number, 0);
 		shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
 		iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, 2, 0, 3, shuf_list);
@@ -3654,6 +3704,14 @@ function AssignStartingPlots:PlaceLuxuries()
 		end
 		if iNumLeftToPlace > 0 and quaternary > 0 then
 			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 2, 0, 2, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and quinternary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 2, 0, 2, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and sexternary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
 			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 2, 0, 2, shuf_list);
 		end
 		if iNumLeftToPlace > 0 then
@@ -3692,8 +3750,8 @@ function AssignStartingPlots:PlaceLuxuries()
 		{0.20, 0.15, 0.15, 0.10, 0.10, 0.10, 0.10, 0.10} };
 
 		for loop, res_ID in ipairs(self.resourceIDs_assigned_to_random) do
-			local primary, secondary, tertiary, quaternary, luxury_plot_lists, current_list, iNumLeftToPlace;
-			primary, secondary, tertiary, quaternary = self:GetIndicesForLuxuryType(res_ID);
+			local primary, secondary, tertiary, quaternary, quinternary, sexternary, luxury_plot_lists, current_list, iNumLeftToPlace;
+			primary, secondary, tertiary, quaternary, quinternary, sexternary = self:GetIndicesForLuxuryType(res_ID);
 			
 			-- If calculated number of randoms is low, just place 3 of each
 			if self.iNumTypesRandom * 3 > iNumRandomLuxTarget then
@@ -3720,6 +3778,14 @@ function AssignStartingPlots:PlaceLuxuries()
 			end
 			if iNumLeftToPlace > 0 and quaternary > 0 then
 				current_list = self.global_luxury_plot_lists[quaternary];
+				iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, 2, 4, 6, current_list);
+			end
+			if iNumLeftToPlace > 0 and quinternary > 0 then
+				current_list = self.global_luxury_plot_lists[quinternary];
+				iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, 2, 4, 6, current_list);
+			end
+			if iNumLeftToPlace > 0 and sexternary > 0 then
+				current_list = self.global_luxury_plot_lists[sexternary];
 				iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, 2, 4, 6, current_list);
 			end
 			iNumRandomLuxPlaced = iNumRandomLuxPlaced + iNumThisLuxToPlace - iNumLeftToPlace;
@@ -3776,8 +3842,8 @@ function AssignStartingPlots:PlaceLuxuries()
 						use_this_ID = shuf_candidate_types[attempt];
 
 						if use_this_ID ~= nil then -- Place this luxury type at this start.
-							local primary, secondary, tertiary, quaternary, luxury_plot_lists, shuf_list;
-							primary, secondary, tertiary, quaternary = self:GetIndicesForLuxuryType(use_this_ID);
+							local primary, secondary, tertiary, quaternary, quinternary, sexternary, luxury_plot_lists, shuf_list;
+							primary, secondary, tertiary, quaternary, quinternary, sexternary = self:GetIndicesForLuxuryType(use_this_ID);
 							luxury_plot_lists = self:GenerateLuxuryPlotListsAtCitySite(x, y, 2, false)
 							shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
 							local iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
@@ -3791,6 +3857,14 @@ function AssignStartingPlots:PlaceLuxuries()
 							end
 							if iNumLeftToPlace > 0 and quaternary > 0 then
 								shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
+								iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+							end
+							if iNumLeftToPlace > 0 and quinternary > 0 then
+								shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
+								iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+							end
+							if iNumLeftToPlace > 0 and sexternary > 0 then
+								shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
 								iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
 							end
 							if iNumLeftToPlace == 0 then
@@ -3820,8 +3894,8 @@ function AssignStartingPlots:PlaceLuxuries()
 							use_this_ID = shuf_candidate_types[attempt];
 
 							if use_this_ID ~= nil then -- Place this luxury type at this start.
-								local primary, secondary, tertiary, quaternary, luxury_plot_lists, shuf_list;
-								primary, secondary, tertiary, quaternary = self:GetIndicesForLuxuryType(use_this_ID);
+								local primary, secondary, tertiary, quaternary, quinternary, sexternary, luxury_plot_lists, shuf_list;
+								primary, secondary, tertiary, quaternary, quinternary, sexternary = self:GetIndicesForLuxuryType(use_this_ID);
 								luxury_plot_lists = self:GenerateLuxuryPlotListsAtCitySite(x, y, 2, false)
 								shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
 								local iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
@@ -3835,6 +3909,14 @@ function AssignStartingPlots:PlaceLuxuries()
 								end
 								if iNumLeftToPlace > 0 and quaternary > 0 then
 									shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
+									iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+								end
+								if iNumLeftToPlace > 0 and quinternary > 0 then
+									shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
+									iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+								end
+								if iNumLeftToPlace > 0 and sexternary > 0 then
+									shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
 									iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
 								end
 								if iNumLeftToPlace == 0 then
