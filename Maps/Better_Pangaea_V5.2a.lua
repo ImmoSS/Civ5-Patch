@@ -3351,6 +3351,59 @@ function AssignStartingPlots:GetDisabledLuxuriesTargetNumber()
 	return maxToDisable
 end
 ------------------------------------------------------------------------------
+function AssignStartingPlots:GetIndicesForLuxuryType(resource_ID)
+	-- This function will identify up to four of the fifteen "Luxury Plot Lists"
+	-- (visually listed on screen directly above this text) that match terrain 
+	-- best suitable for this type of luxury.
+	--print("-"); print("Obtaining indices for Luxury#", resource_ID);
+	local primary, secondary, tertiary, quaternary, quinternary, sexternary = -1, -1, -1, -1, -1, -1;
+	if resource_ID == self.whale_ID then
+		primary = 1;
+	elseif resource_ID == self.pearls_ID then
+		primary = 1;
+	elseif resource_ID == self.gold_ID then
+		primary, secondary, tertiary = 4, 10, 5;
+	elseif resource_ID == self.silver_ID then
+		primary, secondary, tertiary, quaternary = 4, 5, 14, 12;
+	elseif resource_ID == self.gems_ID then
+		primary, secondary, tertiary, quaternary = 6, 7, 4, 8;
+	elseif resource_ID == self.marble_ID then
+		primary, secondary, tertiary, quaternary = 12, 10, 11, 4;
+	elseif resource_ID == self.ivory_ID then
+		primary, secondary = 11, 12;
+	elseif resource_ID == self.fur_ID then
+		primary, secondary = 14, 15;
+	elseif resource_ID == self.dye_ID then
+		primary, secondary, tertiary = 9, 8, 2;
+	elseif resource_ID == self.spices_ID then
+		primary, secondary, tertiary = 8, 15, 2;
+	elseif resource_ID == self.silk_ID then
+		primary, secondary = 15, 8;
+	elseif resource_ID == self.sugar_ID then
+		primary, secondary, tertiary, quaternary = 2, 8, 3, 13;
+	elseif resource_ID == self.cotton_ID then
+		primary, secondary, tertiary = 3, 13, 12;
+	elseif resource_ID == self.wine_ID then
+		primary, secondary, tertiary = 11, 12, 13;
+	elseif resource_ID == self.incense_ID then
+		primary, secondary, tertiary = 10, 3, 11;
+	elseif resource_ID == self.copper_ID then
+		primary, secondary, tertiary, quaternary = 4, 5, 12, 14;
+	elseif resource_ID == self.salt_ID then
+		primary, secondary, tertiary, quaternary = 11, 10, 14, 9;
+	elseif resource_ID == self.citrus_ID then
+		primary, secondary, tertiary, quaternary = 8, 6, 15, 3;
+	elseif resource_ID == self.truffles_ID then
+		primary, secondary, tertiary, quaternary = 15, 8, 2, 5;
+	elseif resource_ID == self.crab_ID then
+		primary = 1;
+	elseif resource_ID == self.cocoa_ID then
+		primary, secondary, tertiary = 8, 6, 15;
+	end
+	--print("Found indices of", primary, secondary, tertiary, quaternary);
+	return primary, secondary, tertiary, quaternary, quinternary, sexternary;
+end
+------------------------------------------------------------------------------
 function AssignStartingPlots:PlaceLuxuries()
 	-- This function is dependent upon AssignLuxuryRoles() and PlaceCityStates() having been executed first.
 	local iW, iH = Map.GetGridSize();
