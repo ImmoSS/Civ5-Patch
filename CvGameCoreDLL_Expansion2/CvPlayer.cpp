@@ -8507,7 +8507,11 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 
 
 //	--------------------------------------------------------------------------------
+#ifdef NEW_BELIEF_PROPHECY
+bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, CvString* toolTipSink, const CvCity* pCity) const
+#else
 bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, CvString* toolTipSink) const
+#endif
 {
 	CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eBuilding);
 	if(pkBuildingInfo == NULL)
@@ -8588,14 +8592,18 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 	if (eBranch != NO_POLICY_BRANCH_TYPE)
 	{
 #ifdef NEW_BELIEF_PROPHECY
-		ReligionTypes eReligionFounded = GetReligions()->GetReligionCreatedByPlayer();
 		bool bReligionAllowsPolicyWonders = false;
-		if (eReligionFounded > RELIGION_PANTHEON)
+		if (pCity)
 		{
-			const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligionFounded, GetID());
-			if (pReligion && pReligion->m_Beliefs.IsAllowPolicyWonders())
+			ReligionTypes eReligionFounded = GetReligions()->GetReligionCreatedByPlayer();
+			ReligionTypes eCityReligion = pCity->GetCityReligions()->GetReligiousMajority();
+			if (eReligionFounded > RELIGION_PANTHEON && eReligionFounded == eCityReligion)
 			{
-				bReligionAllowsPolicyWonders = true;
+				const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligionFounded, GetID());
+				if (pReligion && pReligion->m_Beliefs.IsAllowPolicyWonders())
+				{
+					bReligionAllowsPolicyWonders = true;
+				}
 			}
 		}
 		if (!GetPlayerPolicies()->IsPolicyBranchUnlocked(eBranch) && !bReligionAllowsPolicyWonders)

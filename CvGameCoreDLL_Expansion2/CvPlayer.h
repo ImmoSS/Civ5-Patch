@@ -232,7 +232,11 @@ public:
 	void found(int iX, int iY);
 
 	bool canTrain(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUniqueUnitStatus = false, CvString* toolTipSink = NULL) const;
+#ifdef NEW_BELIEF_PROPHECY
+	bool canConstruct(BuildingTypes eBuilding, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, CvString* toolTipSink = NULL, const CvCity* pCity = NULL) const;
+#else
 	bool canConstruct(BuildingTypes eBuilding, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, CvString* toolTipSink = NULL) const;
+#endif
 	bool canCreate(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;
 	bool canPrepare(SpecialistTypes eSpecialist, bool bContinue = false) const;
 	bool canMaintain(ProcessTypes eProcess, bool bContinue = false) const;

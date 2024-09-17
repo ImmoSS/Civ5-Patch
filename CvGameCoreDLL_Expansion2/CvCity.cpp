@@ -2562,10 +2562,17 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		return false;
 	}
 
+#ifdef NEW_BELIEF_PROPHECY
+	if(!(GET_PLAYER(getOwner()).canConstruct(eBuilding, bContinue, bTestVisible, bIgnoreCost, toolTipSink, this)))
+	{
+		return false;
+	}
+#else
 	if(!(GET_PLAYER(getOwner()).canConstruct(eBuilding, bContinue, bTestVisible, bIgnoreCost, toolTipSink)))
 	{
 		return false;
 	}
+#endif
 
 	if(m_pCityBuildings->GetNumBuilding(eBuilding) >= GC.getCITY_MAX_NUM_BUILDINGS())
 	{
