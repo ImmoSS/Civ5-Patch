@@ -7908,6 +7908,32 @@ void CvGame::doTurn()
 #ifdef TURN_TIMER_PAUSE_BUTTON
 	GC.getGame().m_bIsPaused = false;
 #endif
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+	if (GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
+	{
+		CvGame& kGame = GC.getGame();
+		float fGameTurnEnd = kGame.getPreviousTurnLen();
+		float fTimeElapsed = kGame.getTimeElapsed();
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			for (int jJ = 0; jJ < MAX_PLAYERS; jJ++)
+			{
+				if (kGame.getGameTurn() < GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowing((PlayerTypes)jJ))
+				{
+					GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowing((PlayerTypes)jJ, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ) + (fGameTurnEnd - fTimeElapsed));
+				}
+				if (kGame.getGameTurn() == GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowing((PlayerTypes)jJ))
+				{
+					if (GC.getGame().getTimeElapsed() < GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ))
+					{
+						GET_PLAYER((PlayerTypes)iI).setTurnCSWarAllowing((PlayerTypes)jJ, kGame.getGameTurn() + 1);
+						GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowing((PlayerTypes)jJ, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ) - (fGameTurnEnd - fTimeElapsed));
+					}
+				}
+			}
+		}
+	}
+#endif
 	//We reset the turn timer now so that we know that the turn timer has been reset at least once for
 	//this turn.  CvGameController::Update() will continue to reset the timer if there is prolonged ai processing.
 	resetTurnTimer(true);

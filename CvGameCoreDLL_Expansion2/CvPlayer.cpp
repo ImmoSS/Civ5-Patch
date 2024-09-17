@@ -26755,7 +26755,7 @@ void CvPlayer::Read(FDataStream& kStream)
 
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= 1004)
+	if (uiVersion >= 1008)
 	{
 # endif
 		kStream >> m_paiTurnCSWarAllowing;
