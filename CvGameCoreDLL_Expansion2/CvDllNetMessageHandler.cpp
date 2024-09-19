@@ -1036,6 +1036,19 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 	std::vector<int> vArgs;
 	vArgs.push_back(eMinor);
 #endif
+#ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
+	bool isAnyDisconnected = false;
+	SLOG("ResponseGiftUnit");
+	for (int iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		PlayerTypes eLoopPlayer = (PlayerTypes)iI;
+		SLOG("isDisconnected %d", GET_PLAYER(eLoopPlayer).isDisconnected());
+		if (GET_PLAYER(eLoopPlayer).isDisconnected())
+		{
+			isAnyDisconnected = true;
+		}
+	}
+#endif
 	switch (iUnitID) {
 	case -2:
 #ifdef REPLAY_EVENTS
@@ -1077,6 +1090,10 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 #ifdef TURN_TIMER_RESET_BUTTON
 	// here we intercept response, when UnitID equals -1 we agree to reset timer
 	if (iUnitID == -1) {
+#ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
+		if (!isAnyDisconnected)
+		{
+#endif
 #ifdef REPLAY_EVENTS
 		GC.getGame().addReplayEvent(REPLAYEVENT_ResetTimer, ePlayer, vArgs);
 #endif
@@ -1090,6 +1107,9 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 			args->Push(GC.getGame().m_bIsPaused);
 			LuaSupport::CallHook(pkScriptSystem, "EndTurnTimerReset", args.get(), bResult);
 		}
+#ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
+		}
+#endif
 	}
 	else
 #endif
@@ -1097,6 +1117,10 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 	if (iUnitID == -7) {
 		if(GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
 		{
+#ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
+			if (!isAnyDisconnected)
+			{
+#endif
 			if(!GC.getGame().m_bIsPaused)
 			{
 #ifdef REPLAY_EVENTS
@@ -1126,6 +1150,9 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 				args->Push(GC.getGame().m_bIsPaused);
 				LuaSupport::CallHook(pkScriptSystem, "EndTurnTimerPause", args.get(), bResult);
 			}
+#ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
+			}
+#endif
 		}
 	}
 	else
@@ -1147,6 +1174,51 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 		GC.getGame().addReplayEvent(REPLAYEVENT_EnterCityScreen, ePlayer, vArgs);
 #endif
 		GET_PLAYER(ePlayer).ChangeTimesEnteredCityScreen(1);
+	}
+	else
+#endif
+#if defined TURN_TIMER_PAUSE_BUTTON && defined AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
+	if (iUnitID == -10) {
+		if (GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
+		{
+			if (!GC.getGame().m_bIsPaused)
+			{
+				GC.getGame().m_fCurrentTurnTimerPauseDelta += GC.getGame().m_curTurnTimer.Stop();
+				GC.getGame().m_timeSinceGameTurnStart.Stop();
+				GC.getGame().m_bIsPaused = true;
+				// DLLUI->AddMessage(0, CvPreGame::activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), GetLocalizedText("TXT_KEY_MISC_TURN_TIMER_PAUSE", GET_PLAYER(ePlayer).getName()).GetCString());
+			}
+			ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+			CvLuaArgsHandle args;
+			bool bResult;
+			if (pkScriptSystem)
+			{
+				args->Push(GC.getGame().m_bIsPaused);
+				LuaSupport::CallHook(pkScriptSystem, "EndTurnTimerPause", args.get(), bResult);
+			}
+		}
+	}
+	else
+	if (iUnitID == -11) {
+		if (GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
+		{
+			if (GC.getGame().m_bIsPaused)
+			{
+				GC.getGame().resetTurnTimer(true);
+				GC.getGame().m_timeSinceGameTurnStart.StartWithOffset(GC.getGame().getTimeElapsed());
+				GC.getGame().m_curTurnTimer.StartWithOffset(GC.getGame().getTimeElapsed());
+				GC.getGame().m_bIsPaused = false;
+				// DLLUI->AddMessage(0, CvPreGame::activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), GetLocalizedText("TXT_KEY_MISC_TURN_TIMER_UNPAUSE", GET_PLAYER(ePlayer).getName()).GetCString());
+			}
+			ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+			CvLuaArgsHandle args;
+			bool bResult;
+			if (pkScriptSystem)
+			{
+				args->Push(GC.getGame().m_bIsPaused);
+				LuaSupport::CallHook(pkScriptSystem, "EndTurnTimerPause", args.get(), bResult);
+			}
+		}
 	}
 	else
 #endif

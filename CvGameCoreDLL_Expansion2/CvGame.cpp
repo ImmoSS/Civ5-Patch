@@ -3681,7 +3681,7 @@ void CvGame::doControl(ControlTypes eControl)
 			{
 				// as there is no netcode for timer reset,
 				// this function will act as one, if called with special agreed upon arguments
-				resetTurnTimer(true);
+				// resetTurnTimer(true);
 				gDLL->sendGiftUnit(NO_PLAYER, -1);
 			}
 		}

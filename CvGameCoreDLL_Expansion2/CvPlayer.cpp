@@ -25465,6 +25465,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	uint uiVersion;
 	kStream >> uiVersion;
 
+#ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1008)
+	{
+# endif
+		kStream >> m_bIsDisconnected;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_bIsDisconnected = false;
+	}
+# endif
+#endif
 	kStream >> m_iStartingX;
 	kStream >> m_iStartingY;
 	kStream >> m_iTotalPopulation;
@@ -26953,6 +26967,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << g_CurrentCvPlayerVersion;
 #endif
 
+#ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
+	kStream << m_bIsDisconnected;
+#endif
 	kStream << m_iStartingX;
 	kStream << m_iStartingY;
 	kStream << m_iTotalPopulation;
@@ -29393,8 +29410,29 @@ void CvPlayer::disconnected()
 			if (!CvPreGame::isPitBoss() || gDLL->IsPlayerKicked(GetID()))
 			{
 				setIsDisconnected(false); // kicked players should unpause the game
-				if (GC.getGame().getPausePlayer() == GetID())
-					GC.getGame().setPausePlayer(NO_PLAYER);
+				bool isAnyDisconnected = false;
+				for (int iI = 0; iI < MAX_PLAYERS; iI++)
+				{
+					PlayerTypes eLoopPlayer = (PlayerTypes)iI;
+					if (GET_PLAYER(eLoopPlayer).isDisconnected())
+					{
+						isAnyDisconnected = true;
+					}
+				}
+#ifdef TURN_TIMER_PAUSE_BUTTON
+				{
+					if (!isAnyDisconnected && GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED) && !GC.getGame().isPaused() && GC.getGame().getGameState() == GAMESTATE_ON)
+					{
+						if ((GC.getGame().getElapsedGameTurns() > 0) && GET_PLAYER(GC.getGame().getActivePlayer()).isTurnActive())
+						{
+							// as there is no netcode for timer pause,
+							// this function will act as one, if called with special agreed upon arguments
+							// resetTurnTimer(true);
+							gDLL->sendGiftUnit(NO_PLAYER, -11);
+						}
+					}
+				}
+#endif
 				// JAR : First pass, automatically fall back to CPU so the
 				// game can continue. Todo : add popup on host asking whether
 				// the AI should take over or everyone should wait for the
@@ -29492,11 +29530,24 @@ void CvPlayer::disconnected()
 		}
 #endif
 #ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
-			else if (/*GC.getGame().isOption("GAMEOPTION_AUTOPAUSE_ON_ACTIVE_DISCONNECT")*/ true && isAlive() && isTurnActive() &&
-				(GC.getGame().isOption(GAMEOPTION_DYNAMIC_TURNS) || GC.getGame().isOption(GAMEOPTION_SIMULTANEOUS_TURNS)) && !gDLL->IsPlayerKicked(GetID()))
+			else if (/*GC.getGame().isOption("GAMEOPTION_AUTOPAUSE_ON_ACTIVE_DISCONNECT")*/ true && isAlive() && isTurnActive() && (GC.getGame().isOption(GAMEOPTION_DYNAMIC_TURNS) || GC.getGame().isOption(GAMEOPTION_SIMULTANEOUS_TURNS)) && !gDLL->IsPlayerKicked(GetID()))
 			{
 				setIsDisconnected(true);
-				GC.getGame().setPausePlayer(GetID());
+#ifdef TURN_TIMER_PAUSE_BUTTON
+				{
+					if (GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED) && !GC.getGame().isPaused() && GC.getGame().getGameState() == GAMESTATE_ON)
+					{
+						if ((GC.getGame().getElapsedGameTurns() > 0) && GET_PLAYER(GC.getGame().getActivePlayer()).isTurnActive())
+						{
+							// as there is no netcode for timer pause,
+							// this function will act as one, if called with special agreed upon arguments
+							// resetTurnTimer(true);
+							SLOG("disconnected");
+							gDLL->sendGiftUnit(NO_PLAYER, -10);
+						}
+					}
+				}
+#endif
 			}
 		}
 #endif
@@ -29576,7 +29627,29 @@ void CvPlayer::reconnected()
 		}
 #ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
 		setIsDisconnected(false);
-		GC.getGame().setPausePlayer(NO_PLAYER);
+		bool isAnyDisconnected = false;
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			PlayerTypes eLoopPlayer = (PlayerTypes)iI;
+			if (GET_PLAYER(eLoopPlayer).isDisconnected())
+			{
+				isAnyDisconnected = true;
+			}
+		}
+#ifdef TURN_TIMER_PAUSE_BUTTON
+		{
+			if (!isAnyDisconnected && GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED) && !GC.getGame().isPaused() && GC.getGame().getGameState() == GAMESTATE_ON)
+			{
+				if ((GC.getGame().getElapsedGameTurns() > 0) && GET_PLAYER(GC.getGame().getActivePlayer()).isTurnActive())
+				{
+					// as there is no netcode for timer pause,
+					// this function will act as one, if called with special agreed upon arguments
+					// resetTurnTimer(true);
+					gDLL->sendGiftUnit(NO_PLAYER, -11);
+				}
+			}
+		}
+#endif
 		// Game pauses during a reconnection and will unpause when the reconnect is finished, so there's no need to insert unpause code here
 #endif
 	}
