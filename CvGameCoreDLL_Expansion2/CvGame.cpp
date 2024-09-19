@@ -3681,7 +3681,7 @@ void CvGame::doControl(ControlTypes eControl)
 			{
 				// as there is no netcode for timer reset,
 				// this function will act as one, if called with special agreed upon arguments
-				resetTurnTimer(true);
+				// resetTurnTimer(true);
 				gDLL->sendGiftUnit(NO_PLAYER, -1);
 			}
 		}
@@ -7924,7 +7924,7 @@ void CvGame::doTurn()
 				}
 				if (kGame.getGameTurn() == GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowing((PlayerTypes)jJ))
 				{
-					if (GC.getGame().getTimeElapsed() < GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ))
+					if (fTimeElapsed < GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ))
 					{
 						GET_PLAYER((PlayerTypes)iI).setTurnCSWarAllowing((PlayerTypes)jJ, kGame.getGameTurn() + 1);
 						GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowing((PlayerTypes)jJ, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ) - (fGameTurnEnd - fTimeElapsed));

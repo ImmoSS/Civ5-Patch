@@ -5938,25 +5938,34 @@ void CvMinorCivAI::SetAlly(PlayerTypes eNewAlly)
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 	if (GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
 	{
-		if (eOldAlly != NO_PLAYER && eNewAlly != NO_PLAYER)
+		if (eOldAlly != NO_PLAYER)
 		{
-			if (GET_PLAYER(eOldAlly).isHuman() && GET_PLAYER(eNewAlly).isHuman() && GET_PLAYER(eOldAlly).getTeam() != GET_PLAYER(eNewAlly).getTeam())
+			if (eNewAlly != NO_PLAYER)
 			{
-				CvGame& kGame = GC.getGame();
-				float fGameTurnEnd = kGame.getPreviousTurnLen();
-				float fTimeElapsed = kGame.getTimeElapsed();
-				if (fGameTurnEnd - fTimeElapsed > CS_ALLYING_WAR_RESCTRICTION_TIMER)
+				if (GET_PLAYER(eOldAlly).isHuman() && GET_PLAYER(eNewAlly).isHuman() && GET_PLAYER(eOldAlly).getTeam() != GET_PLAYER(eNewAlly).getTeam())
 				{
-					GET_PLAYER(eNewAlly).setTurnCSWarAllowing(eOldAlly, kGame.getGameTurn());
-					GET_PLAYER(eNewAlly).setTimeCSWarAllowing(eOldAlly, fTimeElapsed + CS_ALLYING_WAR_RESCTRICTION_TIMER);
+					CvGame& kGame = GC.getGame();
+					float fGameTurnEnd = kGame.getPreviousTurnLen();
+					float fTimeElapsed = kGame.getTimeElapsed();
+					if (fGameTurnEnd - fTimeElapsed > CS_ALLYING_WAR_RESCTRICTION_TIMER)
+					{
+						GET_PLAYER(eNewAlly).setTurnCSWarAllowing(eOldAlly, kGame.getGameTurn());
+						GET_PLAYER(eNewAlly).setTimeCSWarAllowing(eOldAlly, fTimeElapsed + CS_ALLYING_WAR_RESCTRICTION_TIMER);
+					}
+					else
+					{
+						GET_PLAYER(eNewAlly).setTurnCSWarAllowing(eOldAlly, kGame.getGameTurn() + 1);
+						GET_PLAYER(eNewAlly).setTimeCSWarAllowing(eOldAlly, CS_ALLYING_WAR_RESCTRICTION_TIMER - (fGameTurnEnd - fTimeElapsed));
+					}
 				}
-				else
+			}
+			if (GET_PLAYER(eOldAlly).isHuman())
+			{
+				for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
 				{
-					GET_PLAYER(eNewAlly).setTurnCSWarAllowing(eOldAlly, kGame.getGameTurn() + 1);
-					GET_PLAYER(eNewAlly).setTimeCSWarAllowing(eOldAlly, CS_ALLYING_WAR_RESCTRICTION_TIMER - (fGameTurnEnd - fTimeElapsed));
+					GET_PLAYER(eOldAlly).setTurnCSWarAllowing((PlayerTypes)iI, -1);
+					GET_PLAYER(eOldAlly).setTimeCSWarAllowing((PlayerTypes)iI, 0.f);
 				}
-				GET_PLAYER(eOldAlly).setTurnCSWarAllowing(eNewAlly, -1);
-				GET_PLAYER(eOldAlly).setTimeCSWarAllowing(eNewAlly, 0.f);
 			}
 		}
 	}
