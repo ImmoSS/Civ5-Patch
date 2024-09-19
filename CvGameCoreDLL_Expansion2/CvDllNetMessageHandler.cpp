@@ -1090,26 +1090,56 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 #ifdef TURN_TIMER_RESET_BUTTON
 	// here we intercept response, when UnitID equals -1 we agree to reset timer
 	if (iUnitID == -1) {
-#ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
-		if (!isAnyDisconnected)
+		if (GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
 		{
+#ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
+			if (!isAnyDisconnected)
+			{
 #endif
 #ifdef REPLAY_EVENTS
-		GC.getGame().addReplayEvent(REPLAYEVENT_ResetTimer, ePlayer, vArgs);
+				GC.getGame().addReplayEvent(REPLAYEVENT_ResetTimer, ePlayer, vArgs);
 #endif
-		GC.getGame().resetTurnTimer(true);
-		DLLUI->AddMessage(0, CvPreGame::activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), GetLocalizedText("TXT_KEY_MISC_TURN_TIMER_RESET", GET_PLAYER(ePlayer).getName()).GetCString());
-		ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
-		CvLuaArgsHandle args;
-		bool bResult;
-		if (pkScriptSystem)
-		{
-			args->Push(GC.getGame().m_bIsPaused);
-			LuaSupport::CallHook(pkScriptSystem, "EndTurnTimerReset", args.get(), bResult);
-		}
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+				float fGameTurnEnd = game.getPreviousTurnLen();
+				float fTimeElapsed = game.getTimeElapsed();
+				for (int iI = 0; iI < MAX_PLAYERS; iI++)
+				{
+					for (int jJ = 0; jJ < MAX_PLAYERS; jJ++)
+					{
+						if (game.getGameTurn() == GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowing((PlayerTypes)jJ))
+						{
+							if (fTimeElapsed < GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ))
+							{
+								GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowing((PlayerTypes)jJ, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ) - fTimeElapsed);
+							}
+							else
+							{
+								GET_PLAYER((PlayerTypes)iI).setTurnCSWarAllowing((PlayerTypes)jJ, -1);
+								GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowing((PlayerTypes)jJ, 0.f);
+							}
+						}
+						if (game.getGameTurn() < GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowing((PlayerTypes)jJ))
+						{
+							GET_PLAYER((PlayerTypes)iI).setTurnCSWarAllowing((PlayerTypes)jJ, game.getGameTurn());
+							GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowing((PlayerTypes)jJ, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ) + (fGameTurnEnd - fTimeElapsed));
+						}
+					}
+				}
+#endif
+				GC.getGame().resetTurnTimer(true);
+				DLLUI->AddMessage(0, CvPreGame::activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), GetLocalizedText("TXT_KEY_MISC_TURN_TIMER_RESET", GET_PLAYER(ePlayer).getName()).GetCString());
+				ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+				CvLuaArgsHandle args;
+				bool bResult;
+				if (pkScriptSystem)
+				{
+					args->Push(GC.getGame().m_bIsPaused);
+					LuaSupport::CallHook(pkScriptSystem, "EndTurnTimerReset", args.get(), bResult);
+				}
 #ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
-		}
+			}
 #endif
+		}
 	}
 	else
 #endif
