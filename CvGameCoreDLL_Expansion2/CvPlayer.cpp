@@ -29542,7 +29542,6 @@ void CvPlayer::disconnected()
 							// as there is no netcode for timer pause,
 							// this function will act as one, if called with special agreed upon arguments
 							// resetTurnTimer(true);
-							SLOG("disconnected");
 							gDLL->sendGiftUnit(NO_PLAYER, -10);
 						}
 					}

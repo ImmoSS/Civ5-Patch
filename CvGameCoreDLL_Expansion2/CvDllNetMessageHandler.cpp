@@ -1038,11 +1038,9 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 #endif
 #ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
 	bool isAnyDisconnected = false;
-	SLOG("ResponseGiftUnit");
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		PlayerTypes eLoopPlayer = (PlayerTypes)iI;
-		SLOG("isDisconnected %d", GET_PLAYER(eLoopPlayer).isDisconnected());
 		if (GET_PLAYER(eLoopPlayer).isDisconnected())
 		{
 			isAnyDisconnected = true;
