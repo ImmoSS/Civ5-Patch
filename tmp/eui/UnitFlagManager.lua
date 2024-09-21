@@ -668,6 +668,12 @@ local function CreateNewFlag( playerID, unitID, isSelected, isHiddenByFog, isInv
 		---------------------------------------------------------
 		-- update all other info
 		flag.Anchor:SetHide( isHiddenByFog or isInvisibleToActiveTeam )
+		if unit:CanMove() then
+			flag.IsOutOfAttacks:SetHide(not isActiveTeam or not unit:IsOutOfAttacks())
+		else
+			flag.IsOutOfAttacks:SetHide(true)
+		end
+		flag.IsNoCapture:SetHide(not isActiveTeam or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
 		flag.FlagShadow:SetAlpha( unit:CanMove() and 1 or 0.5 )
 		flag.Button:SetDisabled( g_activeTeamID ~= teamID )
 		flag.Button:SetConsumeMouseOver( g_activeTeamID == teamID )
@@ -901,9 +907,17 @@ function( playerID, unitID, isDimmed )
 	-- DebugUnit( playerID, unitID, "UnitShouldDimFlag, isDimmed=", isDimmed ) end
 	local flag = g_UnitFlags[ playerID ][ unitID ]
 	if flag then
-	local active_team = Game.GetActiveTeam();
-	local team = Players[playerID]:GetTeam();
-	local isActiveTeam = (active_team == team);
+		local active_team = Game.GetActiveTeam();
+		local team = Players[playerID]:GetTeam();
+		local isActiveTeam = (active_team == team);
+		local player = Players[ playerID ]
+		local unit = player and player:GetUnitByID( unitID )
+		if unit:CanMove() then
+			flag.IsOutOfAttacks:SetHide(not isActiveTeam or not unit:IsOutOfAttacks())
+		else
+			flag.IsOutOfAttacks:SetHide(true)
+		end
+		flag.IsNoCapture:SetHide(not isActiveTeam or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
 		flag.FlagShadow:SetAlpha( (isDimmed and isActiveTeam) and 0.5 or 1.0 )
 	else
 		-- DebugUnit( playerID, unitID, "flag not found for UnitShouldDimFlag" ) end

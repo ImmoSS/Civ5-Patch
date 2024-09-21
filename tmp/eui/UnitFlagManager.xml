@@ -61,6 +61,10 @@
 
 				</Image>
 
+        		<!-- Label ID="IsHealing" Anchor="L,T" Offset="10,-10" Font="TwCenMT18" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" String="[ICON_WAR]" Hidden="1" /-->
+        		<Label ID="IsOutOfAttacks" Anchor="L,B" Offset="10,10" Font="TwCenMT18" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" String="[ICON_WAR]" Hidden="1" />
+        		<Label ID="IsNoCapture" Anchor="L,B" Offset="10,10" Font="TwCenMT18" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" String="[ICON_CAPITAL]" Hidden="1" />
+
 				<!-- Selection or War Highlight -->
 				<Image ID="FlagHighlight" Size="64,64" TextureOffset="0,64" Texture="UnitFlagBase.dds" Hidden="1" />
 

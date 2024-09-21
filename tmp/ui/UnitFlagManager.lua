@@ -211,6 +211,12 @@ local g_UnitFlagClass =
             o.m_Instance.HealthBarButton:SetDisabled( false );
             o.m_Instance.HealthBarButton:SetConsumeMouseOver( true );
             
+            if pUnit:CanMove() then
+                o.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
+            else
+                o.m_Instance.IsOutOfAttacks:SetHide(true)
+            end
+            o.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
         else
             o.m_Instance.NormalButton:SetDisabled( true );
             o.m_Instance.NormalButton:SetConsumeMouseOver( false );
@@ -1463,6 +1469,13 @@ function OnDimEvent( playerID, unitID, bDim )
         	
         	if( active_team == team )
         	then
+                local pUnit = Players[ playerID ]:GetUnitByID( unitID )
+                if pUnit:CanMove() then
+                    flag.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
+                else
+                    flag.m_Instance.IsOutOfAttacks:SetHide(true)
+                end
+                flag.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
                 --print( "  Unit dim: " .. tostring( playerID ) .. " " .. tostring( unitID ) .. " " .. iDim );
                 flag:SetDim( bDim  );
         	end
