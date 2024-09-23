@@ -61,7 +61,7 @@
 
 				</Image>
 
-        		<!-- Label ID="IsHealing" Anchor="L,T" Offset="10,-10" Font="TwCenMT18" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" String="[ICON_WAR]" Hidden="1" /-->
+        		<Label ID="IsHealing" Anchor="L,T" Offset="10,10" Font="TwCenMT18" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" String="[ICON_FLOWER]" Hidden="1" />
         		<Label ID="IsOutOfAttacks" Anchor="L,B" Offset="10,10" Font="TwCenMT18" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" String="[ICON_WAR]" Hidden="1" />
         		<Label ID="IsNoCapture" Anchor="L,B" Offset="10,10" Font="TwCenMT18" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" String="[ICON_CAPITAL]" Hidden="1" />
 

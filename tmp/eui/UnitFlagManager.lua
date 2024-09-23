@@ -673,7 +673,8 @@ local function CreateNewFlag( playerID, unitID, isSelected, isHiddenByFog, isInv
 		else
 			flag.IsOutOfAttacks:SetHide(true)
 		end
-		flag.IsNoCapture:SetHide(not isActiveTeam or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
+		flag.IsHealing:SetHide(g_activeTeamID ~= teamID or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
+		flag.IsNoCapture:SetHide(g_activeTeamID ~= teamID or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
 		flag.FlagShadow:SetAlpha( unit:CanMove() and 1 or 0.5 )
 		flag.Button:SetDisabled( g_activeTeamID ~= teamID )
 		flag.Button:SetConsumeMouseOver( g_activeTeamID == teamID )
@@ -835,8 +836,14 @@ Events.SerialEventUnitSetDamage.Add(
 function( playerID, unitID, damage )--, previousDamage )
 	-- !!! can be called for dead unit !!!
 	-- DebugUnit( playerID, unitID, "SerialEventUnitSetDamage, damage=", damage ) end
+	local active_team = Game.GetActiveTeam();
+	local team = Players[playerID]:GetTeam();
+	local isActiveTeam = (active_team == team);
 	local flag = g_UnitFlags[ playerID ][ unitID ]
+	local player = Players[ playerID ]
+	local unit = player and player:GetUnitByID( unitID )
 	if flag then
+		flag.IsHealing:SetHide(not isActiveTeam or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (damage > 0))
 		UpdateFlagHealth( flag, damage )
 	else
 		-- DebugUnit( playerID, unitID, "flag not found for SerialEventUnitSetDamage" ) end
@@ -917,6 +924,7 @@ function( playerID, unitID, isDimmed )
 		else
 			flag.IsOutOfAttacks:SetHide(true)
 		end
+		flag.IsHealing:SetHide(not isActiveTeam or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
 		flag.IsNoCapture:SetHide(not isActiveTeam or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
 		flag.FlagShadow:SetAlpha( (isDimmed and isActiveTeam) and 0.5 or 1.0 )
 	else

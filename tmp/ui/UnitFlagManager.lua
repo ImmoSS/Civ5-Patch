@@ -216,6 +216,7 @@ local g_UnitFlagClass =
             else
                 o.m_Instance.IsOutOfAttacks:SetHide(true)
             end
+            o.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31))or not (pUnit:GetDamage() > 0))
             o.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
         else
             o.m_Instance.NormalButton:SetDisabled( true );
@@ -406,6 +407,10 @@ local g_UnitFlagClass =
         -- going to damaged state
         if( healthPercent < 1 )
         then
+            local pPlayer = Players[Game.GetActivePlayer()];
+            local active_team = pPlayer:GetTeam();
+            local team = self.m_Player:GetTeam();
+            self.m_Instance.IsHealing:SetHide(active_team ~= team or (pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)))
             -- show the bar and the button anim
             self.m_Instance.HealthBarBG:SetHide( false );
             self.m_Instance.HealthBar:SetHide( false );
@@ -438,6 +443,7 @@ local g_UnitFlagClass =
         --------------------------------------------------------------------    
         -- going to full health
         else
+            self.m_Instance.IsHealing:SetHide(true)
             self.m_Instance.HealthBar:SetFGColor( Vector4( 0, 1, 0, 1 ) );
             
             -- hide the bar and the button anim
@@ -1475,6 +1481,7 @@ function OnDimEvent( playerID, unitID, bDim )
                 else
                     flag.m_Instance.IsOutOfAttacks:SetHide(true)
                 end
+                flag.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)) or not (pUnit:GetDamage() > 0))
                 flag.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
                 --print( "  Unit dim: " .. tostring( playerID ) .. " " .. tostring( unitID ) .. " " .. iDim );
                 flag:SetDim( bDim  );
