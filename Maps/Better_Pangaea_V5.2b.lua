@@ -3693,26 +3693,26 @@ function AssignStartingPlots:PlaceLuxuries()
 		end
 		luxury_plot_lists = GenerateLuxuryPlotListsInRegionOrRange(self, region_number, 0);
 		shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
-		iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, 2, 0, 3, shuf_list);
+		iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, 0, 0, 3, shuf_list);
 		if iNumLeftToPlace > 0 and secondary > 0 then
 			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[secondary])
-			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, 2, 0, 3, shuf_list);
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, 0, 0, 3, shuf_list);
 		end
 		if iNumLeftToPlace > 0 and tertiary > 0 then
 			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[tertiary])
-			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.4, 2, 0, 2, shuf_list);
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.4, 0, 0, 2, shuf_list);
 		end
 		if iNumLeftToPlace > 0 and quaternary > 0 then
 			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
-			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 2, 0, 2, shuf_list);
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 0, 0, 2, shuf_list);
 		end
 		if iNumLeftToPlace > 0 and quinternary > 0 then
 			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
-			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 2, 0, 2, shuf_list);
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 0, 0, 2, shuf_list);
 		end
 		if iNumLeftToPlace > 0 and sexternary > 0 then
 			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
-			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 2, 0, 2, shuf_list);
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 0, 0, 2, shuf_list);
 		end
 		if iNumLeftToPlace > 0 then
 			print("-"); print("-"); print("Number of LuxuryID", res_ID, "left to place in Region#", region_number, "is", iNumLeftToPlace);
