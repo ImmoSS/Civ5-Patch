@@ -1197,13 +1197,15 @@ void CvUnit::convert(CvUnit* pUnit, bool bIsUpgrade)
 					bGivePromotion = false;
 				}
 				else
-				{
-					bGivePromotion = true;
-				}
-					
-#else
-				bGivePromotion = true;
 #endif
+#ifdef ALLOW_HELICOPTER_WATERWALK
+				if (getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_HELICOPTER_GUNSHIP") && (ePromotion == (PromotionTypes)GC.getInfoTypeForString("PROMOTION_EMBARKATION") || ePromotion == (PromotionTypes)GC.getInfoTypeForString("PROMOTION_DEFENSIVE_EMBARKATION") || ePromotion == (PromotionTypes)GC.getInfoTypeForString("PROMOTION_ALLWATER_EMBARKATION")))
+				{
+					bGivePromotion = false;
+				}
+				else
+#endif
+				bGivePromotion = true;
 			}
 
 			// New unit gets promotion for free (as per XML)
