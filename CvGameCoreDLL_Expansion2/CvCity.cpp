@@ -8149,7 +8149,8 @@ int CvCity::getCityAttackRangeModifier() const
 			if (pReligion)
 			{
 				BeliefTypes pBelief = NO_BELIEF;
-				for (int iI = 0; iI < pReligion->m_Beliefs.GetNumBeliefs(); iI++)
+				int iI;
+				for (iI = 0; iI < pReligion->m_Beliefs.GetNumBeliefs(); iI++)
 				{
 					const BeliefTypes eBelief = pReligion->m_Beliefs.GetBelief(iI);
 					CvBeliefEntry* pEntry = GC.GetGameBeliefs()->GetEntry((int)eBelief);
@@ -8173,6 +8174,25 @@ int CvCity::getCityAttackRangeModifier() const
 								iTempMod++;
 							}
 						}
+					}
+				}
+#endif
+				for (int jJ = iI + 1; jJ < pReligion->m_Beliefs.GetNumBeliefs(); jJ++)
+				{
+					const BeliefTypes eBelief = pReligion->m_Beliefs.GetBelief(jJ);
+					CvBeliefEntry* pEntry = GC.GetGameBeliefs()->GetEntry((int)eBelief);
+					if (pEntry && pEntry->IsPantheonBelief())
+					{
+						pBelief = eBelief;
+						break;
+					}
+				}
+#ifdef DUEL_GODDESS_STRATEGY_CHANGE
+				if (!(GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF")))
+				{
+					if (pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_STRATEGY", true))
+					{
+						iTempMod++;
 					}
 				}
 #endif
