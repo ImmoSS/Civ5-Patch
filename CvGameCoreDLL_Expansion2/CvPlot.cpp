@@ -7755,9 +7755,12 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 		// Extra yield for improvements
 		if (getImprovementType() != NO_IMPROVEMENT)
 		{
-			if (pWorkingCity != NULL)
+			if (!IsImprovementPillaged())
 			{
-				iYield += pWorkingCity->GetImprovementExtraYield(getImprovementType(), eYield);
+				if (pWorkingCity != NULL)
+				{
+					iYield += pWorkingCity->GetImprovementExtraYield(getImprovementType(), eYield);
+				}
 			}
 		}
 #endif
@@ -10579,9 +10582,12 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 		// Extra yield for improvements
 		if (getImprovementType() != NO_IMPROVEMENT)
 		{
-			if (pWorkingCity != NULL)
+			if (!IsImprovementPillaged())
 			{
-				iYield += pWorkingCity->GetImprovementExtraYield(getImprovementType(), eYield);
+				if (pWorkingCity != NULL)
+				{
+					iYield += pWorkingCity->GetImprovementExtraYield(getImprovementType(), eYield);
+				}
 			}
 		}
 #endif
