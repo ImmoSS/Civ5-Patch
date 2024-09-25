@@ -633,7 +633,7 @@ local function CreateNewFlag( playerID, unitID, isSelected, isHiddenByFog, isInv
 		flag.m_IsCivilian = isCivilian
 		flag.m_IsGarrisoned = unit:IsGarrisoned()
 		flag.m_IsHiddenByFog = isHiddenByFog
-		flag.m_IsInvisibleToActiveTeam = isInvisibleToActiveTeam
+		flag.m_IsInvisibleToActiveTeam = (isInvisibleToActiveTeam or (flag.m_IsAirCraft and Players[playerID]:GetTeam() ~= Game.GetActiveTeam()))
 		flag.m_Plot = nil
 		flag.m_IsSelected = isSelected
 		flag.m_IsTrade = unit.IsTrade and unit:IsTrade()
@@ -803,7 +803,7 @@ function( playerID, unitID, isVisible, checkFlag )--, blendTime )
 		local flag = g_UnitFlags[ playerID ][ unitID ]
 		local unit = Players[ playerID ]:GetUnitByID( unitID )
 		if flag then
-			flag.m_IsInvisibleToActiveTeam = unit:IsInvisible( Game.GetActiveTeam(), true )
+			flag.m_IsInvisibleToActiveTeam = (unit:IsInvisible( Game.GetActiveTeam(), true ) or (flag.m_IsAirCraft and Players[playerID]:GetTeam() ~= Game.GetActiveTeam()))
 			flag.Anchor:SetHide( unit:IsInvisible( Game.GetActiveTeam(), true ) or flag.m_IsHiddenByFog )
 		end
 	end
