@@ -1944,7 +1944,7 @@ bool CvGame::hasTurnTimerExpired(PlayerTypes playerID)
 				CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
 				if (kPlayer.isAlive() && kPlayer.isHuman() && !kPlayer.isConnected())
 				{
-					ePausePlayer = kPlayer.GetID();
+					// ePausePlayer = kPlayer.GetID();
 					break;
 				}
 			}

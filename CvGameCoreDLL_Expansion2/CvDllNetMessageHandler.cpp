@@ -1091,7 +1091,7 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 		if (GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
 		{
 #ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
-			if (!isAnyDisconnected)
+			// if (!isAnyDisconnected)
 			{
 #endif
 #ifdef REPLAY_EVENTS
@@ -1146,7 +1146,7 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 		if(GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
 		{
 #ifdef AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL
-			if (!isAnyDisconnected)
+			// if (!isAnyDisconnected)
 			{
 #endif
 			if(!GC.getGame().m_bIsPaused)
