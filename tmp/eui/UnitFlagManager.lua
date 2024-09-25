@@ -697,6 +697,15 @@ end--CreateNewFlag
 --==========================================================
 local function DestroyFlag( flag )
 	-- DebugFlag( flag, "DestroyFlag" ) end
+	local unit = flag.m_Unit
+	if flag.m_TransportUnit then
+		local Carrier = g_UnitFlags[ flag.m_TransportUnit:GetOwner() ][ flag.m_TransportUnit:GetID() ]
+		if Carrier then
+			local cargo = Carrier.m_Unit:GetCargo()
+			Carrier.CargoBG:SetHide( cargo < 1 )
+			Carrier.Cargo:SetText( cargo )
+		end
+	end
 	flag.Anchor:ChangeParent( g_ScrapControls )
 	table_insert( g_spareNewUnitFlags, flag )
 	g_UnitFlags[ flag.m_PlayerID ][ flag.m_UnitID ] = nil
