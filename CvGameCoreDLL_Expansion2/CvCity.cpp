@@ -8177,6 +8177,7 @@ int CvCity::getCityAttackRangeModifier() const
 					}
 				}
 #endif
+				pBelief = NO_BELIEF;
 				for (int jJ = iI + 1; jJ < pReligion->m_Beliefs.GetNumBeliefs(); jJ++)
 				{
 					const BeliefTypes eBelief = pReligion->m_Beliefs.GetBelief(jJ);
