@@ -968,7 +968,8 @@ local function RefreshCityBannersNow()
 			instance.CityIsBlockaded:SetHide( not city:IsBlockaded() )
 
 			-- Garrisoned ?
-			instance.GarrisonFrame:SetHide( not ( plot:IsVisible( g_activeTeamID, true ) and city:GetGarrisonedUnit() ) )
+			instance.GarrisonFrame:SetHide( true )
+			-- instance.GarrisonFrame:SetHide( not ( plot:IsVisible( g_activeTeamID, true ) and city:GetGarrisonedUnit() ) )
 
 			instance.CityBannerBackground:SetColor( backgroundColor )
 			instance.CityBannerRightBackground:SetColor( backgroundColor )

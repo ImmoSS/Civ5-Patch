@@ -530,7 +530,8 @@ end
 local function HideGarrisonFrame( instance, isHide )
 	-- Only the active team has a Garrison ring
 	if instance and instance[1] then
-		instance.GarrisonFrame:SetHide( isHide )
+		instance.GarrisonFrame:SetHide( true )
+		-- instance.GarrisonFrame:SetHide( isHide )
 	end
 end
 
@@ -942,7 +943,8 @@ local function RefreshCityBannersNow()
 			instance.CityIsBlockaded:SetHide( not city:IsBlockaded() )
 
 			-- Garrisoned ?
-			instance.GarrisonFrame:SetHide( not ( plot:IsVisible( g_activeTeamID, true ) and city:GetGarrisonedUnit() ) )
+			instance.GarrisonFrame:SetHide( true )
+			-- instance.GarrisonFrame:SetHide( not ( plot:IsVisible( g_activeTeamID, true ) and city:GetGarrisonedUnit() ) )
 
 			instance.CityBannerBackground:SetColor( backgroundColor )
 			instance.CityBannerRightBackground:SetColor( backgroundColor )
