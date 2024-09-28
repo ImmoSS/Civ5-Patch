@@ -667,7 +667,7 @@ local function CreateNewFlag( playerID, unitID, isSelected, isHiddenByFog, isInv
 
 		---------------------------------------------------------
 		-- update all other info
-		flag.Anchor:SetHide( isHiddenByFog or isInvisibleToActiveTeam )
+		flag.Anchor:SetHide( isHiddenByFog or isInvisibleToActiveTeam or (flag.m_IsAirCraft and Players[playerID]:GetTeam() ~= Game.GetActiveTeam()) )
 		if unit:CanMove() then
 			flag.IsOutOfAttacks:SetHide(g_activeTeamID ~= teamID or not unit:IsOutOfAttacks())
 		else
