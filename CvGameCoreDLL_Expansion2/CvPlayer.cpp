@@ -12290,21 +12290,20 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 		if (pEntry && pEntry->IsPantheonBelief())
 		{
 			pBelief = eBelief;
-			break;
-		}
-	}
-	if (!m_bHasUsedGoddessLove && pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_LOVE", true))
-	{
-		m_bHasUsedGoddessLove = true;
+			if (!m_bHasUsedGoddessLove && pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_LOVE", true))
+			{
+				m_bHasUsedGoddessLove = true;
 
 #ifdef DUEL_GODDESS_LOVE_CHANGE
-		if (!(GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF")))
-		{
-			addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"));
-		}
+				if (!(GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF")))
+				{
+					addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"));
+				}
 #else
-		addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"));
+				addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORKER"));
 #endif
+		}
+	}
 	}
 #endif
 #ifdef GOD_SEA_FREE_WORK_BOAT
@@ -12316,21 +12315,20 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 		if (pEntry && pEntry->IsPantheonBelief())
 		{
 			pBelief = eBelief;
-			break;
-		}
-	}
-	if (!m_bHasUsedGodSea && pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GOD_SEA", true))
-	{
-		m_bHasUsedGodSea = true;
+			if (!m_bHasUsedGodSea && pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GOD_SEA", true))
+			{
+				m_bHasUsedGodSea = true;
 
 #ifdef DUEL_GOD_SEA_CHANGE
-		if (!(GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF")))
-		{
-			addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORK_BOAT"));
-		}
+				if (!(GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF")))
+				{
+					addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORK_BOAT"));
+				}
 #else
-		addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORKBOAT"));
+				addFreeUnit((UnitTypes)GC.getInfoTypeForString("UNIT_WORKBOAT"));
 #endif
+				}
+		}
 	}
 #endif
 
