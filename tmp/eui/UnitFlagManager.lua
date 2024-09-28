@@ -209,17 +209,22 @@ local function UpdatePlotFlags( plot )
 	local aflags = {}
 	local unit, flag, n
 	local city = plot:GetPlotCity()
+	local strToolTip = ""
 	if city then
 		local l, r, y = -43, 43, Game.GetActiveTeam() == city:GetTeam() and -39 or -36
 		local gflags = {}
 		for i = 0, GetPlotNumUnits( plot ) - 1 do
 			unit = GetPlotUnit( plot, i )
 			flag = g_UnitFlags[ unit:GetOwner() ][ unit:GetID() ]
-			if flag and flag.m_Plot then
+			if flag and flag.m_Plot and not unit:IsInvisible( Game.GetActiveTeam(), true ) then
 				if unit:IsCargo() then
 					table_insert( aflags, flag )
 				elseif flag.m_IsAirCraft then
 					table_insert( aflags, flag )
+					if (strToolTip ~= "") then
+						strToolTip = strToolTip .. "[NEWLINE]"
+					end
+					strToolTip = strToolTip .. Locale.ConvertTextKey(unit:GetNameKey())
 				elseif unit:IsGarrisoned() then
 					table_insert( gflags, flag )
 				else
@@ -303,7 +308,8 @@ local function UpdatePlotFlags( plot )
 			end
 			flag.Anchor:SetHide( not plot:IsVisible( g_activeTeamID, true ) )
 			flag.Button:SetText( n )
-			flag.Button:LocalizeAndSetToolTip( "TXT_KEY_STATIONED_AIRCRAFT", n )
+			flag.Button:SetToolTipString( strToolTip )
+			-- flag.Button:LocalizeAndSetToolTip( "TXT_KEY_STATIONED_AIRCRAFT", n )
 		elseif flag then
 			g_AirbaseFlags[ plotIndex ] = nil
 			flag.Anchor:ChangeParent( g_ScrapControls )
@@ -486,6 +492,7 @@ local function FinishMove( flag )
 				local cargo = transportUnit:GetCargo()
 				newCarrier.CargoBG:SetHide( cargo < 1 )
 				newCarrier.Cargo:SetText( cargo )
+				-- newCarrier.Button:SetToolTipString( strToolTip )
 			end
 		end
 	end
@@ -664,6 +671,7 @@ local function CreateNewFlag( playerID, unitID, isSelected, isHiddenByFog, isInv
 		local cargo = unit:GetCargo()
 		flag.CargoBG:SetHide( cargo < 1 )
 		flag.Cargo:SetText( cargo )
+		-- flag.Button:SetToolTipString( strToolTip )
 
 		---------------------------------------------------------
 		-- update all other info
@@ -704,6 +712,7 @@ local function DestroyFlag( flag )
 			local cargo = Carrier.m_Unit:GetCargo()
 			Carrier.CargoBG:SetHide( cargo < 1 )
 			Carrier.Cargo:SetText( cargo )
+			-- Carrier.Button:SetToolTipString( strToolTip )
 		end
 	end
 	flag.Anchor:ChangeParent( g_ScrapControls )
@@ -805,6 +814,7 @@ function( playerID, unitID, isVisible, checkFlag )--, blendTime )
 		if flag then
 			flag.m_IsInvisibleToActiveTeam = (unit:IsInvisible( Game.GetActiveTeam(), true ) or (flag.m_IsAirCraft and Players[playerID]:GetTeam() ~= Game.GetActiveTeam()))
 			flag.Anchor:SetHide( unit:IsInvisible( Game.GetActiveTeam(), true ) or flag.m_IsHiddenByFog )
+			UpdatePlotFlags(unit:GetPlot())
 		end
 	end
 end)
