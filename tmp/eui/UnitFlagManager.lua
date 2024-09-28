@@ -677,12 +677,15 @@ local function CreateNewFlag( playerID, unitID, isSelected, isHiddenByFog, isInv
 		-- update all other info
 		flag.Anchor:SetHide( isHiddenByFog or isInvisibleToActiveTeam or (flag.m_IsAirCraft and Players[playerID]:GetTeam() ~= Game.GetActiveTeam()) )
 		if unit:CanMove() then
-			flag.IsOutOfAttacks:SetHide(g_activeTeamID ~= teamID or not unit:IsOutOfAttacks())
+			flag.IsOutOfAttacks:SetHide(true)
+			-- flag.IsOutOfAttacks:SetHide(g_activeTeamID ~= teamID or not unit:IsOutOfAttacks())
 		else
 			flag.IsOutOfAttacks:SetHide(true)
 		end
-		flag.IsHealing:SetHide(g_activeTeamID ~= teamID or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
-		flag.IsNoCapture:SetHide(g_activeTeamID ~= teamID or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
+		-- flag.IsHealing:SetHide(g_activeTeamID ~= teamID or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
+		flag.IsHealing:SetHide(true)
+		-- flag.IsNoCapture:SetHide(g_activeTeamID ~= teamID or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
+		flag.IsNoCapture:SetHide(true)
 		flag.FlagShadow:SetAlpha( unit:CanMove() and 1 or 0.5 )
 		flag.Button:SetDisabled( g_activeTeamID ~= teamID )
 		flag.Button:SetConsumeMouseOver( g_activeTeamID == teamID )
@@ -862,7 +865,8 @@ function( playerID, unitID, damage )--, previousDamage )
 	local player = Players[ playerID ]
 	local unit = player and player:GetUnitByID( unitID )
 	if flag then
-		flag.IsHealing:SetHide(not isActiveTeam or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (damage > 0))
+		-- flag.IsHealing:SetHide(not isActiveTeam or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (damage > 0))
+		flag.IsHealing:SetHide(true)
 		UpdateFlagHealth( flag, damage )
 	else
 		-- DebugUnit( playerID, unitID, "flag not found for SerialEventUnitSetDamage" ) end
@@ -939,12 +943,15 @@ function( playerID, unitID, isDimmed )
 		local player = Players[ playerID ]
 		local unit = player and player:GetUnitByID( unitID )
 		if unit:CanMove() then
-			flag.IsOutOfAttacks:SetHide(not isActiveTeam or not unit:IsOutOfAttacks())
+			-- flag.IsOutOfAttacks:SetHide(not isActiveTeam or not unit:IsOutOfAttacks())
+			flag.IsOutOfAttacks:SetHide(true)
 		else
 			flag.IsOutOfAttacks:SetHide(true)
 		end
 		flag.IsHealing:SetHide(not isActiveTeam or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
+		flag.IsHealing:SetHide(true)
 		flag.IsNoCapture:SetHide(not isActiveTeam or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
+		flag.IsNoCapture:SetHide(true)
 		flag.FlagShadow:SetAlpha( (isDimmed and isActiveTeam) and 0.5 or 1.0 )
 	else
 		-- DebugUnit( playerID, unitID, "flag not found for UnitShouldDimFlag" ) end

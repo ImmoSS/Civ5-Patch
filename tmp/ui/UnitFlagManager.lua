@@ -212,12 +212,15 @@ local g_UnitFlagClass =
             o.m_Instance.HealthBarButton:SetConsumeMouseOver( true );
             
             if pUnit:CanMove() then
-                o.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
+                -- o.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
+                o.m_Instance.IsOutOfAttacks:SetHide(true)
             else
                 o.m_Instance.IsOutOfAttacks:SetHide(true)
             end
-            o.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31))or not (pUnit:GetDamage() > 0))
-            o.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
+            -- o.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31))or not (pUnit:GetDamage() > 0))
+            o.m_Instance.IsHealing:SetHide(true)
+            -- o.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
+            o.m_Instance.IsNoCapture:SetHide(true)
         else
             o.m_Instance.NormalButton:SetDisabled( true );
             o.m_Instance.NormalButton:SetConsumeMouseOver( false );
@@ -410,7 +413,8 @@ local g_UnitFlagClass =
             local pPlayer = Players[Game.GetActivePlayer()];
             local active_team = pPlayer:GetTeam();
             local team = self.m_Player:GetTeam();
-            self.m_Instance.IsHealing:SetHide(active_team ~= team or (pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)))
+            -- self.m_Instance.IsHealing:SetHide(active_team ~= team or (pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)))
+            self.m_Instance.IsHealing:SetHide(true)
             -- show the bar and the button anim
             self.m_Instance.HealthBarBG:SetHide( false );
             self.m_Instance.HealthBar:SetHide( false );
@@ -1477,12 +1481,15 @@ function OnDimEvent( playerID, unitID, bDim )
         	then
                 local pUnit = Players[ playerID ]:GetUnitByID( unitID )
                 if pUnit:CanMove() then
-                    flag.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
+                    -- flag.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
+                    flag.m_Instance.IsOutOfAttacks:SetHide(true)
                 else
                     flag.m_Instance.IsOutOfAttacks:SetHide(true)
                 end
-                flag.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)) or not (pUnit:GetDamage() > 0))
-                flag.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
+                -- flag.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)) or not (pUnit:GetDamage() > 0))
+                flag.m_Instance.IsHealing:SetHide(true)
+                -- flag.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
+                flag.m_Instance.IsNoCapture:SetHide(true)
                 --print( "  Unit dim: " .. tostring( playerID ) .. " " .. tostring( unitID ) .. " " .. iDim );
                 flag:SetDim( bDim  );
         	end
