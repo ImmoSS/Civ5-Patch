@@ -315,6 +315,14 @@ local function UpdatePlotFlags( plot )
 			flag.Anchor:ChangeParent( g_ScrapControls )
 			table_insert( g_spareAirbaseFlags, flag )
 		end
+	else
+		local plotIndex = plot:GetPlotIndex()
+		flag = g_AirbaseFlags[ plotIndex ]
+		if flag then
+			g_AirbaseFlags[ plotIndex ] = nil
+			flag.Anchor:ChangeParent( g_ScrapControls )
+			table_insert( g_spareAirbaseFlags, flag )
+		end
 	end
 	--
 	--local transportUnit = selectedUnit:GetTransportUnit()
@@ -483,6 +491,8 @@ local function FinishMove( flag )
 				local cargo = oldCarrier.m_Unit:GetCargo()
 				oldCarrier.CargoBG:SetHide( cargo < 1 )
 				oldCarrier.Cargo:SetText( cargo )
+				-- local plot = unit:GetPlot()
+				-- oldCarrier.Button:SetToolTipString( strToolTip )
 			end
 		end
 		flag.m_TransportUnit = transportUnit
