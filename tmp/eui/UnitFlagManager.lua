@@ -488,21 +488,46 @@ local function FinishMove( flag )
 		if flag.m_TransportUnit then
 			local oldCarrier = g_UnitFlags[ flag.m_TransportUnit:GetOwner() ][ flag.m_TransportUnit:GetID() ]
 			if oldCarrier then
-				local cargo = oldCarrier.m_Unit:GetCargo()
+				-- local cargo = oldCarrier.m_Unit:GetCargo()
+				local cargo = 0
+				local plot = unit:GetPlot()
+				local strToolTip = ""
+				for i = 0, GetPlotNumUnits( plot ) - 1 do
+					local loopUnit = GetPlotUnit( plot, i )
+					if loopUnit:GetTransportUnit() == flag.m_TransportUnit then
+						cargo = cargo + 1
+						if (strToolTip ~= "") then
+							strToolTip = strToolTip .. "[NEWLINE]"
+						end
+						strToolTip = strToolTip .. Locale.ConvertTextKey(loopUnit:GetNameKey())
+					end
+				end
 				oldCarrier.CargoBG:SetHide( cargo < 1 )
 				oldCarrier.Cargo:SetText( cargo )
-				-- local plot = unit:GetPlot()
-				-- oldCarrier.Button:SetToolTipString( strToolTip )
+				oldCarrier.Cargo:SetToolTipString( strToolTip )
 			end
 		end
 		flag.m_TransportUnit = transportUnit
 		if transportUnit then
 			local newCarrier = g_UnitFlags[ transportUnit:GetOwner() ][ transportUnit:GetID() ]
 			if newCarrier then
-				local cargo = transportUnit:GetCargo()
+				-- local cargo = transportUnit:GetCargo()
+				local cargo = 0
+				local plot = unit:GetPlot()
+				local strToolTip = ""
+				for i = 0, GetPlotNumUnits( plot ) - 1 do
+					local loopUnit = GetPlotUnit( plot, i )
+					if loopUnit:GetTransportUnit() == flag.m_TransportUnit then
+						cargo = cargo + 1
+						if (strToolTip ~= "") then
+							strToolTip = strToolTip .. "[NEWLINE]"
+						end
+						strToolTip = strToolTip .. Locale.ConvertTextKey(loopUnit:GetNameKey())
+					end
+				end
 				newCarrier.CargoBG:SetHide( cargo < 1 )
 				newCarrier.Cargo:SetText( cargo )
-				-- newCarrier.Button:SetToolTipString( strToolTip )
+				newCarrier.Cargo:SetToolTipString( strToolTip )
 			end
 		end
 	end
@@ -678,10 +703,23 @@ local function CreateNewFlag( playerID, unitID, isSelected, isHiddenByFog, isInv
 
 		---------------------------------------------------------
 		-- Can carry units
-		local cargo = unit:GetCargo()
+		-- local cargo = unit:GetCargo()
+		local cargo = 0
+		local plot = unit:GetPlot()
+		local strToolTip = ""
+		for i = 0, GetPlotNumUnits( plot ) - 1 do
+			local loopUnit = GetPlotUnit( plot, i )
+			if loopUnit:GetTransportUnit() == unit then
+				cargo = cargo + 1
+				if (strToolTip ~= "") then
+					strToolTip = strToolTip .. "[NEWLINE]"
+				end
+				strToolTip = strToolTip .. Locale.ConvertTextKey(loopUnit:GetNameKey())
+			end
+		end
 		flag.CargoBG:SetHide( cargo < 1 )
 		flag.Cargo:SetText( cargo )
-		-- flag.Button:SetToolTipString( strToolTip )
+		flag.Cargo:SetToolTipString( strToolTip )
 
 		---------------------------------------------------------
 		-- update all other info
@@ -722,10 +760,25 @@ local function DestroyFlag( flag )
 	if flag.m_TransportUnit then
 		local Carrier = g_UnitFlags[ flag.m_TransportUnit:GetOwner() ][ flag.m_TransportUnit:GetID() ]
 		if Carrier then
-			local cargo = Carrier.m_Unit:GetCargo()
+			-- local cargo = Carrier.m_Unit:GetCargo()
+			local cargo = 0
+			local plot = unit:GetPlot()
+			local strToolTip = ""
+			if plot then
+				for i = 0, GetPlotNumUnits( plot ) - 1 do
+					local loopUnit = GetPlotUnit( plot, i )
+					if loopUnit:GetTransportUnit() == flag.m_TransportUnit then
+						cargo = cargo + 1
+						if (strToolTip ~= "") then
+							strToolTip = strToolTip .. "[NEWLINE]"
+						end
+						strToolTip = strToolTip .. Locale.ConvertTextKey(loopUnit:GetNameKey())
+					end
+				end
+			end
 			Carrier.CargoBG:SetHide( cargo < 1 )
 			Carrier.Cargo:SetText( cargo )
-			-- Carrier.Button:SetToolTipString( strToolTip )
+			Carrier.Cargo:SetToolTipString( strToolTip )
 		end
 	end
 	flag.Anchor:ChangeParent( g_ScrapControls )
@@ -839,7 +892,9 @@ Events.SerialEventUnitDestroyed.Add(
 function( playerID, unitID )
 	-- DebugUnit( playerID, unitID, "SerialEventUnitDestroyed" ) end
 	local flag = g_UnitFlags[ playerID ][ unitID ]
+	print("test1")
 	if flag then
+		print("test2")
 		DestroyFlag( flag )
 	else
 		-- DebugUnit( playerID, unitID, "flag not found for SerialEventUnitDestroyed" ) end
