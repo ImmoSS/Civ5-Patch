@@ -1174,7 +1174,10 @@ bool CvNotifications::IsNotificationRedundant(Notification& notification)
 #ifdef FIX_REDUNDANT_CHOOSE_TECH_NOTIFICATION
 			if (m_aNotifications[iIndex].m_eNotificationType == NOTIFICATION_FREE_TECH)
 			{
-				return true;
+				if (!m_aNotifications[iIndex].m_bDismissed)
+				{
+					return true;
+				}
 			}
 #endif
 
