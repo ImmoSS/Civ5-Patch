@@ -1480,16 +1480,22 @@ function OnDimEvent( playerID, unitID, bDim )
         	if( active_team == team )
         	then
                 local pUnit = Players[ playerID ]:GetUnitByID( unitID )
-                if pUnit:CanMove() then
-                    -- flag.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
-                    flag.m_Instance.IsOutOfAttacks:SetHide(true)
+                if pUnit then
+                    if pUnit:CanMove() then
+                        -- flag.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
+                        flag.m_Instance.IsOutOfAttacks:SetHide(true)
+                    else
+                        flag.m_Instance.IsOutOfAttacks:SetHide(true)
+                    end
+                    -- flag.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)) or not (pUnit:GetDamage() > 0))
+                    flag.m_Instance.IsHealing:SetHide(true)
+                    -- flag.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
+                    flag.m_Instance.IsNoCapture:SetHide(true)
                 else
                     flag.m_Instance.IsOutOfAttacks:SetHide(true)
+                    flag.m_Instance.IsHealing:SetHide(true)
+                    flag.m_Instance.IsNoCapture:SetHide(true)
                 end
-                -- flag.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)) or not (pUnit:GetDamage() > 0))
-                flag.m_Instance.IsHealing:SetHide(true)
-                -- flag.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
-                flag.m_Instance.IsNoCapture:SetHide(true)
                 --print( "  Unit dim: " .. tostring( playerID ) .. " " .. tostring( unitID ) .. " " .. iDim );
                 flag:SetDim( bDim  );
         	end
