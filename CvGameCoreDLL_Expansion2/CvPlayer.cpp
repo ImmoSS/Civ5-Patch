@@ -6064,6 +6064,12 @@ void CvPlayer::chooseTech(int iDiscover, const char* strText, TechTypes iTechJus
 		CvNotifications* pNotifications = GetNotifications();
 		if(pNotifications)
 		{
+#ifdef FIX_REMOVE_EXPIRED_FREE_TECH_NOTFICATION
+			if (GetNumFreeTechs() == 0)
+			{
+				pNotifications->Update();
+			}
+#endif
 			pNotifications->Add(NOTIFICATION_TECH, strBuffer, strSummary, -1, -1, iDiscover, iTechJustDiscovered);
 		}
 	}
@@ -6072,6 +6078,12 @@ void CvPlayer::chooseTech(int iDiscover, const char* strText, TechTypes iTechJus
 		CvNotifications* pNotifications = GetNotifications();
 		if(pNotifications)
 		{
+#ifdef FIX_REMOVE_EXPIRED_FREE_TECH_NOTFICATION
+			if (GetNumFreeTechs() == 0)
+			{
+				pNotifications->Update();
+			}
+#endif
 			pNotifications->Add(NOTIFICATION_TECH, strText, strText, -1, -1, iDiscover, iTechJustDiscovered);
 		}
 	}

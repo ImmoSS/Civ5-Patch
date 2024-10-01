@@ -827,7 +827,9 @@
 ///
 #define FIX_RANGE_COMBAT_MOD
 /// if free tech notification is present, mark choose tech notification as redundant
-// #define FIX_REDUNDANT_CHOOSE_TECH_NOTIFICATION
+#define FIX_REDUNDANT_CHOOSE_TECH_NOTIFICATION
+///
+#define FIX_REMOVE_EXPIRED_FREE_TECH_NOTFICATION
 /*BUGS FIXES END*/
 
 
