@@ -2752,7 +2752,7 @@ void CvCityBuildings::SetNumRealBuildingTimed(BuildingTypes eIndex, int iNewValu
 			{
 				m_pCity->changeNumWorldWonders(iChangeNumRealBuilding);
 #ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
-				if (eOriginalOwner == m_pCity->getOwner())
+				if (eOriginalOwner == m_pCity->getOwner() && iChangeNumRealBuilding > 0)
 				{
 					GET_PLAYER(m_pCity->getOwner()).ChangeNumCreatedWorldWonders(iChangeNumRealBuilding);
 				}
