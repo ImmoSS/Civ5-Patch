@@ -1250,7 +1250,8 @@ Events.InterfaceModeChanged.Add(OnInterfaceModeChanged);
 ------------------------------------------------------------
 function OnStrategicViewStateChanged(bStrategicView, bCityBanners)
 	local bShowBanners = bCityBanners or not bStrategicView;
-	Controls.CityBanners:SetHide(not bShowBanners);
+	Controls.CityBanners:SetHide(false);
+	-- Controls.CityBanners:SetHide(not bShowBanners);
 	Controls.StrategicViewStrikeButtons:SetHide(bShowBanners);
 end
 Events.StrategicViewStateChanged.Add(OnStrategicViewStateChanged);

@@ -1390,7 +1390,8 @@ end)
 
 Events.StrategicViewStateChanged.Add( function(isStrategicView, showCityBanners)
 	local showBanners = showCityBanners or not isStrategicView
-	Controls.CityBanners:SetHide( not showBanners )
+	Controls.CityBanners:SetHide( false )
+	-- Controls.CityBanners:SetHide( not showBanners )
 	return Controls.StrategicViewStrikeButtons:SetHide( showBanners )
 end)
 
