@@ -5020,11 +5020,13 @@ void CvEspionageAI::StealTechnology()
 				{
 					pEspionage->m_aaPlayerScienceToStealList[uiDefendingPlayer].pop_back();
 				}
-#endif
 				if (pEspionage->m_aiNumTechsToStealList[uiDefendingPlayer] > 0)
 				{
 					pEspionage->m_aiNumTechsToStealList[uiDefendingPlayer]--;
 				}
+#else
+				pEspionage->m_aiNumTechsToStealList[uiDefendingPlayer]--;
+#endif
 			}
 			else
 			{
