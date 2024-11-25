@@ -1804,7 +1804,7 @@ g_toolTipHandler.GoldPerTurn = function()-- control )
 	tips:insert( "[ENDCOLOR]" )
 
 	if (g_activePlayer:CalculateGoldRate() + g_activePlayer:GetGold() <= -5) then
-		tips:insert( "[COLOR:255:60:60:255]" .. L("TXT_KEY_TP_UNIT_DISBAND_CHANCE", g_activePlayer:GetUnitDisbandChance()) .. "[/COLOR]" )
+		tips:insert( "[COLOR:255:60:60:255]" .. L("TXT_KEY_TP_UNIT_DISBAND_CHANCE", g_activePlayer:GetUnitDisbandChance()) .. "[ENDCOLOR]" )
 	end
 
 	-- show gold available for trade to the active player
