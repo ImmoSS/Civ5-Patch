@@ -837,8 +837,6 @@
 /*TURN AND TIMER CHANGES START*/
 /// Randomizes the order in which player turns activate in simultaneous mode. E.g. this makes it so that the host no longer wins wonder races against all other players if they finish a wonder the same turn as another player.
 #define NQM_GAME_RANDOMIZE_TURN_ACTIVATION_ORDER_IN_SIMULTANEOUS
-/// If multiple civs have are eligible to found the league, choose a random one instead of the one with the highest slot
-#define AUI_VOTING_RANDOMIZED_LEAGUE_FOUNDER
 ///
 #if defined (NQM_GAME_RANDOMIZE_TURN_ACTIVATION_ORDER_IN_SIMULTANEOUS) && defined (AUI_VOTING_RANDOMIZED_LEAGUE_FOUNDER)
 // #define AUI_VOTING_RANDOMIZED_LEAGUE_FOUNDER_OPTION
@@ -881,6 +879,8 @@
 
 
 /*LEAGUE CHANGES START*/
+/// If multiple civs have are eligible to found the league, choose a random one instead of the one with the highest slot
+#define AUI_VOTING_RANDOMIZED_LEAGUE_FOUNDER
 ///
 #define DIPLO_VICTORY_VOTING
 ///
