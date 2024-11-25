@@ -353,8 +353,11 @@
 #define SS_PART_PURCHASE_RESTRICTION
 ///
 #define SHARED_IDEOLOGY_TRADE_CHANGE
-/// Gunboat Diplomacy Grants 1 additional Delegate in the World Congress for every allied City-State (up to 6 additional Delegates)
+/// Gunboat Diplomacy Grants 1 additional Delegate in the World Congress for every allied City-State (up to MAX_AUTOCRACY_EXTRA_VOTES additional Delegates)
 #define AUTOCRACY_EXTRA_VOTES
+#ifdef AUTOCRACY_EXTRA_VOTES
+#define MAX_AUTOCRACY_EXTRA_VOTES 4
+#endif
 /// Treaty Organization One time increase of 45 Influence with City-States
 #define CS_INFLUENCE_BOOST
 /// Adopting all policies in the Liberty tree will decrease Unhappiness from each city by 1.

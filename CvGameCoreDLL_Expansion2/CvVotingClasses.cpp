@@ -3911,8 +3911,8 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 		int iPolicyVotes = 0;
 #endif
 #ifdef AUTOCRACY_EXTRA_VOTES
-		iPolicyVotes += std::min(6, iExtraAutoVotes);
-		iVotes += std::min(6, iExtraAutoVotes);
+		iPolicyVotes += std::min(MAX_AUTOCRACY_EXTRA_VOTES, iExtraAutoVotes);
+		iVotes += std::min(MAX_AUTOCRACY_EXTRA_VOTES, iExtraAutoVotes);
 #endif
 #ifdef PATRONAGE_FINISHER_REWORK
 		PolicyTypes ePolicy2 = (PolicyTypes)GC.getInfoTypeForString("POLICY_PATRONAGE_FINISHER", true /*bHideAssert*/);
