@@ -2524,7 +2524,11 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 
 	for(iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
+#ifdef FREE_BUILDINGS_COUNTS_AS_REAL_ON_CITY_ACQUIRE
+		paiNumRealBuilding[iI] = pOldCity->GetCityBuildings()->GetNumRealBuilding((BuildingTypes)iI) + pOldCity->GetCityBuildings()->GetNumFreeBuilding((BuildingTypes)iI);
+#else
 		paiNumRealBuilding[iI] = pOldCity->GetCityBuildings()->GetNumRealBuilding((BuildingTypes)iI);
+#endif
 		paiBuildingOriginalOwner[iI] = pOldCity->GetCityBuildings()->GetBuildingOriginalOwner((BuildingTypes)iI);
 		paiBuildingOriginalTime[iI] = pOldCity->GetCityBuildings()->GetBuildingOriginalTime((BuildingTypes)iI);
 #ifdef DESTROYING_MOST_EXPENSIVE_BUILDINGS_ON_CITY_ACQUIRE
