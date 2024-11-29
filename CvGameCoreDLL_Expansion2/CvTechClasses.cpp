@@ -1436,11 +1436,11 @@ int CvPlayerTechs::GetNumCitiesResearchCostModifier(int iNumCities) const
 	}
 	else if (iNumCities == 2)
 	{
-		return 8;
+		return 9;
 	}
 	else if (iNumCities == 3)
 	{
-		return 13;
+		return 14;
 	}
 	else
 	{
