@@ -829,8 +829,6 @@
 #define FIX_MAX_EFFECTIVE_CITIES
 ///
 #define FIX_RANGE_DEFENSE_MOD
-///
-#define FIX_RANGE_COMBAT_MOD
 /// if free tech notification is present, mark choose tech notification as redundant
 #define FIX_REDUNDANT_CHOOSE_TECH_NOTIFICATION
 ///
