@@ -1098,28 +1098,36 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 				GC.getGame().addReplayEvent(REPLAYEVENT_ResetTimer, ePlayer, vArgs);
 #endif
 #ifdef CS_ALLYING_WAR_RESCTRICTION
+#ifdef GAME_UPDATE_TURN_TIMER_ONCE_PER_TURN
 				float fGameTurnEnd = game.getPreviousTurnLen();
+#else
+				float fGameTurnEnd = static_cast<float>(game.getMaxTurnLen());
+#endif
 				float fTimeElapsed = game.getTimeElapsed();
-				for (int iI = 0; iI < MAX_PLAYERS; iI++)
+				for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
 				{
-					for (int jJ = 0; jJ < MAX_PLAYERS; jJ++)
+					for (int jJ = 0; jJ < MAX_MAJOR_CIVS; jJ++)
 					{
-						if (game.getGameTurn() == GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowing((PlayerTypes)jJ))
+						for (int kK = MAX_MAJOR_CIVS; kK < MAX_MINOR_CIVS; kK++)
 						{
-							if (fTimeElapsed < GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ))
+							PlayerTypes eLoopMinor = (PlayerTypes)kK;
+							if (game.getGameTurn() == GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowingMinor((PlayerTypes)jJ, eLoopMinor))
 							{
-								GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowing((PlayerTypes)jJ, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ) - fTimeElapsed);
+								if (fTimeElapsed < GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowingMinor((PlayerTypes)jJ, eLoopMinor))
+								{
+									GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowingMinor((PlayerTypes)jJ, eLoopMinor, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowingMinor((PlayerTypes)jJ, eLoopMinor) - fTimeElapsed);
+								}
+								else
+								{
+									GET_PLAYER((PlayerTypes)iI).setTurnCSWarAllowingMinor((PlayerTypes)jJ, eLoopMinor, -1);
+									GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowingMinor((PlayerTypes)jJ, eLoopMinor, 0.f);
+								}
 							}
-							else
+							if (game.getGameTurn() < GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowingMinor((PlayerTypes)jJ, eLoopMinor))
 							{
-								GET_PLAYER((PlayerTypes)iI).setTurnCSWarAllowing((PlayerTypes)jJ, -1);
-								GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowing((PlayerTypes)jJ, 0.f);
+								GET_PLAYER((PlayerTypes)iI).setTurnCSWarAllowingMinor((PlayerTypes)jJ, eLoopMinor, game.getGameTurn());
+								GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowingMinor((PlayerTypes)jJ, eLoopMinor, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowingMinor((PlayerTypes)jJ, eLoopMinor) + (fGameTurnEnd - fTimeElapsed));
 							}
-						}
-						if (game.getGameTurn() < GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowing((PlayerTypes)jJ))
-						{
-							GET_PLAYER((PlayerTypes)iI).setTurnCSWarAllowing((PlayerTypes)jJ, game.getGameTurn());
-							GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowing((PlayerTypes)jJ, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ) + (fGameTurnEnd - fTimeElapsed));
 						}
 					}
 				}

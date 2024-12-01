@@ -7912,22 +7912,30 @@ void CvGame::doTurn()
 	if (GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
 	{
 		CvGame& kGame = GC.getGame();
+#ifdef GAME_UPDATE_TURN_TIMER_ONCE_PER_TURN
 		float fGameTurnEnd = kGame.getPreviousTurnLen();
+#else
+		float gameTurnEnd = static_cast<float>(game.getMaxTurnLen());
+#endif
 		float fTimeElapsed = kGame.getTimeElapsed();
-		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
 		{
-			for (int jJ = 0; jJ < MAX_PLAYERS; jJ++)
+			for (int jJ = 0; jJ < MAX_MAJOR_CIVS; jJ++)
 			{
-				if (kGame.getGameTurn() < GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowing((PlayerTypes)jJ))
+				for (int kK = MAX_MAJOR_CIVS; kK < MAX_MINOR_CIVS; kK++)
 				{
-					GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowing((PlayerTypes)jJ, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ) + (fGameTurnEnd - fTimeElapsed));
-				}
-				if (kGame.getGameTurn() == GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowing((PlayerTypes)jJ))
-				{
-					if (fTimeElapsed < GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ))
+					PlayerTypes eMinor = (PlayerTypes)kK;
+					if (kGame.getGameTurn() < GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowingMinor((PlayerTypes)jJ, eMinor))
 					{
-						GET_PLAYER((PlayerTypes)iI).setTurnCSWarAllowing((PlayerTypes)jJ, kGame.getGameTurn() + 1);
-						GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowing((PlayerTypes)jJ, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowing((PlayerTypes)jJ) - (fGameTurnEnd - fTimeElapsed));
+						GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowingMinor((PlayerTypes)jJ, eMinor, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowingMinor((PlayerTypes)jJ, eMinor) + (fGameTurnEnd - fTimeElapsed));
+					}
+					if (kGame.getGameTurn() == GET_PLAYER((PlayerTypes)iI).getTurnCSWarAllowingMinor((PlayerTypes)jJ, eMinor))
+					{
+						if (fTimeElapsed < GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowingMinor((PlayerTypes)jJ, eMinor))
+						{
+							GET_PLAYER((PlayerTypes)iI).setTurnCSWarAllowingMinor((PlayerTypes)jJ, eMinor, kGame.getGameTurn() + 1);
+							GET_PLAYER((PlayerTypes)iI).setTimeCSWarAllowingMinor((PlayerTypes)jJ, eMinor, GET_PLAYER((PlayerTypes)iI).getTimeCSWarAllowingMinor((PlayerTypes)jJ, eMinor) - (fGameTurnEnd - fTimeElapsed));
+						}
 					}
 				}
 			}

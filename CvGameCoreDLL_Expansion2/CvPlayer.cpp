@@ -589,8 +589,8 @@ CvPlayer::CvPlayer() :
 	, m_bProcessedAutoMoves(false)
 	, m_kPlayerAchievements(*this)
 #ifdef CS_ALLYING_WAR_RESCTRICTION
-	, m_paiTurnCSWarAllowing("CvPlayer::m_paiTurnCSWarAllowing", m_syncArchive)
-	, m_pafTimeCSWarAllowing("CvPlayer::m_pafTimeCSWarAllowing", m_syncArchive)
+	, m_ppaaiTurnCSWarAllowing("CvPlayer::m_ppaaiTurnCSWarAllowing", m_syncArchive)
+	, m_ppaafTimeCSWarAllowing("CvPlayer::m_ppaafTimeCSWarAllowing", m_syncArchive)
 #endif
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 	, m_bIsDelayedPolicy(false)
@@ -857,8 +857,8 @@ void CvPlayer::uninit()
 	m_pabGetsScienceFromPlayer.clear();
 
 #ifdef CS_ALLYING_WAR_RESCTRICTION
-	m_paiTurnCSWarAllowing.clear();
-	m_pafTimeCSWarAllowing.clear();
+	m_ppaaiTurnCSWarAllowing.clear();
+	m_ppaafTimeCSWarAllowing.clear();
 #endif
 
 	m_pPlayerPolicies->Uninit();
@@ -1498,11 +1498,29 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_pabGetsScienceFromPlayer.resize(MAX_CIV_PLAYERS, false);
 
 #ifdef CS_ALLYING_WAR_RESCTRICTION
-		m_paiTurnCSWarAllowing.clear();
-		m_paiTurnCSWarAllowing.resize(MAX_CIV_PLAYERS, -1);
+		Firaxis::Array< int, MAX_MINOR_CIVS > turn;
+		for (unsigned int j = 0; j < MAX_MINOR_CIVS; ++j)
+		{
+			turn[j] = -1;
+		}
+		m_ppaaiTurnCSWarAllowing.clear();
+		m_ppaaiTurnCSWarAllowing.resize(MAX_MAJOR_CIVS);
+		for (unsigned int i = 0; i < m_ppaaiTurnCSWarAllowing.size(); ++i)
+		{
+			m_ppaaiTurnCSWarAllowing.setAt(i, turn);
+		}
 
-		m_pafTimeCSWarAllowing.clear();
-		m_pafTimeCSWarAllowing.resize(MAX_CIV_PLAYERS, 0.f);
+		Firaxis::Array< float, MAX_MINOR_CIVS > time;
+		for (unsigned int j = 0; j < MAX_MINOR_CIVS; ++j)
+		{
+			time[j] = 0.f;
+		}
+		m_ppaafTimeCSWarAllowing.clear();
+		m_ppaafTimeCSWarAllowing.resize(MAX_MAJOR_CIVS);
+		for (unsigned int i = 0; i < m_ppaafTimeCSWarAllowing.size(); ++i)
+		{
+			m_ppaafTimeCSWarAllowing.setAt(i, time);
+		}
 #endif
 
 		m_pEconomicAI->Init(GC.GetGameEconomicAIStrategies(), this);
@@ -26791,19 +26809,38 @@ void CvPlayer::Read(FDataStream& kStream)
 
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= 1008)
+	if (uiVersion >= 1009)
 	{
 # endif
-		kStream >> m_paiTurnCSWarAllowing;
-		kStream >> m_pafTimeCSWarAllowing;
+		kStream >> m_ppaaiTurnCSWarAllowing;
+		kStream >> m_ppaafTimeCSWarAllowing;
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
 	else
 	{
-		m_paiTurnCSWarAllowing.clear();
-		m_paiTurnCSWarAllowing.resize(MAX_PLAYERS, -1);
-		m_pafTimeCSWarAllowing.clear();
-		m_pafTimeCSWarAllowing.resize(MAX_PLAYERS, 0.f);
+		Firaxis::Array< int, MAX_MINOR_CIVS > turn;
+		for (unsigned int j = 0; j < MAX_MINOR_CIVS; ++j)
+		{
+			turn[j] = -1;
+		}
+		m_ppaaiTurnCSWarAllowing.clear();
+		m_ppaaiTurnCSWarAllowing.resize(MAX_MAJOR_CIVS);
+		for (unsigned int i = 0; i < m_ppaaiTurnCSWarAllowing.size(); ++i)
+		{
+			m_ppaaiTurnCSWarAllowing.setAt(i, turn);
+		}
+
+		Firaxis::Array< float, MAX_MINOR_CIVS > time;
+		for (unsigned int j = 0; j < MAX_MINOR_CIVS; ++j)
+		{
+			time[j] = 0.f;
+		}
+		m_ppaafTimeCSWarAllowing.clear();
+		m_ppaafTimeCSWarAllowing.resize(MAX_MAJOR_CIVS);
+		for (unsigned int i = 0; i < m_ppaafTimeCSWarAllowing.size(); ++i)
+		{
+			m_ppaafTimeCSWarAllowing.setAt(i, time);
+		}
 	}
 # endif
 #endif
@@ -27455,8 +27492,8 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_pabGetsScienceFromPlayer;
 
 #ifdef CS_ALLYING_WAR_RESCTRICTION
-	kStream << m_paiTurnCSWarAllowing;
-	kStream << m_pafTimeCSWarAllowing;
+	kStream << m_ppaaiTurnCSWarAllowing;
+	kStream << m_ppaafTimeCSWarAllowing;
 #endif
 
 	m_pPlayerPolicies->Write(kStream);
@@ -28916,22 +28953,54 @@ bool CvPlayer::IsAllowedToTradeWith(PlayerTypes eOtherPlayer)
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 int CvPlayer::getTurnCSWarAllowing(PlayerTypes ePlayer)
 {
-	return m_paiTurnCSWarAllowing[ePlayer];
+	int iValue = -1;
+	for (int iI = 0; iI < MAX_MINOR_CIVS; iI++)
+	{
+		if (m_ppaaiTurnCSWarAllowing[ePlayer][iI] > iValue)
+		{
+			iValue = m_ppaaiTurnCSWarAllowing[ePlayer][iI];
+		}
+	}
+
+	return iValue;
 }
 
-void CvPlayer::setTurnCSWarAllowing(PlayerTypes ePlayer, int iValue)
+int CvPlayer::getTurnCSWarAllowingMinor(PlayerTypes ePlayer, PlayerTypes eMinor)
 {
-	m_paiTurnCSWarAllowing.setAt(ePlayer, iValue);
+	return m_ppaaiTurnCSWarAllowing[ePlayer][int(eMinor) - MAX_MAJOR_CIVS];
+}
+
+void CvPlayer::setTurnCSWarAllowingMinor(PlayerTypes ePlayer, PlayerTypes eMinor, int iValue)
+{
+	Firaxis::Array<int, MAX_MINOR_CIVS> turn = m_ppaaiTurnCSWarAllowing[ePlayer];
+	turn[int(eMinor) - MAX_MAJOR_CIVS] = iValue;
+	m_ppaaiTurnCSWarAllowing.setAt(ePlayer, turn);
 }
 
 float CvPlayer::getTimeCSWarAllowing(PlayerTypes ePlayer)
 {
-	return m_pafTimeCSWarAllowing[ePlayer];
+	float fValue = 0.f;
+	for (int iI = 0; iI < MAX_MINOR_CIVS; iI++)
+	{
+		if (m_ppaafTimeCSWarAllowing[ePlayer][iI] > fValue)
+		{
+			fValue = m_ppaafTimeCSWarAllowing[ePlayer][iI];
+		}
+	}
+
+	return fValue;
 }
 
-void CvPlayer::setTimeCSWarAllowing(PlayerTypes ePlayer, float fValue)
+float CvPlayer::getTimeCSWarAllowingMinor(PlayerTypes ePlayer, PlayerTypes eMinor)
 {
-	m_pafTimeCSWarAllowing.setAt(ePlayer, fValue);
+	return m_ppaafTimeCSWarAllowing[ePlayer][int(eMinor) - MAX_MAJOR_CIVS];
+}
+
+void CvPlayer::setTimeCSWarAllowingMinor(PlayerTypes ePlayer, PlayerTypes eMinor, float fValue)
+{
+	Firaxis::Array<float, MAX_MINOR_CIVS> time = m_ppaafTimeCSWarAllowing[ePlayer];
+	time[int(eMinor) - MAX_MAJOR_CIVS] = fValue;
+	m_ppaafTimeCSWarAllowing.setAt(ePlayer, time);
 }
 #endif
 

@@ -2360,17 +2360,21 @@ bool CvPlayerEspionage::AttemptCoup(uint uiSpyIndex)
 				if (GET_PLAYER(ePreviousAlly).isHuman() && GET_PLAYER(m_pPlayer->GetID()).isHuman() && GET_PLAYER(ePreviousAlly).getTeam() != GET_PLAYER(m_pPlayer->GetID()).getTeam())
 				{
 					CvGame& kGame = GC.getGame();
+#ifdef GAME_UPDATE_TURN_TIMER_ONCE_PER_TURN
 					float fGameTurnEnd = kGame.getPreviousTurnLen();
+#else
+					float fGameTurnEnd = static_cast<float>(kGame.getMaxTurnLen());
+#endif
 					float fTimeElapsed = kGame.getTimeElapsed();
 					if (fGameTurnEnd - fTimeElapsed > CS_ALLYING_WAR_RESCTRICTION_TIMER)
 					{
-						GET_PLAYER(m_pPlayer->GetID()).setTurnCSWarAllowing(ePreviousAlly, kGame.getGameTurn());
-						GET_PLAYER(m_pPlayer->GetID()).setTimeCSWarAllowing(ePreviousAlly, fTimeElapsed + CS_ALLYING_WAR_RESCTRICTION_TIMER);
+						GET_PLAYER(m_pPlayer->GetID()).setTurnCSWarAllowingMinor(ePreviousAlly, eCityOwner, kGame.getGameTurn());
+						GET_PLAYER(m_pPlayer->GetID()).setTimeCSWarAllowingMinor(ePreviousAlly, eCityOwner, fTimeElapsed + CS_ALLYING_WAR_RESCTRICTION_TIMER);
 					}
 					else
 					{
-						GET_PLAYER(m_pPlayer->GetID()).setTurnCSWarAllowing(ePreviousAlly, kGame.getGameTurn() + 1);
-						GET_PLAYER(m_pPlayer->GetID()).setTimeCSWarAllowing(ePreviousAlly, CS_ALLYING_WAR_RESCTRICTION_TIMER - (fGameTurnEnd - fTimeElapsed));
+						GET_PLAYER(m_pPlayer->GetID()).setTurnCSWarAllowingMinor(ePreviousAlly, eCityOwner, kGame.getGameTurn() + 1);
+						GET_PLAYER(m_pPlayer->GetID()).setTimeCSWarAllowingMinor(ePreviousAlly, eCityOwner, CS_ALLYING_WAR_RESCTRICTION_TIMER - (fGameTurnEnd - fTimeElapsed));
 					}
 				}
 			}
@@ -2378,8 +2382,8 @@ bool CvPlayerEspionage::AttemptCoup(uint uiSpyIndex)
 			{
 				for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
 				{
-					GET_PLAYER(ePreviousAlly).setTurnCSWarAllowing((PlayerTypes)iI, -1);
-					GET_PLAYER(ePreviousAlly).setTimeCSWarAllowing((PlayerTypes)iI, 0.f);
+					GET_PLAYER(ePreviousAlly).setTurnCSWarAllowingMinor((PlayerTypes)iI, eCityOwner, -1);
+					GET_PLAYER(ePreviousAlly).setTimeCSWarAllowingMinor((PlayerTypes)iI, eCityOwner, 0.f);
 				}
 			}
 		}

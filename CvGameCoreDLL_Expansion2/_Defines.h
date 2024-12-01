@@ -251,7 +251,7 @@
 
 
 /*UNITS CHANGES START*/
-/// Gifted units can't attack if they already attacked this turn
+/// Gifted units can't attack if they have already attacked this turn
 #define GIFTED_UNITS_ATTACK
 /// Can nuke only if Mobile Tactics researched
 #define MOBILE_TACTICS_NUKING
@@ -1022,7 +1022,8 @@
 // 1006: v10.0g (adds PENALTY_FOR_DELAYING_POLICIES)
 // 1007: v10.2  (adds third bunch of ENHANCED_GRAPHS)
 // 1008: v10.2b (adds third bunch of CS_ALLYING_WAR_RESCTRICTION, AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL)
-# define BUMP_SAVE_VERSION_PLAYER 1008
+// 1009: v10.4a (separating CS_ALLYING_WAR_RESCTRICTION for different minors)
+# define BUMP_SAVE_VERSION_PLAYER 1009
 // 1000: v7.0   (initial)
 # define BUMP_SAVE_VERSION_POLICIES 1000
 // 1000: v7.0   (initial)

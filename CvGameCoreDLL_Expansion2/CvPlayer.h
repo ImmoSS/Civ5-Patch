@@ -1688,9 +1688,11 @@ public:
 
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 	int getTurnCSWarAllowing(PlayerTypes ePlayer);
-	void setTurnCSWarAllowing(PlayerTypes ePlayer, int iValue);
+	int getTurnCSWarAllowingMinor(PlayerTypes ePlayer, PlayerTypes eMinor);
+	void setTurnCSWarAllowingMinor(PlayerTypes ePlayer, PlayerTypes eMinor, int iValue);
 	float getTimeCSWarAllowing(PlayerTypes ePlayer);
-	void setTimeCSWarAllowing(PlayerTypes ePlayer, float fValue);
+	float getTimeCSWarAllowingMinor(PlayerTypes ePlayer, PlayerTypes eMinor);
+	void setTimeCSWarAllowingMinor(PlayerTypes ePlayer, PlayerTypes eMinor, float fValue);
 #endif
 
 #ifdef PENALTY_FOR_DELAYING_POLICIES
@@ -2438,8 +2440,8 @@ protected:
 	CvPlayerAchievements m_kPlayerAchievements;
 
 #ifdef CS_ALLYING_WAR_RESCTRICTION
-	FAutoVariable<std::vector<int>, CvPlayer> m_paiTurnCSWarAllowing;
-	FAutoVariable<std::vector<float>, CvPlayer> m_pafTimeCSWarAllowing;
+	FAutoVariable <std::vector< Firaxis::Array< int, MAX_MINOR_CIVS > >, CvPlayer> m_ppaaiTurnCSWarAllowing;
+	FAutoVariable <std::vector< Firaxis::Array< float, MAX_MINOR_CIVS > >, CvPlayer> m_ppaafTimeCSWarAllowing;
 #endif
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 	bool m_bIsDelayedPolicy;

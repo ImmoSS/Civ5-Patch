@@ -5945,17 +5945,21 @@ void CvMinorCivAI::SetAlly(PlayerTypes eNewAlly)
 				if (GET_PLAYER(eOldAlly).isHuman() && GET_PLAYER(eNewAlly).isHuman() && GET_PLAYER(eOldAlly).getTeam() != GET_PLAYER(eNewAlly).getTeam())
 				{
 					CvGame& kGame = GC.getGame();
+#ifdef GAME_UPDATE_TURN_TIMER_ONCE_PER_TURN
 					float fGameTurnEnd = kGame.getPreviousTurnLen();
+#else
+					float fGameTurnEnd = static_cast<float>(kGame.getMaxTurnLen());
+#endif
 					float fTimeElapsed = kGame.getTimeElapsed();
 					if (fGameTurnEnd - fTimeElapsed > CS_ALLYING_WAR_RESCTRICTION_TIMER)
 					{
-						GET_PLAYER(eNewAlly).setTurnCSWarAllowing(eOldAlly, kGame.getGameTurn());
-						GET_PLAYER(eNewAlly).setTimeCSWarAllowing(eOldAlly, fTimeElapsed + CS_ALLYING_WAR_RESCTRICTION_TIMER);
+						GET_PLAYER(eNewAlly).setTurnCSWarAllowingMinor(eOldAlly, GetPlayer()->GetID(), kGame.getGameTurn());
+						GET_PLAYER(eNewAlly).setTimeCSWarAllowingMinor(eOldAlly, GetPlayer()->GetID(), fTimeElapsed + CS_ALLYING_WAR_RESCTRICTION_TIMER);
 					}
 					else
 					{
-						GET_PLAYER(eNewAlly).setTurnCSWarAllowing(eOldAlly, kGame.getGameTurn() + 1);
-						GET_PLAYER(eNewAlly).setTimeCSWarAllowing(eOldAlly, CS_ALLYING_WAR_RESCTRICTION_TIMER - (fGameTurnEnd - fTimeElapsed));
+						GET_PLAYER(eNewAlly).setTurnCSWarAllowingMinor(eOldAlly, GetPlayer()->GetID(), kGame.getGameTurn() + 1);
+						GET_PLAYER(eNewAlly).setTimeCSWarAllowingMinor(eOldAlly, GetPlayer()->GetID(), CS_ALLYING_WAR_RESCTRICTION_TIMER - (fGameTurnEnd - fTimeElapsed));
 					}
 				}
 			}
@@ -5963,8 +5967,8 @@ void CvMinorCivAI::SetAlly(PlayerTypes eNewAlly)
 			{
 				for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
 				{
-					GET_PLAYER(eOldAlly).setTurnCSWarAllowing((PlayerTypes)iI, -1);
-					GET_PLAYER(eOldAlly).setTimeCSWarAllowing((PlayerTypes)iI, 0.f);
+					GET_PLAYER(eOldAlly).setTurnCSWarAllowingMinor((PlayerTypes)iI, GetPlayer()->GetID(), -1);
+					GET_PLAYER(eOldAlly).setTimeCSWarAllowingMinor((PlayerTypes)iI, GetPlayer()->GetID(), 0.f);
 				}
 			}
 		}
