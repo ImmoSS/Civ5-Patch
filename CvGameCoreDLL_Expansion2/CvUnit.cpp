@@ -14408,6 +14408,16 @@ void CvUnit::setHotKeyNumber(int iNewValue)
 void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool bCheckPlotVisible, bool bNoMove)
 {
 	VALIDATE_OBJECT
+#ifdef UPDATE_MINOR_BG_ICON_ON_UNIT_MOVE_OR_SET_DAMAGE
+	std::vector<bool> oldCanBully(MAX_MAJOR_CIVS * (MAX_MINOR_CIVS - MAX_MAJOR_CIVS));
+	for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+	{
+		for (int jJ = MAX_MAJOR_CIVS; jJ < MAX_MINOR_CIVS; jJ++)
+		{
+			oldCanBully[iI * (MAX_MINOR_CIVS - MAX_MAJOR_CIVS) + jJ - MAX_MAJOR_CIVS] = GET_PLAYER((PlayerTypes)jJ).GetMinorCivAI()->CanMajorBullyGold((PlayerTypes)iI);
+		}
+	}
+#endif
 	IDInfo* pUnitNode = 0;
 	CvCity* pOldCity = 0;
 	CvCity* pNewCity = 0;
@@ -15229,6 +15239,30 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 			}
 		}
 	}
+
+#ifdef UPDATE_MINOR_BG_ICON_ON_UNIT_MOVE_OR_SET_DAMAGE
+	for (int jJ = MAX_MAJOR_CIVS; jJ < MAX_MINOR_CIVS; jJ++)
+	{
+		for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+		{
+			if (oldCanBully[iI * (MAX_MINOR_CIVS - MAX_MAJOR_CIVS) + jJ - MAX_MAJOR_CIVS] != GET_PLAYER((PlayerTypes)jJ).GetMinorCivAI()->CanMajorBullyGold((PlayerTypes)iI))
+			{
+				PlayerTypes eLoopMinor = (PlayerTypes)jJ;
+				if (GET_PLAYER(eLoopMinor).isAlive())
+				{
+					if (GET_PLAYER(eLoopMinor).getCapitalCity())
+					{
+						if (GET_PLAYER(eLoopMinor).getCapitalCity()->plot())
+						{
+							GET_PLAYER(eLoopMinor).getCapitalCity()->plot()->updateFog();
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+#endif
 }
 
 //	---------------------------------------------------------------------------
@@ -15454,6 +15488,16 @@ void CvUnit::ShowDamageDeltaText(int iDelta, CvPlot* pkPlot, float fAdditionalTe
 int CvUnit::setDamage(int iNewValue, PlayerTypes ePlayer, float fAdditionalTextDelay, const CvString* pAppendText)
 {
 	VALIDATE_OBJECT
+#ifdef UPDATE_MINOR_BG_ICON_ON_UNIT_MOVE_OR_SET_DAMAGE
+	std::vector<bool> oldCanBully(MAX_MAJOR_CIVS * (MAX_MINOR_CIVS - MAX_MAJOR_CIVS));
+	for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+	{
+		for (int jJ = MAX_MAJOR_CIVS; jJ < MAX_MINOR_CIVS; jJ++)
+		{
+			oldCanBully[iI * (MAX_MINOR_CIVS - MAX_MAJOR_CIVS) + jJ - MAX_MAJOR_CIVS] = GET_PLAYER((PlayerTypes)jJ).GetMinorCivAI()->CanMajorBullyGold((PlayerTypes)iI);
+		}
+	}
+#endif
 	int iOldValue;
 
 	iOldValue = getDamage();
@@ -15538,6 +15582,30 @@ int CvUnit::setDamage(int iNewValue, PlayerTypes ePlayer, float fAdditionalTextD
 			GET_PLAYER(ePlayer).DoUnitKilledCombat(getOwner(), getUnitType());
 		}
 	}
+
+#ifdef UPDATE_MINOR_BG_ICON_ON_UNIT_MOVE_OR_SET_DAMAGE
+	for (int jJ = MAX_MAJOR_CIVS; jJ < MAX_MINOR_CIVS; jJ++)
+	{
+		for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+		{
+			if (oldCanBully[iI * (MAX_MINOR_CIVS - MAX_MAJOR_CIVS) + jJ - MAX_MAJOR_CIVS] != GET_PLAYER((PlayerTypes)jJ).GetMinorCivAI()->CanMajorBullyGold((PlayerTypes)iI))
+			{
+				PlayerTypes eLoopMinor = (PlayerTypes)jJ;
+				if (GET_PLAYER(eLoopMinor).isAlive())
+				{
+					if (GET_PLAYER(eLoopMinor).getCapitalCity())
+					{
+						if (GET_PLAYER(eLoopMinor).getCapitalCity()->plot())
+						{
+							GET_PLAYER(eLoopMinor).getCapitalCity()->plot()->updateFog();
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+#endif
 
 	return iDiff;
 }
