@@ -2,6 +2,7 @@
 -------------------------------------------------
 include( "IconSupport" );
 include( "InstanceManager" );
+local EUI_options = Modding.OpenUserData( "Enhanced User Interface Options", 1);
 local g_MilitaryManager = InstanceManager:new( "NewUnitFlag", "Anchor", Controls.MilitaryFlags );
 local g_CivilianManager = InstanceManager:new( "NewUnitFlag", "Anchor", Controls.CivilianFlags );
 local g_AirCraftManager = InstanceManager:new( "NewUnitFlag", "Anchor", Controls.AirCraftFlags );
@@ -211,16 +212,19 @@ local g_UnitFlagClass =
             o.m_Instance.HealthBarButton:SetDisabled( false );
             o.m_Instance.HealthBarButton:SetConsumeMouseOver( true );
             
-            if pUnit:CanMove() then
-                -- o.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
-                o.m_Instance.IsOutOfAttacks:SetHide(true)
+            if EUI_options.GetValue( "DB_bEnhancedUnitIcons" ) == 1 then
+                if pUnit:CanMove() then
+                    o.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
+                else
+                    o.m_Instance.IsOutOfAttacks:SetHide(true)
+                end
+                o.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31))or not (pUnit:GetDamage() > 0))
+                o.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
             else
                 o.m_Instance.IsOutOfAttacks:SetHide(true)
+                o.m_Instance.IsHealing:SetHide(true)
+                o.m_Instance.IsNoCapture:SetHide(true)
             end
-            -- o.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31))or not (pUnit:GetDamage() > 0))
-            o.m_Instance.IsHealing:SetHide(true)
-            -- o.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
-            o.m_Instance.IsNoCapture:SetHide(true)
         else
             o.m_Instance.NormalButton:SetDisabled( true );
             o.m_Instance.NormalButton:SetConsumeMouseOver( false );
@@ -413,8 +417,11 @@ local g_UnitFlagClass =
             local pPlayer = Players[Game.GetActivePlayer()];
             local active_team = pPlayer:GetTeam();
             local team = self.m_Player:GetTeam();
-            -- self.m_Instance.IsHealing:SetHide(active_team ~= team or (pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)))
-            self.m_Instance.IsHealing:SetHide(true)
+            if EUI_options.GetValue( "DB_bEnhancedUnitIcons" ) == 1 then
+                self.m_Instance.IsHealing:SetHide(active_team ~= team or (pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)))
+            else
+                self.m_Instance.IsHealing:SetHide(true)
+            end
             -- show the bar and the button anim
             self.m_Instance.HealthBarBG:SetHide( false );
             self.m_Instance.HealthBar:SetHide( false );
@@ -1332,6 +1339,40 @@ function OnUnitSetDamage( playerID, unitID, iDamage, iPreviousDamage )
     end
 end
 Events.SerialEventUnitSetDamage.Add( OnUnitSetDamage );
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+function OnOptionsChanged()
+    local i = 0;
+    local player = Players[i];
+    while player ~= nil 
+    do
+        if( player:IsAlive() ) then
+            if (player:GetTeam() == Players[Game.GetActivePlayer()]:GetTeam()) then
+                for pUnit in player:Units() do
+                    if pUnit and EUI_options.GetValue( "DB_bEnhancedUnitIcons" ) == 1 then
+                        local flag = g_MasterList[ i ][ pUnit:GetID() ];
+                        if pUnit:CanMove() then
+                            flag.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
+                        else
+                            flag.m_Instance.IsOutOfAttacks:SetHide(true)
+                        end
+                        flag.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)) or not (pUnit:GetDamage() > 0))
+                        flag.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
+                    else
+                        local flag = g_MasterList[ i ][ pUnit:GetID() ];
+                        flag.m_Instance.IsOutOfAttacks:SetHide(true)
+                        flag.m_Instance.IsHealing:SetHide(true)
+                        flag.m_Instance.IsNoCapture:SetHide(true)
+                    end
+                end
+            end
+        end
+
+        i = i + 1;
+        player = Players[i];
+    end
+end
+Events.GameOptionsChanged.Add( OnOptionsChanged );
 
 --------------------------------------------------------------------------------
 -- A unit has changed its name, update the tool tip string
@@ -1480,17 +1521,14 @@ function OnDimEvent( playerID, unitID, bDim )
         	if( active_team == team )
         	then
                 local pUnit = Players[ playerID ]:GetUnitByID( unitID )
-                if pUnit then
+                if pUnit and EUI_options.GetValue( "DB_bEnhancedUnitIcons" ) == 1 then
                     if pUnit:CanMove() then
-                        -- flag.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
-                        flag.m_Instance.IsOutOfAttacks:SetHide(true)
+                        flag.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
                     else
                         flag.m_Instance.IsOutOfAttacks:SetHide(true)
                     end
-                    -- flag.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)) or not (pUnit:GetDamage() > 0))
-                    flag.m_Instance.IsHealing:SetHide(true)
-                    -- flag.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
-                    flag.m_Instance.IsNoCapture:SetHide(true)
+                    flag.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)) or not (pUnit:GetDamage() > 0))
+                    flag.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
                 else
                     flag.m_Instance.IsOutOfAttacks:SetHide(true)
                     flag.m_Instance.IsHealing:SetHide(true)

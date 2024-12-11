@@ -6,6 +6,7 @@
 -- flag offsets vs UI precedence
 --==========================================================
 
+local EUI_options = Modding.OpenUserData( "Enhanced User Interface Options", 1);
 local math_max = math.max
 local math_min = math.min
 local math_ceil = math.ceil
@@ -724,16 +725,19 @@ local function CreateNewFlag( playerID, unitID, isSelected, isHiddenByFog, isInv
 		---------------------------------------------------------
 		-- update all other info
 		flag.Anchor:SetHide( isHiddenByFog or isInvisibleToActiveTeam or (flag.m_IsAirCraft and Players[playerID]:GetTeam() ~= Game.GetActiveTeam()) )
-		if unit:CanMove() then
-			flag.IsOutOfAttacks:SetHide(true)
-			-- flag.IsOutOfAttacks:SetHide(g_activeTeamID ~= teamID or not unit:IsOutOfAttacks())
+        if EUI_options.GetValue( "DB_bEnhancedUnitIcons" ) == 1 then
+			if unit:CanMove() then
+				flag.IsOutOfAttacks:SetHide(g_activeTeamID ~= teamID or not unit:IsOutOfAttacks())
+			else
+				flag.IsOutOfAttacks:SetHide(true)
+			end
+			flag.IsHealing:SetHide(g_activeTeamID ~= teamID or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
+			flag.IsNoCapture:SetHide(g_activeTeamID ~= teamID or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
 		else
 			flag.IsOutOfAttacks:SetHide(true)
+			flag.IsHealing:SetHide(true)
+			flag.IsNoCapture:SetHide(true)
 		end
-		-- flag.IsHealing:SetHide(g_activeTeamID ~= teamID or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
-		flag.IsHealing:SetHide(true)
-		-- flag.IsNoCapture:SetHide(g_activeTeamID ~= teamID or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
-		flag.IsNoCapture:SetHide(true)
 		flag.FlagShadow:SetAlpha( unit:CanMove() and 1 or 0.5 )
 		flag.Button:SetDisabled( g_activeTeamID ~= teamID )
 		flag.Button:SetConsumeMouseOver( g_activeTeamID == teamID )
@@ -928,9 +932,8 @@ function( playerID, unitID, damage )--, previousDamage )
 	local player = Players[ playerID ]
 	local unit = player and player:GetUnitByID( unitID )
 	if flag then
-		if unit then
-			-- flag.IsHealing:SetHide(not isActiveTeam or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (damage > 0))
-			flag.IsHealing:SetHide(true)
+		if unit and EUI_options.GetValue( "DB_bEnhancedUnitIcons" ) == 1 then
+			flag.IsHealing:SetHide(not isActiveTeam or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (damage > 0))
 		else
 			flag.IsHealing:SetHide(true)
 		end
@@ -938,6 +941,40 @@ function( playerID, unitID, damage )--, previousDamage )
 	else
 		-- DebugUnit( playerID, unitID, "flag not found for SerialEventUnitSetDamage" ) end
 	end
+end)
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+Events.GameOptionsChanged.Add(
+function ()
+    local i = 0;
+    local player = Players[i];
+    while player ~= nil 
+    do
+        if( player:IsAlive() ) then
+            if (player:GetTeam() == Players[Game.GetActivePlayer()]:GetTeam()) then
+                for pUnit in player:Units() do
+                    if pUnit and EUI_options.GetValue( "DB_bEnhancedUnitIcons" ) == 1 then
+                        local flag = g_UnitFlags[ i ][ pUnit:GetID() ];
+                        if pUnit:CanMove() then
+                            flag.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
+                        else
+                            flag.IsOutOfAttacks:SetHide(true)
+                        end
+                        flag.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)) or not (pUnit:GetDamage() > 0))
+                        flag.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
+                    else
+                        local flag = g_UnitFlags[ i ][ pUnit:GetID() ];
+                        flag.IsOutOfAttacks:SetHide(true)
+                        flag.IsHealing:SetHide(true)
+                        flag.IsNoCapture:SetHide(true)
+                    end
+                end
+            end
+        end
+
+        i = i + 1;
+        player = Players[i];
+    end
 end)
 
 --==========================================================
@@ -1009,17 +1046,14 @@ function( playerID, unitID, isDimmed )
 		local isActiveTeam = (active_team == team);
 		local player = Players[ playerID ]
 		local unit = player and player:GetUnitByID( unitID )
-		if unit then
+		if unit and EUI_options.GetValue( "DB_bEnhancedUnitIcons" ) == 1 then
 			if unit:CanMove() then
-				-- flag.IsOutOfAttacks:SetHide(not isActiveTeam or not unit:IsOutOfAttacks())
-				flag.IsOutOfAttacks:SetHide(true)
+				flag.IsOutOfAttacks:SetHide(not isActiveTeam or not unit:IsOutOfAttacks())
 			else
 				flag.IsOutOfAttacks:SetHide(true)
 			end
-			-- flag.IsHealing:SetHide(not isActiveTeam or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
-			flag.IsHealing:SetHide(true)
-			-- flag.IsNoCapture:SetHide(not isActiveTeam or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
-			flag.IsNoCapture:SetHide(true)
+			flag.IsHealing:SetHide(not isActiveTeam or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
+			flag.IsNoCapture:SetHide(not isActiveTeam or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
 		else
 			flag.IsOutOfAttacks:SetHide(true)
 			flag.IsHealing:SetHide(true)
