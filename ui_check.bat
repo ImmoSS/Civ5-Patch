@@ -60,7 +60,7 @@ copy /y "%cd%\%patchfolder%\tmp\ui\AnnexCityPopup.lua" "%cd%\%patchfolder%\UI\An
 
 REM -------------------------------------------------
 set text="-- destroy: check fix for need to update plot & cargo & airbase"
-FIND %text% "%cd%\UI_bc1\UnitFlagManager\UnitFlagManager.lua" > nul && (
+FIND %text% "%cd%\UI_bc1\UnitFlagManager\UnitFlagManager.lua" > nul 2>&1 && (
   copy /y "%cd%\%patchfolder%\tmp\eui\UnitFlagManager.xml" "%cd%\%patchfolder%\UI\UnitFlagManager.xml" > nul
   copy /y "%cd%\%patchfolder%\tmp\eui\UnitFlagManager.lua" "%cd%\%patchfolder%\UI\UnitFlagManager.lua" > nul
 ) || (
@@ -124,14 +124,14 @@ IF NOT EXIST "%cd%\UI_bc1\TechTree\TechPopup.lua" (
 )
 REM -------------------------------------------------
 set text="-- modified by bc1 from Civ V 1.0.3.276 code"
-FIND %text% "%cd%\UI_bc1\UnitPanel\UnitPanel.lua" > nul && (
+FIND %text% "%cd%\UI_bc1\UnitPanel\UnitPanel.lua" > nul 2>&1 && (
   copy /y "%cd%\%patchfolder%\tmp\eui\UnitPanel.lua" "%cd%\%patchfolder%\UI\UnitPanel.lua" > nul
 ) || (
   copy /y "%cd%\%patchfolder%\tmp\ui\UnitPanel.lua" "%cd%\%patchfolder%\UI\UnitPanel.lua" > nul
 )
 REM -------------------------------------------------
 set text="-- modified by bc1 from 1.0.3.144 brave new world code"
-FIND %text% "%cd%\UI_bc1\CityStatePopup\CityStateDiploPopup.lua" > nul && (
+FIND %text% "%cd%\UI_bc1\CityStatePopup\CityStateDiploPopup.lua" > nul 2>&1 && (
   copy /y "%cd%\%patchfolder%\tmp\eui\CityStateDiploPopup.lua" "%cd%\%patchfolder%\UI\CityStateDiploPopup.lua" > nul
   copy /y "%cd%\%patchfolder%\tmp\eui\CityStateDiploPopup.xml" "%cd%\%patchfolder%\UI\CityStateDiploPopup.xml" > nul
 ) || (
@@ -140,35 +140,35 @@ FIND %text% "%cd%\UI_bc1\CityStatePopup\CityStateDiploPopup.lua" > nul && (
 )
 REM -------------------------------------------------
 set text="-- coded by bc1 from 1.0.3.276 brave new world code"
-FIND %text% "%cd%\UI_bc1\CityView\CityView.lua" > nul && (
+FIND %text% "%cd%\UI_bc1\CityView\CityView.lua" > nul 2>&1 && (
   copy /y "%cd%\%patchfolder%\tmp\eui\CityView.lua" "%cd%\%patchfolder%\UI\CityView.lua" > nul
 ) || (
   copy /y "%cd%\%patchfolder%\tmp\ui\CityView.lua" "%cd%\%patchfolder%\UI\CityView.lua" > nul
 )
 REM -------------------------------------------------
 set text="-- coded by bc1 from Civ V 1.0.3.276 code"
-FIND %text% "%cd%\UI_bc1\TopPanel\TopPanel.lua" > nul && (
+FIND %text% "%cd%\UI_bc1\TopPanel\TopPanel.lua" > nul 2>&1 && (
   copy /y "%cd%\%patchfolder%\tmp\eui\TopPanel.lua" "%cd%\%patchfolder%\UI\TopPanel.lua" > nul
 ) || (
   copy /y "%cd%\%patchfolder%\tmp\ui\TopPanel.lua" "%cd%\%patchfolder%\UI\TopPanel.lua" > nul
 )
 REM -------------------------------------------------
 set text="Game.SelectionListGameNetMessage( GameMessageTypes.GAMEMESSAGE_DO_COMMAND, action.CommandType, action.CommandData, -1, 0, bAlt );"
-FIND %text% "%cd%\UI_bc1\Improvements\ConfirmCommandPopup.lua" > nul && (
+FIND %text% "%cd%\UI_bc1\Improvements\ConfirmCommandPopup.lua" > nul 2>&1 && (
   copy /y "%cd%\%patchfolder%\tmp\eui\ConfirmCommandPopup.lua" "%cd%\%patchfolder%\UI\ConfirmCommandPopup.lua" > nul
 ) || (
   copy /y "%cd%\%patchfolder%\tmp\ui\ConfirmCommandPopup.lua" "%cd%\%patchfolder%\UI\ConfirmCommandPopup.lua" > nul
 )
 REM -------------------------------------------------
 set text="-- coded by bc1 from Civ V 1.0.3.276 code"
-FIND %text% "%cd%\UI_bc1\TechTree\TechTree.lua" > nul && (
+FIND %text% "%cd%\UI_bc1\TechTree\TechTree.lua" > nul 2>&1 && (
   copy /y "%cd%\%patchfolder%\tmp\eui\TechTree.lua" "%cd%\%patchfolder%\UI\TechTree.lua" > nul
 ) || (
   copy /y "%cd%\%patchfolder%\tmp\ui\TechTree.lua" "%cd%\%patchfolder%\UI\TechTree.lua" > nul
 )
 REM -------------------------------------------------
 set text="-- modified by bc1 from 1.0.3.144 brave new world & civ BE code"
-FIND %text% "%cd%\UI_bc1\Core\CityStateStatusHelper.lua" > nul && (
+FIND %text% "%cd%\UI_bc1\Core\CityStateStatusHelper.lua" > nul 2>&1 && (
   copy /y "%cd%\%patchfolder%\tmp\eui\CityStateStatusHelper.lua" "%cd%\%patchfolder%\UI\CityStateStatusHelper.lua" > nul
 ) || (
   copy /y "%cd%\%patchfolder%\tmp\ui\CityStateStatusHelper.lua" "%cd%\%patchfolder%\UI\CityStateStatusHelper.lua" > nul
@@ -200,7 +200,7 @@ IF EXIST "%cd%\UI_bc1\Options\OptionsMenu.xml" (
 REM -------------------------------------------------
 set text="CityBannerProductionBox = function( city )"
 IF EXIST "%cd%\UI_bc1\CityBanners\CityBannerManager.lua" (
-  FIND %text% "%cd%\UI_bc1\CityBanners\CityBannerManager.lua" > nul && (
+  FIND %text% "%cd%\UI_bc1\CityBanners\CityBannerManager.lua" > nul 2>&1 && (
     copy /y "%cd%\%patchfolder%\tmp\eui\CityBannerManager_1.lua" "%cd%\%patchfolder%\UI\CityBannerManager.lua" > nul
     copy /y "%cd%\%patchfolder%\tmp\eui\CityBannerManager_1.xml" "%cd%\%patchfolder%\UI\CityBannerManager.xml" > nul
   ) || (
