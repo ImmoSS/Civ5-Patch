@@ -1649,7 +1649,7 @@ int CvBuildingEntry::GetYieldChange(int i) const
 		}
 		else if(i == YIELD_SCIENCE)
 		{
-			return m_piYieldChange ? (m_piYieldChange[i] - 1) : -1;
+			return m_piYieldChange ? (m_piYieldChange[i] - 1) : 2;
 		}
 		else
 		{
