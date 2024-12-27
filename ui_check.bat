@@ -177,7 +177,7 @@ REM -------------------------------------------------
 IF EXIST "%cd%\UI_bc1\NotificationPanel\NotificationPanel.lua" (
   copy /y "%cd%\%patchfolder%\tmp\eui\NotificationPanel.lua" "%cd%\%patchfolder%\UI\NotificationPanel.lua" > nul
 ) ELSE (
-  copy /y "%cd%\%patchfolder%\tmp\ui\NotificationPanel.lua" "%cd%\%patchfolder%\UI\NotificationPanel.lua"
+  copy /y "%cd%\%patchfolder%\tmp\ui\NotificationPanel.lua" "%cd%\%patchfolder%\UI\NotificationPanel.lua" > nul
 )
 REM -------------------------------------------------
 IF EXIST "%cd%\UI_bc1\NotificationPanel\NotificationPanel.xml" (
