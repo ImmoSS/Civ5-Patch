@@ -731,7 +731,17 @@ local function CreateNewFlag( playerID, unitID, isSelected, isHiddenByFog, isInv
 			else
 				flag.IsOutOfAttacks:SetHide(true)
 			end
-			flag.IsHealing:SetHide(g_activeTeamID ~= teamID or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
+            local bIsHealing = false
+            if not (unit:HasMoved() or ((not unit:isOutOfInterceptions()) && unit:GetDomainType() == DomainTypes.DOMAIN_AIR)) then
+                if unit:isAlwaysHeal() then
+                    bIsHealing = true
+                end
+            else
+                if unit:IsHurt() then
+                    bIsHealing = true
+                end
+            end
+            flag.IsHealing:SetHide(g_activeTeamID ~= teamID or not bIsHealing)
 			flag.IsNoCapture:SetHide(g_activeTeamID ~= teamID or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
 		else
 			flag.IsOutOfAttacks:SetHide(true)
@@ -933,7 +943,17 @@ function( playerID, unitID, damage )--, previousDamage )
 	local unit = player and player:GetUnitByID( unitID )
 	if flag then
 		if unit and EUI_options.GetValue( "DB_bEnhancedUnitIcons" ) == 1 then
-			flag.IsHealing:SetHide(not isActiveTeam or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (damage > 0))
+            local bIsHealing = false
+            if not (unit:HasMoved() or ((not unit:isOutOfInterceptions()) && unit:GetDomainType() == DomainTypes.DOMAIN_AIR)) then
+                if unit:isAlwaysHeal() then
+                    bIsHealing = true
+                end
+            else
+                if unit:IsHurt() then
+                    bIsHealing = true
+                end
+            end
+            flag.IsHealing:SetHide(not isActiveTeam or not bIsHealing)
 		else
 			flag.IsHealing:SetHide(true)
 		end
@@ -960,7 +980,17 @@ function ()
                         else
                             flag.IsOutOfAttacks:SetHide(true)
                         end
-                        flag.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)) or not (pUnit:GetDamage() > 0))
+			            local bIsHealing = false
+			            if not (unit:HasMoved() or ((not unit:isOutOfInterceptions()) && unit:GetDomainType() == DomainTypes.DOMAIN_AIR)) then
+			                if unit:isAlwaysHeal() then
+			                    bIsHealing = true
+			                end
+			            else
+			                if unit:IsHurt() then
+			                    bIsHealing = true
+			                end
+			            end
+			            flag.IsHealing:SetHide(not bIsHealing)
                         flag.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
                     else
                         local flag = g_UnitFlags[ i ][ pUnit:GetID() ];
@@ -1052,7 +1082,17 @@ function( playerID, unitID, isDimmed )
 			else
 				flag.IsOutOfAttacks:SetHide(true)
 			end
-			flag.IsHealing:SetHide(not isActiveTeam or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
+            local bIsHealing = false
+            if not (unit:HasMoved() or ((not unit:isOutOfInterceptions()) && unit:GetDomainType() == DomainTypes.DOMAIN_AIR)) then
+                if unit:isAlwaysHeal() then
+                    bIsHealing = true
+                end
+            else
+                if unit:IsHurt() then
+                    bIsHealing = true
+                end
+            end
+            flag.IsHealing:SetHide(not isActiveTeam or not bIsHealing)
 			flag.IsNoCapture:SetHide(not isActiveTeam or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
 		else
 			flag.IsOutOfAttacks:SetHide(true)
