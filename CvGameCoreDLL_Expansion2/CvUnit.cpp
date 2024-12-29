@@ -3191,8 +3191,16 @@ bool CvUnit::jumpToNearestValidPlot()
 					{
 						if (getDomainType() != DOMAIN_SEA || (plot()->isFriendlyCity(*this, true) && plot()->isCoastalLand()) || plot()->isWater())
 						{
+#ifdef FIX_JUMP_TO_NEAREST_CITY
+							if (!(plot()->getPlotCity() && plot()->getOwner() != getOwner()))
+							{
+								iBestValue = 0;
+								pBestPlot = plot();
+							}
+#else
 							iBestValue = 0;
 							pBestPlot = plot();
+#endif
 						}
 					}
 				}
@@ -3220,6 +3228,31 @@ bool CvUnit::jumpToNearestValidPlot()
 						{
 							if(getDomainType() != DOMAIN_SEA || (pLoopPlot->isFriendlyCity(*this, true) && pLoopPlot->isCoastalLand()) || pLoopPlot->isWater())
 							{
+#ifdef FIX_JUMP_TO_NEAREST_CITY
+								if (!(pLoopPlot->getPlotCity() && pLoopPlot->getOwner() != getOwner()))
+								{
+									if (pLoopPlot->isRevealed(getTeam()))
+									{
+										iValue = (plotDistance(getX(), getY(), pLoopPlot->getX(), pLoopPlot->getY()) * 2);
+
+										if (pNearestCity != NULL)
+										{
+											iValue += plotDistance(pLoopPlot->getX(), pLoopPlot->getY(), pNearestCity->getX(), pNearestCity->getY());
+										}
+
+										if (pLoopPlot->area() != area())
+										{
+											iValue *= 3;
+										}
+
+										if (iValue < iBestValue)
+										{
+											iBestValue = iValue;
+											pBestPlot = pLoopPlot;
+										}
+									}
+								}
+#else
 								if(pLoopPlot->isRevealed(getTeam()))
 								{
 									iValue = (plotDistance(getX(), getY(), pLoopPlot->getX(), pLoopPlot->getY()) * 2);
@@ -3240,6 +3273,7 @@ bool CvUnit::jumpToNearestValidPlot()
 										pBestPlot = pLoopPlot;
 									}
 								}
+#endif
 							}
 						}
 					}
