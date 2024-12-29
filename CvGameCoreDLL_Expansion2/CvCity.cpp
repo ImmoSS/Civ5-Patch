@@ -13684,10 +13684,47 @@ bool CvCity::IsCanPurchase(bool bTestPurchaseCost, bool bTestTrainable, UnitType
 					if (ePrereqTech == -1)
 					{
 						const CvReligion *pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligion, m_eOwner);
+#ifdef REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
+						if (pReligion == NULL)
+						{
+							return false;
+						}
+						CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
+						bool bIsFaithBuyingEnabled = false;
+
+						for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
+						{
+							if (pReligion->m_Beliefs.HasBelief((BeliefTypes)i))
+							{
+								if (pBeliefs->GetEntry(i)->IsReformationBelief())
+								{
+									if (pReligion->m_eFounder == getOwner())
+									{
+										if (pBeliefs->GetEntry(i)->IsFaithUnitPurchaseEra((EraTypes)0))
+										{
+											bIsFaithBuyingEnabled = true;
+										}
+									}
+								}
+								else
+								{
+									if (pBeliefs->GetEntry(i)->IsFaithUnitPurchaseEra((EraTypes)0))
+									{
+										bIsFaithBuyingEnabled = true;
+									}
+								}
+							}
+						}
+						if (!bIsFaithBuyingEnabled)
+						{
+							return false;
+						}
+#else
 						if (!pReligion->m_Beliefs.IsFaithBuyingEnabled((EraTypes)0)) // Ed?
 						{
 							return false;
 						}
+#endif
 						if(!canTrain(eUnitType, false, !bTestTrainable, false /*bIgnoreCost*/, true /*bWillPurchase*/))
 						{
 							return false;
