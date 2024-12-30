@@ -2485,12 +2485,12 @@ int CvLuaCity::lGetReligionBuildingClassHappiness(lua_State* L)
 						{
 							if (pReligion->m_eFounder == pkCity->getOwner())
 							{
-								iHappinessFromBuilding += pReligion->m_Beliefs.GetBuildingClassHappiness(eBuildingClass, iFollowers);
+								iHappinessFromBuilding += pBeliefs->GetEntry(i)->GetBuildingClassHappiness(eBuildingClass);
 							}
 						}
 						else
 						{
-							iHappinessFromBuilding += pReligion->m_Beliefs.GetBuildingClassHappiness(eBuildingClass, iFollowers);
+							iHappinessFromBuilding += pBeliefs->GetEntry(i)->GetBuildingClassHappiness(eBuildingClass);
 						}
 					}
 				}

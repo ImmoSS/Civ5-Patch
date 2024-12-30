@@ -9664,12 +9664,12 @@ int CvCity::GetLocalHappiness() const
 									{
 										if (pReligion->m_eFounder == getOwner())
 										{
-											iHappinessFromReligion += pReligion->m_Beliefs.GetBuildingClassHappiness(eBuildingClass, iFollowers);
+											iHappinessFromReligion += pBeliefs->GetEntry(i)->GetBuildingClassHappiness(eBuildingClass);
 										}
 									}
 									else
 									{
-										iHappinessFromReligion += pReligion->m_Beliefs.GetBuildingClassHappiness(eBuildingClass, iFollowers);
+										iHappinessFromReligion += pBeliefs->GetEntry(i)->GetBuildingClassHappiness(eBuildingClass);
 									}
 								}
 							}
