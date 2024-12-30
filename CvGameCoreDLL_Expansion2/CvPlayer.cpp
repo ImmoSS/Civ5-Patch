@@ -5099,6 +5099,7 @@ void CvPlayer::doTurnPostDiplomacy()
 	}
 #endif
 #ifdef PENALTY_FOR_DELAYING_POLICIES
+	int bIsDelaydPolicy = IsDelayedPolicy();
 	int iNumFreePoliciesFromProjectReward = GetNumFreePolicies() / 1024;
 	if (iNumFreePoliciesFromProjectReward > 0)
 	{
@@ -5110,12 +5111,12 @@ void CvPlayer::doTurnPostDiplomacy()
 		{
 			if (isHuman())
 			{
-				setIsDelayedPolicy(true);
+				bIsDelaydPolicy = true;
 			}
 		}
 		else
 		{
-			setIsDelayedPolicy(false);
+			bIsDelaydPolicy = false;
 		}
 	}
 	ChangeNumFreePolicies(iNumFreePoliciesFromProjectReward);
@@ -5451,6 +5452,9 @@ void CvPlayer::doTurnPostDiplomacy()
 #ifdef DO_TURN_CHANGE_ORDER
 	// Gold
 	GetTreasury()->DoGold();
+#endif
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+	setIsDelayedPolicy(bIsDelaydPolicy);
 #endif
 #ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
 	if (getNumCities() > 0)
