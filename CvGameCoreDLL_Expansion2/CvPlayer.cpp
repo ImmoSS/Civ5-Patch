@@ -3106,7 +3106,13 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 							}
 						}
 
+#ifdef FIX_MAX_EFFECTIVE_CITIES
+						pNewCity->SetIgnoreCityForHappiness(true);
+#endif
 						pNewCity->GetCityBuildings()->SetNumRealBuildingTimed(eBuilding, iNum, false, ((PlayerTypes)(paiBuildingOriginalOwner[*it])), paiBuildingOriginalTime[*it]);
+#ifdef FIX_MAX_EFFECTIVE_CITIES
+						pNewCity->SetIgnoreCityForHappiness(false);
+#endif
 
 						if (iNum > 0)
 						{
@@ -3192,8 +3198,14 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 							}
 						}
 
+#ifdef FIX_MAX_EFFECTIVE_CITIES
+						pNewCity->SetIgnoreCityForHappiness(true);
+#endif
 						pNewCity->GetCityBuildings()->SetNumRealBuildingTimed(eBuilding, iNum, false, ((PlayerTypes)(paiBuildingOriginalOwner[iI])), paiBuildingOriginalTime[iI]);
 
+#ifdef FIX_MAX_EFFECTIVE_CITIES
+						pNewCity->SetIgnoreCityForHappiness(false);
+#endif
 						if (iNum > 0)
 						{
 							if (pkBuildingInfo->GetGreatWorkCount() > 0)
