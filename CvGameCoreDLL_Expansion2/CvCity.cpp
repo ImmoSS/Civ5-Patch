@@ -8986,6 +8986,15 @@ void CvCity::ChangeNoOccupiedUnhappinessCount(int iChange)
 	VALIDATE_OBJECT
 	if(iChange != 0)
 		m_iNoOccupiedUnhappinessCount += iChange;
+#ifdef CHANGE_CITY_ORIGINAL_OWNER
+	if (iChange > 0 && GC.getGame().isNetworkMultiPlayer() && getOwner() != NO_PLAYER && getOriginalOwner() != NO_PLAYER)
+	{
+		if (!GET_PLAYER(getOriginalOwner()).isHuman() && !GET_PLAYER(getOriginalOwner()).isMinorCiv())
+		{
+			setOriginalOwner(getOwner());
+		}
+	}
+#endif
 }
 
 
