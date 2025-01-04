@@ -8972,6 +8972,9 @@ void CvGame::updateMoves()
 #ifdef DO_TURN_CHANGE_ORDER
 		m_kGameDeals.DoTurn();
 #endif
+#ifdef FIX_PROJECTS_NOTIFICATIONS_PERCENTAGE
+		GC.getGame().GetGameLeagues()->GetActiveLeague()->CheckProjectsProgress();
+#endif
 	}
 }
 

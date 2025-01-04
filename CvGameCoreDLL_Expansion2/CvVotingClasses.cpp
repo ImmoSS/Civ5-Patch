@@ -2367,7 +2367,9 @@ void CvLeague::DoTurn(LeagueSpecialSessionTypes eTriggeredSpecialSession)
 		CheckFinishSession();
 	}
 
+#ifndef FIX_PROJECTS_NOTIFICATIONS_PERCENTAGE
 	CheckProjectsProgress();
+#endif
 }
 
 LeagueTypes CvLeague::GetID() const
