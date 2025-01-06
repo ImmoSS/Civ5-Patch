@@ -643,11 +643,7 @@ function UpdateDisplay()
 					iPreferredIdeologyTenets = 0;
 				end
 				iPreferredIdeologyTenets = iPreferredIdeologyTenets + Game.GetNumFreePolicies(ePreferredIdeology);
-				local iLostPolicies = iCurrentIdeologyTenets - iPreferredIdeologyTenets
-				if iLostPolicies < 0 then
-					iLostPolicies = 0;
-				end
-				strChangeIdeologyTooltip = Locale.ConvertTextKey("TXT_KEY_POLICYSCREEN_CHANGE_IDEOLOGY_TT", strPreferredIdeology, (-1 * iUnhappiness), iLostPolicies);
+				strChangeIdeologyTooltip = Locale.ConvertTextKey("TXT_KEY_POLICYSCREEN_CHANGE_IDEOLOGY_TT", strPreferredIdeology, (-1 * iUnhappiness), iPreferredIdeologyTenets);
 
 				Controls.SwitchIdeologyButton:RegisterCallback(Mouse.eLClick, ChooseChangeIdeology );
 			else
