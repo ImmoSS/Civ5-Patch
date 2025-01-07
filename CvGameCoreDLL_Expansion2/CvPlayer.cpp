@@ -5139,12 +5139,7 @@ void CvPlayer::doTurnPostDiplomacy()
 	}
 #endif
 #ifdef PENALTY_FOR_DELAYING_POLICIES
-	int bIsDelaydPolicy = IsDelayedPolicy();
-	int iNumFreePoliciesFromProjectReward = GetNumFreePolicies() / 1024;
-	if (iNumFreePoliciesFromProjectReward > 0)
-	{
-		ChangeNumFreePolicies(-1024 * iNumFreePoliciesFromProjectReward);
-	}
+	bool bIsDelaydPolicy = IsDelayedPolicy();
 	if (kGame.isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
 	{
 		if (getJONSCulture() >= getNextPolicyCost() || GetNumFreePolicies() > 0)
@@ -5159,7 +5154,6 @@ void CvPlayer::doTurnPostDiplomacy()
 			bIsDelaydPolicy = false;
 		}
 	}
-	ChangeNumFreePolicies(iNumFreePoliciesFromProjectReward);
 #endif
 #ifdef DO_TURN_CHANGE_ORDER
 	// Do turn for all Cities
