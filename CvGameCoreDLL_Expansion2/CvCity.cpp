@@ -9617,7 +9617,7 @@ int CvCity::GetLocalHappiness() const
 				}
 			}
 #else
-			if (plot()->isFreshWater() || plot()->isCoastalLand())
+			if (plot()->isFreshWater())
 			{
 				iHappinessFromReligion += pReligion->m_Beliefs.GetRiverHappiness();
 				if (eSecondaryPantheon != NO_BELIEF)
