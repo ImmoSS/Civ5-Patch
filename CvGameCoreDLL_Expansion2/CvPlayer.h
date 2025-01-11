@@ -706,6 +706,11 @@ public:
 	void ChangeMaxExtraVotesFromMinors(int iChange);
 #endif
 
+#ifdef POLICY_EXTRA_VOTES
+	int GetPolicyExtraVotes() const;
+	void ChangePolicyExtraVotes(int iChange);
+#endif
+
 	int GetWoundedUnitDamageMod() const;
 	void SetWoundedUnitDamageMod(int iValue);
 	void ChangeWoundedUnitDamageMod(int iChange);
@@ -2021,6 +2026,9 @@ protected:
 	int m_iExtraLeagueVotes;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 	int m_iMaxExtraVotesFromMinors;
+#endif
+#ifdef POLICY_EXTRA_VOTES
+	int m_iPolicyExtraVotes;
 #endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;

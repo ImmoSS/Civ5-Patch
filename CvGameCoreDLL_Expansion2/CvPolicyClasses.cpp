@@ -202,6 +202,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 	m_iMaxExtraVotesFromMinors(0),
 #endif
+#ifdef POLICY_EXTRA_VOTES
+	m_iExtraVotes(0),
+#endif
 #ifdef POLICY_MINOR_INFLUENCE_BOOST
 	m_iMinorInfluenceBoost(0),
 #endif
@@ -421,6 +424,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 	m_iMaxExtraVotesFromMinors = kResults.GetInt("MaxExtraVotesFromMinors");
+#endif
+#ifdef POLICY_EXTRA_VOTES
+	m_iExtraVotes = kResults.GetInt("ExtraVotes");
 #endif
 #ifdef POLICY_MINOR_INFLUENCE_BOOST
 	m_iMinorInfluenceBoost = kResults.GetInt("MinorInfluenceBoost");
@@ -1817,6 +1823,14 @@ BuildingTypes CvPolicyEntry::GetFreeBuildingOnConquest() const
 int CvPolicyEntry::GetMaxExtraVotesFromMinors() const
 {
 	return m_iMaxExtraVotesFromMinors;
+}
+#endif
+
+#ifdef POLICY_EXTRA_VOTES
+///
+int CvPolicyEntry::GetExtraVotes() const
+{
+	return m_iExtraVotes;
 }
 #endif
 

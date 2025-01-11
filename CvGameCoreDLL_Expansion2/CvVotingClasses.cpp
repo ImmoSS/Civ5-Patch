@@ -3919,12 +3919,8 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 		iVotes += iExtraAutoVotes;
 #endif
 #ifdef PATRONAGE_FINISHER_REWORK
-		PolicyTypes ePolicy2 = (PolicyTypes)GC.getInfoTypeForString("POLICY_PATRONAGE_FINISHER", true /*bHideAssert*/);
-		if (GET_PLAYER(ePlayer).GetPlayerPolicies()->HasPolicy(ePolicy2))
-		{
-			iPolicyVotes += 2;
-			iVotes += 2;
-		}
+		iPolicyVotes += kPlayer.GetPolicyExtraVotes();
+		iVotes += kPlayer.GetPolicyExtraVotes();
 #endif
 
 		// Diplomats after Globalization tech
