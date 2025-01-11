@@ -208,6 +208,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_MINOR_INFLUENCE_BOOST
 	m_iMinorInfluenceBoost(0),
 #endif
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+	m_bTechFromCityConquer(false),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -430,6 +433,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_MINOR_INFLUENCE_BOOST
 	m_iMinorInfluenceBoost = kResults.GetInt("MinorInfluenceBoost");
+#endif
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+	m_bTechFromCityConquer = kResults.GetBool("TechFromCityConquer");
 #endif
 
 	//Arrays
@@ -1839,6 +1845,14 @@ int CvPolicyEntry::GetExtraVotes() const
 int CvPolicyEntry::GetMinorInfluenceBoost() const
 {
 	return m_iMinorInfluenceBoost;
+}
+#endif
+
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+///
+bool CvPolicyEntry::IsTechFromCityConquer() const
+{
+	return m_bTechFromCityConquer;
 }
 #endif
 

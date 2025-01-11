@@ -299,6 +299,9 @@ CvPlayer::CvPlayer() :
 #ifdef POLICY_EXTRA_VOTES
 	, m_iPolicyExtraVotes(0)
 #endif
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+	, m_iPolicyTechFromCityConquer(0)
+#endif
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
 	, m_iUnitUpgradeCostMod("CvPlayer::m_iUnitUpgradeCostMod", m_syncArchive)
@@ -1106,6 +1109,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef POLICY_EXTRA_VOTES
 	m_iPolicyExtraVotes = 0;
+#endif
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+	m_iPolicyTechFromCityConquer = 0;
 #endif
 	m_iSpecialPolicyBuildingHappiness = 0;
 	m_iWoundedUnitDamageMod = 0;
@@ -2438,8 +2444,8 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 
 	if(bConquest)
 	{
-#ifdef DO_TECH_FROM_CITY_CONQ_FROM_POLICY
-		if (GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_MILITARY_TRADITION", true)))
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+		if (IsPolicyTechFromCityConquer())
 #else
 		if (GetPlayerTraits()->IsTechFromCityConquer())
 #endif
@@ -12535,7 +12541,7 @@ void CvPlayer::DoTechFromCityConquer(CvCity* pConqueredCity)
 		if (pInfo)
 		{
 			// They have it
-#ifdef DO_TECH_FROM_CITY_CONQ_FROM_POLICY
+#ifdef HAS_TECH_BY_HUMAN
 			if (GET_TEAM(GET_PLAYER(eOpponent).getTeam()).GetTeamTechs()->HasTechByHuman(e))
 #else
 			if (GET_TEAM(GET_PLAYER(eOpponent).getTeam()).GetTeamTechs()->HasTech(e))
@@ -14830,6 +14836,28 @@ void CvPlayer::doAdoptPolicy(PolicyTypes ePolicy)
 
 	updateYield();		// Policies can change the yield
 }
+
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+//	--------------------------------------------------------------------------------
+///
+bool CvPlayer::IsPolicyTechFromCityConquer() const
+{
+	return m_iPolicyTechFromCityConquer > 0;
+}
+
+//	--------------------------------------------------------------------------------
+///
+void CvPlayer::ChangePolicyTechFromCityConquer(int iChange)
+{
+	m_iPolicyDoTechFromCityConquer += iChange;
+	CvAssert(m_iPolicyDoTechFromCityConquer >= 0);
+	if (m_iPolicyDoTechFromCityConquer < 0)
+	{
+		m_iPolicyDoTechFromCityConquer = 0;
+	}
+}
+bool m_iPolicyDoTechFromCityConquer;
+#endif
 
 //	--------------------------------------------------------------------------------
 /// Empire in Anarchy?
@@ -24867,6 +24895,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 #ifdef POLICY_EXTRA_VOTES
 	ChangePolicyExtraVotes(pPolicy->GetExtraVotes() * iChange);
 #endif
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+	ChangePolicyExtraVotes(pPolicy->IsTechFromCityConquer() * iChange);
+#endif
 
 	// Not really techs but this is what we use (for now)
 	for(iI = 0; iI < GC.getNUM_AND_TECH_PREREQS(); iI++)
@@ -26281,6 +26312,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 #endif
 #endif
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+#endif
+		kStream >> m_iPolicyTechFromCityConquer;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iPolicyTechFromCityConquer = 0;
+	}
+#endif
+#endif
 	kStream >> m_iSpecialPolicyBuildingHappiness;
 	kStream >> m_iWoundedUnitDamageMod;
 	kStream >> m_iUnitUpgradeCostMod;
@@ -27235,6 +27280,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef POLICY_EXTRA_VOTES
 	kStream << m_iPolicyExtraVotes;
+#endif
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+	kStream << m_iPolicyTechFromCityConquer;
 #endif
 	kStream << m_iSpecialPolicyBuildingHappiness;
 	kStream << m_iWoundedUnitDamageMod;

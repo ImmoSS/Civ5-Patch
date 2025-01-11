@@ -242,6 +242,9 @@ public:
 #ifdef POLICY_MINOR_INFLUENCE_BOOST
 	int GetMinorInfluenceBoost() const;
 #endif
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+	bool IsTechFromCityConquer() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -410,6 +413,9 @@ private:
 #endif
 #ifdef POLICY_MINOR_INFLUENCE_BOOST
 	int m_iMinorInfluenceBoost;
+#endif
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+	bool m_bTechFromCityConquer;
 #endif
 
 	// Arrays

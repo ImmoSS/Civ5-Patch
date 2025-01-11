@@ -734,6 +734,11 @@ public:
 	void doAdoptPolicy(PolicyTypes ePolicy);
 	void DoBuyNewBranch(PolicyBranchTypes eBranch);
 
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+	bool IsPolicyTechFromCityConquer() const;
+	void ChangePolicyTechFromCityConquer(int iChange);
+#endif
+
 	bool IsAnarchy() const;
 	int GetAnarchyNumTurns() const;
 	void SetAnarchyNumTurns(int iValue);
@@ -2029,6 +2034,9 @@ protected:
 #endif
 #ifdef POLICY_EXTRA_VOTES
 	int m_iPolicyExtraVotes;
+#endif
+#ifdef POLICY_DO_TECH_FROM_CITY_CONQ
+	int m_iPolicyTechFromCityConquer;
 #endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;
