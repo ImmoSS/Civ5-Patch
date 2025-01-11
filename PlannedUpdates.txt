@@ -693,12 +693,53 @@
 ТЕХНИЧЕСКИЕ ИЗМЕНЕНИЯ
 
 + (Сделано, но пока добавлять не буду) После постройки суда город меняет статус изначального владельца на нового (не работает для ггшек), если изначальный владелец (игрок-человек) не находится в игре. Если в захваченном городе уже построен суд, то он сменит статус владельца, когда его изначальный владелец (игрок-человек) выйдет из игры.
+
+
+
+SOURCE TO XML
+
 + Теперь возможно менять теху для нюкинга в xml (AllowsNuking), добавлена иконка в "Allows to launch Nuclear Missile" в дереве технологий (по умолчанию false)
 + В xml можно прописывать защиту от ядер у всех юнитов (NukeDefense). По умолчанию 0, у гдр 60 (это значит, что гдр потеряет не больше 100 - 60 = 40 здоровья)
 + В xml теперь можно менять политику/политики и максимальное кол-во доп дипломатов от ггшек (MaxExtraVotesFromMinors, сейчас стоит 4 в Дипломатии канонерок, по умолчанию 0)
 + В xml теперь можно менять политику/политики на буст влияния гг (MinorInfluenceBoost, 45 в Военном блоке, по умолчанию 0)
 + В xml теперь можно менять голоса от принятой политики (ExtraVotes, 2 за закрытие патронажа, по умолчанию 0)
 + В xml теперь можно менять политику на захват технологий с городов (TechFromCityConquer, true в Военной традиции, по умолчанию false)
+
+
+TODO:
+TECHNOLOGIES
+
+FUTURE_TECH_RESEARCHING_BONUSES
+
+
+POLICIES
+
+GOLDEN_AGE_SCIENCE_MODIFIER
+POLICY_ETHICS_REWORK
+LEARNED_SOCIETY_SCIENCE_MOD
+UNITED_FRONT_ALL_CITIES_GIFT_UNITS
+EXTRA_PLOT_GOLD_FROM_TRADE_ROUTES
+NO_PILLAGE_CARGO_TREASURE_FLEETS
+SCIENCE_FROM_PIETY_FINISHER
+FINE_ARTS_HAPPINESS_FROM_GREAT_WORKS
+HONOR_CULTURE_CAP
+AESTHETICS_FINISHER_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
+
+
+RELIGION
+
+NQ_LAKE_BELIEF_BONUSES (убрать зависимость от FEATURE_ICE)
+BELIEF_DANCE_AURORA_NERF
+MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+UNITY_OF_PROPHETS_EXTRA_PROPHETS
+GODDESS_LOVE_FREE_WORKER
+GOD_SEA_FREE_WORK_BOAT
+RELIGIOUS_UNITY_CS_BONUS
+BELIEF_HOLY_ORDER_EXPANSION
+
+
+UA
+...
 
 
 
