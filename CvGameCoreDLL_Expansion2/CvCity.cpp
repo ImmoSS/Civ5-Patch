@@ -4757,11 +4757,7 @@ int CvCity::GetPurchaseCost(UnitTypes eUnit)
 	TraitTypes eTrait = (TraitTypes)GC.getInfoTypeForString("NEW_TRAIT_SUPER_CITY_STATE", true /*bHideAssert*/);
 	if(eUnit == (UnitTypes)GC.getInfoTypeForString("UNIT_SETTLER") && GET_PLAYER(getOwner()).GetPlayerTraits()->HasTrait(eTrait))
 	{
-#ifdef SettlerCost
-		iCost *= 41;
-#else
 		iCost *= 73;
-#endif
 		iCost /= 100;
 	}
 #endif
@@ -10552,10 +10548,6 @@ int CvCity::getBaseYieldRate(YieldTypes eIndex) const
 	iValue += GetBaseYieldRateFromSpecialists(eIndex);
 	iValue += GetBaseYieldRateFromMisc(eIndex);
 	iValue += GetBaseYieldRateFromReligion(eIndex);
-#ifdef GoldForTechs
-	if (isCapital() && eIndex == YIELD_GOLD)
-		iValue += GET_TEAM(getTeam()).GetTeamTechs()->GetNumTechsKnown();
-#endif
 
 	return iValue;
 }
@@ -13338,40 +13330,6 @@ int CvCity::CreateUnit(UnitTypes eUnitType, UnitAITypes eAIType, bool bUseToSati
 	{
 		IncrementUnitStatCount(pUnit);
 	}
-
-#ifdef FiveTrainedFreePromotion
-	std::vector<int> aPossiblePromotions;
-
-	for (int iI = 1; iI < GC.GetGamePromotions()->GetNumPromotions(); iI++)
-	{
-		// if (iI != 191)
-		aPossiblePromotions.push_back(iI);
-	}
-
-	int iNumChoices = aPossiblePromotions.size();
-	int iI = 0;
-	int iSwap;
-	if (pUnit->isHuman() && pUnit->IsCombatUnit())
-		while (iI < 5)
-		{
-			if (iNumChoices - iI > 0)
-			{
-				int iChoice = GC.getGame().getJonRandNum(iNumChoices - iI, "Random Promotion Pick");
-				PromotionTypes ePromotion = (PromotionTypes)aPossiblePromotions[iChoice];
-				CvPromotionEntry* promotionInfo = GC.getPromotionInfo(ePromotion);
-				if (!promotionInfo == NULL)
-					if (!promotionInfo->IsCannotBeChosen())
-						if (!pUnit->isHasPromotion(ePromotion))
-						{
-							pUnit->setHasPromotion(ePromotion, true);
-							iSwap = aPossiblePromotions[iChoice];
-							aPossiblePromotions[iChoice] = aPossiblePromotions[iNumChoices - iI - 1];
-							aPossiblePromotions[iNumChoices - iI - 1] = iSwap;
-							iI++;
-						}
-			}
-		}
-#endif
 
 #ifdef EG_REPLAYDATASET_NUMTRAINEDUNITS
 	if (GC.getUnitInfo(eUnitType)->GetUnitCombatType() != NO_UNITCOMBAT)

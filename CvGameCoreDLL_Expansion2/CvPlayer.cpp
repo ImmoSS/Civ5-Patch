@@ -5346,86 +5346,8 @@ void CvPlayer::doTurnPostDiplomacy()
 	// if this is the human player, have the popup come up so that he can choose a new policy
 	if(isAlive() && isHuman() && getNumCities() > 0)
 	{
-
-#ifdef FreePolEveryTenTurns
-		bool bSuccess;
-		int iNextPolicy = GC.getGame().getJonRandNum(GC.GetGamePolicies()->GetNumPolicies(), "Random Policy Pick");
-
-		if (GC.getGame().getElapsedGameTurns() % 6 == 0)
-		{
-			// ChangeNumFreePolicies(1);
-			bSuccess = false;
-			while (bSuccess == false)
-			{
-				iNextPolicy = GC.getGame().getJonRandNum(GC.GetGamePolicies()->GetNumPolicies(), "Random Policy Pick");
-				if (iNextPolicy == NO_POLICY)
-					continue;
-				PolicyTypes ePolicy = (PolicyTypes)iNextPolicy;
-				CvPolicyEntry* pkPolicyEntry = GC.getPolicyInfo(ePolicy);
-				if(pkPolicyEntry == NULL)
-					continue;
-				if (!GetPlayerPolicies()->HasPolicy(ePolicy) && !(pkPolicyEntry->GetLevel() > 0))
-					bSuccess = true;
-			}
-
-			// These actions should spend our number of free policies or our culture, otherwise we'll loop forever
-			if(iNextPolicy < GC.GetGamePolicies()->GetNumPolicyBranches()) // Low return values indicate a branch has been chosen
-			{
-				GetPlayerPolicies()->DoUnlockPolicyBranch((PolicyBranchTypes)iNextPolicy);
-			}
-			else
-			{
-				// m_pPlayerPolicies->SetPolicy((PolicyTypes)iNextPolicy, true);
-				setHasPolicy((PolicyTypes)iNextPolicy, true);
-				ChangeNumFreePoliciesEver(1);
-				// doAdoptPolicy((PolicyTypes)(iNextPolicy - GC.GetGamePolicies()->GetNumPolicyBranches()));
-			}
-		}
-#endif
 		if(!GC.GetEngineUserInterface()->IsPolicyNotificationSeen())
 		{
-#ifdef RandomPolicies
-			if(getNextPolicyCost() <= getJONSCulture() && GetPlayerPolicies()->GetNumPoliciesCanBeAdopted() > 0)
-			{
-				int iNextPolicy = GC.getGame().getJonRandNum(GC.GetGamePolicies()->GetNumPolicies(), "Random Policy Pick");
-
-				// Do we have enough points to buy a new policy?
-				if(getNextPolicyCost() > 0)
-				{
-					// Adopt new policies until we run out of freebies and culture (usually only one per turn)
-					while(getJONSCulture() >= getNextPolicyCost() || GetNumFreePolicies() > 0 || GetNumFreeTenets() > 0)
-					{
-						bSuccess = false;
-						while (bSuccess == false)
-						{
-							iNextPolicy = GC.getGame().getJonRandNum(GC.GetGamePolicies()->GetNumPolicies(), "Random Policy Pick");
-							if (iNextPolicy == NO_POLICY)
-								continue;
-							PolicyTypes ePolicy = (PolicyTypes)iNextPolicy;
-							CvPolicyEntry* pkPolicyEntry = GC.getPolicyInfo(ePolicy);
-							if(pkPolicyEntry == NULL)
-								continue;
-							if (canAdoptPolicy(ePolicy) && !(pkPolicyEntry->GetLevel() > 0))
-								bSuccess = true;
-						}
-						// Choose the policy we want next (or a branch)
-						// int iNextPolicy = m_pPolicyAI->ChooseNextPolicy(m_pPlayer);
-						// if (iNextPolicy == NO_POLICY)
-							// break;
-
-						// These actions should spend our number of free policies or our culture, otherwise we'll loop forever
-						if(iNextPolicy < GC.GetGamePolicies()->GetNumPolicyBranches()) // Low return values indicate a branch has been chosen
-						{
-							GetPlayerPolicies()->DoUnlockPolicyBranch((PolicyBranchTypes)iNextPolicy);
-						}
-						else
-						{
-							doAdoptPolicy((PolicyTypes)(iNextPolicy - GC.GetGamePolicies()->GetNumPolicyBranches()));
-						}
-					}
-				}
-			}
-#else
 			if(getNextPolicyCost() <= getJONSCulture() && GetPlayerPolicies()->GetNumPoliciesCanBeAdopted() > 0)
 			{
 				CvNotifications* pNotifications = GetNotifications();
@@ -5442,7 +5364,6 @@ void CvPlayer::doTurnPostDiplomacy()
 					pNotifications->Add(NOTIFICATION_POLICY, strBuffer, strSummary, -1, -1, -1);
 				}
 			}
-#endif
 		}
 
 		if (GetPlayerPolicies()->IsTimeToChooseIdeology() && GetPlayerPolicies()->GetLateGamePolicyTree() == NO_POLICY_BRANCH_TYPE)

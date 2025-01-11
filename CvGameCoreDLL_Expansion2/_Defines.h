@@ -1283,13 +1283,6 @@
 
 #endif
 
-// SHOW MATCH
-// #define FiveTrainedFreePromotion
-// #define FreePolEveryTenTurns
-// #define GoldForTechs
-// #define SettlerCost
-// #define RandomPolicies
-
 
 
 
