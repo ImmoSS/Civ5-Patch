@@ -701,6 +701,11 @@ public:
 	int GetExtraLeagueVotes() const;
 	void ChangeExtraLeagueVotes(int iChange);
 
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+	int GetMaxExtraVotesFromMinors() const;
+	void ChangeMaxExtraVotesFromMinors(int iChange);
+#endif
+
 	int GetWoundedUnitDamageMod() const;
 	void SetWoundedUnitDamageMod(int iValue);
 	void ChangeWoundedUnitDamageMod(int iChange);
@@ -2014,6 +2019,9 @@ protected:
 	int m_iNumGoldSpentOnUgrades;
 #endif
 	int m_iExtraLeagueVotes;
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+	int m_iMaxExtraVotesFromMinors;
+#endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;
 	int m_iCultureBonusTurns;

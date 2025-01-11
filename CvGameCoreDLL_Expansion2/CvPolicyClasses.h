@@ -233,6 +233,10 @@ public:
 
 	BuildingTypes GetFreeBuildingOnConquest() const;
 
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+	int GetMaxExtraVotesFromMinors() const;
+#endif
+
 private:
 	int m_iTechPrereq;
 	int m_iCultureCost;
@@ -391,6 +395,10 @@ private:
 	CvString m_wstrWeLoveTheKing;
 
 	BuildingTypes m_eFreeBuildingOnConquest;
+
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+	int m_iMaxExtraVotesFromMinors;
+#endif
 
 	// Arrays
 	std::multimap<int, int> m_FreePromotionUnitCombats;

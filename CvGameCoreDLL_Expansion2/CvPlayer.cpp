@@ -293,6 +293,9 @@ CvPlayer::CvPlayer() :
 	, m_iNumGoldSpentOnUgrades(0)
 #endif
 	, m_iExtraLeagueVotes(0)
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+	, m_iMaxExtraVotesFromMinors(0)
+#endif
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
 	, m_iUnitUpgradeCostMod("CvPlayer::m_iUnitUpgradeCostMod", m_syncArchive)
@@ -1095,6 +1098,9 @@ void CvPlayer::uninit()
 	m_iNumGoldSpentOnUgrades = 0;
 #endif
 	m_iExtraLeagueVotes = 0;
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+	m_iMaxExtraVotesFromMinors = 0;
+#endif
 	m_iSpecialPolicyBuildingHappiness = 0;
 	m_iWoundedUnitDamageMod = 0;
 	m_iUnitUpgradeCostMod = 0;
@@ -14545,6 +14551,27 @@ void CvPlayer::ChangeExtraLeagueVotes(int iChange)
 	}
 }
 
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+//	--------------------------------------------------------------------------------
+///
+int CvPlayer::GetMaxExtraVotesFromMinors() const
+{
+	return m_iMaxExtraVotesFromMinors;
+}
+
+//	--------------------------------------------------------------------------------
+///
+void CvPlayer::ChangeMaxExtraVotesFromMinors(int iChange)
+{
+	m_iMaxExtraVotesFromMinors += iChange;
+	CvAssert(m_iMaxExtraVotesFromMinors >= 0);
+	if (m_iMaxExtraVotesFromMinors < 0)
+	{
+		m_iMaxExtraVotesFromMinors = 0;
+	}
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 /// How much weaker do Units get when wounded?
 int CvPlayer::GetWoundedUnitDamageMod() const
@@ -24807,6 +24834,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 #ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 	ChangeNumCitiesFreeDefensiveBuilding(iNumCitiesFreeDefensiveBuilding);
 #endif
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+	ChangeMaxExtraVotesFromMinors(pPolicy->GetMaxExtraVotesFromMinors() * iChange);
+#endif
 
 	// Not really techs but this is what we use (for now)
 	for(iI = 0; iI < GC.getNUM_AND_TECH_PREREQS(); iI++)
@@ -26196,6 +26226,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	{
 		m_iExtraLeagueVotes = 0;
 	}
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+#endif
+		kStream >> m_iMaxExtraVotesFromMinors;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iMaxExtraVotesFromMinors = 0;
+	}
+#endif
+#endif
 	kStream >> m_iSpecialPolicyBuildingHappiness;
 	kStream >> m_iWoundedUnitDamageMod;
 	kStream >> m_iUnitUpgradeCostMod;
@@ -27145,6 +27189,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iNumGoldSpentOnUgrades;
 #endif
 	kStream << m_iExtraLeagueVotes;
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+	kStream << m_iMaxExtraVotesFromMinors;
+#endif
 	kStream << m_iSpecialPolicyBuildingHappiness;
 	kStream << m_iWoundedUnitDamageMod;
 	kStream << m_iUnitUpgradeCostMod;

@@ -199,6 +199,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_ppiBuildingClassYieldModifiers(NULL),
 	m_ppiBuildingClassYieldChanges(NULL),
 	m_piFlavorValue(NULL),
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+	m_iMaxExtraVotesFromMinors(0),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -412,6 +415,10 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	{
 		m_eFreeBuildingOnConquest = (BuildingTypes)GC.getInfoTypeForString(szFreeBuilding, true);
 	}
+
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+	m_iMaxExtraVotesFromMinors = kResults.GetInt("MaxExtraVotesFromMinors");
+#endif
 
 	//Arrays
 	const char* szPolicyType = GetType();
@@ -1798,6 +1805,14 @@ BuildingTypes CvPolicyEntry::GetFreeBuildingOnConquest() const
 {
 	return m_eFreeBuildingOnConquest;
 }
+
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+///
+int CvPolicyEntry::GetMaxExtraVotesFromMinors() const
+{
+	return m_iMaxExtraVotesFromMinors;
+}
+#endif
 
 //=====================================
 // CvPolicyBranchEntry

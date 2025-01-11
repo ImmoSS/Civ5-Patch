@@ -355,11 +355,8 @@
 #define SS_PART_PURCHASE_RESTRICTION
 ///
 #define SHARED_IDEOLOGY_TRADE_CHANGE
-/// Gunboat Diplomacy Grants 1 additional Delegate in the World Congress for every allied City-State (up to MAX_AUTOCRACY_EXTRA_VOTES additional Delegates)
-#define AUTOCRACY_EXTRA_VOTES
-#ifdef AUTOCRACY_EXTRA_VOTES
-#define MAX_AUTOCRACY_EXTRA_VOTES 4
-#endif
+/// Special Policy Grants 1 additional Delegate in the World Congress for every allied City-State (up to MaxExtraVotesFromMinors additional Delegates)
+#define POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 /// Treaty Organization One time increase of 45 Influence with City-States
 #define CS_INFLUENCE_BOOST
 /// Adopting all policies in the Liberty tree will decrease Unhappiness from each city by 1.
@@ -1035,6 +1032,7 @@
 // 1007: v10.2  (adds third bunch of ENHANCED_GRAPHS)
 // 1008: v10.2b (adds third bunch of CS_ALLYING_WAR_RESCTRICTION, AUI_GAME_AUTOPAUSE_ON_ACTIVE_DISCONNECT_IF_NOT_SEQUENTIAL)
 // 1009: v10.4a (separating CS_ALLYING_WAR_RESCTRICTION for different minors)
+// 1010: v10.x  (adds POLICY_MAX_EXTRA_VOTES_FROM_MINORS)
 # define BUMP_SAVE_VERSION_PLAYER 1009
 // 1000: v7.0   (initial)
 # define BUMP_SAVE_VERSION_POLICIES 1000
