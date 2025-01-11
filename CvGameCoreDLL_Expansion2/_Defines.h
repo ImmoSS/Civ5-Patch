@@ -253,8 +253,8 @@
 /*UNITS CHANGES START*/
 /// Gifted units can't attack if they have already attacked this turn
 #define GIFTED_UNITS_ATTACK
-/// Can nuke only if Mobile Tactics researched
-#define MOBILE_TACTICS_NUKING
+/// Can nuke only if Special Tech is researched
+#define TECH_ALLOWS_NUKING
 ///
 #define UNIT_DIED_BY_NUKING_NOTIFICATIONS
 /// Players can't gain more than 45 exp from combat with AI or Minors
@@ -1039,7 +1039,8 @@
 // 1000: v7.0   (initial)
 # define BUMP_SAVE_VERSION_POLICIES 1000
 // 1000: v7.0   (initial)
-# define BUMP_SAVE_VERSION_TEAM 1000
+# define BUMP_SAVE_VERSION_TEAM 1001
+// 1001: v10.x  (adds TECH_ALLOWS_NUKING)
 // 1000: v7.0   (initial)
 # define BUMP_SAVE_VERSION_TECHS 1000
 // 1000: v7.0   (initial)

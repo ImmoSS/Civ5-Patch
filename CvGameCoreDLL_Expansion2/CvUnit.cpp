@@ -5618,9 +5618,8 @@ bool CvUnit::canNuke(const CvPlot* /*pPlot*/) const
 		return false;
 	}
 
-#ifdef MOBILE_TACTICS_NUKING
-	TechTypes eTech = (TechTypes)GC.getInfoTypeForString("TECH_MOBILE_TACTICS", true);
-	if(!GET_TEAM(getTeam()).GetTeamTechs()->HasTech(eTech))
+#ifdef TECH_ALLOWS_NUKING
+	if(!GET_TEAM(getTeam()).HasTechForNuking())
 	{
 		return false;
 	}
