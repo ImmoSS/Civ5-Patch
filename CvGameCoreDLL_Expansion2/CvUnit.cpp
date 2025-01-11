@@ -3637,8 +3637,11 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport) const
 #ifdef CANT_GIFT_GP
 	else
 	{
-		if (getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_WRITER")	|| getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_ARTIST")	|| getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_MUSICIAN") || getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_SCIENTIST") || getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_MERCHANT") || getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_ENGINEER"))
-			return false;
+#ifdef DUEL_ALLOW_GIFT_GP
+		if (!GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
+#endif
+			if (getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_WRITER")	|| getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_ARTIST")	|| getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_MUSICIAN") || getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_SCIENTIST") || getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_MERCHANT") || getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_ENGINEER"))
+				return false;
 	}
 #endif
 
