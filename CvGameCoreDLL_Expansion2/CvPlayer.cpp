@@ -24879,21 +24879,18 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		changeGoldenAgeTurns(iGoldenAgeTurns);
 	}
 
-#ifdef CS_INFLUENCE_BOOST
+#ifdef POLICY_MINOR_INFLUENCE_BOOST
 	// City-State Influence Boost
 	//antonjs: todo: ordering, to prevent ally / no longer ally notif spam
-	int iInfluenceBoost = GC.getRETURN_CIVILIAN_FRIENDSHIP() * iChange;
+	int iInfluenceBoost = pPolicy->GetMinorInfluenceBoost() * iChange;
 	if (iInfluenceBoost > 0)
 	{
-		if (ePolicy == (PolicyTypes)GC.getInfoTypeForString("POLICY_TREATY_ORGANIZATION", true /*bHideAssert*/))
+		for (int iMinorCivLoop = MAX_MAJOR_CIVS; iMinorCivLoop < MAX_CIV_PLAYERS; iMinorCivLoop++)
 		{
-			for (int iMinorCivLoop = MAX_MAJOR_CIVS; iMinorCivLoop < MAX_CIV_PLAYERS; iMinorCivLoop++)
+			PlayerTypes eMinorCivLoop = (PlayerTypes)iMinorCivLoop;
+			if (GET_PLAYER(eMinorCivLoop).isAlive() && GET_TEAM(GET_PLAYER((PlayerTypes)GetID()).getTeam()).isHasMet(GET_PLAYER(eMinorCivLoop).getTeam()))
 			{
-				PlayerTypes eMinorCivLoop = (PlayerTypes) iMinorCivLoop;
-				if (GET_PLAYER(eMinorCivLoop).isAlive() && GET_TEAM(GET_PLAYER((PlayerTypes)GetID()).getTeam()).isHasMet(GET_PLAYER(eMinorCivLoop).getTeam()))
-				{
-					GET_PLAYER(eMinorCivLoop).GetMinorCivAI()->ChangeFriendshipWithMajor((PlayerTypes)GetID(), iInfluenceBoost);
-				}
+				GET_PLAYER(eMinorCivLoop).GetMinorCivAI()->ChangeFriendshipWithMajor((PlayerTypes)GetID(), iInfluenceBoost);
 			}
 		}
 	}

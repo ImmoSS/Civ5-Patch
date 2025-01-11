@@ -236,6 +236,9 @@ public:
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 	int GetMaxExtraVotesFromMinors() const;
 #endif
+#ifdef POLICY_MINOR_INFLUENCE_BOOST
+	int GetMinorInfluenceBoost() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -398,6 +401,9 @@ private:
 
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 	int m_iMaxExtraVotesFromMinors;
+#endif
+#ifdef POLICY_MINOR_INFLUENCE_BOOST
+	int m_iMinorInfluenceBoost;
 #endif
 
 	// Arrays

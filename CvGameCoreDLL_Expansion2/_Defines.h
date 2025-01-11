@@ -358,7 +358,7 @@
 /// Special Policy Grants 1 additional Delegate in the World Congress for every allied City-State (up to MaxExtraVotesFromMinors additional Delegates)
 #define POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 /// Treaty Organization One time increase of 45 Influence with City-States
-#define CS_INFLUENCE_BOOST
+#define POLICY_MINOR_INFLUENCE_BOOST
 /// Adopting all policies in the Liberty tree will decrease Unhappiness from each city by 1.
 // #define LIBERTY_FINISER_LESS_UNHAPPINESS_PER_CITY
 /// Biology, Electrisity, Steam Power and Dynamite triggers ideology choise
