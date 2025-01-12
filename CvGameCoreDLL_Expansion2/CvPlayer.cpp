@@ -14849,14 +14849,14 @@ bool CvPlayer::IsPolicyTechFromCityConquer() const
 ///
 void CvPlayer::ChangePolicyTechFromCityConquer(int iChange)
 {
-	m_iPolicyDoTechFromCityConquer += iChange;
-	CvAssert(m_iPolicyDoTechFromCityConquer >= 0);
-	if (m_iPolicyDoTechFromCityConquer < 0)
+	m_iPolicyTechFromCityConquer += iChange;
+	CvAssert(m_iPolicyTechFromCityConquer >= 0);
+	if (m_iPolicyTechFromCityConquer < 0)
 	{
-		m_iPolicyDoTechFromCityConquer = 0;
+		m_iPolicyTechFromCityConquer = 0;
 	}
 }
-bool m_iPolicyDoTechFromCityConquer;
+bool m_iPolicyTechFromCityConquer;
 #endif
 
 //	--------------------------------------------------------------------------------
