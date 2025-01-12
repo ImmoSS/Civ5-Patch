@@ -704,6 +704,8 @@ SOURCE TO XML
 + В xml теперь можно менять политику/политики на буст влияния гг (MinorInfluenceBoost, 45 в Военном блоке, по умолчанию 0)
 + В xml теперь можно менять голоса от принятой политики (ExtraVotes, 2 за закрытие патронажа, по умолчанию 0)
 + В xml теперь можно менять политику на захват технологий с городов (TechFromCityConquer, true в Военной традиции, по умолчанию false)
++ В xml теперь можно задавать бонус от зв на йелды от политик через таблицу Policy_GoldenAgeYieldModifiers
+
 
 
 TODO:
@@ -714,7 +716,6 @@ FUTURE_TECH_RESEARCHING_BONUSES
 
 POLICIES
 
-GOLDEN_AGE_SCIENCE_MODIFIER
 POLICY_ETHICS_REWORK
 LEARNED_SOCIETY_SCIENCE_MOD
 UNITED_FRONT_ALL_CITIES_GIFT_UNITS
