@@ -206,6 +206,10 @@ public:
 	int* GetGreatWorkYieldChangeArray() const;
 	int GetSpecialistExtraYield(int i) const;
 	int* GetSpecialistExtraYieldArray() const;
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+	int GetGoldenAgeYieldModifier(int i) const;
+	int* GetGoldenAgeYieldModifierArray() const;
+#endif
 	int IsFreePromotion(int i) const;
 	bool IsFreePromotionUnitCombat(const int promotionID, const int unitCombatID) const;
 	int GetUnitCombatProductionModifiers(int i) const;
@@ -431,6 +435,9 @@ private:
 	int* m_piCapitalYieldModifier;
 	int* m_piGreatWorkYieldChange;
 	int* m_piSpecialistExtraYield;
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+	int* m_piGoldenAgeYieldModifier;
+#endif
 	int* m_piImprovementCultureChange;
 	bool* m_pabFreePromotion;
 	int* m_paiUnitCombatProductionModifiers;

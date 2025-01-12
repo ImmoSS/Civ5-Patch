@@ -1332,6 +1332,11 @@ public:
 	int getSpecialistExtraYield(YieldTypes eIndex) const;
 	void changeSpecialistExtraYield(YieldTypes eIndex, int iChange);
 
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+	int getGoldenAgeYieldModifier(YieldTypes eIndex) const;
+	void changeGoldenAgeYieldModifier(YieldTypes eIndex, int iChange);
+#endif
+
 	PlayerProximityTypes GetProximityToPlayer(PlayerTypes ePlayer) const;
 	void SetProximityToPlayer(PlayerTypes ePlayer, PlayerProximityTypes eProximity);
 	void DoUpdateProximityToPlayer(PlayerTypes ePlayer);
@@ -2288,6 +2293,9 @@ protected:
 	FAutoVariable<std::vector<int>, CvPlayer> m_aiCapitalYieldRateModifier;
 	FAutoVariable<std::vector<int>, CvPlayer> m_aiExtraYieldThreshold;
 	FAutoVariable<std::vector<int>, CvPlayer> m_aiSpecialistExtraYield;
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+	FAutoVariable<std::vector<int>, CvPlayer> m_aiGoldenAgeYieldModifier;
+#endif
 	FAutoVariable<std::vector<int>, CvPlayer> m_aiProximityToPlayer;
 	FAutoVariable<std::vector<int>, CvPlayer> m_aiResearchAgreementCounter;
 	FAutoVariable<std::vector<int>, CvPlayer> m_aiIncomingUnitTypes;

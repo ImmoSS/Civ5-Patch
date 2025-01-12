@@ -535,6 +535,9 @@ CvPlayer::CvPlayer() :
 	, m_aiCapitalYieldRateModifier("CvPlayer::m_aiCapitalYieldRateModifier", m_syncArchive)
 	, m_aiExtraYieldThreshold("CvPlayer::m_aiExtraYieldThreshold", m_syncArchive)
 	, m_aiSpecialistExtraYield("CvPlayer::m_aiSpecialistExtraYield", m_syncArchive)
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+	, m_aiGoldenAgeYieldModifier("CvPlayer::m_aiGoldenAgeYieldModifier", m_syncArchive)
+#endif
 	, m_aiProximityToPlayer("CvPlayer::m_aiProximityToPlayer", m_syncArchive, true)
 	, m_aiResearchAgreementCounter("CvPlayer::m_aiResearchAgreementCounter", m_syncArchive)
 	, m_aiIncomingUnitTypes("CvPlayer::m_aiIncomingUnitTypes", m_syncArchive, true)
@@ -1423,6 +1426,11 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_aiSpecialistExtraYield.clear();
 	m_aiSpecialistExtraYield.resize(NUM_YIELD_TYPES, 0);
+
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+	m_aiGoldenAgeYieldModifier.clear();
+	m_aiGoldenAgeYieldModifier.resize(NUM_YIELD_TYPES, 0);
+#endif
 
 	m_aiProximityToPlayer.clear();
 	m_aiProximityToPlayer.resize(MAX_PLAYERS, 0);
@@ -20323,6 +20331,28 @@ void CvPlayer::changeSpecialistExtraYield(YieldTypes eIndex, int iChange)
 	}
 }
 
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+//	--------------------------------------------------------------------------------
+int CvPlayer::getGoldenAgeYieldModifier(YieldTypes eIndex) const
+{
+	CvAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex is expected to be within maximum bounds (invalid Index)");
+	return m_aiGoldenAgeYieldModifier[eIndex];
+}
+
+//	--------------------------------------------------------------------------------
+void CvPlayer::changeGoldenAgeYieldModifier(YieldTypes eIndex, int iChange)
+{
+	CvAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex is expected to be within maximum bounds (invalid Index)");
+
+	if (iChange != 0)
+	{
+		m_aiGoldenAgeYieldModifier.setAt(eIndex, m_aiGoldenAgeYieldModifier[eIndex] + iChange);
+	}
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 /// Returns how "close" we are to another player (useful for diplomacy, war planning, etc.)
 PlayerProximityTypes CvPlayer::GetProximityToPlayer(PlayerTypes ePlayer) const
@@ -24630,6 +24660,12 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		iMod = pPolicy->GetSpecialistExtraYield(iI) * iChange;
 		if(iMod != 0)
 			changeSpecialistExtraYield(eYield, iMod);
+
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+		iMod = pPolicy->GetGoldenAgeYieldModifier(iI) * iChange;
+		if (iMod != 0)
+			changeGoldenAgeYieldModifier(eYield, iMod);
+#endif
 	}
 
 	for(iI = 0; iI < GC.getNumUnitCombatClassInfos(); iI++)
@@ -26826,6 +26862,21 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 	kStream >> m_aiExtraYieldThreshold;
 	kStream >> m_aiSpecialistExtraYield;
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+# endif
+		kStream >> m_aiGoldenAgeYieldModifier;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_aiGoldenAgeYieldModifier.clear();
+		m_aiGoldenAgeYieldModifier.resize(NUM_YIELD_TYPES, 0);
+	}
+# endif
+#endif
 	kStream >> m_aiProximityToPlayer;
 	kStream >> m_aiResearchAgreementCounter;
 	if (uiVersion >= 5)
@@ -27545,6 +27596,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_aiGreatWorkYieldChange;
 	kStream << m_aiExtraYieldThreshold;
 	kStream << m_aiSpecialistExtraYield;
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+	kStream << m_aiGoldenAgeYieldModifier;
+#endif
 	kStream << m_aiProximityToPlayer;
 	kStream << m_aiResearchAgreementCounter;   // Added in Version 2
 	kStream << m_aiIncomingUnitTypes;

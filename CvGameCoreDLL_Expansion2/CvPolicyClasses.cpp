@@ -181,6 +181,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_piCapitalYieldModifier(NULL),
 	m_piGreatWorkYieldChange(NULL),
 	m_piSpecialistExtraYield(NULL),
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+	m_piGoldenAgeYieldModifier(NULL),
+#endif
 	m_pabFreePromotion(NULL),
 	m_paiUnitCombatProductionModifiers(NULL),
 	m_paiUnitCombatFreeExperiences(NULL),
@@ -229,6 +232,9 @@ CvPolicyEntry::~CvPolicyEntry(void)
 	SAFE_DELETE_ARRAY(m_piCapitalYieldModifier);
 	SAFE_DELETE_ARRAY(m_piGreatWorkYieldChange);
 	SAFE_DELETE_ARRAY(m_piSpecialistExtraYield);
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+	SAFE_DELETE_ARRAY(m_piGoldenAgeYieldModifier);
+#endif
 	SAFE_DELETE_ARRAY(m_pabFreePromotion);
 	SAFE_DELETE_ARRAY(m_paiUnitCombatProductionModifiers);
 	SAFE_DELETE_ARRAY(m_paiUnitCombatFreeExperiences);
@@ -448,6 +454,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	kUtility.SetYields(m_piCapitalYieldModifier, "Policy_CapitalYieldModifiers", "PolicyType", szPolicyType);
 	kUtility.SetYields(m_piGreatWorkYieldChange, "Policy_GreatWorkYieldChanges", "PolicyType", szPolicyType);
 	kUtility.SetYields(m_piSpecialistExtraYield, "Policy_SpecialistExtraYields", "PolicyType", szPolicyType);
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+	kUtility.SetYields(m_piGoldenAgeYieldModifier, "Policy_GoldenAgeYieldModifiers", "PolicyType", szPolicyType);
+#endif
 
 	kUtility.SetFlavors(m_piFlavorValue, "Policy_Flavors", "PolicyType", szPolicyType);
 
@@ -1646,6 +1655,22 @@ int* CvPolicyEntry::GetSpecialistExtraYieldArray() const
 {
 	return m_piSpecialistExtraYield;
 }
+
+#ifdef POLICY_GOLDEN_AGE_YIELD_MOD
+///
+int CvPolicyEntry::GetGoldenAgeYieldModifier(int i) const
+{
+	CvAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	return m_piGoldenAgeYieldModifier ? m_piGoldenAgeYieldModifier[i] : -1;
+}
+
+//
+int* CvPolicyEntry::GetGoldenAgeYieldModifierArray() const
+{
+	return m_piGoldenAgeYieldModifier;
+}
+#endif
 
 /// Production modifier by unit type
 int CvPolicyEntry::GetUnitCombatProductionModifiers(int i) const
