@@ -744,6 +744,11 @@ public:
 	void ChangePolicyTechFromCityConquer(int iChange);
 #endif
 
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+	bool IsNoCultureSpecialistFood() const;
+	void ChangeNoCultureSpecialistFood(int iChange);
+#endif
+
 	bool IsAnarchy() const;
 	int GetAnarchyNumTurns() const;
 	void SetAnarchyNumTurns(int iValue);
@@ -2047,6 +2052,9 @@ protected:
 #endif
 #ifdef POLICY_DO_TECH_FROM_CITY_CONQ
 	int m_iPolicyTechFromCityConquer;
+#endif
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+	int m_iNoCultureSpecialistFood;
 #endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;

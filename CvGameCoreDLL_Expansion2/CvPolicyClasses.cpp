@@ -217,6 +217,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_DO_TECH_FROM_CITY_CONQ
 	m_bTechFromCityConquer(false),
 #endif
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+	m_bNoCultureSpecialistFood(false),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -448,6 +451,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_DO_TECH_FROM_CITY_CONQ
 	m_bTechFromCityConquer = kResults.GetBool("TechFromCityConquer");
+#endif
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+	m_bNoCultureSpecialistFood = kResults.GetBool("NoCultureSpecialistFood");
 #endif
 
 	//Arrays
@@ -1921,6 +1927,14 @@ int CvPolicyEntry::GetMinorInfluenceBoost() const
 bool CvPolicyEntry::IsTechFromCityConquer() const
 {
 	return m_bTechFromCityConquer;
+}
+#endif
+
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+///
+bool CvPolicyEntry::IsNoCultureSpecialistFood() const
+{
+	return m_bNoCultureSpecialistFood;
 }
 #endif
 

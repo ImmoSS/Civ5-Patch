@@ -302,6 +302,9 @@ CvPlayer::CvPlayer() :
 #ifdef POLICY_DO_TECH_FROM_CITY_CONQ
 	, m_iPolicyTechFromCityConquer(0)
 #endif
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+	, m_iNoCultureSpecialistFood(0)
+#endif
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
 	, m_iUnitUpgradeCostMod("CvPlayer::m_iUnitUpgradeCostMod", m_syncArchive)
@@ -1118,6 +1121,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef POLICY_DO_TECH_FROM_CITY_CONQ
 	m_iPolicyTechFromCityConquer = 0;
+#endif
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+	bool m_iNoCultureSpecialistFood;
 #endif
 	m_iSpecialPolicyBuildingHappiness = 0;
 	m_iWoundedUnitDamageMod = 0;
@@ -14919,7 +14925,27 @@ void CvPlayer::ChangePolicyTechFromCityConquer(int iChange)
 		m_iPolicyTechFromCityConquer = 0;
 	}
 }
-bool m_iPolicyTechFromCityConquer;
+#endif
+
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+//	--------------------------------------------------------------------------------
+///
+bool CvPlayer::IsNoCultureSpecialistFood() const
+{
+	return m_iNoCultureSpecialistFood > 0;
+}
+
+//	--------------------------------------------------------------------------------
+///
+void CvPlayer::ChangeNoCultureSpecialistFood(int iChange)
+{
+	m_iNoCultureSpecialistFood += iChange;
+	CvAssert(m_iNoCultureSpecialistFood >= 0);
+	if (m_iNoCultureSpecialistFood < 0)
+	{
+		m_iNoCultureSpecialistFood = 0;
+	}
+}
 #endif
 
 //	--------------------------------------------------------------------------------
@@ -26427,6 +26453,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 #endif
 #endif
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+#endif
+		kStream >> m_iNoCultureSpecialistFood;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iNoCultureSpecialistFood = 0;
+	}
+#endif
+#endif
 	kStream >> m_iSpecialPolicyBuildingHappiness;
 	kStream >> m_iWoundedUnitDamageMod;
 	kStream >> m_iUnitUpgradeCostMod;
@@ -27424,6 +27464,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef POLICY_DO_TECH_FROM_CITY_CONQ
 	kStream << m_iPolicyTechFromCityConquer;
+#endif
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+	kStream << m_iNoCultureSpecialistFood;
 #endif
 	kStream << m_iSpecialPolicyBuildingHappiness;
 	kStream << m_iWoundedUnitDamageMod;

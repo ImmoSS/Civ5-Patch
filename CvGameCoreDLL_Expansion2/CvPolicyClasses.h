@@ -252,6 +252,9 @@ public:
 #ifdef POLICY_DO_TECH_FROM_CITY_CONQ
 	bool IsTechFromCityConquer() const;
 #endif
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+	bool IsNoCultureSpecialistFood() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -423,6 +426,9 @@ private:
 #endif
 #ifdef POLICY_DO_TECH_FROM_CITY_CONQ
 	bool m_bTechFromCityConquer;
+#endif
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+	bool m_bNoCultureSpecialistFood;
 #endif
 
 	// Arrays

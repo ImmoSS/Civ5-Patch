@@ -7250,7 +7250,7 @@ int CvCity::foodConsumption(bool /*bNoAngry*/, int iExtra) const
 	if(GET_PLAYER(getOwner()).isHalfSpecialistFood())
 	{
 		int iFoodReduction = GetCityCitizens()->GetTotalSpecialistCount() * iFoodPerPop;
-#ifdef POLICY_ETHICS_REWORK
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
 		if (GET_PLAYER(getOwner()).GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_ETHICS", true)))
 		{
 			SpecialistTypes eSpecialist;
@@ -7269,7 +7269,7 @@ int CvCity::foodConsumption(bool /*bNoAngry*/, int iExtra) const
 		iFoodReduction /= 2;
 		iNum -= iFoodReduction;
 	}
-#ifdef POLICY_ETHICS_REWORK
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
 	else
 	{
 		int iFoodReduction = 0;
