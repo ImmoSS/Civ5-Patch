@@ -706,6 +706,7 @@ SOURCE TO XML
 + В xml теперь можно менять политику на захват технологий с городов (TechFromCityConquer, true в Военной традиции, по умолчанию false)
 + В xml теперь можно задавать бонус от зв на йелды от политик через таблицу Policy_GoldenAgeYieldModifiers
 + В xml теперь можно менять кол-во слотов специалистов в зданиях, в которых прописан атрибут SpecialistType таблицу Policy_BuildingScecialistCountChange (в таблице для здания нужно продублировать атрибут SpecialistType)
++ В xml теперь можно задавать политику, которая будет убирать потребление пищи культурными спецами (NoCultureSpecialistFood, сейчас в POLICY_ETHICS, по умолчанию false)
 
 
 
@@ -717,7 +718,6 @@ FUTURE_TECH_RESEARCHING_BONUSES
 
 POLICIES
 
-POLICY_ETHICS_REWORK
 LEARNED_SOCIETY_SCIENCE_MOD
 UNITED_FRONT_ALL_CITIES_GIFT_UNITS
 EXTRA_PLOT_GOLD_FROM_TRADE_ROUTES
