@@ -488,6 +488,9 @@ CvPlayer::CvPlayer() :
 	, m_iNumCitiesPolicyCostDiscount(0)
 	, m_iGarrisonedCityRangeStrikeModifier(0)
 	, m_iGarrisonFreeMaintenanceCount(0)
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+	, m_ppaaiBuildingScecialistCountChange("CvPlayer::m_ppaaiBuildingScecialistCountChange", m_syncArchive)
+#endif
 	, m_iNumCitiesFreeCultureBuilding(0)
 	, m_iNumCitiesFreeFoodBuilding(0)
 #ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
@@ -1310,6 +1313,9 @@ void CvPlayer::uninit()
 	m_iGarrisonedCityRangeStrikeModifier = 0;
 	m_iGarrisonFreeMaintenanceCount = 0;
 	m_iNumCitiesFreeCultureBuilding = 0;
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+	m_ppaaiBuildingScecialistCountChange.clear();
+#endif
 	m_iNumCitiesFreeFoodBuilding = 0;
 #ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 	m_iNumCitiesFreeDevensiveBuilding = 0;
@@ -1598,6 +1604,21 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 				m_pFlavorManager->AddFlavorRecipient(m_pWonderProductionAI);
 			}
 		}
+
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+		Firaxis::Array< int, NUM_SPECIALOPTION_TYPES > specialist;
+		for (unsigned int j = 0; j < NUM_SPECIALOPTION_TYPES; ++j)
+		{
+			specialist[j] = 0;
+		}
+
+		m_ppaaiBuildingScecialistCountChange.clear();
+		m_ppaaiBuildingScecialistCountChange.resize(GC.getNumSpecialistInfos());
+		for (unsigned int i = 0; i < m_ppaaiBuildingScecialistCountChange.size(); ++i)
+		{
+			m_ppaaiBuildingScecialistCountChange.setAt(i, specialist);
+		}
+#endif
 
 		Firaxis::Array< int, NUM_YIELD_TYPES > yield;
 		for(unsigned int j = 0; j < NUM_YIELD_TYPES; ++j)
@@ -11928,6 +11949,40 @@ int CvPlayer::GetCultureYieldFromPreviousTurns(int iGameTurn, int iNumPreviousTu
 
 	return iSum;
 }
+
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+//	--------------------------------------------------------------------------------
+int CvPlayer::getBuildingScecialistCountChange(BuildingTypes eIndex1, SpecialistTypes eIndex2) const
+{
+	CvAssertMsg(eIndex1 >= 0, "eIndex1 is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eIndex1 < GC.getNumSpecialistInfos(), "eIndex1 is expected to be within maximum bounds (invalid Index)");
+	CvAssertMsg(eIndex2 >= 0, "eIndex2 is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eIndex2 < NUM_SPECIALOPTION_TYPES, "eIndex2 is expected to be within maximum bounds (invalid Index)");
+	return m_ppaaiBuildingScecialistCountChange[eIndex1][eIndex2];
+}
+
+
+//	--------------------------------------------------------------------------------
+void CvPlayer::changeBuildingScecialistCountChange(BuildingTypes eIndex1, SpecialistTypes eIndex2, int iChange)
+{
+	CvAssertMsg(eIndex1 >= 0, "eIndex1 is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eIndex1 < GC.getNumSpecialistInfos(), "eIndex1 is expected to be within maximum bounds (invalid Index)");
+	CvAssertMsg(eIndex2 >= 0, "eIndex2 is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eIndex2 < NUM_SPECIALOPTION_TYPES, "eIndex2 is expected to be within maximum bounds (invalid Index)");
+
+	if (iChange != 0)
+	{
+		CvAssertMsg(iChange > -50 && iChange < 50, "GAMEPLAY: Yield for a plot is either negative or a ridiculously large number. Please send Jon this with your last 5 autosaves and what changelist # you're playing.");
+
+		Firaxis::Array<int, NUM_SPECIALOPTION_TYPES> specialists = m_ppaaiBuildingScecialistCountChange[eIndex1];
+		specialists[eIndex2] = (m_ppaaiBuildingScecialistCountChange[eIndex1][eIndex2] + iChange);
+		m_ppaaiBuildingScecialistCountChange.setAt(eIndex1, specialists);
+		// CvAssert(getImprovementYieldChange(eIndex1, eIndex2) >= 0);
+
+		// updateYield();
+	}
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 /// Cities remaining to get a free culture building
@@ -24919,6 +24974,16 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		}
 	}
 
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+	for (iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+	{
+		for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+		{
+			changeBuildingScecialistCountChange(((BuildingTypes)iI), ((SpecialistTypes)iJ), (pPolicy->GetBuildingScecialistCountChanges(iI, iJ) * iChange));
+		}
+	}
+#endif
+
 	// Store off number of newly built cities that will get a free building
 	ChangeNumCitiesFreeCultureBuilding(iNumCitiesFreeCultureBuilding);
 	ChangeNumCitiesFreeFoodBuilding(iNumCitiesFreeFoodBuilding);
@@ -26731,6 +26796,31 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iGarrisonFreeMaintenanceCount;
 	kStream >> m_iGarrisonedCityRangeStrikeModifier;
 	kStream >> m_iNumCitiesFreeCultureBuilding;
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+# endif
+		kStream >> m_ppaaiBuildingScecialistCountChange;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		Firaxis::Array< int, NUM_SPECIALOPTION_TYPES > specialist;
+		for (unsigned int j = 0; j < NUM_SPECIALOPTION_TYPES; ++j)
+		{
+			specialist[j] = 0;
+		}
+
+		m_ppaaiBuildingScecialistCountChange.clear();
+		m_ppaaiBuildingScecialistCountChange.resize(GC.getNumSpecialistInfos());
+		for (unsigned int i = 0; i < m_ppaaiBuildingScecialistCountChange.size(); ++i)
+		{
+			m_ppaaiBuildingScecialistCountChange.setAt(i, specialist);
+		}
+	}
+# endif
+#endif
 	kStream >> m_iNumCitiesFreeFoodBuilding;
 #ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
@@ -27523,6 +27613,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iNumCitiesPolicyCostDiscount;
 	kStream << m_iGarrisonFreeMaintenanceCount;
 	kStream << m_iGarrisonedCityRangeStrikeModifier;
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+	kStream << m_ppaaiBuildingScecialistCountChange;
+#endif
 	kStream << m_iNumCitiesFreeCultureBuilding;
 	kStream << m_iNumCitiesFreeFoodBuilding;
 #ifdef POLICY_FREE_DEFENSIVE_BUILDINGS

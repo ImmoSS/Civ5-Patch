@@ -559,6 +559,11 @@ public:
 
 	int GetCultureYieldFromPreviousTurns(int iGameTurn, int iNumPreviousTurnsToCount);
 
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+	int getBuildingScecialistCountChange(BuildingTypes eIndex1, SpecialistTypes eIndex2) const;
+	void changeBuildingScecialistCountChange(BuildingTypes eIndex1, SpecialistTypes eIndex2, int iChange);
+#endif
+
 	int GetNumCitiesFreeCultureBuilding() const;
 	void ChangeNumCitiesFreeCultureBuilding(int iChange);
 	int GetNumCitiesFreeFoodBuilding() const;
@@ -2228,6 +2233,9 @@ protected:
 	int m_iNumCitiesPolicyCostDiscount;
 	int m_iGarrisonedCityRangeStrikeModifier;
 	int m_iGarrisonFreeMaintenanceCount;
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+	FAutoVariable< std::vector< Firaxis::Array<int, NUM_SPECIALOPTION_TYPES > >, CvPlayer> m_ppaaiBuildingScecialistCountChange;
+#endif
 	int m_iNumCitiesFreeCultureBuilding;
 	int m_iNumCitiesFreeFoodBuilding;
 #ifdef POLICY_FREE_DEFENSIVE_BUILDINGS

@@ -201,6 +201,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_ppiImprovementYieldChanges(NULL),
 	m_ppiBuildingClassYieldModifiers(NULL),
 	m_ppiBuildingClassYieldChanges(NULL),
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+	m_ppiBuildingScecialistCountChange(NULL),
+#endif
 	m_piFlavorValue(NULL),
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 	m_iMaxExtraVotesFromMinors(0),
@@ -255,6 +258,9 @@ CvPolicyEntry::~CvPolicyEntry(void)
 	CvDatabaseUtility::SafeDelete2DArray(m_ppiImprovementYieldChanges);
 	CvDatabaseUtility::SafeDelete2DArray(m_ppiBuildingClassYieldModifiers);
 	CvDatabaseUtility::SafeDelete2DArray(m_ppiBuildingClassYieldChanges);
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+	CvDatabaseUtility::SafeDelete2DArray(m_ppiBuildingScecialistCountChange);
+#endif
 }
 
 /// Read from XML file (pass 1)
@@ -524,6 +530,31 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 			m_ppiBuildingClassYieldChanges[BuildingClassID][iYieldID] = iYieldChange;
 		}
 	}
+
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+	//BuildingScecialistCountChange
+	{
+		kUtility.Initialize2DArray(m_ppiBuildingScecialistCountChange, "Buildings", "Specialists");
+
+		std::string strKey("Policy_BuildingScecialistCountChange");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey, "select Buildings.ID as BuildingID, Specialists.ID as SpecialistID, SpecialistCountChange from Policy_BuildingScecialistCountChange inner join Buildings on Buildings.Type = BuildingType inner join Specialists on Specialists.Type = SpecialistType where PolicyType = ?");
+		}
+
+		pResults->Bind(1, szPolicyType);
+
+		while (pResults->Step())
+		{
+			const int BuildingID = pResults->GetInt(0);
+			const int iSpecialistID = pResults->GetInt(1);
+			const int iSpecialistCountChange = pResults->GetInt(2);
+
+			m_ppiBuildingScecialistCountChange[BuildingID][iSpecialistID] = iSpecialistCountChange;
+		}
+	}
+#endif
 
 	//ImprovementYieldChanges
 	{
@@ -1810,6 +1841,18 @@ int CvPolicyEntry::GetBuildingClassYieldChanges(int i, int j) const
 	CvAssertMsg(j > -1, "Index out of bounds");
 	return m_ppiBuildingClassYieldChanges[i][j];
 }
+
+#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+///
+int CvPolicyEntry::GetBuildingScecialistCountChanges(int i, int j) const
+{
+	CvAssertMsg(i < GC.getNumBuildingInfos(), "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	CvAssertMsg(j < NUM_SPECIALOPTION_TYPES, "Index out of bounds");
+	CvAssertMsg(j > -1, "Index out of bounds");
+	return m_ppiBuildingScecialistCountChange[i][j];
+}
+#endif
 
 /// Production modifier for a specific BuildingClass
 int CvPolicyEntry::GetBuildingClassProductionModifier(int i) const
