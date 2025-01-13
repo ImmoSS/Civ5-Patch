@@ -754,6 +754,11 @@ public:
 	void ChangeMinorsGiftUnits(int iChange);
 #endif
 
+#ifdef POLICY_NO_CARGO_PILLAGE
+	bool IsNoCargoPillage() const;
+	void ChangeNoCargoPillage(int iChange);
+#endif
+
 	bool IsAnarchy() const;
 	int GetAnarchyNumTurns() const;
 	void SetAnarchyNumTurns(int iValue);
@@ -2068,6 +2073,9 @@ protected:
 #endif
 #ifdef POLICY_MINORS_GIFT_UNITS
 	int m_iMinorsGiftUnits;
+#endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	int m_iNoCargoPillage;
 #endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;

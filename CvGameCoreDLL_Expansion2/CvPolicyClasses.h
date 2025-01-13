@@ -262,6 +262,9 @@ public:
 #ifdef POLICY_MINORS_GIFT_UNITS
 	bool IsMinorsGiftUnits() const;
 #endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	bool IsNoCargoPillage() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -439,6 +442,9 @@ private:
 #endif
 #ifdef POLICY_MINORS_GIFT_UNITS
 	bool m_bMinorsGiftUnits;
+#endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	bool m_bNoCargoPillage;
 #endif
 
 	// Arrays

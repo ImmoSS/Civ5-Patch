@@ -226,6 +226,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_MINORS_GIFT_UNITS
 	m_bMinorsGiftUnits(false),
 #endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	m_bNoCargoPillage(false),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -466,6 +469,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_MINORS_GIFT_UNITS
 	m_bMinorsGiftUnits = kResults.GetBool("MinorsGiftUnits");
+#endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	m_bNoCargoPillage = kResults.GetBool("NoCargoPillage");
 #endif
 
 	//Arrays
@@ -1974,6 +1980,14 @@ bool CvPolicyEntry::IsNoCultureSpecialistFood() const
 bool CvPolicyEntry::IsMinorsGiftUnits() const
 {
 	return m_bMinorsGiftUnits;
+}
+#endif
+
+#ifdef POLICY_NO_CARGO_PILLAGE
+///
+bool CvPolicyEntry::IsNoCargoPillage() const
+{
+	return m_bNoCargoPillage;
 }
 #endif
 

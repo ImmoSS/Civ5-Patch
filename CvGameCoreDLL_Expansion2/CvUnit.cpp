@@ -6306,7 +6306,7 @@ bool CvUnit::canPlunderTradeRoute(const CvPlot* pPlot, bool bOnlyTestVisibility)
 				return false;
 			}
 
-#ifdef NO_PILLAGE_CARGO_TREASURE_FLEETS
+#ifdef POLICY_NO_CARGO_PILLAGE
 			CvGameTrade* pTrade = GC.getGame().GetGameTrade();
 			int iTradeConnectionIndex = pTrade->GetIndexFromID(aiTradeUnitsAtPlot[0]);
 			PlayerTypes ePlayer = pTrade->GetOwnerFromID(aiTradeUnitsAtPlot[0]);
@@ -6318,7 +6318,7 @@ bool CvUnit::canPlunderTradeRoute(const CvPlot* pPlot, bool bOnlyTestVisibility)
 
 			TradeConnection* pTradeConnection = &(pTrade->m_aTradeConnections[iTradeConnectionIndex]);
 			DomainTypes eDomain = pTradeConnection->m_eDomain;
-			if (eDomain == DOMAIN_SEA && GET_PLAYER(ePlayer).GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_TREASURE_FLEETS", true /*bHideAssert*/)))
+			if (eDomain == DOMAIN_SEA && GET_PLAYER(ePlayer).IsNoCargoPillage())
 			{
 				return false;
 			}

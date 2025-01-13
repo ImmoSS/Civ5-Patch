@@ -308,6 +308,9 @@ CvPlayer::CvPlayer() :
 #ifdef POLICY_MINORS_GIFT_UNITS
 	, m_iMinorsGiftUnits(0)
 #endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	, m_iNoCargoPillage(0)
+#endif
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
 	, m_iUnitUpgradeCostMod("CvPlayer::m_iUnitUpgradeCostMod", m_syncArchive)
@@ -1133,6 +1136,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef POLICY_MINORS_GIFT_UNITS
 	m_iMinorsGiftUnits = 0;
+#endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	m_iNoCargoPillage = 0;
 #endif
 	m_iSpecialPolicyBuildingHappiness = 0;
 	m_iWoundedUnitDamageMod = 0;
@@ -14994,6 +15000,27 @@ void CvPlayer::ChangeMinorsGiftUnits(int iChange)
 }
 #endif
 
+#ifdef POLICY_NO_CARGO_PILLAGE
+//	--------------------------------------------------------------------------------
+///
+bool CvPlayer::IsNoCargoPillage() const
+{
+	return m_iNoCargoPillage > 0;
+}
+
+//	--------------------------------------------------------------------------------
+///
+void CvPlayer::ChangeNoCargoPillage(int iChange)
+{
+	m_iNoCargoPillage += iChange;
+	CvAssert(m_iNoCargoPillage >= 0);
+	if (m_iNoCargoPillage < 0)
+	{
+		m_iNoCargoPillage = 0;
+	}
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 /// Empire in Anarchy?
 bool CvPlayer::IsAnarchy() const
@@ -25105,6 +25132,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 #ifdef POLICY_MINORS_GIFT_UNITS
 	ChangeMinorsGiftUnits(pPolicy->IsMinorsGiftUnits() * iChange);
 #endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	ChangeNoCargoPillage(pPolicy->IsNoCargoPillage() * iChange);
+#endif
 
 	// Not really techs but this is what we use (for now)
 	for(iI = 0; iI < GC.getNUM_AND_TECH_PREREQS(); iI++)
@@ -26548,6 +26578,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 #endif
 #endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+#endif
+		kStream >> m_iNoCargoPillage;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iNoCargoPillage = 0;
+	}
+#endif
+#endif
 	kStream >> m_iSpecialPolicyBuildingHappiness;
 	kStream >> m_iWoundedUnitDamageMod;
 	kStream >> m_iUnitUpgradeCostMod;
@@ -27566,6 +27610,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef POLICY_MINORS_GIFT_UNITS
 	kStream << m_iMinorsGiftUnits;
+#endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	kStream << m_iNoCargoPillage;
 #endif
 	kStream << m_iSpecialPolicyBuildingHappiness;
 	kStream << m_iWoundedUnitDamageMod;
