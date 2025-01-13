@@ -759,6 +759,11 @@ public:
 	void ChangeNoCargoPillage(int iChange);
 #endif
 
+#ifdef POLICY_GREAT_WORK_HAPPINESS
+	int GetGreatWorkHappiness() const;
+	void ChangeGreatWorkHappiness(int iChange);
+#endif
+
 	bool IsAnarchy() const;
 	int GetAnarchyNumTurns() const;
 	void SetAnarchyNumTurns(int iValue);
@@ -2076,6 +2081,9 @@ protected:
 #endif
 #ifdef POLICY_NO_CARGO_PILLAGE
 	int m_iNoCargoPillage;
+#endif
+#ifdef POLICY_GREAT_WORK_HAPPINESS
+	int m_iGreatWorkHappiness;
 #endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;

@@ -311,6 +311,9 @@ CvPlayer::CvPlayer() :
 #ifdef POLICY_NO_CARGO_PILLAGE
 	, m_iNoCargoPillage(0)
 #endif
+#ifdef POLICY_GREAT_WORK_HAPPINESS
+	, m_iGreatWorkHappiness(0)
+#endif
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
 	, m_iUnitUpgradeCostMod("CvPlayer::m_iUnitUpgradeCostMod", m_syncArchive)
@@ -1139,6 +1142,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef POLICY_NO_CARGO_PILLAGE
 	m_iNoCargoPillage = 0;
+#endif
+#ifdef POLICY_GREAT_WORK_HAPPINESS
+	m_iGreatWorkHappiness = 0;
 #endif
 	m_iSpecialPolicyBuildingHappiness = 0;
 	m_iWoundedUnitDamageMod = 0;
@@ -13446,11 +13452,8 @@ int CvPlayer::GetHappinessFromPolicies() const
 		}
 	}
 
-#ifdef FINE_ARTS_HAPPINESS_FROM_GREAT_WORKS
-	if (GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_FINE_ARTS", true)))
-	{
-		iHappiness += 1 * GetCulture()->GetNumGreatWorks();
-	}
+#ifdef POLICY_GREAT_WORK_HAPPINESS
+	iHappiness += GetGreatWorkHappiness() * GetCulture()->GetNumGreatWorks();
 #endif
 
 	return iHappiness;
@@ -15017,6 +15020,27 @@ void CvPlayer::ChangeNoCargoPillage(int iChange)
 	if (m_iNoCargoPillage < 0)
 	{
 		m_iNoCargoPillage = 0;
+	}
+}
+#endif
+
+#ifdef POLICY_GREAT_WORK_HAPPINESS
+//	--------------------------------------------------------------------------------
+///
+int CvPlayer::GetGreatWorkHappiness() const
+{
+	return m_iGreatWorkHappiness;
+}
+
+//	--------------------------------------------------------------------------------
+///
+void CvPlayer::ChangeGreatWorkHappiness(int iChange)
+{
+	m_iGreatWorkHappiness += iChange;
+	CvAssert(m_iGreatWorkHappiness >= 0);
+	if (m_iGreatWorkHappiness < 0)
+	{
+		m_iGreatWorkHappiness = 0;
 	}
 }
 #endif
@@ -25135,6 +25159,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 #ifdef POLICY_NO_CARGO_PILLAGE
 	ChangeNoCargoPillage(pPolicy->IsNoCargoPillage() * iChange);
 #endif
+#ifdef POLICY_GREAT_WORK_HAPPINESS
+	ChangeGreatWorkHappiness(pPolicy->GetGreatWorkHappiness() * iChange);
+#endif
 
 	// Not really techs but this is what we use (for now)
 	for(iI = 0; iI < GC.getNUM_AND_TECH_PREREQS(); iI++)
@@ -26592,6 +26619,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 #endif
 #endif
+#ifdef POLICY_GREAT_WORK_HAPPINESS
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+#endif
+		kStream >> m_iGreatWorkHappiness;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iGreatWorkHappiness = 0;
+	}
+#endif
+#endif
 	kStream >> m_iSpecialPolicyBuildingHappiness;
 	kStream >> m_iWoundedUnitDamageMod;
 	kStream >> m_iUnitUpgradeCostMod;
@@ -27613,6 +27654,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef POLICY_NO_CARGO_PILLAGE
 	kStream << m_iNoCargoPillage;
+#endif
+#ifdef POLICY_GREAT_WORK_HAPPINESS
+	kStream << m_iGreatWorkHappiness;
 #endif
 	kStream << m_iSpecialPolicyBuildingHappiness;
 	kStream << m_iWoundedUnitDamageMod;

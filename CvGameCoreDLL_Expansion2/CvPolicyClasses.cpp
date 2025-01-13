@@ -229,6 +229,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_NO_CARGO_PILLAGE
 	m_bNoCargoPillage(false),
 #endif
+#ifdef POLICY_GREAT_WORK_HAPPINESS
+	m_iGreatWorkHappiness(false),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -472,6 +475,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_NO_CARGO_PILLAGE
 	m_bNoCargoPillage = kResults.GetBool("NoCargoPillage");
+#endif
+#ifdef POLICY_GREAT_WORK_HAPPINESS
+	m_iGreatWorkHappiness = kResults.GetBool("GreatWorkHappiness");
 #endif
 
 	//Arrays
@@ -1988,6 +1994,14 @@ bool CvPolicyEntry::IsMinorsGiftUnits() const
 bool CvPolicyEntry::IsNoCargoPillage() const
 {
 	return m_bNoCargoPillage;
+}
+#endif
+
+#ifdef POLICY_GREAT_WORK_HAPPINESS
+///
+int CvPolicyEntry::GetGreatWorkHappiness() const
+{
+	return m_iGreatWorkHappiness;
 }
 #endif
 
