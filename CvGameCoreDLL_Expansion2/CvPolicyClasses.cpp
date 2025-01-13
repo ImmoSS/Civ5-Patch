@@ -552,7 +552,7 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 		Database::Results* pResults = kUtility.GetResults(strKey);
 		if (pResults == NULL)
 		{
-			pResults = kUtility.PrepareResults(strKey, "select Buildings.ID as BuildingID, Specialists.ID as SpecialistID, SpecialistCountChange from Policy_BuildingScecialistCountChange inner join Buildings on Buildings.Type = BuildingType inner join Specialists on Specialists.Type = SpecialistType where PolicyType = ?");
+			pResults = kUtility.PrepareResults(strKey, "select Buildings.ID as BuildingID, Specialists.ID as SpecialistID, SpecialistCountChange from Policy_BuildingScecialistCountChange inner join Buildings on Buildings.Type = BuildingType inner join Specialists on Specialists.Type = Policy_BuildingScecialistCountChange.SpecialistType where PolicyType = ?");
 		}
 
 		pResults->Bind(1, szPolicyType);

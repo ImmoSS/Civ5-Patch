@@ -26880,7 +26880,6 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iNumCitiesPolicyCostDiscount;
 	kStream >> m_iGarrisonFreeMaintenanceCount;
 	kStream >> m_iGarrisonedCityRangeStrikeModifier;
-	kStream >> m_iNumCitiesFreeCultureBuilding;
 #ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1010)
@@ -26906,6 +26905,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+	kStream >> m_iNumCitiesFreeCultureBuilding;
 	kStream >> m_iNumCitiesFreeFoodBuilding;
 #ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
