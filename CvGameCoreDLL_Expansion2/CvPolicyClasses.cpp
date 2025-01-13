@@ -184,6 +184,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 	m_piGoldenAgeYieldModifier(NULL),
 #endif
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+	m_piPlotExtraYieldFromTradeRoute(NULL),
+#endif
 	m_pabFreePromotion(NULL),
 	m_paiUnitCombatProductionModifiers(NULL),
 	m_paiUnitCombatFreeExperiences(NULL),
@@ -243,6 +246,9 @@ CvPolicyEntry::~CvPolicyEntry(void)
 	SAFE_DELETE_ARRAY(m_piSpecialistExtraYield);
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 	SAFE_DELETE_ARRAY(m_piGoldenAgeYieldModifier);
+#endif
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+	SAFE_DELETE_ARRAY(m_piPlotExtraYieldFromTradeRoute);
 #endif
 	SAFE_DELETE_ARRAY(m_pabFreePromotion);
 	SAFE_DELETE_ARRAY(m_paiUnitCombatProductionModifiers);
@@ -474,6 +480,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	kUtility.SetYields(m_piSpecialistExtraYield, "Policy_SpecialistExtraYields", "PolicyType", szPolicyType);
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 	kUtility.SetYields(m_piGoldenAgeYieldModifier, "Policy_GoldenAgeYieldModifiers", "PolicyType", szPolicyType);
+#endif
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+	kUtility.SetYields(m_piPlotExtraYieldFromTradeRoute, "Policy_PlotExtraYieldFromTradeRoute", "PolicyType", szPolicyType);
 #endif
 
 	kUtility.SetFlavors(m_piFlavorValue, "Policy_Flavors", "PolicyType", szPolicyType);
@@ -1712,6 +1721,22 @@ int CvPolicyEntry::GetGoldenAgeYieldModifier(int i) const
 int* CvPolicyEntry::GetGoldenAgeYieldModifierArray() const
 {
 	return m_piGoldenAgeYieldModifier;
+}
+#endif
+
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+///
+int CvPolicyEntry::GetPlotExtraYieldFromTradeRoute(int i) const
+{
+	CvAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	return m_piPlotExtraYieldFromTradeRoute ? m_piPlotExtraYieldFromTradeRoute[i] : -1;
+}
+
+//
+int* CvPolicyEntry::GetPlotExtraYieldFromTradeRouteArray() const
+{
+	return m_piPlotExtraYieldFromTradeRoute;
 }
 #endif
 

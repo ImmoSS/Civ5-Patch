@@ -210,6 +210,10 @@ public:
 	int GetGoldenAgeYieldModifier(int i) const;
 	int* GetGoldenAgeYieldModifierArray() const;
 #endif
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+	int GetPlotExtraYieldFromTradeRoute(int i) const;
+	int* GetPlotExtraYieldFromTradeRouteArray() const;
+#endif
 	int IsFreePromotion(int i) const;
 	bool IsFreePromotionUnitCombat(const int promotionID, const int unitCombatID) const;
 	int GetUnitCombatProductionModifiers(int i) const;
@@ -452,6 +456,9 @@ private:
 	int* m_piSpecialistExtraYield;
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 	int* m_piGoldenAgeYieldModifier;
+#endif
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+	int* m_piPlotExtraYieldFromTradeRoute;
 #endif
 	int* m_piImprovementCultureChange;
 	bool* m_pabFreePromotion;
