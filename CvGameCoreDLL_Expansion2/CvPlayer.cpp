@@ -308,6 +308,9 @@ CvPlayer::CvPlayer() :
 #ifdef POLICY_MINORS_GIFT_UNITS
 	, m_iMinorsGiftUnits(0)
 #endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	, m_iNoCargoPillage(0)
+#endif
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
 	, m_iUnitUpgradeCostMod("CvPlayer::m_iUnitUpgradeCostMod", m_syncArchive)
@@ -546,6 +549,9 @@ CvPlayer::CvPlayer() :
 	, m_aiSpecialistExtraYield("CvPlayer::m_aiSpecialistExtraYield", m_syncArchive)
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 	, m_aiGoldenAgeYieldModifier("CvPlayer::m_aiGoldenAgeYieldModifier", m_syncArchive)
+#endif
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+	, m_paiPlotExtraYieldFromTradeRoute("CvPlayer::m_paiPlotExtraYieldFromTradeRoute", m_syncArchive)
 #endif
 	, m_aiProximityToPlayer("CvPlayer::m_aiProximityToPlayer", m_syncArchive, true)
 	, m_aiResearchAgreementCounter("CvPlayer::m_aiResearchAgreementCounter", m_syncArchive)
@@ -1131,6 +1137,9 @@ void CvPlayer::uninit()
 #ifdef POLICY_MINORS_GIFT_UNITS
 	m_iMinorsGiftUnits = 0;
 #endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	m_iNoCargoPillage = 0;
+#endif
 	m_iSpecialPolicyBuildingHappiness = 0;
 	m_iWoundedUnitDamageMod = 0;
 	m_iUnitUpgradeCostMod = 0;
@@ -1448,6 +1457,11 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 	m_aiGoldenAgeYieldModifier.clear();
 	m_aiGoldenAgeYieldModifier.resize(NUM_YIELD_TYPES, 0);
+#endif
+
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+	m_paiPlotExtraYieldFromTradeRoute.clear();
+	m_paiPlotExtraYieldFromTradeRoute.resize(NUM_YIELD_TYPES, 0);
 #endif
 
 	m_aiProximityToPlayer.clear();
@@ -5125,7 +5139,7 @@ void CvPlayer::doTurn()
 			if(!isMinorCiv())
 			{
 				GetTrade()->DoTurn();
-#ifdef EXTRA_PLOT_GOLD_FROM_TRADE_ROUTES
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
 				updateYield();
 #endif
 			}
@@ -14986,6 +15000,27 @@ void CvPlayer::ChangeMinorsGiftUnits(int iChange)
 }
 #endif
 
+#ifdef POLICY_NO_CARGO_PILLAGE
+//	--------------------------------------------------------------------------------
+///
+bool CvPlayer::IsNoCargoPillage() const
+{
+	return m_iNoCargoPillage > 0;
+}
+
+//	--------------------------------------------------------------------------------
+///
+void CvPlayer::ChangeNoCargoPillage(int iChange)
+{
+	m_iNoCargoPillage += iChange;
+	CvAssert(m_iNoCargoPillage >= 0);
+	if (m_iNoCargoPillage < 0)
+	{
+		m_iNoCargoPillage = 0;
+	}
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 /// Empire in Anarchy?
 bool CvPlayer::IsAnarchy() const
@@ -20472,6 +20507,28 @@ void CvPlayer::changeGoldenAgeYieldModifier(YieldTypes eIndex, int iChange)
 }
 #endif
 
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+//	--------------------------------------------------------------------------------
+int CvPlayer::getPlotExtraYieldFromTradeRoute(YieldTypes eIndex) const
+{
+	CvAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex is expected to be within maximum bounds (invalid Index)");
+	return m_paiPlotExtraYieldFromTradeRoute[eIndex];
+}
+
+//	--------------------------------------------------------------------------------
+void CvPlayer::changePlotExtraYieldFromTradeRoute(YieldTypes eIndex, int iChange)
+{
+	CvAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex is expected to be within maximum bounds (invalid Index)");
+
+	if (iChange != 0)
+	{
+		m_paiPlotExtraYieldFromTradeRoute.setAt(eIndex, m_paiPlotExtraYieldFromTradeRoute[eIndex] + iChange);
+	}
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 /// Returns how "close" we are to another player (useful for diplomacy, war planning, etc.)
 PlayerProximityTypes CvPlayer::GetProximityToPlayer(PlayerTypes ePlayer) const
@@ -24785,6 +24842,12 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		if (iMod != 0)
 			changeGoldenAgeYieldModifier(eYield, iMod);
 #endif
+
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+		iMod = pPolicy->GetPlotExtraYieldFromTradeRoute(iI) * iChange;
+		if (iMod != 0)
+			changePlotExtraYieldFromTradeRoute(eYield, iMod);
+#endif
 	}
 
 	for(iI = 0; iI < GC.getNumUnitCombatClassInfos(); iI++)
@@ -25068,6 +25131,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 #endif
 #ifdef POLICY_MINORS_GIFT_UNITS
 	ChangeMinorsGiftUnits(pPolicy->IsMinorsGiftUnits() * iChange);
+#endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	ChangeNoCargoPillage(pPolicy->IsNoCargoPillage() * iChange);
 #endif
 
 	// Not really techs but this is what we use (for now)
@@ -26512,6 +26578,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 #endif
 #endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+#endif
+		kStream >> m_iNoCargoPillage;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iNoCargoPillage = 0;
+	}
+#endif
+#endif
 	kStream >> m_iSpecialPolicyBuildingHappiness;
 	kStream >> m_iWoundedUnitDamageMod;
 	kStream >> m_iUnitUpgradeCostMod;
@@ -26880,7 +26960,6 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iNumCitiesPolicyCostDiscount;
 	kStream >> m_iGarrisonFreeMaintenanceCount;
 	kStream >> m_iGarrisonedCityRangeStrikeModifier;
-	kStream >> m_iNumCitiesFreeCultureBuilding;
 #ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1010)
@@ -26906,6 +26985,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+	kStream >> m_iNumCitiesFreeCultureBuilding;
 	kStream >> m_iNumCitiesFreeFoodBuilding;
 #ifdef POLICY_FREE_DEFENSIVE_BUILDINGS
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
@@ -27049,6 +27129,21 @@ void CvPlayer::Read(FDataStream& kStream)
 	{
 		m_aiGoldenAgeYieldModifier.clear();
 		m_aiGoldenAgeYieldModifier.resize(NUM_YIELD_TYPES, 0);
+	}
+# endif
+#endif
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+# endif
+		kStream >> m_paiPlotExtraYieldFromTradeRoute;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_paiPlotExtraYieldFromTradeRoute.clear();
+		m_paiPlotExtraYieldFromTradeRoute.resize(NUM_YIELD_TYPES, 0);
 	}
 # endif
 #endif
@@ -27516,6 +27611,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #ifdef POLICY_MINORS_GIFT_UNITS
 	kStream << m_iMinorsGiftUnits;
 #endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	kStream << m_iNoCargoPillage;
+#endif
 	kStream << m_iSpecialPolicyBuildingHappiness;
 	kStream << m_iWoundedUnitDamageMod;
 	kStream << m_iUnitUpgradeCostMod;
@@ -27782,6 +27880,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_aiSpecialistExtraYield;
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 	kStream << m_aiGoldenAgeYieldModifier;
+#endif
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+	kStream << m_paiPlotExtraYieldFromTradeRoute;
 #endif
 	kStream << m_aiProximityToPlayer;
 	kStream << m_aiResearchAgreementCounter;   // Added in Version 2

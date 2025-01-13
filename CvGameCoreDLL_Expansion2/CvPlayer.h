@@ -754,6 +754,11 @@ public:
 	void ChangeMinorsGiftUnits(int iChange);
 #endif
 
+#ifdef POLICY_NO_CARGO_PILLAGE
+	bool IsNoCargoPillage() const;
+	void ChangeNoCargoPillage(int iChange);
+#endif
+
 	bool IsAnarchy() const;
 	int GetAnarchyNumTurns() const;
 	void SetAnarchyNumTurns(int iValue);
@@ -1350,6 +1355,11 @@ public:
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 	int getGoldenAgeYieldModifier(YieldTypes eIndex) const;
 	void changeGoldenAgeYieldModifier(YieldTypes eIndex, int iChange);
+#endif
+
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+	int getPlotExtraYieldFromTradeRoute(YieldTypes eIndex) const;
+	void changePlotExtraYieldFromTradeRoute(YieldTypes eIndex, int iChange);
 #endif
 
 	PlayerProximityTypes GetProximityToPlayer(PlayerTypes ePlayer) const;
@@ -2064,6 +2074,9 @@ protected:
 #ifdef POLICY_MINORS_GIFT_UNITS
 	int m_iMinorsGiftUnits;
 #endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	int m_iNoCargoPillage;
+#endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;
 	int m_iCultureBonusTurns;
@@ -2319,6 +2332,9 @@ protected:
 	FAutoVariable<std::vector<int>, CvPlayer> m_aiSpecialistExtraYield;
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 	FAutoVariable<std::vector<int>, CvPlayer> m_aiGoldenAgeYieldModifier;
+#endif
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+	FAutoVariable<std::vector<int>, CvPlayer> m_paiPlotExtraYieldFromTradeRoute;
 #endif
 	FAutoVariable<std::vector<int>, CvPlayer> m_aiProximityToPlayer;
 	FAutoVariable<std::vector<int>, CvPlayer> m_aiResearchAgreementCounter;

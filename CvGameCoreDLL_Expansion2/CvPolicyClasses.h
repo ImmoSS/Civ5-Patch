@@ -210,6 +210,10 @@ public:
 	int GetGoldenAgeYieldModifier(int i) const;
 	int* GetGoldenAgeYieldModifierArray() const;
 #endif
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+	int GetPlotExtraYieldFromTradeRoute(int i) const;
+	int* GetPlotExtraYieldFromTradeRouteArray() const;
+#endif
 	int IsFreePromotion(int i) const;
 	bool IsFreePromotionUnitCombat(const int promotionID, const int unitCombatID) const;
 	int GetUnitCombatProductionModifiers(int i) const;
@@ -257,6 +261,9 @@ public:
 #endif
 #ifdef POLICY_MINORS_GIFT_UNITS
 	bool IsMinorsGiftUnits() const;
+#endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	bool IsNoCargoPillage() const;
 #endif
 
 private:
@@ -436,6 +443,9 @@ private:
 #ifdef POLICY_MINORS_GIFT_UNITS
 	bool m_bMinorsGiftUnits;
 #endif
+#ifdef POLICY_NO_CARGO_PILLAGE
+	bool m_bNoCargoPillage;
+#endif
 
 	// Arrays
 	std::multimap<int, int> m_FreePromotionUnitCombats;
@@ -452,6 +462,9 @@ private:
 	int* m_piSpecialistExtraYield;
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 	int* m_piGoldenAgeYieldModifier;
+#endif
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
+	int* m_piPlotExtraYieldFromTradeRoute;
 #endif
 	int* m_piImprovementCultureChange;
 	bool* m_pabFreePromotion;

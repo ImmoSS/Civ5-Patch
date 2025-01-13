@@ -6059,7 +6059,7 @@ bool CvUnit::makeTradeRoute(int iX, int iY, TradeConnectionType eConnectionType)
 	}
 
 	bool bResult = GET_PLAYER(getOwner()).GetTrade()->CreateTradeRoute(pFromCity, pToCity, getDomainType(), eConnectionType);
-#ifdef EXTRA_PLOT_GOLD_FROM_TRADE_ROUTES
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
 	GET_PLAYER(getOwner()).updateYield();
 #endif
 	return bResult;
@@ -6306,7 +6306,7 @@ bool CvUnit::canPlunderTradeRoute(const CvPlot* pPlot, bool bOnlyTestVisibility)
 				return false;
 			}
 
-#ifdef NO_PILLAGE_CARGO_TREASURE_FLEETS
+#ifdef POLICY_NO_CARGO_PILLAGE
 			CvGameTrade* pTrade = GC.getGame().GetGameTrade();
 			int iTradeConnectionIndex = pTrade->GetIndexFromID(aiTradeUnitsAtPlot[0]);
 			PlayerTypes ePlayer = pTrade->GetOwnerFromID(aiTradeUnitsAtPlot[0]);
@@ -6318,7 +6318,7 @@ bool CvUnit::canPlunderTradeRoute(const CvPlot* pPlot, bool bOnlyTestVisibility)
 
 			TradeConnection* pTradeConnection = &(pTrade->m_aTradeConnections[iTradeConnectionIndex]);
 			DomainTypes eDomain = pTradeConnection->m_eDomain;
-			if (eDomain == DOMAIN_SEA && GET_PLAYER(ePlayer).GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_TREASURE_FLEETS", true /*bHideAssert*/)))
+			if (eDomain == DOMAIN_SEA && GET_PLAYER(ePlayer).IsNoCargoPillage())
 			{
 				return false;
 			}
@@ -6358,11 +6358,11 @@ bool CvUnit::plunderTradeRoute()
 	}
 
 	// right now, plunder the first unit
-#ifdef EXTRA_PLOT_GOLD_FROM_TRADE_ROUTES
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
 	PlayerTypes ePlayer = GC.getGame().GetGameTrade()->GetOwnerFromID(aiTradeUnitsAtPlot[0]);
 #endif
 	pTrade->PlunderTradeRoute(aiTradeUnitsAtPlot[0]);
-#ifdef EXTRA_PLOT_GOLD_FROM_TRADE_ROUTES
+#ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
 	GET_PLAYER(ePlayer).updateYield();
 #endif
 	return true;
