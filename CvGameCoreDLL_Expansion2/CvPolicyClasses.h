@@ -255,6 +255,9 @@ public:
 #ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
 	bool IsNoCultureSpecialistFood() const;
 #endif
+#ifdef POLICY_MINORS_GIFT_UNITS
+	bool IsMinorsGiftUnits() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -429,6 +432,9 @@ private:
 #endif
 #ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
 	bool m_bNoCultureSpecialistFood;
+#endif
+#ifdef POLICY_MINORS_GIFT_UNITS
+	bool m_bMinorsGiftUnits;
 #endif
 
 	// Arrays

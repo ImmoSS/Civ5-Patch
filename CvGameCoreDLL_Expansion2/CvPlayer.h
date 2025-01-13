@@ -749,6 +749,11 @@ public:
 	void ChangeNoCultureSpecialistFood(int iChange);
 #endif
 
+#ifdef POLICY_MINORS_GIFT_UNITS
+	bool IsMinorsGiftUnits() const;
+	void ChangeMinorsGiftUnits(int iChange);
+#endif
+
 	bool IsAnarchy() const;
 	int GetAnarchyNumTurns() const;
 	void SetAnarchyNumTurns(int iValue);
@@ -2055,6 +2060,9 @@ protected:
 #endif
 #ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
 	int m_iNoCultureSpecialistFood;
+#endif
+#ifdef POLICY_MINORS_GIFT_UNITS
+	int m_iMinorsGiftUnits;
 #endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;

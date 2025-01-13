@@ -305,6 +305,9 @@ CvPlayer::CvPlayer() :
 #ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
 	, m_iNoCultureSpecialistFood(0)
 #endif
+#ifdef POLICY_MINORS_GIFT_UNITS
+	, m_iMinorsGiftUnits(0)
+#endif
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
 	, m_iUnitUpgradeCostMod("CvPlayer::m_iUnitUpgradeCostMod", m_syncArchive)
@@ -1124,6 +1127,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
 	m_iNoCultureSpecialistFood = 0;
+#endif
+#ifdef POLICY_MINORS_GIFT_UNITS
+	m_iMinorsGiftUnits = 0;
 #endif
 	m_iSpecialPolicyBuildingHappiness = 0;
 	m_iWoundedUnitDamageMod = 0;
@@ -14948,6 +14954,38 @@ void CvPlayer::ChangeNoCultureSpecialistFood(int iChange)
 }
 #endif
 
+#ifdef POLICY_MINORS_GIFT_UNITS
+//	--------------------------------------------------------------------------------
+///
+bool CvPlayer::IsMinorsGiftUnits() const
+{
+	return m_iMinorsGiftUnits > 0;
+}
+
+//	--------------------------------------------------------------------------------
+///
+void CvPlayer::ChangeMinorsGiftUnits(int iChange)
+{
+	m_iMinorsGiftUnits += iChange;
+	CvAssert(m_iMinorsGiftUnits >= 0);
+	if (m_iMinorsGiftUnits < 0)
+	{
+		m_iMinorsGiftUnits = 0;
+	}
+	if (m_iMinorsGiftUnits > 0)
+	{
+		for (int iMinorCivLoop = MAX_MAJOR_CIVS; iMinorCivLoop < MAX_CIV_PLAYERS; iMinorCivLoop++)
+		{
+			PlayerTypes eMinorCivLoop = (PlayerTypes)iMinorCivLoop;
+			if (GET_PLAYER(eMinorCivLoop).isAlive() && GET_TEAM(GET_PLAYER((PlayerTypes)GetID()).getTeam()).isHasMet(GET_PLAYER(eMinorCivLoop).getTeam()) && GET_PLAYER(eMinorCivLoop).GetMinorCivAI()->GetUnitSpawnCounter((PlayerTypes)GetID()) == -1)
+			{
+				GET_PLAYER(eMinorCivLoop).GetMinorCivAI()->DoSeedUnitSpawnCounter((PlayerTypes)GetID());
+			}
+		}
+	}
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 /// Empire in Anarchy?
 bool CvPlayer::IsAnarchy() const
@@ -25024,9 +25062,12 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 #endif
 #ifdef POLICY_DO_TECH_FROM_CITY_CONQ
 	ChangePolicyTechFromCityConquer(pPolicy->IsTechFromCityConquer() * iChange);
+#endif
 #ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
 	ChangeNoCultureSpecialistFood(pPolicy->IsNoCultureSpecialistFood() * iChange);
 #endif
+#ifdef POLICY_MINORS_GIFT_UNITS
+	ChangeMinorsGiftUnits(pPolicy->IsMinorsGiftUnits() * iChange);
 #endif
 
 	// Not really techs but this is what we use (for now)
@@ -25082,19 +25123,6 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 			if (GET_PLAYER(eMinorCivLoop).isAlive() && GET_TEAM(GET_PLAYER((PlayerTypes)GetID()).getTeam()).isHasMet(GET_PLAYER(eMinorCivLoop).getTeam()))
 			{
 				GET_PLAYER(eMinorCivLoop).GetMinorCivAI()->ChangeFriendshipWithMajor((PlayerTypes)GetID(), iInfluenceBoost);
-			}
-		}
-	}
-#endif
-#ifdef UNITED_FRONT_ALL_CITIES_GIFT_UNITS
-	if (ePolicy == (PolicyTypes)GC.getInfoTypeForString("POLICY_UNITED_FRONT", true /*bHideAssert*/))
-	{
-		for (int iMinorCivLoop = MAX_MAJOR_CIVS; iMinorCivLoop < MAX_CIV_PLAYERS; iMinorCivLoop++)
-		{
-			PlayerTypes eMinorCivLoop = (PlayerTypes)iMinorCivLoop;
-			if (GET_PLAYER(eMinorCivLoop).isAlive() && GET_TEAM(GET_PLAYER((PlayerTypes)GetID()).getTeam()).isHasMet(GET_PLAYER(eMinorCivLoop).getTeam()) && GET_PLAYER(eMinorCivLoop).GetMinorCivAI()->GetUnitSpawnCounter((PlayerTypes)GetID()) == -1)
-			{
-				GET_PLAYER(eMinorCivLoop).GetMinorCivAI()->DoSeedUnitSpawnCounter((PlayerTypes)GetID());
 			}
 		}
 	}
@@ -26470,6 +26498,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 #endif
 #endif
+#ifdef POLICY_MINORS_GIFT_UNITS
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+#endif
+		kStream >> m_iMinorsGiftUnits;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iMinorsGiftUnits = 0;
+	}
+#endif
+#endif
 	kStream >> m_iSpecialPolicyBuildingHappiness;
 	kStream >> m_iWoundedUnitDamageMod;
 	kStream >> m_iUnitUpgradeCostMod;
@@ -27470,6 +27512,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
 	kStream << m_iNoCultureSpecialistFood;
+#endif
+#ifdef POLICY_MINORS_GIFT_UNITS
+	kStream << m_iMinorsGiftUnits;
 #endif
 	kStream << m_iSpecialPolicyBuildingHappiness;
 	kStream << m_iWoundedUnitDamageMod;
