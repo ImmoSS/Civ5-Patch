@@ -25023,7 +25023,7 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 	ChangePolicyExtraVotes(pPolicy->GetExtraVotes() * iChange);
 #endif
 #ifdef POLICY_DO_TECH_FROM_CITY_CONQ
-	ChangePolicyExtraVotes(pPolicy->IsTechFromCityConquer() * iChange);
+	ChangePolicyTechFromCityConquer(pPolicy->IsTechFromCityConquer() * iChange);
 #ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
 	ChangeNoCultureSpecialistFood(pPolicy->IsNoCultureSpecialistFood() * iChange);
 #endif
