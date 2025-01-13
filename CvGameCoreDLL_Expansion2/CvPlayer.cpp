@@ -1123,7 +1123,7 @@ void CvPlayer::uninit()
 	m_iPolicyTechFromCityConquer = 0;
 #endif
 #ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
-	bool m_iNoCultureSpecialistFood;
+	m_iNoCultureSpecialistFood = 0;
 #endif
 	m_iSpecialPolicyBuildingHappiness = 0;
 	m_iWoundedUnitDamageMod = 0;
@@ -25024,6 +25024,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 #endif
 #ifdef POLICY_DO_TECH_FROM_CITY_CONQ
 	ChangePolicyExtraVotes(pPolicy->IsTechFromCityConquer() * iChange);
+#ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
+	ChangeNoCultureSpecialistFood(pPolicy->IsNoCultureSpecialistFood() * iChange);
+#endif
 #endif
 
 	// Not really techs but this is what we use (for now)

@@ -7251,7 +7251,7 @@ int CvCity::foodConsumption(bool /*bNoAngry*/, int iExtra) const
 	{
 		int iFoodReduction = GetCityCitizens()->GetTotalSpecialistCount() * iFoodPerPop;
 #ifdef POLICY_NO_CULTURE_SPECIALIST_FOOD
-		if (GET_PLAYER(getOwner()).GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_ETHICS", true)))
+		if (GET_PLAYER(getOwner()).IsNoCultureSpecialistFood())
 		{
 			SpecialistTypes eSpecialist;
 
@@ -7273,7 +7273,7 @@ int CvCity::foodConsumption(bool /*bNoAngry*/, int iExtra) const
 	else
 	{
 		int iFoodReduction = 0;
-		if (GET_PLAYER(getOwner()).GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_ETHICS", true)))
+		if (GET_PLAYER(getOwner()).IsNoCultureSpecialistFood())
 		{
 			SpecialistTypes eSpecialist;
 
