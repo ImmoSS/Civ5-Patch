@@ -709,6 +709,7 @@ SOURCE TO XML
 + В xml теперь можно задавать политику, которая будет убирать потребление пищи культурными спецами (NoCultureSpecialistFood, сейчас в POLICY_ETHICS, по умолчанию false)
 + В xml теперь можно менять политику, которая позволяет получать юниты от всех ггшек (MinorsGiftUnits, в United Front, по умолчанию false)
 + В xml теперь можно менять йелды на клетке с торговым путем при принятой политике в таблице Policy_PlotExtraYieldFromTradeRoute
++ В xml теперь можно менять политику, которая запрещает грабеж морских караванов (NoCargoPillage в Treasure Fleets, по умолчанию false)
 
 
 
@@ -721,7 +722,6 @@ FUTURE_TECH_RESEARCHING_BONUSES
 POLICIES
 
 LEARNED_SOCIETY_SCIENCE_MOD
-NO_PILLAGE_CARGO_TREASURE_FLEETS
 SCIENCE_FROM_PIETY_FINISHER
 FINE_ARTS_HAPPINESS_FROM_GREAT_WORKS
 HONOR_CULTURE_CAP
