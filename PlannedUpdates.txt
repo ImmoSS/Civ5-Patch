@@ -713,6 +713,8 @@ SOURCE TO XML
 + В xml теперь можно менять значение счастья от шедевров за принятие политик (GreatWorkHappiness в Fine Arts, по умолчанию 0)
 + В xml теперь можно менять кол-во науки за X жителей от религии в политиках, где X -- это кол-во последователей (SciencePerXFollowers в POLICY_PIETY_FINISHER, если 0, то не дается, по умолчанию 0)
 + В xml теперь можно менять политику, которая убирает штраф давлению туризма за разные идеологии (NoDifferentIdeologiesTourismMod в POLICY_AESTHETICS_FINISHER, по у молчанию false)
++ В xml теперь можно менять значение счастья за город от политик (HappinessPerCity в POLICY_RESETTLEMENT, по умолчанию 0)
++ В xml теперь можно менять значение моментального изменения населения всех городов (GlobalPopChange в POLICY_RESETTLEMENT, по умолчанию 0)
 
 
 
