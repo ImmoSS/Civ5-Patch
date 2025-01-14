@@ -715,6 +715,7 @@ SOURCE TO XML
 + В xml теперь можно менять политику, которая убирает штраф давлению туризма за разные идеологии (NoDifferentIdeologiesTourismMod в POLICY_AESTHETICS_FINISHER, по у молчанию false)
 + В xml теперь можно менять значение счастья за город от политик (HappinessPerCity в POLICY_RESETTLEMENT, по умолчанию 0)
 + В xml теперь можно менять значение моментального изменения населения всех городов (GlobalPopChange в POLICY_RESETTLEMENT, по умолчанию 0)
++ В xml теперь можно менять значение туризма с шедевров от политик (GreatWorkTourismChanges в POLICY_CREATIVE_EXPRESSION, по умолчанию 0)
 
 
 
@@ -728,7 +729,6 @@ POLICIES
 
 LEARNED_SOCIETY_SCIENCE_MOD
 HONOR_CULTURE_CAP
-CREATIVE_EXPRESSION_REWORK
 
 
 RELIGION
