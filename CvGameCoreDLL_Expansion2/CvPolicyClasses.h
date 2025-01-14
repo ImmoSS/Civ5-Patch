@@ -268,6 +268,9 @@ public:
 #ifdef POLICY_GREAT_WORK_HAPPINESS
 	int GetGreatWorkHappiness() const;
 #endif
+#ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
+	int GetSciencePerXFollowers() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -451,6 +454,9 @@ private:
 #endif
 #ifdef POLICY_GREAT_WORK_HAPPINESS
 	int m_iGreatWorkHappiness;
+#endif
+#ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
+	int m_iSciencePerXFollowers;
 #endif
 
 	// Arrays

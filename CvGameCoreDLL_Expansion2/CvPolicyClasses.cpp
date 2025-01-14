@@ -232,6 +232,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_GREAT_WORK_HAPPINESS
 	m_iGreatWorkHappiness(false),
 #endif
+#ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
+	m_iSciencePerXFollowers(false),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -478,6 +481,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_GREAT_WORK_HAPPINESS
 	m_iGreatWorkHappiness = kResults.GetBool("GreatWorkHappiness");
+#endif
+#ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
+	m_iSciencePerXFollowers = kResults.GetBool("SciencePerXFollowers");
 #endif
 
 	//Arrays
@@ -2002,6 +2008,14 @@ bool CvPolicyEntry::IsNoCargoPillage() const
 int CvPolicyEntry::GetGreatWorkHappiness() const
 {
 	return m_iGreatWorkHappiness;
+}
+#endif
+
+#ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
+///
+int CvPolicyEntry::GetSciencePerXFollowers() const
+{
+	return m_iSciencePerXFollowers;
 }
 #endif
 

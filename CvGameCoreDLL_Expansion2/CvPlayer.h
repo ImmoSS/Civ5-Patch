@@ -764,6 +764,11 @@ public:
 	void ChangeGreatWorkHappiness(int iChange);
 #endif
 
+#ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
+	int GetSciencePerXFollowers() const;
+	void ChangeSciencePerXFollowers(int iChange);
+#endif
+
 	bool IsAnarchy() const;
 	int GetAnarchyNumTurns() const;
 	void SetAnarchyNumTurns(int iValue);
@@ -2084,6 +2089,9 @@ protected:
 #endif
 #ifdef POLICY_GREAT_WORK_HAPPINESS
 	int m_iGreatWorkHappiness;
+#endif
+#ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
+	int m_iSciencePerXFollowers;
 #endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;
