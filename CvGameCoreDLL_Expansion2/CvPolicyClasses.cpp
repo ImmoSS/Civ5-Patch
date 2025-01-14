@@ -238,6 +238,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
 	m_bNoDifferentIdeologiesTourismMod(false),
 #endif
+#ifdef POLICY_GLOBAL_POP_CHANGE
+	m_iGlobalPopChange(false),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -490,6 +493,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
 	m_bNoDifferentIdeologiesTourismMod = kResults.GetBool("NoDifferentIdeologiesTourismMod");
+#endif
+#ifdef POLICY_GLOBAL_POP_CHANGE
+	m_iGlobalPopChange = kResults.GetBool("GlobalPopChange");
 #endif
 
 	//Arrays
@@ -2030,6 +2036,14 @@ int CvPolicyEntry::GetSciencePerXFollowers() const
 bool CvPolicyEntry::IsNoDifferentIdeologiesTourismMod() const
 {
 	return m_bNoDifferentIdeologiesTourismMod;
+}
+#endif
+
+#ifdef POLICY_GLOBAL_POP_CHANGE
+///
+int CvPolicyEntry::GetGlobalPopChange() const
+{
+	return m_iGlobalPopChange;
 }
 #endif
 

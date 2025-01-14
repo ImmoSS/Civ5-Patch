@@ -274,6 +274,9 @@ public:
 #ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
 	bool IsNoDifferentIdeologiesTourismMod() const;
 #endif
+#ifdef POLICY_GLOBAL_POP_CHANGE
+	int GetGlobalPopChange() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -463,6 +466,9 @@ private:
 #endif
 #ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
 	bool m_bNoDifferentIdeologiesTourismMod;
+#endif
+#ifdef POLICY_GLOBAL_POP_CHANGE
+	int m_iGlobalPopChange;
 #endif
 
 	// Arrays

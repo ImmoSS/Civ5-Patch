@@ -320,6 +320,9 @@ CvPlayer::CvPlayer() :
 #ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
 	, m_iNoDifferentIdeologiesTourismMod(0)
 #endif
+#ifdef POLICY_GLOBAL_POP_CHANGE
+	, m_iGlobalPopChange(0)
+#endif
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
 	, m_iUnitUpgradeCostMod("CvPlayer::m_iUnitUpgradeCostMod", m_syncArchive)
@@ -1157,6 +1160,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
 	m_iNoDifferentIdeologiesTourismMod = 0;
+#endif
+#ifdef POLICY_GLOBAL_POP_CHANGE
+	m_iGlobalPopChange = 0;
 #endif
 	m_iSpecialPolicyBuildingHappiness = 0;
 	m_iWoundedUnitDamageMod = 0;
@@ -15099,6 +15105,27 @@ void CvPlayer::ChangeNoDifferentIdeologiesTourismMod(int iChange)
 }
 #endif
 
+#ifdef POLICY_GLOBAL_POP_CHANGE
+//	--------------------------------------------------------------------------------
+///
+int CvPlayer::GetGlobalPopChange() const
+{
+	return m_iGlobalPopChange;
+}
+
+//	--------------------------------------------------------------------------------
+///
+void CvPlayer::ChangeGlobalPopChange(int iChange)
+{
+	m_iGlobalPopChange += iChange;
+	CvAssert(m_iGlobalPopChange >= 0);
+	if (m_iGlobalPopChange < 0)
+	{
+		m_iGlobalPopChange = 0;
+	}
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 /// Empire in Anarchy?
 bool CvPlayer::IsAnarchy() const
@@ -24853,9 +24880,7 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 	changeGetMinorFriendshipDecayMod(pPolicy->GetMinorFriendshipDecayMod() * iChange);
 	ChangeMinorScienceAlliesCount(pPolicy->IsMinorScienceAllies() * iChange);
 	ChangeMinorResourceBonusCount(pPolicy->IsMinorResourceBonus() * iChange);
-#ifndef RESETTLEMENT_CHANGE_GLOBAL_POP
 	ChangeNewCityExtraPopulation(pPolicy->GetNewCityExtraPopulation() * iChange);
-#endif
 	ChangeFreeFoodBox(pPolicy->GetFreeFoodBox() * iChange);
 	ChangeStrategicResourceMod(pPolicy->GetStrategicResourceMod() * iChange);
 	ChangeAbleToAnnexCityStatesCount((pPolicy->IsAbleToAnnexCityStates()) ? iChange : 0);
@@ -25555,9 +25580,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		}
 	}
 
-#ifdef RESETTLEMENT_CHANGE_GLOBAL_POP
+#ifdef POLICY_GLOBAL_POP_CHANGE
 	// Global Pop change
-	if (pPolicy->GetNewCityExtraPopulation() != 0)
+	if (pPolicy->GetGlobalPopChange() != 0)
 	{
 		CvCity* pLoopCity;
 		int iLoop;
@@ -25566,11 +25591,11 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		{
 			if (iChange > 0)
 			{
-				pLoopCity->setPopulation(std::max(1, (pLoopCity->getPopulation() + iChange * pPolicy->GetNewCityExtraPopulation())));
+				pLoopCity->setPopulation(std::max(1, (pLoopCity->getPopulation() + iChange * pPolicy->GetGlobalPopChange())));
 			}
 		}
-		ChangeExtraHappinessPerCity(iChange * pPolicy->GetNewCityExtraPopulation() / 2);
 	}
+	ChangeGlobalPopChange(iChange * pPolicy->GetGlobalPopChange());
 #endif
 
 	// Great People bonus from Allied city-states
@@ -26721,6 +26746,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 #endif
 #endif
+#ifdef POLICY_GLOBAL_POP_CHANGE
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+#endif
+		kStream >> m_iGlobalPopChange;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iGlobalPopChange = 0;
+	}
+#endif
+#endif
 	kStream >> m_iSpecialPolicyBuildingHappiness;
 	kStream >> m_iWoundedUnitDamageMod;
 	kStream >> m_iUnitUpgradeCostMod;
@@ -27751,6 +27790,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
 	kStream << m_iNoDifferentIdeologiesTourismMod;
+#endif
+#ifdef POLICY_GLOBAL_POP_CHANGE
+	kStream << m_iGlobalPopChange;
 #endif
 	kStream << m_iSpecialPolicyBuildingHappiness;
 	kStream << m_iWoundedUnitDamageMod;

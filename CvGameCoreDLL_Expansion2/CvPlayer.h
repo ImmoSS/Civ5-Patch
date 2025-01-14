@@ -774,6 +774,11 @@ public:
 	void ChangeNoDifferentIdeologiesTourismMod(int iChange);
 #endif
 
+#ifdef POLICY_GLOBAL_POP_CHANGE
+	int GetGlobalPopChange() const;
+	void ChangeGlobalPopChange(int iChange);
+#endif
+
 	bool IsAnarchy() const;
 	int GetAnarchyNumTurns() const;
 	void SetAnarchyNumTurns(int iValue);
@@ -2100,6 +2105,9 @@ protected:
 #endif
 #ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
 	int m_iNoDifferentIdeologiesTourismMod;
+#endif
+#ifdef POLICY_GLOBAL_POP_CHANGE
+	int m_iGlobalPopChange;
 #endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;
