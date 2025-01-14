@@ -11842,7 +11842,7 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 	iModifier += 10 * GET_TEAM(kPlayer.getTeam()).GetTeamTechs()->GetTechCount((TechTypes)GC.getInfoTypeForString("TECH_FUTURE_TECH", true));
 #endif
 
-#ifdef CLAUZEWITZS_LEGACY_RANGE_MODIFIER
+#ifdef POLICY_ATTACK_BONUS_TURNS_RANGE_MODIFIER
 	// Temporary attack bonus (Policies, etc.)
 	if (GET_PLAYER(getOwner()).GetAttackBonusTurns() > 0)
 	{
@@ -12201,7 +12201,7 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 	iModifier += 10 * GET_TEAM(kPlayer.getTeam()).GetTeamTechs()->GetTechCount((TechTypes)GC.getInfoTypeForString("TECH_FUTURE_TECH", true));
 #endif
 
-#ifdef CLAUZEWITZS_LEGACY_RANGE_MODIFIER
+#ifdef POLICY_ATTACK_BONUS_TURNS_RANGE_MODIFIER
 	// Temporary attack bonus (Policies, etc.)
 	if(GET_PLAYER(getOwner()).GetAttackBonusTurns() > 0)
 	{
