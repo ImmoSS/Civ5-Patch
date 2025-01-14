@@ -271,6 +271,9 @@ public:
 #ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
 	int GetSciencePerXFollowers() const;
 #endif
+#ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
+	bool IsNoDifferentIdeologiesTourismMod() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -457,6 +460,9 @@ private:
 #endif
 #ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
 	int m_iSciencePerXFollowers;
+#endif
+#ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
+	bool m_bNoDifferentIdeologiesTourismMod;
 #endif
 
 	// Arrays

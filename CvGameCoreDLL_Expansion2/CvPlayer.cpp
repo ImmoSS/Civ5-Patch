@@ -317,6 +317,9 @@ CvPlayer::CvPlayer() :
 #ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
 	, m_iSciencePerXFollowers(0)
 #endif
+#ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
+	, m_iNoDifferentIdeologiesTourismMod(0)
+#endif
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
 	, m_iUnitUpgradeCostMod("CvPlayer::m_iUnitUpgradeCostMod", m_syncArchive)
@@ -1151,6 +1154,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
 	m_iSciencePerXFollowers = 0;
+#endif
+#ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
+	m_iNoDifferentIdeologiesTourismMod = 0;
 #endif
 	m_iSpecialPolicyBuildingHappiness = 0;
 	m_iWoundedUnitDamageMod = 0;
@@ -15072,6 +15078,27 @@ void CvPlayer::ChangeSciencePerXFollowers(int iChange)
 }
 #endif
 
+#ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
+//	--------------------------------------------------------------------------------
+///
+bool CvPlayer::IsNoDifferentIdeologiesTourismMod() const
+{
+	return m_iNoDifferentIdeologiesTourismMod > 0;
+}
+
+//	--------------------------------------------------------------------------------
+///
+void CvPlayer::ChangeNoDifferentIdeologiesTourismMod(int iChange)
+{
+	m_iNoDifferentIdeologiesTourismMod += iChange;
+	CvAssert(m_iNoDifferentIdeologiesTourismMod >= 0);
+	if (m_iNoDifferentIdeologiesTourismMod < 0)
+	{
+		m_iNoDifferentIdeologiesTourismMod = 0;
+	}
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 /// Empire in Anarchy?
 bool CvPlayer::IsAnarchy() const
@@ -25192,6 +25219,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 #ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
 	ChangeSciencePerXFollowers(pPolicy->GetSciencePerXFollowers() * iChange);
 #endif
+#ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
+	ChangeNoDifferentIdeologiesTourismMod(pPolicy->IsNoDifferentIdeologiesTourismMod() * iChange);
+#endif
 
 	// Not really techs but this is what we use (for now)
 	for(iI = 0; iI < GC.getNUM_AND_TECH_PREREQS(); iI++)
@@ -26677,6 +26707,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 #endif
 #endif
+#ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+#endif
+		kStream >> m_iNoDifferentIdeologiesTourismMod;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iNoDifferentIdeologiesTourismMod = 0;
+	}
+#endif
+#endif
 	kStream >> m_iSpecialPolicyBuildingHappiness;
 	kStream >> m_iWoundedUnitDamageMod;
 	kStream >> m_iUnitUpgradeCostMod;
@@ -27704,6 +27748,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
 	kStream << m_iSciencePerXFollowers;
+#endif
+#ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
+	kStream << m_iNoDifferentIdeologiesTourismMod;
 #endif
 	kStream << m_iSpecialPolicyBuildingHappiness;
 	kStream << m_iWoundedUnitDamageMod;

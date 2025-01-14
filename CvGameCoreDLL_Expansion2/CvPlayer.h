@@ -769,6 +769,11 @@ public:
 	void ChangeSciencePerXFollowers(int iChange);
 #endif
 
+#ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
+	bool IsNoDifferentIdeologiesTourismMod() const;
+	void ChangeNoDifferentIdeologiesTourismMod(int iChange);
+#endif
+
 	bool IsAnarchy() const;
 	int GetAnarchyNumTurns() const;
 	void SetAnarchyNumTurns(int iValue);
@@ -2092,6 +2097,9 @@ protected:
 #endif
 #ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
 	int m_iSciencePerXFollowers;
+#endif
+#ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
+	int m_iNoDifferentIdeologiesTourismMod;
 #endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;
