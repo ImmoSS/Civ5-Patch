@@ -277,6 +277,9 @@ public:
 #ifdef POLICY_GLOBAL_POP_CHANGE
 	int GetGlobalPopChange() const;
 #endif
+#ifdef POLICY_HAPPINESS_PER_CITY
+	int GetHappinessPerCity() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -469,6 +472,9 @@ private:
 #endif
 #ifdef POLICY_GLOBAL_POP_CHANGE
 	int m_iGlobalPopChange;
+#endif
+#ifdef POLICY_HAPPINESS_PER_CITY
+	int m_iHappinessPerCity;
 #endif
 
 	// Arrays

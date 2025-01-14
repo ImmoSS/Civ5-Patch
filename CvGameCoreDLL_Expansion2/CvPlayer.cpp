@@ -25597,6 +25597,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 	}
 	ChangeGlobalPopChange(iChange * pPolicy->GetGlobalPopChange());
 #endif
+#ifdef POLICY_HAPPINESS_PER_CITY
+	ChangeExtraHappinessPerCity(iChange * pPolicy->GetHappinessPerCity());
+#endif
 
 	// Great People bonus from Allied city-states
 	if(pPolicy->IsMinorGreatPeopleAllies())

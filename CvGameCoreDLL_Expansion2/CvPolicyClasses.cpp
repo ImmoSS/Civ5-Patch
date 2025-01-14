@@ -241,6 +241,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_GLOBAL_POP_CHANGE
 	m_iGlobalPopChange(false),
 #endif
+#ifdef POLICY_HAPPINESS_PER_CITY
+	m_iHappinessPerCity(false),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -496,6 +499,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_GLOBAL_POP_CHANGE
 	m_iGlobalPopChange = kResults.GetBool("GlobalPopChange");
+#endif
+#ifdef POLICY_HAPPINESS_PER_CITY
+	m_iHappinessPerCity = kResults.GetBool("HappinessPerCity");
 #endif
 
 	//Arrays
@@ -2044,6 +2050,14 @@ bool CvPolicyEntry::IsNoDifferentIdeologiesTourismMod() const
 int CvPolicyEntry::GetGlobalPopChange() const
 {
 	return m_iGlobalPopChange;
+}
+#endif
+
+#ifdef POLICY_HAPPINESS_PER_CITY
+///
+int CvPolicyEntry::GetHappinessPerCity() const
+{
+	return m_iHappinessPerCity;
 }
 #endif
 
