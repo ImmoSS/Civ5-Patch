@@ -323,6 +323,9 @@ CvPlayer::CvPlayer() :
 #ifdef POLICY_GLOBAL_POP_CHANGE
 	, m_iGlobalPopChange(0)
 #endif
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	, m_iGreatWorkTourismChanges(0)
+#endif
 	, m_iSpecialPolicyBuildingHappiness("CvPlayer::m_iSpecialPolicyBuildingHappiness", m_syncArchive)
 	, m_iWoundedUnitDamageMod("CvPlayer::m_iWoundedUnitDamageMod", m_syncArchive)
 	, m_iUnitUpgradeCostMod("CvPlayer::m_iUnitUpgradeCostMod", m_syncArchive)
@@ -1163,6 +1166,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef POLICY_GLOBAL_POP_CHANGE
 	m_iGlobalPopChange = 0;
+#endif
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	m_iGreatWorkTourismChanges = 0;
 #endif
 	m_iSpecialPolicyBuildingHappiness = 0;
 	m_iWoundedUnitDamageMod = 0;
@@ -15126,6 +15132,27 @@ void CvPlayer::ChangeGlobalPopChange(int iChange)
 }
 #endif
 
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+//	--------------------------------------------------------------------------------
+///
+int CvPlayer::GetGreatWorkTourismChanges() const
+{
+	return m_iGreatWorkTourismChanges;
+}
+
+//	--------------------------------------------------------------------------------
+///
+void CvPlayer::ChangeGreatWorkTourismChanges(int iChange)
+{
+	m_iGreatWorkTourismChanges += iChange;
+	CvAssert(m_iGreatWorkTourismChanges >= 0);
+	if (m_iGreatWorkTourismChanges < 0)
+	{
+		m_iGreatWorkTourismChanges = 0;
+	}
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 /// Empire in Anarchy?
 bool CvPlayer::IsAnarchy() const
@@ -25247,6 +25274,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 #ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
 	ChangeNoDifferentIdeologiesTourismMod(pPolicy->IsNoDifferentIdeologiesTourismMod() * iChange);
 #endif
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	ChangeGreatWorkTourismChanges(pPolicy->GetGreatWorkTourismChanges() * iChange);
+#endif
 
 	// Not really techs but this is what we use (for now)
 	for(iI = 0; iI < GC.getNUM_AND_TECH_PREREQS(); iI++)
@@ -26763,6 +26793,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 #endif
 #endif
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1010)
+	{
+#endif
+		kStream >> m_iGreatWorkTourismChanges;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iGreatWorkTourismChanges = 0;
+	}
+#endif
+#endif
 	kStream >> m_iSpecialPolicyBuildingHappiness;
 	kStream >> m_iWoundedUnitDamageMod;
 	kStream >> m_iUnitUpgradeCostMod;
@@ -27796,6 +27840,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef POLICY_GLOBAL_POP_CHANGE
 	kStream << m_iGlobalPopChange;
+#endif
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	kStream << m_iGreatWorkTourismChanges;
 #endif
 	kStream << m_iSpecialPolicyBuildingHappiness;
 	kStream << m_iWoundedUnitDamageMod;

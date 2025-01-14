@@ -196,8 +196,8 @@ CvString CvGameCulture::GetGreatWorkTooltip(int iIndex, PlayerTypes eOwner) cons
 	int iCulturePerWork = GC.getBASE_CULTURE_PER_GREAT_WORK();
 	iCulturePerWork += GET_PLAYER(eOwner).GetGreatWorkYieldChange(YIELD_CULTURE);
 	int iTourismPerWork = GC.getBASE_TOURISM_PER_GREAT_WORK();
-#ifdef CREATIVE_EXPRESSION_REWORK
-	iTourismPerWork += GET_PLAYER(eOwner).GetGreatWorkYieldChange(YIELD_CULTURE);
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	iTourismPerWork += GET_PLAYER(eOwner).GetGreatWorkTourismChanges();
 #endif
 
 #ifdef BELIEF_GREAT_WORK_YIELD_CHANGES
@@ -4314,8 +4314,8 @@ int CvCityCulture::GetBaseTourismBeforeModifiers()
 		return 0;
 	}
 
-#ifdef CREATIVE_EXPRESSION_REWORK
-	int iBase = GetNumGreatWorks() * (GC.getBASE_TOURISM_PER_GREAT_WORK() + GET_PLAYER(m_pCity->getOwner()).GetGreatWorkYieldChange(YIELD_CULTURE));
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	int iBase = GetNumGreatWorks() * (GC.getBASE_TOURISM_PER_GREAT_WORK() + GET_PLAYER(m_pCity->getOwner()).GetGreatWorkTourismChanges());
 #else
 	int iBase = GetNumGreatWorks() * GC.getBASE_TOURISM_PER_GREAT_WORK();
 #endif
@@ -4589,8 +4589,8 @@ CvString CvCityCulture::GetTourismTooltip()
 	ReligionTypes ePlayerReligion = kCityPlayer.GetReligions()->GetReligionInMostCities();
 
 	// Great Works
-#ifdef CREATIVE_EXPRESSION_REWORK
-	int iGWTourism = GetNumGreatWorks() * (GC.getBASE_TOURISM_PER_GREAT_WORK() + GET_PLAYER(m_pCity->getOwner()).GetGreatWorkYieldChange(YIELD_CULTURE));
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	int iGWTourism = GetNumGreatWorks() * (GC.getBASE_TOURISM_PER_GREAT_WORK() + GET_PLAYER(m_pCity->getOwner()).GetGreatWorkTourismChanges());
 #else
 	int iGWTourism = GetNumGreatWorks() * GC.getBASE_TOURISM_PER_GREAT_WORK();
 #endif

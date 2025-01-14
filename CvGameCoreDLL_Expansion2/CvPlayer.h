@@ -779,6 +779,11 @@ public:
 	void ChangeGlobalPopChange(int iChange);
 #endif
 
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	int GetGreatWorkTourismChanges() const;
+	void ChangeGreatWorkTourismChanges(int iChange);
+#endif
+
 	bool IsAnarchy() const;
 	int GetAnarchyNumTurns() const;
 	void SetAnarchyNumTurns(int iValue);
@@ -2108,6 +2113,9 @@ protected:
 #endif
 #ifdef POLICY_GLOBAL_POP_CHANGE
 	int m_iGlobalPopChange;
+#endif
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	int m_iGreatWorkTourismChanges;
 #endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;

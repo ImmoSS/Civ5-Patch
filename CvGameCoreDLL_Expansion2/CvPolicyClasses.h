@@ -280,6 +280,9 @@ public:
 #ifdef POLICY_HAPPINESS_PER_CITY
 	int GetHappinessPerCity() const;
 #endif
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	int GetGreatWorkTourismChanges() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -475,6 +478,9 @@ private:
 #endif
 #ifdef POLICY_HAPPINESS_PER_CITY
 	int m_iHappinessPerCity;
+#endif
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	int m_iGreatWorkTourismChanges;
 #endif
 
 	// Arrays

@@ -244,6 +244,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_HAPPINESS_PER_CITY
 	m_iHappinessPerCity(false),
 #endif
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	m_iGreatWorkTourismChanges(false),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -502,6 +505,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_HAPPINESS_PER_CITY
 	m_iHappinessPerCity = kResults.GetBool("HappinessPerCity");
+#endif
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+	m_iGreatWorkTourismChanges = kResults.GetBool("GreatWorkTourismChanges");
 #endif
 
 	//Arrays
@@ -2058,6 +2064,14 @@ int CvPolicyEntry::GetGlobalPopChange() const
 int CvPolicyEntry::GetHappinessPerCity() const
 {
 	return m_iHappinessPerCity;
+}
+#endif
+
+#ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
+///
+int CvPolicyEntry::GetGreatWorkTourismChanges() const
+{
+	return m_iGreatWorkTourismChanges;
 }
 #endif
 
