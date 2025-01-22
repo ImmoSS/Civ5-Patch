@@ -1620,9 +1620,9 @@ function OnDimEvent( playerID, unitID, bDim )
                 --print( "  Unit dim: " .. tostring( playerID ) .. " " .. tostring( unitID ) .. " " .. iDim );
                 flag:SetDim( bDim  );
             else
-                o.m_Instance.IsOutOfAttacks:SetHide(true)
-                o.m_Instance.IsHealing:SetHide(true)
-                o.m_Instance.IsNoCapture:SetHide(true)
+                flag.m_Instance.IsOutOfAttacks:SetHide(true)
+                flag.m_Instance.IsHealing:SetHide(true)
+                flag.m_Instance.IsNoCapture:SetHide(true)
         	end
         end
     end
