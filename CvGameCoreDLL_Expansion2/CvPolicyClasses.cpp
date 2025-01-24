@@ -2705,6 +2705,20 @@ void CvPlayerPolicies::SetPolicy(PolicyTypes eIndex, bool bNewValue)
 			}
 
 			SetPolicyBranchFinished(eThisBranch, bBranchFinished);
+
+			if(bBranchFinished)
+			{
+				CvPolicyBranchEntry* pkPolicyBranchInfo = GC.getPolicyBranchInfo(eThisBranch);
+				if(pkPolicyBranchInfo)
+				{
+					PolicyTypes eFinisher = (PolicyTypes)pkPolicyBranchInfo->GetFreeFinishingPolicy();
+					if(eFinisher != NO_POLICY)
+					{
+						GetPlayer()->setHasPolicy(eFinisher, true);
+						GetPlayer()->ChangeNumFreePoliciesEver(1);
+					}
+				}
+			}
 		}
 	}
 }
@@ -3315,6 +3329,17 @@ bool CvPlayerPolicies::CanAdoptPolicy(PolicyTypes eIndex, bool bIgnoreCost) cons
 	}
 
 	PolicyBranchTypes eBranch = (PolicyBranchTypes) pkPolicyEntry->GetPolicyBranchType();
+
+	// If it doesn't have a branch, it's a freebie that comes WITH the branch, so we can't pick it manually
+	if(eBranch == NO_POLICY_BRANCH_TYPE)
+	{
+		return false;
+	}
+
+	if(!IsPolicyBranchUnlocked(eBranch))
+	{
+		return false;
+	}
 
 	// Is it from a branch with Levels?
 	CvPolicyBranchEntry* pkPolicyBranchInfo = GC.getPolicyBranchInfo(eBranch);
