@@ -230,22 +230,22 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_bNoCargoPillage(false),
 #endif
 #ifdef POLICY_GREAT_WORK_HAPPINESS
-	m_iGreatWorkHappiness(false),
+	m_iGreatWorkHappiness(0),
 #endif
 #ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
-	m_iSciencePerXFollowers(false),
+	m_iSciencePerXFollowers(0),
 #endif
 #ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
 	m_bNoDifferentIdeologiesTourismMod(false),
 #endif
 #ifdef POLICY_GLOBAL_POP_CHANGE
-	m_iGlobalPopChange(false),
+	m_iGlobalPopChange(0),
 #endif
 #ifdef POLICY_HAPPINESS_PER_CITY
-	m_iHappinessPerCity(false),
+	m_iHappinessPerCity(0),
 #endif
 #ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
-	m_iGreatWorkTourismChanges(false),
+	m_iGreatWorkTourismChanges(0),
 #endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
@@ -492,22 +492,22 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_bNoCargoPillage = kResults.GetBool("NoCargoPillage");
 #endif
 #ifdef POLICY_GREAT_WORK_HAPPINESS
-	m_iGreatWorkHappiness = kResults.GetBool("GreatWorkHappiness");
+	m_iGreatWorkHappiness = kResults.GetInt("GreatWorkHappiness");
 #endif
 #ifdef POLICY_SCIENCE_PER_X_FOLLOWERS
-	m_iSciencePerXFollowers = kResults.GetBool("SciencePerXFollowers");
+	m_iSciencePerXFollowers = kResults.GetInt("SciencePerXFollowers");
 #endif
 #ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
 	m_bNoDifferentIdeologiesTourismMod = kResults.GetBool("NoDifferentIdeologiesTourismMod");
 #endif
 #ifdef POLICY_GLOBAL_POP_CHANGE
-	m_iGlobalPopChange = kResults.GetBool("GlobalPopChange");
+	m_iGlobalPopChange = kResults.GetInt("GlobalPopChange");
 #endif
 #ifdef POLICY_HAPPINESS_PER_CITY
-	m_iHappinessPerCity = kResults.GetBool("HappinessPerCity");
+	m_iHappinessPerCity = kResults.GetInt("HappinessPerCity");
 #endif
 #ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
-	m_iGreatWorkTourismChanges = kResults.GetBool("GreatWorkTourismChanges");
+	m_iGreatWorkTourismChanges = kResults.GetInt("GreatWorkTourismChanges");
 #endif
 
 	//Arrays
