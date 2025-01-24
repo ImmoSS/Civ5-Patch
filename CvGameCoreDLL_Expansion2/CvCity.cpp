@@ -591,7 +591,9 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	// Garrisoned?
 	if (GetGarrisonedUnit())
 	{
+#ifndef FIX_POLICY_CULTURE_PER_GARRISONED_UNIT
 		ChangeJONSCulturePerTurnFromPolicies(GET_PLAYER(getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CULTURE_FROM_GARRISON));
+#endif
 	}
 
 	AI_init();
@@ -8502,7 +8504,14 @@ int CvCity::GetJONSCulturePerTurnFromPolicies() const
 {
 	VALIDATE_OBJECT
 #ifdef FIX_POLICY_CULTURE_PER_GARRISONED_UNIT
-	return GetGarrisonedUnit() != NULL ? GET_PLAYER(getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CULTURE_FROM_GARRISON) : 0;
+	if (GetGarrisonedUnit())
+	{
+		return m_iJONSCulturePerTurnFromPolicies + GET_PLAYER(getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CULTURE_FROM_GARRISON);
+}
+	else
+	{
+		return m_iJONSCulturePerTurnFromPolicies;
+		}
 #else
 	return m_iJONSCulturePerTurnFromPolicies;
 #endif
