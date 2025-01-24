@@ -4,6 +4,7 @@ cd ..
 set patchfolder=Tournament Mod V10.4f
 del /q "%cd%\%patchfolder%\UI\"
 REM -------------------------------------------------
+copy /y "%cd%\%patchfolder%\tmp\ui\SelectCivilization.lua" "%cd%\%patchfolder%\UI\SelectCivilization.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\CultureOverview.lua" "%cd%\%patchfolder%\UI\CultureOverview.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\CultureOverview.xml" "%cd%\%patchfolder%\UI\CultureOverview.xml" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\EnemyUnitPanel.lua" "%cd%\%patchfolder%\UI\EnemyUnitPanel.lua" > nul
