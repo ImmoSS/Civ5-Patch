@@ -8511,7 +8511,7 @@ int CvCity::GetJONSCulturePerTurnFromPolicies() const
 	else
 	{
 		return m_iJONSCulturePerTurnFromPolicies;
-		}
+	}
 #else
 	return m_iJONSCulturePerTurnFromPolicies;
 #endif
