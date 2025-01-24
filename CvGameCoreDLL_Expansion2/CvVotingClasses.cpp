@@ -3918,7 +3918,7 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 		iPolicyVotes += iExtraAutoVotes;
 		iVotes += iExtraAutoVotes;
 #endif
-#ifdef PATRONAGE_FINISHER_REWORK
+#ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 		iPolicyVotes += kPlayer.GetPolicyExtraVotes();
 		iVotes += kPlayer.GetPolicyExtraVotes();
 #endif
