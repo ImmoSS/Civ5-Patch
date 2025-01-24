@@ -1669,7 +1669,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		}
 
 		m_ppaaiBuildingScecialistCountChange.clear();
-		m_ppaaiBuildingScecialistCountChange.resize(GC.getNumSpecialistInfos());
+		m_ppaaiBuildingScecialistCountChange.resize(GC.getNumBuildingInfos());
 		for (unsigned int i = 0; i < m_ppaaiBuildingScecialistCountChange.size(); ++i)
 		{
 			m_ppaaiBuildingScecialistCountChange.setAt(i, specialist);
@@ -12030,7 +12030,7 @@ void CvPlayer::changeBuildingScecialistCountChange(BuildingTypes eIndex1, Specia
 	{
 		CvAssertMsg(iChange > -50 && iChange < 50, "GAMEPLAY: Yield for a plot is either negative or a ridiculously large number. Please send Jon this with your last 5 autosaves and what changelist # you're playing.");
 
-		Firaxis::Array<int, NUM_SPECIALOPTION_TYPES> specialists = m_ppaaiBuildingScecialistCountChange[eIndex1];
+		Firaxis::Array<int, NUM_SPECILIST_TYPES> specialists = m_ppaaiBuildingScecialistCountChange[eIndex1];
 		specialists[eIndex2] = (m_ppaaiBuildingScecialistCountChange[eIndex1][eIndex2] + iChange);
 		m_ppaaiBuildingScecialistCountChange.setAt(eIndex1, specialists);
 		// CvAssert(getImprovementYieldChange(eIndex1, eIndex2) >= 0);
@@ -27187,14 +27187,14 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 	else
 	{
-		Firaxis::Array< int, NUM_SPECIALOPTION_TYPES > specialist;
-		for (unsigned int j = 0; j < NUM_SPECIALOPTION_TYPES; ++j)
+		Firaxis::Array< int, NUM_SPECILIST_TYPES > specialist;
+		for (unsigned int j = 0; j < NUM_SPECILIST_TYPES; ++j)
 		{
 			specialist[j] = 0;
 		}
 
 		m_ppaaiBuildingScecialistCountChange.clear();
-		m_ppaaiBuildingScecialistCountChange.resize(GC.getNumSpecialistInfos());
+		m_ppaaiBuildingScecialistCountChange.resize(GC.getNumBuildingInfos());
 		for (unsigned int i = 0; i < m_ppaaiBuildingScecialistCountChange.size(); ++i)
 		{
 			m_ppaaiBuildingScecialistCountChange.setAt(i, specialist);
