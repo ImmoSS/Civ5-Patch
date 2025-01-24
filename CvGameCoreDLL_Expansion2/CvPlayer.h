@@ -2303,7 +2303,7 @@ protected:
 	int m_iGarrisonedCityRangeStrikeModifier;
 	int m_iGarrisonFreeMaintenanceCount;
 #ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
-	FAutoVariable< std::vector< Firaxis::Array<int, NUM_SPECIALOPTION_TYPES > >, CvPlayer> m_ppaaiBuildingScecialistCountChange;
+	FAutoVariable< std::vector< Firaxis::Array<int, NUM_SPECILIST_TYPES > >, CvPlayer> m_ppaaiBuildingScecialistCountChange;
 #endif
 	int m_iNumCitiesFreeCultureBuilding;
 	int m_iNumCitiesFreeFoodBuilding;

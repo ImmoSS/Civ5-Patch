@@ -1662,8 +1662,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		}
 
 #ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
-		Firaxis::Array< int, NUM_SPECIALOPTION_TYPES > specialist;
-		for (unsigned int j = 0; j < NUM_SPECIALOPTION_TYPES; ++j)
+		Firaxis::Array< int, NUM_SPECILIST_TYPES > specialist;
+		for (unsigned int j = 0; j < NUM_SPECILIST_TYPES; ++j)
 		{
 			specialist[j] = 0;
 		}
