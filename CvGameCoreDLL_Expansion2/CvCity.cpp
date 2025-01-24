@@ -8507,7 +8507,7 @@ int CvCity::GetJONSCulturePerTurnFromPolicies() const
 	if (GetGarrisonedUnit())
 	{
 		return m_iJONSCulturePerTurnFromPolicies + GET_PLAYER(getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CULTURE_FROM_GARRISON);
-}
+	}
 	else
 	{
 		return m_iJONSCulturePerTurnFromPolicies;

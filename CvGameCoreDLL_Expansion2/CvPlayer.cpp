@@ -25170,7 +25170,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		int iCityCultureChange = pPolicy->GetCulturePerCity() * iChange;
 		if(pLoopCity->GetGarrisonedUnit() != NULL)
 		{
+#ifndef FIX_POLICY_CULTURE_PER_GARRISONED_UNIT
 			iCityCultureChange += (pPolicy->GetCulturePerGarrisonedUnit() * iChange);
+#endif
 		}
 		pLoopCity->ChangeJONSCulturePerTurnFromPolicies(iCityCultureChange);
 
