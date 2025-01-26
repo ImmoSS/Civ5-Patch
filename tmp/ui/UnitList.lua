@@ -326,8 +326,8 @@ function SortFunction( a, b )
 			valueA = entryA.status;
 			valueB = entryB.status;
 		else -- health
-			valueA = 100 - entryA.health;
-			valueB = 100 - entryB.health;
+			valueA = entryA.unit:GetDamage();
+			valueB = entryB.unit:GetDamage();
 		end
 	    
 		if( valueA == valueB ) then
