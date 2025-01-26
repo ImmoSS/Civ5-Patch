@@ -3903,7 +3903,7 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 			{
 				iCityStateVotes += pInfo->GetCityStateDelegates();
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
-				if (iExtraVotes < iMaxExtraVotesFromMinors)
+				if (iExtraAutoVotes < iMaxExtraVotesFromMinors)
 				{
 					iExtraAutoVotes++;
 				}
