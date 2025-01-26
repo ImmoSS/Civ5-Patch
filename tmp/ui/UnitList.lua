@@ -15,7 +15,7 @@ local eStatus   = 1;
 local eHealth = 2;
 
 local m_SortMode = eName;
-local m_bSortReverse = true;
+local m_bSortReverse = false;
 
 
 -------------------------------------------------
@@ -33,7 +33,6 @@ ContextPtr:SetShowHideHandler( ShowHideHandler );
 function OnClose( )
     ContextPtr:SetHide( true );
     Events.OpenInfoCorner( InfoCornerID.None );
-    m_bSortReverse = true;
 end
 Controls.CloseButton:RegisterCallback( Mouse.eLClick, OnClose );
 
@@ -410,6 +409,7 @@ Controls.SortHealth:SetVoid1( eHealth );
 -------------------------------------------------
 function OnOpenInfoCorner( iInfoType )
     if( iInfoType == InfoCornerID.Units ) then
+        m_bSortReverse = not m_bSortReverse
         ContextPtr:SetHide( false );
         OnSort( m_SortMode );
     else
