@@ -713,35 +713,6 @@ SOURCE TO XML
 
 
 
-TODO:
-TECHNOLOGIES
-
-FUTURE_TECH_RESEARCHING_BONUSES
-
-
-POLICIES
-
-LEARNED_SOCIETY_SCIENCE_MOD
-HONOR_CULTURE_CAP
-
-
-RELIGION
-
-NQ_LAKE_BELIEF_BONUSES (убрать зависимость от FEATURE_ICE)
-BELIEF_DANCE_AURORA_NERF
-MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
-UNITY_OF_PROPHETS_EXTRA_PROPHETS
-GODDESS_LOVE_FREE_WORKER
-GOD_SEA_FREE_WORK_BOAT
-RELIGIOUS_UNITY_CS_BONUS
-BELIEF_HOLY_ORDER_EXPANSION
-
-
-UA
-...
-
-
-
 ТЕХНИЧЕСКИЕ ИЗМЕНЕНИЯ
 
 + Добавлено окно, появляющееся после запуска игры, если ui_check.bat не был запущен | ОК
@@ -820,13 +791,34 @@ UA
 ДОДЕЛАТЬ/ОБСУДИТЬ
 
 Мирные морские юниты блокируют клетку воды, на которой находятся, не позволяя залочить на нее жителя, но при этом уже залоченный житель не "покидает" клетку.
-Добавить текущие очки давления от всех источников
-Поправить интерфейс cargo у морских юнитов
-При наведении на количество культуры в городе-сателлите (когда культуры 0) показывается странная ошибка?
 Поправить забор клеток другим городом в случае постановки нового города    CITIZENS_CITY_OVERRIDE_BUG_FIX
-Рацик с медивала
 Добавить отображение требований для получения тематического бонуса музеев и чудес света в их описании.
-Грабеж караванов отнимает мувы
 
-МЕЦЕНАТСТВО
-Закрытие: Добавить где-нибудь информацию о дарении следующего ВЧ.
+
+
+TODO:
+TECHNOLOGIES
+
+FUTURE_TECH_RESEARCHING_BONUSES
+
+
+POLICIES
+
+LEARNED_SOCIETY_SCIENCE_MOD
+HONOR_CULTURE_CAP
+
+
+RELIGION
+
+NQ_LAKE_BELIEF_BONUSES (убрать зависимость от FEATURE_ICE)
+BELIEF_DANCE_AURORA_NERF
+MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
+UNITY_OF_PROPHETS_EXTRA_PROPHETS
+GODDESS_LOVE_FREE_WORKER
+GOD_SEA_FREE_WORK_BOAT
+RELIGIOUS_UNITY_CS_BONUS
+BELIEF_HOLY_ORDER_EXPANSION
+
+
+UA
+...
