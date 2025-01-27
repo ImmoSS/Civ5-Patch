@@ -241,8 +241,11 @@ CvUnit::CvUnit() :
 	, m_iFlags("CvUnit::m_iFlags", m_syncArchive)
 	, m_iNumAttacks("CvUnit::m_iNumAttacks", m_syncArchive)
 	, m_iAttacksMade("CvUnit::m_iAttacksMade", m_syncArchive)
-#ifdef REBASE_WITH_AIRPORTS
+#ifdef MADE_REBASE
 	, m_iRebaseMade("CvUnit::m_iRebaseMade", m_syncArchive)
+#endif
+#ifdef REBASE_WITH_AIRPORTS
+	, m_iAirliftRebaseMade("CvUnit::m_iAirliftRebaseMade", m_syncArchive)
 #endif
 #ifdef CAPTURE_RESTRICTION_AFTER_PARADROPPING
 	, m_iSecondHalfTimerParadrop("CvUnit::m_iSecondHalfTimerParadrop", m_syncArchive)
@@ -919,8 +922,11 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iFlags = 0;
 	m_iNumAttacks = 1;
 	m_iAttacksMade = 0;
-#ifdef REBASE_WITH_AIRPORTS
+#ifdef MADE_REBASE
 	m_iRebaseMade = 0;
+#endif
+#ifdef REBASE_WITH_AIRPORTS
+	m_iAirliftRebaseMade = 0;
 #endif
 #ifdef CAPTURE_RESTRICTION_AFTER_PARADROPPING
 	m_iSecondHalfTimerParadrop = 0;
@@ -6655,8 +6661,15 @@ bool CvUnit::canRebase(const CvPlot* /*pPlot*/) const
 		return false;
 	}
 
-#ifdef REBASE_WITH_AIRPORTS
+#ifdef MADE_REBASE
 	if (isOutOfRebases())
+	{
+		return false;
+	}
+#endif
+
+#ifdef REBASE_WITH_AIRPORTS
+	if (isOutOfAirliftRebases())
 	{
 		return false;
 	}
@@ -6822,13 +6835,17 @@ bool CvUnit::rebase(int iX, int iY)
 	if(pTargetPlot == NULL)
 		return false;
 
+#ifdef MADE_REBASE
+	setMadeRebase(true);
+#endif
+
 #ifdef REBASE_WITH_AIRPORTS
 	if (oldPlot->isCity() && pTargetPlot->isCity())
 	{
 		// City must be owned by us
 		if (oldPlot->getPlotCity()->CanAirlift() && pTargetPlot->getPlotCity()->CanAirlift())
 		{
-			setMadeRebase(true);
+			setMadeAirliftRebase(true);
 		}
 		else
 		{
@@ -17898,13 +17915,13 @@ void CvUnit::setMadeAttack(bool bNewValue)
 	}
 }
 
-#ifdef REBASE_WITH_AIRPORTS
+#ifdef MADE_REBASE
 //	--------------------------------------------------------------------------------
 bool CvUnit::isOutOfRebases() const
 {
 	VALIDATE_OBJECT
 
-	return m_iRebaseMade > 0;
+		return m_iRebaseMade > 0;
 }
 
 
@@ -17919,6 +17936,31 @@ void CvUnit::setMadeRebase(bool bNewValue)
 		else
 		{
 			m_iRebaseMade = 0;
+		}
+}
+#endif
+
+#ifdef REBASE_WITH_AIRPORTS
+//	--------------------------------------------------------------------------------
+bool CvUnit::isOutOfAirliftRebases() const
+{
+	VALIDATE_OBJECT
+
+	return m_iAirliftRebaseMade > 0;
+}
+
+
+//	--------------------------------------------------------------------------------
+void CvUnit::setMadeAirliftRebase(bool bNewValue)
+{
+	VALIDATE_OBJECT
+		if (bNewValue)
+		{
+			m_iAirliftRebaseMade++;
+		}
+		else
+		{
+			m_iAirliftRebaseMade = 0;
 		}
 }
 #endif
@@ -21414,7 +21456,7 @@ bool CvUnit::CanDoInterfaceMode(InterfaceModeTypes eInterfaceMode, bool bTestVis
 		break;
 
 	case INTERFACEMODE_REBASE:
-#ifdef REBASE_WITH_AIRPORTS
+#if defined REBASE_WITH_AIRPORTS || defined MADE_REBASE
 		if (getDomainType() == DOMAIN_AIR)
 		{
 			if (canRebase(plot()))

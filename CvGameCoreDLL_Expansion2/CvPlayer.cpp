@@ -5773,8 +5773,11 @@ void CvPlayer::DoUnitReset()
 		}
 		pLoopUnit->setMadeSecondHalfTimerParadrop(false);
 #endif
-#ifdef REBASE_WITH_AIRPORTS
+#ifdef MADE_REBASE
 		pLoopUnit->setMadeRebase(false);
+#endif
+#ifdef REBASE_WITH_AIRPORTS
+		pLoopUnit->setMadeAirliftRebase(false);
 #endif
 		pLoopUnit->setMadeInterception(false);
 
