@@ -7289,7 +7289,7 @@ int CvCity::foodConsumption(bool /*bNoAngry*/, int iExtra) const
 				}
 			}
 		}
-		iNum -= iFoodReduction;
+		iNum -= (iFoodReduction / 2);
 	}
 #endif
 
