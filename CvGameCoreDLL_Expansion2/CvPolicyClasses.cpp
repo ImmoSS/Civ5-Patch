@@ -1927,7 +1927,7 @@ int CvPolicyEntry::GetBuildingScecialistCountChanges(int i, int j) const
 {
 	CvAssertMsg(i < GC.getNumBuildingInfos(), "Index out of bounds");
 	CvAssertMsg(i > -1, "Index out of bounds");
-	CvAssertMsg(j < NUM_SPECIALOPTION_TYPES, "Index out of bounds");
+	CvAssertMsg(j < NUM_SPECILIST_TYPES, "Index out of bounds");
 	CvAssertMsg(j > -1, "Index out of bounds");
 	return m_ppiBuildingScecialistCountChange[i][j];
 }

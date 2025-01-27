@@ -12015,9 +12015,9 @@ int CvPlayer::GetCultureYieldFromPreviousTurns(int iGameTurn, int iNumPreviousTu
 int CvPlayer::getBuildingScecialistCountChange(BuildingTypes eIndex1, SpecialistTypes eIndex2) const
 {
 	CvAssertMsg(eIndex1 >= 0, "eIndex1 is expected to be non-negative (invalid Index)");
-	CvAssertMsg(eIndex1 < GC.getNumSpecialistInfos(), "eIndex1 is expected to be within maximum bounds (invalid Index)");
+	CvAssertMsg(eIndex1 < GC.getNumBuildInfos(), "eIndex1 is expected to be within maximum bounds (invalid Index)");
 	CvAssertMsg(eIndex2 >= 0, "eIndex2 is expected to be non-negative (invalid Index)");
-	CvAssertMsg(eIndex2 < NUM_SPECIALOPTION_TYPES, "eIndex2 is expected to be within maximum bounds (invalid Index)");
+	CvAssertMsg(eIndex2 < NUM_SPECILIST_TYPES, "eIndex2 is expected to be within maximum bounds (invalid Index)");
 	return m_ppaaiBuildingScecialistCountChange[eIndex1][eIndex2];
 }
 
@@ -12026,9 +12026,9 @@ int CvPlayer::getBuildingScecialistCountChange(BuildingTypes eIndex1, Specialist
 void CvPlayer::changeBuildingScecialistCountChange(BuildingTypes eIndex1, SpecialistTypes eIndex2, int iChange)
 {
 	CvAssertMsg(eIndex1 >= 0, "eIndex1 is expected to be non-negative (invalid Index)");
-	CvAssertMsg(eIndex1 < GC.getNumSpecialistInfos(), "eIndex1 is expected to be within maximum bounds (invalid Index)");
+	CvAssertMsg(eIndex1 < GC.getNumBuildInfos(), "eIndex1 is expected to be within maximum bounds (invalid Index)");
 	CvAssertMsg(eIndex2 >= 0, "eIndex2 is expected to be non-negative (invalid Index)");
-	CvAssertMsg(eIndex2 < NUM_SPECIALOPTION_TYPES, "eIndex2 is expected to be within maximum bounds (invalid Index)");
+	CvAssertMsg(eIndex2 < NUM_SPECILIST_TYPES, "eIndex2 is expected to be within maximum bounds (invalid Index)");
 
 	if (iChange != 0)
 	{
@@ -25238,9 +25238,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 	}
 
 #ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
-	for (iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+	for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
-		for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+		for (iJ = 0; iJ < NUM_SPECILIST_TYPES; iJ++)
 		{
 			changeBuildingScecialistCountChange(((BuildingTypes)iI), ((SpecialistTypes)iJ), (pPolicy->GetBuildingScecialistCountChanges(iI, iJ) * iChange));
 		}
