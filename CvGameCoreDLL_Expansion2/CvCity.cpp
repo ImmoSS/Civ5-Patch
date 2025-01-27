@@ -9023,6 +9023,7 @@ void CvCity::ChangeNoOccupiedUnhappinessCount(int iChange)
 		if (!GET_PLAYER(getOriginalOwner()).isHuman() && !GET_PLAYER(getOriginalOwner()).isMinorCiv())
 		{
 			setOriginalOwner(getOwner());
+			SetOccupied(false);
 		}
 	}
 #endif

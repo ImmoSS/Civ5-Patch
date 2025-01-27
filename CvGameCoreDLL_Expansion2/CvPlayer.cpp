@@ -5121,6 +5121,7 @@ void CvPlayer::doTurn()
 										if (pLoopCity->IsNoOccupiedUnhappiness())
 										{
 											pLoopCity->setOriginalOwner(eLoopPlayer);
+											pLoopCity->SetOccupied(false);
 										}
 									}
 								}
@@ -30245,6 +30246,7 @@ void CvPlayer::disconnected()
 										if (pLoopCity->IsNoOccupiedUnhappiness())
 										{
 											pLoopCity->setOriginalOwner(eLoopPlayer);
+											pLoopCity->SetOccupied(false);
 										}
 									}
 								}
@@ -30325,6 +30327,7 @@ void CvPlayer::disconnected()
 									if (pLoopCity->IsNoOccupiedUnhappiness())
 									{
 										pLoopCity->setOriginalOwner(eLoopPlayer);
+										pLoopCity->SetOccupied(false);
 									}
 								}
 							}
