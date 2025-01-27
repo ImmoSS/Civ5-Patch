@@ -8184,9 +8184,9 @@
 			<GoldenAgeValueFromKills>0</GoldenAgeValueFromKills> 
 			<Sapper>false</Sapper> 
 			<HeavyCharge>false</HeavyCharge> 
-			<TechPrereq>TECH_COMBUSTION</TechPrereq> 
-			<PromotionPrereqOr1>PROMOTION_SHOCK_2</PromotionPrereqOr1> 
-			<PromotionPrereqOr2>PROMOTION_DRILL_2</PromotionPrereqOr2> 
+			<TechPrereq>TECH_REPLACEABLE_PARTS</TechPrereq> 
+			<PromotionPrereqOr1>PROMOTION_SHOCK_1</PromotionPrereqOr1> 
+			<PromotionPrereqOr2>PROMOTION_DRILL_1</PromotionPrereqOr2> 
 			<PediaType>PEDIA_MELEE</PediaType> 
 			<PediaEntry>TXT_KEY_PROMOTION_AMBUSH_1</PediaEntry> 
 		</Row>
@@ -10975,10 +10975,6 @@
 			<GoldenAgeValueFromKills>0</GoldenAgeValueFromKills> 
 			<Sapper>false</Sapper> 
 			<HeavyCharge>false</HeavyCharge> 
-			<PromotionPrereqOr1>PROMOTION_INTERCEPTION_1</PromotionPrereqOr1> 
-			<PromotionPrereqOr2>PROMOTION_DOGFIGHTING_1</PromotionPrereqOr2> 
-			<PromotionPrereqOr3>PROMOTION_AIR_SIEGE_1</PromotionPrereqOr3> 
-			<PromotionPrereqOr4>PROMOTION_BOMBARDMENT_1</PromotionPrereqOr4> 
 			<PediaType>PEDIA_AIR</PediaType> 
 			<PediaEntry>TXT_KEY_PROMOTION_AIR_TARGETING_1</PediaEntry> 
 		</Row>
@@ -11908,6 +11904,7 @@
 			<PromotionPrereqOr2>PROMOTION_DOGFIGHTING_2</PromotionPrereqOr2> 
 			<PromotionPrereqOr3>PROMOTION_AIR_SIEGE_2</PromotionPrereqOr3> 
 			<PromotionPrereqOr4>PROMOTION_BOMBARDMENT_2</PromotionPrereqOr4> 
+			<PromotionPrereqOr5>PROMOTION_AIR_TARGETING_2</PromotionPrereqOr5> 
 			<PediaType>PEDIA_HEAL</PediaType> 
 			<PediaEntry>TXT_KEY_PROMOTION_AIR_REPAIR</PediaEntry> 
 		</Row>
