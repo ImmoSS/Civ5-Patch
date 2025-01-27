@@ -6357,6 +6357,13 @@ bool CvUnit::plunderTradeRoute()
 		return false;
 	}
 
+#ifdef PLUNDERING_TRADE_ROUTE_DECREASES_MP
+	if (!hasFreePillageMove() && !IsCaptureDefeatedEnemy())
+	{
+		changeMoves(-GC.getMOVE_DENOMINATOR());
+	}
+#endif
+
 	// right now, plunder the first unit
 #ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
 	PlayerTypes ePlayer = GC.getGame().GetGameTrade()->GetOwnerFromID(aiTradeUnitsAtPlot[0]);
