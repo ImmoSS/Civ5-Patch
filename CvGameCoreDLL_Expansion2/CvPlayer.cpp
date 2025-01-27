@@ -5114,9 +5114,9 @@ void CvPlayer::doTurn()
 							CvCity* pLoopCity = NULL;
 							for (pLoopCity = GET_PLAYER(eLoopPlayer).firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(eLoopPlayer).nextCity(&iCityLoop))
 							{
-								if (pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && pLoopCity->IsOriginalCapital())
+								if ((int)pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && !pLoopCity->IsOriginalCapital())
 								{
-									if (pLoopCity->getOriginalOwner() == GetID())
+									if (!GET_PLAYER(pLoopCity->getOriginalOwner()).isHuman() && pLoopCity->getOriginalOwner() == GetID())
 									{
 										if (pLoopCity->IsNoOccupiedUnhappiness())
 										{
@@ -30239,7 +30239,7 @@ void CvPlayer::disconnected()
 							CvCity* pLoopCity = NULL;
 							for (pLoopCity = GET_PLAYER(eLoopPlayer).firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(eLoopPlayer).nextCity(&iCityLoop))
 							{
-								if (pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && pLoopCity->IsOriginalCapital())
+								if ((int)pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && !pLoopCity->IsOriginalCapital())
 								{
 									if (pLoopCity->getOriginalOwner() == GetID())
 									{
@@ -30320,7 +30320,7 @@ void CvPlayer::disconnected()
 						CvCity* pLoopCity = NULL;
 						for (pLoopCity = GET_PLAYER(eLoopPlayer).firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(eLoopPlayer).nextCity(&iCityLoop))
 						{
-							if (pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && pLoopCity->IsOriginalCapital())
+							if ((int)pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && !pLoopCity->IsOriginalCapital())
 							{
 								if (pLoopCity->getOriginalOwner() == GetID())
 								{
