@@ -8604,10 +8604,12 @@ int CvCity::GetFaithPerTurn() const
 #ifdef BELIEF_GREAT_WORK_YIELD_CHANGES
 	iFaith += GetFaithPerTurnFromGreatWorks();
 #endif
+#if defined BELIEF_SPECIALIST_YIELD_CHANGES || defined BELIEF_HALF_FAITH_IN_CITY
+	ReligionTypes eMajority = GetCityReligions()->GetReligiousMajority();
+#endif
 #ifdef BELIEF_SPECIALIST_YIELD_CHANGES
 	CvAssertMsg(eSpecialist >= 0, "eSpecialist expected to be >= 0");
 	CvAssertMsg(eSpecialist < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos expected to be >= 0");
-	ReligionTypes eMajority = GetCityReligions()->GetReligiousMajority();
 	if(eMajority != NO_RELIGION)
 	{
 		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eMajority, getOwner());
@@ -8635,6 +8637,26 @@ int CvCity::GetFaithPerTurn() const
 		iFaith *= (100 + iModifier);
 		iFaith /= 100;
 	}
+
+#ifdef BELIEF_HALF_FAITH_IN_CITY
+	if (GetCityReligions()->GetReligiousMajority() != NO_RELIGION && GC.getGame().GetGameReligions()->GetReligion(GetCityReligions()->GetReligiousMajority(), getOwner())->m_eFounder == getOwner())
+	{
+	}
+	if (eMajority != NO_RELIGION)
+	{
+		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eMajority, getOwner());
+		if (pReligion)
+		{
+			if (pReligion->m_eFounder == getOwner())
+			{
+				if (pReligion->m_Beliefs.IsHalfFaithInCity())
+				{
+					iFaith /= 2;
+				}
+			}
+		}
+	}
+#endif
 
 	return iFaith;
 }
@@ -13658,6 +13680,17 @@ bool CvCity::IsCanPurchase(bool bTestPurchaseCost, bool bTestTrainable, UnitType
 			{
 				return false;
 			}
+
+#ifdef FAITH_FOR_THE_FIRST_SCIENTIST
+			const UnitClassTypes eUnitClass = (UnitClassTypes)GC.getUnitInfo(eUnitType)->GetUnitClassType();
+			if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_SCIENTIST", true /*bHideAssert*/))
+			{
+				if (GET_PLAYER(getOwner()).getScientistsFromFaith() > 1)
+				{
+					return false;
+				}
+			}
+#endif
 
 			CvUnitEntry* pkUnitInfo = GC.getUnitInfo(eUnitType);
 			if(pkUnitInfo)
