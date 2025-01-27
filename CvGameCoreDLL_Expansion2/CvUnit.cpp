@@ -4214,7 +4214,7 @@ bool CvUnit::canAirPatrol(const CvPlot* pPlot) const
 		float fTimeElapsed = (GET_PLAYER(kGame.getActivePlayer()).isSimultaneousTurns() ? fTimeSinceGameTurnStart : fTimeSinceCurrentTurnStart);
 #endif
 
-		if (fTimeElapsed * 2 > fGameTurnEnd)
+		if (fTimeElapsed * 4 > fGameTurnEnd)
 		{
 			return false;
 		}
