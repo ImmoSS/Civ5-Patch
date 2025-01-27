@@ -736,7 +736,7 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iGoldenAgeCombatMod             =	kResults.GetInt("GoldenAgeCombatMod");
 #endif
 #ifdef NEW_BELIEF_PROPHECY
-	m_bAllowPolicyWonders             = kResults.GetInt("AllowPolicyWonders");
+	m_bAllowPolicyWonders             = kResults.GetBool("AllowPolicyWonders");
 #endif
 	m_iCityStateMinimumInfluence      = kResults.GetInt("CityStateMinimumInfluence");
 	m_iCityStateInfluenceModifier     = kResults.GetInt("CityStateInfluenceModifier");
