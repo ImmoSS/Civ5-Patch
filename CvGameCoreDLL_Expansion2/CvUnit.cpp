@@ -3157,6 +3157,25 @@ void CvUnit::move(CvPlot& targetPlot, bool bShow)
 	}
 #endif
 
+#if defined UPD_RECON_PLOT_IF_CARGO_MOVE && defined MADE_REBASE
+
+	if (hasCargo())
+	{
+		IDInfo* pUnitNode = plot()->headUnitNode();
+
+		while (pUnitNode != NULL)
+		{
+			CvUnit* pLoopUnit = ::getUnit(*pUnitNode);
+			pUnitNode = plot()->nextUnitNode(pUnitNode);
+
+			if (pLoopUnit->IsRecon() && !pLoopUnit->isOutOfRebases())
+			{
+				pLoopUnit->setReconPlot(&targetPlot);
+			}
+		}
+	}
+#endif
+
 	if(bShouldDeductCost)
 		changeMoves(-iMoveCost);
 	setXY(targetPlot.getX(), targetPlot.getY(), true, true, bShow && targetPlot.isVisibleToWatchingHuman(), bShow);
