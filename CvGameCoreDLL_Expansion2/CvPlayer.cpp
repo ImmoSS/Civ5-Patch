@@ -12018,7 +12018,14 @@ int CvPlayer::getBuildingScecialistCountChange(BuildingTypes eIndex1, Specialist
 	CvAssertMsg(eIndex1 < GC.getNumBuildInfos(), "eIndex1 is expected to be within maximum bounds (invalid Index)");
 	CvAssertMsg(eIndex2 >= 0, "eIndex2 is expected to be non-negative (invalid Index)");
 	CvAssertMsg(eIndex2 < NUM_SPECILIST_TYPES, "eIndex2 is expected to be within maximum bounds (invalid Index)");
-	return m_ppaaiBuildingScecialistCountChange[eIndex1][eIndex2];
+	if (eIndex2 == NO_SPECIALIST)
+	{
+		return 0;
+	}
+	else
+	{
+		return m_ppaaiBuildingScecialistCountChange[eIndex1][eIndex2];
+	}
 }
 
 

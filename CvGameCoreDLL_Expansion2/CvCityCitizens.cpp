@@ -2049,7 +2049,7 @@ bool CvCityCitizens::IsCanAddSpecialistToBuilding(BuildingTypes eBuilding)
 
 #ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
 	if (iNumSpecialistsAssigned < GetCity()->getPopulation() &&	// Limit based on Pop of City
-		iNumSpecialistsAssigned < GC.getBuildingInfo(eBuilding)->GetSpecialistCount() + (GET_PLAYER(m_pCity->getOwner()).getBuildingScecialistCountChange((BuildingTypes)GC.getInfoTypeForString(GC.getBuildingInfo(eBuilding)->GetType(), true), (SpecialistTypes)GC.getBuildingInfo(eBuilding)->GetSpecialistType())) &&				// Limit for this particular Building
+		iNumSpecialistsAssigned < GC.getBuildingInfo(eBuilding)->GetSpecialistCount() + (GET_PLAYER(m_pCity->getOwner()).getBuildingScecialistCountChange(eBuilding, (SpecialistTypes)GC.getBuildingInfo(eBuilding)->GetSpecialistType())) &&				// Limit for this particular Building
 		iNumSpecialistsAssigned < GC.getMAX_SPECIALISTS_FROM_BUILDING())	// Overall Limit
 	{
 		return true;
