@@ -234,7 +234,7 @@ public:
 	int GetImprovementYieldChanges(int i, int j) const;
 	int GetBuildingClassYieldModifiers(int i, int j) const;
 	int GetBuildingClassYieldChanges(int i, int j) const;
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 	int GetBuildingScecialistCountChanges(int i, int j) const;
 #endif
 	int GetFlavorValue(int i) const;
@@ -522,7 +522,7 @@ private:
 	int** m_ppiImprovementYieldChanges;
 	int** m_ppiBuildingClassYieldModifiers;
 	int** m_ppiBuildingClassYieldChanges;
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 	int** m_ppiBuildingScecialistCountChange;
 #endif
 	int* m_piFlavorValue;

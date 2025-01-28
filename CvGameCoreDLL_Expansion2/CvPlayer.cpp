@@ -512,7 +512,7 @@ CvPlayer::CvPlayer() :
 	, m_iNumCitiesPolicyCostDiscount(0)
 	, m_iGarrisonedCityRangeStrikeModifier(0)
 	, m_iGarrisonFreeMaintenanceCount(0)
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 	, m_ppaaiBuildingScecialistCountChange("CvPlayer::m_ppaaiBuildingScecialistCountChange", m_syncArchive)
 #endif
 	, m_iNumCitiesFreeCultureBuilding(0)
@@ -1364,7 +1364,7 @@ void CvPlayer::uninit()
 	m_iGarrisonedCityRangeStrikeModifier = 0;
 	m_iGarrisonFreeMaintenanceCount = 0;
 	m_iNumCitiesFreeCultureBuilding = 0;
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 	m_ppaaiBuildingScecialistCountChange.clear();
 #endif
 	m_iNumCitiesFreeFoodBuilding = 0;
@@ -1661,7 +1661,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 			}
 		}
 
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 		Firaxis::Array< int, NUM_SPECILIST_TYPES > specialist;
 		for (unsigned int j = 0; j < NUM_SPECILIST_TYPES; ++j)
 		{
@@ -12010,7 +12010,7 @@ int CvPlayer::GetCultureYieldFromPreviousTurns(int iGameTurn, int iNumPreviousTu
 	return iSum;
 }
 
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 //	--------------------------------------------------------------------------------
 int CvPlayer::getBuildingScecialistCountChange(BuildingTypes eIndex1, SpecialistTypes eIndex2) const
 {
@@ -25244,7 +25244,7 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		}
 	}
 
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 	for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
 		for (iJ = 0; iJ < NUM_SPECILIST_TYPES; iJ++)
@@ -27188,7 +27188,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iNumCitiesPolicyCostDiscount;
 	kStream >> m_iGarrisonFreeMaintenanceCount;
 	kStream >> m_iGarrisonedCityRangeStrikeModifier;
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1010)
 	{
@@ -28045,7 +28045,7 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iNumCitiesPolicyCostDiscount;
 	kStream << m_iGarrisonFreeMaintenanceCount;
 	kStream << m_iGarrisonedCityRangeStrikeModifier;
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 	kStream << m_ppaaiBuildingScecialistCountChange;
 #endif
 	kStream << m_iNumCitiesFreeCultureBuilding;

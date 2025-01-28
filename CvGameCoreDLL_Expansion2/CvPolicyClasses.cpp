@@ -204,7 +204,7 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_ppiImprovementYieldChanges(NULL),
 	m_ppiBuildingClassYieldModifiers(NULL),
 	m_ppiBuildingClassYieldChanges(NULL),
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 	m_ppiBuildingScecialistCountChange(NULL),
 #endif
 	m_piFlavorValue(NULL),
@@ -291,7 +291,7 @@ CvPolicyEntry::~CvPolicyEntry(void)
 	CvDatabaseUtility::SafeDelete2DArray(m_ppiImprovementYieldChanges);
 	CvDatabaseUtility::SafeDelete2DArray(m_ppiBuildingClassYieldModifiers);
 	CvDatabaseUtility::SafeDelete2DArray(m_ppiBuildingClassYieldChanges);
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 	CvDatabaseUtility::SafeDelete2DArray(m_ppiBuildingScecialistCountChange);
 #endif
 }
@@ -594,7 +594,7 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 		}
 	}
 
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 	//BuildingScecialistCountChange
 	{
 		kUtility.Initialize2DArray(m_ppiBuildingScecialistCountChange, "Buildings", "Specialists");
@@ -1921,7 +1921,7 @@ int CvPolicyEntry::GetBuildingClassYieldChanges(int i, int j) const
 	return m_ppiBuildingClassYieldChanges[i][j];
 }
 
-#ifdef POLICY_BUILDING_SPECIALIST_COUNT_CHANGE
+#ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 ///
 int CvPolicyEntry::GetBuildingScecialistCountChanges(int i, int j) const
 {
