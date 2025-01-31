@@ -2962,6 +2962,18 @@ void CvGameDeals::DoEndTradedItem(CvTradedItem* pItem, PlayerTypes eToPlayer, bo
 			{
 				kTeam.GetTeamTechs()->ChangeResearchProgress(eCurrentTech, iBeakersBonus, eToPlayer);
 			}
+#ifdef ESPIONAGE_SYSTEM_REWORK
+			CvPlayerEspionage* pEspionage = toPlayer.GetEspionage();
+			for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+			{
+				PlayerTypes ePlayerToStealFrom = (PlayerTypes)iI;
+				if (pEspionage->GetNumTechsToSteal(ePlayerToStealFrom) == 0)
+				{
+					toPlayer.GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom].clear();
+					toPlayer.GetEspionage()->m_aiNumTechsToStealList[ePlayerToStealFrom] = 0;
+				}
+			}
+#endif
 
 			pNotifications = toPlayer.GetNotifications();
 			if(pNotifications)

@@ -232,6 +232,11 @@ void CvPlayerEspionage::DoTurn()
 				m_pPlayer->GetEspionage()->m_aiNumTechsToStealList[ePlayerToStealFrom] = 0;
 			}
 		}
+		if (pEspionage->GetNumTechsToSteal(ePlayerToStealFrom) == 0)
+		{
+			m_pPlayer->GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom].clear();
+			m_pPlayer->GetEspionage()->m_aiNumTechsToStealList[ePlayerToStealFrom] = 0;
+		}
 	}
 #endif
 #ifdef BUILD_STEALABLE_TECH_LIST_ONCE_PER_TURN
