@@ -2316,6 +2316,16 @@ bool CvPlayerEspionage::AttemptCoup(uint uiSpyIndex)
 		}
 	}
 
+#ifdef AUTO_PEACE_WITH_MINOR_ON_COUP
+	if (iRandRoll <= GetCoupChanceOfSuccess(uiSpyIndex))
+	{
+		if (GET_TEAM(m_pPlayer->getTeam()).isAtWar(GET_PLAYER(eCityOwner).getTeam()))
+		{
+			GET_TEAM(m_pPlayer->getTeam()).makePeace(GET_PLAYER(eCityOwner).getTeam());
+		}
+	}
+#endif
+
 	pMinorCivAI->SetFriendshipWithMajorTimes100(m_pPlayer->GetID(), aiNewInfluenceValueTimes100[m_pPlayer->GetID()]);
 	pMinorCivAI->SetDisableNotifications(false);
 	// send notification to player
