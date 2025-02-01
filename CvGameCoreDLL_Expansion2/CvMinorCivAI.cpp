@@ -1734,6 +1734,10 @@ void CvMinorCivAI::Reset()
 #endif
 		m_abPledgeToProtect[iI] = false;
 		m_aiMajorScratchPad[iI] = 0;
+
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+		m_aiMajorPriority[iI] = MAX_MAJOR_CIVS;
+#endif
 	}
 
 	for(iI = 0; iI < REALLY_MAX_TEAMS; iI++)
@@ -1945,6 +1949,9 @@ void CvMinorCivAI::Read(FDataStream& kStream)
 	CvAssertMsg(m_QuestsGiven.size() == MAX_MAJOR_CIVS, "Number of entries in minor's quest list does not match MAX_MAJOR_CIVS when read from memory!");
 
 	kStream >> m_bDisableNotifications;
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+	kStream >> m_aiMajorPriority;
+#endif
 }
 
 /// Serialization write
@@ -2028,6 +2035,9 @@ void CvMinorCivAI::Write(FDataStream& kStream) const
 	}
 
 	kStream << m_bDisableNotifications;
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+	kStream << m_aiMajorPriority;
+#endif
 }
 
 /// Pick the minor civ's personality and any special traits (ie. unique unit for Militaristic)
@@ -5970,6 +5980,64 @@ void CvMinorCivAI::SetAlly(PlayerTypes eNewAlly)
 					GET_PLAYER(eOldAlly).setTurnCSWarAllowingMinor((PlayerTypes)iI, GetPlayer()->GetID(), -1);
 					GET_PLAYER(eOldAlly).setTimeCSWarAllowingMinor((PlayerTypes)iI, GetPlayer()->GetID(), 0.f);
 				}
+			}
+		}
+	}
+#endif
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+	CvGame& kGame = GC.getGame();
+	if (GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED) && kGame.isNetworkMultiPlayer())
+	{
+		RecalculateMajorPriority();
+
+		if (eNewAlly != NO_PLAYER)
+		{
+			if (GetMajorPriority(eNewAlly) == MAX_MAJOR_CIVS)
+			{
+				SetMajorPriority(eNewAlly, GetMaxMajorPriority() + 1);
+				if (eOldAlly != NO_PLAYER)
+				{
+#ifdef GAME_UPDATE_TURN_TIMER_ONCE_PER_TURN
+					float fGameTurnEnd = kGame.getPreviousTurnLen();
+#else
+					float fGameTurnEnd = static_cast<float>(kGame.getMaxTurnLen());
+#endif
+					float fTimeElapsed = kGame.getTimeElapsed();
+					float fRestrictionTime = CS_ALLYING_WAR_RESCTRICTION_TIMER;
+					if (fGameTurnEnd - fTimeElapsed > fRestrictionTime)
+					{
+						GET_PLAYER(eOldAlly).setPriorityTurn(GetPlayer()->GetID(), kGame.getGameTurn());
+						GET_PLAYER(eOldAlly).setPriorityTime(GetPlayer()->GetID(), fTimeElapsed + fRestrictionTime);
+					}
+					else
+					{
+						GET_PLAYER(eOldAlly).setPriorityTurn(GetPlayer()->GetID(), kGame.getGameTurn() + 1);
+						GET_PLAYER(eOldAlly).setPriorityTime(GetPlayer()->GetID(), fRestrictionTime - (fGameTurnEnd - fTimeElapsed));
+					}
+				}
+			}
+			else
+			{
+				GET_PLAYER(eNewAlly).setPriorityTurn(GetPlayer()->GetID(), -1);
+				GET_PLAYER(eNewAlly).setPriorityTime(GetPlayer()->GetID(), 0.f);
+				for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+				{
+					if (GetMajorPriority((PlayerTypes)iI) > GetMajorPriority(eNewAlly))
+					{
+						SetMajorPriority((PlayerTypes)iI, MAX_MAJOR_CIVS);
+						GET_PLAYER((PlayerTypes)iI).setPriorityTurn(GetPlayer()->GetID(), -1);
+						GET_PLAYER((PlayerTypes)iI).setPriorityTime(GetPlayer()->GetID(), 0.f);
+					}
+				}
+			}
+		}
+		else
+		{
+			for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+			{
+				SetMajorPriority((PlayerTypes)iI, MAX_MAJOR_CIVS);
+				GET_PLAYER((PlayerTypes)iI).setPriorityTurn(GetPlayer()->GetID(), -1);
+				GET_PLAYER((PlayerTypes)iI).setPriorityTime(GetPlayer()->GetID(), 0.f);
 			}
 		}
 	}
@@ -11547,6 +11615,83 @@ void CvMinorCivAI::SetDisableNotifications(bool bDisableNotifications)
 		m_bDisableNotifications = bDisableNotifications;
 	}
 }
+
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+///
+int CvMinorCivAI::GetMajorPriority(PlayerTypes ePlayer) const
+{
+	CvAssertMsg(ePlayer >= 0, "ePlayer is expected to be non-negative (invalid Index)");
+	CvAssertMsg(ePlayer < MAX_MAJOR_CIVS, "ePlayer is expected to be within maximum bounds (invalid Index)");
+	return m_aiMajorPriority[ePlayer];
+}
+
+///
+void CvMinorCivAI::SetMajorPriority(PlayerTypes ePlayer, int iValue)
+{
+	CvAssertMsg(ePlayer >= 0, "ePlayer is expected to be non-negative (invalid Index)");
+	CvAssertMsg(ePlayer < MAX_MAJOR_CIVS, "ePlayer is expected to be within maximum bounds (invalid Index)");
+	m_aiMajorPriority[ePlayer] = iValue;
+}
+
+///
+PlayerTypes CvMinorCivAI::GetPriorityPlayer() const
+{
+	PlayerTypes ePriorityPlayer = NO_PLAYER;
+	for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+	{
+		if (GetMajorPriority((PlayerTypes)iI) == 0)
+		{
+			ePriorityPlayer = (PlayerTypes)iI;
+			break;
+		}
+	}
+
+	return ePriorityPlayer;
+}
+
+///
+int CvMinorCivAI::GetMaxMajorPriority() const
+{
+	int iMaxPriority = -1;
+	for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+	{
+		if (GetMajorPriority((PlayerTypes)iI) > iMaxPriority && GetMajorPriority((PlayerTypes)iI) < MAX_MAJOR_CIVS)
+		{
+			iMaxPriority = GetMajorPriority((PlayerTypes)iI);
+		}
+	}
+	return iMaxPriority;
+}
+
+///
+void CvMinorCivAI::RecalculateMajorPriority()
+{
+	PlayerTypes ePriorityPlayer = NO_PLAYER;
+	do
+	{
+		ePriorityPlayer = GetPriorityPlayer();
+		if (ePriorityPlayer != NO_PLAYER)
+		{
+			if (!(GC.getGame().getGameTurn() < GET_PLAYER(ePriorityPlayer).getPriorityTurn(GetPlayer()->GetID()) ||
+				GC.getGame().getGameTurn() == GET_PLAYER(ePriorityPlayer).getPriorityTurn(GetPlayer()->GetID()) && GC.getGame().getTimeElapsed() < GET_PLAYER(ePriorityPlayer).getPriorityTime(GetPlayer()->GetID()))
+				&& GetAlly() != ePriorityPlayer)
+			{
+				SetMajorPriority(ePriorityPlayer, MAX_MAJOR_CIVS);
+				GET_PLAYER(ePriorityPlayer).setPriorityTurn(GetPlayer()->GetID(), -1);
+				GET_PLAYER(ePriorityPlayer).setPriorityTime(GetPlayer()->GetID(), 0.f);
+
+				for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+				{
+					if (GetMajorPriority((PlayerTypes)iI) < MAX_MAJOR_CIVS)
+					{
+						SetMajorPriority((PlayerTypes)iI, GetMajorPriority((PlayerTypes)iI) - 1);
+					}
+				}
+			}
+		}
+	} while (ePriorityPlayer != GetPriorityPlayer());
+}
+#endif
 
 //======================================================================================================
 //					CvMinorCivInfo

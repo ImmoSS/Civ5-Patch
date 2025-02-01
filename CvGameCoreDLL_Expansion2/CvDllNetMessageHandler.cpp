@@ -1132,6 +1132,39 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 					}
 				}
 #endif
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+#ifdef GAME_UPDATE_TURN_TIMER_ONCE_PER_TURN
+				// float fGameTurnEnd = game.getPreviousTurnLen();
+#else
+				float fGameTurnEnd = static_cast<float>(game.getMaxTurnLen());
+#endif
+				// float fTimeElapsed = game.getTimeElapsed();
+				for (int jJ = MAX_MAJOR_CIVS; jJ < MAX_MINOR_CIVS; jJ++)
+				{
+					PlayerTypes eLoopMinor = (PlayerTypes)jJ;
+					GET_PLAYER(eLoopMinor).GetMinorCivAI()->RecalculateMajorPriority();
+					for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+					{
+						if (game.getGameTurn() == GET_PLAYER((PlayerTypes)iI).getPriorityTurn(eLoopMinor))
+						{
+							if (fTimeElapsed < GET_PLAYER((PlayerTypes)iI).getPriorityTime(eLoopMinor))
+							{
+								GET_PLAYER((PlayerTypes)iI).setPriorityTime(eLoopMinor, GET_PLAYER((PlayerTypes)iI).getPriorityTime(eLoopMinor) - fTimeElapsed);
+							}
+							else
+							{
+								GET_PLAYER((PlayerTypes)iI).setPriorityTurn(eLoopMinor, -1);
+								GET_PLAYER((PlayerTypes)iI).setPriorityTime(eLoopMinor, 0.f);
+							}
+						}
+						if (game.getGameTurn() < GET_PLAYER((PlayerTypes)iI).getPriorityTurn(eLoopMinor))
+						{
+							GET_PLAYER((PlayerTypes)iI).setPriorityTurn(eLoopMinor, game.getGameTurn());
+							GET_PLAYER((PlayerTypes)iI).setPriorityTime(eLoopMinor, GET_PLAYER((PlayerTypes)iI).getPriorityTime(eLoopMinor) + (fGameTurnEnd - fTimeElapsed));
+						}
+					}
+				}
+#endif
 				GC.getGame().resetTurnTimer(true);
 				DLLUI->AddMessage(0, CvPreGame::activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), GetLocalizedText("TXT_KEY_MISC_TURN_TIMER_RESET", GET_PLAYER(ePlayer).getName()).GetCString());
 				ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();

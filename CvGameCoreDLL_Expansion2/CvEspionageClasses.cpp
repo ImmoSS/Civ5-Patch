@@ -2404,6 +2404,64 @@ bool CvPlayerEspionage::AttemptCoup(uint uiSpyIndex)
 		}
 	}
 #endif
+#ifdef CS_ALLYING_WAR_RESCTRICTION
+	CvGame& kGame = GC.getGame();
+	if (GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED) && GC.getGame().isNetworkMultiPlayer())
+	{
+		pMinorCivAI->RecalculateMajorPriority();
+
+		if (m_pPlayer->GetID() != NO_PLAYER)
+		{
+			if (pMinorCivAI->GetMajorPriority(m_pPlayer->GetID()) == MAX_MAJOR_CIVS)
+			{
+				pMinorCivAI->SetMajorPriority(m_pPlayer->GetID(), pMinorCivAI->GetMaxMajorPriority() + 1);
+				if (ePreviousAlly != NO_PLAYER)
+				{
+#ifdef GAME_UPDATE_TURN_TIMER_ONCE_PER_TURN
+					float fGameTurnEnd = kGame.getPreviousTurnLen();
+#else
+					float fGameTurnEnd = static_cast<float>(kGame.getMaxTurnLen());
+#endif
+					float fTimeElapsed = kGame.getTimeElapsed();
+					float fRestrictionTime = CS_ALLYING_WAR_RESCTRICTION_TIMER;
+					if (fGameTurnEnd - fTimeElapsed > fRestrictionTime)
+					{
+						GET_PLAYER(ePreviousAlly).setPriorityTurn(eCityOwner, kGame.getGameTurn());
+						GET_PLAYER(ePreviousAlly).setPriorityTime(eCityOwner, fTimeElapsed + fRestrictionTime);
+					}
+					else
+					{
+						GET_PLAYER(ePreviousAlly).setPriorityTurn(eCityOwner, kGame.getGameTurn() + 1);
+						GET_PLAYER(ePreviousAlly).setPriorityTime(eCityOwner, fRestrictionTime - (fGameTurnEnd - fTimeElapsed));
+					}
+				}
+			}
+			else
+			{
+				GET_PLAYER(m_pPlayer->GetID()).setPriorityTurn(eCityOwner, -1);
+				GET_PLAYER(m_pPlayer->GetID()).setPriorityTime(eCityOwner, 0.f);
+				for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+				{
+					if (pMinorCivAI->GetMajorPriority((PlayerTypes)iI) > pMinorCivAI->GetMajorPriority(m_pPlayer->GetID()))
+					{
+						pMinorCivAI->SetMajorPriority((PlayerTypes)iI, MAX_MAJOR_CIVS);
+						GET_PLAYER((PlayerTypes)iI).setPriorityTurn(eCityOwner, -1);
+						GET_PLAYER((PlayerTypes)iI).setPriorityTime(eCityOwner, 0.f);
+					}
+				}
+			}
+		}
+		else
+		{
+			for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+			{
+				pMinorCivAI->SetMajorPriority((PlayerTypes)iI, MAX_MAJOR_CIVS);
+				GET_PLAYER((PlayerTypes)iI).setPriorityTurn(eCityOwner, -1);
+				GET_PLAYER((PlayerTypes)iI).setPriorityTime(eCityOwner, 0.f);
+			}
+		}
+	}
+#endif
 #ifdef REPLAY_EVENTS
 	std::vector<int> vArgs;
 	vArgs.push_back(static_cast<int>(uiSpyIndex));
