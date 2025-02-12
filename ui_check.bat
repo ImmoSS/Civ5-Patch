@@ -57,6 +57,8 @@ copy /y "%cd%\%patchfolder%\tmp\ui\SocialPolicyPopup.xml" "%cd%\%patchfolder%\UI
 copy /y "%cd%\%patchfolder%\tmp\ui\TechTree.xml" "%cd%\%patchfolder%\UI\TechTree.xml" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\TechHelpInclude.lua" "%cd%\%patchfolder%\UI\TechHelpInclude.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\AnnexCityPopup.lua" "%cd%\%patchfolder%\UI\AnnexCityPopup.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\ChooseMayaBonus.lua" "%cd%\%patchfolder%\UI\ChooseMayaBonus.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\ChooseMayaBonus.xml" "%cd%\%patchfolder%\UI\ChooseMayaBonus.xml" > nul
 
 REM -------------------------------------------------
 set text="-- destroy: check fix for need to update plot & cargo & airbase"

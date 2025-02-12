@@ -138,6 +138,11 @@ function DisplayPopup(playerID, classType, numberOfFreeItems)
 	end);
 end
 
+function OnClose()
+	ContextPtr:SetHide(true);
+end
+Controls.CloseButton:RegisterCallback(Mouse.eLClick, OnClose);
+
 
 function OnPopup( popupInfo )	
     if( popupInfo.Type == ButtonPopupTypes.BUTTONPOPUP_CHOOSE_MAYA_BONUS and
@@ -149,6 +154,26 @@ function OnPopup( popupInfo )
     end
 end
 Events.SerialEventGameMessagePopup.Add( OnPopup );
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+function InputHandler( uiMsg, wParam, lParam )
+    ----------------------------------------------------------------        
+    -- Key Down Processing
+    ----------------------------------------------------------------        
+    if uiMsg == KeyEvents.KeyDown then
+        if (wParam == Keys.VK_ESCAPE) then
+		    OnClose();
+	    	return true;
+        end
+        
+        -- Do Nothing.
+        if(wParam == Keys.VK_RETURN) then
+			return true;
+        end
+    end
+end
+ContextPtr:SetInputHandler( InputHandler );
   
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
