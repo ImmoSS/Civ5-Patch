@@ -2545,7 +2545,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 	if(bConquest)
 	{
 #ifdef POLICY_DO_TECH_FROM_CITY_CONQ
-		if (IsPolicyTechFromCityConquer() && !GET_PLAYER(pOldCity->getOwner()).isMinorCiv() && !pOldCity->IsPuppet() && (!pOldCity->IsOccupied() || pOldCity->IsNoOccupiedUnhappiness()))
+		if (IsPolicyTechFromCityConquer() && !GET_PLAYER(pOldCity->getOwner()).isMinorCiv() && !pOldCity->IsPuppet() && pOldCity->getPopulation() > 4 && (!pOldCity->IsOccupied() || pOldCity->IsNoOccupiedUnhappiness()))
 #else
 		if (GetPlayerTraits()->IsTechFromCityConquer())
 #endif
