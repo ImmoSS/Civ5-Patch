@@ -105,6 +105,7 @@
 		<Column name="Water" type="boolean"  default="0"/>
 		<Column name="CanBeEmbarked" type="boolean"  default="0"/>
 		<Column name="PrereqTech" type="text"  default="NULL"/>
+		<Column name="FastBuildPrereqTech" type="text"  default="NULL"/>
 		<Column name="ImprovementType" type="text"  default="NULL"/>
 		<Column name="RouteType" type="text"  default="NULL"/>
 		<Column name="EntityEvent" type="text"  default="NULL"/>
@@ -141,6 +142,7 @@
 			<Water>false</Water> 
 			<CanBeEmbarked>false</CanBeEmbarked> 
 			<PrereqTech>TECH_THE_WHEEL</PrereqTech> 
+			<FastBuildPrereqTech>TECH_COMBINED_ARMS</FastBuildPrereqTech> 
 			<RouteType>ROUTE_ROAD</RouteType> 
 			<EntityEvent>ENTITY_EVENT_SHOVEL</EntityEvent> 
 			<IconIndex>24</IconIndex> 
@@ -173,6 +175,7 @@
 			<Water>false</Water> 
 			<CanBeEmbarked>false</CanBeEmbarked> 
 			<PrereqTech>TECH_RAILROAD</PrereqTech> 
+			<FastBuildPrereqTech>TECH_COMBINED_ARMS</FastBuildPrereqTech> 
 			<RouteType>ROUTE_RAILROAD</RouteType> 
 			<EntityEvent>ENTITY_EVENT_RAILROAD</EntityEvent> 
 			<IconIndex>25</IconIndex> 
