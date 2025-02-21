@@ -10371,19 +10371,6 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_YIELD_CAPITAL", iTempMod);
 	}
 
-#ifdef LEARNED_SOCIETY_SCIENCE_MOD
-	if (getPopulation() >= 20)
-	{
-		if (eIndex == YIELD_SCIENCE && GET_PLAYER(getOwner()).GetPlayerPolicies()->HasPolicy((PolicyTypes)GC.getInfoTypeForString("POLICY_ECONOMIC_UNION", true)))
-		{
-			iTempMod = 20;
-			iModifier += iTempMod;
-			if (toolTipSink)
-				GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_LARGEPOP_SCIENCEMOD", iTempMod);
-		}
-	}
-#endif
-
 #ifdef POLICY_CITY_SCIENCE_SQUARED_MOD_PER_X_POP
 	if (eIndex == YIELD_SCIENCE && GET_PLAYER(getOwner()).GetCityScienceSquaredModPerXPop() > 0)
 	{
