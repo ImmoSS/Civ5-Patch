@@ -1879,7 +1879,7 @@ int CvBuilderTaskingAI::GetBuildTimeWeight(CvUnit* pUnit, CvPlot* pPlot, BuildTy
 			if (GC.getBuildInfo(eBuild)->getFastBuildPrereqTech() != NO_TECH)
 			{
 				bool bHasFastBuildTech = GET_TEAM(GET_PLAYER(pUnit->getOwner()).getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getBuildInfo(eBuild)->getFastBuildPrereqTech());
-				if (!bHasFastBuildTech)
+				if (bHasFastBuildTech)
 				{
 					iBuildTime += GC.getBuildInfo(eBuild)->getFeatureTime(pPlot->getFeatureType()) - 100;
 				}

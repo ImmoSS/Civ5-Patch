@@ -2519,7 +2519,7 @@ int CvPlot::getBuildTime(BuildTypes eBuild, PlayerTypes ePlayer) const
 	if (GC.getBuildInfo(eBuild)->getFastBuildPrereqTech() != NO_TECH)
 	{
 		bool bHasFastBuildTech = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getBuildInfo(eBuild)->getFastBuildPrereqTech());
-		if (!bHasFastBuildTech)
+		if (bHasFastBuildTech)
 		{
 			iTime = 100;
 		}
