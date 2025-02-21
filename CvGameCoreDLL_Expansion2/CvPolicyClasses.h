@@ -283,6 +283,9 @@ public:
 #ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
 	int GetGreatWorkTourismChanges() const;
 #endif
+#ifdef POLICY_CITY_SCIENCE_SQUARED_MOD_PER_X_POP
+	int GetCityScienceSquaredModPerXPop() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -481,6 +484,9 @@ private:
 #endif
 #ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
 	int m_iGreatWorkTourismChanges;
+#endif
+#ifdef POLICY_CITY_SCIENCE_SQUARED_MOD_PER_X_POP
+	int m_iCityScienceSquaredModPerXPop;
 #endif
 
 	// Arrays

@@ -10384,6 +10384,17 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 	}
 #endif
 
+#ifdef POLICY_CITY_SCIENCE_SQUARED_MOD_PER_X_POP
+	if (eIndex == YIELD_SCIENCE && GET_PLAYER(getOwner()).GetCityScienceSquaredModPerXPop() > 0)
+	{
+		iTempMod = getPopulation() / GET_PLAYER(getOwner()).GetCityScienceSquaredModPerXPop();
+		iTempMod = iTempMod * iTempMod;
+		iModifier += iTempMod;
+		if (toolTipSink)
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_LARGEPOP_SCIENCEMOD", iTempMod);
+	}
+#endif
+
 	// Golden Age Yield Modifier
 	if(GET_PLAYER(getOwner()).isGoldenAge())
 	{

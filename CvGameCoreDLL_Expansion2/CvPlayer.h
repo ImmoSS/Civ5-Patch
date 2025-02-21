@@ -784,6 +784,11 @@ public:
 	void ChangeGreatWorkTourismChanges(int iChange);
 #endif
 
+#ifdef POLICY_CITY_SCIENCE_SQUARED_MOD_PER_X_POP
+	int GetCityScienceSquaredModPerXPop() const;
+	void ChangeCityScienceSquaredModPerXPop(int iChange);
+#endif
+
 	bool IsAnarchy() const;
 	int GetAnarchyNumTurns() const;
 	void SetAnarchyNumTurns(int iValue);
@@ -2121,6 +2126,9 @@ protected:
 #endif
 #ifdef POLICY_GREAT_WORK_TOURISM_CHANGES
 	int m_iGreatWorkTourismChanges;
+#endif
+#ifdef POLICY_CITY_SCIENCE_SQUARED_MOD_PER_X_POP
+	int m_iCityScienceSquaredModPerXPop;
 #endif
 	FAutoVariable<int, CvPlayer> m_iAdvancedStartPoints;
 	FAutoVariable<int, CvPlayer> m_iAttackBonusTurns;
