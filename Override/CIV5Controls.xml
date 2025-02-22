@@ -175,7 +175,6 @@
 			<Water>false</Water> 
 			<CanBeEmbarked>false</CanBeEmbarked> 
 			<PrereqTech>TECH_RAILROAD</PrereqTech> 
-			<FastBuildPrereqTech>TECH_COMBINED_ARMS</FastBuildPrereqTech> 
 			<RouteType>ROUTE_RAILROAD</RouteType> 
 			<EntityEvent>ENTITY_EVENT_RAILROAD</EntityEvent> 
 			<IconIndex>25</IconIndex> 
