@@ -8585,6 +8585,31 @@ int CvCity::GetJONSCulturePerTurnFromLeagues() const
 	return iValue;
 }
 
+#ifdef BELIEF_HALF_FAITH_IN_CITY
+//	--------------------------------------------------------------------------------
+int CvCity::GetFaithMod() const
+{
+	ReligionTypes eMajority = GetCityReligions()->GetReligiousMajority();
+	int iMod = 0;
+	if (eMajority != NO_RELIGION && GC.getGame().GetGameReligions()->GetReligion(eMajority, getOwner())->m_eFounder == getOwner())
+	{
+		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eMajority, getOwner());
+		if (pReligion)
+		{
+			if (pReligion->m_eFounder == getOwner())
+			{
+				if (pReligion->m_Beliefs.IsHalfFaithInCity())
+				{
+					iMod -= 50;
+				}
+			}
+		}
+	}
+
+	return iMod;
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 int CvCity::GetFaithPerTurn() const
 {
@@ -8639,23 +8664,8 @@ int CvCity::GetFaithPerTurn() const
 	}
 
 #ifdef BELIEF_HALF_FAITH_IN_CITY
-	if (GetCityReligions()->GetReligiousMajority() != NO_RELIGION && GC.getGame().GetGameReligions()->GetReligion(GetCityReligions()->GetReligiousMajority(), getOwner())->m_eFounder == getOwner())
-	{
-	}
-	if (eMajority != NO_RELIGION)
-	{
-		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eMajority, getOwner());
-		if (pReligion)
-		{
-			if (pReligion->m_eFounder == getOwner())
-			{
-				if (pReligion->m_Beliefs.IsHalfFaithInCity())
-				{
-					iFaith /= 2;
-				}
-			}
-		}
-	}
+	iFaith *= (100 + GetFaithMod());
+	iFaith /= 100;
 #endif
 
 	return iFaith;
