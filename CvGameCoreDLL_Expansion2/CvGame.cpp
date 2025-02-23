@@ -7946,43 +7946,6 @@ void CvGame::doTurn()
 		}
 	}
 #endif
-#ifdef CS_ALLYING_WAR_RESCTRICTION
-	if (GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
-	{
-		CvGame& kGame = GC.getGame();
-#ifdef GAME_UPDATE_TURN_TIMER_ONCE_PER_TURN
-		float fGameTurnEnd = kGame.getPreviousTurnLen();
-#else
-		float fGameTurnEnd = static_cast<float>(kGame.getMaxTurnLen());
-#endif
-		float fTimeElapsed = kGame.getTimeElapsed();
-		for (int jJ = MAX_MAJOR_CIVS; jJ < MAX_MINOR_CIVS; jJ++)
-		{
-			PlayerTypes eMinor = (PlayerTypes)jJ;
-			GET_PLAYER(eMinor).GetMinorCivAI()->RecalculateMajorPriority();
-			for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
-			{
-				if (kGame.getGameTurn() == GET_PLAYER((PlayerTypes)iI).getPriorityTurn(eMinor))
-				{
-					if (fTimeElapsed < GET_PLAYER((PlayerTypes)iI).getPriorityTime(eMinor))
-					{
-						GET_PLAYER((PlayerTypes)iI).setPriorityTime(eMinor, GET_PLAYER((PlayerTypes)iI).getPriorityTime(eMinor) - fTimeElapsed);
-					}
-					else
-					{
-						GET_PLAYER((PlayerTypes)iI).setPriorityTurn(eMinor, -1);
-						GET_PLAYER((PlayerTypes)iI).setPriorityTime(eMinor, 0.f);
-					}
-				}
-				if (kGame.getGameTurn() < GET_PLAYER((PlayerTypes)iI).getPriorityTurn(eMinor))
-				{
-					GET_PLAYER((PlayerTypes)iI).setPriorityTurn(eMinor, kGame.getGameTurn());
-					GET_PLAYER((PlayerTypes)iI).setPriorityTime(eMinor, GET_PLAYER((PlayerTypes)iI).getPriorityTime(eMinor) + (fGameTurnEnd - fTimeElapsed));
-				}
-			}
-		}
-	}
-#endif
 	//We reset the turn timer now so that we know that the turn timer has been reset at least once for
 	//this turn.  CvGameController::Update() will continue to reset the timer if there is prolonged ai processing.
 	resetTurnTimer(true);

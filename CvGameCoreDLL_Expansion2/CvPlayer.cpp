@@ -636,8 +636,6 @@ CvPlayer::CvPlayer() :
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 	, m_ppaaiTurnCSWarAllowing("CvPlayer::m_ppaaiTurnCSWarAllowing", m_syncArchive)
 	, m_ppaafTimeCSWarAllowing("CvPlayer::m_ppaafTimeCSWarAllowing", m_syncArchive)
-	, m_paiPriorityTurn("CvPlayer::m_paiPriorityTurn", m_syncArchive)
-	, m_piPriorityTime("CvPlayer::m_piPriorityTime", m_syncArchive)
 #endif
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 	, m_bIsDelayedPolicy(false)
@@ -906,12 +904,6 @@ void CvPlayer::uninit()
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 	m_ppaaiTurnCSWarAllowing.clear();
 	m_ppaafTimeCSWarAllowing.clear();
-#endif
-#ifdef CS_ALLYING_WAR_RESCTRICTION
-	m_ppaaiTurnCSWarAllowing.clear();
-	m_ppaafTimeCSWarAllowing.clear();
-	m_paiPriorityTurn.clear();
-	m_piPriorityTime.clear();
 #endif
 
 	m_pPlayerPolicies->Uninit();
@@ -1623,13 +1615,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		{
 			m_ppaafTimeCSWarAllowing.setAt(i, time);
 		}
-#endif
-#ifdef CS_ALLYING_WAR_RESCTRICTION
-		m_paiPriorityTurn.clear();
-		m_paiPriorityTurn.resize(MAX_MAJOR_CIVS, -1);
-
-		m_piPriorityTime.clear();
-		m_piPriorityTime.resize(MAX_MAJOR_CIVS, 0.f);
 #endif
 
 		m_pEconomicAI->Init(GC.GetGameEconomicAIStrategies(), this);
@@ -27541,12 +27526,6 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 # endif
 #endif
-#ifdef CS_ALLYING_WAR_RESCTRICTION
-	kStream >> m_ppaaiTurnCSWarAllowing;
-	kStream >> m_ppaafTimeCSWarAllowing;
-	kStream >> m_paiPriorityTurn;
-	kStream >> m_piPriorityTime;
-#endif
 
 	m_pPlayerPolicies->Read(kStream);
 	m_pEconomicAI->Read(kStream);
@@ -28242,12 +28221,6 @@ void CvPlayer::Write(FDataStream& kStream) const
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 	kStream << m_ppaaiTurnCSWarAllowing;
 	kStream << m_ppaafTimeCSWarAllowing;
-#endif
-#ifdef CS_ALLYING_WAR_RESCTRICTION
-	kStream << m_ppaaiTurnCSWarAllowing;
-	kStream << m_ppaafTimeCSWarAllowing;
-	kStream << m_paiPriorityTurn;
-	kStream << m_piPriorityTime;
 #endif
 
 	m_pPlayerPolicies->Write(kStream);
@@ -29755,28 +29728,6 @@ void CvPlayer::setTimeCSWarAllowingMinor(PlayerTypes ePlayer, PlayerTypes eMinor
 	Firaxis::Array<float, MAX_MINOR_CIVS> time = m_ppaafTimeCSWarAllowing[ePlayer];
 	time[int(eMinor) - MAX_MAJOR_CIVS] = fValue;
 	m_ppaafTimeCSWarAllowing.setAt(ePlayer, time);
-}
-#endif
-#ifdef CS_ALLYING_WAR_RESCTRICTION
-
-int CvPlayer::getPriorityTurn(PlayerTypes eMinor) const
-{
-	return m_paiPriorityTurn[eMinor];
-}
-
-void CvPlayer::setPriorityTurn(PlayerTypes eMinor, int iValue)
-{
-	m_paiPriorityTurn.setAt(eMinor, iValue);
-}
-
-float CvPlayer::getPriorityTime(PlayerTypes eMinor) const
-{
-	return m_piPriorityTime[eMinor];
-}
-
-void CvPlayer::setPriorityTime(PlayerTypes eMinor, float fValue)
-{
-	m_piPriorityTime.setAt(eMinor, fValue);
 }
 #endif
 

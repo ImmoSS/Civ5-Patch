@@ -1066,45 +1066,6 @@ bool CvTeam::canDeclareWar(TeamTypes eTeam) const
 		}
 	}
 #endif
-#ifdef CS_ALLYING_WAR_RESCTRICTION
-	if (GC.getGame().isOption(GAMEOPTION_END_TURN_TIMER_ENABLED) && CvPreGame::quickCombat())
-	{
-		for (int kK = MAX_MAJOR_CIVS; kK < MAX_CIV_PLAYERS; kK++)
-		{
-			if (GET_PLAYER((PlayerTypes)kK).isAlive())
-			{
-				CvMinorCivAI* pMinorCivAI = GET_PLAYER((PlayerTypes)kK).GetMinorCivAI();
-				pMinorCivAI->RecalculateMajorPriority();
-				for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
-				{
-					if (pMinorCivAI->GetAlly() == (PlayerTypes)iI)
-					{
-						for (int jJ = 0; jJ < MAX_MAJOR_CIVS; jJ++)
-						{
-							if (GET_PLAYER((PlayerTypes)iI).getTeam() == GetID() && GET_PLAYER((PlayerTypes)jJ).getTeam() == eTeam)
-							{
-								if (pMinorCivAI->GetMajorPriority((PlayerTypes)iI) > pMinorCivAI->GetMajorPriority((PlayerTypes)jJ))
-								{
-									if (GC.getGame().getGameTurn() < GET_PLAYER((PlayerTypes)jJ).getPriorityTurn((PlayerTypes)kK))
-									{
-										// return false;
-									}
-									if (GC.getGame().getGameTurn() == GET_PLAYER((PlayerTypes)jJ).getPriorityTurn((PlayerTypes)kK))
-									{
-										if (GC.getGame().getTimeElapsed() < GET_PLAYER((PlayerTypes)jJ).getPriorityTime((PlayerTypes)kK))
-										{
-											// return false;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-#endif
 
 	// First, obtain the Lua script system.
 	ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
