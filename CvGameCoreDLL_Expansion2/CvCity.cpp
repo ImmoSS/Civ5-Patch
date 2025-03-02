@@ -271,6 +271,9 @@ CvCity::CvCity() :
 #ifdef MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
 	, eReligionFoundedHere(NO_RELIGION)
 #endif
+#ifdef BUILDING_FAITH_TO_SCIENCE
+	, m_iFaithToScience("CvCity::m_iFaithToScience", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1023,6 +1026,10 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		
 #endif
 	}
+
+#ifdef BUILDING_FAITH_TO_SCIENCE
+	m_iFaithToScience = 0;
+#endif
 
 	if(!bConstructorCall)
 	{
@@ -6802,6 +6809,10 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			changeDomainProductionModifier(((DomainTypes)iI), pBuildingInfo->GetDomainProductionModifier(iI) * iChange);
 		}
 
+#ifdef BUILDING_FAITH_TO_SCIENCE
+		changeFaithToScience(pBuildingInfo->GetFaithToScience() * iChange);
+#endif
+
 		// Process for our player
 		for(int iI = 0; iI < MAX_PLAYERS; iI++)
 		{
@@ -10541,6 +10552,9 @@ int CvCity::getYieldRateTimes100(YieldTypes eIndex, bool bIgnoreTrade) const
 	int iBaseYield = getBaseYieldRate(eIndex) * 100;
 	iBaseYield += (GetYieldPerPopTimes100(eIndex) * getPopulation());
 	iBaseYield += (GetYieldPerReligionTimes100(eIndex) * GetCityReligions()->GetNumReligionsWithFollowers());
+#ifdef BUILDING_FAITH_TO_SCIENCE
+	iBaseYield += (GetFaithPerTurn() * getFaithToScience()) / 100;
+#endif
 
 	int iModifiedYield = iBaseYield * getBaseYieldRateModifier(eIndex);
 	iModifiedYield /= 100;
@@ -15516,6 +15530,21 @@ void CvCity::read(FDataStream& kStream)
 		ChangeExtraHitPoints(iTotalExtraHitPoints);
 	}
 
+#ifdef BUILDING_FAITH_TO_SCIENCE
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iFaithToScience;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iFaithToScience = 0;
+	}
+# endif
+#endif
+
 	CvCityManager::OnCityCreated(this);
 }
 
@@ -15757,6 +15786,10 @@ void CvCity::write(FDataStream& kStream) const
 	kStream << *m_pCityEspionage;
 
 	kStream << m_iExtraHitPoints;
+
+#ifdef BUILDING_FAITH_TO_SCIENCE
+	kStream << m_iFaithToScience;
+#endif
 }
 
 
@@ -17150,3 +17183,18 @@ bool CvCity::isFighting() const
 {
 	return getCombatUnit() != NULL;
 }
+
+#ifdef BUILDING_FAITH_TO_SCIENCE
+//	----------------------------------------------------------------------------
+int CvCity::getFaithToScience() const
+{
+	return m_iFaithToScience;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeFaithToScience(int iChange)
+{
+	VALIDATE_OBJECT
+	m_iFaithToScience += iChange;
+}
+#endif

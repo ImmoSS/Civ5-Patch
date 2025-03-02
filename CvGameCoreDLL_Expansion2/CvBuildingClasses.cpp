@@ -201,6 +201,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_ppiBuildingClassYieldChanges(NULL),
 	m_paiBuildingClassHappiness(NULL),
 	m_paThemingBonusInfo(NULL),
+#ifdef BUILDING_FAITH_TO_SCIENCE
+	m_iFaithToScience(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -704,6 +707,10 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 		m_iNumThemingBonuses = idx;
 		pResourceTypes->Reset();
 	}
+
+#ifdef BUILDING_FAITH_TO_SCIENCE
+	m_iFaithToScience = kResults.GetInt("FaithToScience");
+#endif
 
 	return true;
 }
@@ -2105,6 +2112,13 @@ CvThemingBonusInfo *CvBuildingEntry::GetThemingBonusInfo(int i) const
 		return &m_paThemingBonusInfo[i];
 	}
 }
+
+#ifdef BUILDING_FAITH_TO_SCIENCE
+int CvBuildingEntry::GetFaithToScience() const
+{
+	return m_iFaithToScience;
+}
+#endif
 
 //=====================================
 // CvBuildingXMLEntries

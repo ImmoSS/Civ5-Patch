@@ -309,6 +309,10 @@ public:
 	CvThemingBonusInfo *GetThemingBonusInfo(int i) const;
 	int GetNumThemingBonuses() const {return m_iNumThemingBonuses;};
 
+#ifdef BUILDING_FAITH_TO_SCIENCE
+	int GetFaithToScience() const;
+#endif
+
 private:
 	int m_iBuildingClassType;
 	const CvBuildingClassInfo* m_pkBuildingClassInfo;
@@ -512,6 +516,9 @@ private:
 
 	CvThemingBonusInfo* m_paThemingBonusInfo;
 	int m_iNumThemingBonuses;
+#ifdef BUILDING_FAITH_TO_SCIENCE
+	int m_iFaithToScience;
+#endif
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

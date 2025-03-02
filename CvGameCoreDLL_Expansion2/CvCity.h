@@ -842,6 +842,11 @@ public:
 	void			clearCombat();
 	bool			isFighting() const;
 
+#ifdef BUILDING_FAITH_TO_SCIENCE
+	int getFaithToScience() const;
+	void changeFaithToScience(int iChange);
+#endif
+
 	int iScratch; // know the scope of your validity
 
 protected:
@@ -1030,6 +1035,10 @@ protected:
 	FAutoVariable<std::vector<bool>, CvCity> m_abYieldRankValid;
 
 	IDInfo m_combatUnit;		// The unit the city is in combat with
+
+#ifdef BUILDING_FAITH_TO_SCIENCE
+	FAutoVariable<int, CvCity> m_iFaithToScience;
+#endif
 
 	void doGrowth();
 	void doProduction(bool bAllowNoProduction);
