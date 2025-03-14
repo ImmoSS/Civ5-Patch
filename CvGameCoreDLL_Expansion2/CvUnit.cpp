@@ -182,6 +182,9 @@ CvUnit::CvUnit() :
 	, m_iNearbyEnemyCombatRange(0)
 	, m_iSapperCount(0)
 	, m_iCanHeavyCharge(0)
+#ifdef PROMOTION_NO_UNHAPPINESS_PENALTY
+	, m_iNoUnhappinessPenalty(0)
+#endif
 	, m_iNumExoticGoods(0)
 	, m_iAdjacentModifier("CvUnit::m_iAdjacentModifier", m_syncArchive)
 	, m_iRangedAttackModifier("CvUnit::m_iRangedAttackModifier", m_syncArchive)
@@ -915,6 +918,9 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iGoldenAgeValueFromKills = 0;
 	m_iSapperCount = 0;
 	m_iCanHeavyCharge = 0;
+#ifdef PROMOTION_NO_UNHAPPINESS_PENALTY
+	m_iNoUnhappinessPenalty = 0;
+#endif
 	m_iNumExoticGoods = 0;
 	m_iTacticalAIPlotX = INVALID_PLOT_COORD;
 	m_iTacticalAIPlotY = INVALID_PLOT_COORD;
@@ -10970,7 +10976,11 @@ int CvUnit::GetUnhappinessCombatPenalty() const
 	CvPlayer &kPlayer = GET_PLAYER(getOwner());
 	int iPenalty = 0;
 
+#ifdef PROMOTION_NO_UNHAPPINESS_PENALTY
+	if (kPlayer.IsEmpireUnhappy() && !IsNoUnhappinessPenalty())
+#else
 	if (kPlayer.IsEmpireUnhappy())
+#endif
 	{
 		iPenalty = (-1 * kPlayer.GetExcessHappiness()) * GC.getVERY_UNHAPPY_COMBAT_PENALTY_PER_UNHAPPY();
 		iPenalty = max(iPenalty, GC.getVERY_UNHAPPY_MAX_COMBAT_PENALTY());
@@ -17753,7 +17763,23 @@ bool CvUnit::IsCanHeavyCharge() const
 void CvUnit::ChangeCanHeavyChargeCount(int iChange)
 {
 	m_iCanHeavyCharge += iChange;
+
 }
+
+#ifdef PROMOTION_NO_UNHAPPINESS_PENALTY
+//	--------------------------------------------------------------------------------
+bool CvUnit::IsNoUnhappinessPenalty() const
+{
+	return m_iNoUnhappinessPenalty > 0;
+}
+
+//	--------------------------------------------------------------------------------
+void CvUnit::ChangeNoUnhappinessPenalty(int iChange)
+{
+	m_iNoUnhappinessPenalty += iChange;
+
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 int CvUnit::getFriendlyLandsModifier() const
@@ -19327,6 +19353,9 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 		ChangeCityAttackOnlyCount((thisPromotion.IsCityAttackOnly()) ? iChange: 0);
 		ChangeCaptureDefeatedEnemyCount((thisPromotion.IsCaptureDefeatedEnemy()) ? iChange: 0);
 		ChangeCanHeavyChargeCount((thisPromotion.IsCanHeavyCharge()) ? iChange : 0);
+#ifdef PROMOTION_NO_UNHAPPINESS_PENALTY
+		ChangeNoUnhappinessPenalty((thisPromotion.IsNoUnhappinessPenalty()) ? iChange : 0);
+#endif
 
 		ChangeEmbarkExtraVisibility((thisPromotion.GetEmbarkExtraVisibility()) * iChange);
 		ChangeEmbarkDefensiveModifier((thisPromotion.GetEmbarkDefenseModifier()) * iChange);
@@ -19708,6 +19737,22 @@ void CvUnit::read(FDataStream& kStream)
 
 	kStream >> m_iCanHeavyCharge;
 
+#ifdef PROMOTION_NO_UNHAPPINESS_PENALTY
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+#endif
+		kStream >> m_iNoUnhappinessPenalty;
+
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iNoUnhappinessPenalty = 0;
+	}
+#endif
+#endif
+
 	if (uiVersion >= 5)
 	{
 		kStream >> m_iNumExoticGoods;
@@ -19891,6 +19936,9 @@ void CvUnit::write(FDataStream& kStream) const
 	kStream << m_iIgnoreZOC;
 	kStream << m_iSapperCount;
 	kStream << m_iCanHeavyCharge;
+#ifdef PROMOTION_NO_UNHAPPINESS_PENALTY
+	kStream << m_iNoUnhappinessPenalty;
+#endif
 	kStream << m_iNumExoticGoods;
 	kStream << m_iCityAttackOnlyCount;
 	kStream << m_iCaptureDefeatedEnemyCount;

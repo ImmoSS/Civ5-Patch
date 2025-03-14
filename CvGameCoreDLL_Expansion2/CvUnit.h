@@ -922,6 +922,11 @@ public:
 	bool IsCanHeavyCharge() const;
 	void ChangeCanHeavyChargeCount(int iChange);
 
+#ifdef PROMOTION_NO_UNHAPPINESS_PENALTY
+	bool IsNoUnhappinessPenalty() const;
+	void ChangeNoUnhappinessPenalty(int iChange);
+#endif
+
 	int getFriendlyLandsModifier() const;
 	void changeFriendlyLandsModifier(int iChange);
 
@@ -1457,6 +1462,9 @@ protected:
 	int m_iSapperCount;
 	int m_iCanHeavyCharge;
 	int m_iNumExoticGoods;
+#ifdef PROMOTION_NO_UNHAPPINESS_PENALTY
+	int m_iNoUnhappinessPenalty;
+#endif
 
 	FAutoVariable<bool, CvUnit> m_bPromotionReady;
 	FAutoVariable<bool, CvUnit> m_bDeathDelay;
