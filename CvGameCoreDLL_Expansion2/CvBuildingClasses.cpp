@@ -207,6 +207,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_INCREASE_BONUSES_PER_ERA
 	m_iIncreaseBonusesPerEra(0),
 #endif
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+	m_iCityTileWorkSpeedModifier(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -716,6 +719,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_INCREASE_BONUSES_PER_ERA
 	m_iIncreaseBonusesPerEra = kResults.GetInt("IncreaseBonusesPerEra");
+#endif
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+	m_iCityTileWorkSpeedModifier = kResults.GetInt("CityTileWorkSpeedModifier");
 #endif
 
 	return true;
@@ -2130,6 +2136,13 @@ int CvBuildingEntry::GetFaithToScience() const
 int CvBuildingEntry::GetIncreaseBonusesPerEra() const
 {
 	return m_iIncreaseBonusesPerEra;
+}
+#endif
+
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+int CvBuildingEntry::GetCityTileWorkSpeedModifier() const
+{
+	return m_iCityTileWorkSpeedModifier;
 }
 #endif
 

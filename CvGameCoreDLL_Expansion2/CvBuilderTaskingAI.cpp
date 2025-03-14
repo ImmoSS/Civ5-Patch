@@ -1863,7 +1863,16 @@ int CvBuilderTaskingAI::GetBuildTimeWeight(CvUnit* pUnit, CvPlot* pPlot, BuildTy
 	}
 
 	int iBuildTimeNormal = pPlot->getBuildTime(eBuild, m_pPlayer->GetID());
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+	int iCityWorkRate = 0;
+	if (pPlot->getWorkingCity())
+	{
+		iCityWorkRate = pPlot->getWorkingCity()->getCityTileWorkSpeedModifier();
+	}
+	int iBuildTurnsLeft = pPlot->getBuildTurnsLeft(eBuild, m_pPlayer->GetID(), pUnit->workRate(true, iCityWorkRate), pUnit->workRate(true, iCityWorkRate));
+#else
 	int iBuildTurnsLeft = pPlot->getBuildTurnsLeft(eBuild, m_pPlayer->GetID(), pUnit->workRate(true), pUnit->workRate(true));
+#endif
 	int iBuildTime = min(iBuildTimeNormal, iBuildTurnsLeft);
 	if(iBuildTime <= 0)
 	{

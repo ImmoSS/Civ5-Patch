@@ -9575,11 +9575,29 @@ bool CvUnit::build(BuildTypes eBuild)
 
 		// wipe out all build progress also
 
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+		int iCityWorkRate = 0;
+		if (pPlot->getWorkingCity())
+		{
+			iCityWorkRate = pPlot->getWorkingCity()->getCityTileWorkSpeedModifier();
+		}
+		bFinished = pPlot->changeBuildProgress(eBuild, workRate(false, iCityWorkRate), getOwner());
+#else
 		bFinished = pPlot->changeBuildProgress(eBuild, workRate(false), getOwner());
+#endif
 
 	}
 
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+	int iCityWorkRate = 0;
+	if (pPlot->getWorkingCity())
+	{
+		iCityWorkRate = pPlot->getWorkingCity()->getCityTileWorkSpeedModifier();
+	}
+	bFinished = pPlot->changeBuildProgress(eBuild, workRate(false, iCityWorkRate), getOwner());
+#else
 	bFinished = pPlot->changeBuildProgress(eBuild, workRate(false), getOwner());
+#endif
 
 	finishMoves(); // needs to be at bottom because movesLeft() can affect workRate()...
 
@@ -10676,6 +10694,37 @@ BuildTypes CvUnit::getBuildType() const
 }
 
 
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+//	--------------------------------------------------------------------------------
+int CvUnit::workRate(bool bMax, int iCityWorkRate, BuildTypes /*eBuild*/) const
+{
+	VALIDATE_OBJECT
+		int iRate;
+
+	if (!bMax)
+	{
+		if (!canMove())
+		{
+			return 0;
+		}
+	}
+
+	iRate = m_pUnitInfo->GetWorkRate();
+
+	CvPlayerAI& kPlayer = GET_PLAYER(getOwner());
+
+	iRate *= std::max(0, (iCityWorkRate + kPlayer.getWorkerSpeedModifier() + kPlayer.GetPlayerTraits()->GetWorkerSpeedModifier() + 100));
+	iRate /= 100;
+
+	if (!kPlayer.isHuman() && !kPlayer.IsAITeammateOfHuman() && !kPlayer.isBarbarian())
+	{
+		iRate *= std::max(0, (GC.getGame().getHandicapInfo().getAIWorkRateModifier() + 100));
+		iRate /= 100;
+	}
+
+	return iRate;
+}
+#else
 //	--------------------------------------------------------------------------------
 int CvUnit::workRate(bool bMax, BuildTypes /*eBuild*/) const
 {
@@ -10705,6 +10754,7 @@ int CvUnit::workRate(bool bMax, BuildTypes /*eBuild*/) const
 
 	return iRate;
 }
+#endif
 
 //	--------------------------------------------------------------------------------
 bool CvUnit::isNoBadGoodies() const

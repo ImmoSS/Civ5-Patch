@@ -846,6 +846,10 @@ public:
 	int getFaithToScience() const;
 	void changeFaithToScience(int iChange);
 #endif
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+	int getCityTileWorkSpeedModifier() const;
+	void changeCityTileWorkSpeedModifier(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1038,6 +1042,9 @@ protected:
 
 #ifdef BUILDING_FAITH_TO_SCIENCE
 	FAutoVariable<int, CvCity> m_iFaithToScience;
+#endif
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+	FAutoVariable<int, CvCity> m_iCityTileWorkSpeedModifier;
 #endif
 
 	void doGrowth();

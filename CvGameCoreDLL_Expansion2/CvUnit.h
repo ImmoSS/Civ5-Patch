@@ -428,7 +428,11 @@ public:
 
 	bool canBuildRoute() const;
 	BuildTypes getBuildType() const;
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+	int workRate(bool bMax, int iCityWorkRate = 0, BuildTypes eBuild = NO_BUILD) const;
+#else
 	int workRate(bool bMax, BuildTypes eBuild = NO_BUILD) const;
+#endif
 
 	bool isNoBadGoodies() const;
 	bool isRivalTerritory() const;

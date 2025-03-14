@@ -2558,9 +2558,27 @@ int CvPlot::getBuildTurnsLeft(BuildTypes eBuild, PlayerTypes ePlayer, int iNowEx
 		{
 			if(pLoopUnit->canMove())
 			{
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+				int iCityWorkRate = 0;
+				if (getWorkingCity())
+				{
+					iCityWorkRate = getWorkingCity()->getCityTileWorkSpeedModifier();
+				}
+				iNowBuildRate += pLoopUnit->workRate(false, iCityWorkRate);
+#else
 				iNowBuildRate += pLoopUnit->workRate(false);
+#endif
 			}
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+			int iCityWorkRate = 0;
+			if (getWorkingCity())
+			{
+				iCityWorkRate = getWorkingCity()->getCityTileWorkSpeedModifier();
+			}
+			iThenBuildRate += pLoopUnit->workRate(true, iCityWorkRate);
+#else
 			iThenBuildRate += pLoopUnit->workRate(true);
+#endif
 		}
 	}
 
@@ -2610,9 +2628,27 @@ int CvPlot::getBuildTurnsTotal(BuildTypes eBuild, PlayerTypes ePlayer) const
 		{
 			if(pLoopUnit->canMove())
 			{
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+				int iCityWorkRate = 0;
+				if (getWorkingCity())
+				{
+					iCityWorkRate = getWorkingCity()->getCityTileWorkSpeedModifier();
+				}
+				iNowBuildRate += pLoopUnit->workRate(false, iCityWorkRate);
+#else
 				iNowBuildRate += pLoopUnit->workRate(false);
+#endif
 			}
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+			int iCityWorkRate = 0;
+			if (getWorkingCity())
+			{
+				iCityWorkRate = getWorkingCity()->getCityTileWorkSpeedModifier();
+			}
+			iThenBuildRate += pLoopUnit->workRate(true, iCityWorkRate);
+#else
 			iThenBuildRate += pLoopUnit->workRate(true);
+#endif
 		}
 	}
 

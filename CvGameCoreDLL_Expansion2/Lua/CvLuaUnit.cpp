@@ -1759,7 +1759,16 @@ int CvLuaUnit::lWorkRate(lua_State* L)
 	CvUnit* pkUnit = GetInstance(L);
 	const bool bMax = lua_toboolean(L, 2);
 
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+	int iCityWorkRate = 0;
+	if (pkUnit->plot() && pkUnit->plot()->getWorkingCity())
+	{
+		iCityWorkRate = pkUnit->plot()->getWorkingCity()->getCityTileWorkSpeedModifier();
+	}
+	const int iResult = pkUnit->workRate(bMax, iCityWorkRate);
+#else
 	const int iResult = pkUnit->workRate(bMax);
+#endif
 	lua_pushinteger(L, iResult);
 	return 1;
 }

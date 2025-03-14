@@ -315,6 +315,9 @@ public:
 #ifdef BUILDING_INCREASE_BONUSES_PER_ERA
 	int GetIncreaseBonusesPerEra() const;
 #endif
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+	int GetCityTileWorkSpeedModifier() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -524,6 +527,9 @@ private:
 #endif
 #ifdef BUILDING_INCREASE_BONUSES_PER_ERA
 	int m_iIncreaseBonusesPerEra;
+#endif
+#ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
+	int m_iCityTileWorkSpeedModifier;
 #endif
 };
 
