@@ -7007,6 +7007,41 @@ void CvTeam::SetCurrentEra(EraTypes eNewValue)
 				{
 					kPlayer.ChangeNumFreePolicies(iNumFreePolicies);
 				}
+
+#ifdef BUILDING_INCREASE_BONUSES_PER_ERA
+				CvCity* pLoopCity;
+				int iLoop;
+
+				for (pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
+				{
+					for (int iBuildingLoop = 0; iBuildingLoop < GC.getNumBuildingInfos(); iBuildingLoop++)
+					{
+						BuildingTypes eBuildingLoop = (BuildingTypes)iBuildingLoop;
+						CvBuildingEntry* pBuildingInfo = GC.getBuildingInfo(eBuildingLoop);
+						if (pLoopCity->GetCityBuildings()->GetNumBuilding(eBuildingLoop) > 0)
+						{
+							for (int k = 0; k < NUM_YIELD_TYPES; k++)
+							{
+								if (pBuildingInfo->GetIncreaseBonusesPerEra() > 0)
+								{
+									if ((YieldTypes)k == YIELD_CULTURE)
+									{
+										pLoopCity->ChangeJONSCulturePerTurnFromBuildings(pBuildingInfo->GetIncreaseBonusesPerEra() * (eNewValue - GetCurrentEra()));
+									}
+									else if ((YieldTypes)k == YIELD_FAITH)
+									{
+										pLoopCity->ChangeFaithPerTurnFromBuildings(pBuildingInfo->GetIncreaseBonusesPerEra() * (eNewValue - GetCurrentEra()));
+									}
+									else
+									{
+										pLoopCity->ChangeBaseYieldRateFromBuildings((YieldTypes)k, pBuildingInfo->GetIncreaseBonusesPerEra() * (eNewValue - GetCurrentEra()));
+									}
+								}
+							}
+						}
+					}
+				}
+#endif
 			}
 		}
 

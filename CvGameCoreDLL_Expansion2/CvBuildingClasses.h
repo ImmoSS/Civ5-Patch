@@ -312,6 +312,9 @@ public:
 #ifdef BUILDING_FAITH_TO_SCIENCE
 	int GetFaithToScience() const;
 #endif
+#ifdef BUILDING_INCREASE_BONUSES_PER_ERA
+	int GetIncreaseBonusesPerEra() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -518,6 +521,9 @@ private:
 	int m_iNumThemingBonuses;
 #ifdef BUILDING_FAITH_TO_SCIENCE
 	int m_iFaithToScience;
+#endif
+#ifdef BUILDING_INCREASE_BONUSES_PER_ERA
+	int m_iIncreaseBonusesPerEra;
 #endif
 };
 

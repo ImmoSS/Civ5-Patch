@@ -204,6 +204,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_FAITH_TO_SCIENCE
 	m_iFaithToScience(0),
 #endif
+#ifdef BUILDING_INCREASE_BONUSES_PER_ERA
+	m_iIncreaseBonusesPerEra(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -710,6 +713,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 
 #ifdef BUILDING_FAITH_TO_SCIENCE
 	m_iFaithToScience = kResults.GetInt("FaithToScience");
+#endif
+#ifdef BUILDING_INCREASE_BONUSES_PER_ERA
+	m_iIncreaseBonusesPerEra = kResults.GetInt("IncreaseBonusesPerEra");
 #endif
 
 	return true;
@@ -2117,6 +2123,13 @@ CvThemingBonusInfo *CvBuildingEntry::GetThemingBonusInfo(int i) const
 int CvBuildingEntry::GetFaithToScience() const
 {
 	return m_iFaithToScience;
+}
+#endif
+
+#ifdef BUILDING_INCREASE_BONUSES_PER_ERA
+int CvBuildingEntry::GetIncreaseBonusesPerEra() const
+{
+	return m_iIncreaseBonusesPerEra;
 }
 #endif
 

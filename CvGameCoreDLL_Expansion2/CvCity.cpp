@@ -6766,6 +6766,24 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 				}
 			}
 
+#ifdef BUILDING_INCREASE_BONUSES_PER_ERA
+			if (pBuildingInfo->GetIncreaseBonusesPerEra() > 0)
+			{
+				if (eYield == YIELD_CULTURE)
+				{
+					ChangeJONSCulturePerTurnFromBuildings(pBuildingInfo->GetIncreaseBonusesPerEra() * owningTeam.GetCurrentEra() * iChange);
+				}
+				else if (eYield == YIELD_FAITH)
+				{
+					ChangeFaithPerTurnFromBuildings(pBuildingInfo->GetIncreaseBonusesPerEra() * owningTeam.GetCurrentEra() * iChange);
+				}
+				else
+				{
+					ChangeBaseYieldRateFromBuildings(eYield, pBuildingInfo->GetIncreaseBonusesPerEra() * owningTeam.GetCurrentEra() * iChange);
+				}
+			}
+#endif
+
 			int iBuildingClassBonus = owningPlayer.GetBuildingClassYieldChange(eBuildingClass, eYield);
 			if(iBuildingClassBonus > 0)
 			{
