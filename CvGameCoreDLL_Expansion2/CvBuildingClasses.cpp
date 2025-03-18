@@ -219,6 +219,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_GROWTH_GOLD
 	m_iGrowthGold(0),
 #endif
+#ifdef BUILDING_BAKTUN_GOLD_AGE_POINTS
+	m_iBaktunGoldenAgePoints(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -740,6 +743,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_GROWTH_GOLD
 	m_iGrowthGold = kResults.GetInt("GrowthGold");
+#endif
+#ifdef BUILDING_BAKTUN_GOLD_AGE_POINTS
+	m_iBaktunGoldenAgePoints = kResults.GetInt("BaktunGoldenAgePoints");
 #endif
 
 	return true;
@@ -2182,6 +2188,13 @@ int CvBuildingEntry::GetRiverGold() const
 int CvBuildingEntry::GetGrowthGold() const
 {
 	return m_iGrowthGold;
+}
+#endif
+
+#ifdef BUILDING_BAKTUN_GOLD_AGE_POINTS
+int CvBuildingEntry::GetBaktunGoldenAgePoints() const
+{
+	return m_iBaktunGoldenAgePoints;
 }
 #endif
 

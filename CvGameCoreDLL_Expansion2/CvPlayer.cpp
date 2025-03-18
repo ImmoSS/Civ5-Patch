@@ -5075,6 +5075,11 @@ void CvPlayer::doTurn()
 	if(GetPlayerTraits()->IsEndOfMayaLongCount())
 	{
 		ChangeNumMayaBoosts(1);
+#ifdef BUILDING_BAKTUN_GOLD_AGE_POINTS
+		BuildingTypes eBaktunBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_PITZ_HALL", true);
+		CvBuildingEntry* pEntry = GC.GetGameBuildings()->GetEntry(eBaktunBuilding);
+		ChangeGoldenAgeProgressMeter(countNumBuildings(eBaktunBuilding) * pEntry->GetBaktunGoldenAgePoints());
+#endif
 	}
 
 	bool bHasActiveDiploRequest = false;

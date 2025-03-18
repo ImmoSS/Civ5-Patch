@@ -327,6 +327,9 @@ public:
 #ifdef BUILDING_GROWTH_GOLD
 	int GetGrowthGold() const;
 #endif
+#ifdef BUILDING_BAKTUN_GOLD_AGE_POINTS
+	int GetBaktunGoldenAgePoints() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -548,6 +551,9 @@ private:
 #endif
 #ifdef BUILDING_GROWTH_GOLD
 	int m_iGrowthGold;
+#endif
+#ifdef BUILDING_BAKTUN_GOLD_AGE_POINTS
+	int m_iBaktunGoldenAgePoints;
 #endif
 };
 
