@@ -854,6 +854,10 @@ public:
 	int getBuildingHurryCostModifier() const;
 	void changeBuildingHurryCostModifier(int iChange);
 #endif
+#ifdef BUILDING_GROWTH_GOLD
+	int getGrowthGold() const;
+	void changeGrowthGold(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1052,6 +1056,9 @@ protected:
 #endif
 #ifdef BUILDING_HURRY_COST_MODIFIER
 	FAutoVariable<int, CvCity> m_iBuildingHurryCostModifier;
+#endif
+#ifdef BUILDING_GROWTH_GOLD
+	FAutoVariable<int, CvCity> m_iGrowthGold;
 #endif
 
 	void doGrowth();

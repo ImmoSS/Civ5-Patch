@@ -324,6 +324,9 @@ public:
 #ifdef BUILDING_RIVER_GOLD
 	int GetRiverGold() const;
 #endif
+#ifdef BUILDING_GROWTH_GOLD
+	int GetGrowthGold() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -542,6 +545,9 @@ private:
 #endif
 #ifdef BUILDING_RIVER_GOLD
 	int m_iRiverGold;
+#endif
+#ifdef BUILDING_GROWTH_GOLD
+	int m_iGrowthGold;
 #endif
 };
 

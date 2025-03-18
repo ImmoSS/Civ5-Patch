@@ -216,6 +216,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_RIVER_GOLD
 	m_iRiverGold(0),
 #endif
+#ifdef BUILDING_GROWTH_GOLD
+	m_iGrowthGold(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -734,6 +737,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_RIVER_GOLD
 	m_iRiverGold = kResults.GetInt("RiverGold");
+#endif
+#ifdef BUILDING_GROWTH_GOLD
+	m_iGrowthGold = kResults.GetInt("GrowthGold");
 #endif
 
 	return true;
@@ -2169,6 +2175,13 @@ int CvBuildingEntry::GetBuildingHurryCostModifier() const
 int CvBuildingEntry::GetRiverGold() const
 {
 	return m_iRiverGold;
+}
+#endif
+
+#ifdef BUILDING_GROWTH_GOLD
+int CvBuildingEntry::GetGrowthGold() const
+{
+	return m_iGrowthGold;
 }
 #endif
 

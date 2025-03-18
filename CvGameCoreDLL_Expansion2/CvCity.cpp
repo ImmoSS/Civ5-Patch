@@ -280,6 +280,9 @@ CvCity::CvCity() :
 #ifdef BUILDING_HURRY_COST_MODIFIER
 	, m_iBuildingHurryCostModifier("CvCity::m_iBuildingHurryCostModifier", m_syncArchive)
 #endif
+#ifdef BUILDING_GROWTH_GOLD
+	, m_iGrowthGold("CvCity::m_iGrowthGold", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1041,6 +1044,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #endif
 #ifdef BUILDING_HURRY_COST_MODIFIER
 	m_iBuildingHurryCostModifier = 0;
+#endif
+#ifdef BUILDING_GROWTH_GOLD
+	m_iGrowthGold = 0;
 #endif
 
 	if(!bConstructorCall)
@@ -6870,6 +6876,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #ifdef BUILDING_HURRY_COST_MODIFIER
 		changeBuildingHurryCostModifier(pBuildingInfo->GetBuildingHurryCostModifier() * iChange);
 #endif
+#ifdef BUILDING_GROWTH_GOLD
+		changeGrowthGold(pBuildingInfo->GetGrowthGold() * iChange);
+#endif
 
 		// Process for our player
 		for(int iI = 0; iI < MAX_PLAYERS; iI++)
@@ -8095,6 +8104,12 @@ void CvCity::changePopulation(int iChange, bool bReassignPop)
 {
 	VALIDATE_OBJECT
 	setPopulation(getPopulation() + iChange, bReassignPop);
+#ifdef BUILDING_GROWTH_GOLD
+	if (iChange > 0)
+	{
+		GET_PLAYER(getOwner()).GetTreasury()->ChangeGold(getGrowthGold() * iChange);
+	}
+#endif
 
 	// Update the religious system
 	GetCityReligions()->DoPopulationChange(iChange);
@@ -15649,6 +15664,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_GROWTH_GOLD
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iGrowthGold;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iGrowthGold = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -15900,6 +15929,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef BUILDING_HURRY_COST_MODIFIER
 	kStream << m_iBuildingHurryCostModifier;
+#endif
+#ifdef BUILDING_GROWTH_GOLD
+	kStream << m_iGrowthGold;
 #endif
 }
 
@@ -17321,7 +17353,7 @@ int CvCity::getCityTileWorkSpeedModifier() const
 void CvCity::changeCityTileWorkSpeedModifier(int iChange)
 {
 	VALIDATE_OBJECT
-		m_iCityTileWorkSpeedModifier += iChange;
+	m_iCityTileWorkSpeedModifier += iChange;
 }
 #endif
 
@@ -17336,6 +17368,21 @@ int CvCity::getBuildingHurryCostModifier() const
 void CvCity::changeBuildingHurryCostModifier(int iChange)
 {
 	VALIDATE_OBJECT
-		m_iBuildingHurryCostModifier += iChange;
+	m_iBuildingHurryCostModifier += iChange;
+}
+#endif
+
+#ifdef BUILDING_GROWTH_GOLD
+//	----------------------------------------------------------------------------
+int CvCity::getGrowthGold() const
+{
+	return m_iGrowthGold;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeGrowthGold(int iChange)
+{
+	VALIDATE_OBJECT
+	m_iGrowthGold += iChange;
 }
 #endif
