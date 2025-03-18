@@ -213,6 +213,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_HURRY_COST_MODIFIER
 	m_iBuildingHurryCostModifier(0),
 #endif
+#ifdef BUILDING_RIVER_GOLD
+	m_iRiverGold(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -728,6 +731,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_HURRY_COST_MODIFIER
 	m_iBuildingHurryCostModifier = kResults.GetInt("BuildingHurryCostModifier");
+#endif
+#ifdef BUILDING_RIVER_GOLD
+	m_iRiverGold = kResults.GetInt("RiverGold");
 #endif
 
 	return true;
@@ -2156,6 +2162,13 @@ int CvBuildingEntry::GetCityTileWorkSpeedModifier() const
 int CvBuildingEntry::GetBuildingHurryCostModifier() const
 {
 	return m_iBuildingHurryCostModifier;
+}
+#endif
+
+#ifdef BUILDING_RIVER_GOLD
+int CvBuildingEntry::GetRiverGold() const
+{
+	return m_iRiverGold;
 }
 #endif
 

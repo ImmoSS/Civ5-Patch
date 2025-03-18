@@ -321,6 +321,9 @@ public:
 #ifdef BUILDING_HURRY_COST_MODIFIER
 	int GetBuildingHurryCostModifier() const;
 #endif
+#ifdef BUILDING_RIVER_GOLD
+	int GetRiverGold() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -536,6 +539,9 @@ private:
 #endif
 #ifdef BUILDING_HURRY_COST_MODIFIER
 	int m_iBuildingHurryCostModifier;
+#endif
+#ifdef BUILDING_RIVER_GOLD
+	int m_iRiverGold;
 #endif
 };
 

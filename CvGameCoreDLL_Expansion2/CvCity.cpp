@@ -6695,6 +6695,15 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #if defined NEW_FACTORIES || defined BUILDING_BARN
 			if (eBuilding != (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true) && eBuilding != (BuildingTypes)GC.getInfoTypeForString("BUILDING_BARN", true))
 			{
+#ifdef BUILDING_RIVER_GOLD
+				if (eYield == YIELD_GOLD)
+				{
+					if (plot()->isRiver())
+					{
+						ChangeBaseYieldRateFromBuildings(eYield, pBuildingInfo->GetRiverGold() * iChange);
+					}
+				}
+#endif
 				ChangeBaseYieldRateFromBuildings(eYield, ((pBuildingInfo->GetYieldChange(eYield) + m_pCityBuildings->GetBuildingYieldChange(eBuildingClass, eYield)) * iChange));
 				changeYieldRateModifier(eYield, (pBuildingInfo->GetYieldModifier(eYield) * iChange));
 			}
@@ -6729,6 +6738,15 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			}
 #endif
 #if !defined NEW_FACTORIES && !defined BUILDING_BARN
+#ifdef BUILDING_RIVER_GOLD
+			if (eYield == YIELD_GOLD)
+			{
+				if (plot()->isRiver())
+				{
+					ChangeBaseYieldRateFromBuildings(eYield, pBuildingInfo->GetRiverGold() * iChange);
+				}
+			}
+#endif
 			ChangeBaseYieldRateFromBuildings(eYield, ((pBuildingInfo->GetYieldChange(eYield) + m_pCityBuildings->GetBuildingYieldChange(eBuildingClass, eYield)) * iChange));
 #endif
 			ChangeYieldPerPopTimes100(eYield, pBuildingInfo->GetYieldChangePerPop(eYield) * iChange);
