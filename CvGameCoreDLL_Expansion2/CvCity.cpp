@@ -277,6 +277,9 @@ CvCity::CvCity() :
 #ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
 	, m_iCityTileWorkSpeedModifier("CvCity::m_iCityTileWorkSpeedModifier", m_syncArchive)
 #endif
+#ifdef BUILDING_HURRY_COST_MODIFIER
+	, m_iBuildingHurryCostModifier("CvCity::m_iBuildingHurryCostModifier", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1035,6 +1038,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #endif
 #ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
 	m_iCityTileWorkSpeedModifier = 0;
+#endif
+#ifdef BUILDING_HURRY_COST_MODIFIER
+	m_iBuildingHurryCostModifier = 0;
 #endif
 
 	if(!bConstructorCall)
@@ -5158,7 +5164,11 @@ int CvCity::GetPurchaseCostFromProduction(int iProduction)
 
 	if(eHurry != NO_HURRY)
 	{
+#ifdef BUILDING_HURRY_COST_MODIFIER
+		int iHurryMod = GET_PLAYER(getOwner()).getHurryModifier(eHurry) + getBuildingHurryCostModifier();
+#else
 		int iHurryMod = GET_PLAYER(getOwner()).getHurryModifier(eHurry);
+#endif
 
 		if(iHurryMod != 0)
 		{
@@ -6839,6 +6849,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
 		changeCityTileWorkSpeedModifier(pBuildingInfo->GetCityTileWorkSpeedModifier() * iChange);
 #endif
+#ifdef BUILDING_HURRY_COST_MODIFIER
+		changeBuildingHurryCostModifier(pBuildingInfo->GetBuildingHurryCostModifier() * iChange);
+#endif
 
 		// Process for our player
 		for(int iI = 0; iI < MAX_PLAYERS; iI++)
@@ -7577,13 +7590,32 @@ int CvCity::getHurryCostModifier(HurryTypes eHurry, int iBaseModifier, int iProd
 	}
 
 	// Some places just don't care what kind of Hurry it is (leftover from Civ 4)
-	if(eHurry != NO_HURRY)
+	if (eHurry != NO_HURRY)
 	{
+#ifdef BUILDING_HURRY_COST_MODIFIER
+		if (eHurry != (HurryTypes)GC.getInfoTypeForString("HURRY_GOLD"))
+		{
+			if (GET_PLAYER(getOwner()).getHurryModifier(eHurry) != 0)
+			{
+				iModifier *= (100 + GET_PLAYER(getOwner()).getHurryModifier(eHurry));
+				iModifier /= 100;
+			}
+		}
+		else
+		{
+			if (GET_PLAYER(getOwner()).getHurryModifier(eHurry) + getBuildingHurryCostModifier() != 0)
+			{
+				iModifier *= (100 + GET_PLAYER(getOwner()).getHurryModifier(eHurry) + getBuildingHurryCostModifier());
+				iModifier /= 100;
+			}
+		}
+#else
 		if(GET_PLAYER(getOwner()).getHurryModifier(eHurry) != 0)
 		{
 			iModifier *= (100 + GET_PLAYER(getOwner()).getHurryModifier(eHurry));
 			iModifier /= 100;
 		}
+#endif
 	}
 
 	return iModifier;
@@ -15585,6 +15617,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_HURRY_COST_MODIFIER
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iBuildingHurryCostModifier;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iBuildingHurryCostModifier = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -15833,6 +15879,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
 	kStream << m_iCityTileWorkSpeedModifier;
+#endif
+#ifdef BUILDING_HURRY_COST_MODIFIER
+	kStream << m_iBuildingHurryCostModifier;
 #endif
 }
 
@@ -17255,5 +17304,20 @@ void CvCity::changeCityTileWorkSpeedModifier(int iChange)
 {
 	VALIDATE_OBJECT
 		m_iCityTileWorkSpeedModifier += iChange;
+}
+#endif
+
+#ifdef BUILDING_HURRY_COST_MODIFIER
+//	----------------------------------------------------------------------------
+int CvCity::getBuildingHurryCostModifier() const
+{
+	return m_iBuildingHurryCostModifier;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeBuildingHurryCostModifier(int iChange)
+{
+	VALIDATE_OBJECT
+		m_iBuildingHurryCostModifier += iChange;
 }
 #endif

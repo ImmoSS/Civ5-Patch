@@ -318,6 +318,9 @@ public:
 #ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
 	int GetCityTileWorkSpeedModifier() const;
 #endif
+#ifdef BUILDING_HURRY_COST_MODIFIER
+	int GetBuildingHurryCostModifier() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -530,6 +533,9 @@ private:
 #endif
 #ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
 	int m_iCityTileWorkSpeedModifier;
+#endif
+#ifdef BUILDING_HURRY_COST_MODIFIER
+	int m_iBuildingHurryCostModifier;
 #endif
 };
 

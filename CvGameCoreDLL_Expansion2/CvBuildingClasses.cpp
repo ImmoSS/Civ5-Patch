@@ -210,6 +210,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
 	m_iCityTileWorkSpeedModifier(0),
 #endif
+#ifdef BUILDING_HURRY_COST_MODIFIER
+	m_iBuildingHurryCostModifier(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -722,6 +725,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
 	m_iCityTileWorkSpeedModifier = kResults.GetInt("CityTileWorkSpeedModifier");
+#endif
+#ifdef BUILDING_HURRY_COST_MODIFIER
+	m_iBuildingHurryCostModifier = kResults.GetInt("BuildingHurryCostModifier");
 #endif
 
 	return true;
@@ -2143,6 +2149,13 @@ int CvBuildingEntry::GetIncreaseBonusesPerEra() const
 int CvBuildingEntry::GetCityTileWorkSpeedModifier() const
 {
 	return m_iCityTileWorkSpeedModifier;
+}
+#endif
+
+#ifdef BUILDING_HURRY_COST_MODIFIER
+int CvBuildingEntry::GetBuildingHurryCostModifier() const
+{
+	return m_iBuildingHurryCostModifier;
 }
 #endif
 

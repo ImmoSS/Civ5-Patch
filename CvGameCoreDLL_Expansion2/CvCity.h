@@ -850,6 +850,10 @@ public:
 	int getCityTileWorkSpeedModifier() const;
 	void changeCityTileWorkSpeedModifier(int iChange);
 #endif
+#ifdef BUILDING_HURRY_COST_MODIFIER
+	int getBuildingHurryCostModifier() const;
+	void changeBuildingHurryCostModifier(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1045,6 +1049,9 @@ protected:
 #endif
 #ifdef BUILDING_CITY_TILE_WORK_SPEED_MOD
 	FAutoVariable<int, CvCity> m_iCityTileWorkSpeedModifier;
+#endif
+#ifdef BUILDING_HURRY_COST_MODIFIER
+	FAutoVariable<int, CvCity> m_iBuildingHurryCostModifier;
 #endif
 
 	void doGrowth();
