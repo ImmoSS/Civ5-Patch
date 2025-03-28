@@ -225,6 +225,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_SCIENCE_PER_X_POP
 	m_iScienvePerXPop(0),
 #endif
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+	m_iCulturePerXAncientBuildings(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -752,7 +755,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
 	m_iScienvePerXPop = kResults.GetInt("ScienvePerXPop");
-	FAutoVariable<int, CvCity> ;
+#endif
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+	m_iCulturePerXAncientBuildings = kResults.GetInt("CulturePerXAncientBuildings");
 #endif
 
 	return true;
@@ -2209,6 +2214,13 @@ int CvBuildingEntry::GetBaktunGoldenAgePoints() const
 int CvBuildingEntry::GetScienvePerXPop() const
 {
 	return m_iScienvePerXPop;
+}
+#endif
+
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+int CvBuildingEntry::GetCulturePerXAncientBuildings() const
+{
+	return m_iCulturePerXAncientBuildings;
 }
 #endif
 

@@ -286,6 +286,9 @@ CvCity::CvCity() :
 #ifdef BUILDING_SCIENCE_PER_X_POP
 	, m_iScienvePerXPop("CvCity::m_iScienvePerXPop", m_syncArchive)
 #endif
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+	, m_iCulturePerXAncientBuildings("CvCity::m_iCulturePerXAncientBuildings", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1053,6 +1056,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
 	m_iScienvePerXPop = 0;
+#endif
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+	m_iCulturePerXAncientBuildings = 0;
 #endif
 
 	if(!bConstructorCall)
@@ -6830,6 +6836,16 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			}
 #endif
 
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+			if (pBuildingInfo->GetCulturePerXAncientBuildings() > 0)
+			{
+				if (eYield == YIELD_CULTURE)
+				{
+					ChangeJONSCulturePerTurnFromBuildings(getCulturePerXAncientBuildings() / pBuildingInfo->GetCulturePerXAncientBuildings() * iChange);
+				}
+			}
+#endif
+
 			int iBuildingClassBonus = owningPlayer.GetBuildingClassYieldChange(eBuildingClass, eYield);
 			if(iBuildingClassBonus > 0)
 			{
@@ -6887,6 +6903,14 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
 		changeGrowthGold(pBuildingInfo->GetScienvePerXPop() * iChange);
+#endif
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+		CvTechEntry* pTechInfo = GC.getTechInfo((TechTypes)pBuildingInfo->GetPrereqAndTech());
+		if (pTechInfo && (pTechInfo->GetEra() < GC.getInfoTypeForString("ERA_MEDIEVAL", true /*bHideAssert*/) && !isWorldWonderClass(pBuildingInfo->GetBuildingClassInfo()) && !isNationalWonderClass(pBuildingInfo->GetBuildingClassInfo())
+			|| pBuildingInfo->GetBuildingClassInfo().GetID() == 18))
+		{
+			changeCulturePerXAncientBuildings(iChange);
+		}
 #endif
 
 		// Process for our player
@@ -15704,6 +15728,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iCulturePerXAncientBuildings;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iCulturePerXAncientBuildings = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -15961,6 +15999,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
 	kStream << m_iScienvePerXPop;
+#endif
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+	kStream << m_iCulturePerXAncientBuildings;
 #endif
 }
 
@@ -17428,5 +17469,20 @@ void CvCity::changeScienvePerXPop(int iChange)
 {
 	VALIDATE_OBJECT
 	m_iScienvePerXPop += iChange;
+}
+#endif
+
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+//	----------------------------------------------------------------------------
+int CvCity::getCulturePerXAncientBuildings() const
+{
+	return m_iCulturePerXAncientBuildings;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeCulturePerXAncientBuildings(int iChange)
+{
+	VALIDATE_OBJECT
+	m_iCulturePerXAncientBuildings += iChange;
 }
 #endif

@@ -333,6 +333,9 @@ public:
 #ifdef BUILDING_SCIENCE_PER_X_POP
 	int GetScienvePerXPop() const;
 #endif
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+	int GetCulturePerXAncientBuildings() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -560,6 +563,9 @@ private:
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
 	int m_iScienvePerXPop;
+#endif
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+	int m_iCulturePerXAncientBuildings;
 #endif
 };
 

@@ -862,6 +862,10 @@ public:
 	int getScienvePerXPop() const;
 	void changeScienvePerXPop(int iChange);
 #endif
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+	int getCulturePerXAncientBuildings() const;
+	void changeCulturePerXAncientBuildings(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1066,6 +1070,9 @@ protected:
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
 	FAutoVariable<int, CvCity> m_iScienvePerXPop;
+#endif
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+	FAutoVariable<int, CvCity> m_iCulturePerXAncientBuildings;
 #endif
 
 	void doGrowth();
