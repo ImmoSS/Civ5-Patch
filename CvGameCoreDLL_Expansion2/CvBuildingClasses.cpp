@@ -222,6 +222,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_BAKTUN_GOLD_AGE_POINTS
 	m_iBaktunGoldenAgePoints(0),
 #endif
+#ifdef BUILDING_SCIENCE_PER_X_POP
+	m_iScienvePerXPop(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -746,6 +749,10 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_BAKTUN_GOLD_AGE_POINTS
 	m_iBaktunGoldenAgePoints = kResults.GetInt("BaktunGoldenAgePoints");
+#endif
+#ifdef BUILDING_SCIENCE_PER_X_POP
+	m_iScienvePerXPop = kResults.GetInt("ScienvePerXPop");
+	FAutoVariable<int, CvCity> ;
 #endif
 
 	return true;
@@ -2195,6 +2202,13 @@ int CvBuildingEntry::GetGrowthGold() const
 int CvBuildingEntry::GetBaktunGoldenAgePoints() const
 {
 	return m_iBaktunGoldenAgePoints;
+}
+#endif
+
+#ifdef BUILDING_SCIENCE_PER_X_POP
+int CvBuildingEntry::GetScienvePerXPop() const
+{
+	return m_iScienvePerXPop;
 }
 #endif
 

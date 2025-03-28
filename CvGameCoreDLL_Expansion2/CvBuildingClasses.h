@@ -330,6 +330,9 @@ public:
 #ifdef BUILDING_BAKTUN_GOLD_AGE_POINTS
 	int GetBaktunGoldenAgePoints() const;
 #endif
+#ifdef BUILDING_SCIENCE_PER_X_POP
+	int GetScienvePerXPop() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -554,6 +557,9 @@ private:
 #endif
 #ifdef BUILDING_BAKTUN_GOLD_AGE_POINTS
 	int m_iBaktunGoldenAgePoints;
+#endif
+#ifdef BUILDING_SCIENCE_PER_X_POP
+	int m_iScienvePerXPop;
 #endif
 };
 

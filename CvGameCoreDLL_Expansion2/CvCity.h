@@ -858,6 +858,10 @@ public:
 	int getGrowthGold() const;
 	void changeGrowthGold(int iChange);
 #endif
+#ifdef BUILDING_SCIENCE_PER_X_POP
+	int getScienvePerXPop() const;
+	void changeScienvePerXPop(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1059,6 +1063,9 @@ protected:
 #endif
 #ifdef BUILDING_GROWTH_GOLD
 	FAutoVariable<int, CvCity> m_iGrowthGold;
+#endif
+#ifdef BUILDING_SCIENCE_PER_X_POP
+	FAutoVariable<int, CvCity> m_iScienvePerXPop;
 #endif
 
 	void doGrowth();
