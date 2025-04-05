@@ -7758,6 +7758,39 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 			}
 		}
 
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+		bool bFoundMountain = false;
+
+		CvPlot* pAdjacentPlot;
+		for (int iDirectionLoop = 0; iDirectionLoop < NUM_DIRECTION_TYPES; iDirectionLoop++)
+		{
+			pAdjacentPlot = plotDirection(getX(), getY(), ((DirectionTypes)iDirectionLoop));
+
+			if (pAdjacentPlot != NULL)
+			{
+				if (pAdjacentPlot->isMountain())
+				{
+					bFoundMountain = true;
+					break;
+				}
+			}
+		}
+
+		if (bFoundMountain)
+		{
+			if (!isImpassable() && !isMountain())
+			{
+				if (NULL != pWorkingCity)
+				{
+					if (!bDisplay || pWorkingCity->isRevealed(GC.getGame().getActiveTeam(), false))
+					{
+						iYield += pWorkingCity->getNearMountainYield(eYield);
+					}
+				}
+			}
+		}
+#endif
+
 		// Extra yield for features
 		if(getFeatureType() != NO_FEATURE)
 		{
@@ -10601,6 +10634,39 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 				}
 			}
 		}
+
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+		bool bFoundMountain = false;
+
+		CvPlot* pAdjacentPlot;
+		for (int iDirectionLoop = 0; iDirectionLoop < NUM_DIRECTION_TYPES; iDirectionLoop++)
+		{
+			pAdjacentPlot = plotDirection(getX(), getY(), ((DirectionTypes)iDirectionLoop));
+
+			if (pAdjacentPlot != NULL)
+			{
+				if (pAdjacentPlot->isMountain())
+				{
+					bFoundMountain = true;
+					break;
+				}
+			}
+		}
+
+		if (bFoundMountain)
+		{
+			if (!isImpassable() && !isMountain())
+			{
+				if (NULL != pWorkingCity)
+				{
+					if (pWorkingCity->isRevealed(eTeam, false))
+					{
+						iYield += pWorkingCity->getNearMountainYield(eYield);
+					}
+				}
+			}
+		}
+#endif
 
 		// Worked Feature extra yield (e.g. University bonus)
 		if(getFeatureType() != NO_FEATURE)

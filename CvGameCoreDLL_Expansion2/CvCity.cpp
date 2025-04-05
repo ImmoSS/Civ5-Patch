@@ -289,6 +289,9 @@ CvCity::CvCity() :
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	, m_iCulturePerXAncientBuildings("CvCity::m_iCulturePerXAncientBuildings", m_syncArchive)
 #endif
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+	, m_aiNearMountainYield("CvCity::m_aiNearMountainYield", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -814,6 +817,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_aiResourceYieldRateModifier.resize(NUM_YIELD_TYPES);
 	m_aiExtraSpecialistYield.resize(NUM_YIELD_TYPES);
 	m_aiProductionToYieldModifier.resize(NUM_YIELD_TYPES);
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+	m_aiNearMountainYield.resize(NUM_YIELD_TYPES);
+#endif
 	for(iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
 		m_aiSeaPlotYield.setAt(iI, 0);
@@ -832,6 +838,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_aiResourceYieldRateModifier.setAt(iI, 0);
 		m_aiExtraSpecialistYield.setAt(iI, 0);
 		m_aiProductionToYieldModifier.setAt(iI, 0);
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+		m_aiNearMountainYield.setAt(iI, 0);
+#endif
 	}
 #ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE
 	m_iProcessOverflowProductionTimes100 = 0;
@@ -6708,6 +6717,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 
 			changeSeaPlotYield(eYield, (pBuildingInfo->GetSeaPlotYieldChange(eYield) * iChange));
 			changeRiverPlotYield(eYield, (pBuildingInfo->GetRiverPlotYieldChange(eYield) * iChange));
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+			changeNearMountainYield(eYield, (pBuildingInfo->GetNearMountainYieldChange(eYield) * iChange));
+#endif
 			changeLakePlotYield(eYield, (pBuildingInfo->GetLakePlotYieldChange(eYield) * iChange));
 			changeSeaResourceYield(eYield, (pBuildingInfo->GetSeaResourceYieldChange(eYield) * iChange));
 #if defined NEW_FACTORIES || defined BUILDING_BARN
@@ -10405,6 +10417,33 @@ void CvCity::changeRiverPlotYield(YieldTypes eIndex, int iChange)
 		updateYield();
 	}
 }
+
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+//	--------------------------------------------------------------------------------
+int CvCity::getNearMountainYield(YieldTypes eIndex) const
+{
+	VALIDATE_OBJECT
+	CvAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
+	return m_aiNearMountainYield[eIndex];
+}
+
+//	--------------------------------------------------------------------------------
+void CvCity::changeNearMountainYield(YieldTypes eIndex, int iChange)
+{
+	VALIDATE_OBJECT
+	CvAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
+
+	if (iChange != 0)
+	{
+		m_aiNearMountainYield.setAt(eIndex, m_aiNearMountainYield[eIndex] + iChange);
+		CvAssert(getNearMountainYield(eIndex) >= 0);
+
+		updateYield();
+	}
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 int CvCity::getLakePlotYield(YieldTypes eIndex) const
@@ -15742,6 +15781,23 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_aiNearMountainYield;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		for (uint iI = 0; iI < NUM_YIELD_TYPES; iI++)
+		{
+			m_aiNearMountainYield.setAt(iI, 0);
+		}
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -16002,6 +16058,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	kStream << m_iCulturePerXAncientBuildings;
+#endif
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+	kStream << m_aiNearMountainYield;
 #endif
 }
 

@@ -228,6 +228,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	m_iCulturePerXAncientBuildings(0),
 #endif
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+	m_piNearMountainYieldChanges(NULL),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -277,6 +280,10 @@ CvBuildingEntry::~CvBuildingEntry(void)
 	CvDatabaseUtility::SafeDelete2DArray(m_ppaiImprovementYieldChange);
 #endif
 	CvDatabaseUtility::SafeDelete2DArray(m_ppiBuildingClassYieldChanges);
+
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+	SAFE_DELETE_ARRAY(m_piNearMountainYieldChanges);
+#endif
 }
 
 /// Read from XML file
@@ -758,6 +765,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	m_iCulturePerXAncientBuildings = kResults.GetInt("CulturePerXAncientBuildings");
+#endif
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+	kUtility.SetYields(m_piNearMountainYieldChanges, "Building_NearMountainYieldChanges", "BuildingType", szBuildingType);
 #endif
 
 	return true;
@@ -2221,6 +2231,20 @@ int CvBuildingEntry::GetScienvePerXPop() const
 int CvBuildingEntry::GetCulturePerXAncientBuildings() const
 {
 	return m_iCulturePerXAncientBuildings;
+}
+#endif
+
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+int CvBuildingEntry::GetNearMountainYieldChange(int i) const
+{
+	CvAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	return m_piNearMountainYieldChanges ? m_piNearMountainYieldChanges[i] : -1;
+}
+
+int* CvBuildingEntry::GetNearMountainYieldChangeArray() const
+{
+	return m_piNearMountainYieldChanges;
 }
 #endif
 

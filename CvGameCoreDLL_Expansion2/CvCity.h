@@ -587,6 +587,11 @@ public:
 	int getRiverPlotYield(YieldTypes eIndex) const;
 	void changeRiverPlotYield(YieldTypes eIndex, int iChange);
 
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+	int getNearMountainYield(YieldTypes eIndex) const;
+	void changeNearMountainYield(YieldTypes eIndex, int iChange);
+#endif
+
 	int getLakePlotYield(YieldTypes eIndex) const;
 	void changeLakePlotYield(YieldTypes eIndex, int iChange);
 
@@ -1073,6 +1078,9 @@ protected:
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	FAutoVariable<int, CvCity> m_iCulturePerXAncientBuildings;
+#endif
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+	FAutoVariable<std::vector<int>, CvCity> m_aiNearMountainYield;
 #endif
 
 	void doGrowth();

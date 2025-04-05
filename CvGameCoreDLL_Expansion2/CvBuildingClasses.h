@@ -336,6 +336,10 @@ public:
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	int GetCulturePerXAncientBuildings() const;
 #endif
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+	int GetNearMountainYieldChange(int i) const;
+	int* GetNearMountainYieldChangeArray() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -566,6 +570,9 @@ private:
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	int m_iCulturePerXAncientBuildings;
+#endif
+#ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
+	int* m_piNearMountainYieldChanges;
 #endif
 };
 
