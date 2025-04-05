@@ -231,6 +231,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
 	m_piNearMountainYieldChanges(NULL),
 #endif
+#ifdef BUILDING_DOUBLE_DEFENSE_NEAR_MOUNTAIN
+	m_bDoubleDefenseNearMountain(false),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -768,6 +771,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
 	kUtility.SetYields(m_piNearMountainYieldChanges, "Building_NearMountainYieldChanges", "BuildingType", szBuildingType);
+#endif
+#ifdef BUILDING_DOUBLE_DEFENSE_NEAR_MOUNTAIN
+	m_bDoubleDefenseNearMountain = kResults.GetBool("DoubleDefenseNearMountain");
 #endif
 
 	return true;
@@ -2245,6 +2251,13 @@ int CvBuildingEntry::GetNearMountainYieldChange(int i) const
 int* CvBuildingEntry::GetNearMountainYieldChangeArray() const
 {
 	return m_piNearMountainYieldChanges;
+}
+#endif
+
+#ifdef BUILDING_DOUBLE_DEFENSE_NEAR_MOUNTAIN
+bool CvBuildingEntry::IsDoubleDefenseNearMountain() const
+{
+	return m_bDoubleDefenseNearMountain;
 }
 #endif
 

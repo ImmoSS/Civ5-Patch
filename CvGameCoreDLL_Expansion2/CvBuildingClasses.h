@@ -336,6 +336,9 @@ public:
 	int GetNearMountainYieldChange(int i) const;
 	int* GetNearMountainYieldChangeArray() const;
 #endif
+#ifdef BUILDING_DOUBLE_DEFENSE_NEAR_MOUNTAIN
+	bool IsDoubleDefenseNearMountain() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -569,6 +572,9 @@ private:
 #endif
 #ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
 	int* m_piNearMountainYieldChanges;
+#endif
+#ifdef BUILDING_DOUBLE_DEFENSE_NEAR_MOUNTAIN
+	bool m_bDoubleDefenseNearMountain;
 #endif
 };
 

@@ -6943,7 +6943,18 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 
 	if(!bObsolete)
 	{
+#ifdef BUILDING_DOUBLE_DEFENSE_NEAR_MOUNTAIN
+		if (pBuildingInfo->IsDoubleDefenseNearMountain())
+		{
+			m_pCityBuildings->ChangeBuildingDefense(2 * pBuildingInfo->GetDefenseModifier() * iChange);
+		}
+		else
+		{
+			m_pCityBuildings->ChangeBuildingDefense(pBuildingInfo->GetDefenseModifier() * iChange);
+		}
+#else
 		m_pCityBuildings->ChangeBuildingDefense(pBuildingInfo->GetDefenseModifier() * iChange);
+#endif
 
 		owningTeam.changeBuildingClassCount(eBuildingClass, iChange);
 		owningPlayer.changeBuildingClassCount(eBuildingClass, iChange);
