@@ -11555,7 +11555,7 @@ int CvPlayer::GetTotalJONSCulturePerTurn() const
 #ifdef BRAZIL_UA_REWORK
 		if (GetPlayerTraits()->GetGoldenAgeGreatArtistRateModifier() > 0)
 		{
-			iCulturePerTurn += (((10 + iCulturePerTurn) * GC.getGOLDEN_AGE_CULTURE_MODIFIER()) / 100);
+			iCulturePerTurn += ((iCulturePerTurn * (10 + GC.getGOLDEN_AGE_CULTURE_MODIFIER())) / 100);
 		}
 		else
 		{
