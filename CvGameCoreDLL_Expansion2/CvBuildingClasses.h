@@ -255,10 +255,6 @@ public:
 	int* GetGlobalYieldModifierArray() const;
 	int GetTechEnhancedYieldChange(int i) const;
 	int* GetTechEnhancedYieldChangeArray() const;
-#ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
-	int GetImprovementYieldChanges(int i) const;
-	int* GetImprovementYieldChangesArray() const;
-#endif
 	int GetSeaPlotYieldChange(int i) const;
 	int* GetSeaPlotYieldChangeArray() const;
 	int GetRiverPlotYieldChange(int i) const;
