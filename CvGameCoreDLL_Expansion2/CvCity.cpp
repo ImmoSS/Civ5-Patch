@@ -295,6 +295,9 @@ CvCity::CvCity() :
 #ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
 	, m_iNoHolyCityAndNoOccupiedUnhappiness("CvCity::m_iNoHolyCityAndNoOccupiedUnhappiness", m_syncArchive)
 #endif
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+	, m_iNearbyEnemyDamage("CvCity::m_iNearbyEnemyDamage", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1074,6 +1077,8 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #endif
 #ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
 	m_iNoHolyCityAndNoOccupiedUnhappiness = 0;
+#endif
+	m_iNearbyEnemyDamage = 0;
 #endif
 
 	if(!bConstructorCall)
@@ -6946,6 +6951,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 				GetCityReligions()->AdoptReligionFully(eFoundedReligion, eMajority);
 			}
 		}
+#endif
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+		changeNearbyEnemyDamage(pBuildingInfo->GetNearbyEnemyDamage() * iChange);
 #endif
 
 		// Process for our player
@@ -15846,6 +15854,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iNearbyEnemyDamage;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iNearbyEnemyDamage = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -16112,6 +16134,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
 	kStream << m_iNoHolyCityAndNoOccupiedUnhappiness;
+#endif
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+	kStream << m_iNearbyEnemyDamage;
 #endif
 }
 
@@ -17609,5 +17634,20 @@ void CvCity::changeNoHolyCityAndNoOccupiedUnhappiness(int iChange)
 {
 	VALIDATE_OBJECT
 	m_iNoHolyCityAndNoOccupiedUnhappiness += iChange;
+}
+#endif
+
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+//	----------------------------------------------------------------------------
+int CvCity::getNearbyEnemyDamage() const
+{
+	return m_iNearbyEnemyDamage;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeNearbyEnemyDamage(int iChange)
+{
+	VALIDATE_OBJECT
+	m_iNearbyEnemyDamage += iChange;
 }
 #endif

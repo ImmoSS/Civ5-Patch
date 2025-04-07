@@ -875,6 +875,10 @@ public:
 	int getNoHolyCityAndNoOccupiedUnhappiness() const;
 	void changeNoHolyCityAndNoOccupiedUnhappiness(int iChange);
 #endif
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+	int getNearbyEnemyDamage() const;
+	void changeNearbyEnemyDamage(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1088,6 +1092,9 @@ protected:
 #endif
 #ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
 	FAutoVariable<int, CvCity> m_iNoHolyCityAndNoOccupiedUnhappiness;
+#endif
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+	FAutoVariable<int, CvCity> m_iNearbyEnemyDamage;
 #endif
 
 	void doGrowth();

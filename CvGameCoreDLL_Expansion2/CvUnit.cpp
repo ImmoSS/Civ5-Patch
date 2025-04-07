@@ -17353,6 +17353,31 @@ bool CvUnit::IsNearEnemyCitadel(int& iCitadelDamage)
 				eImprovement = pLoopPlot->getImprovementType();
 
 				// Citadel here?
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+				iDamage = 0;
+				if (pLoopPlot->getPlotCity())
+				{
+					iDamage += GC.getImprovementInfo(eImprovement)->GetNearbyEnemyDamage();
+				}
+				if (eImprovement != NO_IMPROVEMENT && !pLoopPlot->IsImprovementPillaged())
+				{
+					iDamage += GC.getImprovementInfo(eImprovement)->GetNearbyEnemyDamage();
+				}
+				if (eImprovement != NO_IMPROVEMENT && !pLoopPlot->IsImprovementPillaged())
+				{
+					if (iDamage != 0)
+					{
+						if (pLoopPlot->getOwner() != NO_PLAYER)
+						{
+							if (GET_TEAM(getTeam()).isAtWar(pLoopPlot->getTeam()))
+							{
+								iCitadelDamage = iDamage;
+								return true;
+							}
+						}
+					}
+				}
+#else
 				if(eImprovement != NO_IMPROVEMENT && !pLoopPlot->IsImprovementPillaged())
 				{
 					iDamage = GC.getImprovementInfo(eImprovement)->GetNearbyEnemyDamage();
@@ -17368,6 +17393,7 @@ bool CvUnit::IsNearEnemyCitadel(int& iCitadelDamage)
 						}
 					}
 				}
+#endif
 			}
 		}
 	}

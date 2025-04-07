@@ -342,6 +342,9 @@ public:
 #ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
 	bool IsNoHolyCityAndNoOccupiedUnhappiness() const;
 #endif
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+	int GetNearbyEnemyDamage() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -581,6 +584,9 @@ private:
 #endif
 #ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
 	bool m_bNoHolyCityAndNoOccupiedUnhappiness;
+#endif
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+	int m_iNearbyEnemyDamage;
 #endif
 };
 

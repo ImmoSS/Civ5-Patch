@@ -237,6 +237,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
 	m_bNoHolyCityAndNoOccupiedUnhappiness(false),
 #endif
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+	m_iNearbyEnemyDamage(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -780,6 +783,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
 	m_bNoHolyCityAndNoOccupiedUnhappiness = kResults.GetBool("NoHolyCityAndNoOccupiedUnhappiness");
+#endif
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+	m_iNearbyEnemyDamage = kResults.GetBool("NearbyEnemyDamage");
 #endif
 
 	return true;
