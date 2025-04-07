@@ -357,6 +357,10 @@ public:
 	int getCityCurrentExtraAttack() const;
 	void changeCityCurrentExtraAttack(int iChange);
 #endif
+#ifdef CITY_EXTRA_HEAL
+	int getCityExtraHeal() const;
+	void changeCityExtraHeal(int iChange);
+#endif
 
 	// Culture stuff
 
@@ -909,6 +913,9 @@ protected:
 #ifdef CITY_EXTRA_ATTACK
 	FAutoVariable<int, CvCity> m_iCityExtraAttack;
 	FAutoVariable<int, CvCity> m_iCityCurrentExtraAttack;
+#endif
+#ifdef CITY_EXTRA_HEAL
+	FAutoVariable<int, CvCity> m_iCityExtraHeal;
 #endif
 	FAutoVariable<int, CvCity> m_iJONSCultureStored;
 	FAutoVariable<int, CvCity> m_iJONSCultureLevel;

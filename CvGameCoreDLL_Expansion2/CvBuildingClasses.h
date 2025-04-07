@@ -200,6 +200,9 @@ public:
 #ifdef CITY_EXTRA_ATTACK
 	int GetCityExtraAttack() const;
 #endif
+#ifdef CITY_EXTRA_HEAL
+	int GetCityExtraHeal() const;
+#endif
 	bool IsTeamShare() const;
 	bool IsWater() const;
 	bool IsRiver() const;
@@ -463,6 +466,9 @@ private:
 #endif
 #ifdef CITY_EXTRA_ATTACK
 	int m_iCityExtraAttack;
+#endif
+#ifdef CITY_EXTRA_HEAL
+	int m_iCityExtraHeal;
 #endif
 
 	bool m_bTeamShare;

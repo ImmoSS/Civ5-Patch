@@ -129,6 +129,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef CITY_EXTRA_ATTACK
 	m_iCityExtraAttack(0),
 #endif
+#ifdef CITY_EXTRA_HEAL
+	m_iCityExtraHeal(0),
+#endif
 	m_bTeamShare(false),
 	m_bWater(false),
 	m_bRiver(false),
@@ -418,7 +421,10 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iCityAttackRangeModifier = kResults.GetInt("CityAttackRangeModifier");
 #endif
 #ifdef CITY_EXTRA_ATTACK
-	m_iCityExtraAttack = kResults.GetBool("CityExtraAttack");
+	m_iCityExtraAttack = kResults.GetInt("CityExtraAttack");
+#endif
+#ifdef CITY_EXTRA_HEAL
+	m_iCityExtraHeal = kResults.GetInt("CityExtraHeal");
 #endif
 
 	m_bArtInfoCulturalVariation = kResults.GetBool("ArtInfoCulturalVariation");
@@ -1472,6 +1478,13 @@ int CvBuildingEntry::getCityAttackRangeModifier() const
 int CvBuildingEntry::GetCityExtraAttack() const
 {
 	return m_iCityExtraAttack;
+}
+#endif
+
+#ifdef CITY_EXTRA_HEAL
+int CvBuildingEntry::GetCityExtraHeal() const
+{
+	return m_iCityExtraHeal;
 }
 #endif
 

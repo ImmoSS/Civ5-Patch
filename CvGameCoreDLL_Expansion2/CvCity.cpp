@@ -134,6 +134,9 @@ CvCity::CvCity() :
 	, m_iCityExtraAttack("CvCity::m_iCityExtraAttack", m_syncArchive)
 	, m_iCityCurrentExtraAttack("CvCity::m_iCityCurrentExtraAttack", m_syncArchive)
 #endif
+#ifdef CITY_EXTRA_HEAL
+	, m_iCityExtraHeal("CvCity::m_iCityExtraHeal", m_syncArchive)
+#endif
 	, m_iJONSCultureStored("CvCity::m_iJONSCultureStored", m_syncArchive, true)
 	, m_iJONSCultureLevel("CvCity::m_iJONSCultureLevel", m_syncArchive)
 	, m_iJONSCulturePerTurnFromBuildings("CvCity::m_iJONSCulturePerTurnFromBuildings", m_syncArchive)
@@ -728,6 +731,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iCityExtraAttack = 0;
 	m_iCityCurrentExtraAttack = 0;
 #endif
+#ifdef CITY_EXTRA_HEAL
+	m_iCityExtraHeal = 0;
+#endif
 	m_iJONSCultureStored = 0;
 	m_iJONSCultureLevel = 0;
 	m_iJONSCulturePerTurnFromBuildings = 0;
@@ -1078,6 +1084,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
 	m_iNoHolyCityAndNoOccupiedUnhappiness = 0;
 #endif
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
 	m_iNearbyEnemyDamage = 0;
 #endif
 
@@ -1590,9 +1597,9 @@ void CvCity::doTurn()
 		iHitsHealed += iBuildingDefense / 500;
 #ifdef CITY_EXTRA_HEAL
 		iHitsHealed /= 2;
-		if (m_pCityBuildings->GetNumBuilding((BuildingTypes)GC.getInfoTypeForString("BUILDING_CASTLE")) > 0 || m_pCityBuildings->GetNumBuilding((BuildingTypes)GC.getInfoTypeForString("BUILDING_MUGHAL_FORT")) > 0)
+		if (getCityExtraHeal() > 0)
 		{
-			iHitsHealed *= 2;
+			iHitsHealed *= (1 + getCityExtraHeal());
 		}
 #endif
 		changeDamage(-iHitsHealed);
@@ -6546,6 +6553,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 		changeCityExtraAttack(pBuildingInfo->GetCityExtraAttack() * iChange);
 		changeCityCurrentExtraAttack(pBuildingInfo->GetCityExtraAttack()* iChange);
 #endif
+#ifdef CITY_EXTRA_HEAL
+		changeCityExtraHeal(pBuildingInfo->GetCityExtraHeal() * iChange);
+#endif
 
 		changeGreatPeopleRateModifier(pBuildingInfo->GetGreatPeopleRateModifier() * iChange);
 		changeFreeExperience(pBuildingInfo->GetFreeExperience() * iChange);
@@ -8427,6 +8437,22 @@ void CvCity::changeCityCurrentExtraAttack(int iChange)
 {
 	VALIDATE_OBJECT
 	m_iCityCurrentExtraAttack = (m_iCityCurrentExtraAttack + iChange);
+}
+#endif
+
+#ifdef CITY_EXTRA_HEAL
+//	--------------------------------------------------------------------------------
+int CvCity::getCityExtraHeal() const
+{
+	VALIDATE_OBJECT
+	return m_iCityExtraHeal;
+}
+
+//	--------------------------------------------------------------------------------
+void CvCity::changeCityExtraHeal(int iChange)
+{
+	VALIDATE_OBJECT
+	m_iCityExtraHeal = (m_iCityExtraHeal + iChange);
 }
 #endif
 
@@ -15355,6 +15381,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef CITY_EXTRA_HEAL
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iCityExtraHeal;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iCityExtraHeal = 0;
+	}
+# endif
+#endif
 	kStream >> m_iJONSCultureStored;
 	kStream >> m_iJONSCultureLevel;
 	kStream >> m_iJONSCulturePerTurnFromBuildings;
@@ -15902,6 +15942,9 @@ void CvCity::write(FDataStream& kStream) const
 #ifdef CITY_EXTRA_ATTACK
 	kStream << m_iCityExtraAttack;
 	kStream << m_iCityCurrentExtraAttack;
+#endif
+#ifdef CITY_EXTRA_HEAL
+	kStream << m_iCityExtraHeal;
 #endif
 	kStream << m_iJONSCultureStored;
 	kStream << m_iJONSCultureLevel;
