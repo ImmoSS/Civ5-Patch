@@ -292,6 +292,9 @@ CvCity::CvCity() :
 #ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
 	, m_aiNearMountainYield("CvCity::m_aiNearMountainYield", m_syncArchive)
 #endif
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+	, m_iNoHolyCityAndNoOccupiedUnhappiness("CvCity::m_iNoHolyCityAndNoOccupiedUnhappiness", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1068,6 +1071,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	m_iCulturePerXAncientBuildings = 0;
+#endif
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+	m_iNoHolyCityAndNoOccupiedUnhappiness = 0;
 #endif
 
 	if(!bConstructorCall)
@@ -2650,6 +2656,11 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 	// Can't construct a building to reduce occupied unhappiness if the city isn't occupied
 	if(pkBuildingInfo->IsNoOccupiedUnhappiness() && !IsOccupied())
 		return false;
+
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+	if (pkBuildingInfo->IsNoHolyCityAndNoOccupiedUnhappiness() && !GetCityReligions()->IsHolyCityAnyReligion())
+		return false;
+#endif
 
 #ifdef NO_OXFORD_AFTER_ATOM
 	const char* szWonderTypeChar = pkBuildingInfo->GetType();
@@ -6922,6 +6933,18 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			|| pBuildingInfo->GetBuildingClassInfo().GetID() == 18))
 		{
 			changeCulturePerXAncientBuildings(iChange);
+		}
+#endif
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+		changeNoHolyCityAndNoOccupiedUnhappiness(pBuildingInfo->IsNoHolyCityAndNoOccupiedUnhappiness() * iChange);
+		if (iChange > 0)
+		{
+			ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetFounderBenefitsReligion(getOwner());
+			ReligionTypes eMajority = GetCityReligions()->GetReligiousMajority();
+			if (eFoundedReligion > RELIGION_PANTHEON)
+			{
+				GetCityReligions()->AdoptReligionFully(eFoundedReligion, eMajority);
+			}
 		}
 #endif
 
@@ -15809,6 +15832,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iNoHolyCityAndNoOccupiedUnhappiness;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iNoHolyCityAndNoOccupiedUnhappiness = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -16072,6 +16109,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
 	kStream << m_aiNearMountainYield;
+#endif
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+	kStream << m_iNoHolyCityAndNoOccupiedUnhappiness;
 #endif
 }
 
@@ -17554,5 +17594,20 @@ void CvCity::changeCulturePerXAncientBuildings(int iChange)
 {
 	VALIDATE_OBJECT
 	m_iCulturePerXAncientBuildings += iChange;
+}
+#endif
+
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+//	----------------------------------------------------------------------------
+int CvCity::getNoHolyCityAndNoOccupiedUnhappiness() const
+{
+	return m_iNoHolyCityAndNoOccupiedUnhappiness;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeNoHolyCityAndNoOccupiedUnhappiness(int iChange)
+{
+	VALIDATE_OBJECT
+	m_iNoHolyCityAndNoOccupiedUnhappiness += iChange;
 }
 #endif

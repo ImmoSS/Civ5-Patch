@@ -339,6 +339,9 @@ public:
 #ifdef BUILDING_DOUBLE_DEFENSE_NEAR_MOUNTAIN
 	bool IsDoubleDefenseNearMountain() const;
 #endif
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+	bool IsNoHolyCityAndNoOccupiedUnhappiness() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -575,6 +578,9 @@ private:
 #endif
 #ifdef BUILDING_DOUBLE_DEFENSE_NEAR_MOUNTAIN
 	bool m_bDoubleDefenseNearMountain;
+#endif
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+	bool m_bNoHolyCityAndNoOccupiedUnhappiness;
 #endif
 };
 

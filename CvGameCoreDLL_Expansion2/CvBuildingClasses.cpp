@@ -234,6 +234,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_DOUBLE_DEFENSE_NEAR_MOUNTAIN
 	m_bDoubleDefenseNearMountain(false),
 #endif
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+	m_bNoHolyCityAndNoOccupiedUnhappiness(false),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -774,6 +777,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_DOUBLE_DEFENSE_NEAR_MOUNTAIN
 	m_bDoubleDefenseNearMountain = kResults.GetBool("DoubleDefenseNearMountain");
+#endif
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+	m_bNoHolyCityAndNoOccupiedUnhappiness = kResults.GetBool("NoHolyCityAndNoOccupiedUnhappiness");
 #endif
 
 	return true;
@@ -2258,6 +2264,20 @@ int* CvBuildingEntry::GetNearMountainYieldChangeArray() const
 bool CvBuildingEntry::IsDoubleDefenseNearMountain() const
 {
 	return m_bDoubleDefenseNearMountain;
+}
+#endif
+
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+bool CvBuildingEntry::IsNoHolyCityAndNoOccupiedUnhappiness() const
+{
+	return m_bNoHolyCityAndNoOccupiedUnhappiness;
+}
+#endif
+
+#ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+int CvBuildingEntry::GetNearbyEnemyDamage() const
+{
+	return m_iNearbyEnemyDamage;
 }
 #endif
 

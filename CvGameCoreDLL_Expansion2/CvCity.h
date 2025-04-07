@@ -871,6 +871,10 @@ public:
 	int getCulturePerXAncientBuildings() const;
 	void changeCulturePerXAncientBuildings(int iChange);
 #endif
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+	int getNoHolyCityAndNoOccupiedUnhappiness() const;
+	void changeNoHolyCityAndNoOccupiedUnhappiness(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1081,6 +1085,9 @@ protected:
 #endif
 #ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
 	FAutoVariable<std::vector<int>, CvCity> m_aiNearMountainYield;
+#endif
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+	FAutoVariable<int, CvCity> m_iNoHolyCityAndNoOccupiedUnhappiness;
 #endif
 
 	void doGrowth();
