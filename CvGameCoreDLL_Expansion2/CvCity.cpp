@@ -301,6 +301,9 @@ CvCity::CvCity() :
 #ifdef BUILDING_NEARBY_ENEMY_DAMAGE
 	, m_iNearbyEnemyDamage("CvCity::m_iNearbyEnemyDamage", m_syncArchive)
 #endif
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+	, m_iNavalCombatModifierNearCity("CvCity::m_iNavalCombatModifierNearCity", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1086,6 +1089,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #endif
 #ifdef BUILDING_NEARBY_ENEMY_DAMAGE
 	m_iNearbyEnemyDamage = 0;
+#endif
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+	m_iNavalCombatModifierNearCity = 0;
 #endif
 
 	if(!bConstructorCall)
@@ -6964,6 +6970,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #endif
 #ifdef BUILDING_NEARBY_ENEMY_DAMAGE
 		changeNearbyEnemyDamage(pBuildingInfo->GetNearbyEnemyDamage() * iChange);
+#endif
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+		changeNavalCombatModifierNearCity(pBuildingInfo->GetNavalCombatModifierNearCity() * iChange);
 #endif
 
 		// Process for our player
@@ -15908,6 +15917,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iNavalCombatModifierNearCity;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iNavalCombatModifierNearCity = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -16180,6 +16203,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef BUILDING_NEARBY_ENEMY_DAMAGE
 	kStream << m_iNearbyEnemyDamage;
+#endif
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+	kStream << m_iNavalCombatModifierNearCity;
 #endif
 }
 
@@ -17692,5 +17718,20 @@ void CvCity::changeNearbyEnemyDamage(int iChange)
 {
 	VALIDATE_OBJECT
 	m_iNearbyEnemyDamage += iChange;
+}
+#endif
+
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+//	----------------------------------------------------------------------------
+int CvCity::getNavalCombatModifierNearCity() const
+{
+	return m_iNavalCombatModifierNearCity;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeNavalCombatModifierNearCity(int iChange)
+{
+	VALIDATE_OBJECT
+	m_iNavalCombatModifierNearCity += iChange;
 }
 #endif

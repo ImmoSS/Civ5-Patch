@@ -11186,6 +11186,14 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvUnit* pOtherUnit, const CvPlot
 						iModifier += iTempModifier;
 					}
 				}
+
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+				if (getDomainType() == DOMAIN_SEA)
+				{
+					iTempModifier = pPlotCity->getNavalCombatModifierNearCity();
+					iModifier += iTempModifier;
+				}
+#endif
 			}
 		}
 
@@ -12079,6 +12087,13 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 							iModifier += iTempModifier;
 						}
 					}
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+					if (getDomainType() == DOMAIN_SEA)
+					{
+						iTempModifier = pPlotCity->getNavalCombatModifierNearCity();
+						iModifier += iTempModifier;
+					}
+#endif
 				}
 			}
 
@@ -12206,6 +12221,13 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 						iModifier += iTempModifier;
 					}
 				}
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+				if (getDomainType() == DOMAIN_SEA)
+				{
+					iTempModifier = pPlotCity->getNavalCombatModifierNearCity();
+					iModifier += iTempModifier;
+				}
+#endif
 			}
 		}
 
@@ -12453,6 +12475,13 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 							iModifier += iTempModifier;
 						}
 					}
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+					if (getDomainType() == DOMAIN_SEA)
+					{
+						iTempModifier = pPlotCity->getNavalCombatModifierNearCity();
+						iModifier += iTempModifier;
+					}
+#endif
 				}
 			}
 
@@ -12567,6 +12596,13 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 						iModifier += iTempModifier;
 					}
 				}
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+				if (getDomainType() == DOMAIN_SEA)
+				{
+					iTempModifier = pPlotCity->getNavalCombatModifierNearCity();
+					iModifier += iTempModifier;
+				}
+#endif
 			}
 		}
 

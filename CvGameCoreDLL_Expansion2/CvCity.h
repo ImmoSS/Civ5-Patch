@@ -883,6 +883,10 @@ public:
 	int getNearbyEnemyDamage() const;
 	void changeNearbyEnemyDamage(int iChange);
 #endif
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+	int getNavalCombatModifierNearCity() const;
+	void changeNavalCombatModifierNearCity(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1102,6 +1106,9 @@ protected:
 #endif
 #ifdef BUILDING_NEARBY_ENEMY_DAMAGE
 	FAutoVariable<int, CvCity> m_iNearbyEnemyDamage;
+#endif
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+	FAutoVariable<int, CvCity> m_iNavalCombatModifierNearCity;
 #endif
 
 	void doGrowth();

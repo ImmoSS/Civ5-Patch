@@ -348,6 +348,9 @@ public:
 #ifdef BUILDING_NEARBY_ENEMY_DAMAGE
 	int GetNearbyEnemyDamage() const;
 #endif
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+	int GetNavalCombatModifierNearCity() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -593,6 +596,9 @@ private:
 #endif
 #ifdef BUILDING_NEARBY_ENEMY_DAMAGE
 	int m_iNearbyEnemyDamage;
+#endif
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+	int m_iNavalCombatModifierNearCity;
 #endif
 };
 

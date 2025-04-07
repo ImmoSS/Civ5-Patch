@@ -243,6 +243,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_NEARBY_ENEMY_DAMAGE
 	m_iNearbyEnemyDamage(0),
 #endif
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+	m_iNavalCombatModifierNearCity(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -791,7 +794,10 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_bNoHolyCityAndNoOccupiedUnhappiness = kResults.GetBool("NoHolyCityAndNoOccupiedUnhappiness");
 #endif
 #ifdef BUILDING_NEARBY_ENEMY_DAMAGE
-	m_iNearbyEnemyDamage = kResults.GetBool("NearbyEnemyDamage");
+	m_iNearbyEnemyDamage = kResults.GetInt("NearbyEnemyDamage");
+#endif
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+	m_iNavalCombatModifierNearCity = kResults.GetInt("NavalCombatModifierNearCity");
 #endif
 
 	return true;
@@ -2297,6 +2303,13 @@ bool CvBuildingEntry::IsNoHolyCityAndNoOccupiedUnhappiness() const
 int CvBuildingEntry::GetNearbyEnemyDamage() const
 {
 	return m_iNearbyEnemyDamage;
+}
+#endif
+
+#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
+int CvBuildingEntry::GetNavalCombatModifierNearCity() const
+{
+	return m_iNavalCombatModifierNearCity;
 }
 #endif
 
