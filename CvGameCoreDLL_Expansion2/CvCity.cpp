@@ -6946,7 +6946,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 		changeGrowthGold(pBuildingInfo->GetGrowthGold() * iChange);
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-		changeGrowthGold(pBuildingInfo->GetScienvePerXPop() * iChange);
+		changeScienvePerXPop(pBuildingInfo->GetScienvePerXPop() * iChange);
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 		CvTechEntry* pTechInfo = GC.getTechInfo((TechTypes)pBuildingInfo->GetPrereqAndTech());
