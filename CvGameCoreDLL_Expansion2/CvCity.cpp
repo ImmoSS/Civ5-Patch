@@ -2676,7 +2676,7 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		return false;
 
 #ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
-	if (pkBuildingInfo->IsNoHolyCityAndNoOccupiedUnhappiness() && !GetCityReligions()->IsHolyCityAnyReligion())
+	if (pkBuildingInfo->IsNoHolyCityAndNoOccupiedUnhappiness() && GetCityReligions()->IsHolyCityAnyReligion())
 		return false;
 #endif
 
