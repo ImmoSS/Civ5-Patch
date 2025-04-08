@@ -6994,7 +6994,32 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 	if(!bObsolete)
 	{
 #ifdef BUILDING_DOUBLE_DEFENSE_NEAR_MOUNTAIN
-		if (pBuildingInfo->IsDoubleDefenseNearMountain())
+		// Requires nearby Mountain (within 2 tiles)
+		bool bFoundMountain = false;
+
+		const int iMountainRange = 2;
+		CvPlot* pLoopPlot;
+
+		for (int iDX = -iMountainRange; iDX <= iMountainRange; iDX++)
+		{
+			for (int iDY = -iMountainRange; iDY <= iMountainRange; iDY++)
+			{
+				pLoopPlot = plotXYWithRangeCheck(getX(), getY(), iDX, iDY, iMountainRange);
+				if (pLoopPlot)
+				{
+					if (pLoopPlot->isMountain() && !pLoopPlot->IsNaturalWonder() && pLoopPlot->getOwner() == getOwner())
+					{
+						bFoundMountain = true;
+						break;
+					}
+				}
+			}
+
+			if (bFoundMountain == true)
+				break;
+		}
+
+		if (bFoundMountain && pBuildingInfo->IsDoubleDefenseNearMountain())
 		{
 			m_pCityBuildings->ChangeBuildingDefense(2 * pBuildingInfo->GetDefenseModifier() * iChange);
 		}
