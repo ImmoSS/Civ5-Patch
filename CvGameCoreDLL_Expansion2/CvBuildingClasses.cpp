@@ -246,6 +246,10 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
 	m_iNavalCombatModifierNearCity(0),
 #endif
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	m_piYieldForEachBuildingInEmpire(NULL),
+	m_piMaxYieldForEachBuildingInEmpire(NULL),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -798,6 +802,10 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
 	m_iNavalCombatModifierNearCity = kResults.GetInt("NavalCombatModifierNearCity");
+#endif
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	kUtility.SetYields(m_piYieldForEachBuildingInEmpire, "Building_YieldForEachBuildingInEmpire", "BuildingType", szBuildingType);
+	kUtility.PopulateArrayByValue(m_piMaxYieldForEachBuildingInEmpire, "Yields", "Building_YieldForEachBuildingInEmpire", "YieldType", "BuildingType", szBuildingType, "MaxYield");
 #endif
 
 	return true;
@@ -2310,6 +2318,32 @@ int CvBuildingEntry::GetNearbyEnemyDamage() const
 int CvBuildingEntry::GetNavalCombatModifierNearCity() const
 {
 	return m_iNavalCombatModifierNearCity;
+}
+#endif
+
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+int CvBuildingEntry::GetYieldForEachBuildingInEmpire(int i) const
+{
+	CvAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	return m_piYieldForEachBuildingInEmpire ? m_piYieldForEachBuildingInEmpire[i] : -1;
+}
+
+int* CvBuildingEntry::GetYieldForEachBuildingInEmpireArray() const
+{
+	return m_piYieldForEachBuildingInEmpire;
+}
+
+int CvBuildingEntry::GetMaxYieldForEachBuildingInEmpire(int i) const
+{
+	CvAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	return m_piMaxYieldForEachBuildingInEmpire ? m_piMaxYieldForEachBuildingInEmpire[i] : -1;
+}
+
+int* CvBuildingEntry::GetMaxYieldForEachBuildingInEmpireArray() const
+{
+	return m_piMaxYieldForEachBuildingInEmpire;
 }
 #endif
 

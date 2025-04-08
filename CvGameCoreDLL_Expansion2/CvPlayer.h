@@ -1775,6 +1775,11 @@ public:
 	void setIsDelayedPolicy(bool bValue);
 #endif
 
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	int GetYieldForEachBuildingInEmpire(BuildingTypes eBuilding, YieldTypes eIndex) const;
+	void ChangeYieldForEachBuildingInEmpire(BuildingTypes eBuilding, YieldTypes eIndex, int iChange);
+#endif
+
 	CvPlayerPolicies* GetPlayerPolicies() const;
 	CvPlayerTraits* GetPlayerTraits() const;
 	CvEconomicAI* GetEconomicAI() const;
@@ -2565,6 +2570,9 @@ protected:
 #endif
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 	bool m_bIsDelayedPolicy;
+#endif
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	FAutoVariable <std::vector< Firaxis::Array< int, NUM_YIELD_TYPES > >, CvPlayer> m_ppaaiYieldForEachBuildingInEmpire;
 #endif
 };
 

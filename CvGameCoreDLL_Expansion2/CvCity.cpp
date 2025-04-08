@@ -6752,10 +6752,40 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #ifdef BUILDING_NEAR_MOUNTAIN_YIELD_CHANGES
 			changeNearMountainYield(eYield, (pBuildingInfo->GetNearMountainYieldChange(eYield) * iChange));
 #endif
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+			if (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
+			{
+				GET_PLAYER(getOwner()).ChangeYieldForEachBuildingInEmpire(eBuilding, eYield, (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) * iChange));
+
+				int iYieldForEachBuildingInEmpire = std::min(GET_PLAYER(getOwner()).GetYieldForEachBuildingInEmpire(eBuilding, eYield), pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield));
+				int iLoop = 0;
+				for (CvCity* pLoopCity = GET_PLAYER(getOwner()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwner()).nextCity(&iLoop))
+				{
+					if (pLoopCity != this)
+					{
+						if (pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
+						{
+							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, iYieldForEachBuildingInEmpire - pLoopCity->GetBaseYieldRateFromBuildings(eYield));
+						}
+					}
+					else
+					{
+						if (pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding) == 0)
+						{
+							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, - (GET_PLAYER(getOwner()).GetYieldForEachBuildingInEmpire(eBuilding, eYield) - (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) * iChange)));
+						}
+						else
+						{
+							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, iYieldForEachBuildingInEmpire - pLoopCity->GetBaseYieldRateFromBuildings(eYield));
+						}
+					}
+				}
+			}
+#endif
 			changeLakePlotYield(eYield, (pBuildingInfo->GetLakePlotYieldChange(eYield) * iChange));
 			changeSeaResourceYield(eYield, (pBuildingInfo->GetSeaResourceYieldChange(eYield) * iChange));
-#if defined NEW_FACTORIES || defined BUILDING_BARN
-			if (eBuilding != (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true) && eBuilding != (BuildingTypes)GC.getInfoTypeForString("BUILDING_BARN", true))
+#ifdef NEW_FACTORIES
+			if (eBuilding != (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true))
 			{
 #ifdef BUILDING_RIVER_GOLD
 				if (eYield == YIELD_GOLD)
@@ -6769,37 +6799,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 				ChangeBaseYieldRateFromBuildings(eYield, ((pBuildingInfo->GetYieldChange(eYield) + m_pCityBuildings->GetBuildingYieldChange(eBuildingClass, eYield)) * iChange));
 				changeYieldRateModifier(eYield, (pBuildingInfo->GetYieldModifier(eYield) * iChange));
 			}
-#endif
-#ifdef BUILDING_BARN
-			else if (eBuilding == (BuildingTypes)GC.getInfoTypeForString("BUILDING_BARN", true) && (YieldTypes)eYield == (YieldTypes)GC.getInfoTypeForString("YIELD_FOOD", true))
-			{
-				// changeYieldRateModifier(eYield, (pBuildingInfo->GetYieldModifier(eYield) * iChange));
-				int iLoop = 0;
-				int iNumBuildings = 0;
-				for (CvCity* pLoopCity = GET_PLAYER(getOwner()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwner()).nextCity(&iLoop))
-				{
-					if (pLoopCity != this)
-					{
-						iNumBuildings += pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding);
-					}
-				}
-				for (CvCity* pLoopCity = GET_PLAYER(getOwner()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwner()).nextCity(&iLoop))
-				{
-					if (pLoopCity != this)
-					{
-						if (pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
-						{
-							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, iChange);
-						}
-					}
-					else
-					{
-						pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, (iNumBuildings + 1) * iChange);
-					}
-				}
-			}
-#endif
-#if !defined NEW_FACTORIES && !defined BUILDING_BARN
+#else
 #ifdef BUILDING_RIVER_GOLD
 			if (eYield == YIELD_GOLD)
 			{
@@ -6813,7 +6813,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #endif
 			ChangeYieldPerPopTimes100(eYield, pBuildingInfo->GetYieldChangePerPop(eYield) * iChange);
 			ChangeYieldPerReligionTimes100(eYield, pBuildingInfo->GetYieldChangePerReligion(eYield) * iChange);
-#if !defined NEW_FACTORIES && !defined BUILDING_BARN
+#ifndef NEW_FACTORIES
 			changeYieldRateModifier(eYield, (pBuildingInfo->GetYieldModifier(eYield) * iChange));
 #endif
 

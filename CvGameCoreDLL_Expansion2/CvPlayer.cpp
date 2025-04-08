@@ -640,6 +640,9 @@ CvPlayer::CvPlayer() :
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 	, m_bIsDelayedPolicy(false)
 #endif
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	, m_ppaaiYieldForEachBuildingInEmpire("CvPlayer::m_ppaaiYieldForEachBuildingInEmpire", m_syncArchive)
+#endif
 {
 	m_pPlayerPolicies = FNEW(CvPlayerPolicies, c_eCiv5GameplayDLL, 0);
 	m_pEconomicAI = FNEW(CvEconomicAI, c_eCiv5GameplayDLL, 0);
@@ -904,6 +907,10 @@ void CvPlayer::uninit()
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 	m_ppaaiTurnCSWarAllowing.clear();
 	m_ppaafTimeCSWarAllowing.clear();
+#endif
+
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	m_ppaaiYieldForEachBuildingInEmpire.clear();
 #endif
 
 	m_pPlayerPolicies->Uninit();
@@ -1708,6 +1715,15 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		{
 			m_ppaaiBuildingClassYieldMod.setAt(i, yield);
 		}
+
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+		m_ppaaiYieldForEachBuildingInEmpire.clear();
+		m_ppaaiYieldForEachBuildingInEmpire.resize(GC.getNumBuildingInfos());
+		for (unsigned int i = 0; i < m_ppaaiYieldForEachBuildingInEmpire.size(); ++i)
+		{
+			m_ppaaiYieldForEachBuildingInEmpire.setAt(i, yield);
+		}
+#endif
 
 		m_aVote.clear();
 		m_aUnitExtraCosts.clear();
@@ -27532,6 +27548,29 @@ void CvPlayer::Read(FDataStream& kStream)
 # endif
 #endif
 
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1012)
+	{
+# endif
+		kStream >> m_ppaaiYieldForEachBuildingInEmpire;
+	}
+	else
+	{
+		Firaxis::Array<int, NUM_YIELD_TYPES> yield;
+		for (unsigned int j = 0; j < NUM_YIELD_TYPES; ++j)
+		{
+			yield[j] = 0;
+		}
+		m_ppaaiYieldForEachBuildingInEmpire.clear();
+		m_ppaaiYieldForEachBuildingInEmpire.resize(GC.getNumBuildingInfos());
+		for (unsigned int i = 0; i < m_ppaaiYieldForEachBuildingInEmpire.size(); ++i)
+		{
+			m_ppaaiYieldForEachBuildingInEmpire.setAt(i, yield);
+		}
+	}
+#endif
+
 	m_pPlayerPolicies->Read(kStream);
 	m_pEconomicAI->Read(kStream);
 	m_pCitySpecializationAI->Read(kStream);
@@ -28226,6 +28265,10 @@ void CvPlayer::Write(FDataStream& kStream) const
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 	kStream << m_ppaaiTurnCSWarAllowing;
 	kStream << m_ppaafTimeCSWarAllowing;
+#endif
+
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	kStream << m_ppaaiYieldForEachBuildingInEmpire;
 #endif
 
 	m_pPlayerPolicies->Write(kStream);
@@ -29745,6 +29788,23 @@ bool CvPlayer::IsDelayedPolicy() const
 void CvPlayer::setIsDelayedPolicy(bool bValue)
 {
 	m_bIsDelayedPolicy = bValue;
+}
+#endif
+
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+int CvPlayer::GetYieldForEachBuildingInEmpire(BuildingTypes eBuilding, YieldTypes eIndex) const
+{
+	return m_ppaaiYieldForEachBuildingInEmpire[eBuilding][eIndex];
+}
+
+void CvPlayer::ChangeYieldForEachBuildingInEmpire(BuildingTypes eBuilding, YieldTypes eIndex, int iChange)
+{
+	if (iChange != 0)
+	{
+		Firaxis::Array<int, NUM_YIELD_TYPES> yield = m_ppaaiYieldForEachBuildingInEmpire[eBuilding];
+		yield[int(eIndex)] += iChange;
+		m_ppaaiYieldForEachBuildingInEmpire.setAt(eBuilding, yield);
+	}
 }
 #endif
 

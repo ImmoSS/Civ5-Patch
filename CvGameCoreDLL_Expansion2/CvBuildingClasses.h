@@ -351,6 +351,12 @@ public:
 #ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
 	int GetNavalCombatModifierNearCity() const;
 #endif
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	int GetYieldForEachBuildingInEmpire(int i) const;
+	int* GetYieldForEachBuildingInEmpireArray() const;
+	int GetMaxYieldForEachBuildingInEmpire(int i) const;
+	int* GetMaxYieldForEachBuildingInEmpireArray() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -599,6 +605,10 @@ private:
 #endif
 #ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
 	int m_iNavalCombatModifierNearCity;
+#endif
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	int* m_piYieldForEachBuildingInEmpire;
+	int* m_piMaxYieldForEachBuildingInEmpire;
 #endif
 };
 
