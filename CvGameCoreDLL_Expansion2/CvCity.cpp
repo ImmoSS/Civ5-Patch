@@ -10797,7 +10797,10 @@ int CvCity::getYieldRateTimes100(YieldTypes eIndex, bool bIgnoreTrade) const
 	iBaseYield += (GetFaithPerTurn() * getFaithToScience());
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-	iBaseYield += (getPopulation() / getScienvePerXPop() * 100);
+	if (getScienvePerXPop() > 0)
+	{
+		iBaseYield += (getPopulation() / getScienvePerXPop() * 100);
+	}
 #endif
 
 	int iModifiedYield = iBaseYield * getBaseYieldRateModifier(eIndex);
