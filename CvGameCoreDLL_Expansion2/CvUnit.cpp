@@ -17393,7 +17393,7 @@ bool CvUnit::IsNearEnemyCitadel(int& iCitadelDamage)
 				iDamage = 0;
 				if (pLoopPlot->getPlotCity())
 				{
-					iDamage += GC.getImprovementInfo(eImprovement)->GetNearbyEnemyDamage();
+					iDamage += pLoopPlot->getPlotCity()->getNearbyEnemyDamage();
 				}
 				if (eImprovement != NO_IMPROVEMENT && !pLoopPlot->IsImprovementPillaged())
 				{
