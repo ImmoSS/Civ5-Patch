@@ -19851,7 +19851,7 @@ void CvUnit::read(FDataStream& kStream)
 
 #ifdef PROMOTION_NO_UNHAPPINESS_PENALTY
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= 1004)
+	if (uiVersion >= 1002)
 	{
 #endif
 		kStream >> m_iNoUnhappinessPenalty;
