@@ -6785,7 +6785,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			changeLakePlotYield(eYield, (pBuildingInfo->GetLakePlotYieldChange(eYield) * iChange));
 			changeSeaResourceYield(eYield, (pBuildingInfo->GetSeaResourceYieldChange(eYield) * iChange));
 #ifdef NEW_FACTORIES
-			if (eBuilding != (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true))
+			if (GC.GetGameBuildings()->GetEntry(eBuilding)->GetBuildingClassType() != (BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_FACTORY", true))
 			{
 #ifdef BUILDING_RIVER_GOLD
 				if (eYield == YIELD_GOLD)
