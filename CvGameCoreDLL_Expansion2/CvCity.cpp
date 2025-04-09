@@ -9962,7 +9962,6 @@ int CvCity::GetLocalHappiness() const
 					{
 #ifdef NEW_BELIEF_PROPHECY
 						CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
-						int iYieldFromBuilding = 0;
 
 						for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
 						{
