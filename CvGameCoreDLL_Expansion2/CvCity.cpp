@@ -3629,7 +3629,16 @@ bool CvCity::isCityHasCoal() const
 				return true;
 			}
 		}
-		if (pLoopCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true)))
+
+		BuildingTypes eBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true);
+		BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.GetGameBuildings()->GetEntry(eBuilding)->GetReplacementBuildingClass();
+		BuildingTypes eUpgradeBuilding = NO_BUILDING;
+		if (eBuildingClass != NO_BUILDINGCLASS)
+		{
+			eUpgradeBuilding = ((BuildingTypes)(GET_PLAYER(getOwner()).getCivilizationInfo().getCivilizationBuildings(eBuildingClass)));
+		}
+
+		if (pLoopCity->GetCityBuildings()->GetNumBuilding(eUpgradeBuilding))
 		{
 			iLoopCity++;
 		}
@@ -10612,9 +10621,15 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 	if (eIndex == YIELD_PRODUCTION)
 	{
 		BuildingTypes eBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true);
+		BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.GetGameBuildings()->GetEntry(eBuilding)->GetReplacementBuildingClass();
+		BuildingTypes eUpgradeBuilding = NO_BUILDING;
+		if (eBuildingClass != NO_BUILDINGCLASS)
+		{
+			eUpgradeBuilding = ((BuildingTypes)(GET_PLAYER(getOwner()).getCivilizationInfo().getCivilizationBuildings(eBuildingClass)));
+		}
 		if (isCityHasCoal())
 		{
-			iTempMod += (GC.getBuildingInfo(eBuilding)->GetYieldModifier(YIELD_PRODUCTION) ) * GetCityBuildings()->GetNumBuilding(eBuilding);
+			iTempMod += (GC.getBuildingInfo(eUpgradeBuilding)->GetYieldModifier(YIELD_PRODUCTION) ) * GetCityBuildings()->GetNumBuilding(eUpgradeBuilding);
 		}
 	}
 #endif
@@ -10857,9 +10872,15 @@ int CvCity::getBaseYieldRate(YieldTypes eIndex) const
 	if (eIndex == YIELD_PRODUCTION)
 	{
 		BuildingTypes eBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true);
+		BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.GetGameBuildings()->GetEntry(eBuilding)->GetReplacementBuildingClass();
+		BuildingTypes eUpgradeBuilding = NO_BUILDING;
+		if (eBuildingClass != NO_BUILDINGCLASS)
+		{
+			eUpgradeBuilding = ((BuildingTypes)(GET_PLAYER(getOwner()).getCivilizationInfo().getCivilizationBuildings(eBuildingClass)));
+		}
 		if (isCityHasCoal())
 		{
-			iValue += (GC.getBuildingInfo(eBuilding)->GetYieldChange(YIELD_PRODUCTION) + m_pCityBuildings->GetBuildingYieldChange((BuildingClassTypes)GC.getBuildingInfo(eBuilding)->GetBuildingClassType(), YIELD_PRODUCTION)) * GetCityBuildings()->GetNumBuilding(eBuilding);
+			iValue += (GC.getBuildingInfo(eUpgradeBuilding)->GetYieldChange(YIELD_PRODUCTION) + m_pCityBuildings->GetBuildingYieldChange((BuildingClassTypes)GC.getBuildingInfo(eUpgradeBuilding)->GetBuildingClassType(), YIELD_PRODUCTION)) * GetCityBuildings()->GetNumBuilding(eUpgradeBuilding);
 		}
 	}
 #endif
