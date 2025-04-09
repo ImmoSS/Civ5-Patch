@@ -2908,9 +2908,8 @@ int CvLuaPlayer::lGetNavalCombatModifierNearCity(lua_State* L)
 {
 	int iRtnValue = 0;
 
-	CvPlayerAI* pkPlayer = GetInstance(L);
-	CvPlot* pkPlot = CvLuaPlot::GetInstance(L, 2);
-	CvUnit* pkUnit = CvLuaUnit::GetInstance(L, 3);
+	CvPlot* pkPlot = CvLuaPlot::GetInstance(L);
+	CvUnit* pkUnit = CvLuaUnit::GetInstance(L, 2);
 	if (pkPlot)
 	{
 		CvCity* pPlotCity = pkPlot->getWorkingCity();
