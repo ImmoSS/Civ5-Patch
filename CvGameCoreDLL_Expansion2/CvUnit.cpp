@@ -17381,6 +17381,7 @@ bool CvUnit::IsNearEnemyCitadel(int& iCitadelDamage)
 	iCitadelDamage = 0;
 
 	iDamage = 0;
+	int iCityDamage = 0;
 	for (int iX = -iCitadelRange; iX <= iCitadelRange; iX++)
 	{
 		for (int iY = -iCitadelRange; iY <= iCitadelRange; iY++)
@@ -17397,23 +17398,20 @@ bool CvUnit::IsNearEnemyCitadel(int& iCitadelDamage)
 						{
 							if (GET_TEAM(getTeam()).isAtWar(pLoopPlot->getTeam()))
 							{
-								iDamage = pLoopPlot->getPlotCity()->getNearbyEnemyDamage();
+								iCityDamage = pLoopPlot->getPlotCity()->getNearbyEnemyDamage();
 								break;
 							}
 						}
 					}
 				}
 			}
-			if (iDamage > 0)
+			if (iCityDamage > 0)
 			{
-				iCitadelDamage += iDamage;
-				iDamage = 0;
 				break;
 			}
 		}
 	}
 
-	iDamage = 0;
 	for (int iX = -iCitadelRange; iX <= iCitadelRange; iX++)
 	{
 		for (int iY = -iCitadelRange; iY <= iCitadelRange; iY++)
@@ -17441,12 +17439,12 @@ bool CvUnit::IsNearEnemyCitadel(int& iCitadelDamage)
 			}
 			if (iDamage > 0)
 			{
-				iCitadelDamage += iDamage;
-				iDamage = 0;
 				break;
 			}
 		}
 	}
+
+	iCitadelDamage = iDamage + iCityDamage;
 
 	if (iCitadelDamage > 0)
 	{
