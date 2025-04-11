@@ -10833,7 +10833,10 @@ int CvCity::getYieldRateTimes100(YieldTypes eIndex, bool bIgnoreTrade) const
 	iBaseYield += (GetYieldPerPopTimes100(eIndex) * getPopulation());
 	iBaseYield += (GetYieldPerReligionTimes100(eIndex) * GetCityReligions()->GetNumReligionsWithFollowers());
 #ifdef BUILDING_FAITH_TO_SCIENCE
-	iBaseYield += (GetFaithPerTurn() * getFaithToScience());
+	if (eIndex == YIELD_SCIENCE)
+	{
+		iBaseYield += (GetFaithPerTurn() * getFaithToScience());
+	}
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
 	if (eIndex == YIELD_SCIENCE && getSciencePerXPop() > 0)
