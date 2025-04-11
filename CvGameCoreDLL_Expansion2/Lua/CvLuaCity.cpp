@@ -1005,13 +1005,7 @@ int CvLuaCity::lIsCityHasCoal(lua_State* L)
 	bool bResult = false;
 	CvCity* pkCity = GetInstance(L);
 	BuildingTypes eBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true);
-	BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.GetGameBuildings()->GetEntry(eBuilding)->GetReplacementBuildingClass();
-	BuildingTypes eUpgradeBuilding = NO_BUILDING;
-	if (eBuildingClass != NO_BUILDINGCLASS)
-	{
-		eUpgradeBuilding = ((BuildingTypes)(GET_PLAYER(pkCity->getOwner()).getCivilizationInfo().getCivilizationBuildings(eBuildingClass)));
-	}
-	if (pkCity->GetCityBuildings()->GetNumBuilding(eUpgradeBuilding) > 0)
+	if (pkCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
 	{
 		bResult = pkCity->isCityHasCoal();
 	}
@@ -3066,15 +3060,9 @@ int CvLuaCity::lGetBaseYieldRateFromBuildings(lua_State* L)
 	if (eIndex == YIELD_PRODUCTION)
 	{
 		BuildingTypes eBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true);
-		BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.GetGameBuildings()->GetEntry(eBuilding)->GetReplacementBuildingClass();
-		BuildingTypes eUpgradeBuilding = NO_BUILDING;
-		if (eBuildingClass != NO_BUILDINGCLASS)
-		{
-			eUpgradeBuilding = ((BuildingTypes)(GET_PLAYER(pkCity->getOwner()).getCivilizationInfo().getCivilizationBuildings(eBuildingClass)));
-		}
 		if (pkCity->isCityHasCoal())
 		{
-			iYieldChanges += (GC.getBuildingInfo(eUpgradeBuilding)->GetYieldChange(YIELD_PRODUCTION) + pkCity->GetCityBuildings()->GetBuildingYieldChange((BuildingClassTypes)GC.getBuildingInfo(eUpgradeBuilding)->GetBuildingClassType(), YIELD_PRODUCTION)) * pkCity->GetCityBuildings()->GetNumBuilding(eUpgradeBuilding);
+			iYieldChanges += (GC.getBuildingInfo(eBuilding)->GetYieldChange(YIELD_PRODUCTION) + pkCity->GetCityBuildings()->GetBuildingYieldChange((BuildingClassTypes)GC.getBuildingInfo(eBuilding)->GetBuildingClassType(), YIELD_PRODUCTION)) * pkCity->GetCityBuildings()->GetNumBuilding(eBuilding);
 		}
 	}
 	lua_pushinteger(L, iYieldChanges);
@@ -3171,15 +3159,9 @@ int CvLuaCity::lGetYieldRateModifier(lua_State* L)
 	if (eIndex == YIELD_PRODUCTION)
 	{
 		BuildingTypes eBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true);
-		BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.GetGameBuildings()->GetEntry(eBuilding)->GetReplacementBuildingClass();
-		BuildingTypes eUpgradeBuilding = NO_BUILDING;
-		if (eBuildingClass != NO_BUILDINGCLASS)
-		{
-			eUpgradeBuilding = ((BuildingTypes)(GET_PLAYER(pkCity->getOwner()).getCivilizationInfo().getCivilizationBuildings(eBuildingClass)));
-		}
 		if (pkCity->isCityHasCoal())
 		{
-			iResult += (GC.getBuildingInfo(eUpgradeBuilding)->GetYieldModifier(YIELD_PRODUCTION)) * pkCity->GetCityBuildings()->GetNumBuilding(eUpgradeBuilding);
+			iResult += (GC.getBuildingInfo(eBuilding)->GetYieldModifier(YIELD_PRODUCTION)) * pkCity->GetCityBuildings()->GetNumBuilding(eBuilding);
 		}
 	}
 #else

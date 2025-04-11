@@ -1359,15 +1359,9 @@ int CvCitySpecializationAI::AdjustValueBasedOnBuildings(CvCity* pCity, YieldType
 	if (eYield == YIELD_PRODUCTION)
 	{
 		BuildingTypes eBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true);
-		BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.GetGameBuildings()->GetEntry(eBuilding)->GetReplacementBuildingClass();
-		BuildingTypes eUpgradeBuilding = NO_BUILDING;
-		if (eBuildingClass != NO_BUILDINGCLASS)
-		{
-			eUpgradeBuilding = ((BuildingTypes)(GET_PLAYER(pCity->getOwner()).getCivilizationInfo().getCivilizationBuildings(eBuildingClass)));
-		}
 		if (pCity->isCityHasCoal())
 		{
-			iYieldChanges += (GC.getBuildingInfo(eUpgradeBuilding)->GetYieldChange(YIELD_PRODUCTION) + pCity->GetCityBuildings()->GetBuildingYieldChange((BuildingClassTypes)GC.getBuildingInfo(eUpgradeBuilding)->GetBuildingClassType(), YIELD_PRODUCTION)) * pCity->GetCityBuildings()->GetNumBuilding(eUpgradeBuilding);
+			iYieldChanges += (GC.getBuildingInfo(eBuilding)->GetYieldChange(YIELD_PRODUCTION) + pCity->GetCityBuildings()->GetBuildingYieldChange((BuildingClassTypes)GC.getBuildingInfo(eBuilding)->GetBuildingClassType(), YIELD_PRODUCTION)) * pCity->GetCityBuildings()->GetNumBuilding(eBuilding);
 		}
 	}
 #else
