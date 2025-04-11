@@ -1004,7 +1004,8 @@ int CvLuaCity::lIsCityHasCoal(lua_State* L)
 {
 	bool bResult = false;
 	CvCity* pkCity = GetInstance(L);
-	BuildingTypes eBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true);
+	BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_FACTORY", true);
+	BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(pkCity->getCivilizationType())->getCivilizationBuildings(eBuildingClass);
 	if (pkCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
 	{
 		bResult = pkCity->isCityHasCoal();
@@ -3059,7 +3060,8 @@ int CvLuaCity::lGetBaseYieldRateFromBuildings(lua_State* L)
 	int iYieldChanges = pkCity->GetBaseYieldRateFromBuildings(eIndex);
 	if (eIndex == YIELD_PRODUCTION)
 	{
-		BuildingTypes eBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true);
+		BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_FACTORY", true);
+		BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(pkCity->getCivilizationType())->getCivilizationBuildings(eBuildingClass);
 		if (pkCity->isCityHasCoal())
 		{
 			iYieldChanges += (GC.getBuildingInfo(eBuilding)->GetYieldChange(YIELD_PRODUCTION) + pkCity->GetCityBuildings()->GetBuildingYieldChange((BuildingClassTypes)GC.getBuildingInfo(eBuilding)->GetBuildingClassType(), YIELD_PRODUCTION)) * pkCity->GetCityBuildings()->GetNumBuilding(eBuilding);
@@ -3158,7 +3160,8 @@ int CvLuaCity::lGetYieldRateModifier(lua_State* L)
 	int iResult = pkCity->getYieldRateModifier(eIndex);
 	if (eIndex == YIELD_PRODUCTION)
 	{
-		BuildingTypes eBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true);
+		BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_FACTORY", true);
+		BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(pkCity->getCivilizationType())->getCivilizationBuildings(eBuildingClass);
 		if (pkCity->isCityHasCoal())
 		{
 			iResult += (GC.getBuildingInfo(eBuilding)->GetYieldModifier(YIELD_PRODUCTION)) * pkCity->GetCityBuildings()->GetNumBuilding(eBuilding);

@@ -3629,7 +3629,9 @@ bool CvCity::isCityHasCoal() const
 				return true;
 			}
 		}
-		if (pLoopCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true)))
+		BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_FACTORY", true);
+		BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType())->getCivilizationBuildings(eBuildingClass);
+		if (pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding))
 		{
 			iLoopCity++;
 		}
@@ -10610,7 +10612,8 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 #ifdef NEW_FACTORIES
 	if (eIndex == YIELD_PRODUCTION)
 	{
-		BuildingTypes eBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true);
+		BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_FACTORY", true);
+		BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType())->getCivilizationBuildings(eBuildingClass);
 		if (isCityHasCoal())
 		{
 			iTempMod += (GC.getBuildingInfo(eBuilding)->GetYieldModifier(YIELD_PRODUCTION) ) * GetCityBuildings()->GetNumBuilding(eBuilding);
@@ -10858,7 +10861,8 @@ int CvCity::getBaseYieldRate(YieldTypes eIndex) const
 #ifdef NEW_FACTORIES
 	if (eIndex == YIELD_PRODUCTION)
 	{
-		BuildingTypes eBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_FACTORY", true);
+		BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_FACTORY", true);
+		BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType())->getCivilizationBuildings(eBuildingClass);
 		if (isCityHasCoal())
 		{
 			iValue += (GC.getBuildingInfo(eBuilding)->GetYieldChange(YIELD_PRODUCTION) + m_pCityBuildings->GetBuildingYieldChange((BuildingClassTypes)GC.getBuildingInfo(eBuilding)->GetBuildingClassType(), YIELD_PRODUCTION)) * GetCityBuildings()->GetNumBuilding(eBuilding);
