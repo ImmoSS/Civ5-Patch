@@ -17378,6 +17378,8 @@ bool CvUnit::IsNearEnemyCitadel(int& iCitadelDamage)
 	int iDamage;
 
 #ifdef BUILDING_NEARBY_ENEMY_DAMAGE
+	iCitadelDamage = 0;
+
 	iDamage = 0;
 	for (int iX = -iCitadelRange; iX <= iCitadelRange; iX++)
 	{

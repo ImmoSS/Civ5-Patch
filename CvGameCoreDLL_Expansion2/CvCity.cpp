@@ -287,7 +287,7 @@ CvCity::CvCity() :
 	, m_iGrowthGold("CvCity::m_iGrowthGold", m_syncArchive)
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-	, m_iScienvePerXPop("CvCity::m_iScienvePerXPop", m_syncArchive)
+	, m_iSciencePerXPop("CvCity::m_iSciencePerXPop", m_syncArchive)
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	, m_iCulturePerXAncientBuildings("CvCity::m_iCulturePerXAncientBuildings", m_syncArchive)
@@ -1079,7 +1079,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iGrowthGold = 0;
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-	m_iScienvePerXPop = 0;
+	m_iSciencePerXPop = 0;
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	m_iCulturePerXAncientBuildings = 0;
@@ -6955,7 +6955,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 		changeGrowthGold(pBuildingInfo->GetGrowthGold() * iChange);
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-		changeScienvePerXPop(pBuildingInfo->GetScienvePerXPop() * iChange);
+		changeSciencePerXPop(pBuildingInfo->GetSciencePerXPop() * iChange);
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 		CvTechEntry* pTechInfo = GC.getTechInfo((TechTypes)pBuildingInfo->GetPrereqAndTech());
@@ -10836,9 +10836,9 @@ int CvCity::getYieldRateTimes100(YieldTypes eIndex, bool bIgnoreTrade) const
 	iBaseYield += (GetFaithPerTurn() * getFaithToScience());
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-	if (getScienvePerXPop() > 0)
+	if (eIndex == YIELD_SCIENCE && getSciencePerXPop() > 0)
 	{
-		iBaseYield += (getPopulation() / getScienvePerXPop() * 100);
+		iBaseYield += (getPopulation() / getSciencePerXPop() * 100);
 	}
 #endif
 
@@ -15897,12 +15897,12 @@ void CvCity::read(FDataStream& kStream)
 	if (uiVersion >= 1004)
 	{
 # endif
-		kStream >> m_iScienvePerXPop;
+		kStream >> m_iSciencePerXPop;
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
 	else
 	{
-		m_iScienvePerXPop = 0;
+		m_iSciencePerXPop = 0;
 	}
 # endif
 #endif
@@ -16238,7 +16238,7 @@ void CvCity::write(FDataStream& kStream) const
 	kStream << m_iGrowthGold;
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-	kStream << m_iScienvePerXPop;
+	kStream << m_iSciencePerXPop;
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	kStream << m_iCulturePerXAncientBuildings;
@@ -17711,16 +17711,16 @@ void CvCity::changeGrowthGold(int iChange)
 
 #ifdef BUILDING_SCIENCE_PER_X_POP
 //	----------------------------------------------------------------------------
-int CvCity::getScienvePerXPop() const
+int CvCity::getSciencePerXPop() const
 {
-	return m_iScienvePerXPop;
+	return m_iSciencePerXPop;
 }
 
 //	----------------------------------------------------------------------------
-void CvCity::changeScienvePerXPop(int iChange)
+void CvCity::changeSciencePerXPop(int iChange)
 {
 	VALIDATE_OBJECT
-	m_iScienvePerXPop += iChange;
+	m_iSciencePerXPop += iChange;
 }
 #endif
 

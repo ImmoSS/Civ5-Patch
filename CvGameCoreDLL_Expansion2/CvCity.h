@@ -868,8 +868,8 @@ public:
 	void changeGrowthGold(int iChange);
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-	int getScienvePerXPop() const;
-	void changeScienvePerXPop(int iChange);
+	int getSciencePerXPop() const;
+	void changeSciencePerXPop(int iChange);
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	int getCulturePerXAncientBuildings() const;
@@ -1093,7 +1093,7 @@ protected:
 	FAutoVariable<int, CvCity> m_iGrowthGold;
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-	FAutoVariable<int, CvCity> m_iScienvePerXPop;
+	FAutoVariable<int, CvCity> m_iSciencePerXPop;
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	FAutoVariable<int, CvCity> m_iCulturePerXAncientBuildings;

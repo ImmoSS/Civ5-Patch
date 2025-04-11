@@ -226,7 +226,7 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iBaktunGoldenAgePoints(0),
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-	m_iScienvePerXPop(0),
+	m_iSciencePerXPop(0),
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	m_iCulturePerXAncientBuildings(0),
@@ -783,7 +783,7 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iBaktunGoldenAgePoints = kResults.GetInt("BaktunGoldenAgePoints");
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-	m_iScienvePerXPop = kResults.GetInt("ScienvePerXPop");
+	m_iSciencePerXPop = kResults.GetInt("SciencePerXPop");
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	m_iCulturePerXAncientBuildings = kResults.GetInt("CulturePerXAncientBuildings");
@@ -2266,9 +2266,9 @@ int CvBuildingEntry::GetBaktunGoldenAgePoints() const
 #endif
 
 #ifdef BUILDING_SCIENCE_PER_X_POP
-int CvBuildingEntry::GetScienvePerXPop() const
+int CvBuildingEntry::GetSciencePerXPop() const
 {
-	return m_iScienvePerXPop;
+	return m_iSciencePerXPop;
 }
 #endif
 

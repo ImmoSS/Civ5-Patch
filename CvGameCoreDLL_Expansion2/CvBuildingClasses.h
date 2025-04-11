@@ -330,7 +330,7 @@ public:
 	int GetBaktunGoldenAgePoints() const;
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-	int GetScienvePerXPop() const;
+	int GetSciencePerXPop() const;
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	int GetCulturePerXAncientBuildings() const;
@@ -586,7 +586,7 @@ private:
 	int m_iBaktunGoldenAgePoints;
 #endif
 #ifdef BUILDING_SCIENCE_PER_X_POP
-	int m_iScienvePerXPop;
+	int m_iSciencePerXPop;
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	int m_iCulturePerXAncientBuildings;
