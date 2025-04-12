@@ -250,6 +250,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_piYieldForEachBuildingInEmpire(NULL),
 	m_piMaxYieldForEachBuildingInEmpire(NULL),
 #endif
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+	m_iHappinessForFilledGreatWorkSlot(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -806,6 +809,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
 	kUtility.SetYields(m_piYieldForEachBuildingInEmpire, "Building_YieldForEachBuildingInEmpire", "BuildingType", szBuildingType);
 	kUtility.PopulateArrayByValue(m_piMaxYieldForEachBuildingInEmpire, "Yields", "Building_YieldForEachBuildingInEmpire", "YieldType", "BuildingType", szBuildingType, "MaxYield");
+#endif
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+	m_iHappinessForFilledGreatWorkSlot = kResults.GetInt("HappinessForFilledGreatWorkSlot");
 #endif
 
 	return true;
@@ -2344,6 +2350,13 @@ int CvBuildingEntry::GetMaxYieldForEachBuildingInEmpire(int i) const
 int* CvBuildingEntry::GetMaxYieldForEachBuildingInEmpireArray() const
 {
 	return m_piMaxYieldForEachBuildingInEmpire;
+}
+#endif
+
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+int CvBuildingEntry::GetHappinessForFilledGreatWorkSlot() const
+{
+	return m_iHappinessForFilledGreatWorkSlot;
 }
 #endif
 

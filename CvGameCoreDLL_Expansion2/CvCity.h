@@ -887,6 +887,10 @@ public:
 	int getNavalCombatModifierNearCity() const;
 	void changeNavalCombatModifierNearCity(int iChange);
 #endif
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+	int getHappinessForFilledGreatWorkSlot() const;
+	void changeHappinessForFilledGreatWorkSlot(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1109,6 +1113,9 @@ protected:
 #endif
 #ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
 	FAutoVariable<int, CvCity> m_iNavalCombatModifierNearCity;
+#endif
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+	FAutoVariable<int, CvCity> m_iHappinessForFilledGreatWorkSlot;
 #endif
 
 	void doGrowth();

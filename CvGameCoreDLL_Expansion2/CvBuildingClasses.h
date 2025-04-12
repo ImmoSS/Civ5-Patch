@@ -357,6 +357,9 @@ public:
 	int GetMaxYieldForEachBuildingInEmpire(int i) const;
 	int* GetMaxYieldForEachBuildingInEmpireArray() const;
 #endif
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+	int GetHappinessForFilledGreatWorkSlot() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -609,6 +612,9 @@ private:
 #ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
 	int* m_piYieldForEachBuildingInEmpire;
 	int* m_piMaxYieldForEachBuildingInEmpire;
+#endif
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+	int m_iHappinessForFilledGreatWorkSlot;
 #endif
 };
 

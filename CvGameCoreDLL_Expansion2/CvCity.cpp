@@ -304,6 +304,9 @@ CvCity::CvCity() :
 #ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
 	, m_iNavalCombatModifierNearCity("CvCity::m_iNavalCombatModifierNearCity", m_syncArchive)
 #endif
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+	, m_iHappinessForFilledGreatWorkSlot("CvCity::m_iHappinessForFilledGreatWorkSlot", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1092,6 +1095,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #endif
 #ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
 	m_iNavalCombatModifierNearCity = 0;
+#endif
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+	m_iHappinessForFilledGreatWorkSlot = 0;
 #endif
 
 	if(!bConstructorCall)
@@ -6976,6 +6982,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
 		changeNavalCombatModifierNearCity(pBuildingInfo->GetNavalCombatModifierNearCity() * iChange);
 #endif
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+		changeHappinessForFilledGreatWorkSlot(pBuildingInfo->GetHappinessForFilledGreatWorkSlot() * iChange);
+#endif
 
 		// Process for our player
 		for(int iI = 0; iI < MAX_PLAYERS; iI++)
@@ -9862,6 +9871,19 @@ int CvCity::GetLocalHappiness() const
 	CvPlayer& kPlayer = GET_PLAYER(m_eOwner);
 
 	int iLocalHappiness = GetBaseHappinessFromBuildings();
+
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+	CvBuildingXMLEntries* pkBuildings = GetCityBuildings()->GetBuildings();
+	for (int iBuilding = 0; iBuilding < GetCityBuildings()->GetBuildings()->GetNumBuildings(); iBuilding++)
+	{
+		CvBuildingEntry* pInfo = pkBuildings->GetEntry(iBuilding);
+		if (pInfo)
+		{
+			int iGreatWorks = GetCityBuildings()->GetNumGreatWorksInBuilding((BuildingClassTypes)pInfo->GetBuildingClassType());
+			iLocalHappiness += iGreatWorks * pInfo->GetHappinessForFilledGreatWorkSlot();
+		}
+	}
+#endif
 
 	int iHappinessPerGarrison = kPlayer.GetHappinessPerGarrisonedUnit();
 	if(iHappinessPerGarrison > 0)
@@ -15965,6 +15987,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iHappinessForFilledGreatWorkSlot;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iHappinessForFilledGreatWorkSlot = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -16240,6 +16276,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
 	kStream << m_iNavalCombatModifierNearCity;
+#endif
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+	kStream << m_iHappinessForFilledGreatWorkSlot;
 #endif
 }
 
@@ -17767,5 +17806,20 @@ void CvCity::changeNavalCombatModifierNearCity(int iChange)
 {
 	VALIDATE_OBJECT
 	m_iNavalCombatModifierNearCity += iChange;
+}
+#endif
+
+#ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
+//	----------------------------------------------------------------------------
+int CvCity::getHappinessForFilledGreatWorkSlot() const
+{
+	return m_iHappinessForFilledGreatWorkSlot;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeHappinessForFilledGreatWorkSlot(int iChange)
+{
+	VALIDATE_OBJECT
+		m_iHappinessForFilledGreatWorkSlot += iChange;
 }
 #endif
