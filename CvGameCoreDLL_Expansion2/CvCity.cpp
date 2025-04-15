@@ -13694,6 +13694,18 @@ bool CvCity::IsCanPurchase(bool bTestPurchaseCost, bool bTestTrainable, UnitType
 			const UnitClassTypes eUnitClass = (UnitClassTypes)GC.getUnitInfo(eUnitType)->GetUnitClassType();
 			if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_SCIENTIST", true /*bHideAssert*/))
 			{
+#ifdef BELIEF_TO_GLORY_OF_GOD_ONE_GP_OF_EACH_TYPE
+				const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligion, getOwner());
+
+				if (pReligion && pReligion->m_eFounder == getOwner() && pReligion->m_Beliefs.IsFaithPurchaseAllGreatPeople())
+				{
+					if (GET_PLAYER(getOwner()).getScientistsFromFaith() > 2)
+					{
+						return false;
+					}
+				}
+				else
+#endif
 				if (GET_PLAYER(getOwner()).getScientistsFromFaith() > 1)
 				{
 					return false;
