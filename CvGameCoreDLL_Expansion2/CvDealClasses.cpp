@@ -2742,6 +2742,12 @@ void CvGameDeals::DoCancelDealsBetweenPlayers(PlayerTypes eFromPlayer, PlayerTyp
 				TradedItemList::iterator itemIter;
 				for(itemIter = it->m_TradedItems.begin(); itemIter != it->m_TradedItems.end(); ++itemIter)
 				{
+#ifdef AI_PEACE_TURNS
+					if (itemIter->m_eItemType == TRADE_ITEM_PEACE_TREATY)
+					{
+						continue;
+					}
+#endif
 					bSomethingChanged = true;
 
 					itemIter->m_iFinalTurn = GC.getGame().getGameTurn();
