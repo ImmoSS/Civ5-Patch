@@ -3552,7 +3552,11 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 			{
 				// Used to display info for annex/puppet/raze popup - turned off in DoPuppet and DoAnnex
 				pNewCity->SetIgnoreCityForHappiness(true);
+#ifdef NEW_VENICE_UA
+				if (GetPlayerTraits()->IsNoAnnexing() && bIsMinorCivBuyout || GetPlayerTraits()->HasTrait((TraitTypes)GC.getInfoTypeForString("NEW_TRAIT_SUPER_CITY_STATE", true /*bHideAssert*/)))
+#else
 				if (GetPlayerTraits()->IsNoAnnexing() && bIsMinorCivBuyout)
+#endif
 				{
 					pNewCity->DoCreatePuppet();
 				}
