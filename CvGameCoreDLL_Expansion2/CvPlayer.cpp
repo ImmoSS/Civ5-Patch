@@ -4084,6 +4084,9 @@ void CvPlayer::DoLiberatePlayer(PlayerTypes ePlayer, int iOldCityID)
 	if(GET_PLAYER(ePlayer).isMinorCiv())
 	{
 		GET_PLAYER(ePlayer).GetMinorCivAI()->DoLiberationByMajor(eOldOwner, eConquerorTeam);
+#ifdef UPDATE_MINOR_TECHS_ON_LIBERATION
+		GET_TEAM(GET_PLAYER(ePlayer).getTeam()).DoMinorCivTech();
+#endif
 	}
 
 	// slewis
