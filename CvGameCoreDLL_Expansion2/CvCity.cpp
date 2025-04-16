@@ -2296,7 +2296,11 @@ UnitTypes CvCity::allUpgradesAvailable(UnitTypes eUnit, int iUpgradeCount) const
 			return eUpgradeUnit;
 		}
 
+#ifdef FIX_ALL_UPGRADES_AVAILABLE
+		if(canTrain(eUnit, true, false, false, true))
+#else
 		if(canTrain(eUnit, false, false, false, true))
+#endif
 		{
 			return eUnit;
 		}
