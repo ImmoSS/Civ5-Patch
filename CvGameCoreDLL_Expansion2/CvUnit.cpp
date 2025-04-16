@@ -700,7 +700,8 @@ void CvUnit::initWithNameOffset(int iID, UnitTypes eUnit, int iNameOffset, UnitA
 		kPlayer.GetUnitCycler().AddUnit( GetID() );
 	}
 
-	// Message for World Unit being borntUnitClassType())))
+	// Message for World Unit being
+	if (isWorldUnitClass((UnitClassTypes)(getUnitInfo().GetUnitClassType())))
 	{
 		for(iI = 0; iI < MAX_PLAYERS; iI++)
 		{
