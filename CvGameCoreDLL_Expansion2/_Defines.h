@@ -780,7 +780,7 @@
 ///
 #define CITY_RANGE_MODIFIER
 ///
-#define CITY_EXTRA_HEAL // ToDo: XML Stuff
+#define CITY_EXTRA_HEAL
 ///
 #define CITY_EXTRA_ATTACK
 ///
