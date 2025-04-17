@@ -594,6 +594,11 @@ bool CvDeal::IsPossibleToTradeItem(PlayerTypes ePlayer, PlayerTypes eToPlayer, T
 		// Embassy has not been established
 		if(!pFromTeam->HasEmbassyAtTeam(eToTeam))
 			return false;
+#else
+		if (!pFromTeam->GetCurrentEra() < GC.getInfoTypeForString("ERA_FUTURE", true) || !pToTeam->GetCurrentEra() < GC.getInfoTypeForString("ERA_FUTURE", true))
+		{
+			return false;
+		}
 #endif
 #ifdef DEF_PACT_COUNT
 		CvGame& kGame = GC.getGame();
