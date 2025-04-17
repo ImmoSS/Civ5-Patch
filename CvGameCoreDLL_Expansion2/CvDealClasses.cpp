@@ -2740,7 +2740,7 @@ void CvGameDeals::DoCancelDealsBetweenPlayers(PlayerTypes eFromPlayer, PlayerTyp
 
 				// Cancel individual items
 				TradedItemList::iterator itemIter;
-#ifdef AI_PEACE_TURNS
+/*#ifndef AI_PEACE_TURNS
 				bool bIsPeaceTreaty = false;
 				for(itemIter = it->m_TradedItems.begin(); itemIter != it->m_TradedItems.end(); ++itemIter)
 				{
@@ -2765,7 +2765,7 @@ void CvGameDeals::DoCancelDealsBetweenPlayers(PlayerTypes eFromPlayer, PlayerTyp
 				{
 					m_CurrentDeals.push_back(*it);
 				}
-#else
+#else*/
 				for (itemIter = it->m_TradedItems.begin(); itemIter != it->m_TradedItems.end(); ++itemIter)
 				{
 					bSomethingChanged = true;
@@ -2777,7 +2777,7 @@ void CvGameDeals::DoCancelDealsBetweenPlayers(PlayerTypes eFromPlayer, PlayerTyp
 
 					DoEndTradedItem(&*itemIter, eToPlayer, true);
 				}
-#endif
+// #endif
 				m_HistoricalDeals.push_back(*it);
 			}
 			else
