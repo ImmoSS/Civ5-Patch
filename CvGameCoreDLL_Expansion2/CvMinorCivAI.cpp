@@ -5630,6 +5630,14 @@ int CvMinorCivAI::GetFriendshipChangePerTurnTimes100(PlayerTypes ePlayer)
 			iShift += kPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_AFRAID_INFLUENCE);
 			iShift += kPlayer.GetPlayerTraits()->GetAfraidMinorPerTurnInfluence();
 		}
+
+#ifdef POLICY_SPY_MINOR_PER_TURN_INFLUENCE
+		CvPlayerEspionage* pEspionage = kPlayer.GetEspionage();
+		if (pEspionage->IsAnySurveillanceEstablished(GetPlayer()->GetID()))
+		{
+			iShift += kPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_SPY_INFLUENCE);
+		}
+#endif
 		
 		if (iShift != 0)
 		{

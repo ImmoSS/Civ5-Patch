@@ -289,6 +289,9 @@ public:
 #ifdef POLICY_EXTRA_SPIES
 	int GetExtraSpies() const;
 #endif
+#ifdef POLICY_SPY_MINOR_PER_TURN_INFLUENCE
+	int GetSpyMinorPerTurnInfluence() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -494,6 +497,9 @@ private:
 #ifdef POLICY_EXTRA_SPIES
 	int m_iExtraSpies;
 #endif
+#ifdef POLICY_SPY_MINOR_PER_TURN_INFLUENCE
+	int m_iSpyMinorPerTurnInfluence;
+#endif
 
 	// Arrays
 	std::multimap<int, int> m_FreePromotionUnitCombats;
@@ -679,6 +685,9 @@ enum PolicyModifierType
     POLICYMOD_SHARED_RELIGION_TOURISM_MODIFIER,
     POLICYMOD_TRADE_ROUTE_TOURISM_MODIFIER,
 	POLICYMOD_OPEN_BORDERS_TOURISM_MODIFIER,
+#ifdef POLICY_SPY_MINOR_PER_TURN_INFLUENCE
+	POLICYMOD_SPY_INFLUENCE,
+#endif
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

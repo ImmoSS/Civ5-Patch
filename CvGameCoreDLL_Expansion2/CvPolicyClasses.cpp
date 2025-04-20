@@ -253,6 +253,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_EXTRA_SPIES
 	m_iExtraSpies(0),
 #endif
+#ifdef POLICY_SPY_MINOR_PER_TURN_INFLUENCE
+	m_iSpyMinorPerTurnInfluence(0),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -520,6 +523,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_EXTRA_SPIES
 	m_iExtraSpies = kResults.GetInt("ExtraSpies");
+#endif
+#ifdef POLICY_SPY_MINOR_PER_TURN_INFLUENCE
+	m_iSpyMinorPerTurnInfluence = kResults.GetInt("SpyMinorPerTurnInfluence");
 #endif
 
 	//Arrays
@@ -2103,6 +2109,14 @@ int CvPolicyEntry::GetExtraSpies() const
 }
 #endif
 
+#ifdef POLICY_SPY_MINOR_PER_TURN_INFLUENCE
+///
+int CvPolicyEntry::GetSpyMinorPerTurnInfluence() const
+{
+	return m_iSpyMinorPerTurnInfluence;
+}
+#endif
+
 //=====================================
 // CvPolicyBranchEntry
 //=====================================
@@ -2981,6 +2995,11 @@ int CvPlayerPolicies::GetNumericModifier(PolicyModifierType eType)
 			case POLICYMOD_TRADE_ROUTE_TOURISM_MODIFIER:
 				rtnValue += m_pPolicies->GetPolicyEntry(i)->GetTradeRouteTourismModifier();
 				break;
+#ifdef POLICY_SPY_MINOR_PER_TURN_INFLUENCE
+			case POLICYMOD_SPY_INFLUENCE:
+				rtnValue += m_pPolicies->GetPolicyEntry(i)->GetSpyMinorPerTurnInfluence();
+				break;
+#endif
 			case POLICYMOD_OPEN_BORDERS_TOURISM_MODIFIER:
 				rtnValue += m_pPolicies->GetPolicyEntry(i)->GetOpenBordersTourismModifier();
 			}
