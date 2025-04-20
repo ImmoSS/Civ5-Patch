@@ -259,6 +259,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	m_iFoeTourismModifier(0),
 #endif
+#ifdef HAPPY_TOURISM_MODIFIER
+	m_iHappyTourismModifier(0),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -532,6 +535,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	m_iFoeTourismModifier = kResults.GetInt("FoeTourismModifier");
+#endif
+#ifdef HAPPY_TOURISM_MODIFIER
+	m_iHappyTourismModifier = kResults.GetInt("HappyTourismModifier");
 #endif
 
 	//Arrays
@@ -2131,6 +2137,14 @@ int CvPolicyEntry::GetFoeTourismModifier() const
 }
 #endif
 
+#ifdef HAPPY_TOURISM_MODIFIER
+///
+int CvPolicyEntry::GetHappyTourismModifier() const
+{
+	return m_iHappyTourismModifier;
+}
+#endif
+
 //=====================================
 // CvPolicyBranchEntry
 //=====================================
@@ -3017,6 +3031,11 @@ int CvPlayerPolicies::GetNumericModifier(PolicyModifierType eType)
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 			case POLICYMOD_TOURISM_MOD_FOE:
 				rtnValue += m_pPolicies->GetPolicyEntry(i)->GetFoeTourismModifier();
+				break;
+#endif
+#ifdef HAPPY_TOURISM_MODIFIER
+			case POLICYMOD_TOURISM_MOD_HAPPY:
+				rtnValue += m_pPolicies->GetPolicyEntry(i)->GetHappyTourismModifier();
 				break;
 #endif
 			case POLICYMOD_OPEN_BORDERS_TOURISM_MODIFIER:

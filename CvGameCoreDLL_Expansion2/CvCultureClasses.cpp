@@ -3077,6 +3077,16 @@ int CvPlayerCulture::GetTourismModifierWith(PlayerTypes ePlayer) const
 		}
 	}
 #endif
+#ifdef HAPPY_TOURISM_MODIFIER
+	int iHappyMod = m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_HAPPY);
+	if (iHappyMod > 0)
+	{
+		if (m_pPlayer->GetExcessHappiness() > 0)
+		{
+			iMultiplier += iHappyMod;
+		}
+	}
+#endif
 
 	if (m_pPlayer->isGoldenAge() && m_pPlayer->GetPlayerTraits()->GetGoldenAgeTourismModifier())
 	{
@@ -3179,6 +3189,17 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 		if (GET_TEAM(m_pPlayer->getTeam()).isAtWar(kPlayer.getTeam()))
 		{
 			szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_FOE", iLessHappyMod) + "[ENDCOLOR]";
+		}
+	}
+#endif
+
+#ifdef HAPPY_TOURISM_MODIFIER
+	int iHappyMod = m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_HAPPY);
+	if (iHappyMod > 0)
+	{
+		if (m_pPlayer->GetExcessHappiness() > 0)
+		{
+			szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_HAPPY", iHappyMod) + "[ENDCOLOR]";
 		}
 	}
 #endif
@@ -4613,6 +4634,9 @@ CvString CvCityCulture::GetTourismTooltip()
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	CvString foeCivs = "";
 #endif
+#ifdef HAPPY_TOURISM_MODIFIER
+	CvString happyCivs = "";
+#endif
 	CvString differentIdeologyCivs = "";
 #ifdef TOURISM_BONUS_DIPLOMAT
 	CvString diplomatVisitingCivs = "";
@@ -4762,6 +4786,9 @@ CvString CvCityCulture::GetTourismTooltip()
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	int iFoeMod = kCityPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_FOE);
 #endif
+#ifdef HAPPY_TOURISM_MODIFIER
+	int iHappyMod = kCityPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_HAPPY);
+#endif
 
 	// If generating any, itemize which players we have bonuses with
 	if (iGWTourism > 0 || iTileTourism > 0)
@@ -4863,6 +4890,19 @@ CvString CvCityCulture::GetTourismTooltip()
 				}
 #endif
 
+#ifdef HAPPY_TOURISM_MODIFIER
+				if (iHappyMod > 0)
+				{
+					if (kCityPlayer.GetExcessHappiness() > 0)
+					{
+						if (happyCivs.length() > 0)
+						{
+							happyCivs += ", ";
+						}
+					}
+				}
+#endif
+
 				// Different ideology penalty (applies all the time)
 				if (eMyIdeology != NO_POLICY_BRANCH_TYPE && eTheirIdeology != NO_POLICY_BRANCH_TYPE && eMyIdeology != eTheirIdeology)
 				{
@@ -4952,6 +4992,17 @@ CvString CvCityCulture::GetTourismTooltip()
 			}
 			szTemp = GetLocalizedText("TXT_KEY_CO_CITY_TOURISM_FOE_BONUS", iFoeMod);
 			szRtnValue += szTemp + foeCivs;
+		}
+#endif
+#ifdef HAPPY_TOURISM_MODIFIER
+		if (happyCivs.length() > 0)
+		{
+			if (szRtnValue.length() > 0)
+			{
+				szRtnValue += "[NEWLINE][NEWLINE]";
+			}
+			szTemp = GetLocalizedText("TXT_KEY_CO_CITY_TOURISM_HAPPY_BONUS", iHappyMod);
+			szRtnValue += szTemp + happyCivs;
 		}
 #endif
 

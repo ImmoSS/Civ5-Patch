@@ -295,6 +295,9 @@ public:
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	int GetFoeTourismModifier() const;
 #endif
+#ifdef HAPPY_TOURISM_MODIFIER
+	int GetHappyTourismModifier() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -506,6 +509,9 @@ private:
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	int m_iFoeTourismModifier;
 #endif
+#ifdef HAPPY_TOURISM_MODIFIER
+	int m_iHappyTourismModifier;
+#endif
 
 	// Arrays
 	std::multimap<int, int> m_FreePromotionUnitCombats;
@@ -696,6 +702,9 @@ enum PolicyModifierType
 #endif
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	POLICYMOD_TOURISM_MOD_FOE,
+#endif
+#ifdef HAPPY_TOURISM_MODIFIER
+	POLICYMOD_TOURISM_MOD_HAPPY,
 #endif
 };
 
