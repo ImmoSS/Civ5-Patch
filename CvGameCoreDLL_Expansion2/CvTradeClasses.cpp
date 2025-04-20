@@ -113,6 +113,13 @@ bool CvGameTrade::CanCreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, Do
 	}
 	else if (eConnectionType == TRADE_CONNECTION_PRODUCTION || eConnectionType == TRADE_CONNECTION_FOOD)
 	{
+#ifdef POLICY_ONLY_INTERNAL_TRADE_ROUTE_YIELD_MODIFIER
+		if (GET_PLAYER(pOriginCity->getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_INTERNAL_TRADE_MODIFIER) > 0)
+		{
+			return false;
+		}
+#endif
+
 		// can't have production or food connections internationally
 		if (eOriginTeam != eDestTeam)
 		{
