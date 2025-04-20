@@ -25355,7 +25355,22 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 	ChangeGreatWorkTourismChanges(pPolicy->GetGreatWorkTourismChanges() * iChange);
 #endif
 #ifdef POLICY_CITY_SCIENCE_SQUARED_MOD_PER_X_POP
-	ChangeCityScienceSquaredModPerXPop(pPolicy->GetCityScienceSquaredModPerXPop()* iChange);
+	ChangeCityScienceSquaredModPerXPop(pPolicy->GetCityScienceSquaredModPerXPop() * iChange);
+#endif
+#ifdef POLICY_EXTRA_SPIES
+	if (pPolicy->GetExtraSpies() > 0)
+	{
+		CvPlayerEspionage* pEspionage = GetEspionage();
+		CvAssertMsg(pEspionage, "pEspionage is null! What's up with that?!");
+		if (pEspionage)
+		{
+			int iNumSpies = pPolicy->GetExtraSpies();
+			for (int i = 0; i < iNumSpies; i++)
+			{
+				pEspionage->CreateSpy();
+			}
+		}
+	}
 #endif
 
 	// Not really techs but this is what we use (for now)

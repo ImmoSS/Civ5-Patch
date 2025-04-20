@@ -286,6 +286,9 @@ public:
 #ifdef POLICY_CITY_SCIENCE_SQUARED_MOD_PER_X_POP
 	int GetCityScienceSquaredModPerXPop() const;
 #endif
+#ifdef POLICY_EXTRA_SPIES
+	int GetExtraSpies() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -487,6 +490,9 @@ private:
 #endif
 #ifdef POLICY_CITY_SCIENCE_SQUARED_MOD_PER_X_POP
 	int m_iCityScienceSquaredModPerXPop;
+#endif
+#ifdef POLICY_EXTRA_SPIES
+	int m_iExtraSpies;
 #endif
 
 	// Arrays
