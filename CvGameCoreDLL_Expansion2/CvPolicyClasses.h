@@ -295,7 +295,7 @@ public:
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	int GetFoeTourismModifier() const;
 #endif
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	int GetHappyTourismModifier() const;
 #endif
 
@@ -509,7 +509,7 @@ private:
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	int m_iFoeTourismModifier;
 #endif
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	int m_iHappyTourismModifier;
 #endif
 
@@ -703,7 +703,7 @@ enum PolicyModifierType
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	POLICYMOD_TOURISM_MOD_FOE,
 #endif
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	POLICYMOD_TOURISM_MOD_HAPPY,
 #endif
 };

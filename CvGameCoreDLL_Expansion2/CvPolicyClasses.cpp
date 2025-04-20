@@ -259,7 +259,7 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	m_iFoeTourismModifier(0),
 #endif
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	m_iHappyTourismModifier(0),
 #endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
@@ -536,7 +536,7 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	m_iFoeTourismModifier = kResults.GetInt("FoeTourismModifier");
 #endif
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	m_iHappyTourismModifier = kResults.GetInt("HappyTourismModifier");
 #endif
 
@@ -2137,7 +2137,7 @@ int CvPolicyEntry::GetFoeTourismModifier() const
 }
 #endif
 
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 ///
 int CvPolicyEntry::GetHappyTourismModifier() const
 {
@@ -3033,7 +3033,7 @@ int CvPlayerPolicies::GetNumericModifier(PolicyModifierType eType)
 				rtnValue += m_pPolicies->GetPolicyEntry(i)->GetFoeTourismModifier();
 				break;
 #endif
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 			case POLICYMOD_TOURISM_MOD_HAPPY:
 				rtnValue += m_pPolicies->GetPolicyEntry(i)->GetHappyTourismModifier();
 				break;

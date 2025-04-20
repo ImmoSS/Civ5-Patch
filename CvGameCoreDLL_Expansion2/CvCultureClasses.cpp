@@ -3077,7 +3077,7 @@ int CvPlayerCulture::GetTourismModifierWith(PlayerTypes ePlayer) const
 		}
 	}
 #endif
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	int iHappyMod = m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_HAPPY);
 	if (iHappyMod > 0)
 	{
@@ -3193,7 +3193,7 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 	}
 #endif
 
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	int iHappyMod = m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_HAPPY);
 	if (iHappyMod > 0)
 	{
@@ -4634,7 +4634,7 @@ CvString CvCityCulture::GetTourismTooltip()
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	CvString foeCivs = "";
 #endif
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	CvString happyCivs = "";
 #endif
 	CvString differentIdeologyCivs = "";
@@ -4786,7 +4786,7 @@ CvString CvCityCulture::GetTourismTooltip()
 #ifdef POLICY_FOE_TOURISM_MODIFIER
 	int iFoeMod = kCityPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_FOE);
 #endif
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	int iHappyMod = kCityPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_HAPPY);
 #endif
 
@@ -4890,7 +4890,7 @@ CvString CvCityCulture::GetTourismTooltip()
 				}
 #endif
 
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 				if (iHappyMod > 0)
 				{
 					if (kCityPlayer.GetExcessHappiness() > 0)
@@ -4994,7 +4994,7 @@ CvString CvCityCulture::GetTourismTooltip()
 			szRtnValue += szTemp + foeCivs;
 		}
 #endif
-#ifdef HAPPY_TOURISM_MODIFIER
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
 		if (happyCivs.length() > 0)
 		{
 			if (szRtnValue.length() > 0)
