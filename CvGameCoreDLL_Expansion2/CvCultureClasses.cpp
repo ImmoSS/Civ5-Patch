@@ -3067,6 +3067,16 @@ int CvPlayerCulture::GetTourismModifierWith(PlayerTypes ePlayer) const
 			iMultiplier += iSharedIdeologyMod;
 		}
 	}
+#ifdef POLICY_FOE_TOURISM_MODIFIER
+	int iFoeMod = m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_FOE);
+	if (iFoeMod > 0)
+	{
+		if (GET_TEAM(m_pPlayer->getTeam()).isAtWar(GET_PLAYER(ePlayer).getTeam()))
+		{
+			iMultiplier += iFoeMod;
+		}
+	}
+#endif
 
 	if (m_pPlayer->isGoldenAge() && m_pPlayer->GetPlayerTraits()->GetGoldenAgeTourismModifier())
 	{
@@ -3161,6 +3171,17 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 			szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_LESS_HAPPY", iLessHappyMod) + "[ENDCOLOR]";
 		}
 	}
+
+#ifdef POLICY_FOE_TOURISM_MODIFIER
+	int iFoeMod = m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_FOE);
+	if (iFoeMod > 0)
+	{
+		if (GET_TEAM(m_pPlayer->getTeam()).isAtWar(kPlayer.getTeam()))
+		{
+			szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_CITY_TOURISM_FOE_BONUS", iLessHappyMod) + "[ENDCOLOR]";
+		}
+	}
+#endif
 
 	if (m_pPlayer->isGoldenAge() && m_pPlayer->GetPlayerTraits()->GetGoldenAgeTourismModifier())
 	{
@@ -4561,6 +4582,16 @@ int CvCityCulture::GetTourismMultiplier(PlayerTypes ePlayer, bool bIgnoreReligio
 				iMultiplier += iSharedIdeologyMod;
 			}
 		}
+#ifdef POLICY_FOE_TOURISM_MODIFIER
+		int iFoeMod = kCityPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_FOE);
+		if (iFoeMod > 0)
+		{
+			if (GET_TEAM(kCityPlayer.getTeam()).isAtWar(GET_PLAYER(ePlayer).getTeam()))
+			{
+				iMultiplier += iFoeMod;
+			}
+		}
+#endif
 	}
 
 	// LATER add top science city and research agreement with this player???
@@ -4579,6 +4610,9 @@ CvString CvCityCulture::GetTourismTooltip()
 	CvString lessHappyCivs = "";
 	CvString commonFoeCivs = "";
 	CvString sharedIdeologyCivs = "";
+#ifdef POLICY_FOE_TOURISM_MODIFIER
+	CvString foeCivs = "";
+#endif
 	CvString differentIdeologyCivs = "";
 #ifdef TOURISM_BONUS_DIPLOMAT
 	CvString diplomatVisitingCivs = "";
@@ -4725,6 +4759,9 @@ CvString CvCityCulture::GetTourismTooltip()
 	int iLessHappyMod = kCityPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_LESS_HAPPY);
 	int iCommonFoeMod = kCityPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_COMMON_FOE);
 	int iSharedIdeologyMod = kCityPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_SHARED_IDEOLOGY);
+#ifdef POLICY_FOE_TOURISM_MODIFIER
+	int iFoeMod = kCityPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_FOE);
+#endif
 
 	// If generating any, itemize which players we have bonuses with
 	if (iGWTourism > 0 || iTileTourism > 0)
@@ -4813,6 +4850,19 @@ CvString CvCityCulture::GetTourismTooltip()
 					}
 				}
 
+#ifdef POLICY_FOE_TOURISM_MODIFIER
+				if (iFoeMod > 0)
+				{
+					if (GET_TEAM(kCityPlayer.getTeam()).isAtWar(kPlayer.getTeam()))
+					{
+						if (foeCivs.length() > 0)
+						{
+							foeCivs += ", ";
+						}
+					}
+				}
+#endif
+
 				// Different ideology penalty (applies all the time)
 				if (eMyIdeology != NO_POLICY_BRANCH_TYPE && eTheirIdeology != NO_POLICY_BRANCH_TYPE && eMyIdeology != eTheirIdeology)
 				{
@@ -4893,6 +4943,18 @@ CvString CvCityCulture::GetTourismTooltip()
 			szTemp = GetLocalizedText("TXT_KEY_CO_CITY_TOURISM_SHARED_IDEOLOGY_BONUS", iSharedIdeologyMod);
 			szRtnValue += szTemp + sharedIdeologyCivs;
 		}
+#ifdef POLICY_FOE_TOURISM_MODIFIER
+		if (foeCivs.length() > 0)
+		{
+			if (szRtnValue.length() > 0)
+			{
+				szRtnValue += "[NEWLINE][NEWLINE]";
+			}
+			szTemp = GetLocalizedText("TXT_KEY_CO_CITY_TOURISM_FOE_BONUS", iFoeMod);
+			szRtnValue += szTemp + foeCivs;
+		}
+#endif
+
 #ifdef POLICY_NO_DIFFERENT_IDEOLOGIES_TOURISM_MOD
 		if (differentIdeologyCivs.length() > 0 && !kCityPlayer.IsNoDifferentIdeologiesTourismMod())
 		{

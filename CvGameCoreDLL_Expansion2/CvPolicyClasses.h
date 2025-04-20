@@ -292,6 +292,9 @@ public:
 #ifdef POLICY_SPY_MINOR_PER_TURN_INFLUENCE
 	int GetSpyMinorPerTurnInfluence() const;
 #endif
+#ifdef POLICY_FOE_TOURISM_MODIFIER
+	int GetFoeTourismModifier() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -500,6 +503,9 @@ private:
 #ifdef POLICY_SPY_MINOR_PER_TURN_INFLUENCE
 	int m_iSpyMinorPerTurnInfluence;
 #endif
+#ifdef POLICY_FOE_TOURISM_MODIFIER
+	int m_iFoeTourismModifier;
+#endif
 
 	// Arrays
 	std::multimap<int, int> m_FreePromotionUnitCombats;
@@ -687,6 +693,9 @@ enum PolicyModifierType
 	POLICYMOD_OPEN_BORDERS_TOURISM_MODIFIER,
 #ifdef POLICY_SPY_MINOR_PER_TURN_INFLUENCE
 	POLICYMOD_SPY_INFLUENCE,
+#endif
+#ifdef POLICY_FOE_TOURISM_MODIFIER
+	POLICYMOD_TOURISM_MOD_FOE,
 #endif
 };
 
