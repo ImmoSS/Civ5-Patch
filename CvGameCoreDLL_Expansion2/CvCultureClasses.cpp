@@ -3178,7 +3178,7 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 	{
 		if (GET_TEAM(m_pPlayer->getTeam()).isAtWar(kPlayer.getTeam()))
 		{
-			szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_CITY_TOURISM_FOE_BONUS", iLessHappyMod) + "[ENDCOLOR]";
+			szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_FOE", iLessHappyMod) + "[ENDCOLOR]";
 		}
 	}
 #endif
