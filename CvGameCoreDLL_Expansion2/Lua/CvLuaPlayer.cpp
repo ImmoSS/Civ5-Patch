@@ -1045,6 +1045,10 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(AddReplayEnteredCityScreen);
 #endif
 
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+	Method(GetBuildingClassTourismChanges);
+#endif
+
 
 }
 //------------------------------------------------------------------------------
@@ -11339,6 +11343,29 @@ int CvLuaPlayer::lAddReplayEnteredCityScreen(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);
 	pkPlayer->ChangeTimesEnteredCityScreen(1);
+	return 1;
+}
+#endif
+
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+int CvLuaPlayer::lGetBuildingClassTourismChanges(lua_State* L)
+{
+	int iTourismFromBuilding = 0;
+
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	BuildingClassTypes eBuildingClass = (BuildingClassTypes)lua_tointeger(L, 2);
+
+	CvBuildingClassInfo* pInfo = GC.getBuildingClassInfo(eBuildingClass);
+	if (pInfo)
+	{
+		int iTourismChange = pkPlayer->GetPlayerPolicies()->GetBuildingClassTourismChanges(eBuildingClass);
+		if (iTourismChange != 0)
+		{
+			iTourismFromBuilding += iTourismChange;
+		}
+	}
+
+	lua_pushinteger(L, iTourismFromBuilding);
 	return 1;
 }
 #endif

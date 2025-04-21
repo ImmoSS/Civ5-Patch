@@ -1051,6 +1051,10 @@ protected:
 #ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
 	static int lAddReplayEnteredCityScreen(lua_State* L);
 #endif
+
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+	static int lGetBuildingClassTourismChanges(lua_State* L);
+#endif
 };
 
 #endif //CVLUAPLAYER_H

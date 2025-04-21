@@ -501,10 +501,6 @@ protected:
 	static int lGetCultureFromSpecialist(lua_State* L);
 
 	static int lGetReligionCityRangeStrikeModifier(lua_State* L);
-
-#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
-	static int lGetBuildingClassTourismChanges(lua_State* L);
-#endif
 };
 
 #endif //CVLUACITY_H

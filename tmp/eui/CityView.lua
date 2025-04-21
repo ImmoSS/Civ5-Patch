@@ -877,7 +877,7 @@ local function SetupBuildingList( city, buildings, buildingIM )
 					) or 0 )
 --			local enhancedYieldTechID = GameInfoTypes[ building.EnhancedYieldTech ]
 			tourism = tourism + (tonumber(building.TechEnhancedTourism) or 0)
-			tourism = tourism + (tonumber(city:GetBuildingClassTourismChanges(buildingClassID)) or 0)
+			tourism = tourism + (tonumber(cityOwner:GetBuildingClassTourismChanges(buildingClassID)) or 0)
 			tips:insertIf( tourism ~= 0 and tourism.."[ICON_TOURISM]" )
 		end
 
