@@ -491,6 +491,10 @@ void CvLuaCity::PushMethods(lua_State* L, int t)
 	Method(GetNumForcedWorkingPlots);
 
 	Method(GetReligionCityRangeStrikeModifier);
+
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+	Method(GetBuildingClassTourismChanges);
+#endif
 }
 //------------------------------------------------------------------------------
 void CvLuaCity::HandleMissingInstance(lua_State* L)
@@ -4154,4 +4158,26 @@ int CvLuaCity::lGetReligionCityRangeStrikeModifier(lua_State* L)
 
 	return 1;
 }
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+int CvLuaCity::lGetBuildingClassTourismChanges(lua_State* L)
+{
+	int iTourismFromBuilding = 0;
+
+	CvCity* pkCity = GetInstance(L);
+	BuildingClassTypes eBuildingClass = (BuildingClassTypes)lua_tointeger(L, 2);
+
+	CvBuildingClassInfo* pInfo = GC.getBuildingClassInfo(eBuildingClass);
+	if (pInfo)
+	{
+		int iTourismChange = GET_PLAYER(pkCity->getOwner()).GetPlayerPolicies()->GetBuildingClassTourismChanges(eBuildingClass);
+		if (iTourismChange != 0)
+		{
+			iTourismFromBuilding += iTourismChange;
+		}
+	}
+
+	lua_pushinteger(L, iTourismFromBuilding);
+	return 1;
+}
+#endif
 

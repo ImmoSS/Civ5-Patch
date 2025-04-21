@@ -4420,6 +4420,10 @@ int CvCityCulture::GetBaseTourismBeforeModifiers()
 			continue;
 		}
 
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+		iBase += GET_PLAYER(m_pCity->getOwner()).GetPlayerPolicies()->GetBuildingClassTourismChanges(eBuildingClass);
+#endif
+
 		CvCivilizationInfo& playerCivilizationInfo = GET_PLAYER(m_pCity->getOwner()).getCivilizationInfo();
 		BuildingTypes eBuilding = (BuildingTypes)playerCivilizationInfo.getCivilizationBuildings(eBuildingClass);
 

@@ -262,6 +262,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	m_iHappyTourismModifier(0),
 #endif
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+	m_paiBuildingClassTourismChanges(NULL),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -298,6 +301,9 @@ CvPolicyEntry::~CvPolicyEntry(void)
 	SAFE_DELETE_ARRAY(m_paiBuildingClassHappiness);
 	SAFE_DELETE_ARRAY(m_paiFreeUnitClasses);
 	SAFE_DELETE_ARRAY(m_paiTourismOnUnitCreation);
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+	SAFE_DELETE_ARRAY(m_paiBuildingClassTourismChanges);
+#endif
 
 //	SAFE_DELETE_ARRAY(m_pabHurry);
 	SAFE_DELETE_ARRAY(m_paiHurryModifier);
@@ -577,6 +583,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 
 	kUtility.PopulateArrayByValue(m_paiFreeUnitClasses, "UnitClasses", "Policy_FreeUnitClasses", "UnitClassType", "PolicyType", szPolicyType, "Count");
 	kUtility.PopulateArrayByValue(m_paiTourismOnUnitCreation, "UnitClasses", "Policy_TourismOnUnitCreation", "UnitClassType", "PolicyType", szPolicyType, "Tourism");
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+	kUtility.PopulateArrayByValue(m_paiBuildingClassTourismChanges, "BuildingClasses", "Policy_BuildingClassTourismChanges", "BuildingClassType", "PolicyType", szPolicyType, "TourismChange");
+#endif
 
 	//BuildingYieldModifiers
 	{
@@ -2142,6 +2151,16 @@ int CvPolicyEntry::GetFoeTourismModifier() const
 int CvPolicyEntry::GetHappyTourismModifier() const
 {
 	return m_iHappyTourismModifier;
+}
+#endif
+
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+///
+int CvPolicyEntry::GetBuildingClassTourismChanges(int i) const
+{
+	CvAssertMsg(i < GC.getNumBuildingCLassInfos(), "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	return m_paiBuildingClassTourismChanges[i];
 }
 #endif
 
@@ -4700,6 +4719,25 @@ void CvPlayerPolicies::AddFlavorAsStrategies(int iPropagatePercent)
 		}
 	}
 }
+
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+///
+int CvPlayerPolicies::GetBuildingClassTourismChanges(BuildingClassTypes eBuildingClass)
+{
+	int rtnValue = 0;
+
+	for (int i = 0; i < m_pPolicies->GetNumPolicies(); i++)
+	{
+		// Do we have this policy?
+		if (m_pabHasPolicy[i] && !IsPolicyBlocked((PolicyTypes)i))
+		{
+			rtnValue += m_pPolicies->GetPolicyEntry(i)->GetBuildingClassTourismChanges(eBuildingClass);
+		}
+	}
+
+	return rtnValue;
+}
+#endif
 
 void CvPlayerPolicies::LogFlavors(FlavorTypes)
 {

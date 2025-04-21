@@ -304,7 +304,10 @@ function GetHelpTextForBuilding(iBuildingID, bExcludeName, bExcludeHeader, bNoMa
 	local iTechEnhancedTourism = pBuildingInfo.TechEnhancedTourism;
 	local iEnhancingTech = GameInfoTypes[pBuildingInfo.EnhancedYieldTech];
 	if(iTechEnhancedTourism > 0 and pActiveTeam:GetTeamTechs():HasTech(iEnhancingTech)) then
-		local localizedText = Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_TOURISM", iTechEnhancedTourism);
+		local localizedText = Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_TOURISM", iTechEnhancedTourism + pCity:GetBuildingClassTourismChanges(buildingClassID));
+		table.insert(lines, localizedText);
+	else
+		local localizedText = Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_TOURISM", pCity:GetBuildingClassTourismChanges(buildingClassID));
 		table.insert(lines, localizedText);
 	end	
 	

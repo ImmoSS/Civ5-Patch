@@ -849,6 +849,7 @@ local function GetHelpTextForBuilding( buildingID, bExcludeName, bExcludeHeader,
 			tip = S("%s %s %+i[ICON_TOURISM]", tip, enhancedYieldTechName, building.TechEnhancedTourism )
 		end
 		tips:insertIf( #tip > 0 and L"TXT_KEY_CITYVIEW_TOURISM_TEXT" .. ":" .. tip )
+
 	end
 -- TODO GetInternationalTradeRouteYourBuildingBonus
 	if gk_mode then
@@ -1013,6 +1014,13 @@ local function GetHelpTextForBuilding( buildingID, bExcludeName, bExcludeHeader,
 		end
 	end
 	if civ5_mode then
+		if bnw_mode then
+			for row in GameInfo.Policy_BuildingClassTourismChanges( thisBuildingClassType ) do
+				if row.PolicyType and (row.TourismChange or 0)~=0 then
+					items[row.PolicyType] = S( "%s %+i[ICON_TOURISM]", items[row.PolicyType] or "", row.TourismChange )
+				end
+			end
+		end
 		if bnw_mode then
 			for row in GameInfo.Policy_BuildingClassTourismModifiers( thisBuildingClassType ) do
 				if row.PolicyType and (row.TourismModifier or 0)~=0 then

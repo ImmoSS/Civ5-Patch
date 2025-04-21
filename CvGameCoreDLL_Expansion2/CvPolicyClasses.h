@@ -298,6 +298,9 @@ public:
 #ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	int GetHappyTourismModifier() const;
 #endif
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+	int GetBuildingClassTourismChanges(int i) const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -554,6 +557,9 @@ private:
 	int** m_ppiBuildingClassYieldChanges;
 #ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 	int** m_ppiBuildingScecialistCountChange;
+#endif
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+	int* m_paiBuildingClassTourismChanges;
 #endif
 	int* m_piFlavorValue;
 };
@@ -836,6 +842,10 @@ public:
 	// Functions to process AI each turn
 	void DoPolicyAI();
 	void DoChooseIdeology();
+
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+	int GetBuildingClassTourismChanges(BuildingClassTypes eBuildingClass);
+#endif
 
 private:
 	void AddFlavorAsStrategies(int iPropagatePercent);
