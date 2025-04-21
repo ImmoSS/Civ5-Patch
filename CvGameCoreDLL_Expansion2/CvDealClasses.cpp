@@ -595,7 +595,7 @@ bool CvDeal::IsPossibleToTradeItem(PlayerTypes ePlayer, PlayerTypes eToPlayer, T
 		if(!pFromTeam->HasEmbassyAtTeam(eToTeam))
 			return false;
 #else
-		if (!pFromTeam->GetCurrentEra() < GC.getInfoTypeForString("ERA_FUTURE", true) || !pToTeam->GetCurrentEra() < GC.getInfoTypeForString("ERA_FUTURE", true))
+		if (!(pFromTeam->GetCurrentEra() < GC.getInfoTypeForString("ERA_FUTURE", true)) || !(pToTeam->GetCurrentEra() < GC.getInfoTypeForString("ERA_FUTURE", true)))
 		{
 			return false;
 		}
