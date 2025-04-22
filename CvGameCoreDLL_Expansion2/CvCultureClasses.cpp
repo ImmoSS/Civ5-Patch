@@ -4420,12 +4420,19 @@ int CvCityCulture::GetBaseTourismBeforeModifiers()
 			continue;
 		}
 
-#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
-		iBase += GET_PLAYER(m_pCity->getOwner()).GetPlayerPolicies()->GetBuildingClassTourismChanges(eBuildingClass);
-#endif
-
 		CvCivilizationInfo& playerCivilizationInfo = GET_PLAYER(m_pCity->getOwner()).getCivilizationInfo();
 		BuildingTypes eBuilding = (BuildingTypes)playerCivilizationInfo.getCivilizationBuildings(eBuildingClass);
+
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+		if (eBuilding != NO_BUILDING)
+		{
+			CvBuildingEntry* pkEntry = GC.getBuildingInfo(eBuilding);
+			if (pkEntry && m_pCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
+			{
+				iBase += GET_PLAYER(m_pCity->getOwner()).GetPlayerPolicies()->GetBuildingClassTourismChanges(eBuildingClass);
+			}
+		}
+#endif
 
 		if(eBuilding != NO_BUILDING)
 		{

@@ -306,7 +306,7 @@ function GetHelpTextForBuilding(iBuildingID, bExcludeName, bExcludeHeader, bNoMa
 	if(iTechEnhancedTourism > 0 and pActiveTeam:GetTeamTechs():HasTech(iEnhancingTech)) then
 		local localizedText = Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_TOURISM", iTechEnhancedTourism + pActivePlayer:GetBuildingClassTourismChanges(buildingClassID));
 		table.insert(lines, localizedText);
-	else
+	elseif(pActivePlayer:GetBuildingClassTourismChanges(buildingClassID) > 0) then
 		local localizedText = Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_TOURISM", pActivePlayer:GetBuildingClassTourismChanges(buildingClassID));
 		table.insert(lines, localizedText);
 	end	
