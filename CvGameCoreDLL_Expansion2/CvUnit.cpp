@@ -17480,6 +17480,50 @@ bool CvUnit::IsNearGreatGeneral() const
 	IDInfo* pUnitNode;
 	CvUnit* pLoopUnit;
 
+#ifdef MONGOLIAN_KHAN_RANGE_INCREASE
+	if (getDomainType() == DOMAIN_LAND)
+	{
+		iGreatGeneralRange++;
+		// Look around this Unit to see if there's a Great General nearby
+		for (int iX = -iGreatGeneralRange; iX <= iGreatGeneralRange; iX++)
+		{
+			for (int iY = -iGreatGeneralRange; iY <= iGreatGeneralRange; iY++)
+			{
+				pLoopPlot = plotXYWithRangeCheck(getX(), getY(), iX, iY, iGreatGeneralRange);
+
+				if (pLoopPlot != NULL)
+				{
+					// If there are Units here, loop through them
+					if (pLoopPlot->getNumUnits() > 0)
+					{
+						pUnitNode = pLoopPlot->headUnitNode();
+
+						while (pUnitNode != NULL)
+						{
+							pLoopUnit = ::getUnit(*pUnitNode);
+							pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
+
+							// Owned by us
+							if (pLoopUnit && pLoopUnit->getOwner() == getOwner())
+							{
+								// Great General unit
+								if (pLoopUnit->getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_MONGOLIAN_KHAN", true /*bHideAssert*/))
+								{
+									// Same domain
+									if (pLoopUnit->getDomainType() == getDomainType())
+									{
+										return true;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		iGreatGeneralRange--;
+	}
+#endif
 	// Look around this Unit to see if there's a Great General nearby
 	for(int iX = -iGreatGeneralRange; iX <= iGreatGeneralRange; iX++)
 	{
