@@ -33269,7 +33269,7 @@
 			<ID>236</ID> 
 			<Type>PROMOTION_LAND_NO_UNHAPPINESS_PENALTY</Type> 
 			<Description>TXT_KEY_PROMOTION_LAND_NO_UNHAPPINESS_PENALTY</Description> 
-			<Help>TXT_KEY_PROMOTION_LAND_NO_UNHAPPINESS_PENALTY</Help> 
+			<Help>TXT_KEY_PROMOTION_LAND_NO_UNHAPPINESS_PENALTY_HELP</Help> 
 			<PortraitIndex>59</PortraitIndex> 
 			<IconAtlas>ABILITY_ATLAS</IconAtlas> 
 			<HotKeyPriority>0</HotKeyPriority> 
@@ -33282,7 +33282,7 @@
 			<CtrlDown>false</CtrlDown> 
 			<CtrlDownAlt>false</CtrlDownAlt> 
 			<Sound>AS2D_IF_LEVELUP</Sound> 
-			<CannotBeChosen>false</CannotBeChosen> 
+			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
 			<InstaHeal>false</InstaHeal> 
