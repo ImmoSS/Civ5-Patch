@@ -448,14 +448,28 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
 		end
 	end
 
+	g_activePlayerID = Game.GetActivePlayer()
+	g_activePlayer = Players[g_activePlayerID]
+	g_activeCivID = GameInfo.Civilizations[g_activePlayer:GetCivilizationType()].ID
 	-- actions enabled by this tech (usually only workers can do these)
 	for row in GameInfo.Builds( thisPrereqTech ) do
+		if not (g_activeCivID == 10 and row.ID == 5) then
+			local improvementType = row.ImprovementType
+			if ( not civ5_bnw_mode or row.ShowInTechTree )
+				and (not improvementType or validImprovementBuilds[improvementType] == improvementType )
+				and not addSmallArtButton( AdjustArtOnGrantedActionButton, row, actionToolTip )
+			then
+				break
+			end
+		end
+	end
+	if g_activeCivID == 10 and tech.ID == 0 then
+		local row = GameInfo.Builds[5];
 		local improvementType = row.ImprovementType
 		if ( not civ5_bnw_mode or row.ShowInTechTree )
 			and (not improvementType or validImprovementBuilds[improvementType] == improvementType )
 			and not addSmallArtButton( AdjustArtOnGrantedActionButton, row, actionToolTip )
 		then
-			break
 		end
 	end
 

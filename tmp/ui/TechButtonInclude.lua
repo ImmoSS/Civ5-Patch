@@ -141,7 +141,32 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
 	end
 
 	-- if this tech grants this player the ability to perform this action (usually only workers can do these)
+	playerID = Game.GetActivePlayer();
+	player = Players[playerID];
+	civID = GameInfo.Civilizations[player:GetCivilizationType()].ID;
 	for thisBuildInfo in GameInfo.Builds{PrereqTech = techType, ShowInTechTree  = 1} do
+		if not (civID == 10 and thisBuildInfo.ID == 5) then
+			if thisBuildInfo.ImprovementType then
+				if validImprovementBuilds[thisBuildInfo.ImprovementType] == thisBuildInfo.ImprovementType then
+					local buttonName = "B"..tostring(buttonNum);
+					local thisButton = thisTechButtonInstance[buttonName];
+					if thisButton then
+						AdjustArtOnGrantedActionButton( thisButton, thisBuildInfo, textureSize );
+	 					buttonNum = buttonNum + 1;
+	 				end
+	 			end
+			else
+				local buttonName = "B"..tostring(buttonNum);
+				local thisButton = thisTechButtonInstance[buttonName];
+				if thisButton then
+					AdjustArtOnGrantedActionButton( thisButton, thisBuildInfo, textureSize );
+	 				buttonNum = buttonNum + 1;
+	 			end
+			end
+		end
+	end
+	if civID == 10 and tech.ID == 0 then
+		local thisBuildInfo = GameInfo.Builds[5];
 		if thisBuildInfo.ImprovementType then
 			if validImprovementBuilds[thisBuildInfo.ImprovementType] == thisBuildInfo.ImprovementType then
 				local buttonName = "B"..tostring(buttonNum);

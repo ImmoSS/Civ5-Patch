@@ -10238,7 +10238,11 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, b
 			}
 		} else
 #endif
+#ifdef IROQUOIS_UA_REWORK
+		if(!(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getBuildInfo(eBuild)->getTechPrereq())) && !(strcmp(GC.getBuildInfo(eBuild)->GetType(), "BUILD_LUMBERMILL") == 0 && GetPlayerTraits()->IsMoveFriendlyWoodsAsRoad()))
+#else
 		if(!(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getBuildInfo(eBuild)->getTechPrereq())))
+#endif
 		{
 			if((!bTestEra && !bTestVisible) || ((GetCurrentEra() + 1) < GC.getTechInfo((TechTypes) GC.getBuildInfo(eBuild)->getTechPrereq())->GetEra()))
 			{
