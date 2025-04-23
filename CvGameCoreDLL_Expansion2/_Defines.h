@@ -600,8 +600,8 @@
 ///
 #define ASSYRIA_UA_REWORK
 ///
-#define MONGOL_CS_BULLY
-#ifdef MONGOL_CS_BULLY
+#define MONGOL_UA_REWORK
+#ifdef MONGOL_UA_REWORK
 #define MONGOL_CS_BULLY_MOD 30
 #endif
 ///

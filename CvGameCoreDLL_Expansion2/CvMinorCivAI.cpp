@@ -9486,7 +9486,7 @@ int CvMinorCivAI::CalculateBullyMetric(PlayerTypes eBullyPlayer, bool bForUnit, 
 	}
 	iScore += iPoliciesScore;
 
-#ifdef MONGOL_CS_BULLY
+#ifdef MONGOL_UA_REWORK
 	int iTraitsScore = 0;
 	int iTraitsMod = 0;
 	if(strcmp(GET_PLAYER(eBullyPlayer).getCivilizationTypeKey(), "CIVILIZATION_MONGOL") == 0)
