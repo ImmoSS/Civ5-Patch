@@ -33139,7 +33139,7 @@
 			<ID>235</ID> 
 			<Type>PROMOTION_MOUNTED_COMBAT_BONUS</Type> 
 			<Description>TXT_KEY_PROMOTION_MOUNTED_COMBAT_BONUS</Description> 
-			<Help>TXT_KEY_PROMOTION_MOUNTED_COMBAT_BONUS</Help> 
+			<Help>TXT_KEY_PROMOTION_MOUNTED_COMBAT_BONUS_HELP</Help> 
 			<PortraitIndex>59</PortraitIndex> 
 			<IconAtlas>ABILITY_ATLAS</IconAtlas> 
 			<HotKeyPriority>0</HotKeyPriority> 
