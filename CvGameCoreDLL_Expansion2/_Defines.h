@@ -621,6 +621,8 @@
 #ifdef AUSTRIA_UA_REWORK
 #define AUSTRIA_UA_CONTACT_GOLD 40
 #endif
+///
+#define CELTS_UA_REWORK
 /// Golden age combat bonus modifier now applies only during attack
 #define GOLDEN_AGE_ATTACK_BONUS_MODIFIER
 /*UA CHANGES END*/

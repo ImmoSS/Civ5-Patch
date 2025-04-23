@@ -1041,7 +1041,11 @@ void CvBuilderTaskingAI::AddImprovingPlotsDirectives(CvUnit* pUnit, CvPlot* pPlo
 	}
 
 	// celtic rule: if this is a forest tile next to a city, do not improve this tile with a normal improvement
+#ifdef CELTS_UA_REWORK
+	if (m_pPlayer->GetPlayerTraits()->IsFaithFromUnimprovedForest())
+#else
 	if (m_pPlayer->GetPlayerTraits()->IsFaithFromUnimprovedForest() && eExistingImprovement == NO_IMPROVEMENT)
+#endif
 	{
 		CvCity* pNextCity = pPlot->GetAdjacentCity();
 		if (pNextCity && pNextCity->getOwner() == m_pPlayer->GetID())

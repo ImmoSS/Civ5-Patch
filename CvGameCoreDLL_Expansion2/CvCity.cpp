@@ -8987,7 +8987,11 @@ int CvCity::GetFaithPerTurnFromTraits() const
 			CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), ((DirectionTypes)iDirectionLoop));
 			if(pAdjacentPlot != NULL)
 			{
+#ifdef CELTS_UA_REWORK
+				if (pAdjacentPlot->getFeatureType() == FEATURE_FOREST)
+#else
 				if(pAdjacentPlot->getFeatureType() == FEATURE_FOREST && pAdjacentPlot->getImprovementType() == NO_IMPROVEMENT)
+#endif
 				{
 					iAdjacentForests++;
 				}
