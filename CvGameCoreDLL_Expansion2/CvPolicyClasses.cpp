@@ -271,6 +271,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_EXTRA_TRADE_ROUTES
 	m_iExtraTradeRoutes(0),
 #endif
+#ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_CAP
+	m_iHappinessPerTradeRouteToCap(0),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -556,6 +559,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_EXTRA_TRADE_ROUTES
 	m_iExtraTradeRoutes = kResults.GetInt("ExtraTradeRoutes");
+#endif
+#ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_CAP
+	m_iHappinessPerTradeRouteToCap = kResults.GetInt("HappinessPerTradeRouteToCap");
 #endif
 
 	//Arrays
@@ -2192,6 +2198,14 @@ int CvPolicyEntry::GetExtraTradeRoutes() const
 }
 #endif
 
+#ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_CAP
+///
+int CvPolicyEntry::GetHappinessPerTradeRouteToCap() const
+{
+	return m_iHappinessPerTradeRouteToCap;
+}
+#endif
+
 //=====================================
 // CvPolicyBranchEntry
 //=====================================
@@ -3093,6 +3107,11 @@ int CvPlayerPolicies::GetNumericModifier(PolicyModifierType eType)
 #ifdef POLICY_EXTRA_TRADE_ROUTES
 			case POLICYMOD_EXTRA_TRADE_ROUTES:
 				rtnValue += m_pPolicies->GetPolicyEntry(i)->GetExtraTradeRoutes();
+				break;
+#endif
+#ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_CAP
+			case POLICYMOD_HAPPINESS_PER_TRADE_ROUTE_TO_CAP:
+				rtnValue += m_pPolicies->GetPolicyEntry(i)->GetHappinessPerTradeRouteToCap();
 				break;
 #endif
 			case POLICYMOD_OPEN_BORDERS_TOURISM_MODIFIER:

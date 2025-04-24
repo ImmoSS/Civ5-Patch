@@ -13537,6 +13537,28 @@ int CvPlayer::GetHappinessFromPolicies() const
 #ifdef POLICY_GREAT_WORK_HAPPINESS
 	iHappiness += GetGreatWorkHappiness() * GetCulture()->GetNumGreatWorks();
 #endif
+#ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_CAP
+	const CvCity* pCapitalCity = getCapitalCity();
+	if (pCapitalCity)
+	{
+		int iCount = 0;
+		for (uint ui = 0; ui < GC.getGame().GetGameTrade()->m_aTradeConnections.size(); ui++)
+		{
+			if (GC.getGame().GetGameTrade()->IsTradeRouteIndexEmpty(ui))
+			{
+				continue;
+			}
+
+			CvCity* pDestCity = CvGameTrade::GetDestCity(GC.getGame().GetGameTrade()->m_aTradeConnections[ui]);
+			if (pDestCity == pCapitalCity)
+			{
+				iCount++;
+			}
+		}
+
+		iHappiness += (iCount * GetPlayerPolicies()->GetNumericModifier(POLICYMOD_HAPPINESS_PER_TRADE_ROUTE_TO_CAP));
+	}
+#endif
 
 	return iHappiness;
 }
