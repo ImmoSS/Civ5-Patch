@@ -491,6 +491,10 @@ void CvLuaCity::PushMethods(lua_State* L, int t)
 	Method(GetNumForcedWorkingPlots);
 
 	Method(GetReligionCityRangeStrikeModifier);
+
+#ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
+	Method(GetCapitalCultureModPerDiplomat);
+#endif
 }
 //------------------------------------------------------------------------------
 void CvLuaCity::HandleMissingInstance(lua_State* L)
@@ -4154,4 +4158,21 @@ int CvLuaCity::lGetReligionCityRangeStrikeModifier(lua_State* L)
 
 	return 1;
 }
+#ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
+//------------------------------------------------------------------------------
+//int GetCapitalCultureModPerDiplomat() const;
+int CvLuaCity::lGetCapitalCultureModPerDiplomat(lua_State* L)
+{
+	CvCity* pkCity = GetInstance(L);
+	int iModifier = 0;
+	if (pkCity->isCapital())
+	{
+		iModifier += GET_PLAYER(pkCity->getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CAPITAL_CULTURE_MOD_PER_DIPLOMAT);
+	}
+
+	lua_pushinteger(L, iModifier);
+
+	return 1;
+}
+#endif
 

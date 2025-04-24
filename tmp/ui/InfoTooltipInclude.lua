@@ -675,6 +675,13 @@ function GetCultureTooltip(pCity)
 			strCultureToolTip = strCultureToolTip .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_CULTURE_CITY_MOD", iAmount);
 		end
 		
+		-- Policy Culture modifier
+		local iAmount = pCity:GetCapitalCultureModPerDiplomat();
+		if (iAmount ~= 0) then
+			strCultureToolTip = strCultureToolTip .. "[NEWLINE][NEWLINE]";
+			strCultureToolTip = strCultureToolTip .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_CULTURE_POLICY_MOD", iAmount);
+		end
+		
 		-- Culture Wonders modifier
 		-- if (pCity:GetNumWorldWonders() > 0) then
 		if (pCity:GetNumGreatWorks() > 0) then

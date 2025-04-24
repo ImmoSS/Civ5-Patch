@@ -301,6 +301,9 @@ public:
 #ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
 	int GetBuildingClassTourismChanges(int i) const;
 #endif
+#ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
+	int GetCapitalCultureModPerDiplomat() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -515,6 +518,9 @@ private:
 #ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	int m_iHappyTourismModifier;
 #endif
+#ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
+	int m_iCapitalCultureModPerDiplomat;
+#endif
 
 	// Arrays
 	std::multimap<int, int> m_FreePromotionUnitCombats;
@@ -711,6 +717,9 @@ enum PolicyModifierType
 #endif
 #ifdef POLICY_HAPPY_TOURISM_MODIFIER
 	POLICYMOD_TOURISM_MOD_HAPPY,
+#endif
+#ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
+	POLICYMOD_CAPITAL_CULTURE_MOD_PER_DIPLOMAT,
 #endif
 };
 

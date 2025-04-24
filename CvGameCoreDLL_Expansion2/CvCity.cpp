@@ -8703,6 +8703,12 @@ int CvCity::getJONSCulturePerTurn() const
 	iModifier += getCultureRateModifier();
 	// Player modifier
 	iModifier += GET_PLAYER(getOwner()).GetJONSCultureCityModifier();
+#ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
+	if (isCapital())
+	{
+		iModifier += GET_PLAYER(getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CAPITAL_CULTURE_MOD_PER_DIPLOMAT);
+	}
+#endif
 
 #ifdef FLOURISHING_OF_ARTS_REWORK
 	if (GetCityCulture()->GetNumGreatWorks() > 0)

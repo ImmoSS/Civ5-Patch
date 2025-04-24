@@ -1958,6 +1958,9 @@ local function GetCultureTooltip( city )
 		-- City Culture modifier
 		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_CULTURE_CITY_MOD", city:GetCultureRateModifier())
 
+		-- Policy Culture modifier
+		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_CULTURE_POLICY_MOD", city:GetCapitalCultureModPerDiplomat())
+
 		-- Culture Wonders modifier
 		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_CULTURE_WONDER_BONUS", city:GetNumWorldWonders() > 0 and cityOwner and cityOwner:GetCultureWonderMultiplier() or 0 )
 	end
