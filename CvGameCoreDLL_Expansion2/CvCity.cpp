@@ -6970,7 +6970,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #endif
 #ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
 		changeNoHolyCityAndNoOccupiedUnhappiness(pBuildingInfo->IsNoHolyCityAndNoOccupiedUnhappiness() * iChange);
-		if (iChange > 0)
+		if (iChange > 0 && pBuildingInfo->IsNoHolyCityAndNoOccupiedUnhappiness())
 		{
 			ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetFounderBenefitsReligion(getOwner());
 			ReligionTypes eMajority = GetCityReligions()->GetReligiousMajority();
