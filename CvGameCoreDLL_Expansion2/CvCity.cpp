@@ -4810,6 +4810,88 @@ int CvCity::GetPurchaseCost(UnitTypes eUnit)
 		return 0;
 	}
 
+#ifdef POLICY_ALLOWS_GP_BUYS_FOR_GOLD
+	int iCost = 0;
+
+	// LATE-GAME GREAT PERSON
+	SpecialUnitTypes eSpecialUnitGreatPerson = (SpecialUnitTypes)GC.getInfoTypeForString("SPECIALUNIT_PEOPLE");
+	if (pkUnitInfo->GetSpecialUnitType() == eSpecialUnitGreatPerson)
+	{
+		CvPlayer& kPlayer = GET_PLAYER(m_eOwner);
+
+		// We must be into the industrial era
+		if (kPlayer.GetCurrentEra() >= GC.getInfoTypeForString("ERA_INDUSTRIAL", true /*bHideAssert*/))
+		{
+			// Must be proper great person for our civ
+			const UnitClassTypes eUnitClass = (UnitClassTypes)pkUnitInfo->GetUnitClassType();
+			if (eUnitClass != NO_UNITCLASS)
+			{
+				const UnitTypes eThisPlayersUnitType = (UnitTypes)kPlayer.getCivilizationInfo().getCivilizationUnits(eUnitClass);
+
+				if (eThisPlayersUnitType == eUnit)
+				{
+					PolicyBranchTypes eBranch = (PolicyBranchTypes)GC.getInfoTypeForString("POLICY_BRANCH_PATRONAGE", true /*bHideAssert*/);
+					int iNum = GET_PLAYER(getOwner()).GetNumGoldPurchasedGreatPerson();
+
+					if ((eBranch != NO_POLICY_BRANCH_TYPE && kPlayer.GetPlayerPolicies()->IsPolicyBranchFinished(eBranch) && !kPlayer.GetPlayerPolicies()->IsPolicyBranchBlocked(eBranch)))
+					{
+						iCost = GC.getRELIGION_MIN_FAITH_FIRST_GREAT_PERSON() + iNum * GC.getRELIGION_FAITH_DELTA_NEXT_GREAT_PERSON();
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		int iModifier = pkUnitInfo->GetHurryCostModifier();
+
+		bool bIsSpaceshipPart = pkUnitInfo->GetSpaceshipProject() != NO_PROJECT;
+
+#ifdef SS_PART_PURCHASE_RESTRICTION
+		if (iModifier == -1 && (!bIsSpaceshipPart || !GET_PLAYER(getOwner()).IsEnablesSSPartPurchase() || getPopulation() < 5))
+#else
+		if (iModifier == -1 && (!bIsSpaceshipPart || !GET_PLAYER(getOwner()).IsEnablesSSPartPurchase()))
+#endif
+		{
+			return -1;
+		}
+
+#ifdef NUCLEAR_NON_PROLIFERATION_INCREASE_NUKES_COST
+		iCost = GetPurchaseCostFromProduction(getProductionNeeded(eUnit));
+		if (GC.getUnitInfo(eUnit)->GetNukeDamageLevel() != -1)
+		{
+			if (GC.getGame().GetGameLeagues()->IsNoTrainingNuclearWeapons(getOwner()))
+			{
+				iCost = 3 * GetPurchaseCostFromProduction(getProductionNeeded(eUnit) / 3);
+			}
+		}
+#else
+		iCost = GetPurchaseCostFromProduction(getProductionNeeded(eUnit));
+#endif
+		iCost *= (100 + iModifier);
+		iCost /= 100;
+
+		// Cost of purchasing units modified?
+		iCost *= (100 + GET_PLAYER(getOwner()).GetUnitPurchaseCostModifier());
+		iCost /= 100;
+
+#ifdef NEW_VENICE_UA
+		TraitTypes eTrait = (TraitTypes)GC.getInfoTypeForString("NEW_TRAIT_SUPER_CITY_STATE", true /*bHideAssert*/);
+		if (eUnit == (UnitTypes)GC.getInfoTypeForString("UNIT_SETTLER") && GET_PLAYER(getOwner()).GetPlayerTraits()->HasTrait(eTrait))
+		{
+			iCost *= 73;
+			iCost /= 100;
+		}
+#endif
+#ifdef FOREIGN_LEGION_COST_PURCHASE
+		if (eUnit == (UnitTypes)GC.getInfoTypeForString("UNIT_FRENCH_FOREIGNLEGION"))
+		{
+			iCost *= 81;
+			iCost /= 100;
+		}
+#endif
+	}
+#else
 	int iModifier = pkUnitInfo->GetHurryCostModifier();
 
 	bool bIsSpaceshipPart = pkUnitInfo->GetSpaceshipProject() != NO_PROJECT;
@@ -4856,6 +4938,7 @@ int CvCity::GetPurchaseCost(UnitTypes eUnit)
 		iCost *= 81;
 		iCost /= 100;
 	}
+#endif
 #endif
 
 	// Make the number not be funky
@@ -13951,10 +14034,43 @@ bool CvCity::IsCanPurchase(bool bTestPurchaseCost, bool bTestTrainable, UnitType
 		// Unit
 		if(eUnitType != NO_UNIT)
 		{
+#ifdef POLICY_ALLOWS_GP_BUYS_FOR_GOLD
+			CvUnitEntry* pUnitEntry = GC.getUnitInfo(eUnitType);
+			UnitClassTypes eUnitClass = (UnitClassTypes)pUnitEntry->GetUnitClassType();
+			if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_WRITER") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_ARTIST") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_MUSICIAN") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_SCIENTIST") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_ENGINEER") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_MERCHANT") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_GREAT_GENERAL") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_GREAT_ADMIRAL"))
+			{
+				iGoldCost = GetPurchaseCost(eUnitType);
+
+				if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_GREAT_ADMIRAL") && !isCoastal())
+				{
+					return false;
+				}
+
+				if (iGoldCost < 1 || GET_PLAYER(getOwner()).IsGoldGreatPerson(eUnitClass))
+				{
+					return false;
+				}
+			}
+			else
+			{
+				if (!canTrain(eUnitType, false, !bTestTrainable, false /*bIgnoreCost*/, true /*bWillPurchase*/))
+					return false;
+
+				iGoldCost = GetPurchaseCost(eUnitType);
+			}
+#else
 			if(!canTrain(eUnitType, false, !bTestTrainable, false /*bIgnoreCost*/, true /*bWillPurchase*/))
 				return false;
 
 			iGoldCost = GetPurchaseCost(eUnitType);
+#endif
 		}
 		// Building
 		else if(eBuildingType != NO_BUILDING)
@@ -14371,6 +14487,22 @@ void CvCity::Purchase(UnitTypes eUnitType, BuildingTypes eBuildingType, ProjectT
 					bool bScriptResult;
 					LuaSupport::CallHook(pkScriptSystem, "CityTrained", args.get(), bScriptResult);
 				}
+
+#ifdef POLICY_ALLOWS_GP_BUYS_FOR_GOLD
+				UnitClassTypes eUnitClass = pUnit->getUnitClassType();
+				if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_WRITER") ||
+					eUnitClass == GC.getInfoTypeForString("UNITCLASS_ARTIST") ||
+					eUnitClass == GC.getInfoTypeForString("UNITCLASS_MUSICIAN") ||
+					eUnitClass == GC.getInfoTypeForString("UNITCLASS_SCIENTIST") ||
+					eUnitClass == GC.getInfoTypeForString("UNITCLASS_ENGINEER") ||
+					eUnitClass == GC.getInfoTypeForString("UNITCLASS_MERCHANT") ||
+					eUnitClass == GC.getInfoTypeForString("UNITCLASS_GREAT_GENERAL") ||
+					eUnitClass == GC.getInfoTypeForString("UNITCLASS_GREAT_ADMIRAL"))
+				{
+					GET_PLAYER(getOwner()).ChangeNumGoldPurchasedGreatPerson(1);
+					GET_PLAYER(getOwner()).SetGoldGreatPerson(eUnitClass, true);
+				}
+#endif
 
 #ifdef EG_REPLAYDATASET_NUMTRAINEDUNITS
 				if (GC.getUnitInfo(eUnitType)->GetUnitCombatType() != NO_UNITCOMBAT)

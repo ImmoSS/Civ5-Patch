@@ -643,6 +643,17 @@ CvPlayer::CvPlayer() :
 #ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
 	, m_ppaaiYieldForEachBuildingInEmpire("CvPlayer::m_ppaaiYieldForEachBuildingInEmpire", m_syncArchive)
 #endif
+#ifdef POLICY_ALLOWS_GP_BUYS_FOR_GOLD
+	, m_iNumGoldPurchasedGreatPerson(0)
+	, m_bGoldWriter(false)
+	, m_bGoldArtist(false)
+	, m_bGoldMusician(false)
+	, m_bGoldScientist(false)
+	, m_bGoldEngineer(false)
+	, m_bGoldMerchant(false)
+	, m_bGoldGeneral(false)
+	, m_bGoldAdmiral(false)
+#endif
 {
 	m_pPlayerPolicies = FNEW(CvPlayerPolicies, c_eCiv5GameplayDLL, 0);
 	m_pEconomicAI = FNEW(CvEconomicAI, c_eCiv5GameplayDLL, 0);
@@ -1439,6 +1450,17 @@ void CvPlayer::uninit()
 	m_bHasAdoptedStateReligion = false;
 	m_bAlliesGreatPersonBiasApplied = false;
 	m_lastGameTurnInitialAIProcessed = -1;
+#ifdef POLICY_ALLOWS_GP_BUYS_FOR_GOLD
+	m_iNumGoldPurchasedGreatPerson = 0;
+	m_bGoldWriter = false;
+	m_bGoldArtist = false;
+	m_bGoldMusician = false;
+	m_bGoldScientist = false;
+	m_bGoldEngineer = false;
+	m_bGoldMerchant = false;
+	m_bGoldGeneral = false;
+	m_bGoldAdmiral = false;
+#endif
 
 	m_eID = NO_PLAYER;
 }
@@ -27650,6 +27672,37 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #endif
 
+#ifdef POLICY_ALLOWS_GP_BUYS_FOR_GOLD
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1012)
+	{
+# endif
+		kStream >> m_iNumGoldPurchasedGreatPerson;
+		kStream >> m_bGoldWriter;
+		kStream >> m_bGoldArtist;
+		kStream >> m_bGoldMusician;
+		kStream >> m_bGoldScientist;
+		kStream >> m_bGoldEngineer;
+		kStream >> m_bGoldMerchant;
+		kStream >> m_bGoldGeneral;
+		kStream >> m_bGoldAdmiral;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iNumGoldPurchasedGreatPerson = 0;
+		m_bGoldWriter = false;
+		m_bGoldArtist = false;
+		m_bGoldMusician = false;
+		m_bGoldScientist = false;
+		m_bGoldEngineer = false;
+		m_bGoldMerchant = false;
+		m_bGoldGeneral = false;
+		m_bGoldAdmiral = false;
+	}
+# endif
+#endif
+
 	m_pPlayerPolicies->Read(kStream);
 	m_pEconomicAI->Read(kStream);
 	m_pCitySpecializationAI->Read(kStream);
@@ -28348,6 +28401,17 @@ void CvPlayer::Write(FDataStream& kStream) const
 
 #ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
 	kStream << m_ppaaiYieldForEachBuildingInEmpire;
+#endif
+#ifdef POLICY_ALLOWS_GP_BUYS_FOR_GOLD
+	kStream << m_iNumGoldPurchasedGreatPerson;
+	kStream << m_bGoldWriter;
+	kStream << m_bGoldArtist;
+	kStream << m_bGoldMusician;
+	kStream << m_bGoldScientist;
+	kStream << m_bGoldEngineer;
+	kStream << m_bGoldMerchant;
+	kStream << m_bGoldGeneral;
+	kStream << m_bGoldAdmiral;
 #endif
 
 	m_pPlayerPolicies->Write(kStream);
@@ -29883,6 +29947,92 @@ void CvPlayer::ChangeYieldForEachBuildingInEmpire(BuildingTypes eBuilding, Yield
 		Firaxis::Array<int, NUM_YIELD_TYPES> yield = m_ppaaiYieldForEachBuildingInEmpire[eBuilding];
 		yield[int(eIndex)] += iChange;
 		m_ppaaiYieldForEachBuildingInEmpire.setAt(eBuilding, yield);
+	}
+}
+#endif
+
+#ifdef POLICY_ALLOWS_GP_BUYS_FOR_GOLD
+int CvPlayer::GetNumGoldPurchasedGreatPerson() const
+{
+	return m_iNumGoldPurchasedGreatPerson;
+}
+
+void CvPlayer::ChangeNumGoldPurchasedGreatPerson(int iChange)
+{
+	m_iNumGoldPurchasedGreatPerson += iChange;
+}
+
+bool CvPlayer::IsGoldGreatPerson(UnitClassTypes eUnitClass) const
+{
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_WRITER"))
+	{
+		return m_bGoldWriter;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_ARTIST"))
+	{
+		return m_bGoldArtist;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_MUSICIAN"))
+	{
+		return m_bGoldMusician;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_SCIENTIST"))
+	{
+		return m_bGoldScientist;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_ENGINEER"))
+	{
+		return m_bGoldEngineer;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_MERCHANT"))
+	{
+		return m_bGoldMerchant;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_GREAT_GENERAL"))
+	{
+		return m_bGoldGeneral;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_GREAT_ADMIRAL"))
+	{
+		return m_bGoldAdmiral;
+	}
+
+	return false;
+}
+
+void CvPlayer::SetGoldGreatPerson(UnitClassTypes eUnitClass, bool bValue)
+{
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_WRITER"))
+	{
+		m_bGoldWriter = bValue;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_ARTIST"))
+	{
+		m_bGoldArtist = bValue;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_MUSICIAN"))
+	{
+		m_bGoldMusician = bValue;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_SCIENTIST"))
+	{
+		m_bGoldScientist = bValue;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_ENGINEER"))
+	{
+		m_bGoldEngineer = bValue;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_MERCHANT"))
+	{
+		m_bGoldMerchant = bValue;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_GREAT_GENERAL"))
+	{
+		m_bGoldGeneral = bValue;
+	}
+	if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_GREAT_ADMIRAL"))
+	{
+		m_bGoldAdmiral = bValue;
 	}
 }
 #endif
