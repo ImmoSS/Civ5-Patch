@@ -13559,6 +13559,26 @@ int CvPlayer::GetHappinessFromPolicies() const
 		iHappiness += (iCount * GetPlayerPolicies()->GetNumericModifier(POLICYMOD_HAPPINESS_PER_TRADE_ROUTE_TO_CAP));
 	}
 #endif
+#ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_MINOR
+	int iCount = 0;
+	for (uint ui = 0; ui < GC.getGame().GetGameTrade()->m_aTradeConnections.size(); ui++)
+	{
+		if (GC.getGame().GetGameTrade()->IsTradeRouteIndexEmpty(ui))
+		{
+			continue;
+		}
+
+		CvCity* pOriginCity = CvGameTrade::GetOriginCity(GC.getGame().GetGameTrade()->m_aTradeConnections[ui]);
+		CvCity* pDestCity = CvGameTrade::GetDestCity(GC.getGame().GetGameTrade()->m_aTradeConnections[ui]);
+		if (pOriginCity->getOwner() == GetID() && GET_PLAYER(pDestCity->getOwner()).isMinorCiv())
+		{
+			iCount++;
+		}
+	}
+
+	iHappiness += (iCount * GetPlayerPolicies()->GetNumericModifier(POLICYMOD_HAPPINESS_PER_TRADE_ROUTE_TO_MINOR));
+
+#endif
 
 	return iHappiness;
 }

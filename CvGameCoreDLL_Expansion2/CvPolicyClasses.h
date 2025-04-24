@@ -310,6 +310,9 @@ public:
 #ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_CAP
 	int GetHappinessPerTradeRouteToCap() const;
 #endif
+#ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_MINOR
+	int GetHappinessPerTradeRouteToMinor() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -533,6 +536,9 @@ private:
 #ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_CAP
 	int m_iHappinessPerTradeRouteToCap;
 #endif
+#ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_MINOR
+	int m_iHappinessPerTradeRouteToMinor;
+#endif
 
 	// Arrays
 	std::multimap<int, int> m_FreePromotionUnitCombats;
@@ -738,6 +744,9 @@ enum PolicyModifierType
 #endif
 #ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_CAP
 	POLICYMOD_HAPPINESS_PER_TRADE_ROUTE_TO_CAP,
+#endif
+#ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_MINOR
+	POLICYMOD_HAPPINESS_PER_TRADE_ROUTE_TO_MINOR,
 #endif
 };
 
