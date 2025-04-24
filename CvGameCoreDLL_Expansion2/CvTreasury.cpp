@@ -9,7 +9,7 @@
 #include "CvGameCoreDLLPCH.h"
 #include "CvGameCoreUtils.h"
 #include "ICvDLLUserInterface.h"
-#ifdef GOLD_PER_CS_FRIENDSHIP
+#ifdef POLICY_GOLD_PER_CS_FRIENDSHIP
 #include "CvMinorCivAI.h"
 #endif
 
@@ -488,7 +488,7 @@ int CvTreasury::GetGoldPerTurnFromReligion() const
 	return iGoldFromReligion;
 }
 
-#ifdef GOLD_PER_CS_FRIENDSHIP
+#ifdef POLICY_GOLD_PER_CS_FRIENDSHIP
 /// Gold Per Turn from Policies
 int CvTreasury::GetGoldPerTurnFromPolicies() const
 {
@@ -507,7 +507,7 @@ int CvTreasury::GetGoldPerTurnFromPolicies() const
 			iGoldPerCSFriendship += 1;
 		}
 	}
-	iGoldPerCSFriendship *= m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_GOLD_PER_CS_FRIENDSHIP);
+	iGoldPerCSFriendship *= m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_POLICY_GOLD_PER_CS_FRIENDSHIP);
 
 	iGoldFromPolicies += iGoldPerCSFriendship;
 
@@ -538,7 +538,7 @@ int CvTreasury::CalculateGrossGoldTimes100()
 	// Religion
 	iNetGold += GetGoldPerTurnFromReligion() * 100;
 
-#ifdef GOLD_PER_CS_FRIENDSHIP
+#ifdef POLICY_GOLD_PER_CS_FRIENDSHIP
 	// Policies
 	iNetGold += GetGoldPerTurnFromPolicies() * 100;
 #endif

@@ -196,7 +196,7 @@ protected:
 	static int lGetCityConnectionGold(lua_State* L);
 	static int lGetCityConnectionGoldTimes100(lua_State* L);
 	static int lGetGoldPerTurnFromReligion(lua_State* L);
-#ifdef GOLD_PER_CS_FRIENDSHIP
+#ifdef POLICY_GOLD_PER_CS_FRIENDSHIP
 	static int lGetGoldPerTurnFromPolicies(lua_State* L);
 #endif
 	static int lGetGoldPerTurnFromTradeRoutes(lua_State* L);
