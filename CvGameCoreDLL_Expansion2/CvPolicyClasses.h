@@ -304,6 +304,9 @@ public:
 #ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
 	int GetCapitalCultureModPerDiplomat() const;
 #endif
+#ifdef POLICY_EXTRA_TRADE_ROUTES
+	int GetExtraTradeRoutes() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -521,6 +524,9 @@ private:
 #ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
 	int m_iCapitalCultureModPerDiplomat;
 #endif
+#ifdef POLICY_EXTRA_TRADE_ROUTES
+	int m_iExtraTradeRoutes;
+#endif
 
 	// Arrays
 	std::multimap<int, int> m_FreePromotionUnitCombats;
@@ -720,6 +726,9 @@ enum PolicyModifierType
 #endif
 #ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
 	POLICYMOD_CAPITAL_CULTURE_MOD_PER_DIPLOMAT,
+#endif
+#ifdef POLICY_EXTRA_TRADE_ROUTES
+	POLICYMOD_EXTRA_TRADE_ROUTES,
 #endif
 };
 

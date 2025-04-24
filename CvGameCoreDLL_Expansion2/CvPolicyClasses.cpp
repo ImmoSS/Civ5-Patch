@@ -268,6 +268,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
 	m_iCapitalCultureModPerDiplomat(0),
 #endif
+#ifdef POLICY_EXTRA_TRADE_ROUTES
+	m_iExtraTradeRoutes(0),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -550,6 +553,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
 	m_iCapitalCultureModPerDiplomat = kResults.GetInt("CapitalCultureModPerDiplomat");
+#endif
+#ifdef POLICY_EXTRA_TRADE_ROUTES
+	m_iExtraTradeRoutes = kResults.GetInt("ExtraTradeRoutes");
 #endif
 
 	//Arrays
@@ -2178,6 +2184,14 @@ int CvPolicyEntry::GetCapitalCultureModPerDiplomat() const
 }
 #endif
 
+#ifdef POLICY_EXTRA_TRADE_ROUTES
+///
+int CvPolicyEntry::GetExtraTradeRoutes() const
+{
+	return m_iExtraTradeRoutes;
+}
+#endif
+
 //=====================================
 // CvPolicyBranchEntry
 //=====================================
@@ -3074,6 +3088,11 @@ int CvPlayerPolicies::GetNumericModifier(PolicyModifierType eType)
 #ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
 			case POLICYMOD_CAPITAL_CULTURE_MOD_PER_DIPLOMAT:
 				rtnValue += m_pPolicies->GetPolicyEntry(i)->GetCapitalCultureModPerDiplomat();
+				break;
+#endif
+#ifdef POLICY_EXTRA_TRADE_ROUTES
+			case POLICYMOD_EXTRA_TRADE_ROUTES:
+				rtnValue += m_pPolicies->GetPolicyEntry(i)->GetExtraTradeRoutes();
 				break;
 #endif
 			case POLICYMOD_OPEN_BORDERS_TOURISM_MODIFIER:
