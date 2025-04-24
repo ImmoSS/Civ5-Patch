@@ -3911,7 +3911,7 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 			}
 		}
 		iVotes += iCityStateVotes;
-#if defined POLICY_MAX_EXTRA_VOTES_FROM_MINORS || defined PATRONAGE_FINISHER_REWORK
+#if defined POLICY_MAX_EXTRA_VOTES_FROM_MINORS || defined POLICY_EXTRA_VOTES
 		int iPolicyVotes = 0;
 #endif
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
@@ -4048,7 +4048,7 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 				sTemp << iWonderVotes;
 				pMember->sVoteSources += sTemp.toUTF8();
 			}
-#if defined PATRONAGE_FINISHER_REWORK || defined POLICY_MAX_EXTRA_VOTES_FROM_MINORS
+#if defined POLICY_EXTRA_VOTES || defined POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 			if (iPolicyVotes > 0)
 			{
 				Localization::String sTemp = Localization::Lookup("TXT_KEY_LEAGUE_OVERVIEW_MEMBER_DETAILS_POLICY_VOTES");
