@@ -8789,7 +8789,15 @@ int CvCity::getJONSCulturePerTurn() const
 #ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
 	if (isCapital())
 	{
-		iModifier += GET_PLAYER(getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CAPITAL_CULTURE_MOD_PER_DIPLOMAT);
+		int iNumDiplomats = 0;
+		for (uint ui = 0; ui < GET_PLAYER(getOwner()).GetEspionage()->m_aSpyList.size(); ui++)
+		{
+			if (GET_PLAYER(getOwner()).GetEspionage()->IsDiplomat(ui))
+			{
+				iNumDiplomats++;
+			}	
+		}
+		iModifier += iNumDiplomats * GET_PLAYER(getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CAPITAL_CULTURE_MOD_PER_DIPLOMAT);
 	}
 #endif
 
