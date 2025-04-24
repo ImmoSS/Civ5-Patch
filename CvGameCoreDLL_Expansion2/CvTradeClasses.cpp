@@ -3361,7 +3361,7 @@ uint CvPlayerTrade::GetNumTradeRoutesPossible (void)
 		}
 	}
 
-#ifdef NQ_EXTRA_TRADE_ROUTES_FROM_BELIEF
+#ifdef BELIEF_EXTRA_TRADE_ROUTES
 	ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetFounderBenefitsReligion(m_pPlayer->GetID());
 	if (eFoundedReligion && eFoundedReligion != NO_RELIGION)
 	{

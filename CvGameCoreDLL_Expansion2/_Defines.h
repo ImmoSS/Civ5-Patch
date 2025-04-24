@@ -511,7 +511,7 @@
 /// allow golden ages from beliefs
 #define NQ_GOLDEN_AGE_TURNS_FROM_BELIEF
 // extra trade routes from beliefs
-#define NQ_EXTRA_TRADE_ROUTES_FROM_BELIEF
+#define BELIEF_EXTRA_TRADE_ROUTES
 ///
 #define MISSIONARY_ZEAL_AUTO_RELIGION_SPREAD
 ///
