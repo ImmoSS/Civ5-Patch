@@ -27631,6 +27631,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	{
 # endif
 		kStream >> m_ppaaiYieldForEachBuildingInEmpire;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
 	else
 	{
@@ -27646,6 +27647,7 @@ void CvPlayer::Read(FDataStream& kStream)
 			m_ppaaiYieldForEachBuildingInEmpire.setAt(i, yield);
 		}
 	}
+#endif
 #endif
 
 	m_pPlayerPolicies->Read(kStream);
