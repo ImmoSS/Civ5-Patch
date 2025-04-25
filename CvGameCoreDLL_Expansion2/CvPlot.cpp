@@ -4258,7 +4258,11 @@ bool CvPlot::isValidDomainForAction(const CvUnit& unit) const
 	switch(unit.getDomainType())
 	{
 	case DOMAIN_SEA:
+#ifdef FIX_DOMAIN_SEA_ZOC
+		return (isWater() || isCity() && unit.getOwner() == getOwner() || unit.canMoveAllTerrain());
+#else
 		return (isWater() || unit.canMoveAllTerrain());
+#endif
 		break;
 
 	case DOMAIN_AIR:
