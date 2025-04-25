@@ -990,6 +990,37 @@ void CvGameTrade::ClearAllCityStateTradeRoutes (void)
 	}
 }
 
+#ifdef POLICY_ONLY_INTERNAL_TRADE_ROUTE_YIELD_MODIFIER
+//	--------------------------------------------------------------------------------
+void CvGameTrade::ClearAllTradeRoutesByType(TradeConnectionType eConnectionType)
+{
+	for (uint ui = 0; ui < m_aTradeConnections.size(); ui++)
+	{
+		if (IsTradeRouteIndexEmpty(ui))
+		{
+			continue;
+		}
+
+		TradeConnectionType eType = m_aTradeConnections[ui].m_eConnectionType;
+		if (eType == eConnectionType)
+		{
+			// if the destination was wiped, the origin gets a trade unit back
+			if (GET_PLAYER(m_aTradeConnections[ui].m_eOriginOwner).isAlive())
+			{
+				UnitTypes eUnitType = GET_PLAYER(m_aTradeConnections[ui].m_eOriginOwner).GetTrade()->GetTradeUnit(m_aTradeConnections[ui].m_eDomain);
+				CvAssertMsg(eUnitType != NO_UNIT, "No trade unit found");
+				if (eUnitType != NO_UNIT)
+				{
+					GET_PLAYER(m_aTradeConnections[ui].m_eOriginOwner).initUnit(eUnitType, m_aTradeConnections[ui].m_iOriginX, m_aTradeConnections[ui].m_iOriginY, UNITAI_TRADE_UNIT);
+				}
+			}
+
+			EmptyTradeRoute(ui);
+		}
+	}
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 /// Called when war is declared between teams
 void CvGameTrade::CancelTradeBetweenTeams (TeamTypes eTeam1, TeamTypes eTeam2)

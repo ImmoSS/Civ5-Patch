@@ -25122,6 +25122,13 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 			changePlotExtraYieldFromTradeRoute(eYield, iMod);
 #endif
 	}
+#ifdef POLICY_ONLY_INTERNAL_TRADE_ROUTE_YIELD_MODIFIER
+	iMod = pPolicy->GetInternalTradeRouteYieldModifier() * iChange;
+	if (iMod > 0)
+	{
+		GC.getGame().GetGameTrade()->ClearAllTradeRoutesByType(TRADE_CONNECTION_INTERNATIONAL);
+	}
+#endif
 
 	for(iI = 0; iI < GC.getNumUnitCombatClassInfos(); iI++)
 	{
