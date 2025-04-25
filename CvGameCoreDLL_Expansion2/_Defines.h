@@ -1236,6 +1236,8 @@
 #define PREGAMEAPI_GET_NETID
 ///
 #define SHOW_ACTUAL_POPULATION
+/// Adds UI Drafts screen for staging room -- each player bans X civs and then picks from random set of Y civs
+#define INGAME_CIV_DRAFTER
 /*OTHER CHANGES END*/
 
 
