@@ -4753,6 +4753,25 @@ CvString CvCityCulture::GetTourismTooltip()
 		{
 			if(m_pCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
 			{
+#ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
+				int iTechEnhancedTourism = GC.getBuildingInfo(eBuilding)->GetTechEnhancedTourism();
+				if (iTechEnhancedTourism > 0 && GET_TEAM(m_pCity->getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getBuildingInfo(eBuilding)->GetEnhancedYieldTech()))
+				{
+					if (szRtnValue.length() > 0)
+					{
+						szRtnValue += "[NEWLINE][NEWLINE]";
+					}
+					szRtnValue += GetLocalizedText("TXT_KEY_CO_CITY_TOURISM_TECH_ENHANCED", iTechEnhancedTourism + GET_PLAYER(m_pCity->getOwner()).GetPlayerPolicies()->GetBuildingClassTourismChanges(eBuildingClass));
+				}
+				else if (GET_PLAYER(m_pCity->getOwner()).GetPlayerPolicies()->GetBuildingClassTourismChanges(eBuildingClass) > 0)
+				{
+					if (szRtnValue.length() > 0)
+					{
+						szRtnValue += "[NEWLINE][NEWLINE]";
+					}
+					szRtnValue += GetLocalizedText("TXT_KEY_CO_CITY_TOURISM_TECH_ENHANCED", GET_PLAYER(m_pCity->getOwner()).GetPlayerPolicies()->GetBuildingClassTourismChanges(eBuildingClass));
+				}
+#else
 				int iTechEnhancedTourism = GC.getBuildingInfo(eBuilding)->GetTechEnhancedTourism();
 				if (iTechEnhancedTourism > 0 && GET_TEAM(m_pCity->getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getBuildingInfo(eBuilding)->GetEnhancedYieldTech()))
 				{
@@ -4762,6 +4781,7 @@ CvString CvCityCulture::GetTourismTooltip()
 					}
 					szRtnValue += GetLocalizedText("TXT_KEY_CO_CITY_TOURISM_TECH_ENHANCED", iTechEnhancedTourism);
 				}
+#endif
 			}
 		}
 	}

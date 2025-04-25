@@ -846,7 +846,9 @@ local function GetHelpTextForBuilding( buildingID, bExcludeName, bExcludeHeader,
 			end
 		end
 		if enhancedYieldTechName and (building.TechEnhancedTourism or 0) ~= 0 then
-			tip = S("%s %s %+i[ICON_TOURISM]", tip, enhancedYieldTechName, building.TechEnhancedTourism )
+			tip = S("%s %+i[ICON_TOURISM]", tip, building.TechEnhancedTourism + activePlayer:GetBuildingClassTourismChanges(buildingClassID) )
+		elseif (activePlayer:GetBuildingClassTourismChanges(buildingClassID) or 0) ~= 0 then
+			tip = S("%s %+i[ICON_TOURISM]", tip, activePlayer:GetBuildingClassTourismChanges(buildingClassID) )
 		end
 		tips:insertIf( #tip > 0 and L"TXT_KEY_CITYVIEW_TOURISM_TEXT" .. ":" .. tip )
 
