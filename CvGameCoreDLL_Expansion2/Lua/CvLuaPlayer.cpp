@@ -9760,6 +9760,15 @@ int CvLuaPlayer::lGetPlayerBuildingClassYieldChange(lua_State* L)
 	if(pkPlayer)
 	{
 		int iChange = pkPlayer->GetBuildingClassYieldChange(eBuildingClass, eYieldType);
+#ifdef BUILDING_INCREASE_BONUSES_PER_ERA
+		if (eYieldType != YIELD_FOOD && eYieldType != YIELD_FAITH)
+		{
+			CvCivilizationInfo& playerCivilizationInfo = pkPlayer->getCivilizationInfo();
+			BuildingTypes eBuilding = (BuildingTypes)playerCivilizationInfo.getCivilizationBuildings(eBuildingClass);
+			CvBuildingEntry* pBuildingInfo = GC.getBuildingInfo(eBuilding);
+			iChange += pBuildingInfo->GetIncreaseBonusesPerEra() * pkPlayer->GetCurrentEra();
+		}
+#endif
 		lua_pushinteger(L, iChange);
 
 		return 1;

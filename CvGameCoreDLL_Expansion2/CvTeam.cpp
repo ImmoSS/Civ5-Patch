@@ -7030,7 +7030,10 @@ void CvTeam::SetCurrentEra(EraTypes eNewValue)
 									}
 									else if ((YieldTypes)k == YIELD_FAITH)
 									{
-										pLoopCity->ChangeFaithPerTurnFromBuildings(pBuildingInfo->GetIncreaseBonusesPerEra() * (eNewValue - GetCurrentEra()));
+										// pLoopCity->ChangeFaithPerTurnFromBuildings(pBuildingInfo->GetIncreaseBonusesPerEra() * (eNewValue - GetCurrentEra()));
+									}
+									else if ((YieldTypes)k == YIELD_FOOD)
+									{
 									}
 									else
 									{
