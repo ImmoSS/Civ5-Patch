@@ -8795,7 +8795,7 @@ int CvCity::getJONSCulturePerTurn() const
 		int iNumDiplomats = 0;
 		for (uint ui = 0; ui < GET_PLAYER(getOwner()).GetEspionage()->m_aSpyList.size(); ui++)
 		{
-			if (GET_PLAYER(getOwner()).GetEspionage()->IsDiplomat(ui))
+			if (GET_PLAYER(getOwner()).GetEspionage()->IsDiplomat(ui) && GET_PLAYER(getOwner()).GetEspionage()->m_aSpyList[ui].m_eSpyState == SPY_STATE_SCHMOOZE)
 			{
 				iNumDiplomats++;
 			}	
