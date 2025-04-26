@@ -313,6 +313,9 @@ public:
 #ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_MINOR
 	int GetHappinessPerTradeRouteToMinor() const;
 #endif
+#ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
+	int GetLeagueSessionYieldBoostPerDelegate(int i) const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -584,6 +587,9 @@ private:
 #endif
 #ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
 	int* m_paiBuildingClassTourismChanges;
+#endif
+#ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
+	int* m_paiLeagueSessionYieldBoostPerDelegate;
 #endif
 	int* m_piFlavorValue;
 };
@@ -881,6 +887,9 @@ public:
 
 #ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
 	int GetBuildingClassTourismChanges(BuildingClassTypes eBuildingClass);
+#endif
+#ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
+	int GetLeagueSessionYieldBoostPerDelegateChanges(YieldTypes eYield);
 #endif
 
 private:
