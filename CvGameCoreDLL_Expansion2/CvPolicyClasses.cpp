@@ -277,6 +277,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_MINOR
 	m_iHappinessPerTradeRouteToMinor(0),
 #endif
+#ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
+	m_paiLeagueSessionYieldBoostPerDelegate(0),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -315,6 +318,9 @@ CvPolicyEntry::~CvPolicyEntry(void)
 	SAFE_DELETE_ARRAY(m_paiTourismOnUnitCreation);
 #ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
 	SAFE_DELETE_ARRAY(m_paiBuildingClassTourismChanges);
+#endif
+#ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
+	SAFE_DELETE_ARRAY(m_paiLeagueSessionYieldBoostPerDelegate);
 #endif
 
 //	SAFE_DELETE_ARRAY(m_pabHurry);
@@ -609,6 +615,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	kUtility.PopulateArrayByValue(m_paiTourismOnUnitCreation, "UnitClasses", "Policy_TourismOnUnitCreation", "UnitClassType", "PolicyType", szPolicyType, "Tourism");
 #ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
 	kUtility.PopulateArrayByValue(m_paiBuildingClassTourismChanges, "BuildingClasses", "Policy_BuildingClassTourismChanges", "BuildingClassType", "PolicyType", szPolicyType, "TourismChange");
+#endif
+#ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
+	kUtility.PopulateArrayByValue(m_paiLeagueSessionYieldBoostPerDelegate, "YieldTypes", "Policy_LeagueSessionYieldBoostPerDelegate", "YieldType", "PolicyType", szPolicyType, "Yield");
 #endif
 
 	//BuildingYieldModifiers
@@ -2217,6 +2226,16 @@ int CvPolicyEntry::GetHappinessPerTradeRouteToCap() const
 int CvPolicyEntry::GetHappinessPerTradeRouteToMinor() const
 {
 	return m_iHappinessPerTradeRouteToMinor;
+}
+#endif
+
+#ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
+///
+int CvPolicyEntry::GetLeagueSessionYieldBoostPerDelegate(int i) const
+{
+	CvAssertMsg(i < GC.getNumYieldInfos(), "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	return m_paiLeagueSessionYieldBoostPerDelegate[i];
 }
 #endif
 
@@ -4808,6 +4827,25 @@ int CvPlayerPolicies::GetBuildingClassTourismChanges(BuildingClassTypes eBuildin
 		if (m_pabHasPolicy[i] && !IsPolicyBlocked((PolicyTypes)i))
 		{
 			rtnValue += m_pPolicies->GetPolicyEntry(i)->GetBuildingClassTourismChanges(eBuildingClass);
+		}
+	}
+
+	return rtnValue;
+}
+#endif
+
+#ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
+///
+int CvPlayerPolicies::GetLeagueSessionYieldBoostPerDelegateChanges(YieldTypes eYield)
+{
+	int rtnValue = 0;
+
+	for (int i = 0; i < m_pPolicies->GetNumPolicies(); i++)
+	{
+		// Do we have this policy?
+		if (m_pabHasPolicy[i] && !IsPolicyBlocked((PolicyTypes)i))
+		{
+			rtnValue += m_pPolicies->GetPolicyEntry(i)->GetLeagueSessionYieldBoostPerDelegate(eYield);
 		}
 	}
 
