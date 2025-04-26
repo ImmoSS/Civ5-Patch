@@ -3400,7 +3400,7 @@ uint CvPlayerTrade::GetNumTradeRoutesPossible (void)
 		iNumRoutes += pReligion->m_Beliefs.GetExtraTradeRoutes();
 	}
 #endif
-#ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
+#ifdef POLICY_EXTRA_TRADE_ROUTES
 	iNumRoutes += m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_EXTRA_TRADE_ROUTES);
 #endif
 
