@@ -2243,6 +2243,89 @@ void CvUnit::doCommand(CommandTypes eCommand, int iData1, int iData2)
 }
 
 //	--------------------------------------------------------------------------------
+#ifdef BUMP_UNITS_OUT_MINOR_LAND
+bool CvUnit::canEnterTerritory(TeamTypes eTeam, bool bIgnoreRightOfPassage, bool bIsCity, bool bIsDeclareWarMove, bool bIsMinor) const
+{
+	VALIDATE_OBJECT
+
+		if (eTeam == NO_TEAM)
+		{
+			return true;
+		}
+
+	TeamTypes eMyTeam = GET_PLAYER(getOwner()).getTeam();
+
+	CvTeam& kMyTeam = GET_TEAM(eMyTeam);
+	CvTeam& kTheirTeam = GET_TEAM(eTeam);
+
+	if (kMyTeam.isFriendlyTerritory(eTeam))
+	{
+		return true;
+	}
+
+	if (isEnemy(eTeam))
+	{
+		return true;
+	}
+
+	if (isRivalTerritory())
+	{
+		return true;
+	}
+
+	if (kTheirTeam.isMinorCiv())
+	{
+		if (bIsMinor)
+		{
+			return false;
+		}
+
+		// Minors can't intrude into one another's territory
+		if (!kMyTeam.isMinorCiv())
+		{
+			// If we haven't yet met the Minor we can move in
+			// Do we need to do anything special here for human VS AI civs?  AIs might get confused
+			if (!kMyTeam.isHasMet(eTeam))
+			{
+				return true;
+			}
+
+			if (bIsCity && bIsDeclareWarMove)
+			{
+				return false;
+			}
+
+			// The remaining checks are only for AI major vs. AI Minor, humans can always enter a minor's territory.
+			if (isHuman())
+				return true;
+
+			CvMinorCivAI* pMinorAI = GET_PLAYER(kTheirTeam.getLeaderID()).GetMinorCivAI();
+
+			// Is this an excluded unit that doesn't cause anger?
+			bool bAngerFreeUnit = IsAngerFreeUnit();
+			// Player can earn Open Borders with enough Friendship
+			bool bHasOpenBorders = pMinorAI->IsPlayerHasOpenBorders(getOwner());
+			// If already intruding on this minor, okay to do it some more
+			bool bIntruding = pMinorAI->IsMajorIntruding(getOwner());
+
+			if (bAngerFreeUnit || bHasOpenBorders || bIntruding)
+			{
+				return true;
+			}
+		}
+	}
+
+	if (!bIgnoreRightOfPassage)
+	{
+		if (kTheirTeam.IsAllowsOpenBordersToTeam(eMyTeam))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+#else
 bool CvUnit::canEnterTerritory(TeamTypes eTeam, bool bIgnoreRightOfPassage, bool bIsCity, bool bIsDeclareWarMove) const
 {
 	VALIDATE_OBJECT
@@ -2319,6 +2402,7 @@ bool CvUnit::canEnterTerritory(TeamTypes eTeam, bool bIgnoreRightOfPassage, bool
 
 	return false;
 }
+#endif
 
 //	--------------------------------------------------------------------------------
 bool CvUnit::canEnterTerrain(const CvPlot& enterPlot, byte bMoveFlags) const
@@ -3167,6 +3251,161 @@ void CvUnit::move(CvPlot& targetPlot, bool bShow)
 
 
 //	--------------------------------------------------------------------------------
+#ifdef BUMP_UNITS_OUT_MINOR_LAND
+bool CvUnit::jumpToNearestValidPlot(bool bIsMinor)
+{
+	VALIDATE_OBJECT
+		CvCity* pNearestCity;
+	CvPlot* pLoopPlot;
+	CvPlot* pBestPlot;
+	int iValue;
+	int iBestValue;
+	int iI;
+
+	CvAssertMsg(!isAttacking(), "isAttacking did not return false as expected");
+	CvAssertMsg(!isFighting(), "isFighting did not return false as expected");
+
+	pNearestCity = GC.getMap().findCity(getX(), getY(), getOwner());
+
+	iBestValue = INT_MAX;
+	pBestPlot = NULL;
+
+#ifdef FREE_UNIT_AT_STARTING_PLOT
+	if (plot() && plot()->isValidDomainForLocation(*this))
+	{
+		if (plot()->IsFriendlyTerritory(getOwner()))
+		{
+			if (!(plot()->isCity() && plot()->getPlotCity()->getOwner() != getOwner()))
+			{
+				if (plot()->getNumFriendlyUnitsOfType(this) < GC.getPLOT_UNIT_LIMIT() + 1)
+				{
+					CvAssertMsg(!atPlot(*plot()), "atPlot(pLoopPlot) did not return false as expected");
+
+					if ((getDomainType() != DOMAIN_AIR) || plot()->isFriendlyCity(*this, true))
+					{
+						if (getDomainType() != DOMAIN_SEA || (plot()->isFriendlyCity(*this, true) && plot()->isCoastalLand()) || plot()->isWater())
+						{
+#ifdef FIX_JUMP_TO_NEAREST_CITY
+							if (!(plot()->getPlotCity() && plot()->getOwner() != getOwner()))
+							{
+								iBestValue = 0;
+								pBestPlot = plot();
+							}
+#else
+							iBestValue = 0;
+							pBestPlot = plot();
+#endif
+						}
+					}
+				}
+			}
+		}
+	}
+#endif
+
+	for (iI = 0; iI < GC.getMap().numPlots(); iI++)
+	{
+		pLoopPlot = GC.getMap().plotByIndexUnchecked(iI);
+
+		if (pLoopPlot && pLoopPlot->isValidDomainForLocation(*this))
+		{
+			if (canMoveInto(*pLoopPlot))
+			{
+				if (pLoopPlot->getNumFriendlyUnitsOfType(this) < GC.getPLOT_UNIT_LIMIT())
+				{
+					// Can only jump to a plot if we can enter the territory, and it's NOT enemy territory OR we're a barb
+					if (canEnterTerritory(pLoopPlot->getTeam(), false, false, false, bIsMinor) && (isBarbarian() || !isEnemy(pLoopPlot->getTeam(), pLoopPlot)) && !pLoopPlot->isMountain())
+					{
+						CvAssertMsg(!atPlot(*pLoopPlot), "atPlot(pLoopPlot) did not return false as expected");
+
+						if ((getDomainType() != DOMAIN_AIR) || pLoopPlot->isFriendlyCity(*this, true))
+						{
+							if (getDomainType() != DOMAIN_SEA || (pLoopPlot->isFriendlyCity(*this, true) && pLoopPlot->isCoastalLand()) || pLoopPlot->isWater())
+							{
+#ifdef FIX_JUMP_TO_NEAREST_CITY
+								if (!(pLoopPlot->getPlotCity() && pLoopPlot->getOwner() != getOwner()))
+								{
+									if (pLoopPlot->isRevealed(getTeam()))
+									{
+										iValue = (plotDistance(getX(), getY(), pLoopPlot->getX(), pLoopPlot->getY()) * 2);
+
+										if (pNearestCity != NULL)
+										{
+											iValue += plotDistance(pLoopPlot->getX(), pLoopPlot->getY(), pNearestCity->getX(), pNearestCity->getY());
+										}
+
+										if (pLoopPlot->area() != area())
+										{
+											iValue *= 3;
+										}
+
+										if (iValue < iBestValue)
+										{
+											iBestValue = iValue;
+											pBestPlot = pLoopPlot;
+										}
+									}
+								}
+#else
+								if (pLoopPlot->isRevealed(getTeam()))
+								{
+									iValue = (plotDistance(getX(), getY(), pLoopPlot->getX(), pLoopPlot->getY()) * 2);
+
+									if (pNearestCity != NULL)
+									{
+										iValue += plotDistance(pLoopPlot->getX(), pLoopPlot->getY(), pNearestCity->getX(), pNearestCity->getY());
+									}
+
+									if (pLoopPlot->area() != area())
+									{
+										iValue *= 3;
+									}
+
+									if (iValue < iBestValue)
+									{
+										iBestValue = iValue;
+										pBestPlot = pLoopPlot;
+									}
+								}
+#endif
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (GC.getLogging() && GC.getAILogging())
+	{
+		CvString strLogString;
+		if (pBestPlot != NULL)
+		{
+			strLogString.Format("Jump to nearest valid plot by %s , X: %d, Y: %d, From X: %d, From Y: %d", getName().GetCString(),
+				pBestPlot->getX(), pBestPlot->getY(), getX(), getY());
+			GET_PLAYER(m_eOwner).GetHomelandAI()->LogHomelandMessage(strLogString);
+		}
+		else
+		{
+			strLogString.Format("Can't find a valid plot within range. %s deleted, X: %d, Y: %d", getName().GetCString(), getX(), getY());
+			GET_PLAYER(m_eOwner).GetHomelandAI()->LogHomelandMessage(strLogString);
+		}
+	}
+
+	if (pBestPlot != NULL)
+	{
+		setXY(pBestPlot->getX(), pBestPlot->getY());
+		ClearMissionQueue();
+		SetActivityType(ACTIVITY_AWAKE);
+	}
+	else
+	{
+		return false;
+	}
+
+	return true;
+}
+#else
 bool CvUnit::jumpToNearestValidPlot()
 {
 	VALIDATE_OBJECT
@@ -3320,6 +3559,7 @@ bool CvUnit::jumpToNearestValidPlot()
 
 	return true;
 }
+#endif
 
 
 //	--------------------------------------------------------------------------------

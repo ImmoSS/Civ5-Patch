@@ -159,7 +159,11 @@ public:
 	int  UnitPathTo(int iX, int iY, int iFlags, int iPrevETA = -1, bool bBuildingRoute = false); // slewis'd the iPrevETA
 	bool UnitRoadTo(int iX, int iY, int iFlags);
 	bool UnitBuild(BuildTypes eBuild);
+#ifdef BUMP_UNITS_OUT_MINOR_LAND
+	bool canEnterTerritory(TeamTypes eTeam, bool bIgnoreRightOfPassage = false, bool bIsCity = false, bool bIsDeclareWarMove = false, bool bIsMinor = false) const;
+#else
 	bool canEnterTerritory(TeamTypes eTeam, bool bIgnoreRightOfPassage = false, bool bIsCity = false, bool bIsDeclareWarMove = false) const;
+#endif
 	bool canEnterTerrain(const CvPlot& pPlot, byte bMoveFlags = 0) const;
 	TeamTypes GetDeclareWarMove(const CvPlot& pPlot) const;
 	PlayerTypes GetBullyMinorMove(const CvPlot* pPlot) const;
@@ -173,7 +177,11 @@ public:
 	int getCombatDamage(int iStrength, int iOpponentStrength, int iCurrentDamage, bool bIncludeRand, bool bAttackerIsCity, bool bDefenderIsCity) const;
 	void fightInterceptor(const CvPlot& pPlot);
 	void move(CvPlot& pPlot, bool bShow);
+#ifdef BUMP_UNITS_OUT_MINOR_LAND
+	bool jumpToNearestValidPlot(bool bIsMinor = false);
+#else
 	bool jumpToNearestValidPlot();
+#endif
 	bool jumpToNearestValidPlotWithinRange(int iRange);
 
 	bool canScrap(bool bTestVisible = false) const;

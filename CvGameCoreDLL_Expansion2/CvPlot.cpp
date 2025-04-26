@@ -705,6 +705,132 @@ void CvPlot::updateCenterUnit()
 
 
 //	--------------------------------------------------------------------------------
+#ifdef BUMP_UNITS_OUT_MINOR_LAND
+void CvPlot::verifyUnitValidPlot(bool bIsMinor, TeamTypes eTeam)
+{
+	FStaticVector<IDInfo, 50, true, c_eCiv5GameplayDLL, 0> oldUnitList;
+
+	IDInfo* pUnitNode;
+	CvUnit* pLoopUnit;
+
+	oldUnitList.clear();
+
+	pUnitNode = headUnitNode();
+
+	while (pUnitNode != NULL)
+	{
+		oldUnitList.push_back(*pUnitNode);
+		pUnitNode = nextUnitNode(pUnitNode);
+	}
+
+	int iUnitListSize = (int)oldUnitList.size();
+	for (int iVectorLoop = 0; iVectorLoop < (int)iUnitListSize; ++iVectorLoop)
+	{
+		pLoopUnit = GetPlayerUnit(oldUnitList[iVectorLoop]);
+		if (pLoopUnit != NULL)
+		{
+			if (!pLoopUnit->isDelayedDeath())
+			{
+				if (pLoopUnit->atPlot(*this))
+				{
+					if (!(pLoopUnit->isCargo()))
+					{
+						if (!(pLoopUnit->isInCombat()))
+						{
+							// Unit not allowed to be here
+							if (getNumFriendlyUnitsOfType(pLoopUnit) > /*1*/ GC.getPLOT_UNIT_LIMIT())
+							{
+#ifndef AVOID_UNIT_SPLIT_MID_TURN
+								if (!pLoopUnit->jumpToNearestValidPlot())
+								{
+									pLoopUnit->kill(false);
+									pLoopUnit = NULL;
+								}
+#endif
+							}
+
+							if (pLoopUnit != NULL)
+							{
+#ifdef NQ_NEVER_PUSH_OUT_OF_MINORS_ON_PEACE
+								bool bIsOwnedByMinor = false;
+								if (isOwned())
+								{
+									if (GET_PLAYER(getOwner()).isMinorCiv())
+									{
+										bIsOwnedByMinor = true;
+									}
+								}
+								// may want to make an extra check here about if it's owned by minor, we can still enter territory but with ignoring right of passage
+								if (!isValidDomainForLocation(*pLoopUnit) || (!bIsOwnedByMinor && !(pLoopUnit->canEnterTerritory(getTeam(), false /*bIgnoreRightOfPassage*/, isCity()))) || bIsMinor && eTeam == getTeam() && !(pLoopUnit->canEnterTerritory(getTeam(), false /*bIgnoreRightOfPassage*/, isCity(), false, bIsMinor)))
+#else
+								if (!isValidDomainForLocation(*pLoopUnit) || !(pLoopUnit->canEnterTerritory(getTeam(), false /*bIgnoreRightOfPassage*/, isCity())))
+#endif
+								{
+									if (!pLoopUnit->jumpToNearestValidPlot(bIsMinor))
+										pLoopUnit->kill(false);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Unit not allowed in a plot owned by someone?
+	if (isOwned())
+	{
+		for (int iVectorLoop = 0; iVectorLoop < (int)iUnitListSize; ++iVectorLoop)
+		{
+			pLoopUnit = GetPlayerUnit(oldUnitList[iVectorLoop]);
+			if (pLoopUnit != NULL)
+			{
+				if (!pLoopUnit->isDelayedDeath())
+				{
+					if (pLoopUnit->atPlot(*this))  // it may have jumped
+					{
+						if (!(pLoopUnit->isInCombat()))
+						{
+							if (bIsMinor && eTeam == getTeam())
+							{
+								if (pLoopUnit->getTeam() != getTeam())
+								{
+									if (isVisibleEnemyUnit(pLoopUnit))
+									{
+										if (!(pLoopUnit->isInvisible(getTeam(), false)))
+										{
+											if (!pLoopUnit->jumpToNearestValidPlot(bIsMinor))
+												pLoopUnit->kill(false);
+										}
+									}
+								}
+							}
+							else
+							{
+#ifdef NQ_NEVER_PUSH_OUT_OF_MINORS_ON_PEACE
+								if (pLoopUnit->getTeam() != getTeam() && !GET_PLAYER(getOwner()).isMinorCiv())
+#else
+								if (pLoopUnit->getTeam() != getTeam()) // && getTeam() == NO_TEAM)// || !GET_TEAM(getTeam()).isVassal(pLoopUnit->getTeam())))
+#endif
+								{
+									if (isVisibleEnemyUnit(pLoopUnit))
+									{
+										if (!(pLoopUnit->isInvisible(getTeam(), false)))
+										{
+											if (!pLoopUnit->jumpToNearestValidPlot())
+												pLoopUnit->kill(false);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+#else
 void CvPlot::verifyUnitValidPlot()
 {
 	FStaticVector<IDInfo, 50, true, c_eCiv5GameplayDLL, 0> oldUnitList;
@@ -812,6 +938,7 @@ void CvPlot::verifyUnitValidPlot()
 		}
 	}
 }
+#endif
 
 //	--------------------------------------------------------------------------------
 // Left-over method, primarily because it is exposed to Lua.
