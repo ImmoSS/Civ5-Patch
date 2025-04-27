@@ -129,6 +129,12 @@ bool CvGameTrade::CanCreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, Do
 		if (eConnectionType == TRADE_CONNECTION_FOOD)
 		{
 			bool bAllowsFoodConnection = false;
+#ifdef TRAIT_GET_BUILDING_CLASS_HAPPINESS
+			if (GET_PLAYER(pOriginCity->getOwner()).GetPlayerTraits()->IsAlwaysAllowedInnerTradeRoutes())
+			{
+				bAllowsFoodConnection = true;
+			}
+#endif
 			for (int iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
 			{
 				BuildingTypes eBuilding = (BuildingTypes)GET_PLAYER(pOriginCity->getOwner()).getCivilizationInfo().getCivilizationBuildings(iI);
@@ -158,6 +164,12 @@ bool CvGameTrade::CanCreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, Do
 		else if (eConnectionType == TRADE_CONNECTION_PRODUCTION)
 		{
 			bool bAllowsProductionConnection = false;
+#ifdef TRAIT_GET_BUILDING_CLASS_HAPPINESS
+			if (GET_PLAYER(pOriginCity->getOwner()).GetPlayerTraits()->IsAlwaysAllowedInnerTradeRoutes())
+			{
+				bAllowsProductionConnection = true;
+			}
+#endif
 			for (int iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
 			{
 				BuildingTypes eBuilding = (BuildingTypes)GET_PLAYER(pOriginCity->getOwner()).getCivilizationInfo().getCivilizationBuildings(iI);

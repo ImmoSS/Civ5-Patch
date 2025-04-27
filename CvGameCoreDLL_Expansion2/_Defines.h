@@ -647,6 +647,8 @@
 #define IROQUOIS_UA_REWORK
 /// Golden age combat bonus modifier now applies only during attack
 #define GOLDEN_AGE_ATTACK_BONUS_MODIFIER
+///
+#define TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
 /*UA CHANGES END*/
 
 
@@ -1151,7 +1153,8 @@
 // 1000: v7.0   (initial)
 # define BUMP_SAVE_VERSION_TECHS 1000
 // 1000: v7.0   (initial)
-# define BUMP_SAVE_VERSION_TRAITS 1000
+// 1001: v7.0   (adds TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES)
+# define BUMP_SAVE_VERSION_TRAITS 1001
 // 1000: v7.0   (initial)
 // 1001: v8.0   (adds NEW_WRITERS_CULTURE_BOMB)
 // 1002: v11.0  (adds PROMOTION_NO_UNHAPPINESS_PENALTY)

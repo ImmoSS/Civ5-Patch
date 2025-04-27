@@ -902,6 +902,14 @@ bool CvTraitEntry::NoTrain(UnitClassTypes eUnitClass)
 	}
 }
 
+#ifdef TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
+///
+bool CvTraitEntry::IsAlwaysAllowedInnerTradeRoutes() const
+{
+	return m_bAlwaysAllowedInnerTradeRoutes;
+}
+#endif
+
 /// Load XML data
 bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& kUtility)
 {
@@ -1038,6 +1046,9 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 	m_bUniqueLuxuryRequiresNewArea = kResults.GetBool("UniqueLuxuryRequiresNewArea");
 	m_bRiverTradeRoad = kResults.GetBool("RiverTradeRoad");
 	m_bAngerFreeIntrusionOfCityStates = kResults.GetBool("AngerFreeIntrusionOfCityStates");
+#ifdef TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
+	m_bAlwaysAllowedInnerTradeRoutes = kResults.GetBool("AlwaysAllowedInnerTradeRoutes");
+#endif
 
 	//Arrays
 	const char* szTraitType = GetType();
@@ -1646,6 +1657,13 @@ void CvPlayerTraits::InitPlayerTraits()
 					m_aFreeResourceXCities[iResourceLoop] = temp;
 				}
 			}
+
+#ifdef TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
+			if (trait->IsAlwaysAllowedInnerTradeRoutes())
+			{
+				m_bAlwaysAllowedInnerTradeRoutes = true;
+			}
+#endif
 		}
 	}
 }
@@ -1839,6 +1857,10 @@ void CvPlayerTraits::Reset()
 		FreeResourceXCities temp;
 		m_aFreeResourceXCities.push_back(temp);
 	}
+
+#ifdef TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
+	m_bAlwaysAllowedInnerTradeRoutes = false;
+#endif
 }
 
 /// Does this player possess a specific trait?
@@ -3027,6 +3049,21 @@ void CvPlayerTraits::Read(FDataStream& kStream)
 	{
 		m_aUniqueLuxuryAreas.clear();
 	}
+
+#ifdef TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1001)
+	{
+# endif
+		kStream >> m_bAlwaysAllowedInnerTradeRoutes;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_bAlwaysAllowedInnerTradeRoutes = false;
+	}
+# endif
+#endif
 }
 
 /// Serialization write
@@ -3189,6 +3226,10 @@ void CvPlayerTraits::Write(FDataStream& kStream)
 	{
 		kStream << m_aUniqueLuxuryAreas[iI];
 	}
+
+#ifdef TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
+	kStream << m_bAlwaysAllowedInnerTradeRoutes;
+#endif
 }
 
 // PRIVATE METHODS
