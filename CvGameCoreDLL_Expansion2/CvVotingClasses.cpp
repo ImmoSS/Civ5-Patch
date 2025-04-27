@@ -6264,7 +6264,7 @@ void CvLeague::FinishSession()
 					TechTypes eCurrentTech = GET_PLAYER(it->ePlayer).GetPlayerTechs()->GetCurrentResearch();
 					if (eCurrentTech == NO_TECH)
 					{
-						GET_PLAYER(it->ePlayer).changeOverflowResearch(iBeakersBonus);
+						GET_PLAYER(it->ePlayer).changeOverflowResearch(iNumVotes * iBeakersBonus);
 					}
 					else
 					{

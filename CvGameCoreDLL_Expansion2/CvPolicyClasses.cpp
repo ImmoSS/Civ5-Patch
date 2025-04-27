@@ -278,7 +278,7 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_iHappinessPerTradeRouteToMinor(0),
 #endif
 #ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
-	m_paiLeagueSessionYieldBoostPerDelegate(0),
+	m_paiLeagueSessionYieldBoostPerDelegate(NULL),
 #endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
@@ -617,7 +617,7 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	kUtility.PopulateArrayByValue(m_paiBuildingClassTourismChanges, "BuildingClasses", "Policy_BuildingClassTourismChanges", "BuildingClassType", "PolicyType", szPolicyType, "TourismChange");
 #endif
 #ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
-	kUtility.PopulateArrayByValue(m_paiLeagueSessionYieldBoostPerDelegate, "YieldTypes", "Policy_LeagueSessionYieldBoostPerDelegate", "YieldType", "PolicyType", szPolicyType, "Yield");
+	kUtility.PopulateArrayByValue(m_paiLeagueSessionYieldBoostPerDelegate, "Yields", "Policy_LeagueSessionYieldBoostPerDelegate", "YieldType", "PolicyType", szPolicyType, "Yield");
 #endif
 
 	//BuildingYieldModifiers
