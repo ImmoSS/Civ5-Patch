@@ -2258,6 +2258,14 @@ bool CvUnit::canEnterTerritory(TeamTypes eTeam, bool bIgnoreRightOfPassage, bool
 	CvTeam& kMyTeam = GET_TEAM(eMyTeam);
 	CvTeam& kTheirTeam = GET_TEAM(eTeam);
 
+	if (kTheirTeam.isMinorCiv())
+	{
+		if (bIsMinor)
+		{
+			return false;
+		}
+	}
+
 	if (kMyTeam.isFriendlyTerritory(eTeam))
 	{
 		return true;
@@ -2275,11 +2283,6 @@ bool CvUnit::canEnterTerritory(TeamTypes eTeam, bool bIgnoreRightOfPassage, bool
 
 	if (kTheirTeam.isMinorCiv())
 	{
-		if (bIsMinor)
-		{
-			return false;
-		}
-
 		// Minors can't intrude into one another's territory
 		if (!kMyTeam.isMinorCiv())
 		{
@@ -3271,30 +3274,33 @@ bool CvUnit::jumpToNearestValidPlot(bool bIsMinor)
 	pBestPlot = NULL;
 
 #ifdef FREE_UNIT_AT_STARTING_PLOT
-	if (plot() && plot()->isValidDomainForLocation(*this))
+	if (!bIsMinor)
 	{
-		if (plot()->IsFriendlyTerritory(getOwner()))
+		if (plot() && plot()->isValidDomainForLocation(*this))
 		{
-			if (!(plot()->isCity() && plot()->getPlotCity()->getOwner() != getOwner()))
+			if (plot()->IsFriendlyTerritory(getOwner()))
 			{
-				if (plot()->getNumFriendlyUnitsOfType(this) < GC.getPLOT_UNIT_LIMIT() + 1)
+				if (!(plot()->isCity() && plot()->getPlotCity()->getOwner() != getOwner()))
 				{
-					CvAssertMsg(!atPlot(*plot()), "atPlot(pLoopPlot) did not return false as expected");
-
-					if ((getDomainType() != DOMAIN_AIR) || plot()->isFriendlyCity(*this, true))
+					if (plot()->getNumFriendlyUnitsOfType(this) < GC.getPLOT_UNIT_LIMIT() + 1)
 					{
-						if (getDomainType() != DOMAIN_SEA || (plot()->isFriendlyCity(*this, true) && plot()->isCoastalLand()) || plot()->isWater())
+						CvAssertMsg(!atPlot(*plot()), "atPlot(pLoopPlot) did not return false as expected");
+
+						if ((getDomainType() != DOMAIN_AIR) || plot()->isFriendlyCity(*this, true))
 						{
-#ifdef FIX_JUMP_TO_NEAREST_CITY
-							if (!(plot()->getPlotCity() && plot()->getOwner() != getOwner()))
+							if (getDomainType() != DOMAIN_SEA || (plot()->isFriendlyCity(*this, true) && plot()->isCoastalLand()) || plot()->isWater())
 							{
+#ifdef FIX_JUMP_TO_NEAREST_CITY
+								if (!(plot()->getPlotCity() && plot()->getOwner() != getOwner()))
+								{
+									iBestValue = 0;
+									pBestPlot = plot();
+								}
+#else
 								iBestValue = 0;
 								pBestPlot = plot();
-							}
-#else
-							iBestValue = 0;
-							pBestPlot = plot();
 #endif
+							}
 						}
 					}
 				}
