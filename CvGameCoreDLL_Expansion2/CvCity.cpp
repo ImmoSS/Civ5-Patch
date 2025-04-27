@@ -10982,18 +10982,6 @@ int CvCity::getYieldRateTimes100(YieldTypes eIndex, bool bIgnoreTrade) const
 	int iBaseYield = getBaseYieldRate(eIndex) * 100;
 	iBaseYield += (GetYieldPerPopTimes100(eIndex) * getPopulation());
 	iBaseYield += (GetYieldPerReligionTimes100(eIndex) * GetCityReligions()->GetNumReligionsWithFollowers());
-#ifdef BUILDING_FAITH_TO_SCIENCE
-	if (eIndex == YIELD_SCIENCE)
-	{
-		iBaseYield += (GetFaithPerTurn() * getFaithToScience());
-	}
-#endif
-#ifdef BUILDING_SCIENCE_PER_X_POP
-	if (eIndex == YIELD_SCIENCE && getSciencePerXPop() > 0)
-	{
-		iBaseYield += (getPopulation() / getSciencePerXPop() * 100);
-	}
-#endif
 
 	int iModifiedYield = iBaseYield * getBaseYieldRateModifier(eIndex);
 	iModifiedYield /= 100;
@@ -11083,14 +11071,26 @@ int CvCity::GetBaseYieldRateFromBuildings(YieldTypes eIndex) const
 	VALIDATE_OBJECT
 	CvAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
 	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
+#if defined BUILDING_FAITH_TO_SCIENCE || defined BUILDING_SCIENCE_PER_X_POP
+	int iNumScience = 0;
+#endif
 #ifdef BUILDING_FAITH_TO_SCIENCE
 	if (eIndex == YIELD_SCIENCE)
 	{
-		return m_aiBaseYieldRateFromBuildings[eIndex] + (GetFaithPerTurn() * getFaithToScience()) / 100;
+		iNumScience += (GetFaithPerTurn() * getFaithToScience()) / 100;
 	}
 #endif
-
+#ifdef BUILDING_SCIENCE_PER_X_POP
+	if (eIndex == YIELD_SCIENCE && getSciencePerXPop() > 0)
+	{
+		iNumScience += getPopulation() / getSciencePerXPop();
+	}
+#endif
+#if defined BUILDING_FAITH_TO_SCIENCE || defined BUILDING_SCIENCE_PER_X_POP
+	return (m_aiBaseYieldRateFromBuildings[eIndex] + iNumScience);
+#else
 	return m_aiBaseYieldRateFromBuildings[eIndex];
+#endif
 }
 
 //	--------------------------------------------------------------------------------
