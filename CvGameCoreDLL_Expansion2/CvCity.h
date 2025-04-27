@@ -891,6 +891,10 @@ public:
 	int getHappinessForFilledGreatWorkSlot() const;
 	void changeHappinessForFilledGreatWorkSlot(int iChange);
 #endif
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+	int getFoodBonusIfNoCitiesAround() const;
+	void changeFoodBonusIfNoCitiesAround(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1116,6 +1120,9 @@ protected:
 #endif
 #ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
 	FAutoVariable<int, CvCity> m_iHappinessForFilledGreatWorkSlot;
+#endif
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+	FAutoVariable<int, CvCity> m_iFoodBonusIfNoCitiesAround;
 #endif
 
 	void doGrowth();

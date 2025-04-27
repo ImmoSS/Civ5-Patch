@@ -307,6 +307,9 @@ CvCity::CvCity() :
 #ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
 	, m_iHappinessForFilledGreatWorkSlot("CvCity::m_iHappinessForFilledGreatWorkSlot", m_syncArchive)
 #endif
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+	, m_iFoodBonusIfNoCitiesAround("CvCity::m_iFoodBonusIfNoCitiesAround", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1098,6 +1101,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #endif
 #ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
 	m_iHappinessForFilledGreatWorkSlot = 0;
+#endif
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+	m_iFoodBonusIfNoCitiesAround = 0;
 #endif
 
 	if(!bConstructorCall)
@@ -7075,6 +7081,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
 		changeHappinessForFilledGreatWorkSlot(pBuildingInfo->GetHappinessForFilledGreatWorkSlot() * iChange);
 #endif
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+		changeFoodBonusIfNoCitiesAround(pBuildingInfo->GetFoodBonusIfNoCitiesAround() * iChange);
+#endif
 
 		// Process for our player
 		for(int iI = 0; iI < MAX_PLAYERS; iI++)
@@ -7658,11 +7667,14 @@ int CvCity::foodDifferenceTimes100(bool bBottom, CvString* toolTipSink) const
 #ifdef BUILDING_FOOD_YIELD_MODIFIERS_GROTH
 		iCityGrowthMod += getYieldRateModifier(YIELD_FOOD);
 #endif
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+		iCityGrowthMod += getFoodBonusIfNoCitiesAround();
+#endif
 		if(iCityGrowthMod != 0)
 		{
 			iTotalMod += iCityGrowthMod;
-#ifdef BUILDING_FOOD_YIELD_MODIFIERS_GROTH
-			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_FOODMOD_PLAYER", iCityGrowthMod - getYieldRateModifier(YIELD_FOOD));
+#if defined BUILDING_FOOD_YIELD_MODIFIERS_GROTH || defined BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_FOODMOD_PLAYER", GET_PLAYER(getOwner()).GetCityGrowthMod());
 #else
 			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_FOODMOD_PLAYER", iCityGrowthMod);
 #endif
@@ -10746,6 +10758,12 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 
 	// Yield Rate Modifier
 	iTempMod = getYieldRateModifier(eIndex);
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+	if (eIndex == YIELD_FOOD)
+	{
+		iTempMod += getFoodBonusIfNoCitiesAround();
+	}
+#endif
 #ifdef NEW_FACTORIES
 	if (eIndex == YIELD_PRODUCTION)
 	{
@@ -16179,6 +16197,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iFoodBonusIfNoCitiesAround;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iFoodBonusIfNoCitiesAround = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -16457,6 +16489,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
 	kStream << m_iHappinessForFilledGreatWorkSlot;
+#endif
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+	kStream << m_iFoodBonusIfNoCitiesAround;
 #endif
 }
 
@@ -17999,5 +18034,36 @@ void CvCity::changeHappinessForFilledGreatWorkSlot(int iChange)
 {
 	VALIDATE_OBJECT
 		m_iHappinessForFilledGreatWorkSlot += iChange;
+}
+#endif
+
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+//	----------------------------------------------------------------------------
+int CvCity::getFoodBonusIfNoCitiesAround() const
+{
+	int iRange = 5;
+	for (int iDX = -(iRange); iDX <= iRange; iDX++)
+	{
+		for (int iDY = -(iRange); iDY <= iRange; iDY++)
+		{
+			CvPlot* pLoopPlot = plotXYWithRangeCheck(getX(), getY(), iDX, iDY, iRange);
+
+			if (pLoopPlot != NULL && pLoopPlot != plot())
+			{
+				if (pLoopPlot->isCity())
+				{
+					return 0;
+				}
+			}
+		}
+	}
+	return m_iFoodBonusIfNoCitiesAround;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeFoodBonusIfNoCitiesAround(int iChange)
+{
+	VALIDATE_OBJECT
+		m_iFoodBonusIfNoCitiesAround += iChange;
 }
 #endif

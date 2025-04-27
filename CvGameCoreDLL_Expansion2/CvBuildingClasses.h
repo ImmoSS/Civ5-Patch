@@ -360,6 +360,9 @@ public:
 #ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
 	int GetHappinessForFilledGreatWorkSlot() const;
 #endif
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+	int GetFoodBonusIfNoCitiesAround() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -615,6 +618,9 @@ private:
 #endif
 #ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
 	int m_iHappinessForFilledGreatWorkSlot;
+#endif
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+	int m_iFoodBonusIfNoCitiesAround;
 #endif
 };
 

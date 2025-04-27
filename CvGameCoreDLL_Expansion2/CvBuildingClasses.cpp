@@ -253,6 +253,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
 	m_iHappinessForFilledGreatWorkSlot(0),
 #endif
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+	m_iFoodBonusIfNoCitiesAround(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -812,6 +815,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_HAPPINESS_FOR_FILLED_GREAT_WORK_SLOT
 	m_iHappinessForFilledGreatWorkSlot = kResults.GetInt("HappinessForFilledGreatWorkSlot");
+#endif
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+	m_iFoodBonusIfNoCitiesAround = kResults.GetInt("FoodBonusIfNoCitiesAround");
 #endif
 
 	return true;
@@ -2357,6 +2363,13 @@ int* CvBuildingEntry::GetMaxYieldForEachBuildingInEmpireArray() const
 int CvBuildingEntry::GetHappinessForFilledGreatWorkSlot() const
 {
 	return m_iHappinessForFilledGreatWorkSlot;
+}
+#endif
+
+#ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+int CvBuildingEntry::GetFoodBonusIfNoCitiesAround() const
+{
+	return m_iFoodBonusIfNoCitiesAround;
 }
 #endif
 
