@@ -187,6 +187,9 @@ public:
 #ifdef TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
 	bool IsAlwaysAllowedInnerTradeRoutes() const;
 #endif
+#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
+	int GetGoldForLuxuryExport() const;
+#endif
 
 	virtual bool CacheResults(Database::Results& kResults, CvDatabaseUtility& kUtility);
 
@@ -320,6 +323,9 @@ protected:
 
 #ifdef TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
 	bool m_bAlwaysAllowedInnerTradeRoutes;
+#endif
+#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
+	int m_iGoldForLuxuryExport;
 #endif
 
 private:
@@ -822,6 +828,12 @@ public:
 		return m_bAlwaysAllowedInnerTradeRoutes;
 	};
 #endif
+#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
+	int GetGoldForLuxuryExport() const
+	{
+		return m_iGoldForLuxuryExport;
+	};
+#endif
 
 	// Serialization
 	void Read(FDataStream& kStream);
@@ -968,6 +980,9 @@ private:
 
 #ifdef TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
 	bool m_bAlwaysAllowedInnerTradeRoutes;
+#endif
+#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
+	int m_iGoldForLuxuryExport;
 #endif
 };
 

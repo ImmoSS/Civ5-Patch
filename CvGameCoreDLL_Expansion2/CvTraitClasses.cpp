@@ -910,6 +910,14 @@ bool CvTraitEntry::IsAlwaysAllowedInnerTradeRoutes() const
 }
 #endif
 
+#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
+///
+int CvTraitEntry::GetGoldForLuxuryExport() const
+{
+	return m_iGoldForLuxuryExport;
+}
+#endif
+
 /// Load XML data
 bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& kUtility)
 {
@@ -1048,6 +1056,9 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 	m_bAngerFreeIntrusionOfCityStates = kResults.GetBool("AngerFreeIntrusionOfCityStates");
 #ifdef TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
 	m_bAlwaysAllowedInnerTradeRoutes = kResults.GetBool("AlwaysAllowedInnerTradeRoutes");
+#endif
+#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
+	m_iGoldForLuxuryExport = kResults.GetInt("GoldForLuxuryExport");
 #endif
 
 	//Arrays
@@ -1664,6 +1675,12 @@ void CvPlayerTraits::InitPlayerTraits()
 				m_bAlwaysAllowedInnerTradeRoutes = true;
 			}
 #endif
+#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
+			if (trait->GetGoldForLuxuryExport())
+			{
+				m_iGoldForLuxuryExport = true;
+			}
+#endif
 		}
 	}
 }
@@ -1860,6 +1877,9 @@ void CvPlayerTraits::Reset()
 
 #ifdef TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
 	m_bAlwaysAllowedInnerTradeRoutes = false;
+#endif
+#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
+	m_iGoldForLuxuryExport = 0;
 #endif
 }
 
@@ -3064,6 +3084,20 @@ void CvPlayerTraits::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1001)
+	{
+# endif
+		kStream >> m_iGoldForLuxuryExport;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iGoldForLuxuryExport = 0;
+	}
+# endif
+#endif
 }
 
 /// Serialization write
@@ -3229,6 +3263,9 @@ void CvPlayerTraits::Write(FDataStream& kStream)
 
 #ifdef TRAIT_ALWAYS_ALLOWED_INNER_TRADE_ROUTES
 	kStream << m_bAlwaysAllowedInnerTradeRoutes;
+#endif
+#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
+	kStream << m_iGoldForLuxuryExport;
 #endif
 }
 
