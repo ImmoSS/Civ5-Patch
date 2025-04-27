@@ -11083,6 +11083,12 @@ int CvCity::GetBaseYieldRateFromBuildings(YieldTypes eIndex) const
 	VALIDATE_OBJECT
 	CvAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
 	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
+#ifdef BUILDING_FAITH_TO_SCIENCE
+	if (eIndex == YIELD_SCIENCE)
+	{
+		return m_aiBaseYieldRateFromBuildings[eIndex] + (GetFaithPerTurn() * getFaithToScience()) / 100;
+	}
+#endif
 
 	return m_aiBaseYieldRateFromBuildings[eIndex];
 }
