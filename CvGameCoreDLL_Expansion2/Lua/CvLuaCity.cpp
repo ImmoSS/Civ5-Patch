@@ -4167,7 +4167,15 @@ int CvLuaCity::lGetCapitalCultureModPerDiplomat(lua_State* L)
 	int iModifier = 0;
 	if (pkCity->isCapital())
 	{
-		iModifier += GET_PLAYER(pkCity->getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CAPITAL_CULTURE_MOD_PER_DIPLOMAT);
+		int iNumDiplomats = 0;
+		for (uint ui = 0; ui < GET_PLAYER(pkCity->getOwner()).GetEspionage()->m_aSpyList.size(); ui++)
+		{
+			if (GET_PLAYER(pkCity->getOwner()).GetEspionage()->IsDiplomat(ui) && GET_PLAYER(pkCity->getOwner()).GetEspionage()->m_aSpyList[ui].m_eSpyState == SPY_STATE_SCHMOOZE)
+			{
+				iNumDiplomats++;
+			}
+		}
+		iModifier += iNumDiplomats * GET_PLAYER(pkCity->getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CAPITAL_CULTURE_MOD_PER_DIPLOMAT);
 	}
 
 	lua_pushinteger(L, iModifier);
