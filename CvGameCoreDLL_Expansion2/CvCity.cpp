@@ -7655,10 +7655,17 @@ int CvCity::foodDifferenceTimes100(bool bBottom, CvString* toolTipSink) const
 
 		// City Mod for player. Used for Policies and such
 		int iCityGrowthMod = GET_PLAYER(getOwner()).GetCityGrowthMod();
+#ifdef BUILDING_FOOD_YIELD_MODIFIERS_GROTH
+		iCityGrowthMod += getYieldRateModifier(YIELD_FOOD);
+#endif
 		if(iCityGrowthMod != 0)
 		{
 			iTotalMod += iCityGrowthMod;
+#ifdef BUILDING_FOOD_YIELD_MODIFIERS_GROTH
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_FOODMOD_PLAYER", iCityGrowthMod - getYieldRateModifier(YIELD_FOOD));
+#else
 			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_FOODMOD_PLAYER", iCityGrowthMod);
+#endif
 		}
 
 		// Religion growth mod
@@ -10750,7 +10757,14 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 		}
 	}
 #endif
+#ifdef BUILDING_FOOD_YIELD_MODIFIERS_GROTH
+	if (eIndex != YIELD_FOOD)
+	{
+		iModifier += iTempMod;
+	}
+#else
 	iModifier += iTempMod;
+#endif
 	if(toolTipSink)
 		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_YIELD", iTempMod);
 
