@@ -829,10 +829,13 @@ for EUI and vanilla UI -->
 			<Button ID="DraftCivEntryButton" Size="60,60" Anchor="L,C" >
 				<Image ID="LeaderFrame" Anchor="C,T" Size="64,64" Offset="0,-6" Texture="iconframe64.dds" >
 					<AlphaAnim Anchor="C,C" Offset="0,0" Size="64,64" Cycle="Bounce" Speed="0.5" AlphaStart="0.6" AlphaEnd="1" >
-						<Image ID="LeaderFrameSelectedAnim" Anchor="C,T" Size="64,64" TextureOffset="0.0" Texture="notificationadvisorglowback.dds" Color="255,255,50" Hidden="1" />
+						<Image ID="HoverAnim" Anchor="C,T" Size="64,64" Texture="iconframe64.dds" Color="255,255,50" Hidden="1" />
 					</AlphaAnim>
 					<Image ID="LeaderIcon" Size="64,64" Offset="0,0" Anchor="C,C" Texture="leaderportraits64_exp2.dds" Color="200,200,200,255" />
 					<Image ID="LeaderSubIconFrame" Anchor="R,B" Offset="-2,0" Size="32,32" Texture="iconframe32lock.dds">
+						<AlphaAnim Anchor="R,B" Offset="0,0" Size="32,32" Cycle="Bounce" Speed="0.5" AlphaStart="0.6" AlphaEnd="1" >
+							<Image ID="HoverAnimSub" Anchor="C,T" Size="32,32" Texture="iconframe32lock.dds" Color="255,255,50" Hidden="1" />
+						</AlphaAnim>
 						<Image ID="LeaderSubIcon" Size="32,32" Anchor="C,C" Offset="0,0" TextureOffset="32,0" Texture="civsymbolscolor256.dds" />
 					</Image>
 				</Image>

@@ -2605,6 +2605,7 @@ function RebuildDrafts()
 		if PreGame.GetGameOption("GAMEOPTION_TOURNAMENT_MODE") > 0 then
 			numBans = 1
 		end
+		Controls.DraftButton:LocalizeAndSetToolTip('TXT_KEY_DRAFTS_HELP', numBans, numPicks)
 		local DraftCivEntrySmall_WIDTH = 70
 		if g_DraftResultInstances.BansT[i] == nil then
 			g_DraftResultInstances.BansT[i] = {};
@@ -3034,6 +3035,15 @@ function AssignDraftedCivs( civsArr )
 
 				local dummy = playerEntry.picksIMD:GetInstance();
 				dummy.DummyButton:LocalizeAndSetToolTip( bonusText );
+				dummy.DummyButton:RegisterCallback(Mouse.eLClick, function()
+					print('PICK', playerID, tonumber(v))
+					if Matchmaking.GetLocalID() == playerID then
+						PreGame.SetCivilization( playerID, tonumber(v) );
+						Network.BroadcastPlayerInfo();
+						UpdateDisplay();
+						Controls.DraftBGBlock:SetHide(true);
+					end
+				end);
 				table.insert(g_DraftResultInstances.PicksD[playerID], dummy);
 			end
 			civs[k] = GameInfo.Civilizations[tonumber(v)] and Locale.Lookup(GameInfo.Civilizations[tonumber(v)].ShortDescription) or '??';
@@ -3069,6 +3079,10 @@ function AssignDraftedCivs( civsArr )
 							end
 						end
 					end
+					if Matchmaking.GetLocalID() == playerID then
+						g_DraftResultInstances.Picks[playerID][i].HoverAnim:SetHide(false)
+						g_DraftResultInstances.Picks[playerID][i].HoverAnimSub:SetHide(false)
+					end
 				end);
 				dummy.DummyButton:RegisterCallback(Mouse.eMouseExit, function()
 					pp[i] = false
@@ -3083,6 +3097,10 @@ function AssignDraftedCivs( civsArr )
 							inst2.Root:SetSizeX(w2);
 						end
 					end
+					if Matchmaking.GetLocalID() == playerID then
+						g_DraftResultInstances.Picks[playerID][i].HoverAnim:SetHide(true)
+						g_DraftResultInstances.Picks[playerID][i].HoverAnimSub:SetHide(true)
+					end
 				end);
 				playerEntry.statusInstance.DraftPlayerPicksStack:SetAnchor('L,T');
 				inst.Root:SetSizeX(w2)
@@ -3090,6 +3108,18 @@ function AssignDraftedCivs( civsArr )
 				dummy.Root:SetSizeX(w1)
 				dummy.DummyButton:SetSizeX(w1 + 1)
 				inst.Root:SetSizeX(w1)
+				dummy.DummyButton:RegisterCallback(Mouse.eMouseEnter, function()
+					if Matchmaking.GetLocalID() == playerID then
+						g_DraftResultInstances.Picks[playerID][i].HoverAnim:SetHide(false)
+						g_DraftResultInstances.Picks[playerID][i].HoverAnimSub:SetHide(false)
+					end
+				end);
+				dummy.DummyButton:RegisterCallback(Mouse.eMouseExit, function()
+					if Matchmaking.GetLocalID() == playerID then
+						g_DraftResultInstances.Picks[playerID][i].HoverAnim:SetHide(true)
+						g_DraftResultInstances.Picks[playerID][i].HoverAnimSub:SetHide(true)
+					end
+				end);
 			end
 		end
 		playerEntry.statusInstance.DraftPlayerPicksStack:CalculateSize();
