@@ -377,11 +377,7 @@ bool CvGameTrade::CreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, Domai
 		iTurnsPerCircuit = ((m_aTradeConnections[iNewTradeRouteIndex].m_aPlotList.size() - 1) * 2) / iRouteSpeed;
 	}
 	
-#ifdef TRADE_ROUTES_TARGET_TURNS
-	int iTargetTurns = TRADE_ROUTES_TARGET_TURNS;
-#else
 	int iTargetTurns = 30; // how many turns do we want the cycle to consume
-#endif
 #ifdef NQ_TRADE_ROUTE_DURATION_SCALES_WITH_GAME_SPEED
 	iTargetTurns = iTargetTurns * GC.getGame().getGameSpeedInfo().getCulturePercent() / 100;
 #endif
@@ -392,8 +388,13 @@ bool CvGameTrade::CreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, Domai
 	}
 
 	m_aTradeConnections[iNewTradeRouteIndex].m_iCircuitsCompleted = 0;
+#ifdef TRADE_ROUTES_TARGET_TURNS
+	m_aTradeConnections[iNewTradeRouteIndex].m_iCircuitsToComplete = iRouteSpeed * TRADE_ROUTES_TARGET_TURNS;
+	m_aTradeConnections[iNewTradeRouteIndex].m_iTurnRouteComplete = TRADE_ROUTES_TARGET_TURNS + GC.getGame().getGameTurn();
+#else
 	m_aTradeConnections[iNewTradeRouteIndex].m_iCircuitsToComplete = iCircuitsToComplete;
 	m_aTradeConnections[iNewTradeRouteIndex].m_iTurnRouteComplete = (iTurnsPerCircuit * iCircuitsToComplete) + GC.getGame().getGameTurn();
+#endif
 
 	GET_PLAYER(eOriginPlayer).GetTrade()->UpdateTradeConnectionValues();
 	if (eDestPlayer != eOriginPlayer)
@@ -1412,9 +1413,14 @@ bool CvGameTrade::StepUnit (int iIndex)
 		kTradeConnection.m_iTradeUnitLocationIndex -= 1;
 		if (kTradeConnection.m_iTradeUnitLocationIndex == 0)
 		{
+#ifndef TRADE_ROUTES_TARGET_TURNS
 			kTradeConnection.m_iCircuitsCompleted += 1;
+#endif
 		}
 	}
+#ifdef TRADE_ROUTES_TARGET_TURNS
+	kTradeConnection.m_iCircuitsCompleted += 1;
+#endif
 
 	// Move the visualization
 	CvUnit *pkUnit = GetVis(iIndex);
