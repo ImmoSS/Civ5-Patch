@@ -21,11 +21,13 @@ local i1, i2 = string.find( UI.GetVersionInfo(), " " );
 versionNumber = string.sub(UI.GetVersionInfo(), 1, i2-1);
 Controls.VersionNumber:SetText(versionNumber);
 -- Patch Updates Checker and Changelog Button START
+blob = {}
 IMB = InstanceManager:new("PatchNotesLangButton", "Button", Controls.PatchNotesLangStack)
 local bPatchNotesLoaded = false
 function ShowPatchNotesText(lang)
 	if blob[lang].stack == nil then
 		blob[lang].stack = {}
+		local sum = 0
 		for m, m2 in string.gmatch(blob[lang].text, '"(%S-)": `\n(.-)[^\\]`,') do
     	    local instTitle = {};
     	    ContextPtr:BuildInstanceForControl("PatchNotesVersion", instTitle, Controls.PatchNotesStack);
@@ -44,6 +46,8 @@ function ShowPatchNotesText(lang)
 			instEntry.LinesStack:CalculateSize();
 			instEntry.LinesStack:ReprocessAnchoring();
     	    instEntry.Root:SetSizeY(instEntry.LinesStack:GetSizeY());
+			blob[lang].Anchor = sum
+    	    sum = sum + instTitle.Root:GetSizeY() + instEntry.Root:GetSizeY() + 14
 		end
 	end
 	for ilang, data in next, blob do
@@ -70,26 +74,34 @@ function ShowHidePatchNotesPopup()
 				local t2 = os.time();
 				if t2 - t1 > tdelta then
 					tdelta = t2-t1
-					print('request2 tdelta', tdelta)
+					--print('request2 tdelta', tdelta)
 				end
 				if req2.Finished() then
 					ContextPtr:ClearUpdate();
 					Controls.PatchNotesLoadingLabel:SetText('')
-					print('finished2:');
+					--print('finished2:');
 					local resp = req2.PopReceivedData();
-					for var in string.gmatch(resp, 'const patchNotes = (%b{})') do
-						for lang, patchNotes in string.gmatch(var, '(%S+): (%b{})') do
-							blob[lang] = { text = patchNotes }
-							local inst3 = IMB:GetInstance()
-							inst3.Text:SetText(lang)
-							inst3.Button:RegisterCallback( Mouse.eLClick, function() ShowPatchNotesText(lang) end)
+					if resp ~= nil then
+						for var in string.gmatch(resp, 'const patchNotes = (%b{})') do
+							for lang, patchNotes in string.gmatch(var, '(%S+): (%b{})') do
+								blob[lang] = { text = patchNotes }
+								local inst3 = IMB:GetInstance()
+								inst3.Text:SetText(lang)
+								inst3.Button:RegisterCallback( Mouse.eLClick, function() ShowPatchNotesText(lang) end)
+							end
 						end
+						Controls.PatchNotesLangStack:ReprocessAnchoring()
+						ShowPatchNotesText(next(blob))
+						local sval = blob[next(blob)].Anchor / (Controls.PatchNotesStack:GetSizeY() - Controls.PatchNotesScrollPanel:GetSizeY())
+						Controls.PatchNotesScrollPanel:SetScrollValue(sval)  -- scroll to the last version's title
+					else
+						print('request2 empty response')
+						Controls.PatchNotesLoadingLabel:SetText(Locale.Lookup('{TXT_KEY_PATCH_UPDATE_NOTES_CHANGELOG_ERROR}'))
 					end
-					ShowPatchNotesText(next(blob))
-					Controls.PatchNotesScrollPanel:SetScrollValue(1)
 				elseif tdelta >= 30 then
 					ContextPtr:ClearUpdate();
 					print('request2 timeout')
+					Controls.PatchNotesLoadingLabel:SetText(Locale.Lookup('{TXT_KEY_PATCH_UPDATE_NOTES_CHANGELOG_ERROR}'))
 				end
 			end)
 		end
@@ -108,39 +120,40 @@ local updPatchVersion = '0'
 local pvcon = Controls.PatchChangelog:GetTextControl()
 pvcon:SetAnchor('C,T')
 pvcon:ReprocessAnchoring()
--- TODO store patch version in a separate file
-local req = Network.HttpRequest('https://raw.githubusercontent.com/catscatsforever/Civ5-Patch/refs/heads/main/ui_check.bat');
+local req = Network.HttpRequest('https://raw.githubusercontent.com/catscatsforever/Civ5-Patch/refs/heads/main/PATCH_VERSION.txt');
 Controls.PatchChangelog:SetText(Locale.Lookup('{TXT_KEY_GAME_SELECTION_SCREEN} - {TXT_KEY_PATCH_UPDATE_NOTES_CHECK}'));
 Controls.PatchChangelog:SetSizeX(pvcon:GetSizeX())
 pvcon:ReprocessAnchoring()
-blob = {}
 ContextPtr:SetUpdate(function()
 	local t2 = os.time();
 	if t2 - t1 > tdelta then
 		tdelta = t2-t1
-		print('request tdelta', tdelta)
+		--print('request tdelta', tdelta)
 	end
 	if req.Finished() then
 		ContextPtr:ClearUpdate();
-		print('finished:');
-		local resp = req.PopReceivedData();
-		for m in string.gmatch(resp, 'set patchfolder=Tournament Mod (.-)\n') do
-			updPatchVersion = Locale.ToLower(m)
-		end
-		print(string.format('client %s server %s', clientPatchVersion, updPatchVersion));
-		if clientPatchVersion ~= updPatchVersion then
-			Controls.PatchChangelog:SetText(string.format('%s - %s', Locale.Lookup('TXT_KEY_GAME_SELECTION_SCREEN'),  Locale.Lookup('TXT_KEY_PATCH_UPDATE_NOTES_UPDATE_AVAILABLE', updPatchVersion)));
+		--print('finished:');
+		local rec = req.PopReceivedData()
+		if rec ~= nil then
+			updPatchVersion = Locale.ToLower(rec);
+			print(string.format('client %s server %s', clientPatchVersion, updPatchVersion));
+			if clientPatchVersion ~= updPatchVersion then
+				Controls.PatchChangelog:SetText(string.format('%s - %s', Locale.Lookup('TXT_KEY_GAME_SELECTION_SCREEN'),  Locale.Lookup('TXT_KEY_PATCH_UPDATE_NOTES_UPDATE_AVAILABLE', updPatchVersion)));
+			else
+				Controls.PatchChangelog:SetText(Locale.Lookup('{TXT_KEY_GAME_SELECTION_SCREEN} - {TXT_KEY_PATCH_UPDATE_NOTES_UP_TO_DATE}'));
+			end
+			Controls.PatchChangelog:SetSizeX(pvcon:GetSizeX())
+			pvcon:ReprocessAnchoring()
 		else
-			Controls.PatchChangelog:SetText(string.format(Locale.Lookup('{TXT_KEY_GAME_SELECTION_SCREEN} - {TXT_KEY_PATCH_UPDATE_NOTES_UP_TO_DATE}')));
+			print('request empty response')
+			Controls.PatchChangelog:SetText(Locale.Lookup('{TXT_KEY_GAME_SELECTION_SCREEN} - {TXT_KEY_PATCH_UPDATE_NOTES_CHECK_ERROR}'));
+			Controls.PatchChangelog:SetSizeX(pvcon:GetSizeX())
+			pvcon:ReprocessAnchoring()
 		end
-		Controls.PatchChangelog:SetSizeX(pvcon:GetSizeX())
-		pvcon:ReprocessAnchoring()
-		--------------------------------------
-		
 	elseif tdelta >= 10 then
 		ContextPtr:ClearUpdate();
 		print('request timeout')
-		Controls.PatchChangelog:SetText(string.format('%s - *Error checking for updates', Locale.Lookup('TXT_KEY_GAME_SELECTION_SCREEN')));
+		Controls.PatchChangelog:SetText(Locale.Lookup('{TXT_KEY_GAME_SELECTION_SCREEN} - {TXT_KEY_PATCH_UPDATE_NOTES_CHECK_ERROR}'));
 		Controls.PatchChangelog:SetSizeX(pvcon:GetSizeX())
 		pvcon:ReprocessAnchoring()
 	end
