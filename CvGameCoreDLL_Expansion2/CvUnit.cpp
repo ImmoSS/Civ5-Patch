@@ -15605,7 +15605,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 	setInfoBarDirty(true);
 
 	// if there is an enemy city nearby, alert any scripts to this
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 	for (int iI = 1; iI <= 3; iI++)
 	{
 		int iRing = iI;

@@ -127,14 +127,14 @@ CvCity::CvCity() :
 	, m_iNumGreatPeople("CvCity::m_iNumGreatPeople", m_syncArchive)
 	, m_iBaseGreatPeopleRate("CvCity::m_iBaseGreatPeopleRate", m_syncArchive)
 	, m_iGreatPeopleRateModifier("CvCity::m_iGreatPeopleRateModifier", m_syncArchive)
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 	, m_iCityAttackRangeModifier("CvCity::m_iCityAttackRangeModifier", m_syncArchive)
 #endif
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 	, m_iCityExtraAttack("CvCity::m_iCityExtraAttack", m_syncArchive)
 	, m_iCityCurrentExtraAttack("CvCity::m_iCityCurrentExtraAttack", m_syncArchive)
 #endif
-#ifdef CITY_EXTRA_HEAL
+#ifdef BUILDING_CITY_EXTRA_HEAL
 	, m_iCityExtraHeal("CvCity::m_iCityExtraHeal", m_syncArchive)
 #endif
 	, m_iJONSCultureStored("CvCity::m_iJONSCultureStored", m_syncArchive, true)
@@ -733,14 +733,14 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iNumGreatPeople = 0;
 	m_iBaseGreatPeopleRate = 0;
 	m_iGreatPeopleRateModifier = 0;
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 	m_iCityAttackRangeModifier = 0;
 #endif
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 	m_iCityExtraAttack = 0;
 	m_iCityCurrentExtraAttack = 0;
 #endif
-#ifdef CITY_EXTRA_HEAL
+#ifdef BUILDING_CITY_EXTRA_HEAL
 	m_iCityExtraHeal = 0;
 #endif
 	m_iJONSCultureStored = 0;
@@ -1613,7 +1613,7 @@ void CvCity::doTurn()
 		iBuildingDefense *= (100 + m_pCityBuildings->GetBuildingDefenseMod());
 		iBuildingDefense /= 100;
 		iHitsHealed += iBuildingDefense / 500;
-#ifdef CITY_EXTRA_HEAL
+#ifdef BUILDING_CITY_EXTRA_HEAL
 		iHitsHealed /= 2;
 		if (getCityExtraHeal() > 0)
 		{
@@ -1629,7 +1629,7 @@ void CvCity::doTurn()
 
 	setDrafted(false);
 	setMadeAttack(false);
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 	changeCityCurrentExtraAttack(-getCityCurrentExtraAttack() + getCityExtraAttack());
 #endif
 	GetCityBuildings()->SetSoldBuildingThisTurn(false);
@@ -6639,7 +6639,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			}
 		}
 #endif
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 #ifdef DUEL_WALL_CHANGE
 		if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
 		{
@@ -6656,11 +6656,11 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 		changeCityAttackRangeModifier(pBuildingInfo->getCityAttackRangeModifier() * iChange);
 #endif
 #endif
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 		changeCityExtraAttack(pBuildingInfo->GetCityExtraAttack() * iChange);
 		changeCityCurrentExtraAttack(pBuildingInfo->GetCityExtraAttack()* iChange);
 #endif
-#ifdef CITY_EXTRA_HEAL
+#ifdef BUILDING_CITY_EXTRA_HEAL
 		changeCityExtraHeal(pBuildingInfo->GetCityExtraHeal() * iChange);
 #endif
 
@@ -8481,7 +8481,7 @@ void CvCity::changeGreatPeopleRateModifier(int iChange)
 	m_iGreatPeopleRateModifier = (m_iGreatPeopleRateModifier + iChange);
 }
 
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 //	--------------------------------------------------------------------------------
 int CvCity::getCityAttackRangeModifier() const
 {
@@ -8564,7 +8564,7 @@ void CvCity::changeCityAttackRangeModifier(int iChange)
 }
 #endif
 
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 //	--------------------------------------------------------------------------------
 int CvCity::getCityExtraAttack() const
 {
@@ -8594,7 +8594,7 @@ void CvCity::changeCityCurrentExtraAttack(int iChange)
 }
 #endif
 
-#ifdef CITY_EXTRA_HEAL
+#ifdef BUILDING_CITY_EXTRA_HEAL
 //	--------------------------------------------------------------------------------
 int CvCity::getCityExtraHeal() const
 {
@@ -15614,7 +15614,7 @@ void CvCity::read(FDataStream& kStream)
 	kStream >> m_iNumGreatPeople;
 	kStream >> m_iBaseGreatPeopleRate;
 	kStream >> m_iGreatPeopleRateModifier;
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1000)
 	{
@@ -15632,7 +15632,7 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1001)
 	{
@@ -15648,7 +15648,7 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
-#ifdef CITY_EXTRA_HEAL
+#ifdef BUILDING_CITY_EXTRA_HEAL
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1004)
 	{
@@ -16245,14 +16245,14 @@ void CvCity::write(FDataStream& kStream) const
 	kStream << m_iNumGreatPeople;
 	kStream << m_iBaseGreatPeopleRate;
 	kStream << m_iGreatPeopleRateModifier;
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 	kStream << m_iCityAttackRangeModifier;
 #endif
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 	kStream << m_iCityExtraAttack;
 	kStream << m_iCityCurrentExtraAttack;
 #endif
-#ifdef CITY_EXTRA_HEAL
+#ifdef BUILDING_CITY_EXTRA_HEAL
 	kStream << m_iCityExtraHeal;
 #endif
 	kStream << m_iJONSCultureStored;
@@ -16701,7 +16701,7 @@ bool CvCity::canRangeStrike() const
 	VALIDATE_OBJECT
 
 	// Can't shoot more than once per turn
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 	if(getCityCurrentExtraAttack() == 0 && isMadeAttack())
 #else
 	if(isMadeAttack())
@@ -16738,7 +16738,7 @@ bool CvCity::CanRangeStrikeNow() const
 		iRange += 1;
 	}
 #endif
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 	iRange += getCityAttackRangeModifier();
 #endif
 	bool bIndirectFireAllowed = GC.getCAN_CITY_USE_INDIRECT_FIRE();
@@ -16858,7 +16858,7 @@ bool CvCity::canRangeStrikeAt(int iX, int iY) const
 		iAttackRange += 1;
 	}
 #endif
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 	iAttackRange += getCityAttackRangeModifier();
 #endif
 
@@ -16910,7 +16910,7 @@ CityTaskResult CvCity::rangeStrike(int iX, int iY)
 		return eResult;
 	}
 
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 	if (isMadeAttack())
 	{
 		changeCityCurrentExtraAttack(-1);
@@ -17178,7 +17178,7 @@ void CvCity::DoNearbyEnemy()
 	if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
 		iSearchRange += 1;
 #endif
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 	iSearchRange += getCityAttackRangeModifier();
 #endif
 	CvPlot* pBestPlot = NULL;

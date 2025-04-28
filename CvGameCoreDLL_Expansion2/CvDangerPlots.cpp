@@ -172,7 +172,7 @@ void CvDangerPlots::UpdateDanger(bool bPretendWarWithAllCivs, bool bIgnoreVisibi
 			if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
 				iRange += 1;
 #endif
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 			iRange += pLoopCity->getCityAttackRangeModifier();
 #endif
 			CvPlot* pCityPlot = pLoopCity->plot();

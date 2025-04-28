@@ -449,7 +449,7 @@ void CvLuaCity::PushMethods(lua_State* L, int t)
 	Method(CanRangeStrike);
 	Method(CanRangeStrikeNow);
 	Method(CanRangeStrikeAt);
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 	Method(GetCityAttackRangeModifier)
 #endif
 	Method(HasPerformedRangedStrikeThisTurn);
@@ -3698,7 +3698,7 @@ int CvLuaCity::lCanRangeStrikeAt(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvCity::canRangeStrikeAt);
 }
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 //------------------------------------------------------------------------------
 //int GetCityAttackRangeModifier()
 int CvLuaCity::lGetCityAttackRangeModifier(lua_State* L)
@@ -3714,7 +3714,7 @@ int CvLuaCity::lGetCityAttackRangeModifier(lua_State* L)
 int CvLuaCity::lHasPerformedRangedStrikeThisTurn(lua_State* L)
 {
 
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 	CvCity* pkCity = GetInstance(L);
 	const bool bResult = (pkCity->getCityCurrentExtraAttack() == 0) && pkCity->isMadeAttack();
 

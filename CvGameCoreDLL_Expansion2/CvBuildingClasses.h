@@ -194,13 +194,13 @@ public:
 	int GetExtraLeagueVotes() const;
 	int GetPreferredDisplayPosition() const;
 	int GetPortraitIndex() const;
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 	int getCityAttackRangeModifier() const;
 #endif
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 	int GetCityExtraAttack() const;
 #endif
-#ifdef CITY_EXTRA_HEAL
+#ifdef BUILDING_CITY_EXTRA_HEAL
 	int GetCityExtraHeal() const;
 #endif
 	bool IsTeamShare() const;
@@ -476,13 +476,13 @@ private:
 	int m_iExtraLeagueVotes;
 	int m_iPreferredDisplayPosition;
 	int m_iPortraitIndex;
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 	int m_iCityAttackRangeModifier;
 #endif
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 	int m_iCityExtraAttack;
 #endif
-#ifdef CITY_EXTRA_HEAL
+#ifdef BUILDING_CITY_EXTRA_HEAL
 	int m_iCityExtraHeal;
 #endif
 

@@ -347,17 +347,17 @@ public:
 	int getGreatPeopleRateModifier() const;
 	void changeGreatPeopleRateModifier(int iChange);
 
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 	int getCityAttackRangeModifier() const;
 	void changeCityAttackRangeModifier(int iChange);
 #endif
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 	int getCityExtraAttack() const;
 	void changeCityExtraAttack(int iChange);
 	int getCityCurrentExtraAttack() const;
 	void changeCityCurrentExtraAttack(int iChange);
 #endif
-#ifdef CITY_EXTRA_HEAL
+#ifdef BUILDING_CITY_EXTRA_HEAL
 	int getCityExtraHeal() const;
 	void changeCityExtraHeal(int iChange);
 #endif
@@ -919,14 +919,14 @@ protected:
 	FAutoVariable<int, CvCity> m_iNumGreatPeople;
 	FAutoVariable<int, CvCity> m_iBaseGreatPeopleRate;
 	FAutoVariable<int, CvCity> m_iGreatPeopleRateModifier;
-#ifdef CITY_RANGE_MODIFIER
+#ifdef BUILDING_CITY_RANGE_MODIFIER
 	FAutoVariable<int, CvCity> m_iCityAttackRangeModifier;
 #endif
-#ifdef CITY_EXTRA_ATTACK
+#ifdef BUILDING_CITY_EXTRA_ATTACK
 	FAutoVariable<int, CvCity> m_iCityExtraAttack;
 	FAutoVariable<int, CvCity> m_iCityCurrentExtraAttack;
 #endif
-#ifdef CITY_EXTRA_HEAL
+#ifdef BUILDING_CITY_EXTRA_HEAL
 	FAutoVariable<int, CvCity> m_iCityExtraHeal;
 #endif
 	FAutoVariable<int, CvCity> m_iJONSCultureStored;
