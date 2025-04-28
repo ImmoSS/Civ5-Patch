@@ -377,7 +377,11 @@ bool CvGameTrade::CreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, Domai
 		iTurnsPerCircuit = ((m_aTradeConnections[iNewTradeRouteIndex].m_aPlotList.size() - 1) * 2) / iRouteSpeed;
 	}
 	
+#ifdef TRADE_ROUTES_TARGET_TURNS
+	int iTargetTurns = TRADE_ROUTES_TARGET_TURNS;
+#else
 	int iTargetTurns = 30; // how many turns do we want the cycle to consume
+#endif
 #ifdef NQ_TRADE_ROUTE_DURATION_SCALES_WITH_GAME_SPEED
 	iTargetTurns = iTargetTurns * GC.getGame().getGameSpeedInfo().getCulturePercent() / 100;
 #endif
