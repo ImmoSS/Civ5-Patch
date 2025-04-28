@@ -697,7 +697,12 @@ function UpdatePlayer( slotInstance, playerInfo )
 			slotInstance.CivLabel:LocalizeAndSetToolTip( "" );
         
 			IconHookup( leader.PortraitIndex, 64, leader.IconAtlas, slotInstance.Portrait );
-			SimpleCivIconHookup( playerID, 64, slotInstance.Icon);
+			-- Ingame Civ Drafter START
+			--SimpleCivIconHookup( playerID, 64, slotInstance.Icon);  -- weird civ icon glitch fix
+			local thisCivType = PreGame.GetCivilization( playerID );
+    		local thisCiv = GameInfo.Civilizations[thisCivType];
+			IconHookup( thisCiv.PortraitIndex, 64, thisCiv.IconAtlas, slotInstance.Icon )
+			-- Ingame Civ Drafter END
 		else   
 			if ( not activeCivSlot or PreGame.IsCivilizationKeyAvailable( playerID ) ) then
 				--------------------------------------------------------------
@@ -1033,7 +1038,12 @@ function UpdateLocalPlayer( playerInfo )
 		Controls.CivLabel:LocalizeAndSetText( "TXT_KEY_RANDOM_LEADER_CIV", Locale.ConvertTextKey( leaderDescription ), Locale.ConvertTextKey( civ.ShortDescription ) );
 		
 		IconHookup( leader.PortraitIndex, 64, leader.IconAtlas, Controls.Portrait );
-		SimpleCivIconHookup( Matchmaking.GetLocalID(), 64, Controls.Icon);
+		-- Ingame Civ Drafter START
+		--SimpleCivIconHookup( Matchmaking.GetLocalID(), 64, Controls.Icon);  -- weird civ icon glitch fix
+		local thisCivType = PreGame.GetCivilization( Matchmaking.GetLocalID() );
+    	local thisCiv = GameInfo.Civilizations[thisCivType];
+		IconHookup( thisCiv.PortraitIndex, 64, thisCiv.IconAtlas, Controls.Icon )
+		-- Ingame Civ Drafter END
 	else   
 		--------------------------------------------------------------
 		-- Random Civ             

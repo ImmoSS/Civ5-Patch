@@ -577,7 +577,7 @@ for EUI and vanilla UI -->
         </GridButton>
 		
 		<!-- Ingame Civ Drafter START -->
-        <GridButton Anchor="R,B"  Style="SmallButton" Size="150,32"  Offset="0,0" StateOffsetIncrement="0,0" ID="DraftButton" Hidden="0" >
+        <GridButton Anchor="R,B"  Style="SmallButton" Size="150,32"  Offset="0,0" StateOffsetIncrement="0,0" ID="DraftButton" ToolTip="TXT_KEY_DRAFTS_HELP" Hidden="0" >
           <Label Anchor="C,C"  Offset="0,0"  String="TXT_KEY_DRAFTS_BUTTON" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"  />
         </GridButton>
 		<!-- Ingame Civ Drafter END -->
