@@ -3409,9 +3409,35 @@ void CvCity::DoPickResourceDemanded(bool bCurrentResourceInvalid)
 				// Can't be a minor civ only resource!
 				if(!GC.getResourceInfo(eResource)->isOnlyMinorCivs())
 				{
+#ifdef WLTKD_DO_PICK_RESOURCES_IN_BORDERS_ONLY
+					bool bResourceInBorders = false;
+					for (int iPlotLoop = 0; iPlotLoop < GC.getMap().numPlots(); iPlotLoop++)
+					{
+						pLoopPlot = GC.getMap().plotByIndexUnchecked(iPlotLoop);
+
+						if (pLoopPlot != NULL)
+						{
+							if (eResource != pLoopPlot->getResourceType() && pLoopPlot->getOwner() != NO_PLAYER)
+							{
+								if (GET_PLAYER(pLoopPlot->getOwner()).isHuman() || GET_PLAYER(pLoopPlot->getOwner()).isMinorCiv())
+								{
+									bResourceInBorders = true;
+									break;
+								}
+							}
+						}
+					}
+					if (bResourceInBorders)
+					{
+						// We must not have this already
+						if (GET_PLAYER(getOwner()).getNumResourceAvailable(eResource) == 0)
+							veValidLuxuryResources.push_back(eResource);
+					}
+#else
 					// We must not have this already
 					if(GET_PLAYER(getOwner()).getNumResourceAvailable(eResource) == 0)
 						veValidLuxuryResources.push_back(eResource);
+#endif
 				}
 			}
 		}
