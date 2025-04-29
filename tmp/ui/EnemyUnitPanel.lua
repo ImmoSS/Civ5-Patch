@@ -971,13 +971,6 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_FRIENDLY_CITY_BELIEF_BONUS" );
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 				end
-				
-				--[[iModifier = pMyUnit:GetNavalCombatModifierNearCity();
-				if (iModifier ~= 0) then
-					controlTable = g_MyCombatDataIM:GetInstance();
-					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NAVAL_NEAR_CITY_BONUS" );
-					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
-				end]]
 			end
 			
 			-- Assyria UA Rework
@@ -1454,13 +1447,6 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 						controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_FRIENDLY_CITY_BELIEF_BONUS" );
 						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 					end
-				
-					--[[iModifier = pTheirUnit:GetNavalCombatModifierNearCity();
-					if (iModifier ~= 0) then
-						controlTable = g_MyCombatDataIM:GetInstance();
-						controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NAVAL_NEAR_CITY_BONUS" );
-						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
-					end]]
 				end
 				
 				-- Bonus for fighting outside one's lands
@@ -1936,13 +1922,6 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_FRIENDLY_CITY_BELIEF_BONUS" );
 				controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 			end
-				
-			--[[iModifier = theirUnit:GetNavalCombatModifierNearCity();
-			if (iModifier ~= 0) then
-				controlTable = g_MyCombatDataIM:GetInstance();
-				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NAVAL_NEAR_CITY_BONUS" );
-				controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
-			end]]
 		end
 		
 		-- Bonus for fighting outside one's lands

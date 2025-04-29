@@ -3663,7 +3663,7 @@ int CvLuaUnit::lGetNavalCombatModifierNearCity(lua_State* L)
 	CvPlot* pkPlot = CvLuaPlot::GetInstance(L, 2);
 	int iRtnValue = 0;
 
-	if (pkUnit->plot()->IsFriendlyTerritory(pkUnit->getOwner()) && pkUnit->getDomainType() == DOMAIN_SEA)
+	if (pkUnit->getDomainType() == DOMAIN_SEA)
 	{
 		if (pkPlot)
 		{
