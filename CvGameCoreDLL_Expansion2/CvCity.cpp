@@ -7110,6 +7110,10 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
 		changeFoodBonusIfNoCitiesAround(pBuildingInfo->GetFoodBonusIfNoCitiesAround() * iChange);
 #endif
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+		// Local Trade route gold modifier
+		GET_PLAYER(getOwner()).GetTreasury()->ChangeLocalCityConnectionTradeRouteGoldModifier(pBuildingInfo->GetLocalCityConnectionTradeRouteModifier() * iChange);
+#endif
 
 		// Process for our player
 		for(int iI = 0; iI < MAX_PLAYERS; iI++)

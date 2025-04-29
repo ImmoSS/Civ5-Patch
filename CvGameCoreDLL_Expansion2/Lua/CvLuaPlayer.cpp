@@ -3288,7 +3288,11 @@ int CvLuaPlayer::lChangeHappinessPerTradeRoute(lua_State* L)
 int CvLuaPlayer::lGetCityConnectionTradeRouteGoldModifier(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+	const int iResult = pkPlayer->GetTreasury()->GetCityConnectionTradeRouteGoldModifier() + pkPlayer->GetTreasury()->GetLocalCityConnectionTradeRouteGoldModifier();
+#else
 	const int iResult = pkPlayer->GetTreasury()->GetCityConnectionTradeRouteGoldModifier();
+#endif
 	lua_pushinteger(L, iResult);
 	return 1;
 }

@@ -256,6 +256,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
 	m_iFoodBonusIfNoCitiesAround(0),
 #endif
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+	m_iLocalCityConnectionTradeRouteModifier(0),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -818,6 +821,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
 	m_iFoodBonusIfNoCitiesAround = kResults.GetInt("FoodBonusIfNoCitiesAround");
+#endif
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+	m_iLocalCityConnectionTradeRouteModifier = kResults.GetInt("LocalCityConnectionTradeRouteModifier");
 #endif
 
 	return true;
@@ -2370,6 +2376,13 @@ int CvBuildingEntry::GetHappinessForFilledGreatWorkSlot() const
 int CvBuildingEntry::GetFoodBonusIfNoCitiesAround() const
 {
 	return m_iFoodBonusIfNoCitiesAround;
+}
+#endif
+
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+int CvBuildingEntry::GetLocalCityConnectionTradeRouteModifier() const
+{
+	return m_iLocalCityConnectionTradeRouteModifier;
 }
 #endif
 

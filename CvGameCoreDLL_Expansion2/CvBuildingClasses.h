@@ -363,6 +363,9 @@ public:
 #ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
 	int GetFoodBonusIfNoCitiesAround() const;
 #endif
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+	int GetLocalCityConnectionTradeRouteModifier() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -621,6 +624,9 @@ private:
 #endif
 #ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
 	int m_iFoodBonusIfNoCitiesAround;
+#endif
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+	int m_iLocalCityConnectionTradeRouteModifier;
 #endif
 };
 

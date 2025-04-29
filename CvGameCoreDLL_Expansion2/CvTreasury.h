@@ -61,6 +61,10 @@ public:
 	int GetCityConnectionTradeRouteGoldChange() const;
 	void ChangeCityConnectionTradeRouteGoldChange(int iChange);
 	bool HasCityConnectionRouteBetweenCities(CvCity* pFirstCity, CvCity* pSecondCity, bool bBestRoute = false) const;
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+	int GetLocalCityConnectionTradeRouteGoldModifier() const;
+	void ChangeLocalCityConnectionTradeRouteGoldModifier(int iChange);
+#endif
 
 	// Gold from international trade routes
 	int GetGoldPerTurnFromTradeRoutes() const;
@@ -119,6 +123,9 @@ protected:
 	int m_iCityConnectionGoldTimes100;
 	int m_iCityConnectionTradeRouteGoldModifier;
 	int m_iCityConnectionTradeRouteGoldChange;
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+	int m_iLocalCityConnectionTradeRouteGoldModifier;
+#endif
 
 	int m_iBaseBuildingGoldMaintenance;
 	int m_iBaseImprovementGoldMaintenance;
