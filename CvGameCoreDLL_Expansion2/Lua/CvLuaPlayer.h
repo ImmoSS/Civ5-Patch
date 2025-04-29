@@ -280,9 +280,6 @@ protected:
 	static int lGetFoundedReligionGoldenAgeCombatMod(lua_State* L);
 #endif
 	static int lGetFoundedReligionFriendlyCityCombatMod(lua_State* L);
-#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
-	static int lGetNavalCombatModifierNearCity(lua_State* L);
-#endif
 	static int lGetMinimumFaithNextGreatProphet(lua_State* L);
 	static int lHasReligionInMostCities(lua_State* L);
 	static int lDoesUnitPassFaithPurchaseCheck(lua_State* L);

@@ -291,9 +291,6 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(GetFoundedReligionGoldenAgeCombatMod);
 #endif
 	Method(GetFoundedReligionFriendlyCityCombatMod);
-#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
-	Method(GetNavalCombatModifierNearCity);
-#endif
 	Method(GetMinimumFaithNextGreatProphet);
 	Method(HasReligionInMostCities);
 	Method(DoesUnitPassFaithPurchaseCheck);
@@ -2905,32 +2902,6 @@ int CvLuaPlayer::lGetFoundedReligionFriendlyCityCombatMod(lua_State* L)
 
 	return 1;
 }
-#ifdef BUILDING_NAVAL_COMBAT_MODIFIER_NEAR_CITY
-//------------------------------------------------------------------------------
-//int GetNavalCombatModifierNearCity();
-int CvLuaPlayer::lGetNavalCombatModifierNearCity(lua_State* L)
-{
-	int iRtnValue = 0;
-
-	CvPlot* pkPlot = CvLuaPlot::GetInstance(L);
-	CvUnit* pkUnit = CvLuaUnit::GetInstance(L, 2);
-	if (pkPlot)
-	{
-		CvCity* pPlotCity = pkPlot->getWorkingCity();
-		if (pPlotCity)
-		{
-			if (pkUnit->getDomainType() == DOMAIN_SEA)
-			{
-				iRtnValue = pPlotCity->getNavalCombatModifierNearCity();
-			}
-		}
-
-	}
-	lua_pushinteger(L, iRtnValue);
-
-	return 1;
-}
-#endif
 //------------------------------------------------------------------------------
 // int GetMinimumFaithNextGreatProphet() const
 int CvLuaPlayer::lGetMinimumFaithNextGreatProphet(lua_State* L)
