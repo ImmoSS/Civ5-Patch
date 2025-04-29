@@ -1104,6 +1104,9 @@ void CvTreasury::Write(FDataStream& kStream)
 {
 	// Current version number
 	uint uiVersion = 1;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	uiVersion = BUMP_SAVE_VERSION_TREASURY;
+#endif
 	kStream << uiVersion;
 
 	kStream << m_iGold;
