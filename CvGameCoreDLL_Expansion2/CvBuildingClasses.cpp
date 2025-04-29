@@ -2356,7 +2356,7 @@ int CvBuildingEntry::GetMaxYieldForEachBuildingInEmpire(int i) const
 {
 	CvAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
 	CvAssertMsg(i > -1, "Index out of bounds");
-	return m_piMaxYieldForEachBuildingInEmpire ? m_piMaxYieldForEachBuildingInEmpire[i] : -1;
+	return m_piMaxYieldForEachBuildingInEmpire ? m_piMaxYieldForEachBuildingInEmpire[i] : 0;
 }
 
 int* CvBuildingEntry::GetMaxYieldForEachBuildingInEmpireArray() const

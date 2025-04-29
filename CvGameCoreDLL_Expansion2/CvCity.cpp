@@ -6882,28 +6882,45 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
 			if (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
 			{
-				GET_PLAYER(getOwner()).ChangeYieldForEachBuildingInEmpire(eBuilding, eYield, (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) * iChange));
-
-				int iYieldForEachBuildingInEmpire = std::min(GET_PLAYER(getOwner()).GetYieldForEachBuildingInEmpire(eBuilding, eYield), pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield));
 				int iLoop = 0;
+				int iNumBuildings = 0;
+				int iNumSuppYields;
+				int iNumYileds;
+				int iNewNumYileds;
+				for (CvCity* pLoopCity = GET_PLAYER(getOwner()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwner()).nextCity(&iLoop))
+				{
+					iNumBuildings += pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding);
+				}
+				if (pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield) >= 0)
+				{
+					iNumSuppYields = iNumBuildings * pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield);
+					iNumYileds = std::min(pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield), iNumSuppYields);
+					iNewNumYileds = std::min(pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield), iNumSuppYields + pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) * iChange);
+				}
+				else
+				{
+					iNumSuppYields = iNumBuildings * pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield);
+					iNumYileds = iNumSuppYields;
+					iNewNumYileds = iNumSuppYields + pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) * iChange;
+				}
 				for (CvCity* pLoopCity = GET_PLAYER(getOwner()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwner()).nextCity(&iLoop))
 				{
 					if (pLoopCity != this)
 					{
 						if (pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
 						{
-							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, iYieldForEachBuildingInEmpire - pLoopCity->GetBaseYieldRateFromBuildings(eYield));
+							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, iNewNumYileds - iNumYileds);
 						}
 					}
 					else
 					{
-						if (pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding) == 0)
+						if (pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
 						{
-							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, - (GET_PLAYER(getOwner()).GetYieldForEachBuildingInEmpire(eBuilding, eYield) - (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) * iChange)));
+							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, iNewNumYileds);
 						}
 						else
 						{
-							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, iYieldForEachBuildingInEmpire - pLoopCity->GetBaseYieldRateFromBuildings(eYield));
+							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, -iNumYileds);
 						}
 					}
 				}
