@@ -7143,7 +7143,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 				pLoopPlot = plotXYWithRangeCheck(getX(), getY(), iDX, iDY, iMountainRange);
 				if (pLoopPlot)
 				{
-					if (pLoopPlot->isMountain() && !pLoopPlot->IsNaturalWonder() && pLoopPlot->getOwner() == getOwner())
+					if (pLoopPlot->isMountain() && !pLoopPlot->IsNaturalWonder())
 					{
 						bFoundMountain = true;
 						break;
