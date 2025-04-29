@@ -950,7 +950,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 			if (pToPlot:IsFriendlyTerritory(iMyPlayer)) then
 				
 				-- General combat mod
-				iModifier = pMyUnit:GetFriendlyLandsModifier() + pMyUnit:GetNavalCombatModifierNearCity();
+				iModifier = pMyUnit:GetFriendlyLandsModifier() + pMyUnit:GetNavalCombatModifierNearCity(pToPlot);
 				if (iModifier ~= 0) then
 					controlTable = g_MyCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_FIGHT_AT_HOME_BONUS" );
@@ -1441,7 +1441,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 
 				-- Bonus for fighting in one's lands
 				if (pToPlot:IsFriendlyTerritory(iTheirPlayer)) then
-					iModifier = pTheirUnit:GetFriendlyLandsModifier() + pTheirUnit:GetNavalCombatModifierNearCity();
+					iModifier = pTheirUnit:GetFriendlyLandsModifier() + pTheirUnit:GetNavalCombatModifierNearCity(pToPlot);
 					if (iModifier ~= 0) then
 						controlTable = g_TheirCombatDataIM:GetInstance();
 						controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_FIGHT_AT_HOME_BONUS" );
@@ -1923,7 +1923,7 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 
 		-- Bonus for fighting in one's lands
 		if (theirPlot:IsFriendlyTerritory(iTheirPlayer)) then
-			iModifier = theirUnit:GetFriendlyLandsModifier() + theirUnit:GetNavalCombatModifierNearCity();
+			iModifier = theirUnit:GetFriendlyLandsModifier() + theirUnit:GetNavalCombatModifierNearCity(theirPlot);
 			if (iModifier ~= 0) then
 				controlTable = g_TheirCombatDataIM:GetInstance();
 				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_FIGHT_AT_HOME_BONUS" );

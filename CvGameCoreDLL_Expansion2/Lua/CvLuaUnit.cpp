@@ -3660,14 +3660,18 @@ int CvLuaUnit::lGetOutsideFriendlyLandsModifier(lua_State* L)
 int CvLuaUnit::lGetNavalCombatModifierNearCity(lua_State* L)
 {
 	CvUnit* pkUnit = GetInstance(L);
+	CvPlot* pkPlot = CvLuaPlot::GetInstance(L, 2);
 	int iRtnValue = 0;
 
-	if (pkUnit->plot()->IsFriendlyTerritory(pkUnit->getOwner()))
+	if (pkUnit->plot()->IsFriendlyTerritory(pkUnit->getOwner()) && pkUnit->getDomainType() == DOMAIN_SEA)
 	{
-		CvCity* pPlotCity = pkUnit->plot()->getWorkingCity();
-		if (pPlotCity)
+		if (pkPlot)
 		{
-			iRtnValue = pPlotCity->getNavalCombatModifierNearCity();
+			CvCity* pPlotCity = pkPlot->getWorkingCity();
+			if (pPlotCity)
+			{
+				iRtnValue = pPlotCity->getNavalCombatModifierNearCity();
+			}
 		}
 	}
 	lua_pushinteger(L, iRtnValue);
