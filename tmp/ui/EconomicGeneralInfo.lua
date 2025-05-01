@@ -260,7 +260,7 @@ function UpdateGPT()
     -- Trade income breakdown tooltip
     local iBaseGold = GameDefines.TRADE_ROUTE_BASE_GOLD / 100;
     local iGoldPerPop = GameDefines.TRADE_ROUTE_CITY_POP_GOLD_MULTIPLIER / 100;
-    local strTooltip = Locale.ConvertTextKey("TXT_KEY_EO_INCOME_TRADE");
+    --[[local strTooltip = Locale.ConvertTextKey("TXT_KEY_EO_INCOME_TRADE");
     strTooltip = strTooltip .. "[NEWLINE][NEWLINE]";
 	local iTradeRouteGoldModifier = pPlayer:GetCityConnectionTradeRouteGoldModifier();
 	if (iTradeRouteGoldModifier ~= 0) then
@@ -268,7 +268,7 @@ function UpdateGPT()
 		strTooltip = strTooltip .. "[NEWLINE]";
 	end
     strTooltip = strTooltip .. Locale.ConvertTextKey("TXT_KEY_TRADE_ROUTE_INCOME_INFO", iBaseGold, iGoldPerPop);
-    Controls.TradeIncomeValue:SetToolTipString( strTooltip );
+    Controls.TradeIncomeValue:SetToolTipString( strTooltip );]]
     
     local bFoundTrade = false;
     Controls.TradeStack:DestroyAllChildren();
@@ -286,6 +286,16 @@ function UpdateGPT()
                 instance.TradeIncomeValue:SetText( Locale.ToNumber( tradeIncome, "#.##" ) );
                 
                 local strPopInfo = " (" .. pCity:GetPopulation() .. ")"; 
+                local strTooltip = Locale.ConvertTextKey("TXT_KEY_EO_INCOME_TRADE");
+                strTooltip = strTooltip .. "[NEWLINE][NEWLINE]";
+                local iTradeRouteGoldModifier = pPlayer:GetCityConnectionTradeRouteGoldModifier(pCity);
+                print("iTradeRouteGoldModifier = ", iTradeRouteGoldModifier);
+                if (iTradeRouteGoldModifier ~= 0) then
+                    strTooltip = strTooltip .. Locale.ConvertTextKey("TXT_KEY_EGI_TRADE_ROUTE_MOD_INFO", iTradeRouteGoldModifier);
+                    strTooltip = strTooltip .. "[NEWLINE]";
+                end
+                strTooltip = strTooltip .. Locale.ConvertTextKey("TXT_KEY_TRADE_ROUTE_INCOME_INFO", iBaseGold, iGoldPerPop);
+                -- Controls.TradeIncomeValue:SetToolTipString( strTooltip );
                 instance.CityName:SetToolTipString( strTooltip .. strPopInfo );
                 instance.TradeIncomeValue:SetToolTipString( strTooltip .. strPopInfo );
                 instance.TradeIncome:SetToolTipString( strTooltip .. strPopInfo );

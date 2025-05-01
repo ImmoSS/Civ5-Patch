@@ -3260,7 +3260,8 @@ int CvLuaPlayer::lGetCityConnectionTradeRouteGoldModifier(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);
 #ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
-	const int iResult = pkPlayer->GetTreasury()->GetCityConnectionTradeRouteGoldModifier() + pkPlayer->GetTreasury()->GetLocalCityConnectionTradeRouteGoldModifier();
+	CvCity* pkCity = CvLuaCity::GetInstance(L, 2);
+	const int iResult = pkPlayer->GetTreasury()->GetCityConnectionTradeRouteGoldModifier() + pkCity->getLocalCityConnectionTradeRouteModifier();
 #else
 	const int iResult = pkPlayer->GetTreasury()->GetCityConnectionTradeRouteGoldModifier();
 #endif

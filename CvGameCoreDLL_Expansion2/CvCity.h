@@ -895,6 +895,10 @@ public:
 	int getFoodBonusIfNoCitiesAround() const;
 	void changeFoodBonusIfNoCitiesAround(int iChange);
 #endif
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+	int getLocalCityConnectionTradeRouteModifier() const;
+	void changeLocalCityConnectionTradeRouteModifier(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1123,6 +1127,9 @@ protected:
 #endif
 #ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
 	FAutoVariable<int, CvCity> m_iFoodBonusIfNoCitiesAround;
+#endif
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+	FAutoVariable<int, CvCity> m_iLocalCityConnectionTradeRouteModifier;
 #endif
 
 	void doGrowth();

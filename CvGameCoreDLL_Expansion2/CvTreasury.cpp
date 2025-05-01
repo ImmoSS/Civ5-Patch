@@ -28,9 +28,6 @@ CvTreasury::CvTreasury():
 	m_iCityConnectionGoldTimes100(0),
 	m_iCityConnectionTradeRouteGoldModifier(0),
 	m_iCityConnectionTradeRouteGoldChange(0),
-#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
-	m_iLocalCityConnectionTradeRouteGoldModifier(0),
-#endif
 	m_iBaseBuildingGoldMaintenance(0),
 	m_iBaseImprovementGoldMaintenance(0),
 	m_iLifetimeGrossGoldIncome(0),
@@ -56,9 +53,6 @@ void CvTreasury::Init(CvPlayer* pPlayer)
 	m_iCityConnectionGoldTimes100 = 0;
 	m_iCityConnectionTradeRouteGoldModifier = 0;
 	m_iCityConnectionTradeRouteGoldChange = 0;
-#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
-	m_iLocalCityConnectionTradeRouteGoldModifier = 0;
-#endif
 	m_iBaseBuildingGoldMaintenance = 0;
 	m_iBaseImprovementGoldMaintenance = 0;
 	m_iLifetimeGrossGoldIncome = 0;
@@ -263,9 +257,9 @@ int CvTreasury::GetCityConnectionRouteGoldTimes100(CvCity* pNonCapitalCity) cons
 	iGold += GetCityConnectionTradeRouteGoldChange() * 100;
 
 #ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
-	if (GetCityConnectionTradeRouteGoldModifier() + GetLocalCityConnectionTradeRouteGoldModifier() != 0)
+	if (GetCityConnectionTradeRouteGoldModifier() + pNonCapitalCity->getLocalCityConnectionTradeRouteModifier() != 0)
 	{
-		iGold *= (100 + GetCityConnectionTradeRouteGoldModifier()) + GetLocalCityConnectionTradeRouteGoldModifier();
+		iGold *= (100 + GetCityConnectionTradeRouteGoldModifier()) + pNonCapitalCity->getLocalCityConnectionTradeRouteModifier();
 		iGold /= 100;
 	}
 
@@ -424,25 +418,6 @@ bool CvTreasury::HasCityConnectionRouteBetweenCities(CvCity* pFirstCity, CvCity*
 
 	return FALSE;
 }
-
-#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
-/// How much of a percent bonus do we get for Trade Routes
-int CvTreasury::GetLocalCityConnectionTradeRouteGoldModifier() const
-{
-	return m_iLocalCityConnectionTradeRouteGoldModifier;
-}
-
-/// Changes how much of a percent bonus do we get for Trade Routes
-void CvTreasury::ChangeLocalCityConnectionTradeRouteGoldModifier(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iLocalCityConnectionTradeRouteGoldModifier += iChange;
-
-		DoUpdateCityConnectionGold();
-	}
-}
-#endif
 
 /// Gold per turn from international trade routes
 int CvTreasury::GetGoldPerTurnFromTradeRoutes() const
@@ -1127,20 +1102,6 @@ void CvTreasury::Read(FDataStream& kStream)
 	kStream >> m_iCityConnectionGoldTimes100;
 	kStream >> m_iCityConnectionTradeRouteGoldModifier;
 	kStream >> m_iCityConnectionTradeRouteGoldChange;
-#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
-# ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= 1000)
-	{
-# endif
-		kStream >> m_iLocalCityConnectionTradeRouteGoldModifier;
-# ifdef SAVE_BACKWARDS_COMPATIBILITY
-	}
-	else
-	{
-		m_iLocalCityConnectionTradeRouteGoldModifier = 0;
-	}
-# endif
-#endif
 	kStream >> m_iBaseBuildingGoldMaintenance;
 	kStream >> m_iBaseImprovementGoldMaintenance;
 	kStream >> m_GoldBalanceForTurnTimes100;
@@ -1165,9 +1126,6 @@ void CvTreasury::Write(FDataStream& kStream)
 	kStream << m_iCityConnectionGoldTimes100;
 	kStream << m_iCityConnectionTradeRouteGoldModifier;
 	kStream << m_iCityConnectionTradeRouteGoldChange;
-#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
-	kStream << m_iLocalCityConnectionTradeRouteGoldModifier;
-#endif
 	kStream << m_iBaseBuildingGoldMaintenance;
 	kStream << m_iBaseImprovementGoldMaintenance;
 	kStream << m_GoldBalanceForTurnTimes100;

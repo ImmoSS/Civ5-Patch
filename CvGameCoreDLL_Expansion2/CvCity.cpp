@@ -310,6 +310,9 @@ CvCity::CvCity() :
 #ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
 	, m_iFoodBonusIfNoCitiesAround("CvCity::m_iFoodBonusIfNoCitiesAround", m_syncArchive)
 #endif
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+	, m_iLocalCityConnectionTradeRouteModifier("CvCity::m_iLocalCityConnectionTradeRouteModifier", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1104,6 +1107,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #endif
 #ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
 	m_iFoodBonusIfNoCitiesAround = 0;
+#endif
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+	m_iLocalCityConnectionTradeRouteModifier = 0;
 #endif
 
 	if(!bConstructorCall)
@@ -7128,8 +7134,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 		changeFoodBonusIfNoCitiesAround(pBuildingInfo->GetFoodBonusIfNoCitiesAround() * iChange);
 #endif
 #ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
-		// Local Trade route gold modifier
-		GET_PLAYER(getOwner()).GetTreasury()->ChangeLocalCityConnectionTradeRouteGoldModifier(pBuildingInfo->GetLocalCityConnectionTradeRouteModifier() * iChange);
+		changeLocalCityConnectionTradeRouteModifier(pBuildingInfo->GetLocalCityConnectionTradeRouteModifier() * iChange);
 #endif
 
 		// Process for our player
@@ -16264,6 +16269,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iLocalCityConnectionTradeRouteModifier;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iLocalCityConnectionTradeRouteModifier = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -16545,6 +16564,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
 	kStream << m_iFoodBonusIfNoCitiesAround;
+#endif
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+	kStream << m_iLocalCityConnectionTradeRouteModifier;
 #endif
 }
 
@@ -18086,7 +18108,7 @@ int CvCity::getHappinessForFilledGreatWorkSlot() const
 void CvCity::changeHappinessForFilledGreatWorkSlot(int iChange)
 {
 	VALIDATE_OBJECT
-		m_iHappinessForFilledGreatWorkSlot += iChange;
+	m_iHappinessForFilledGreatWorkSlot += iChange;
 }
 #endif
 
@@ -18117,6 +18139,21 @@ int CvCity::getFoodBonusIfNoCitiesAround() const
 void CvCity::changeFoodBonusIfNoCitiesAround(int iChange)
 {
 	VALIDATE_OBJECT
-		m_iFoodBonusIfNoCitiesAround += iChange;
+	m_iFoodBonusIfNoCitiesAround += iChange;
+}
+#endif
+
+#ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
+//	----------------------------------------------------------------------------
+int CvCity::getLocalCityConnectionTradeRouteModifier() const
+{
+	return m_iLocalCityConnectionTradeRouteModifier;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeLocalCityConnectionTradeRouteModifier(int iChange)
+{
+	VALIDATE_OBJECT
+	m_iLocalCityConnectionTradeRouteModifier += iChange;
 }
 #endif
