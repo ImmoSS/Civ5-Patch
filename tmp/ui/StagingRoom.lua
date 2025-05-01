@@ -2519,6 +2519,11 @@ Controls.EmotesScrollPanel:CalculateInternalSize()
 -- INGAME CIV DRAFTER
 -------------------------------------------------
 
+numBans = 2
+if PreGame.GetGameOption("GAMEOPTION_TOURNAMENT_MODE") > 0 then
+	numBans = 1
+end
+numPicks = 3
 function RebuildDrafts()
 	print('rebuild drafts')
 	g_DraftResultInstances = { Bans = {}, BansD = {}, BansT = {}, Picks = {}, PicksD = {}, PicksT = {} };
@@ -2631,11 +2636,6 @@ function RebuildDrafts()
 			g_DummyInstancies[i].Root:SetHide(false)
 		end
 
-		local numBans = 2
-		local numPicks = 3
-		if PreGame.GetGameOption("GAMEOPTION_TOURNAMENT_MODE") > 0 then
-			numBans = 1
-		end
 		Controls.DraftButton:LocalizeAndSetToolTip('TXT_KEY_DRAFTS_HELP', numBans, numPicks)
 		local DraftCivEntrySmall_WIDTH = 70
 		if g_DraftResultInstances.BansT[i] == nil then
@@ -2721,7 +2721,7 @@ function PopulateDrafts()
 		elseif control == 'DRAFT_PROGRESS_BANS' then
 			print('--- DRAFT_PROGRESS_BANS');
 			g_DraftProgress = control;
-			Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', 2, len(g_SelectedCivs), 2);
+			Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', numBans, len(g_SelectedCivs), numBans);
 			Controls.DraftPlayersStatus:SetHide(true);
 			Controls.DraftCivPicker:SetHide(false);
 			for p, ban in string.gmatch(text, '(.-):(.-);') do
@@ -2863,7 +2863,7 @@ function doCivSelectionHighlight(civId, leaderId, v3,v4,v5, force)
 		instance.LeaderSubIcon:SetColor( {x=1, y=1, z=1, w=1 } )
 		instance.CivName:SetColor( {x=1, y=1, z=200/255, w=1 }, 0 )
 	else
-		if force or Matchmaking.IsHost() or len(g_SelectedCivs) < 2 then
+		if force or Matchmaking.IsHost() or len(g_SelectedCivs) < numBans then
 			g_SelectedCivs[civId] = true;
 			instance.LeaderFrame:SetColor( {x=200/255, y=200/255, z=50/255, w=1 } )
 			instance.LeaderFrameSelectedAnim:SetHide(false)
@@ -2873,12 +2873,12 @@ function doCivSelectionHighlight(civId, leaderId, v3,v4,v5, force)
 		end
 	end
 	if g_DraftProgress == 'DRAFT_PROGRESS_BANS' then
-		if len(g_SelectedCivs) > 0 and (Matchmaking.IsHost() or len(g_SelectedCivs) == 2) then
+		if len(g_SelectedCivs) > 0 and (Matchmaking.IsHost() or len(g_SelectedCivs) == numBans) then
 				Controls.DraftConfirmBansButton:SetDisabled(false);
 		else
 			Controls.DraftConfirmBansButton:SetDisabled(true);
 		end
-		Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', 2, len(g_SelectedCivs), 2);
+		Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', numBans, len(g_SelectedCivs), numBans);
 	end
 	UpdateDraftCivButtons()
 end
@@ -3256,7 +3256,7 @@ function OnGameplayAlertMessage( text )
 		local pName = Matchmaking.GetPlayerList()[tonumber(splayerID) + 1].playerName or Locale.Lookup('TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME', tonumber(splayerID) + 1);
 		AddPlayerBans(tonumber(splayerID), pName, bans);
 		if Matchmaking.GetLocalID() == tonumber(splayerID) and not Matchmaking.IsHost() then
-			Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS_2');
+			Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', numBans, len(g_SelectedCivs), numBans);
 			g_DraftLocalBansDone = true;
 			if not Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(true);
@@ -3296,7 +3296,7 @@ function OnGameplayAlertMessage( text )
 	elseif control == 'DRAFT_PROGRESS_BANS' then
 		print('--- DRAFT_PROGRESS_BANS');
 		g_DraftProgress = control;
-		Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', 2, len(g_SelectedCivs), 2);
+		Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', numBans, len(g_SelectedCivs), numBans);
 		Controls.DraftPlayersStatus:SetHide(true);
 		Controls.DraftCivPicker:SetHide(false);
 	elseif control == 'DRAFT_PROGRESS_BUSY' then
