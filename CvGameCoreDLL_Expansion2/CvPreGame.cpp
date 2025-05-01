@@ -3068,10 +3068,8 @@ void DraftResponseBans(PlayerTypes p, const char* szBans)
 
 	SLOG("1old %d new %d res %d", old1, civs1, old1 ^ civs1);
 	SLOG("2old %d new %d res %d", old2, civs2, old2 ^ civs2);
-	std::vector<CustomOption> opts;
-	opts.push_back(CustomOption("GAMEOPTION_DRAFTS_BANNED_CIVS1", old1 ^ civs1));
-	opts.push_back(CustomOption("GAMEOPTION_DRAFTS_BANNED_CIVS2", old2 ^ civs2));
-	CvPreGame::SetGameOptions(opts);
+	CvPreGame::SetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS1", old1 ^ civs1);
+	CvPreGame::SetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS2", old2 ^ civs2);
 
 	// notify UI
 	DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("ban-success|%d|%s", uiPlayerID, szBans).c_str());
