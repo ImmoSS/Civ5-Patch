@@ -2914,7 +2914,7 @@ void CvGameDeals::DoEndTradedItem(CvTradedItem* pItem, PlayerTypes eToPlayer, bo
 #ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
 		if (GC.getResourceInfo(eResource)->getResourceUsage() == RESOURCEUSAGE_LUXURY)
 		{
-			fromPlayer.GetTreasury()->ChangeGoldPerTurnFromDiplomacy(iResourceQuantity * fromPlayer.GetPlayerTraits()->GetGoldForLuxuryExport());
+			fromPlayer.GetTreasury()->ChangeGoldPerTurnFromDiplomacy(-iResourceQuantity * fromPlayer.GetPlayerTraits()->GetGoldForLuxuryExport());
 		}
 #endif
 
