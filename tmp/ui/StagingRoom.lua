@@ -633,7 +633,7 @@ function RefreshPlayerList()
 			-- Ingame Civ Drafter START
 			local bIsHuman  = (PreGame.GetSlotStatus( playerID ) == SlotStatus.SS_TAKEN ) or (PreGame.GetSlotStatus( playerID ) == SlotStatus.SS_OPEN );
 			g_PlayerEntries[playerID].statusInstance.PlayerName:LocalizeAndSetText( GetSlotTypeString(playerID) );
-			print('pid', playerID, playerInfo.playerName)
+			--print('pid', playerID, playerInfo.playerName)
 			if PreGame.GetSlotClaim( playerID ) ~= SlotClaim.SLOTCLAIM_UNASSIGNED and bIsHuman then
 				g_PlayerEntries[playerID].statusInstance.PlayerName:SetText( playerInfo.playerName );
 				if g_PlayerEntries[playerID].statusInstance.Root:IsHidden() then
@@ -1226,13 +1226,18 @@ Events.MultiplayerGamePlayerUpdated.Add( OnDisconnectOrPossiblyUpdate );
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function OnDisconnect( playerID )
-    if( ContextPtr:IsHidden() == false ) then
-			if(Network.IsPlayerKicked(playerID)) then
-				OnChat( playerID, -1, Locale.ConvertTextKey( "TXT_KEY_KICKED" ) );
-			else
-    		OnChat( playerID, -1, Locale.ConvertTextKey( "TXT_KEY_DISCONNECTED" ) );
-			end
-    	ShowHideInviteButton();
+	if( ContextPtr:IsHidden() == false ) then
+		if(Network.IsPlayerKicked(playerID)) then
+			OnChat( playerID, -1, Locale.ConvertTextKey( "TXT_KEY_KICKED" ) );
+		else
+			OnChat( playerID, -1, Locale.ConvertTextKey( "TXT_KEY_DISCONNECTED" ) );
+		end
+		ShowHideInviteButton();
+		-- Ingame Civ Drafter START
+		print('disconnect: reset drafts')
+		local product = 4 * 2 ^ 28;  -- reset draft data (local)
+		local data = PreGame.SetLeaderKey( product, 'TXT_KEY_DRAFTS_RESET_DISC' );
+		-- Ingame Civ Drafter END
 	end
 end
 Events.MultiplayerGamePlayerDisconnected.Add( OnDisconnect );
