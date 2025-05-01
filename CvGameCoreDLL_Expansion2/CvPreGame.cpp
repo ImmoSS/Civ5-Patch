@@ -2444,19 +2444,22 @@ void setActivePlayer(PlayerTypes p)
 {
 #ifdef INGAME_CIV_DRAFTER
 	SLOG("active p %d", p);
-	/*if (isNetworkMultiplayerGame() || isHotSeatGame())
+	if (isNetworkMultiplayerGame() || isHotSeatGame())
 	{
 		if (s_draftCurrentProgress != DRAFT_PROGRESS_OVER)
 		{
 			int oldp = (int)s_activePlayer;
-			CvString t = s_draftPlayerSecrets[oldp];
-			s_draftPlayerSecrets[oldp] = s_draftPlayerSecrets[p];
-			s_draftPlayerSecrets[p] = t;
-			t = s_draftPlayerSecretHashes[oldp];
-			s_draftPlayerSecretHashes[oldp] = s_draftPlayerSecretHashes[p];
-			s_draftPlayerSecretHashes[p] = t;
+			if (oldp >= 0 && oldp < MAX_MAJOR_CIVS)
+			{
+				CvString t = s_draftPlayerSecrets[oldp];
+				s_draftPlayerSecrets[oldp] = s_draftPlayerSecrets[p];
+				s_draftPlayerSecrets[p] = t;
+				t = s_draftPlayerSecretHashes[oldp];
+				s_draftPlayerSecretHashes[oldp] = s_draftPlayerSecretHashes[p];
+				s_draftPlayerSecretHashes[p] = t;
+			}
 		}
-	}*/
+	}
 #endif
 	s_activePlayer = p;
 }
