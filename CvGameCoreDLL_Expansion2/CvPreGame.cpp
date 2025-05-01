@@ -1728,9 +1728,9 @@ const CvString& nicknameDisplayed(PlayerTypes p)
 {
 #ifdef PREGAMEAPI_GET_NETID
 	// UI <- dll
-	// 0001 xxxx xxxx xxxx - get steamID
-	// 0002 xxxx xxxx xxxx - get drafts data
-	// 0003 xxxx xxxx xxxx - get s_draftPlayersReady
+	// 0001 xxxx xxxx xxxx xxxx xxxx xxxx xxxx - get steamID
+	// 0010 xxxx xxxx xxxx xxxx xxxx xxxx xxxx - get drafts data
+	// 0011 xxxx xxxx xxxx xxxx xxxx xxxx xxxx - get s_draftPlayersReady
 	// 
 	// intercept Pregame.GetNickName here
 	// it actually limits max PlayerType value to 2^28 (it's OK)
@@ -3125,7 +3125,7 @@ void DraftResponseSecret(PlayerTypes p, const char* szSecret)
 	if (s_draftPlayerSecretHashes[uiPlayerID] != hash(szSecret))
 	{
 		SLOG("WARN received secret does not match declared secret hash: player %d declared %s received %s (hash %s)", uiPlayerID, s_draftPlayerSecretHashes[uiPlayerID].c_str(), szSecret, hash(CvString(szSecret)).c_str());
-		//s_draftResult = DRAFT_RESULT_FAIL;
+		DraftLocalReset(GetLocalizedText("TXT_KEY_DRAFTS_RESET_HASH_MISMATCH", nicknameDisplayed((PlayerTypes)uiPlayerID).c_str()).c_str());
 		return;
 	}
 	s_draftPlayerSecrets[uiPlayerID] = CvString(szSecret);
@@ -3258,7 +3258,7 @@ void DraftLocalReady()
 	DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DRAFT_PROGRESS_INIT|%s", s_draftLocalSecretHash.c_str()).c_str());
 }
 
-void DraftLocalReset(bool bLocal)
+void DraftLocalReset(const char* szReason)
 {
 	SLOG("--- DRAFT RESET ---");
 	for (uint i = 0; i < s_draftPlayerSecrets.size(); i++)
@@ -3278,11 +3278,10 @@ void DraftLocalReset(bool bLocal)
 	CvPreGame::SetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS2", 0);
 	s_draftBansMsgQueue.clear();
 	s_draftCurrBansMsgNumber = 0;
-	if (bLocal)
-	{
-		s_draftLocalSecret = "";
-		s_draftLocalSecretHash = "";
-	}
+	s_draftLocalSecret = "";
+	s_draftLocalSecretHash = "";
+	CvString strReason(CvString("reset|") + szReason);
+	DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), strReason.c_str());
 }
 
 void DraftLocalUpdate()
@@ -3327,8 +3326,7 @@ void DraftLocalUpdate()
 
 	if (!bOk)
 	{
-		DraftLocalReset(true);  // something went wrong; abort draft progress
-		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "reset|");  // TODO: provide reason info
+		DraftLocalReset("TXT_KEY_DRAFTS_RESET_MISSING_PLAYER");  // something went wrong; abort draft progress
 	}
 }
 
@@ -3454,6 +3452,11 @@ void setLeaderKey(PlayerTypes p, const CvString& szKey)
 {
 #ifdef INGAME_HOTKEY_MANAGER
 	// UI -> dll
+	// 0001 xxxx xxxx xxxx xxxx xxxx xxxx xxxx - update hotkey
+	// 0010 xxxx xxxx xxxx xxxx xxxx xxxx xxxx - set remap token
+	// 0011 xxxx xxxx xxxx xxxx xxxx xxxx xxxx - drafts local player ready
+	// 0100 xxxx xxxx xxxx xxxx xxxx xxxx xxxx - drafts local reset
+	// 0101 xxxx xxxx xxxx xxxx xxxx xxxx xxxx - drafts local update
 	// intercept Pregame.SetLeaderKey here, check if leftmost bits are 0001
 	// it actually limits max PlayerType value to 2^28 (it's OK)
 	if ((((uint)p >> 28) & 15) == 1)  // 4 left-most bits reserved for mode (0 default; 1-15 moddable)
@@ -3485,9 +3488,6 @@ void setLeaderKey(PlayerTypes p, const CvString& szKey)
 	}
 #endif
 #ifdef INGAME_CIV_DRAFTER
-	// 3 -- local player ready
-	// 4 -- local reset
-	// 5 -- local update
 	if ((((uint)p >> 28) & 15) == 3)  // player is ready for draft
 	{
 		DraftLocalReady();
@@ -3495,7 +3495,7 @@ void setLeaderKey(PlayerTypes p, const CvString& szKey)
 	}
 	else if ((((uint)p >> 28) & 15) == 4)  // force reset
 	{
-		DraftLocalReset(true);
+		DraftLocalReset(szKey.c_str());
 		return;
 	}
 	else if ((((uint)p >> 28) & 15) == 5)  // local update
