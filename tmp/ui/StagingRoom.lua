@@ -2410,7 +2410,7 @@ function AdjustScreenSize()
     local screenXcap = math.min(screenX, 1920)
     local screenYcap = math.min(screenY, screenY)
     local width = math.max(1000, screenXcap * 0.77)
-    Controls.DraftPopup:SetSizeY( screenYcap - TOP_COMPENSATION )
+    Controls.DraftPopup:SetSizeY( screenYcap - TOP_COMPENSATION + 50 )
     Controls.DraftPopup:SetSizeX( width )
     Controls.DraftCivPicker:SetSizeY( screenYcap - TOP_COMPENSATION - 334 )
     Controls.DraftCivPicker:SetSizeX( width - 56 )
@@ -2432,6 +2432,10 @@ function AdjustScreenSize()
     Controls.DraftPlayersStatusScrollPanel:CalculateInternalSize();
     Controls.DraftPlayersStatusScrollBar:SetSizeY(screenYcap - TOP_COMPENSATION - 370)
 	Controls.DraftPlayersStatusScrollPanel:SetScrollValue( 0 );
+    Controls.DraftCivPicker:SetSizeY( screenYcap - TOP_COMPENSATION - 384 )
+    Controls.DraftStatusBox:SetSizeX( width - 56 )
+    Controls.DraftYourBansScrollPanel:SetSizeX( width - 52 )
+    Controls.DraftYourBansScrollPanel:CalculateInternalSize();
     -- Ingame Civ Drafter END
 end
 
@@ -3063,7 +3067,6 @@ function AssignDraftedCivs( civsArr )
 				local dummy = playerEntry.picksIMD:GetInstance();
 				dummy.DummyButton:LocalizeAndSetToolTip( bonusText );
 				dummy.DummyButton:RegisterCallback(Mouse.eLClick, function()
-					print('PICK', playerID, tonumber(v))
 					if Matchmaking.GetLocalID() == playerID then
 						PreGame.SetCivilization( playerID, tonumber(v) );
 						Network.BroadcastPlayerInfo();
