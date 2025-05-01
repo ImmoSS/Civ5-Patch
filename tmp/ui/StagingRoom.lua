@@ -2672,13 +2672,15 @@ function RebuildDrafts()
 	Controls.DraftConfirmBansButton:SetDisabled(true);
 end
 
-function ResetDrafts( bMessage )
-	print('reset drafts', bMessage)
+function ResetDrafts( message )
+	print('reset drafts', message)
+	g_DraftProgress = 'DRAFT_PROGRESS_INIT'
 	ClearSelection();
 	ClearBans();
 	UpdateDraftScreen();
-	if bMessage then
-		AddDraftStatus(Locale.Lookup('TXT_KEY_DRAFT_STATUS_DRAFT_RESET'));
+	Controls.DraftBGBlock:SetHide(true)
+	if message then
+		OnChat( 0, -1, Locale.Lookup(message) );
 	end
 end
 
@@ -3282,7 +3284,7 @@ function OnGameplayAlertMessage( text )
 		end
 	elseif control == 'reset' then
 		--RebuildDrafts();
-		ResetDrafts(true);
+		ResetDrafts(text);
 		--AddDraftStatus(Locale.Lookup('TXT_KEY_DRAFT_STATUS_DRAFT_RESET'));
 	elseif control == 'DRAFT_PROGRESS_INIT' then
 		print('--- DRAFT_PROGRESS_INIT');
@@ -3324,7 +3326,7 @@ Events.GameplayAlertMessage.Add( OnGameplayAlertMessage );
 function HandleExitDrafts()
 	print('exit drafts')
 	local product = 4 * 2 ^ 28;  -- reset draft data (local)
-	local data = PreGame.SetLeaderKey( product, '' );
+	local data = PreGame.SetLeaderKey( product, 'TXT_KEY_DRAFTS_RESET_DISC' );
 	--g_DraftProgress = 'DRAFT_PROGRESS_DEFAULT';
 	--Controls.DraftBGBlock:SetHide(true);
 	RebuildDrafts();
