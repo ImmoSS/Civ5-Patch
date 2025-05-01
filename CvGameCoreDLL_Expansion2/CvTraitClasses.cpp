@@ -1676,10 +1676,7 @@ void CvPlayerTraits::InitPlayerTraits()
 			}
 #endif
 #ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
-			if (trait->GetGoldForLuxuryExport())
-			{
-				m_iGoldForLuxuryExport = true;
-			}
+			m_iGoldForLuxuryExport += trait->GetGoldForLuxuryExport();
 #endif
 		}
 	}
