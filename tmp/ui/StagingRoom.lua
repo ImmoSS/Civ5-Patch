@@ -2726,6 +2726,7 @@ function PopulateDrafts()
 			Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', numBans, len(g_SelectedCivs), numBans);
 			Controls.DraftPlayersStatus:SetHide(true);
 			Controls.DraftCivPicker:SetHide(false);
+			Controls.DraftConfirmBansButton:SetHide(false);
 			for p, ban in string.gmatch(text, '(.-):(.-);') do
 				print('p', p, 'ban', ban)
 				local pName = Matchmaking.GetPlayerList()[tonumber(p) + 1].playerName or Locale.Lookup('TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME', tonumber(p) + 1);
@@ -3247,6 +3248,19 @@ function UpdateDraftScreen()
 			end
 		end
 	end
+	if g_DraftProgress == 'DRAFT_PROGRESS_BANS' then
+		Controls.DraftConfirmBansButton:SetHide(false);
+	else
+		Controls.DraftConfirmBansButton:SetHide(true);
+	end
+	print('bans', len(g_DraftResultInstances.Bans[Matchmaking.GetLocalID()] or {}))
+	print('bansT', len(g_DraftResultInstances.BansT[Matchmaking.GetLocalID()] or {}))
+	if g_DraftResultInstances.Bans[Matchmaking.GetLocalID()] and len(g_DraftResultInstances.Bans[Matchmaking.GetLocalID()]) > 0 then
+		g_DraftLocalBansDone = true;
+	else
+		g_DraftLocalBansDone = false;
+	end
+	UpdateDraftCivButtons()
 end
 
 -- 'events' from dll
@@ -3301,6 +3315,7 @@ function OnGameplayAlertMessage( text )
 		Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', numBans, len(g_SelectedCivs), numBans);
 		Controls.DraftPlayersStatus:SetHide(true);
 		Controls.DraftCivPicker:SetHide(false);
+		Controls.DraftConfirmBansButton:SetHide(false);
 	elseif control == 'DRAFT_PROGRESS_BUSY' then
 		print('--- DRAFT_PROGRESS_BUSY');
 		g_DraftProgress = control;
