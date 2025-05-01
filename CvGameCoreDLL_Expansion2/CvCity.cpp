@@ -7033,16 +7033,6 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			}
 #endif
 
-#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
-			if (pBuildingInfo->GetCulturePerXAncientBuildings() > 0)
-			{
-				if (eYield == YIELD_CULTURE)
-				{
-					ChangeJONSCulturePerTurnFromBuildings(getCulturePerXAncientBuildings() / pBuildingInfo->GetCulturePerXAncientBuildings() * iChange);
-				}
-			}
-#endif
-
 			int iBuildingClassBonus = owningPlayer.GetBuildingClassYieldChange(eBuildingClass, eYield);
 			if(iBuildingClassBonus > 0)
 			{
@@ -7103,8 +7093,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #endif
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 		CvTechEntry* pTechInfo = GC.getTechInfo((TechTypes)pBuildingInfo->GetPrereqAndTech());
-		if (pTechInfo && (pTechInfo->GetEra() < GC.getInfoTypeForString("ERA_MEDIEVAL", true /*bHideAssert*/) && !isWorldWonderClass(pBuildingInfo->GetBuildingClassInfo()) && !isNationalWonderClass(pBuildingInfo->GetBuildingClassInfo())
-			|| pBuildingInfo->GetBuildingClassInfo().GetID() == 18))
+		if (pTechInfo && (pTechInfo->GetEra() < GC.getInfoTypeForString("ERA_RENAISSANCE", true /*bHideAssert*/)) || !pTechInfo)
 		{
 			changeCulturePerXAncientBuildings(iChange);
 		}
@@ -8922,7 +8911,22 @@ int CvCity::GetBaseJONSCulturePerTurn() const
 int CvCity::GetJONSCulturePerTurnFromBuildings() const
 {
 	VALIDATE_OBJECT
+#ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
+	int iCulturePerXAncientBuildings = 0;
+	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+	{
+		BuildingTypes eLoopBuilding = (BuildingTypes)iI;
+		CvBuildingEntry* pBuildingInfo = GC.getBuildingInfo(eLoopBuilding);
+		if (pBuildingInfo && pBuildingInfo->GetCulturePerXAncientBuildings() > 0)
+		{
+			iCulturePerXAncientBuildings += GetCityBuildings()->GetNumBuilding(eLoopBuilding) * (getCulturePerXAncientBuildings() / pBuildingInfo->GetCulturePerXAncientBuildings());
+		}
+	}
+
+	return m_iJONSCulturePerTurnFromBuildings + iCulturePerXAncientBuildings;
+#else
 	return m_iJONSCulturePerTurnFromBuildings;
+#endif
 }
 
 //	--------------------------------------------------------------------------------
