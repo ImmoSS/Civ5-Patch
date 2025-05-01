@@ -35,6 +35,10 @@ g_BannedCivs = {};
 g_PlayerEntries = {};
 g_DummyInstancies = {};
 g_CivEntries = {};
+g_DraftSettings = {
+	TournamentMode = PreGame.GetGameOption('GAMEOPTION_TOURNAMENT_MODE'),
+	WorldSize = PreGame.GetWorldSize(),
+}
 -- Ingame Civ Drafter END
 
 local g_AdvancedOptionIM = InstanceManager:new( "GameOption", "Text", Controls.AdvancedOptions );
@@ -1921,6 +1925,24 @@ function UpdateOptions()
 		end
 	end
 	-- Duel Mode END
+	-- Ingame Civ Drafter START
+	local op1 = PreGame.GetGameOption('GAMEOPTION_TOURNAMENT_MODE');
+	local op2 = PreGame.GetWorldSize();
+	if g_DraftSettings.TournamentMode ~= op1 or g_DraftSettings.WorldSize ~= op2 then
+		g_DraftSettings.TournamentMode = op1;
+		g_DraftSettings.WorldSize = op2;
+		if PreGame.GetGameOption("GAMEOPTION_TOURNAMENT_MODE") > 0 then
+			numBans = 1
+		else
+			numBans = 2
+		end
+		local product = 4 * 2 ^ 28;  -- reset draft data (local)
+		local data = PreGame.SetLeaderKey( product, 'TXT_KEY_DRAFTS_RESET_GAMEOPTION' );
+		--ResetDrafts(true);
+		RebuildDrafts()
+		Controls.DraftBGBlock:SetHide(true)
+	end
+	-- Ingame Civ Drafter END
 	-- Add empty text to padd the bottom.
 	local controlTable = g_AdvancedOptionIM:GetInstance();
 	controlTable.Text:SetText(" ");
