@@ -61,6 +61,7 @@ copy /y "%cd%\%patchfolder%\tmp\ui\ChooseMayaBonus.lua" "%cd%\%patchfolder%\UI\C
 copy /y "%cd%\%patchfolder%\tmp\ui\ChooseMayaBonus.xml" "%cd%\%patchfolder%\UI\ChooseMayaBonus.xml" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\MainMenu.lua" "%cd%\%patchfolder%\UI\MainMenu.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\MainMenu.xml" "%cd%\%patchfolder%\UI\MainMenu.xml" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\FrontEnd.lua" "%cd%\%patchfolder%\UI\FrontEnd.lua" > nul
 
 REM -------------------------------------------------
 set text="-- destroy: check fix for need to update plot & cargo & airbase"
@@ -76,12 +77,6 @@ IF EXIST "%cd%\UI_bc1\GameSetup\SelectCivilization.lua" (
   copy /y "%cd%\%patchfolder%\tmp\eui\SelectCivilization.lua" "%cd%\%patchfolder%\UI\SelectCivilization.lua" > nul
 ) ELSE (
   copy /y "%cd%\%patchfolder%\tmp\ui\SelectCivilization.lua" "%cd%\%patchfolder%\UI\SelectCivilization.lua" > nul
-)
-REM -------------------------------------------------
-IF EXIST "%cd%\UI_bc1\FrontEnd\FrontEnd.lua" (
-  copy /y "%cd%\%patchfolder%\tmp\eui\FrontEnd.lua" "%cd%\%patchfolder%\UI\FrontEnd.lua" > nul
-) ELSE (
-  copy /y "%cd%\%patchfolder%\tmp\ui\FrontEnd.lua" "%cd%\%patchfolder%\UI\FrontEnd.lua" > nul
 )
 REM -------------------------------------------------
 IF EXIST "%cd%\UI_bc1\Improvements\SocialPolicyPopup.lua" (
