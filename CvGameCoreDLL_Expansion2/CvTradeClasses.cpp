@@ -389,7 +389,7 @@ bool CvGameTrade::CreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, Domai
 
 	m_aTradeConnections[iNewTradeRouteIndex].m_iCircuitsCompleted = 0;
 #ifdef TRADE_ROUTES_TARGET_TURNS
-	m_aTradeConnections[iNewTradeRouteIndex].m_iCircuitsToComplete = iRouteSpeed * TRADE_ROUTES_TARGET_TURNS;
+	m_aTradeConnections[iNewTradeRouteIndex].m_iCircuitsToComplete = iRouteSpeed * (TRADE_ROUTES_TARGET_TURNS + 1);
 	m_aTradeConnections[iNewTradeRouteIndex].m_iTurnRouteComplete = TRADE_ROUTES_TARGET_TURNS + GC.getGame().getGameTurn();
 #else
 	m_aTradeConnections[iNewTradeRouteIndex].m_iCircuitsToComplete = iCircuitsToComplete;
