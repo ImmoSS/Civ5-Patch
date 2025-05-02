@@ -7021,10 +7021,10 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 				}
 				else if (eYield == YIELD_FAITH)
 				{
-					// ChangeFaithPerTurnFromBuildings(pBuildingInfo->GetIncreaseBonusesPerEra() * owningTeam.GetCurrentEra() * iChange);
 				}
 				else if (eYield == YIELD_FOOD)
 				{
+					m_pCityBuildings->ChangeBuildingDefense(100 * pBuildingInfo->GetIncreaseBonusesPerEra() * iChange);
 				}
 				else
 				{
