@@ -13599,7 +13599,6 @@ int CvPlayer::GetHappinessFromPolicies() const
 	}
 
 	iHappiness += (iCount * GetPlayerPolicies()->GetNumericModifier(POLICYMOD_HAPPINESS_PER_TRADE_ROUTE_TO_MINOR));
-
 #endif
 
 	return iHappiness;
