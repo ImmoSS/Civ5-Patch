@@ -2899,6 +2899,49 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 	GC.GetEngineUserInterface()->setDirty(NationalBorders_DIRTY_BIT, true);
 	// end adapted from PostKill()
 
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	if (getNumCities() > 0)
+	{
+		for (int iYield = 0; iYield < GC.getNUM_YIELD_TYPES(); iYield++)
+		{
+			YieldTypes eYield = (YieldTypes)iYield;
+			for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+			{
+				eBuilding = eBuilding = (BuildingTypes)iI;
+				CvBuildingEntry* pBuildingInfo = GC.getBuildingInfo(eBuilding);
+				if (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
+				{
+					int iLoop = 0;
+					int iNumBuildings = 0;
+					int iNumSuppYields;
+					int iNumYileds;
+					int iNewNumYileds;
+					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+					{
+						iNumBuildings += pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding);
+					}
+					if (pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield) >= 0)
+					{
+						iNumSuppYields = iNumBuildings * pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield);
+						iNumYileds = std::min(pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield), iNumSuppYields);
+					}
+					else
+					{
+						iNumSuppYields = iNumBuildings * pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield);
+						iNumYileds = iNumSuppYields;
+					}
+					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+					{
+						if (pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
+						{
+							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, -iNumYileds);
+						}
+					}
+				}
+			}
+		}
+	}
+#endif
 	pNewCity = initCity(pCityPlot->getX(), pCityPlot->getY(), !bConquest, (!bConquest && !bGift));
 
 	CvAssertMsg(pNewCity != NULL, "NewCity is not assigned a valid value");
@@ -3631,6 +3674,49 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 		CvMap& theMap = GC.getMap();
 		theMap.updateDeferredFog();
 	}
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	if (getNumCities() > 0)
+	{
+		for (int iYield = 0; iYield < GC.getNUM_YIELD_TYPES(); iYield++)
+		{
+			YieldTypes eYield = (YieldTypes)iYield;
+			for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+			{
+				eBuilding = eBuilding = (BuildingTypes)iI;
+				CvBuildingEntry* pBuildingInfo = GC.getBuildingInfo(eBuilding);
+				if (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
+				{
+					int iLoop = 0;
+					int iNumBuildings = 0;
+					int iNumSuppYields;
+					int iNumYileds;
+					int iNewNumYileds;
+					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+					{
+						iNumBuildings += pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding);
+					}
+					if (pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield) >= 0)
+					{
+						iNumSuppYields = iNumBuildings * pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield);
+						iNumYileds = std::min(pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield), iNumSuppYields);
+					}
+					else
+					{
+						iNumSuppYields = iNumBuildings * pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield);
+						iNumYileds = iNumSuppYields;
+					}
+					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+					{
+						if (pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
+						{
+							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, iNumYileds);
+						}
+					}
+				}
+			}
+		}
+	}
+#endif
 
 	ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
 	if(pkScriptSystem && pNewCity != NULL)
@@ -22900,7 +22986,93 @@ CvCity* CvPlayer::addCity()
 //	--------------------------------------------------------------------------------
 void CvPlayer::deleteCity(int iID)
 {
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	if (getNumCities() > 0)
+	{
+		for (int iYield = 0; iYield < GC.getNUM_YIELD_TYPES(); iYield++)
+		{
+			YieldTypes eYield = (YieldTypes)iYield;
+			for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+			{
+				BuildingTypes eBuilding = eBuilding = (BuildingTypes)iI;
+				CvBuildingEntry* pBuildingInfo = GC.getBuildingInfo(eBuilding);
+				if (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
+				{
+					int iLoop = 0;
+					int iNumBuildings = 0;
+					int iNumSuppYields;
+					int iNumYileds;
+					int iNewNumYileds;
+					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+					{
+						iNumBuildings += pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding);
+					}
+					if (pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield) >= 0)
+					{
+						iNumSuppYields = iNumBuildings * pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield);
+						iNumYileds = std::min(pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield), iNumSuppYields);
+					}
+					else
+					{
+						iNumSuppYields = iNumBuildings * pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield);
+						iNumYileds = iNumSuppYields;
+					}
+					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+					{
+						if (pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
+						{
+							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, -iNumYileds);
+						}
+					}
+				}
+			}
+		}
+	}
+#endif
 	m_cities.RemoveAt(iID);
+#ifdef BUILDING_YIELD_FOR_EACH_BUILDING_IN_EMPIRE
+	if (getNumCities() > 0)
+	{
+		for (int iYield = 0; iYield < GC.getNUM_YIELD_TYPES(); iYield++)
+		{
+			YieldTypes eYield = (YieldTypes)iYield;
+			for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+			{
+				BuildingTypes eBuilding = eBuilding = (BuildingTypes)iI;
+				CvBuildingEntry* pBuildingInfo = GC.getBuildingInfo(eBuilding);
+				if (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
+				{
+					int iLoop = 0;
+					int iNumBuildings = 0;
+					int iNumSuppYields;
+					int iNumYileds;
+					int iNewNumYileds;
+					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+					{
+						iNumBuildings += pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding);
+					}
+					if (pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield) >= 0)
+					{
+						iNumSuppYields = iNumBuildings * pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield);
+						iNumYileds = std::min(pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield), iNumSuppYields);
+					}
+					else
+					{
+						iNumSuppYields = iNumBuildings * pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield);
+						iNumYileds = iNumSuppYields;
+					}
+					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+					{
+						if (pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
+						{
+							pLoopCity->ChangeBaseYieldRateFromBuildings(eYield, iNumYileds);
+						}
+					}
+				}
+			}
+		}
+	}
+#endif
 }
 
 //	--------------------------------------------------------------------------------

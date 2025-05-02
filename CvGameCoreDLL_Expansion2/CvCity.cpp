@@ -6897,6 +6897,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 				{
 					iNumBuildings += pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding);
 				}
+				iNumBuildings -= iChange;
 				if (pBuildingInfo->GetMaxYieldForEachBuildingInEmpire(eYield) >= 0)
 				{
 					iNumSuppYields = iNumBuildings * pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield);
