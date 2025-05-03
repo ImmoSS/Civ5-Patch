@@ -69,7 +69,7 @@ copy /y "%cd%\%patchfolder%\tmp\ui\EUI_tooltip_library.lua" "%cd%\%patchfolder%\
 copy /y "%cd%\%patchfolder%\tmp\ui\EUI_unit_include.lua" "%cd%\%patchfolder%\UI\EUI_unit_include.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\EUI_context.xml" "%cd%\%patchfolder%\UI\EUI_context.xml" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\EUI_context.lua" "%cd%\%patchfolder%\UI\EUI_context.lua" > nul
-copy /y "%cd%\%patchfolder%\tmp\ui\EUI_core_library.lua" "%cd%\%patchfolder%\UI\EUI_core_library" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\EUI_core_library.lua" "%cd%\%patchfolder%\UI\EUI_core_library.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\EUI_tooltips.lua" "%cd%\%patchfolder%\UI\EUI_tooltips.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\EUI_utilities.lua" "%cd%\%patchfolder%\UI\EUI_utilities.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\PopulateUniques.lua" "%cd%\%patchfolder%\UI\PopulateUniques.lua" > nul
