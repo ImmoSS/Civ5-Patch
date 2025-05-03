@@ -64,14 +64,15 @@ copy /y "%cd%\%patchfolder%\tmp\ui\MainMenu.xml" "%cd%\%patchfolder%\UI\MainMenu
 copy /y "%cd%\%patchfolder%\tmp\ui\EconomicGeneralInfo.lua" "%cd%\%patchfolder%\UI\EconomicGeneralInfo.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\ChooseInternationalTradeRoutePopup.lua" "%cd%\%patchfolder%\UI\ChooseInternationalTradeRoutePopup.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\SelectCivilization.xml" "%cd%\%patchfolder%\UI\SelectCivilization.xml" > nul
-copy /y "%cd%\%patchfolder%\tmp\eui\EUI_tooltip_library.lua" "%cd%\%patchfolder%\UI\EUI_tooltip_library.lua" > nul
-copy /y "%cd%\%patchfolder%\tmp\eui\EUI_unit_include.lua" "%cd%\%patchfolder%\UI\EUI_unit_include.lua" > nul
-copy /y "%cd%\%patchfolder%\tmp\eui\EUI_context.xml" "%cd%\%patchfolder%\UI\EUI_context.xml" > nul
-copy /y "%cd%\%patchfolder%\tmp\eui\EUI_context.lua" "%cd%\%patchfolder%\UI\EUI_context.lua" > nul
-copy /y "%cd%\%patchfolder%\tmp\eui\EUI_core_library.lua" "%cd%\%patchfolder%\UI\EUI_core_library" > nul
-copy /y "%cd%\%patchfolder%\tmp\eui\EUI_tooltips.lua" "%cd%\%patchfolder%\UI\EUI_tooltips.lua" > nul
-copy /y "%cd%\%patchfolder%\tmp\eui\EUI_utilities.lua" "%cd%\%patchfolder%\UI\EUI_utilities.lua" > nul
-copy /y "%cd%\%patchfolder%\tmp\eui\PopulateUniques.lua" "%cd%\%patchfolder%\UI\PopulateUniques.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\SelectCivilization.lua" "%cd%\%patchfolder%\UI\SelectCivilization.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\EUI_tooltip_library.lua" "%cd%\%patchfolder%\UI\EUI_tooltip_library.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\EUI_unit_include.lua" "%cd%\%patchfolder%\UI\EUI_unit_include.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\EUI_context.xml" "%cd%\%patchfolder%\UI\EUI_context.xml" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\EUI_context.lua" "%cd%\%patchfolder%\UI\EUI_context.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\EUI_core_library.lua" "%cd%\%patchfolder%\UI\EUI_core_library" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\EUI_tooltips.lua" "%cd%\%patchfolder%\UI\EUI_tooltips.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\EUI_utilities.lua" "%cd%\%patchfolder%\UI\EUI_utilities.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\PopulateUniques.lua" "%cd%\%patchfolder%\UI\PopulateUniques.lua" > nul
 
 REM -------------------------------------------------
 set text="-- destroy: check fix for need to update plot & cargo & airbase"
@@ -81,12 +82,6 @@ FIND %text% "%cd%\UI_bc1\UnitFlagManager\UnitFlagManager.lua" > nul 2>&1 && (
 ) || (
   copy /y "%cd%\%patchfolder%\tmp\ui\UnitFlagManager.xml" "%cd%\%patchfolder%\UI\UnitFlagManager.xml" > nul
   copy /y "%cd%\%patchfolder%\tmp\ui\UnitFlagManager.lua" "%cd%\%patchfolder%\UI\UnitFlagManager.lua" > nul
-)
-REM -------------------------------------------------
-IF EXIST "%cd%\UI_bc1\GameSetup\SelectCivilization.lua" (
-  copy /y "%cd%\%patchfolder%\tmp\eui\SelectCivilization.lua" "%cd%\%patchfolder%\UI\SelectCivilization.lua" > nul
-) ELSE (
-  copy /y "%cd%\%patchfolder%\tmp\ui\SelectCivilization.lua" "%cd%\%patchfolder%\UI\SelectCivilization.lua" > nul
 )
 REM -------------------------------------------------
 IF EXIST "%cd%\UI_bc1\FrontEnd\FrontEnd.lua" (
