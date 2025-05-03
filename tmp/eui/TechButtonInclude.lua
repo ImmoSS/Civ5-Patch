@@ -421,10 +421,13 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
 		end
 	end
 
+	g_activePlayerID = Game.GetActivePlayer()
+	g_activePlayer = Players[g_activePlayerID]
+	g_activeCivID = GameInfo.Civilizations[g_activePlayer:GetCivilizationType()].ID
 	-- buildings and wonders unlocked by this tech
 	for row in GameInfo.Buildings( thisPrereqTech ) do
 -- Duel Mode
-		if not (PreGame.GetGameOption("GAMEOPTION_DUEL_STUFF") > 0 and (PreGame.GetGameOption("GAMEOPTION_BAN_WORLD_WONDERS") > 0 
+		if not (g_activeCivID == 21 and row.ID == 162 or PreGame.GetGameOption("GAMEOPTION_DUEL_STUFF") > 0 and (PreGame.GetGameOption("GAMEOPTION_BAN_WORLD_WONDERS") > 0 
 			and (PreGame.GetGameOption("GAMEOPTION_BAN_WONDER1") == row.ID or PreGame.GetGameOption("GAMEOPTION_BAN_WONDER2") == row.ID or PreGame.GetGameOption("GAMEOPTION_BAN_WONDER3") == row.ID) or 70 == row.ID or PreGame.GetGameOption("GAMEOPTION_DISABLE_OXFORD_UNIVERSITY") > 0 and row.ID == 61)) then
 			if validBuildingBuilds[row.BuildingClass] == row.Type and not addSmallArtButton( AdjustArtOnGrantedBuildingButton, row ) then
 				break

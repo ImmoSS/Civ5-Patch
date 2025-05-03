@@ -2656,6 +2656,13 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		return false;
 	}
 
+#ifdef NO_BARN_FOR_INCA
+	if (strcmp(GET_PLAYER(getOwner()).getCivilizationTypeKey(), "CIVILIZATION_INCA") == 0 && eBuilding == (BuildingTypes)GC.getInfoTypeForString("BUILDING_BARN", true))
+	{
+		return false;
+	}
+#endif
+
 #ifdef NEW_BELIEF_PROPHECY
 	if(!(GET_PLAYER(getOwner()).canConstruct(eBuilding, bContinue, bTestVisible, bIgnoreCost, toolTipSink, this)))
 	{
