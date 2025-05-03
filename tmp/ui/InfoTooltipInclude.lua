@@ -188,8 +188,8 @@ function GetHelpTextForBuilding(iBuildingID, bExcludeName, bExcludeHeader, bNoMa
 	-- Defense
 	local iDefense = pBuildingInfo.Defense;
 	if (iDefense ~= nil and iDefense ~= 0) then
-		if (pActivePlayer and pBuildingInfo.IncreaseBonusesPerEra) then
-			iDefense = iDefense + 100 * pActivePlayer:GetCurrentEra();
+		if (pActivePlayer and pBuildingInfo.IncreaseBonusesPerEra > 0) then
+			iDefense = iDefense + 100 * pActivePlayer:GetCurrentEra() * pBuildingInfo.IncreaseBonusesPerEra;
 		end
 		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_DEFENSE", iDefense / 100));
 	end

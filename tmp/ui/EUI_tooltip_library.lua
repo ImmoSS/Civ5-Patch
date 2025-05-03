@@ -609,8 +609,8 @@ local function GetHelpTextForBuilding( buildingID, bExcludeName, bExcludeHeader,
 	local maintenanceCost = tonumber(building[g_maintenanceCurrency]) or 0
 	local happinessChange = (tonumber(building.Happiness) or 0) + (tonumber(building.UnmoddedHappiness) or 0)
 	local defenseChange = tonumber(building.Defense) or 0
-	if (activePlayer and building.IncreaseBonusesPerEra) then
-		defenseChange = defenseChange + 100 * activePlayer:GetCurrentEra();
+	if (activePlayer and building.IncreaseBonusesPerEra > 0) then
+		defenseChange = defenseChange + 100 * activePlayer:GetCurrentEra() * building.IncreaseBonusesPerEra;
 	end
 	local hitPointChange = tonumber(building.ExtraCityHitPoints) or 0
 	local cultureChange = not gk_mode and tonumber(building.Culture) or 0

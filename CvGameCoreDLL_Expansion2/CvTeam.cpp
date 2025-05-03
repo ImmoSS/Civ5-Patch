@@ -7037,18 +7037,19 @@ void CvTeam::SetCurrentEra(EraTypes eNewValue)
 								{
 									if ((YieldTypes)k == YIELD_CULTURE)
 									{
-										pLoopCity->ChangeJONSCulturePerTurnFromBuildings(pBuildingInfo->GetIncreaseBonusesPerEra() * (eNewValue - GetCurrentEra()));
+										pLoopCity->ChangeJONSCulturePerTurnFromBuildings(pBuildingInfo->GetIncreaseBonusesPerEra() * (eNewValue - GetCurrentEra() * pLoopCity->GetCityBuildings()->GetNumBuilding(eBuildingLoop)));
 									}
 									else if ((YieldTypes)k == YIELD_FAITH)
 									{
-										// pLoopCity->ChangeFaithPerTurnFromBuildings(pBuildingInfo->GetIncreaseBonusesPerEra() * (eNewValue - GetCurrentEra()));
+										pLoopCity->GetCityBuildings()->ChangeBuildingDefense(100 * pBuildingInfo->GetIncreaseBonusesPerEra() * pLoopCity->GetCityBuildings()->GetNumBuilding(eBuildingLoop));
+										pLoopCity->updateStrengthValue();
 									}
 									else if ((YieldTypes)k == YIELD_FOOD)
 									{
 									}
 									else
 									{
-										pLoopCity->ChangeBaseYieldRateFromBuildings((YieldTypes)k, pBuildingInfo->GetIncreaseBonusesPerEra() * (eNewValue - GetCurrentEra()));
+										pLoopCity->ChangeBaseYieldRateFromBuildings((YieldTypes)k, pBuildingInfo->GetIncreaseBonusesPerEra() * (eNewValue - GetCurrentEra()) * pLoopCity->GetCityBuildings()->GetNumBuilding(eBuildingLoop));
 									}
 								}
 							}
