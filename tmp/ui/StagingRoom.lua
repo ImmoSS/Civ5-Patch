@@ -2686,6 +2686,8 @@ function ResetDrafts( message )
 	UpdateDraftScreen();
 	Controls.DraftBGBlock:SetHide(true)
 	if message then
+		AddDraftStatus(Locale.Lookup(message));
+		AddDraftStatus('------------------------------[NEWLINE][NEWLINE]');
 		OnChat( 0, -1, Locale.Lookup(message) );
 	end
 end
@@ -2708,6 +2710,8 @@ function PopulateDrafts()
 			end
 		elseif control == 'DRAFT_PROGRESS_INIT' then
 			print('--- DRAFT_PROGRESS_INIT');
+			AddDraftStatus('------------------------------');
+			AddDraftStatus(Locale.Lookup('TXT_KEY_DRAFT_STATUS_PROGRESS_INIT'));
 			g_DraftProgress = control;
 			g_DraftBansTable = {}
 			Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_INIT');
@@ -2730,8 +2734,13 @@ function PopulateDrafts()
 			end
 		elseif control == 'DRAFT_PROGRESS_BANS' then
 			print('--- DRAFT_PROGRESS_BANS');
+			AddDraftStatus(Locale.Lookup('TXT_KEY_DRAFT_STATUS_PROGRESS_BANS'));
 			g_DraftProgress = control;
-			Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', numBans, len(g_SelectedCivs), numBans);
+			if len(g_DraftBansTable[Matchmaking.GetLocalID()] or {}) == 0 then
+				Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', numBans, len(g_SelectedCivs));
+			else
+				Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS2');
+			end
 			Controls.DraftPlayersStatus:SetHide(true);
 			Controls.DraftCivPicker:SetHide(false);
 			Controls.DraftConfirmBansButton:SetHide(false);
@@ -2748,6 +2757,7 @@ function PopulateDrafts()
 			end
 		elseif control == 'DRAFT_PROGRESS_BUSY' then
 			print('--- DRAFT_PROGRESS_BUSY');
+			AddDraftStatus(Locale.Lookup('TXT_KEY_DRAFT_STATUS_PROGRESS_BUSY'));
 			g_DraftProgress = control;
 			Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BUSY');
 			Controls.DraftPlayersStatus:SetHide(true);
@@ -2777,7 +2787,7 @@ function PopulateDrafts()
 				local pName = Matchmaking.GetPlayerList()[tonumber(p) + 1].playerName or Locale.Lookup('TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME', tonumber(p) + 1);
 				AddPlayerBans(tonumber(p), pName, ban);
 			end
-			AddDraftStatus('------------------------------');
+			AddDraftStatus(Locale.Lookup('TXT_KEY_DRAFT_STATUS_RESULT'));
 			AssignDraftedCivs( text );
 		end
 	end
@@ -2889,6 +2899,7 @@ function doCivSelectionHighlight(civId, leaderId, v3,v4,v5, force)
 	if g_DraftProgress == 'DRAFT_PROGRESS_BANS' then
 		if len(g_SelectedCivs) > 0 and (Matchmaking.IsHost() or len(g_SelectedCivs) == numBans) then
 				Controls.DraftConfirmBansButton:SetDisabled(false);
+				Controls.DraftConfirmBansButton:EnableToolTip(false);
 		else
 			Controls.DraftConfirmBansButton:SetDisabled(true);
 			Controls.DraftConfirmBansButton:EnableToolTip(true);
@@ -3404,13 +3415,19 @@ function OnGameplayAlertMessage( text )
 		Network.SendRenameCity(-1, text);  -- send secret hash
 	elseif control == 'DRAFT_PROGRESS_BANS' then
 		print('--- DRAFT_PROGRESS_BANS');
+		AddDraftStatus(Locale.Lookup('TXT_KEY_DRAFT_STATUS_PROGRESS_BANS'));
 		g_DraftProgress = control;
-		Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', numBans, len(g_SelectedCivs), numBans);
+		if len(g_DraftBansTable[Matchmaking.GetLocalID()] or {}) == 0 then
+			Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', numBans, len(g_SelectedCivs));
+		else
+			Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS2');
+		end
 		Controls.DraftPlayersStatus:SetHide(true);
 		Controls.DraftCivPicker:SetHide(false);
 		Controls.DraftConfirmBansButton:SetHide(false);
 	elseif control == 'DRAFT_PROGRESS_BUSY' then
 		print('--- DRAFT_PROGRESS_BUSY');
+		AddDraftStatus(Locale.Lookup('TXT_KEY_DRAFT_STATUS_PROGRESS_BUSY'));
 		g_DraftProgress = control;
 		Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BUSY');
 		if not Controls.DraftConfirmBansButton:IsDisabled() then
@@ -3425,7 +3442,7 @@ function OnGameplayAlertMessage( text )
 		Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_OVER');
 		Controls.DraftPlayersStatus:SetHide(false);
 		Controls.DraftCivPicker:SetHide(true);
-		AddDraftStatus('------------------------------');
+		AddDraftStatus(Locale.Lookup('TXT_KEY_DRAFT_STATUS_RESULT'));
 		AssignDraftedCivs( text );
 	end
 	UpdateDraftCivButtons();
