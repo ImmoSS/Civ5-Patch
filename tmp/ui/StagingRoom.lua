@@ -1234,9 +1234,11 @@ function OnDisconnect( playerID )
 		end
 		ShowHideInviteButton();
 		-- Ingame Civ Drafter START
-		print('disconnect: reset drafts')
-		local product = 4 * 2 ^ 28;  -- reset draft data (local)
-		local data = PreGame.SetLeaderKey( product, 'TXT_KEY_DRAFTS_RESET_DISC' );
+		if g_DraftProgress ~= 'DRAFT_PROGRESS_INIT' and g_DraftProgress ~= 'DRAFT_PROGRESS_DEFAULT' and g_DraftProgress ~= 'DRAFT_PROGRESS_OVER' then
+			print('disconnect: reset drafts')
+			local product = 4 * 2 ^ 28;  -- reset draft data (local)
+			local data = PreGame.SetLeaderKey( product, 'TXT_KEY_DRAFTS_RESET_DISC' );
+		end
 		-- Ingame Civ Drafter END
 	end
 end
@@ -2520,13 +2522,11 @@ Controls.EmotesScrollPanel:CalculateInternalSize()
 -- INGAME CIV DRAFTER
 -------------------------------------------------
 
-numBans = 2
-if PreGame.GetGameOption("GAMEOPTION_TOURNAMENT_MODE") > 0 then
-	numBans = 1
-end
+numBans = PreGame.GetGameOption("GAMEOPTION_TOURNAMENT_MODE") > 0 and 1 or 2;
 numPicks = 3
 function RebuildDrafts()
 	print('rebuild drafts')
+	numBans = PreGame.GetGameOption("GAMEOPTION_TOURNAMENT_MODE") > 0 and 1 or 2;
 	g_DraftResultInstances = { Bans = {}, BansD = {}, BansT = {}, Picks = {}, PicksD = {}, PicksB = {}, PicksBD = {}, PicksT = {} };
 	g_DraftCivInstances = {};
 	g_BannedCivs = {};
