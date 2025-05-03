@@ -73,6 +73,7 @@ copy /y "%cd%\%patchfolder%\tmp\ui\EUI_core_library.lua" "%cd%\%patchfolder%\UI\
 copy /y "%cd%\%patchfolder%\tmp\ui\EUI_tooltips.lua" "%cd%\%patchfolder%\UI\EUI_tooltips.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\EUI_utilities.lua" "%cd%\%patchfolder%\UI\EUI_utilities.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\PopulateUniques.lua" "%cd%\%patchfolder%\UI\PopulateUniques.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\GameSetupScreen.xml" "%cd%\%patchfolder%\UI\GameSetupScreen.xml" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\GameSetupScreen.lua" "%cd%\%patchfolder%\UI\GameSetupScreen.lua" > nul
 
 REM -------------------------------------------------
