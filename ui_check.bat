@@ -63,6 +63,8 @@ copy /y "%cd%\%patchfolder%\tmp\ui\MainMenu.lua" "%cd%\%patchfolder%\UI\MainMenu
 copy /y "%cd%\%patchfolder%\tmp\ui\MainMenu.xml" "%cd%\%patchfolder%\UI\MainMenu.xml" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\EconomicGeneralInfo.lua" "%cd%\%patchfolder%\UI\EconomicGeneralInfo.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\ChooseInternationalTradeRoutePopup.lua" "%cd%\%patchfolder%\UI\ChooseInternationalTradeRoutePopup.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\eui\EUI_tooltip_library.lua" "%cd%\%patchfolder%\UI\EUI_tooltip_library.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\eui\EUI_unit_include.lua" "%cd%\%patchfolder%\UI\EUI_unit_include.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\eui\EUI_context.xml" "%cd%\%patchfolder%\UI\EUI_context.xml" > nul
 copy /y "%cd%\%patchfolder%\tmp\eui\EUI_context.lua" "%cd%\%patchfolder%\UI\EUI_context.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\eui\EUI_core_library.lua" "%cd%\%patchfolder%\UI\EUI_core_library" > nul
@@ -108,14 +110,8 @@ IF EXIST "%cd%\UI_bc1\LeaderHead\TradeLogic.lua" (
   copy /y "%cd%\%patchfolder%\tmp\ui\TradeLogic.lua" "%cd%\%patchfolder%\UI\TradeLogic.lua" > nul
 )
 REM -------------------------------------------------
-IF EXIST "%cd%\UI_bc1\ToolTips\InfoTooltipInclude.lua" (
-  copy /y "%cd%\%patchfolder%\tmp\eui\EUI_tooltip_library.lua" "%cd%\%patchfolder%\UI\EUI_tooltip_library.lua" > nul
-) ELSE (
+IF NOT EXIST "%cd%\UI_bc1\ToolTips\InfoTooltipInclude.lua" (
   copy /y "%cd%\%patchfolder%\tmp\ui\InfoTooltipInclude.lua" "%cd%\%patchfolder%\UI\InfoTooltipInclude.lua" > nul
-)
-REM -------------------------------------------------
-IF EXIST "%cd%\UI_bc1\ToolTips\InfoTooltipInclude.lua" (
-  copy /y "%cd%\%patchfolder%\tmp\eui\EUI_unit_include.lua" "%cd%\%patchfolder%\UI\EUI_unit_include.lua" > nul
 )
 REM -------------------------------------------------
 IF NOT EXIST "%cd%\UI_bc1\PlotHelp\PlotHelpManager.lua" (
