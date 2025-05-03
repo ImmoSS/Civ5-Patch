@@ -66,6 +66,7 @@ copy /y "%cd%\%patchfolder%\tmp\ui\ChooseInternationalTradeRoutePopup.lua" "%cd%
 copy /y "%cd%\%patchfolder%\tmp\eui\EUI_context.xml" "%cd%\%patchfolder%\UI\EUI_context.xml" > nul
 copy /y "%cd%\%patchfolder%\tmp\eui\EUI_context.lua" "%cd%\%patchfolder%\UI\EUI_context.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\eui\EUI_core_library.lua" "%cd%\%patchfolder%\UI\EUI_core_library" > nul
+copy /y "%cd%\%patchfolder%\tmp\eui\EUI_tooltips.lua" "%cd%\%patchfolder%\UI\EUI_tooltips.lua" > nul
 
 REM -------------------------------------------------
 set text="-- destroy: check fix for need to update plot & cargo & airbase"
