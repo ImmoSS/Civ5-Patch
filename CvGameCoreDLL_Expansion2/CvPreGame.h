@@ -230,8 +230,9 @@ void                                       DraftSyncBans(PlayerTypes p, const ch
 void                                       DraftResponseBans(PlayerTypes p, const char* szBans);
 void                                       DraftResponseSecret(PlayerTypes p, const char* szSecret);
 void                                       DraftResponseBanRollback(PlayerTypes p, const char* szBans);
+void                                       DraftResponseSwapPlayers(PlayerTypes p, const char* szSwapWith);
 void                                       DraftLocalReady();
-void                                       DraftLocalReset(bool bLocal = false);
+void                                       DraftLocalReset(const char* szReason);
 void                                       DraftLocalUpdate();
 bool                                       IsCivBanned(int iCivId);
 void                                       SetCivBanned(int iCivId, bool bValue);

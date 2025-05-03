@@ -77,6 +77,7 @@ copy /y "%cd%\%patchfolder%\tmp\ui\GameSetupScreen.xml" "%cd%\%patchfolder%\UI\G
 copy /y "%cd%\%patchfolder%\tmp\ui\GameSetupScreen.lua" "%cd%\%patchfolder%\UI\GameSetupScreen.lua" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\LoadScreen.xml" "%cd%\%patchfolder%\UI\LoadScreen.xml" > nul
 copy /y "%cd%\%patchfolder%\tmp\ui\LoadScreen.lua" "%cd%\%patchfolder%\UI\LoadScreen.lua" > nul
+copy /y "%cd%\%patchfolder%\tmp\ui\FrontEnd.lua" "%cd%\%patchfolder%\UI\FrontEnd.lua" > nul
 
 REM -------------------------------------------------
 set text="-- destroy: check fix for need to update plot & cargo & airbase"
@@ -86,12 +87,6 @@ FIND %text% "%cd%\UI_bc1\UnitFlagManager\UnitFlagManager.lua" > nul 2>&1 && (
 ) || (
   copy /y "%cd%\%patchfolder%\tmp\ui\UnitFlagManager.xml" "%cd%\%patchfolder%\UI\UnitFlagManager.xml" > nul
   copy /y "%cd%\%patchfolder%\tmp\ui\UnitFlagManager.lua" "%cd%\%patchfolder%\UI\UnitFlagManager.lua" > nul
-)
-REM -------------------------------------------------
-IF EXIST "%cd%\UI_bc1\FrontEnd\FrontEnd.lua" (
-  copy /y "%cd%\%patchfolder%\tmp\eui\FrontEnd.lua" "%cd%\%patchfolder%\UI\FrontEnd.lua" > nul
-) ELSE (
-  copy /y "%cd%\%patchfolder%\tmp\ui\FrontEnd.lua" "%cd%\%patchfolder%\UI\FrontEnd.lua" > nul
 )
 REM -------------------------------------------------
 IF EXIST "%cd%\UI_bc1\Improvements\SocialPolicyPopup.lua" (

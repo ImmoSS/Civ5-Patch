@@ -199,7 +199,7 @@ for EUI and vanilla UI -->
 			<UpButton  Offset="0,-6"  Style="ScrollBarUp" AnchorSide="O.I" Anchor="R,T" />
 			<DownButton Offset="0,-6" Style="ScrollBarDown" AnchorSide="O.I" Anchor="R,B" />
 		</ScrollPanel>
-		<Stack ID="PatchNotesLangStack" Anchor="L,B" Offset="30,90" Padding="7" StackGrowth="Right" >
+		<Stack ID="PatchNotesLangStack" Anchor="L,B" Offset="30,50" Padding="7" StackGrowth="Right" >
 		</Stack>
 		<GridButton Style="BaseButton" ID="PatchNotesCloseButton" Size="200,42" Anchor="R,B" Offset="30,50" Hidden="0">
 			<Label Anchor="C,C" Offset="0,0" String="TXT_KEY_CLOSE" ColorSet="Beige_Black" Font="TwCenMT20" FontStyle="Shadow"/>
@@ -227,7 +227,7 @@ for EUI and vanilla UI -->
 		<Label ID="Text" Anchor="L,T" Offset="35,0" Font="TwCenMT16" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" WrapWidth="870" />
 	</Instance>
 	<Instance Name="PatchNotesLangButton" >
-		<GridButton Style="BaseButton" ID="Button" Size="100,42" Anchor="L,T" >
+		<GridButton Style="BaseButton" ID="Button" Size="100,42" Anchor="L,B" >
 			<Label Anchor="C,C" Font="TwCenMT20" FontStyle="Shadow" ID="Text" />
 		</GridButton>
 	</Instance>
