@@ -437,8 +437,26 @@ int CvTreasury::GetGoldPerTurnFromTradeRoutesTimes100() const
 /// Gold per turn from traits
 int CvTreasury::GetGoldPerTurnFromTraits() const
 {
+#if defined MOROCCO_UA_REWORK || defined TRAIT_GOLD_FOR_LUXURY_EXPORT
+	int iGoldPerTurnFromTraits = 0;
 #ifdef MOROCCO_UA_REWORK
-	return m_pPlayer->GetPlayerTraits()->GetYieldChangePerTradePartner(YIELD_GOLD) * m_pPlayer->GetTrade()->GetNumDifferentTradingPartners() * (m_pPlayer->GetCurrentEra() + 1);
+	iGoldPerTurnFromTraits += m_pPlayer->GetPlayerTraits()->GetYieldChangePerTradePartner(YIELD_GOLD) * m_pPlayer->GetTrade()->GetNumDifferentTradingPartners() * (m_pPlayer->GetCurrentEra() + 1);
+#else
+	iGoldPerTurnFromTraits += m_pPlayer->GetPlayerTraits()->GetYieldChangePerTradePartner(YIELD_GOLD) * m_pPlayer->GetTrade()->GetNumDifferentTradingPartners();
+#endif
+#endif
+#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
+	for (int iResource = 0; iResource < GC.getNumResourceInfos(); iResource++)
+	{
+		ResourceTypes eResource = (ResourceTypes)iResource;
+		if (GC.getResourceInfo(eResource)->getResourceUsage() == RESOURCEUSAGE_LUXURY)
+		{
+			iGoldPerTurnFromTraits += m_pPlayer->getResourceExport(eResource) * m_pPlayer->GetPlayerTraits()->GetGoldForLuxuryExport();
+		}
+	}
+#endif
+#if defined MOROCCO_UA_REWORK || defined TRAIT_GOLD_FOR_LUXURY_EXPORT
+	return iGoldPerTurnFromTraits;
 #else
 	return m_pPlayer->GetPlayerTraits()->GetYieldChangePerTradePartner(YIELD_GOLD) * m_pPlayer->GetTrade()->GetNumDifferentTradingPartners();
 #endif

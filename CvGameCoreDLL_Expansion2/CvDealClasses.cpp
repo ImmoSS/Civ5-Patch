@@ -2263,12 +2263,6 @@ bool CvGameDeals::FinalizeDeal(PlayerTypes eFromPlayer, PlayerTypes eToPlayer, b
 					int iResourceQuantity = it->m_iData2;
 					GET_PLAYER(eAcceptedFromPlayer).changeResourceExport(eResource, iResourceQuantity);
 					GET_PLAYER(eAcceptedToPlayer).changeResourceImport(eResource, iResourceQuantity);
-#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
-					if (GC.getResourceInfo(eResource)->getResourceUsage() == RESOURCEUSAGE_LUXURY)
-					{
-						GET_PLAYER(eAcceptedFromPlayer).GetTreasury()->ChangeGoldPerTurnFromDiplomacy(iResourceQuantity * GET_PLAYER(eAcceptedFromPlayer).GetPlayerTraits()->GetGoldForLuxuryExport());
-					}
-#endif
 
 					//Resource Trading Achievements
 					if(!GC.getGame().isGameMultiPlayer())
@@ -2911,12 +2905,6 @@ void CvGameDeals::DoEndTradedItem(CvTradedItem* pItem, PlayerTypes eToPlayer, bo
 
 		fromPlayer.changeResourceExport(eResource, -iResourceQuantity);
 		toPlayer.changeResourceImport(eResource, -iResourceQuantity);
-#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
-		if (GC.getResourceInfo(eResource)->getResourceUsage() == RESOURCEUSAGE_LUXURY)
-		{
-			fromPlayer.GetTreasury()->ChangeGoldPerTurnFromDiplomacy(-iResourceQuantity * fromPlayer.GetPlayerTraits()->GetGoldForLuxuryExport());
-		}
-#endif
 
 		CvResourceInfo* pkResourceInfo = GC.getResourceInfo(eResource);
 		const char* szResourceDescription = (pkResourceInfo)? pkResourceInfo->GetDescriptionKey() : "";
@@ -3207,23 +3195,11 @@ void CvGameDeals::PrepareRenewDeal(CvDeal* pOldDeal, const CvDeal* pNewDeal)
 					{
 						fromPlayer.changeResourceExport(eResource, iResourceDelta);
 						toPlayer.changeResourceImport(eResource, iResourceDelta);
-#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
-						if (GC.getResourceInfo(eResource)->getResourceUsage() == RESOURCEUSAGE_LUXURY)
-						{
-							fromPlayer.GetTreasury()->ChangeGoldPerTurnFromDiplomacy(iResourceDelta * fromPlayer.GetPlayerTraits()->GetGoldForLuxuryExport());
-						}
-#endif
 					}
 					else
 					{
 						toPlayer.changeResourceExport(eResource, iResourceDelta);
 						fromPlayer.changeResourceImport(eResource, iResourceDelta);
-#ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
-						if (GC.getResourceInfo(eResource)->getResourceUsage() == RESOURCEUSAGE_LUXURY)
-						{
-							toPlayer.GetTreasury()->ChangeGoldPerTurnFromDiplomacy(iResourceDelta * toPlayer.GetPlayerTraits()->GetGoldForLuxuryExport());
-						}
-#endif
 					}
 				}
 			}
