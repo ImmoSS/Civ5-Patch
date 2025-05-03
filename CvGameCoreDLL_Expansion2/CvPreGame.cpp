@@ -2446,19 +2446,8 @@ void setActivePlayer(PlayerTypes p)
 	SLOG("active p %d", p);
 	if (isNetworkMultiplayerGame() || isHotSeatGame())
 	{
-		if (s_draftCurrentProgress != DRAFT_PROGRESS_OVER)
-		{
-			int oldp = (int)s_activePlayer;
-			if (oldp >= 0 && oldp < MAX_MAJOR_CIVS)
-			{
-				CvString t = s_draftPlayerSecrets[oldp];
-				s_draftPlayerSecrets[oldp] = s_draftPlayerSecrets[p];
-				s_draftPlayerSecrets[p] = t;
-				t = s_draftPlayerSecretHashes[oldp];
-				s_draftPlayerSecretHashes[oldp] = s_draftPlayerSecretHashes[p];
-				s_draftPlayerSecretHashes[p] = t;
-			}
-		}
+		CvString strP = CvString::format("%d", (int)p);
+		gDLL->SendRenameCity(-6, strP);
 	}
 #endif
 	s_activePlayer = p;
@@ -2962,13 +2951,13 @@ void DraftResponseSecretHash(PlayerTypes p, const char* szHash)
 		SLOG("WARN uiPlayerID out of bounds %d", uiPlayerID);
 		return;
 	}
+	SetDraftPlayerReady(p, true);
 	if (s_draftPlayerSecretHashes[uiPlayerID] != "")
 	{
 		SLOG("WARN attempt to overwrite secret hash for player %d", uiPlayerID);
 		return;
 	}
 	s_draftPlayerSecretHashes[uiPlayerID] = CvString(szHash);
-	SetDraftPlayerReady(p, true);
 	DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("ready|%d", uiPlayerID).c_str());
 	SLOG("set secret hash for player %d to %s", uiPlayerID, szHash);
 
@@ -3219,6 +3208,31 @@ void DraftResponseBanRollback(PlayerTypes p, const char* szBans)
 		}
 	}
 	SLOG("WARN could not find bans for rollback: %s", szBans);
+};
+
+void DraftResponseSwapPlayers(PlayerTypes p, const char* szSwapWith)
+{
+	if (s_draftCurrentProgress != DRAFT_PROGRESS_OVER)
+	{
+		CvString strSwapWith = CvString(szSwapWith);
+		int newp = -1;
+		if (strSwapWith != "")
+		{
+			if (sscanf(strSwapWith.c_str(), "%d", &newp) != 1)
+			{
+				return;
+			}
+		}
+		int oldp = (int)p;
+		if (newp >= 0 && newp < MAX_MAJOR_CIVS)
+		{
+			s_draftPlayerSecretHashes[oldp] = "";
+			s_draftPlayerSecretHashes[p] = "";
+			SetDraftPlayerReady((PlayerTypes)oldp, false);
+			SetDraftPlayerReady(p, false);
+			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("upd|%s", szSwapWith).c_str());
+		}
+	}
 };
 
 

@@ -3299,7 +3299,12 @@ function OnGameplayAlertMessage( text )
 	elseif control == 'reset' then
 		--RebuildDrafts();
 		ResetDrafts(text);
-		--AddDraftStatus(Locale.Lookup('TXT_KEY_DRAFT_STATUS_DRAFT_RESET'));
+	elseif control == 'upd' then
+		local playerID = tonumber(text) or -1;
+		if Matchmaking.GetLocalID() == playerID then
+			Controls.DraftBGBlock:SetHide(true)
+		end
+		UpdateDraftScreen();
 	elseif control == 'DRAFT_PROGRESS_INIT' then
 		print('--- DRAFT_PROGRESS_INIT');
 		g_DraftProgress = control;
