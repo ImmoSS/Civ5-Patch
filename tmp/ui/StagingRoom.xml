@@ -740,9 +740,9 @@ for EUI and vanilla UI -->
 					<Stack ID="DraftPlayersStatusStack" Anchor="C,T" Padding="0" StackGrowth="Right" WrapWidth="908" WrapGrowth="Down" >
 					</Stack>
 		
-					<ScrollBar ID="DraftPlayersStatusScrollBar" Offset="0,10" Style="VertSlider" AnchorSide="O.I" Anchor="R,T" Length="294" ConsumeMouse="True" />
-					<UpButton  Offset="0,-6"  Style="ScrollBarUp" AnchorSide="O.I" Anchor="R,T" />
-					<DownButton Offset="0,-6" Style="ScrollBarDown" AnchorSide="O.I" Anchor="R,B" />
+					<UpButton  Offset="7,1"  Style="ScrollBarUp" AnchorSide="I.I" Anchor="R,T" />
+					<ScrollBar ID="DraftPlayersStatusScrollBar" Offset="7,18" Style="VertSlider" AnchorSide="I.I" Anchor="R,T" Length="284" ConsumeMouse="True" />
+					<DownButton Offset="7,1" Style="ScrollBarDown" AnchorSide="I.I" Anchor="R,B" />
 		
 				</ScrollPanel>
 			</Grid>
@@ -753,22 +753,9 @@ for EUI and vanilla UI -->
 					<Stack ID="DraftCivStack" Anchor="C,T" Padding="-13" StackGrowth="Right" WrapWidth="908" WrapGrowth="Down" >
 					</Stack>
 		
-					<ScrollBar ID="DraftCivScrollBar" Offset="0,10" Style="VertSlider" AnchorSide="O.I" Anchor="R,T" Length="294" ConsumeMouse="True" />
-					<UpButton  Offset="0,-6"  Style="ScrollBarUp" AnchorSide="O.I" Anchor="R,T" />
-					<DownButton Offset="0,-6" Style="ScrollBarDown" AnchorSide="O.I" Anchor="R,B" />
-		
-				</ScrollPanel>
-			</Grid>
-			
-			<Grid ID="DraftResults" Style="GridBlack8" Anchor="C,T" Offset="0,100" Size="904,330" ConsumeMouse="0" Hidden="1" >
-				<Grid ID="DraftResultsFrame" Anchor="C,C" Offset="0,0" Size="908,334" Padding="0,0" Style="Grid9Frame" />
-				<ScrollPanel Anchor="L,T" Offset="-4,8" Size="908,314" Vertical="1" ID="DraftResultsScrollPanel" >
-					<Stack ID="DraftResultsStack" Anchor="C,T" Padding="-13" StackGrowth="Right" WrapWidth="908" WrapGrowth="Down" >
-					</Stack>
-		
-					<ScrollBar ID="DraftResultsScrollBar" Offset="0,10" Style="VertSlider" AnchorSide="O.I" Anchor="R,T" Length="294" ConsumeMouse="True" />
-					<UpButton  Offset="0,-6"  Style="ScrollBarUp" AnchorSide="O.I" Anchor="R,T" />
-					<DownButton Offset="0,-6" Style="ScrollBarDown" AnchorSide="O.I" Anchor="R,B" />
+					<UpButton  Offset="7,1"  Style="ScrollBarUp" AnchorSide="I.I" Anchor="R,T" />
+					<ScrollBar ID="DraftCivScrollBar" Offset="7,18" Style="VertSlider" AnchorSide="I.I" Anchor="R,T" Length="284" ConsumeMouse="True" />
+					<DownButton Offset="7,-19" Style="ScrollBarDown" AnchorSide="I.O" Anchor="R,B" />
 		
 				</ScrollPanel>
 			</Grid>
@@ -778,14 +765,14 @@ for EUI and vanilla UI -->
 					<Stack ID="DraftStatusStack" Anchor="L,T" StackGrowth="Down" >
 					</Stack>
 		
-					<ScrollBar Offset="0,10" Style="VertSlider" AnchorSide="O.I" Anchor="R,T" Length="145" ConsumeMouse="True" />
-					<UpButton  Offset="0,-6"  Style="ScrollBarUp" AnchorSide="O.I" Anchor="R,T" />
-					<DownButton Offset="0,-6" Style="ScrollBarDown" AnchorSide="O.I" Anchor="R,B" />
+					<UpButton  Offset="19,1"  Style="ScrollBarUp" AnchorSide="I.I" Anchor="R,T" />
+					<ScrollBar Offset="19,18" Style="VertSlider" AnchorSide="I.I" Anchor="R,T" Length="107" ConsumeMouse="True" />
+					<DownButton Offset="19,145" Style="ScrollBarDown" AnchorSide="I.I" Anchor="R,T" />
 		
 				</ScrollPanel>
 			</Grid>
 			
-			<GridButton Style="BaseButton" ID="DraftConfirmBansButton" Size="200,42" Anchor="R,B" Offset="237,50" Disabled="0" Hidden="0">
+			<GridButton Style="BaseButton" ID="DraftConfirmBansButton" Size="200,42" Anchor="C,B" Offset="0,50" ToolTip="TXT_KEY_DRAFT_BANS_CONFIRM_HELP" Disabled="0" Hidden="0">
 				<Label Anchor="C,C" Offset="0,0" String="TXT_KEY_DRAFT_BANS_CONFIRM" ColorSet="Beige_Black" Font="TwCenMT20" FontStyle="Shadow"/>
 			</GridButton>
 			<GridButton Style="BaseButton" ID="DraftCloseButton" Size="200,42" Anchor="R,B" Offset="27,50" Hidden="0">
@@ -795,8 +782,8 @@ for EUI and vanilla UI -->
 	</Box>
   
 	<Instance Name="DraftCivEntry" >
-		<Container Size="140,140" ID="Root" >
-			<Button ID="DraftCivEntryButton" Size="114,127" Anchor="C,C" Disabled="0" >
+		<Container Size="120,140" ID="Root" >
+			<Button ID="DraftCivEntryButton" Size="114,127" Anchor="L,C" Disabled="0" >
 				<Image ID="LeaderFrame" Anchor="C,T" Size="128,128" Offset="0,-6" Texture="CitizenFrame128.dds" >
 					<AlphaAnim Anchor="C,C" Offset="0,0" Size="128.128" Cycle="Bounce" Speed="0.5" AlphaStart="0.6" AlphaEnd="1" >
 						<Image ID="LeaderFrameSelectedAnim" Anchor="C,T" Size="128,128" TextureOffset="0.0" Texture="notificationadvisorglowback.dds" Color="255,255,50" Hidden="1" />
@@ -849,18 +836,28 @@ for EUI and vanilla UI -->
 			<Button ID="DummyButton" Size="60,60" Anchor="C,C" ConsumeMouseOver="1" />
 		</Container>
 	</Instance>
+	<Instance Name="Dummy3Instance" >
+		<Container Size="140,140" ID="Root" >
+			<Button ID="DummyButton" Size="140,140" Anchor="C,C" ConsumeMouseOver="1" />
+		</Container>
+	</Instance>
 	
 	<Instance Name="DraftPlayerStatusEntry" >
 		<Container Size="360,240" ID="Root" Hidden="1" >
 			<Grid Anchor="C,T" Offset="0,20" Size="314,200" Style="Grid9FrameTurns" ID="DraftPlayerStatusFrame" >
+				<Grid Anchor="L,T" Size="314,200" Style="Grid9FrameTurns" Color="255,255,100" ID="FocusFrame" Hidden="1" />
 				<Label Anchor="C,T" ID="PlayerName" Offset="0,10" String="--" Font="TwCenMT20" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
-				<Label Anchor="C,T" Offset="0,30" String="TXT_KEY_DRAFT_STATUS_BANS_SUBTITLE" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+				<Label Anchor="C,T" ID="BansLabel" Offset="0,30" String="TXT_KEY_DRAFT_STATUS_BANS_SUBTITLE" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 				<Stack ID="DraftPlayerBansStack" Offset="0,50" Anchor="C,T" Padding="0" StackGrowth="Right" />
 				<Stack ID="DraftPlayerBansDummy" Offset="0,50" Anchor="C,T" Padding="0" StackGrowth="Right" />
-				<Label Anchor="C,T" Offset="0,115" String="TXT_KEY_DRAFT_STATUS_PICKS_SUBTITLE" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+				<Label Anchor="C,T" ID="PicksLabel" Offset="0,115" String="TXT_KEY_DRAFT_STATUS_PICKS_SUBTITLE" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
 				<Stack ID="DraftPlayerPicksStack" Offset="0,135" Anchor="C,T" Padding="0" StackGrowth="Right" />
 				<Stack ID="DraftPlayerPicksDummy" Offset="0,135" Anchor="C,T" Padding="0" StackGrowth="Right" />
-				<Box Size="330,198" Anchor="C,C" Color="0,0,0,200" ID="DraftPlayerStatusBlackFade" />
+				<Stack ID="DraftPlayerPicksBigStack" Offset="0,42" Anchor="C,T" Padding="0" StackGrowth="Right" />
+				<Stack ID="DraftPlayerPicksBigDummy" Offset="0,42" Anchor="C,T" Padding="0" StackGrowth="Right" />
+				<Box Size="314,194" Anchor="C,C" Color="0,0,0,0" ID="DraftPlayerStatusBlackFade" >
+					<Grid Anchor="C,C" Size="420,204" Offset="-20,0" Style="Grid9FrameTurns" Color="0,0,0" />
+				</Box>
 			</Grid>
 		</Container>
 	</Instance>
