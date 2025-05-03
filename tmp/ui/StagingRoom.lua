@@ -2675,6 +2675,7 @@ function RebuildDrafts()
 	Controls.DraftPlayersStatusStack:CalculateSize();
 	Controls.DraftPlayersStatusScrollPanel:CalculateInternalSize();
 	Controls.DraftConfirmBansButton:SetDisabled(true);
+	Controls.DraftConfirmBansButton:EnableToolTip(true);
 end
 
 function ResetDrafts( message )
@@ -2703,6 +2704,7 @@ function PopulateDrafts()
 			Controls.DraftCivPicker:SetHide(true);
 			if not Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(true);
+				Controls.DraftConfirmBansButton:EnableToolTip(true);
 			end
 		elseif control == 'DRAFT_PROGRESS_INIT' then
 			print('--- DRAFT_PROGRESS_INIT');
@@ -2713,6 +2715,7 @@ function PopulateDrafts()
 			Controls.DraftCivPicker:SetHide(true);
 			if not Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(true);
+				Controls.DraftConfirmBansButton:EnableToolTip(true);
 			end
 			local p = 0;
 			for bReady in string.gmatch(text, '([^,]+)') do
@@ -2739,6 +2742,7 @@ function PopulateDrafts()
 				if Matchmaking.GetLocalID() == tonumber(p) and not Matchmaking.IsHost() then
 					if not Controls.DraftConfirmBansButton:IsDisabled() then
 						Controls.DraftConfirmBansButton:SetDisabled(true);
+						Controls.DraftConfirmBansButton:EnableToolTip(true);
 					end
 				end
 			end
@@ -2750,6 +2754,7 @@ function PopulateDrafts()
 			Controls.DraftCivPicker:SetHide(false);
 			if not Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(true);
+				Controls.DraftConfirmBansButton:EnableToolTip(true);
 			end
 			for p, ban in string.gmatch(text, '(.-):(.-);') do
 				print('p', p, 'ban', ban)
@@ -2764,6 +2769,7 @@ function PopulateDrafts()
 			Controls.DraftCivPicker:SetHide(true);
 			if not Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(true);
+				Controls.DraftConfirmBansButton:EnableToolTip(true);
 			end
 			local bans, text = string.match(text, '(.-)|(.*)');
 			for p, ban in string.gmatch(bans, '(.-):(.-);') do
@@ -2814,6 +2820,7 @@ Controls.DraftCloseButton:RegisterCallback( Mouse.eLClick, OnDraftsClose )
 
 function sendSelectedCivs()
 	Controls.DraftConfirmBansButton:SetDisabled(true);
+	Controls.DraftConfirmBansButton:EnableToolTip(true);
 	local list = {};
 	for k,v in pairs(g_SelectedCivs) do
 		table.insert(list, k);
@@ -3356,6 +3363,7 @@ function OnGameplayAlertMessage( text )
 			end
 			if not Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(true);
+				Controls.DraftConfirmBansButton:EnableToolTip(true);
 			end
 		end
 	elseif control == 'ban-failure' then
@@ -3365,6 +3373,7 @@ function OnGameplayAlertMessage( text )
 			AddDraftStatus('--- ban again');
 			if Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(false);
+				Controls.DraftConfirmBansButton:EnableToolTip(false);
 			end
 		end
 	elseif control == 'ready' then
@@ -3406,6 +3415,7 @@ function OnGameplayAlertMessage( text )
 		Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BUSY');
 		if not Controls.DraftConfirmBansButton:IsDisabled() then
 			Controls.DraftConfirmBansButton:SetDisabled(true);
+			Controls.DraftConfirmBansButton:EnableToolTip(true);
 		end
 		print('send local secret', text)
 		Network.SendRenameCity(-3, text);  -- send secret
