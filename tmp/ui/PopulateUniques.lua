@@ -163,7 +163,7 @@ local function populateCivilizationUniquesInitialized( civControls, civKeys )
 --		trait = GameInfo.Traits[ GameInfo.Leader_Traits{ LeaderType = civ.LeaderType )().TraitType ];
 	else
 		-- Question mark icons
-		for i = 1, 3 do
+		for i = 1, 4 do
 			newItemIcon( iconParentControl, g_questionMark, true, g_questionMarkTip );
 		end
 		trait = g_randomTrait;
