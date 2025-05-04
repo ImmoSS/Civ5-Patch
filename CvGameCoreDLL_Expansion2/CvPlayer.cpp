@@ -5200,7 +5200,20 @@ void CvPlayer::doTurn()
 						TeamTypes eTeam = (TeamTypes)iLoopTeam;
 						if (getTeam() != eTeam && GET_TEAM(eTeam).isAlive() && GET_TEAM(eTeam).isHuman())
 						{
-							GC.getGame().GetGameDeals()->DoCancelDealsBetweenTeams(GET_PLAYER(GetID()).getTeam(), (TeamTypes)iLoopTeam);
+							for (DealList::iterator it = GC.getGame().GetGameDeals()->m_CurrentDeals.begin(); it != GC.getGame().GetGameDeals()->m_CurrentDeals.end(); ++it)
+							{
+								TradedItemList::iterator itemIter;
+								for (itemIter = it->m_TradedItems.begin(); itemIter != it->m_TradedItems.end(); ++itemIter)
+								{
+									if (itemIter->m_eItemType != TRADE_ITEM_PEACE_TREATY)
+									{
+										PlayerTypes eFromPlayer = itemIter->m_eFromPlayer;
+										PlayerTypes eToPlayer = it->GetOtherPlayer(eFromPlayer);
+
+										GC.getGame().GetGameDeals()->DoEndTradedItem(&*itemIter, eToPlayer, false);
+									}
+								}
+							}
 							GET_TEAM(getTeam()).CloseEmbassyAtTeam(eTeam);
 							GET_TEAM(eTeam).CloseEmbassyAtTeam(getTeam());
 							GET_TEAM(getTeam()).CancelResearchAgreement(eTeam);
@@ -30662,7 +30675,20 @@ void CvPlayer::disconnected()
 						TeamTypes eTeam = (TeamTypes)iLoopTeam;
 						if (getTeam() != eTeam && GET_TEAM(eTeam).isAlive() && GET_TEAM(eTeam).isHuman())
 						{
-							GC.getGame().GetGameDeals()->DoCancelDealsBetweenTeams(GET_PLAYER(GetID()).getTeam(), (TeamTypes)iLoopTeam);
+							for (DealList::iterator it = GC.getGame().GetGameDeals()->m_CurrentDeals.begin(); it != GC.getGame().GetGameDeals()->m_CurrentDeals.end(); ++it)
+							{
+								TradedItemList::iterator itemIter;
+								for (itemIter = it->m_TradedItems.begin(); itemIter != it->m_TradedItems.end(); ++itemIter)
+								{
+									if (itemIter->m_eItemType != TRADE_ITEM_PEACE_TREATY)
+									{
+										PlayerTypes eFromPlayer = itemIter->m_eFromPlayer;
+										PlayerTypes eToPlayer = it->GetOtherPlayer(eFromPlayer);
+
+										GC.getGame().GetGameDeals()->DoEndTradedItem(&*itemIter, eToPlayer, false);
+									}
+								}
+							}
 							GET_TEAM(getTeam()).CloseEmbassyAtTeam(eTeam);
 							GET_TEAM(eTeam).CloseEmbassyAtTeam(getTeam());
 							GET_TEAM(getTeam()).CancelResearchAgreement(eTeam);
@@ -30743,7 +30769,20 @@ void CvPlayer::disconnected()
 					TeamTypes eTeam = (TeamTypes)iLoopTeam;
 					if (getTeam() != eTeam && GET_TEAM(eTeam).isAlive() && GET_TEAM(eTeam).isHuman())
 					{
-						GC.getGame().GetGameDeals()->DoCancelDealsBetweenTeams(GET_PLAYER(GetID()).getTeam(), (TeamTypes)iLoopTeam);
+						for (DealList::iterator it = GC.getGame().GetGameDeals()->m_CurrentDeals.begin(); it != GC.getGame().GetGameDeals()->m_CurrentDeals.end(); ++it)
+						{
+							TradedItemList::iterator itemIter;
+							for (itemIter = it->m_TradedItems.begin(); itemIter != it->m_TradedItems.end(); ++itemIter)
+							{
+								if (itemIter->m_eItemType != TRADE_ITEM_PEACE_TREATY)
+								{
+									PlayerTypes eFromPlayer = itemIter->m_eFromPlayer;
+									PlayerTypes eToPlayer = it->GetOtherPlayer(eFromPlayer);
+
+									GC.getGame().GetGameDeals()->DoEndTradedItem(&*itemIter, eToPlayer, false);
+								}
+							}
+						}
 						GET_TEAM(getTeam()).CloseEmbassyAtTeam(eTeam);
 						GET_TEAM(eTeam).CloseEmbassyAtTeam(getTeam());
 						GET_TEAM(getTeam()).CancelResearchAgreement(eTeam);
