@@ -12082,7 +12082,9 @@ bool CvUnit::canSiege(TeamTypes eTeam) const
 	VALIDATE_OBJECT
 	if(!IsCanDefend())
 	{
+#ifndef FIX_CIVILLIANS_DROP_CITIZENS_FROM_BLOCKED_TILES
 		return false;
+#endif
 	}
 
 	if(!isEnemy(eTeam))
