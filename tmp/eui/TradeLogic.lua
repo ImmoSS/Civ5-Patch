@@ -165,7 +165,7 @@ local g_SubTooltipsNo = {
 for k, v in pairs(g_SubTooltipsNo) do g_SubTooltipsNo[k] = "[COLOR_WARNING_TEXT]" .. v .. "[ENDCOLOR]" end
 
 local g_itemControls = {
-[ TradeableItems.TRADE_ITEM_PEACE_TREATY or false ] = { Controls.UsPocketPeaceTreaty, Controls.UsTablePeaceTreaty, Controls.ThemPocketPeaceTreaty, Controls.ThemTablePeaceTreaty },
+-- [ TradeableItems.TRADE_ITEM_PEACE_TREATY or false ] = { Controls.UsPocketPeaceTreaty, Controls.UsTablePeaceTreaty, Controls.ThemPocketPeaceTreaty, Controls.ThemTablePeaceTreaty },
 [ TradeableItems.TRADE_ITEM_ALLOW_EMBASSY or false ] = { Controls.UsPocketAllowEmbassy, Controls.UsTableAllowEmbassy, Controls.ThemPocketAllowEmbassy, Controls.ThemTableAllowEmbassy },
 [ TradeableItems.TRADE_ITEM_OPEN_BORDERS or false ] = { Controls.UsPocketOpenBorders, Controls.UsTableOpenBorders, Controls.ThemPocketOpenBorders, Controls.ThemTableOpenBorders },
 [ TradeableItems.TRADE_ITEM_DEFENSIVE_PACT or false ] = { Controls.UsPocketDefensivePact, Controls.UsTableDefensivePact, Controls.ThemPocketDefensivePact, Controls.ThemTableDefensivePact },
@@ -1141,6 +1141,18 @@ function DisplayDeal(...)
 			if tableControl then
 				tableControl:SetHide( false )
 			end
+
+		elseif TradeableItems.TRADE_ITEM_PEACE_TREATY == itemType then
+
+        	if g_pUs:IsHuman() and g_pThem:IsHuman() then
+				Controls.UsTablePeaceTreaty:LocalizeAndSetText( "TXT_KEY_DIPLO_PEACE_TREATY", g_iPeaceDuration )
+				Controls.ThemTablePeaceTreaty:LocalizeAndSetText( "TXT_KEY_DIPLO_PEACE_TREATY", g_iPeaceDuration )
+			else
+				Controls.UsTablePeaceTreaty:LocalizeAndSetText( "TXT_KEY_DIPLO_PEACE_TREATY", 5 )
+				Controls.ThemTablePeaceTreaty:LocalizeAndSetText( "TXT_KEY_DIPLO_PEACE_TREATY", 5 )
+			end
+            Controls.UsTablePeaceTreaty:SetHide( false );
+            Controls.ThemTablePeaceTreaty:SetHide( false );
 
 		elseif TradeableItems.TRADE_ITEM_GOLD == itemType then
 
@@ -2312,20 +2324,11 @@ for tradeableItem, controls in pairs( g_itemControls ) do
 	table_insert( g_tableControls, controls[4] )
 end
 
-if g_pUs and g_pThem and g_pUs:IsHuman() and g_pThem:IsHuman() then
-	Controls.UsMakePeaceDuration:LocalizeAndSetText( "TXT_KEY_DIPLO_TURNS", g_iPeaceDuration )
-	Controls.UsDeclareWarDuration:LocalizeAndSetText( "TXT_KEY_DIPLO_TURNS", g_iPeaceDuration )
-	Controls.ThemMakePeaceDuration:LocalizeAndSetText( "TXT_KEY_DIPLO_TURNS", g_iPeaceDuration )
-	Controls.ThemDeclareWarDuration:LocalizeAndSetText( "TXT_KEY_DIPLO_TURNS", g_iPeaceDuration )
-	Controls.UsTablePeaceTreaty:LocalizeAndSetText( "TXT_KEY_DIPLO_PEACE_TREATY", g_iPeaceDuration )
-	Controls.ThemTablePeaceTreaty:LocalizeAndSetText( "TXT_KEY_DIPLO_PEACE_TREATY", g_iPeaceDuration )
-else
-	Controls.UsMakePeaceDuration:LocalizeAndSetText( "TXT_KEY_DIPLO_TURNS", 5 )
-	Controls.UsDeclareWarDuration:LocalizeAndSetText( "TXT_KEY_DIPLO_TURNS", 5 )
-	Controls.ThemMakePeaceDuration:LocalizeAndSetText( "TXT_KEY_DIPLO_TURNS", 5 )
-	Controls.ThemDeclareWarDuration:LocalizeAndSetText( "TXT_KEY_DIPLO_TURNS", 5 )
-	Controls.UsTablePeaceTreaty:LocalizeAndSetText( "TXT_KEY_DIPLO_PEACE_TREATY", 5 )
-	Controls.ThemTablePeaceTreaty:LocalizeAndSetText( "TXT_KEY_DIPLO_PEACE_TREATY", 5 )
-end
+Controls.UsMakePeaceDuration:LocalizeAndSetText( "TXT_KEY_DIPLO_TURNS", g_iPeaceDuration )
+Controls.UsDeclareWarDuration:LocalizeAndSetText( "TXT_KEY_DIPLO_TURNS", g_iPeaceDuration )
+Controls.ThemMakePeaceDuration:LocalizeAndSetText( "TXT_KEY_DIPLO_TURNS", g_iPeaceDuration )
+Controls.ThemDeclareWarDuration:LocalizeAndSetText( "TXT_KEY_DIPLO_TURNS", g_iPeaceDuration )
+-- Controls.UsTablePeaceTreaty:LocalizeAndSetText( "TXT_KEY_DIPLO_PEACE_TREATY", g_iPeaceDuration )
+-- Controls.ThemTablePeaceTreaty:LocalizeAndSetText( "TXT_KEY_DIPLO_PEACE_TREATY", g_iPeaceDuration )
 
 DisplayDeal()
