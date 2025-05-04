@@ -1937,19 +1937,18 @@ function UpdateOptions()
 	local op2 = PreGame.GetWorldSize();
 	if g_DraftProgress == 'DRAFT_PROGRESS_INIT' or g_DraftProgress == 'DRAFT_PROGRESS_DEFAULT' then
 		if g_DraftSettings.TournamentMode ~= op1 then
-			g_DraftSettings.TournamentMode = op1;
 			RebuildDrafts()
 		end
 	else
 		if g_DraftSettings.TournamentMode ~= op1 or g_DraftSettings.WorldSize ~= op2 then
-			g_DraftSettings.TournamentMode = op1;
-			g_DraftSettings.WorldSize = op2;
 			local product = 4 * 2 ^ 28;  -- reset draft data (local)
 			local data = PreGame.SetLeaderKey( product, 'TXT_KEY_DRAFTS_RESET_GAMEOPTION' );
 			RebuildDrafts()
 			Controls.DraftBGBlock:SetHide(true)
 		end
 	end
+	g_DraftSettings.TournamentMode = op1;
+	g_DraftSettings.WorldSize = op2;
 	-- Ingame Civ Drafter END
 	-- Add empty text to padd the bottom.
 	local controlTable = g_AdvancedOptionIM:GetInstance();
