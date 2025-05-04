@@ -2909,7 +2909,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 			{
 				eBuilding = eBuilding = (BuildingTypes)iI;
 				CvBuildingEntry* pBuildingInfo = GC.getBuildingInfo(eBuilding);
-				if (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
+				if (pBuildingInfo && pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
 				{
 					int iLoop = 0;
 					int iNumBuildings = 0;
@@ -3684,7 +3684,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 			{
 				eBuilding = eBuilding = (BuildingTypes)iI;
 				CvBuildingEntry* pBuildingInfo = GC.getBuildingInfo(eBuilding);
-				if (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
+				if (pBuildingInfo && pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
 				{
 					int iLoop = 0;
 					int iNumBuildings = 0;
@@ -22996,7 +22996,7 @@ void CvPlayer::deleteCity(int iID)
 			{
 				BuildingTypes eBuilding = eBuilding = (BuildingTypes)iI;
 				CvBuildingEntry* pBuildingInfo = GC.getBuildingInfo(eBuilding);
-				if (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
+				if (pBuildingInfo && pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
 				{
 					int iLoop = 0;
 					int iNumBuildings = 0;
@@ -23040,7 +23040,7 @@ void CvPlayer::deleteCity(int iID)
 			{
 				BuildingTypes eBuilding = eBuilding = (BuildingTypes)iI;
 				CvBuildingEntry* pBuildingInfo = GC.getBuildingInfo(eBuilding);
-				if (pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
+				if (pBuildingInfo && pBuildingInfo->GetYieldForEachBuildingInEmpire(eYield) > 0)
 				{
 					int iLoop = 0;
 					int iNumBuildings = 0;
