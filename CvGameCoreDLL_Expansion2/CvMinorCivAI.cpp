@@ -5270,7 +5270,7 @@ UnitTypes CvMinorCivAI::GetBestGreatPersonForQuest(PlayerTypes ePlayer)
 		if (pkUnitInfo->GetUnitClassType() == GC.getInfoTypeForString("UNITCLASS_WRITER", true /*bHideAssert*/))
 		{
 
-			if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getInfoTypeForString("TECH_DRAMA", true /*bHideAssert*/)))
+			if (!GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getInfoTypeForString("TECH_DRAMA", true /*bHideAssert*/)))
 			{
 				continue;
 			}
@@ -5279,7 +5279,7 @@ UnitTypes CvMinorCivAI::GetBestGreatPersonForQuest(PlayerTypes ePlayer)
 		if (pkUnitInfo->GetUnitClassType() == GC.getInfoTypeForString("UNITCLASS_ARTIST", true /*bHideAssert*/))
 		{
 
-			if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getInfoTypeForString("TECH_GUILDS", true /*bHideAssert*/)))
+			if (!GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getInfoTypeForString("TECH_GUILDS", true /*bHideAssert*/)))
 			{
 				continue;
 			}
@@ -5288,7 +5288,7 @@ UnitTypes CvMinorCivAI::GetBestGreatPersonForQuest(PlayerTypes ePlayer)
 		if (pkUnitInfo->GetUnitClassType() == GC.getInfoTypeForString("UNITCLASS_MUSICIAN", true /*bHideAssert*/))
 		{
 
-			if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getInfoTypeForString("TECH_ACOUSTICS", true /*bHideAssert*/)))
+			if (!GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getInfoTypeForString("TECH_ACOUSTICS", true /*bHideAssert*/)))
 			{
 				continue;
 			}
