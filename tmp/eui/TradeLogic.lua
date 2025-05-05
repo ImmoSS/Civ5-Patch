@@ -176,6 +176,8 @@ local g_itemControls = {
 g_itemControls[ false ] = nil
 
 local g_tableControls = {
+	Controls.UsTablePeaceTreaty,
+	Controls.ThemTablePeaceTreaty,
 	Controls.UsTableVoteStack,
 	Controls.ThemTableVoteStack,
 	Controls.UsTableGold,
