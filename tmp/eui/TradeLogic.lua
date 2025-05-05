@@ -1597,6 +1597,13 @@ function OnBack( flag )
 end
 local OnBack = OnBack
 Controls.CancelButton:RegisterCallback( Mouse.eLClick, OnBack )
+Events.WarStateChanged.Add(
+function( iTeam1, iTeam2, isAtWar )
+	-- Active player changed war state with this AI
+	if iTeam1 == g_iUsTeam and iTeam2 == g_iThemTeam and isAtWar then
+		OnBack()
+	end
+end)
 
 ----------------------------------------------------------------
 -- SHOW/HIDE
@@ -1737,6 +1744,17 @@ function()
 		UIManager:DequeuePopup( ContextPtr )
 	end
 --	g_diploUIStateID = false
+end)
+Events.WarStateChanged.Add(
+function( iTeam1, iTeam2, isAtWar )
+	-- Active player changed war state with this AI
+	if iTeam1 == g_iUsTeam and iTeam2 == g_iThemTeam and isAtWar then
+		if g_PVPTrade then
+			UI.DoFinalizePlayerDeal( g_iUs, g_iThem, false )
+			ContextPtr:SetHide( true )
+			ContextPtr:CallParentShowHideHandler( false )
+		end
+	end
 end)
 
 
