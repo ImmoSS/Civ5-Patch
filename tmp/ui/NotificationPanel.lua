@@ -324,18 +324,19 @@ function OnNotificationAdded( Id, type, toolTip, strSummary, iGameValue, iExtraG
 
 			if type == NotificationTypes.NOTIFICATION_MP_IRR_PROPOSAL then
 				instance.StatusFrame:SetText('[ICON_TEAM_1]')
+				instance.SmallCivFrame:SetHide(false);
 			elseif type == NotificationTypes.NOTIFICATION_MP_CC_PROPOSAL then
 				instance.StatusFrame:SetText('[ICON_TROPHY_GOLD]')
+				instance.SmallCivFrame:SetHide(true);
 			elseif type == NotificationTypes.NOTIFICATION_MP_SCRAP_PROPOSAL then
 				instance.StatusFrame:SetText('[ICON_FLOWER]')
+				instance.SmallCivFrame:SetHide(true);
 			end
 			-- debug only
 			--instance.StatusFrame:SetText(Id .. '|' .. Game.GetProposalIDbyUIid(Id) .. '/' .. Game.GetLastProposalID())
 			
 			LuaEvents.OnProposalCreated()
-			if type == NotificationTypes.NOTIFICATION_MP_IRR_PROPOSAL then
-				CivIconHookup( playerID, 45, instance.CivIcon, instance.CivIconBG, instance.CivIconShadow, false, true );
-			end
+			CivIconHookup( playerID, 45, instance.CivIcon, instance.CivIconBG, instance.CivIconShadow, false, true );
 		elseif type == NotificationTypes.NOTIFICATION_MP_REMAP_PROPOSAL then
 			instance.StatusFrame:SetText('[ICON_FLOWER]')
 			LuaEvents.OnProposalCreated();
