@@ -5468,7 +5468,7 @@ int CvUnit::healRate(const CvPlot* pPlot) const
 			iExtraHeal += pCity->getHealRate();
 		}
 #ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
-		if (pCity && getDomainType() != DOMAIN_AIR)
+		if (pCity && pCity->getNonAirUnitMaxHeal() > 0 && getDomainType() != DOMAIN_AIR)
 		{
 			iExtraHeal += 100;
 		}
