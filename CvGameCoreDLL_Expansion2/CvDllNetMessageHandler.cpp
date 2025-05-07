@@ -1656,6 +1656,7 @@ void CvDllNetMessageHandler::ResponseRenameCity(PlayerTypes ePlayer, int iCityID
 	// -4 -- failed ban rollback
 	// -5 -- bans synced by host
 	// -6 -- swap players
+	// -7 -- receive AllBansReceived
 	SLOG("ResponseRenameCity << ePlayer %d iCityID %d szName %s", (int)ePlayer, iCityID, szName);
 	if (iCityID == -1)
 	{
@@ -1706,6 +1707,11 @@ void CvDllNetMessageHandler::ResponseRenameCity(PlayerTypes ePlayer, int iCityID
 	else if (iCityID == -6)
 	{
 		CvPreGame::DraftResponseSwapPlayers(ePlayer, szName);
+		return;
+	}
+	else if (iCityID == -7)
+	{
+		CvPreGame::DraftResponseAllBansReceived(ePlayer);
 		return;
 	}
 #endif

@@ -321,6 +321,7 @@ std::vector<CvString> s_draftPlayerBans;
 std::vector<CvString> s_draftPlayerSecrets(MAX_MAJOR_CIVS);
 std::vector<CvString> s_draftPlayerSecretHashes(MAX_MAJOR_CIVS);
 std::vector<CvString> s_draftBansMsgQueue(MAX_PLAYERS);
+std::vector<bool> s_draftAllBansReceived(MAX_MAJOR_CIVS);
 int s_draftCurrBansMsgNumber = 0;
 CvString hash(CvString m) {
 	uint H[8] = { 0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19 };
@@ -2183,6 +2184,10 @@ void resetGame()
 	{
 		s_draftPlayerSecretHashes[i] = "";
 	}
+	for (uint i = 0; i < s_draftAllBansReceived.size(); i++)
+	{
+		s_draftAllBansReceived[i] = false;
+	}
 	s_draftPlayerBans.clear();
 	s_draftCurrentProgress = DRAFT_PROGRESS_INIT;
 	s_draftResult = DRAFT_RESULT_NONE;
@@ -2737,6 +2742,10 @@ void setGameType(GameTypes g, GameStartTypes eStartType)
 	{
 		s_draftPlayerSecretHashes[i] = "";
 	}
+	for (uint i = 0; i < s_draftAllBansReceived.size(); i++)
+	{
+		s_draftAllBansReceived[i] = false;
+	}
 	s_draftPlayerBans.clear();
 	s_draftCurrentProgress = DRAFT_PROGRESS_INIT;
 	s_draftResult = DRAFT_RESULT_NONE;
@@ -3087,11 +3096,36 @@ void DraftResponseBans(PlayerTypes p, const char* szBans)
 	}
 	if (bReady)
 	{
+		// extra step required due to network jitter
+		gDLL->SendRenameCity(-7, "");
+	}
+}
+
+void DraftResponseAllBansReceived(PlayerTypes p)
+{
+	uint uiPlayerID = (uint)p;
+	if (uiPlayerID >= MAX_MAJOR_CIVS)
+	{
+		SLOG("WARN uiPlayerID out of bounds %d", uiPlayerID);
+		return;
+	}
+	
+	s_draftAllBansReceived[uiPlayerID] = true;
+
+	// check AllBansReceived
+	bool bReady = true;
+	for (uint i = 0; i < s_draftAllBansReceived.size(); i++)
+	{
+		if (isHuman((PlayerTypes)i) && !s_draftAllBansReceived[i])
+			bReady = false;
+	}
+	if (bReady)
+	{
 		s_draftCurrentProgress = DRAFT_PROGRESS_BUSY;
 		// send secret via UI
 		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DRAFT_PROGRESS_BUSY|%s", s_draftLocalSecret.c_str()).c_str());
 	}
-}
+};
 
 void DraftResponseSecret(PlayerTypes p, const char* szSecret)
 {
@@ -3283,6 +3317,10 @@ void DraftLocalReset(const char* szReason)
 	{
 		s_draftPlayerSecretHashes[i] = "";
 	}
+	for (uint i = 0; i < s_draftAllBansReceived.size(); i++)
+	{
+		s_draftAllBansReceived[i] = false;
+	}
 	s_draftPlayerBans.clear();
 	s_draftCurrentProgress = DRAFT_PROGRESS_INIT;
 	s_draftResult = DRAFT_RESULT_NONE;
@@ -3427,6 +3465,11 @@ std::vector<CvString> getDraftPlayerSecretHashes()
 	return s_draftPlayerSecretHashes;
 }
 
+std::vector<bool> getDraftAllBansReceived()
+{
+	return s_draftAllBansReceived;
+}
+
 void setDraftShuffledCivs(CvString value)
 {
 	s_draftShuffledCivs = value;
@@ -3454,6 +3497,11 @@ void setDraftPlayerBans(std::vector<CvString> value)
 void setDraftPlayerSecrets(std::vector<CvString> value)
 {
 	s_draftPlayerSecrets = value;
+}
+
+void setDraftAllBansReceived(std::vector<bool> value)
+{
+	s_draftAllBansReceived = value;
 }
 
 void setDraftPlayerSecretHashes(std::vector<CvString> value)

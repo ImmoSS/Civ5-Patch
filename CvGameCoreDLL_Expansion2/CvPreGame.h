@@ -231,6 +231,7 @@ void                                       DraftResponseBans(PlayerTypes p, cons
 void                                       DraftResponseSecret(PlayerTypes p, const char* szSecret);
 void                                       DraftResponseBanRollback(PlayerTypes p, const char* szBans);
 void                                       DraftResponseSwapPlayers(PlayerTypes p, const char* szSwapWith);
+void                                       DraftResponseAllBansReceived(PlayerTypes p);
 void                                       DraftLocalReady();
 void                                       DraftLocalReset(const char* szReason);
 void                                       DraftLocalUpdate();
@@ -243,6 +244,7 @@ int                                        getDraftResult();
 std::vector<CvString>                      getDraftPlayerBans();
 std::vector<CvString>                      getDraftPlayerSecrets();
 std::vector<CvString>                      getDraftPlayerSecretHashes();
+std::vector<bool>                          getDraftAllBansReceived();
 void                                       setDraftShuffledCivs(CvString value);
 void                                       setDraftPlayersReady(int value);
 void                                       setDraftCurrentProgress(int value);
@@ -250,6 +252,7 @@ void                                       setDraftResult(int value);
 void                                       setDraftPlayerBans(std::vector<CvString> value);
 void                                       setDraftPlayerSecrets(std::vector<CvString> value);
 void                                       setDraftPlayerSecretHashes(std::vector<CvString> value);
+void                                       setDraftAllBansReceived(std::vector<bool> value);
 #endif
 void                                       setLeaderKey(PlayerTypes p, const CvString& n);
 void                                       setLeaderKeyPackageID(PlayerTypes p, const GUID& n);

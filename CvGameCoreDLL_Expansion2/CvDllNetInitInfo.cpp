@@ -53,6 +53,7 @@ CvDllNetInitInfo::CvDllNetInitInfo()
 	m_draftPlayerBans = CvPreGame::getDraftPlayerBans();
 	m_draftPlayerSecrets = CvPreGame::getDraftPlayerSecrets();
 	m_draftPlayerSecretHashes = CvPreGame::getDraftPlayerSecretHashes();
+	m_draftAllBansReceived = CvPreGame::getDraftAllBansReceived();
 #endif
 
 	ZeroMemory(m_szDebugString, sizeof m_szDebugString);
@@ -196,6 +197,7 @@ bool CvDllNetInitInfo::Read(FDataStream& kStream)
 	kStream >> m_draftPlayerBans;
 	kStream >> m_draftPlayerSecrets;
 	kStream >> m_draftPlayerSecretHashes;
+	kStream >> m_draftAllBansReceived;
 	SLOG("m_draftShuffledCivs %s", m_draftShuffledCivs);
 	SLOG("m_draftPlayersReady %d", m_draftPlayersReady);
 	SLOG("m_draftCurrentProgress %d", m_draftCurrentProgress);
@@ -247,6 +249,7 @@ bool CvDllNetInitInfo::Write(FDataStream& kStream)
 	kStream << m_draftPlayerBans;
 	kStream << m_draftPlayerSecrets;
 	kStream << m_draftPlayerSecretHashes;
+	kStream << m_draftAllBansReceived;
 #endif
 
 	return true;
@@ -304,6 +307,7 @@ bool CvDllNetInitInfo::Commit()
 	CvPreGame::setDraftPlayerBans(m_draftPlayerBans);
 	CvPreGame::setDraftPlayerSecrets(m_draftPlayerSecrets);
 	CvPreGame::setDraftPlayerSecretHashes(m_draftPlayerSecretHashes);
+	CvPreGame::setDraftAllBansReceived(m_draftAllBansReceived);
 #endif
 
 	return true;
