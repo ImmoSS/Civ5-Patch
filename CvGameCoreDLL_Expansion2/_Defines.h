@@ -1359,8 +1359,6 @@
 ///
 #define DUEL_HONOR_CHANGE
 ///
-#define DUEL_WALL_CHANGE
-///
 #define DUEL_GREAT_LIBRARY_CHANGE
 ///
 #define DUEL_DISABLE_GREAT_WALL

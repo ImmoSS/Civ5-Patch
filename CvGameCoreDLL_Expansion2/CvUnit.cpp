@@ -15612,10 +15612,6 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 	{
 		int iRing = iI;
 		int iAttackRange = GC.getCITY_ATTACK_RANGE();
-#ifdef DUEL_WALL_CHANGE
-		if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
-			iAttackRange += 1;
-#endif
 		for (int iDX = -iRing; iDX <= iRing; iDX++)
 		{
 			for (int iDY = -iRing; iDY <= iRing; iDY++)
