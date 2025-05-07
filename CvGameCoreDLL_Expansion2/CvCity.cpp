@@ -313,6 +313,9 @@ CvCity::CvCity() :
 #ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
 	, m_iLocalCityConnectionTradeRouteModifier("CvCity::m_iLocalCityConnectionTradeRouteModifier", m_syncArchive)
 #endif
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+	, m_iNonAirUnitMaxHeal("CvCity::m_iNonAirUnitMaxHeal", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1110,6 +1113,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #endif
 #ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
 	m_iLocalCityConnectionTradeRouteModifier = 0;
+#endif
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+	m_iNonAirUnitMaxHeal = 0;
 #endif
 
 	if(!bConstructorCall)
@@ -7119,6 +7125,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #endif
 #ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
 		changeLocalCityConnectionTradeRouteModifier(pBuildingInfo->GetLocalCityConnectionTradeRouteModifier() * iChange);
+#endif
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+		changeNonAirUnitMaxHeal(pBuildingInfo->IsNonAirUnitMaxHeal() * iChange);
 #endif
 
 		// Process for our player
@@ -16276,6 +16285,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1004)
+	{
+# endif
+		kStream >> m_iNonAirUnitMaxHeal;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iNonAirUnitMaxHeal = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -16560,6 +16583,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
 	kStream << m_iLocalCityConnectionTradeRouteModifier;
+#endif
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+	kStream << m_iNonAirUnitMaxHeal;
 #endif
 }
 
@@ -18132,5 +18158,20 @@ void CvCity::changeLocalCityConnectionTradeRouteModifier(int iChange)
 {
 	VALIDATE_OBJECT
 	m_iLocalCityConnectionTradeRouteModifier += iChange;
+}
+#endif
+
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+//	----------------------------------------------------------------------------
+int CvCity::getNonAirUnitMaxHeal() const
+{
+	return m_iNonAirUnitMaxHeal;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeNonAirUnitMaxHeal(int iChange)
+{
+	VALIDATE_OBJECT
+	m_iNonAirUnitMaxHeal += iChange;
 }
 #endif

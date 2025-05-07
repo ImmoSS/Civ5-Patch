@@ -899,6 +899,10 @@ public:
 	int getLocalCityConnectionTradeRouteModifier() const;
 	void changeLocalCityConnectionTradeRouteModifier(int iChange);
 #endif
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+	int getNonAirUnitMaxHeal() const;
+	void changeNonAirUnitMaxHeal(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1130,6 +1134,9 @@ protected:
 #endif
 #ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
 	FAutoVariable<int, CvCity> m_iLocalCityConnectionTradeRouteModifier;
+#endif
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+	FAutoVariable<int, CvCity> m_iNonAirUnitMaxHeal;
 #endif
 
 	void doGrowth();

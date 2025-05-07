@@ -259,6 +259,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
 	m_iLocalCityConnectionTradeRouteModifier(0),
 #endif
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+	m_bNonAirUnitMaxHeal(false),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -824,6 +827,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
 	m_iLocalCityConnectionTradeRouteModifier = kResults.GetInt("LocalCityConnectionTradeRouteModifier");
+#endif
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+	m_bNonAirUnitMaxHeal = kResults.GetBool("NonAirUnitMaxHeal");
 #endif
 
 	return true;
@@ -2383,6 +2389,13 @@ int CvBuildingEntry::GetFoodBonusIfNoCitiesAround() const
 int CvBuildingEntry::GetLocalCityConnectionTradeRouteModifier() const
 {
 	return m_iLocalCityConnectionTradeRouteModifier;
+}
+#endif
+
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+bool CvBuildingEntry::IsNonAirUnitMaxHeal() const
+{
+	return m_bNonAirUnitMaxHeal;
 }
 #endif
 

@@ -366,6 +366,9 @@ public:
 #ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
 	int GetLocalCityConnectionTradeRouteModifier() const;
 #endif
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+	bool IsNonAirUnitMaxHeal() const;
+#endif
 
 private:
 	int m_iBuildingClassType;
@@ -627,6 +630,9 @@ private:
 #endif
 #ifdef BUILDING_LOCAL_CITY_CONNECTION_TRADE_ROUTE_MODIFIER
 	int m_iLocalCityConnectionTradeRouteModifier;
+#endif
+#ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
+	int m_bNonAirUnitMaxHeal;
 #endif
 };
 
