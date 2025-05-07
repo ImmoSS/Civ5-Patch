@@ -88,5 +88,6 @@ private:
 	std::vector<CvString> m_draftPlayerBans;
 	std::vector<CvString> m_draftPlayerSecrets;
 	std::vector<CvString> m_draftPlayerSecretHashes;
+	std::vector<bool> m_draftAllBansReceived;
 #endif
 };

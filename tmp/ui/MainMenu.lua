@@ -84,10 +84,12 @@ function ShowHidePatchNotesPopup()
 					if resp ~= nil then
 						for var in string.gmatch(resp, 'const patchNotes = (%b{})') do
 							for lang, patchNotes in string.gmatch(var, '(%S+): (%b{})') do
-								blob[lang] = { text = patchNotes }
-								local inst3 = IMB:GetInstance()
-								inst3.Text:SetText(lang)
-								inst3.Button:RegisterCallback( Mouse.eLClick, function() ShowPatchNotesText(lang) end)
+								for versionNotes in string.gmatch(patchNotes, 'versions: (%b{})') do
+									blob[lang] = { text = versionNotes }
+									local inst3 = IMB:GetInstance()
+									inst3.Text:SetText(lang)
+									inst3.Button:RegisterCallback( Mouse.eLClick, function() ShowPatchNotesText(lang) end)
+								end
 							end
 						end
 						Controls.PatchNotesLangStack:ReprocessAnchoring()
