@@ -1524,6 +1524,8 @@ function ShowHideHandler( bIsHide, bIsInit )
     if( not bIsHide ) then
 		-- Ingame Civ Drafter START
 		print('--- StagingRoom.lua ---')
+		print((PreGame.GetLoadFileName() ~= ""), PreGame.GameStarted())
+		Controls.DraftButton:SetHide( (PreGame.GetLoadFileName() ~= "") or PreGame.GameStarted() );
 		RebuildDrafts();
 		PopulateDrafts();
 		-- Ingame Civ Drafter END
@@ -3303,7 +3305,7 @@ end
 
 function UpdateDraftScreen()
 	print('upd drafts')
-	if PreGame.IsMultiplayerGame() and Controls.DraftButton:IsHidden() then
+	if PreGame.IsMultiplayerGame() and Controls.DraftButton:IsHidden() and (PreGame.GetLoadFileName() == "") and not PreGame.GameStarted() then
 		Controls.DraftButton:SetHide(false);
 	elseif not PreGame.IsMultiplayerGame() and not Controls.DraftButton:IsHidden() then
 		Controls.DraftButton:SetHide(true);
