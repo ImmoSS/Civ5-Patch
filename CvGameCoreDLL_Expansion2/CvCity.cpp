@@ -8522,73 +8522,67 @@ void CvCity::changeGreatPeopleRateModifier(int iChange)
 int CvCity::getCityAttackRangeModifier() const
 {
 	VALIDATE_OBJECT
-	if (GET_PLAYER(getOwner()).isMinorCiv())
-	{
-		return 1;
-	}
-	else
-	{
-		int iTempMod = 0;
-		ReligionTypes eMajority = GetCityReligions()->GetReligiousMajority();
+	int iTempMod = 0;
+	ReligionTypes eMajority = GetCityReligions()->GetReligiousMajority();
 
-		if (eMajority != NO_RELIGION)
+	if (eMajority != NO_RELIGION)
+	{
+		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eMajority, getOwner());
+		if (pReligion)
 		{
-			const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eMajority, getOwner());
-			if (pReligion)
+			BeliefTypes pBelief = NO_BELIEF;
+			int iI;
+			for (iI = 0; iI < pReligion->m_Beliefs.GetNumBeliefs(); iI++)
 			{
-				BeliefTypes pBelief = NO_BELIEF;
-				int iI;
-				for (iI = 0; iI < pReligion->m_Beliefs.GetNumBeliefs(); iI++)
+				const BeliefTypes eBelief = pReligion->m_Beliefs.GetBelief(iI);
+				CvBeliefEntry* pEntry = GC.GetGameBeliefs()->GetEntry((int)eBelief);
+				if (pEntry && pEntry->IsPantheonBelief())
 				{
-					const BeliefTypes eBelief = pReligion->m_Beliefs.GetBelief(iI);
-					CvBeliefEntry* pEntry = GC.GetGameBeliefs()->GetEntry((int)eBelief);
-					if (pEntry && pEntry->IsPantheonBelief())
-					{
-						pBelief = eBelief;
-						break;
-					}
+					pBelief = eBelief;
+					break;
 				}
+			}
 #ifdef DUEL_GODDESS_STRATEGY_CHANGE
-				if (!(GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF")))
+			if (!(GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF")))
+			{
+				if (pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_STRATEGY", true))
 				{
-					if (pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_STRATEGY", true))
+					iTempMod++;
+					if (eMajority > RELIGION_PANTHEON)
 					{
-						iTempMod++;
-						if (eMajority > RELIGION_PANTHEON)
+						ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(getOwner());
+						if (eFoundedReligion == eMajority && GET_PLAYER(getOwner()).IsSecondReligionPantheon())
 						{
-							ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(getOwner());
-							if (eFoundedReligion == eMajority && GET_PLAYER(getOwner()).IsSecondReligionPantheon())
-							{
-								iTempMod++;
-							}
+							iTempMod++;
 						}
 					}
 				}
-#endif
-				pBelief = NO_BELIEF;
-				for (int jJ = iI + 1; jJ < pReligion->m_Beliefs.GetNumBeliefs(); jJ++)
-				{
-					const BeliefTypes eBelief = pReligion->m_Beliefs.GetBelief(jJ);
-					CvBeliefEntry* pEntry = GC.GetGameBeliefs()->GetEntry((int)eBelief);
-					if (pEntry && pEntry->IsPantheonBelief())
-					{
-						pBelief = eBelief;
-						break;
-					}
-				}
-#ifdef DUEL_GODDESS_STRATEGY_CHANGE
-				if (!(GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF")))
-				{
-					if (pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_STRATEGY", true))
-					{
-						iTempMod++;
-					}
-				}
-#endif
 			}
+#endif
+			pBelief = NO_BELIEF;
+			for (int jJ = iI + 1; jJ < pReligion->m_Beliefs.GetNumBeliefs(); jJ++)
+			{
+				const BeliefTypes eBelief = pReligion->m_Beliefs.GetBelief(jJ);
+				CvBeliefEntry* pEntry = GC.GetGameBeliefs()->GetEntry((int)eBelief);
+				if (pEntry && pEntry->IsPantheonBelief())
+				{
+					pBelief = eBelief;
+					break;
+				}
+			}
+#ifdef DUEL_GODDESS_STRATEGY_CHANGE
+			if (!(GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF")))
+			{
+				if (pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_STRATEGY", true))
+				{
+					iTempMod++;
+				}
+			}
+#endif
 		}
-		return m_iCityAttackRangeModifier + iTempMod;
 	}
+
+	return m_iCityAttackRangeModifier + iTempMod;
 }
 
 
