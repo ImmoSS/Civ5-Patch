@@ -39,6 +39,10 @@ g_DraftSettings = {
 	TournamentMode = PreGame.GetGameOption('GAMEOPTION_TOURNAMENT_MODE'),
 	WorldSize = PreGame.GetWorldSize(),
 }
+
+numBans = PreGame.GetGameOption("GAMEOPTION_TOURNAMENT_MODE") > 0 and 1 or 2;
+minBans = PreGame.GetGameOption("GAMEOPTION_TOURNAMENT_MODE") > 0 and 1 or 0;
+numPicks = 3;
 -- Ingame Civ Drafter END
 
 local g_AdvancedOptionIM = InstanceManager:new( "GameOption", "Text", Controls.AdvancedOptions );
@@ -2523,11 +2527,10 @@ Controls.EmotesScrollPanel:CalculateInternalSize()
 -- INGAME CIV DRAFTER
 -------------------------------------------------
 
-numBans = PreGame.GetGameOption("GAMEOPTION_TOURNAMENT_MODE") > 0 and 1 or 2;
-numPicks = 3
 function RebuildDrafts()
 	print('rebuild drafts')
 	numBans = PreGame.GetGameOption("GAMEOPTION_TOURNAMENT_MODE") > 0 and 1 or 2;
+	minBans = PreGame.GetGameOption("GAMEOPTION_TOURNAMENT_MODE") > 0 and 1 or 0;
 	g_DraftResultInstances = { Bans = {}, BansD = {}, BansT = {}, Picks = {}, PicksD = {}, PicksB = {}, PicksBD = {}, PicksT = {} };
 	g_DraftCivInstances = {};
 	g_BannedCivs = {};
@@ -2535,7 +2538,7 @@ function RebuildDrafts()
 	g_CivEntries = {};
 	for row in DB.Query([[SELECT 
 							Civilizations.ID as CivID,
-	            			Leaders.ID as LeaderID,
+							Leaders.ID as LeaderID,
 							Civilizations.ShortDescription as CivShortDescription,
 							Leaders.Description as LeaderDescription
 							FROM Civilizations, Leaders, Civilization_Leaders
@@ -2657,16 +2660,16 @@ function RebuildDrafts()
 			inst.LeaderIcon:SetColor( {x=50/255, y=50/255, z=50/255, w=1 } )
 			inst.LeaderSubIconFrame:SetColor( {x=1, y=50/255, z=50/255, w=210/255 } )
 			inst.LeaderSubIcon:SetColor( {x=150/255, y=150/255, z=150/255, w=1 } )
-        	local w = math.min( DraftCivEntrySmall_WIDTH, playerEntry.statusInstance.DraftPlayerStatusFrame:GetSizeX() / numBans )
-        	inst.Root:SetSizeX(w)
-        end
+			local w = math.min( DraftCivEntrySmall_WIDTH, playerEntry.statusInstance.DraftPlayerStatusFrame:GetSizeX() / numBans )
+			inst.Root:SetSizeX(w)
+		end
 		for _ = 1, numPicks do
 			local inst = playerEntry.picksIM:GetInstance()
 			table.insert(g_DraftResultInstances.PicksT[i], inst);
 			IconHookup( 22, 64, "LEADER_ATLAS", inst.LeaderIcon );
 			SimpleCivIconHookup(-1, 32, inst.LeaderSubIcon);
-        	local w = math.min( DraftCivEntrySmall_WIDTH, playerEntry.statusInstance.DraftPlayerStatusFrame:GetSizeX() / numPicks )
-        	inst.Root:SetSizeX(w)
+			local w = math.min( DraftCivEntrySmall_WIDTH, playerEntry.statusInstance.DraftPlayerStatusFrame:GetSizeX() / numPicks )
+			inst.Root:SetSizeX(w)
 		end
 		playerEntry.statusInstance.DraftPlayerBansStack:CalculateSize();
 		playerEntry.statusInstance.DraftPlayerBansStack:ReprocessAnchoring();
@@ -2750,9 +2753,29 @@ function PopulateDrafts()
 				local pName = Matchmaking.GetPlayerList()[tonumber(p) + 1].playerName or Locale.Lookup('TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME', tonumber(p) + 1);
 				AddPlayerBans(tonumber(p), pName, ban);
 				if Matchmaking.GetLocalID() == tonumber(p) and not Matchmaking.IsHost() then
-					if not Controls.DraftConfirmBansButton:IsDisabled() then
-						Controls.DraftConfirmBansButton:SetDisabled(true);
-						Controls.DraftConfirmBansButton:EnableToolTip(true);
+					if len(g_SelectedCivs) < minBans or (not Matchmaking.IsHost() and len(g_SelectedCivs) > numBans) then
+						if not Controls.DraftConfirmBansButton:IsDisabled() then
+							Controls.DraftConfirmBansButton:SetDisabled(true);
+						end
+						Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_HELP')
+					elseif not Matchmaking.IsHost() and g_DraftBansTable[Matchmaking.GetLocalID()] ~= nil then
+						if not Controls.DraftConfirmBansButton:IsDisabled() then
+							Controls.DraftConfirmBansButton:SetDisabled(true);
+						end
+						Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_TT2')
+					else
+						Controls.DraftConfirmBansButton:SetDisabled(false);
+						local civtbl = {}
+						for k,v in pairs(g_SelectedCivs) do
+							table.insert(civtbl, GameInfo.Civilizations[k] and Locale.Lookup(GameInfo.Civilizations[k].ShortDescription))
+						end
+						table.sort(civtbl, function(astr,bstr)
+							local a0, b0
+							if astr:match("The ") then a0 = astr:sub(5) else a0 = astr end
+							if bstr:match("The ") then b0 = bstr:sub(5) else b0 = bstr end
+							return a0 < b0
+						end);
+						Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_TT', next(civtbl) and table.concat(civtbl, ', ') or '[ENDCOLOR]{TXT_KEY_MP_NO_PROPOSAL}')
 					end
 				end
 			end
@@ -2898,7 +2921,7 @@ function doCivSelectionHighlight(civId, leaderId, v3,v4,v5, force)
 		end
 	end
 	if g_DraftProgress == 'DRAFT_PROGRESS_BANS' then
-		if len(g_SelectedCivs) > 0 and (Matchmaking.IsHost() or len(g_SelectedCivs) == numBans) then
+		if len(g_SelectedCivs) >= minBans and (Matchmaking.IsHost() or len(g_SelectedCivs) <= numBans) then
 				Controls.DraftConfirmBansButton:SetDisabled(false);
 				Controls.DraftConfirmBansButton:EnableToolTip(false);
 		else
@@ -2944,15 +2967,15 @@ function AddPlayerBans(playerID, playerName, strCivs)
 		playerEntry.bansIM:ResetInstances();
 		playerEntry.bansIMD:ResetInstances();
 	end
+	if g_DraftBansTable[playerID] == nil then
+		g_DraftBansTable[playerID] = {}
+	end
 	for civId in string.gmatch(strCivs, '([^,]+)') do
 		local civ = GameInfo.Civilizations[tonumber(civId)];
 		if civ then
 			civId = tonumber(civId);
 			--print(civ.ShortDescription);
 			doCivBan(civId);
-			if g_DraftBansTable[playerID] == nil then
-				g_DraftBansTable[playerID] = {}
-			end
 			g_DraftBansTable[playerID][civId] = g_BannedCivs[civId]
 			table.insert(bansTbl, Locale.Lookup(civ.ShortDescription))
 			table.insert(banIdsTbl, civId)
@@ -3426,6 +3449,31 @@ function OnGameplayAlertMessage( text )
 		Controls.DraftPlayersStatus:SetHide(true);
 		Controls.DraftCivPicker:SetHide(false);
 		Controls.DraftConfirmBansButton:SetHide(false);
+		if len(g_SelectedCivs) < minBans or (not Matchmaking.IsHost() and len(g_SelectedCivs) > numBans) then
+			if not Controls.DraftConfirmBansButton:IsDisabled() then
+				Controls.DraftConfirmBansButton:SetDisabled(true);
+			end
+			Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_HELP')
+		elseif not Matchmaking.IsHost() and g_DraftBansTable[Matchmaking.GetLocalID()] ~= nil then
+			if not Controls.DraftConfirmBansButton:IsDisabled() then
+				Controls.DraftConfirmBansButton:SetDisabled(true);
+			end
+			Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_TT2')
+		else
+			Controls.DraftConfirmBansButton:SetDisabled(false);
+			local civtbl = {}
+			for k,v in pairs(g_SelectedCivs) do
+				table.insert(civtbl, GameInfo.Civilizations[k] and Locale.Lookup(GameInfo.Civilizations[k].ShortDescription))
+			end
+			table.sort(civtbl, function(astr,bstr)
+				local a0, b0
+				if astr:match("The ") then a0 = astr:sub(5) else a0 = astr end
+				if bstr:match("The ") then b0 = bstr:sub(5) else b0 = bstr end
+				return a0 < b0
+			end);
+			Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_TT', next(civtbl) and table.concat(civtbl, ', ') or '[ENDCOLOR]{TXT_KEY_MP_NO_PROPOSAL}')
+		end
+
 	elseif control == 'DRAFT_PROGRESS_BUSY' then
 		print('--- DRAFT_PROGRESS_BUSY');
 		AddDraftStatus(Locale.Lookup('TXT_KEY_DRAFT_STATUS_PROGRESS_BUSY'));
