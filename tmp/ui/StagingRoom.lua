@@ -2678,8 +2678,10 @@ function RebuildDrafts()
 	end
 	Controls.DraftPlayersStatusStack:CalculateSize();
 	Controls.DraftPlayersStatusScrollPanel:CalculateInternalSize();
-	Controls.DraftConfirmBansButton:SetDisabled(true);
-	Controls.DraftConfirmBansButton:EnableToolTip(true);
+	if not Controls.DraftConfirmBansButton:IsDisabled() then
+		Controls.DraftConfirmBansButton:SetDisabled(true);
+	end
+	Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_HELP')
 end
 
 function ResetDrafts( message )
@@ -2710,8 +2712,8 @@ function PopulateDrafts()
 			Controls.DraftCivPicker:SetHide(true);
 			if not Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(true);
-				Controls.DraftConfirmBansButton:EnableToolTip(true);
 			end
+			Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_HELP')
 		elseif control == 'DRAFT_PROGRESS_INIT' then
 			print('--- DRAFT_PROGRESS_INIT');
 			AddDraftStatus('------------------------------');
@@ -2723,8 +2725,8 @@ function PopulateDrafts()
 			Controls.DraftCivPicker:SetHide(true);
 			if not Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(true);
-				Controls.DraftConfirmBansButton:EnableToolTip(true);
 			end
+			Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_HELP')
 			local p = 0;
 			for bReady in string.gmatch(text, '([^,]+)') do
 				if bReady == '1' then
@@ -2788,8 +2790,8 @@ function PopulateDrafts()
 			Controls.DraftCivPicker:SetHide(false);
 			if not Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(true);
-				Controls.DraftConfirmBansButton:EnableToolTip(true);
 			end
+			Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_HELP')
 			for p, ban in string.gmatch(text, '(.-):(.-);') do
 				print('p', p, 'ban', ban)
 				local pName = Matchmaking.GetPlayerList()[tonumber(p) + 1].playerName or Locale.Lookup('TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME', tonumber(p) + 1);
@@ -2803,8 +2805,8 @@ function PopulateDrafts()
 			Controls.DraftCivPicker:SetHide(true);
 			if not Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(true);
-				Controls.DraftConfirmBansButton:EnableToolTip(true);
 			end
+			Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_HELP')
 			local bans, text = string.match(text, '(.-)|(.*)');
 			for p, ban in string.gmatch(bans, '(.-):(.-);') do
 				print('p', p, 'ban', ban);
@@ -2853,8 +2855,10 @@ Controls.DraftCloseButton:RegisterCallback( Mouse.eLClick, OnDraftsClose )
 
 
 function sendSelectedCivs()
-	Controls.DraftConfirmBansButton:SetDisabled(true);
-	Controls.DraftConfirmBansButton:EnableToolTip(true);
+	if not Controls.DraftConfirmBansButton:IsDisabled() then
+		Controls.DraftConfirmBansButton:SetDisabled(true);
+	end
+	Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_TT2')
 	local list = {};
 	for k,v in pairs(g_SelectedCivs) do
 		table.insert(list, k);
@@ -2923,10 +2927,22 @@ function doCivSelectionHighlight(civId, leaderId, v3,v4,v5, force)
 	if g_DraftProgress == 'DRAFT_PROGRESS_BANS' then
 		if len(g_SelectedCivs) >= minBans and (Matchmaking.IsHost() or len(g_SelectedCivs) <= numBans) then
 				Controls.DraftConfirmBansButton:SetDisabled(false);
-				Controls.DraftConfirmBansButton:EnableToolTip(false);
+				local civtbl = {}
+				for k,v in pairs(g_SelectedCivs) do
+					table.insert(civtbl, GameInfo.Civilizations[k] and Locale.Lookup(GameInfo.Civilizations[k].ShortDescription))
+				end
+				table.sort(civtbl, function(astr,bstr)
+					local a0, b0
+					if astr:match("The ") then a0 = astr:sub(5) else a0 = astr end
+					if bstr:match("The ") then b0 = bstr:sub(5) else b0 = bstr end
+					return a0 < b0
+				end);
+				Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_TT', next(civtbl) and table.concat(civtbl, ', ') or '[ENDCOLOR]{TXT_KEY_MP_NO_PROPOSAL}')
 		else
-			Controls.DraftConfirmBansButton:SetDisabled(true);
-			Controls.DraftConfirmBansButton:EnableToolTip(true);
+			if not Controls.DraftConfirmBansButton:IsDisabled() then
+				Controls.DraftConfirmBansButton:SetDisabled(true);
+			end
+			Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_HELP')
 		end
 		if len(g_DraftBansTable[Matchmaking.GetLocalID()] or {}) == 0 then
 			Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BANS', numBans, len(g_SelectedCivs));
@@ -3062,7 +3078,7 @@ function AddPlayerBans(playerID, playerName, strCivs)
 	playerEntry.statusInstance.DraftPlayerBansDummy:CalculateSize();
 	playerEntry.statusInstance.DraftPlayerBansDummy:ReprocessAnchoring();
 
-	local s = Locale.Lookup('TXT_KEY_DRAFT_STATUS_PLAYER_BAN', playerName, table.concat(bansTbl, ', '));
+	local s = Locale.Lookup('TXT_KEY_DRAFT_STATUS_PLAYER_BAN', playerName, next(bansTbl) and table.concat(bansTbl, ', ') or '[ENDCOLOR]{TXT_KEY_MP_NO_PROPOSAL}');
 	AddDraftStatus(s);
 end
 
@@ -3284,7 +3300,7 @@ function AssignDraftedCivs( civsArr )
 		playerEntry.statusInstance.DraftPlayerPicksBigDummy:CalculateSize();
 		playerEntry.statusInstance.DraftPlayerPicksBigDummy:ReprocessAnchoring();
 
-		local s = Locale.Lookup('TXT_KEY_DRAFT_STATUS_PLAYER_PICK', Matchmaking.GetPlayerList()[playerID + 1].playerName, table.concat(civs, ', '));
+		local s = Locale.Lookup('TXT_KEY_DRAFT_STATUS_PLAYER_PICK', Matchmaking.GetPlayerList()[playerID + 1].playerName, next(civs) and table.concat(civs, ', ') or '[ENDCOLOR]{TXT_KEY_MP_NO_PROPOSAL}');
 		AddDraftStatus(s);
 	end
 end
@@ -3308,7 +3324,7 @@ end
 
 function UpdateDraftCivButtons()
 	for id, inst in next, g_DraftCivInstances do
-		if g_DraftProgress == 'DRAFT_PROGRESS_BANS' and (Matchmaking.IsHost() or len(g_DraftBansTable[Matchmaking.GetLocalID()] or {}) == 0) then
+		if g_DraftProgress == 'DRAFT_PROGRESS_BANS' and (Matchmaking.IsHost() or g_DraftBansTable[Matchmaking.GetLocalID()] == nil) then
 			if g_BannedCivs[id] then
 				inst.DraftCivEntryButton:SetDisabled(true);
 			else
@@ -3318,10 +3334,12 @@ function UpdateDraftCivButtons()
 			inst.DraftCivEntryButton:SetDisabled(true);
 		end
 
-		if g_SelectedCivs[id] or g_BannedCivs[id] or (not Matchmaking.IsHost() and len(g_DraftBansTable[Matchmaking.GetLocalID()] or {}) > 0) then
+		if g_SelectedCivs[id] or g_BannedCivs[id] or (not Matchmaking.IsHost() and g_DraftBansTable[Matchmaking.GetLocalID()] ~= nil) then
 			inst.HoverAnim:SetHide(true);
+			inst.SubHoverAnim:SetHide(true);
 		else
 			inst.HoverAnim:SetHide(false);
+			inst.SubHoverAnim:SetHide(false);
 		end
 	end
 end
@@ -3398,8 +3416,8 @@ function OnGameplayAlertMessage( text )
 			end
 			if not Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(true);
-				Controls.DraftConfirmBansButton:EnableToolTip(true);
 			end
+			Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_TT2')
 		end
 	elseif control == 'ban-failure' then
 		local playerID = tonumber(text) or -1;
@@ -3408,7 +3426,17 @@ function OnGameplayAlertMessage( text )
 			AddDraftStatus('--- ban again');
 			if Controls.DraftConfirmBansButton:IsDisabled() then
 				Controls.DraftConfirmBansButton:SetDisabled(false);
-				Controls.DraftConfirmBansButton:EnableToolTip(false);
+				local civtbl = {}
+				for k,v in pairs(g_SelectedCivs) do
+					table.insert(civtbl, GameInfo.Civilizations[k] and Locale.Lookup(GameInfo.Civilizations[k].ShortDescription))
+				end
+				table.sort(civtbl, function(astr,bstr)
+					local a0, b0
+					if astr:match("The ") then a0 = astr:sub(5) else a0 = astr end
+					if bstr:match("The ") then b0 = bstr:sub(5) else b0 = bstr end
+					return a0 < b0
+				end);
+				Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_TT', next(civtbl) and table.concat(civtbl, ', ') or '[ENDCOLOR]{TXT_KEY_MP_NO_PROPOSAL}')
 			end
 		end
 	elseif control == 'ready' then
@@ -3481,8 +3509,8 @@ function OnGameplayAlertMessage( text )
 		Controls.DraftProgressBar:LocalizeAndSetText('TXT_KEY_DRAFT_PROGRESS_BUSY');
 		if not Controls.DraftConfirmBansButton:IsDisabled() then
 			Controls.DraftConfirmBansButton:SetDisabled(true);
-			Controls.DraftConfirmBansButton:EnableToolTip(true);
 		end
+		Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_HELP')
 		print('send local secret', text)
 		Network.SendRenameCity(-3, text);  -- send secret
 	elseif control == 'DRAFT_PROGRESS_OVER' then
