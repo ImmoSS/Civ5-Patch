@@ -2420,11 +2420,11 @@ function AdjustScreenSize()
     Controls.DraftCivPicker:SetSizeX( width - 56 )
     Controls.DraftCivPickerFrame:SetSizeY( screenYcap - TOP_COMPENSATION - 330 )
     Controls.DraftCivPickerFrame:SetSizeX( width - 52 )
-    Controls.DraftCivScrollPanel:SetSizeY( screenYcap - TOP_COMPENSATION - 350 )
+    Controls.DraftCivScrollPanel:SetSizeY( screenYcap - TOP_COMPENSATION - 336 )
     Controls.DraftCivScrollPanel:SetSizeX( width - 52 )
     Controls.DraftCivStack:SetWrapWidth( width - 52 )
     Controls.DraftCivScrollPanel:CalculateInternalSize();
-    Controls.DraftCivScrollBar:SetSizeY(screenYcap - TOP_COMPENSATION - 386)
+    Controls.DraftCivScrollBar:SetSizeY(screenYcap - TOP_COMPENSATION - 381)
 	Controls.DraftCivScrollPanel:SetScrollValue( 0 );
     Controls.DraftPlayersStatus:SetSizeY( screenYcap - TOP_COMPENSATION - 334 )
     Controls.DraftPlayersStatus:SetSizeX( width - 56 )
