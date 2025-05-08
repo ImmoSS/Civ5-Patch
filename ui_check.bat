@@ -78,6 +78,8 @@ copy /y "%patchfolder%\tmp\ui\GameSetupScreen.lua" "%patchfolder%\UI\GameSetupSc
 copy /y "%patchfolder%\tmp\ui\LoadScreen.xml" "%patchfolder%\UI\LoadScreen.xml" > nul
 copy /y "%patchfolder%\tmp\ui\LoadScreen.lua" "%patchfolder%\UI\LoadScreen.lua" > nul
 copy /y "%patchfolder%\tmp\ui\FrontEnd.lua" "%patchfolder%\UI\FrontEnd.lua" > nul
+copy /y "%patchfolder%\tmp\ui\YieldIconManager.xml" "%patchfolder%\UI\YieldIconManager.xml" > nul
+copy /y "%patchfolder%\tmp\ui\YieldIconManager.lua" "%patchfolder%\UI\YieldIconManager.lua" > nul
 
 REM -------------------------------------------------
 set text="-- destroy: check fix for need to update plot & cargo & airbase"
@@ -253,13 +255,6 @@ IF EXIST "UI_bc1\CityView\CityView_small.xml" (
   copy /y "%patchfolder%\tmp\eui\CityView_small.xml" "%patchfolder%\UI\CityView_small.xml" > nul
 ) ELSE (
   copy /y "%patchfolder%\tmp\ui\CityView_small.xml" "%patchfolder%\UI\CityView_small.xml" > nul
-)
-
-REM -------------------------------------------------
-IF EXIST "UI_bc1\Improvements\YieldIconManager.lua" (
-  copy /y "%patchfolder%\tmp\eui\YieldIconManager.lua" "%patchfolder%\UI\YieldIconManager.lua" > nul
-) ELSE (
-  copy /y "%patchfolder%\tmp\ui\YieldIconManager.lua" "%patchfolder%\UI\YieldIconManager.lua" > nul
 )
 
 EXIT
