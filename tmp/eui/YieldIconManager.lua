@@ -4,6 +4,9 @@
 -- fix quantity erratic display & make code much more efficient
 -- add compatibility with "DLL - Various Mod Components" v63
 -------------------------------------------------
+-- edit:
+--     Enhanced Observer Mode
+-- for EUI
 
 -- Minor optimizations
 local pairs = pairs
@@ -172,6 +175,16 @@ function( x, y )
 				g_ActiveAnchors[ index ] = nil
 			end
 		end
+	-- Enhanced Observer Mode START
+	elseif plot then
+		local index = plot:GetPlotIndex()
+		local anchor = g_ActiveAnchors[ index ]
+		if anchor then
+			-- just hide it
+			anchor.Anchor:ChangeParent( Controls_Scrap )
+			anchor.IsVisible = false
+		end
+	-- Enhanced Observer Mode END
 	end
 end)
 

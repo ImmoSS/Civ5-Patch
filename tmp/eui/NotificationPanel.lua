@@ -10,6 +10,7 @@
 --     Diplomacy stack left/right switch option
 --     FIX Events.NotificationRemoved missing PlayerID argument
 --     FIX stacked tech notifications
+--     Enhanced Observer Mode
 -- for EUI
 -------------------------------------------------
 include( "EUI_tooltips" )
@@ -479,19 +480,18 @@ local function SetupNotification( instance, sequence, Id, type, toolTip, strSumm
 
 			if type == NotificationTypes.NOTIFICATION_MP_IRR_PROPOSAL then
 				instance.StatusFrame:SetText('[ICON_TEAM_1]')
-				instance.SmallCivFrame:SetHide(false);
 			elseif type == NotificationTypes.NOTIFICATION_MP_CC_PROPOSAL then
 				instance.StatusFrame:SetText('[ICON_TROPHY_GOLD]')
-				instance.SmallCivFrame:SetHide(true);
 			elseif type == NotificationTypes.NOTIFICATION_MP_SCRAP_PROPOSAL then
 				instance.StatusFrame:SetText('[ICON_FLOWER]')
-				instance.SmallCivFrame:SetHide(true);
 			end
 			-- debug only
 			--instance.StatusFrame:SetText(Id .. '|' .. Game.GetProposalIDbyUIid(Id) .. '/' .. Game.GetLastProposalID())
 
 			LuaEvents.OnProposalCreated()
-			return CivIconHookup( playerID, 45, instance.CivIcon, instance.CivIconBG, instance.CivIconShadow, false, true );
+			if type == NotificationTypes.NOTIFICATION_MP_IRR_PROPOSAL then
+				return CivIconHookup( playerID, 45, instance.CivIcon, instance.CivIconBG, instance.CivIconShadow, false, true );
+			end
 		
 		elseif type == NotificationTypes.NOTIFICATION_MP_REMAP_PROPOSAL then
 			instance.StatusFrame:SetText('[ICON_FLOWER]')
@@ -1230,15 +1230,40 @@ local g_civListInstanceCallBacks = {-- the callback function table names need to
 		[Mouse.eRClick] = function( playerID )
 			local player = Players[ playerID ]
 			if player then
-				if player:IsMinorCiv() then
-					local city = player:GetCapitalCity()
-					local plot = city and city:Plot()
-					if plot and not g_leaderMode then
-						UI.LookAt(plot, 0)
+				-- Enhanced Observer Mode START
+				if Players[Game.GetActivePlayer()]:IsObserver() then
+					local cteam = player:GetTeam()
+					local ateam = Game.GetActiveTeam()
+					for k,v in next, Teams do
+						if v:GetID() ~= cteam then
+							Teams[ateam]:SetTeamObserverVisibility(v:GetID(), false)
+						end
+					end
+					if not Teams[ateam]:IsTeamObserverVisibility(cteam) then
+						Teams[ateam]:SetTeamObserverVisibility(cteam, true)
+					end
+					for i = 0, Map.GetNumPlots() - 1, 1 do
+						local plot = Map.GetPlotByIndex(i);
+						if plot:IsRevealed(ateam, false) then
+							Events.HexYieldMightHaveChanged(plot:GetX(), plot:GetY(), true)
+						else
+							Events.HexYieldMightHaveChanged(plot:GetX(), plot:GetY(), false)
+						end
 					end
 				else
-					Events.SearchForPediaEntry( player:GetCivilizationShortDescription() )
+				-- Enhanced Observer Mode END
+					if player:IsMinorCiv() then
+						local city = player:GetCapitalCity()
+						local plot = city and city:Plot()
+						if plot and not g_leaderMode then
+							UI.LookAt(plot, 0)
+						end
+					else
+						Events.SearchForPediaEntry( player:GetCivilizationShortDescription() )
+					end
+				-- Enhanced Observer Mode START
 				end
+				-- Enhanced Observer Mode END
 			end
 		end;
 		[Mouse.eMouseEnter] = nil;
