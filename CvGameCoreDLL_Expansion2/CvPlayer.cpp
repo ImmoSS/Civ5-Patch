@@ -2915,7 +2915,6 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 					int iNumBuildings = 0;
 					int iNumSuppYields;
 					int iNumYileds;
-					int iNewNumYileds;
 					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 					{
 						iNumBuildings += pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding);
@@ -3690,7 +3689,6 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 					int iNumBuildings = 0;
 					int iNumSuppYields;
 					int iNumYileds;
-					int iNewNumYileds;
 					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 					{
 						iNumBuildings += pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding);
@@ -23015,7 +23013,6 @@ void CvPlayer::deleteCity(int iID)
 					int iNumBuildings = 0;
 					int iNumSuppYields;
 					int iNumYileds;
-					int iNewNumYileds;
 					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 					{
 						iNumBuildings += pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding);
@@ -23059,7 +23056,6 @@ void CvPlayer::deleteCity(int iID)
 					int iNumBuildings = 0;
 					int iNumSuppYields;
 					int iNumYileds;
-					int iNewNumYileds;
 					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 					{
 						iNumBuildings += pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding);
