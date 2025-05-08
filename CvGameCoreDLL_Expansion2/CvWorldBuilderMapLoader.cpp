@@ -1246,6 +1246,13 @@ bool CvWorldBuilderMapLoader::InitMap()
 		{
 			if(sg_kSave.GetVisibility(iPlotX, iPlotY, uiTeam))
 				pkPlot->setRevealed((TeamTypes)uiTeam, true);
+#ifdef ENHANCED_OBSERVER_MODE
+			if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility((TeamTypes)uiTeam))
+			{
+				if (sg_kSave.GetVisibility(iPlotX, iPlotY, uiTeam))
+					pkPlot->setRevealed(OBSERVER_TEAM, true);
+			}
+#endif
 		}
 	}
 

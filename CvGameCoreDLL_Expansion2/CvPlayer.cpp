@@ -3508,6 +3508,12 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 	}
 
 	pCityPlot->setRevealed(GET_PLAYER(eOldOwner).getTeam(), true);
+#ifdef ENHANCED_OBSERVER_MODE
+	if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(GET_PLAYER(eOldOwner).getTeam()))
+	{
+		pCityPlot->setRevealed(OBSERVER_TEAM, true);
+	}
+#endif
 
 	// If the old owner is "killed," then notify everyone's Grand Strategy AI
 	if(GET_PLAYER(eOldOwner).getNumCities() == 0 && !GET_PLAYER(eOldOwner).GetPlayerTraits()->IsStaysAliveZeroCities() && !bIsMinorCivBuyout)
@@ -7563,6 +7569,13 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 							pNearbyBarbarianPlot->setRevealed(getTeam(), true);
 							// Reveal Barb Camp here
 							pNearbyBarbarianPlot->setRevealedImprovementType(getTeam(), pNearbyBarbarianPlot->getImprovementType());
+#ifdef ENHANCED_OBSERVER_MODE
+							if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(getTeam()))
+							{
+								pNearbyBarbarianPlot->setRevealed(OBSERVER_TEAM, true);
+								pNearbyBarbarianPlot->setRevealedImprovementType(OBSERVER_TEAM, pNearbyBarbarianPlot->getImprovementType());
+							}
+#endif
 						}
 					}
 				}
@@ -7633,6 +7646,12 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 						if(GC.getGame().getJonRandNum(100, "Goody Map") < kGoodyInfo.getMapProb())
 						{
 							pLoopPlot->setRevealed(getTeam(), true);
+#ifdef ENHANCED_OBSERVER_MODE
+							if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(getTeam()))
+							{
+								pLoopPlot->setRevealed(OBSERVER_TEAM, true);
+							}
+#endif
 						}
 					}
 				}
@@ -7727,6 +7746,13 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 			{
 				pBestResourcePlot->setRevealed(getTeam(), true);
 				pBestResourcePlot->SetResourceForceReveal(getTeam(), true);
+#ifdef ENHANCED_OBSERVER_MODE
+				if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(getTeam()))
+				{
+					pBestResourcePlot->setRevealed(OBSERVER_TEAM, true);
+					pBestResourcePlot->SetResourceForceReveal(OBSERVER_TEAM, true);
+				}
+#endif
 				//pBestPlot->updateFog();
 
 				if(getTeam() == GC.getGame().getActiveTeam())
@@ -7743,6 +7769,12 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 					if(pAdjacentPlot != NULL)
 					{
 						pAdjacentPlot->setRevealed(getTeam(), true);
+#ifdef ENHANCED_OBSERVER_MODE
+						if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(getTeam()))
+						{
+							pAdjacentPlot->setRevealed(OBSERVER_TEAM, true);
+						}
+#endif
 					}
 				}
 
@@ -24237,6 +24269,12 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 			if(getAdvancedStartPoints() >= iCost)
 			{
 				pPlot->setRevealed(getTeam(), true, true);
+#ifdef ENHANCED_OBSERVER_MODE
+				if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(getTeam()))
+				{
+					pPlot->setRevealed(OBSERVER_TEAM, true, true);
+				}
+#endif
 				changeAdvancedStartPoints(-iCost);
 			}
 		}
@@ -24245,6 +24283,12 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 		else
 		{
 			pPlot->setRevealed(getTeam(), false, true);
+#ifdef ENHANCED_OBSERVER_MODE
+			if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(getTeam()))
+			{
+				pPlot->setRevealed(OBSERVER_TEAM, false, true);
+			}
+#endif
 			changeAdvancedStartPoints(iCost);
 		}
 	}

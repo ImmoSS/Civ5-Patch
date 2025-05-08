@@ -544,8 +544,8 @@ bool CvGame::InitMap(CvGameInitialItemsOverrides& kGameInitialItemsOverrides)
 					CvPlot* pLoopPlot = GC.getMap().plotByIndexUnchecked(plotID);
 
 #ifdef AUI_PLOT_OBSERVER_SEE_ALL_PLOTS
-					pLoopPlot->setRevealed(OBSERVER_TEAM, true, false);
-					pLoopPlot->changeVisibilityCount(OBSERVER_TEAM, pLoopPlot->getVisibilityCount(OBSERVER_TEAM) + 1, NO_INVISIBLE, true, true);
+					// pLoopPlot->setRevealed(OBSERVER_TEAM, true, false);
+					// pLoopPlot->changeVisibilityCount(OBSERVER_TEAM, pLoopPlot->getVisibilityCount(OBSERVER_TEAM) + 1, NO_INVISIBLE, true, true);
 #else
 					pLoopPlot->changeVisibilityCount(eTeam, pLoopPlot->getVisibilityCount(eTeam) + 1, NO_INVISIBLE, true, false);
 
@@ -561,6 +561,16 @@ bool CvGame::InitMap(CvGameInitialItemsOverrides& kGameInitialItemsOverrides)
 				for (int iJ = 0; iJ < MAX_TEAMS; iJ++)
 				{
 					GET_TEAM(OBSERVER_TEAM).makeHasMet(static_cast<TeamTypes>(iJ), true, true);
+				}
+#endif
+#ifdef ENHANCED_OBSERVER_MODE
+				for (int iJ = 0; iJ < MAX_TEAMS; iJ++)
+				{
+					TeamTypes eLoopTeam = (TeamTypes)iJ;
+					if (eLoopTeam != OBSERVER_TEAM && eLoopTeam != BARBARIAN_TEAM && GET_TEAM(eLoopTeam).isAlive() && !GET_TEAM(eLoopTeam).isMinorCiv())
+					{
+						GET_TEAM(OBSERVER_TEAM).SetTeamObserverVisibility(eLoopTeam, true);
+					}
 				}
 #endif
 #ifndef AUI_PLOT_OBSERVER_SEE_ALL_PLOTS
@@ -10449,6 +10459,7 @@ void CvGame::Read(FDataStream& kStream)
 			message.read(kStream, uiReplayMessageVersion);
 			m_listReplayMessages.push_back(message);
 		}
+
 #ifdef REPLAY_EVENTS
 		clearReplayEventMap();
 
@@ -10707,6 +10718,7 @@ void CvGame::Write(FDataStream& kStream) const
 	{
 		(*it).write(kStream);
 	}
+
 #ifdef REPLAY_EVENTS
 	const int iSize2 = m_listReplayEvents.size();
 	kStream << CvReplayEvent::Version();

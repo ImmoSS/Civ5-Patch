@@ -421,6 +421,12 @@ public:
 	virtual void Read(FDataStream& kStream);
 	virtual void Write(FDataStream& kStream) const;
 
+#ifdef ENHANCED_OBSERVER_MODE
+	bool IsTeamObserverVisibility(TeamTypes eTeam) const;
+	void SetTeamObserverVisibility(TeamTypes eTeam, bool bValue);
+	void UpdateObserverVisibility();
+#endif
+
 protected:
 
 	TeamTypes m_eID;
@@ -562,6 +568,10 @@ protected:
 	void DoNowAtWarOrPeace(TeamTypes eTeam, bool bWar);
 	void DoDeclareWar(TeamTypes eTeam, bool bDefensivePact, bool bMinorAllyPact = false);
 	void DoMakePeace(TeamTypes eTeam, bool bBumpUnits, bool bSuppressNotification = false);
+
+#ifdef ENHANCED_OBSERVER_MODE
+	bool* m_abTeamObserverVisibility;
+#endif
 };
 
 // helper for accessing static functions

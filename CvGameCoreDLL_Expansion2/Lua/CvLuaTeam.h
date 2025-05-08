@@ -212,6 +212,11 @@ protected:
 	static int lSetCurrentEra(lua_State* L);
 
 	static int lUpdateEmbarkGraphics(lua_State* L);
+
+#ifdef ENHANCED_OBSERVER_MODE
+	static int lIsTeamObserverVisibility(lua_State* L);
+	static int lSetTeamObserverVisibility(lua_State* L);
+#endif
 };
 
 #endif //CVLUATEAM_H

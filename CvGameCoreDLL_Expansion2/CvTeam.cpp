@@ -82,6 +82,10 @@ CvTeam::CvTeam()
 	m_ppaaiImprovementNoFreshWaterYieldChange = NULL;
 	m_ppaaiImprovementFreshWaterYieldChange = NULL;
 
+#ifdef ENHANCED_OBSERVER_MODE
+	m_abTeamObserverVisibility = NULL;
+#endif
+
 	reset((TeamTypes)0, true);
 }
 
@@ -222,6 +226,10 @@ void CvTeam::uninit()
 	}
 
 	m_eID = NO_TEAM;
+
+#ifdef ENHANCED_OBSERVER_MODE
+	m_abTeamObserverVisibility = NULL;
+#endif
 }
 
 
@@ -345,6 +353,14 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 		m_pTeamTechs->Init(GC.GetGameTechs(), this);
 		m_pavProjectArtTypes = FNEW(std::vector<int> [GC.getNumProjectInfos()], c_eCiv5GameplayDLL, 0);
 		m_aeRevealedResources.clear();
+
+#ifdef ENHANCED_OBSERVER_MODE
+		m_abTeamObserverVisibility = FNEW(bool[REALLY_MAX_TEAMS], c_eCiv5GameplayDLL, 0);
+		for (int i = 0; i < REALLY_MAX_TEAMS; i++)
+		{
+			m_abTeamObserverVisibility[i] = false;
+		}
+#endif
 	}
 }
 
@@ -543,6 +559,12 @@ void CvTeam::addTeam(TeamTypes eTeam)
 		if(pLoopPlot->isRevealed(eTeam))
 		{
 			pLoopPlot->setRevealed(GetID(), true, false, eTeam);
+#ifdef ENHANCED_OBSERVER_MODE
+			if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(GetID()))
+			{
+				pLoopPlot->setRevealed(OBSERVER_TEAM, true, false, eTeam);
+			}
+#endif
 		}
 	}
 
@@ -3631,6 +3653,12 @@ void CvTeam::makeHasMet(TeamTypes eIndex, bool bSuppressMessages)
 				if(pCapPlot)
 				{
 					pCapPlot->setRevealed(GetID(), true);
+#ifdef ENHANCED_OBSERVER_MODE
+					if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(GetID()))
+					{
+						pCapPlot->setRevealed(OBSERVER_TEAM, true);
+					}
+#endif
 					GC.getMap().updateDeferredFog();
 				}
 			}
@@ -3962,6 +3990,12 @@ void CvTeam::SetHasEmbassyAtTeam(TeamTypes eIndex, bool bNewValue)
 								}
 
 								pLoopPlot->setRevealed(GetID(), true);
+#ifdef ENHANCED_OBSERVER_MODE
+								if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(GetID()))
+								{
+									pLoopPlot->setRevealed(OBSERVER_TEAM, true);
+								}
+#endif
 							}
 						}
 						bRevealPlots = true;
@@ -7432,6 +7466,11 @@ void CvTeam::Read(FDataStream& kStream)
 
 	CvInfosSerializationHelper::ReadHashedTypeArray(kStream, m_aeRevealedResources);
 
+#ifdef ENHANCED_OBSERVER_MODE
+	for (uint i = 0; i < REALLY_MAX_TEAMS; i++)
+		kStream >> m_abTeamObserverVisibility[i];
+#endif
+
 	// Fix bad 'at war' flags where we are at war with ourselves.  Not a good thing.
 	if(m_eID >= 0 && m_eID < MAX_TEAMS)
 	{
@@ -7565,6 +7604,11 @@ void CvTeam::Write(FDataStream& kStream) const
 	ImprovementArrayHelpers::WriteYieldArray(kStream, m_ppaaiImprovementFreshWaterYieldChange, iNumImprovements);
 
 	CvInfosSerializationHelper::WriteHashedTypeArray(kStream, m_aeRevealedResources);
+
+#ifdef ENHANCED_OBSERVER_MODE
+	for (uint i = 0; i < REALLY_MAX_TEAMS; i++)
+		kStream << m_abTeamObserverVisibility[i];
+#endif
 }
 
 // CACHE: cache frequently used values
@@ -7593,3 +7637,115 @@ void CvTeam::AddNotification(NotificationTypes eNotificationType, const char* st
 		loopPlayer.GetNotifications()->Add(eNotificationType, strMessage, strSummary, iX, iY, iGameDataIndex, iExtraGameData);
 	}
 }
+
+#ifdef ENHANCED_OBSERVER_MODE
+//	--------------------------------------------------------------------------------
+bool CvTeam::IsTeamObserverVisibility(TeamTypes eTeam) const
+{
+	return m_abTeamObserverVisibility[eTeam];
+}
+
+//	--------------------------------------------------------------------------------
+void CvTeam::SetTeamObserverVisibility(TeamTypes eTeam, bool bValue)
+{
+	CvAssertMsg(eTeam >= 0, "eTeam is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eTeam < MAX_TEAMS, "eTeam is expected to be within maximum bounds (invalid Index)");
+	if (m_abTeamObserverVisibility[eTeam] != bValue)
+	{
+		if (!bValue)
+		{
+			// GC.GetEngineUserInterface()->toggleYieldVisibleMode();
+			for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
+			{
+				CvPlot* pLoopPlot = GC.getMap().plotByIndexUnchecked(iI);
+
+				int iVisibilityCount = pLoopPlot->getVisibilityCount(eTeam);
+				pLoopPlot->changeVisibilityCount(OBSERVER_TEAM, -iVisibilityCount, NO_INVISIBLE, true, true);
+
+				bool bIsRevealed = false;
+				for (int iLoopTeam = 0; iLoopTeam < MAX_TEAMS; iLoopTeam++)
+				{
+					if (iLoopTeam != OBSERVER_TEAM && iLoopTeam != BARBARIAN_TEAM)
+					{
+						TeamTypes eLoopTeam = (TeamTypes)iLoopTeam;
+						if (eTeam != eLoopTeam && IsTeamObserverVisibility(eLoopTeam))
+						{
+							if (pLoopPlot->isRevealed(eLoopTeam))
+							{
+								bIsRevealed = pLoopPlot->isRevealed(eLoopTeam);
+							}
+						}
+					}
+				}
+				pLoopPlot->setRevealed(OBSERVER_TEAM, bIsRevealed);
+
+				pLoopPlot->updateRevealedOwner(OBSERVER_TEAM);
+				pLoopPlot->updateSymbols();
+				pLoopPlot->setLayoutDirty(true);
+			}
+			// GC.GetEngineUserInterface()->toggleYieldVisibleMode();
+		}
+		else
+		{
+			for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
+			{
+				CvPlot* pLoopPlot = GC.getMap().plotByIndexUnchecked(iI);
+
+				for (int jJ = 0; jJ < NUM_INVISIBLE_TYPES; jJ++)
+				{
+					int iVisibilityCount = pLoopPlot->getVisibilityCount(eTeam);
+					pLoopPlot->changeVisibilityCount(OBSERVER_TEAM, iVisibilityCount, (InvisibleTypes)jJ, true, false);
+				}
+
+				if (pLoopPlot->isRevealed(eTeam))
+				{
+					pLoopPlot->setRevealed(OBSERVER_TEAM, true);
+				}
+
+				pLoopPlot->updateRevealedOwner(OBSERVER_TEAM);
+				pLoopPlot->updateSymbols();
+				pLoopPlot->setLayoutDirty(true);
+			}
+		}
+
+		m_abTeamObserverVisibility[eTeam] = bValue;
+	}
+}
+
+void CvTeam::UpdateObserverVisibility()
+{
+	GC.getMap().setRevealedPlots(OBSERVER_TEAM, false);
+	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
+	{
+		CvPlot* pLoopPlot = GC.getMap().plotByIndexUnchecked(iI);
+
+		int iVisibilityCount = pLoopPlot->getVisibilityCount(OBSERVER_TEAM);
+		pLoopPlot->changeVisibilityCount(OBSERVER_TEAM, -iVisibilityCount, NO_INVISIBLE, true, true);
+
+		bool bIsRevealed = false;
+		for (int iLoopTeam = 0; iLoopTeam < MAX_TEAMS; iLoopTeam++)
+		{
+			if (iLoopTeam != OBSERVER_TEAM && iLoopTeam != BARBARIAN_TEAM)
+			{
+				TeamTypes eLoopTeam = (TeamTypes)iLoopTeam;
+				if (IsTeamObserverVisibility(eLoopTeam))
+				{
+					if (pLoopPlot->isRevealed(eLoopTeam))
+					{
+						bIsRevealed = pLoopPlot->isRevealed(eLoopTeam);
+					}
+
+					for (int jJ = 0; jJ < NUM_INVISIBLE_TYPES; jJ++)
+					{
+						iVisibilityCount = pLoopPlot->getVisibilityCount(eLoopTeam);
+						pLoopPlot->changeVisibilityCount(OBSERVER_TEAM, iVisibilityCount, (InvisibleTypes)jJ, true, false);
+					}
+				}
+			}
+		}
+		pLoopPlot->setRevealed(OBSERVER_TEAM, bIsRevealed);
+
+		pLoopPlot->updateRevealedOwner(OBSERVER_TEAM);
+	}
+}
+#endif

@@ -874,6 +874,13 @@ void CvMinorCivQuest::DoStartQuest(int iStartTurn)
 
 		pPlot->setRevealed(pAssignedPlayer->getTeam(), true);
 		pPlot->setRevealedImprovementType(pAssignedPlayer->getTeam(), pPlot->getImprovementType());
+#ifdef ENHANCED_OBSERVER_MODE
+		if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(pAssignedPlayer->getTeam()))
+		{
+			pPlot->setRevealed(OBSERVER_TEAM, true);
+			pPlot->setRevealedImprovementType(OBSERVER_TEAM, pPlot->getImprovementType());
+		}
+#endif
 
 		strMessage = Localization::Lookup("TXT_KEY_NOTIFICATION_QUEST_KILL_CAMP");
 		strSummary = Localization::Lookup("TXT_KEY_NOTIFICATION_SUMMARY_QUEST_KILL_CAMP");
@@ -1210,6 +1217,13 @@ void CvMinorCivQuest::DoStartQuestUsingExistingData(CvMinorCivQuest* pExistingQu
 
 		pPlot->setRevealed(pAssignedPlayer->getTeam(), true);
 		pPlot->setRevealedImprovementType(pAssignedPlayer->getTeam(), pPlot->getImprovementType());
+#ifdef ENHANCED_OBSERVER_MODE
+		if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(pAssignedPlayer->getTeam()))
+		{
+			pPlot->setRevealed(OBSERVER_TEAM, true);
+			pPlot->setRevealedImprovementType(OBSERVER_TEAM, pPlot->getImprovementType());
+		}
+#endif
 
 		strMessage = Localization::Lookup("TXT_KEY_NOTIFICATION_QUEST_KILL_CAMP");
 		strSummary = Localization::Lookup("TXT_KEY_NOTIFICATION_SUMMARY_QUEST_KILL_CAMP");

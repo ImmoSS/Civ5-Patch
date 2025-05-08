@@ -206,6 +206,11 @@ void CvLuaTeam::PushMethods(lua_State* L, int t)
 	Method(SetCurrentEra);
 
 	Method(UpdateEmbarkGraphics);
+
+#ifdef ENHANCED_OBSERVER_MODE
+	Method(IsTeamObserverVisibility);
+	Method(SetTeamObserverVisibility);
+#endif
 }
 //------------------------------------------------------------------------------
 const char* CvLuaTeam::GetTypeName()
@@ -1251,3 +1256,18 @@ int CvLuaTeam::lUpdateEmbarkGraphics(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvTeam::UpdateEmbarkGraphics);
 }
+
+#ifdef ENHANCED_OBSERVER_MODE
+//------------------------------------------------------------------------------
+//bool IsTeamObserverVisibility();
+int CvLuaTeam::lIsTeamObserverVisibility(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvTeam::IsTeamObserverVisibility);
+}
+//------------------------------------------------------------------------------
+//void SetTeamObserverVisibility();
+int CvLuaTeam::lSetTeamObserverVisibility(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvTeam::SetTeamObserverVisibility);
+}
+#endif

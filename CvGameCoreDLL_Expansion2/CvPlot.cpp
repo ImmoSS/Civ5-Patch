@@ -1517,6 +1517,12 @@ void CvPlot::changeSeeFromSight(TeamTypes eTeam, DirectionTypes eDirection, int 
 			if((iFromLevel > iThroughLevel) || (pPlot->seeFromLevel(eTeam) > iFromLevel))
 			{
 				pPlot->changeVisibilityCount(eTeam, ((bIncrement) ? 1 : -1), eSeeInvisible, true, false);
+#ifdef ENHANCED_OBSERVER_MODE
+				if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+				{
+					pPlot->changeVisibilityCount(OBSERVER_TEAM, ((bIncrement) ? 1 : -1), eSeeInvisible, true, false);
+				}
+#endif
 			}
 		}
 	}
@@ -1550,6 +1556,13 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, I
 				{
 					pPlotToCheck->changeVisibilityCount(eTeam, 1, eSeeInvisible, false /*bInformExplorationTracking*/, false);
 					pPlotToCheck->changeVisibilityCount(eTeam, -1, eSeeInvisible, false /*bInformExplorationTracking*/, false);
+#ifdef ENHANCED_OBSERVER_MODE
+					if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+					{
+						pPlotToCheck->changeVisibilityCount(OBSERVER_TEAM, 1, eSeeInvisible, false /*bInformExplorationTracking*/, false);
+						pPlotToCheck->changeVisibilityCount(OBSERVER_TEAM, -1, eSeeInvisible, false /*bInformExplorationTracking*/, false);
+					}
+#endif
 				}
 			}
 
@@ -1670,6 +1683,12 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, I
 							if(iSecondInwardLevel < iThisPlotLevel || ((iCenterLevel >= iSecondInwardLevel) && (thisRing < iRangeWithOneExtraRing)))
 							{								
 								pPlotToCheck->changeVisibilityCount(eTeam, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2)?true:false);
+#ifdef ENHANCED_OBSERVER_MODE
+								if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+								{
+									pPlotToCheck->changeVisibilityCount(OBSERVER_TEAM, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2) ? true : false);
+								}
+#endif
 							}
 						}
 						else if(fSecondDist - fFirstDist > 0.05)   // we are closer to the first point
@@ -1679,6 +1698,12 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, I
 							if(iFirstInwardLevel < iThisPlotLevel || ((iCenterLevel >= iFirstInwardLevel) && (thisRing < iRangeWithOneExtraRing)))
 							{								
 								pPlotToCheck->changeVisibilityCount(eTeam, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2)?true:false);
+#ifdef ENHANCED_OBSERVER_MODE
+								if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+								{
+									pPlotToCheck->changeVisibilityCount(OBSERVER_TEAM, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2) ? true : false);
+								}
+#endif
 							}
 						}
 						else
@@ -1698,6 +1723,12 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, I
 							if(iLowestInwardLevel < iThisPlotLevel || ((iCenterLevel >= iLowestInwardLevel) && (thisRing < iRangeWithOneExtraRing)))
 							{								
 								pPlotToCheck->changeVisibilityCount(eTeam, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2)?true:false);
+#ifdef ENHANCED_OBSERVER_MODE
+								if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+								{
+									pPlotToCheck->changeVisibilityCount(OBSERVER_TEAM, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2) ? true : false);
+								}
+#endif
 							}
 						}
 					}
@@ -1708,6 +1739,12 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, I
 						if(iFirstInwardLevel < iThisPlotLevel || ((iCenterLevel >= iFirstInwardLevel) && (thisRing < iRangeWithOneExtraRing)))
 						{							
 							pPlotToCheck->changeVisibilityCount(eTeam, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2)?true:false);
+#ifdef ENHANCED_OBSERVER_MODE
+							if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+							{
+								pPlotToCheck->changeVisibilityCount(OBSERVER_TEAM, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2) ? true : false);
+							}
+#endif
 						}
 					}
 					else if(iSecondInwardLevel != INVALID_RING && !bSecondHalfBlocked)
@@ -1717,6 +1754,12 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, I
 						if(iSecondInwardLevel < iThisPlotLevel || ((iCenterLevel >= iSecondInwardLevel) && (thisRing < iRangeWithOneExtraRing)))
 						{							
 							pPlotToCheck->changeVisibilityCount(eTeam, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2)?true:false);
+#ifdef ENHANCED_OBSERVER_MODE
+							if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+							{
+								pPlotToCheck->changeVisibilityCount(OBSERVER_TEAM, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2) ? true : false);
+							}
+#endif
 						}
 					}
 					else if(iFirstInwardLevel != INVALID_RING)
@@ -1726,6 +1769,12 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, I
 						if(iFirstInwardLevel < iThisPlotLevel || ((iCenterLevel >= iFirstInwardLevel) && (thisRing < iRangeWithOneExtraRing)))
 						{
 							pPlotToCheck->changeVisibilityCount(eTeam, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2)?true:false);
+#ifdef ENHANCED_OBSERVER_MODE
+							if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+							{
+								pPlotToCheck->changeVisibilityCount(OBSERVER_TEAM, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2) ? true : false);
+							}
+#endif
 						}
 					}
 					else if(iSecondInwardLevel != INVALID_RING)
@@ -1735,6 +1784,12 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, I
 						if(iSecondInwardLevel < iThisPlotLevel || ((iCenterLevel >= iSecondInwardLevel) && (thisRing < iRangeWithOneExtraRing)))
 						{							
 							pPlotToCheck->changeVisibilityCount(eTeam, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2)?true:false);
+#ifdef ENHANCED_OBSERVER_MODE
+							if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+							{
+								pPlotToCheck->changeVisibilityCount(OBSERVER_TEAM, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2) ? true : false);
+							}
+#endif
 						}
 					}
 					else // I have no idea how this can happen, but...
@@ -1746,6 +1801,12 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, I
 				else // this is the center point
 				{					
 					pPlotToCheck->changeVisibilityCount(eTeam, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2)?true:false);
+#ifdef ENHANCED_OBSERVER_MODE
+					if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+					{
+						pPlotToCheck->changeVisibilityCount(OBSERVER_TEAM, ((bIncrement) ? 1 : -1), eSeeInvisible, true, (bBasedOnUnit && thisRing < 2) ? true : false);
+					}
+#endif
 					pPlotToCheck->setScratchPad(0);
 				}
 			}
@@ -1805,6 +1866,12 @@ void CvPlot::changeSightInRing(TeamTypes eTeam, int iRange, bool bIncrement, Inv
 				if (plotDistance(getX(), getY(), pPlotToCheck->getX(), pPlotToCheck->getY()) <= iRange)
 				{
 					pPlotToCheck->changeVisibilityCount(eTeam, ((bIncrement) ? 1 : -1), eSeeInvisible, true, false);
+#ifdef ENHANCED_OBSERVER_MODE
+					if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+					{
+						pPlotToCheck->changeVisibilityCount(OBSERVER_TEAM, ((bIncrement) ? 1 : -1), eSeeInvisible, true, false);
+					}
+#endif
 				}
 			}
 		}
@@ -5957,9 +6024,26 @@ ResourceTypes CvPlot::getResourceType(TeamTypes eTeam) const
 		{
 			CvGame& Game = GC.getGame();
 			bool bDebug = Game.isDebugMode();
+#ifdef ENHANCED_OBSERVER_MODE
+			if (eTeam == OBSERVER_TEAM)
+			{
+				for (int iI = 0; iI < MAX_TEAMS; iI++)
+				{
+					TeamTypes eLoopTeam = (TeamTypes)iI;
+					if (eLoopTeam != OBSERVER_TEAM && GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eLoopTeam))
+					{
+						if (getResourceType(eLoopTeam) != NO_RESOURCE)
+						{
+							return getResourceType(eLoopTeam);
+						}
+					}
+				}
+			}
+#else
 #ifdef AUI_PLOT_OBSERVER_SEE_ALL_RESOURCES
 			if (eTeam == OBSERVER_TEAM)
 				bDebug = true;
+#endif
 #endif
 #ifdef REVEAL_MAP_GAME_OVER
 			if (GC.getGame().getGameState() == GAMESTATE_OVER)
@@ -8276,6 +8360,12 @@ PlotVisibilityChangeResult CvPlot::changeVisibilityCount(TeamTypes eTeam, int iC
 			{
 				eResult = VISIBILITY_CHANGE_TO_VISIBLE;
 				bool bOldRevealed = isRevealed(eTeam);
+#ifdef ENHANCED_OBSERVER_MODE
+				if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+				{
+					setRevealed(OBSERVER_TEAM, true);
+				}
+#endif
 				if (!setRevealed(eTeam, true))	// Change to revealed, returns true if the visibility was changed
 				{
 					// The visibility was not changed because it was already revealed, but we are changing to a visible state as well, so we must update.

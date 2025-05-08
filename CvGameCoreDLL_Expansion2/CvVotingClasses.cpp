@@ -3683,11 +3683,23 @@ void CvLeague::AddMember(PlayerTypes ePlayer)
 				if (pCapital && pCapital->plot() && !pCapital->plot()->isRevealed(eOtherTeam))
 				{
 					pCapital->plot()->setRevealed(eOtherTeam, true);
+#ifdef ENHANCED_OBSERVER_MODE
+					if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+						pCapital->plot()->setRevealed(OBSERVER_TEAM, true);
+					{
+					}
+#endif
 				}
 				CvCity* pOtherCapital = GET_PLAYER(eOtherPlayer).getCapitalCity();
 				if (pOtherCapital && pOtherCapital->plot() && !pOtherCapital->plot()->isRevealed(eTeam))
 				{
 					pOtherCapital->plot()->setRevealed(eTeam, true);
+#ifdef ENHANCED_OBSERVER_MODE
+					if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eTeam))
+					{
+						pOtherCapital->plot()->setRevealed(OBSERVER_TEAM, true);
+					}
+#endif
 				}
 			}
 		}

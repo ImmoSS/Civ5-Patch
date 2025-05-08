@@ -365,6 +365,12 @@ bool CvGameTrade::CreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, Domai
 	for (uint ui = 0; ui < m_aTradeConnections[iNewTradeRouteIndex].m_aPlotList.size(); ui++)
 	{
 		GC.getMap().plot(m_aTradeConnections[iNewTradeRouteIndex].m_aPlotList[ui].m_iX, m_aTradeConnections[iNewTradeRouteIndex].m_aPlotList[ui].m_iY)->setRevealed(eOriginTeam, true, true);
+#ifdef ENHANCED_OBSERVER_MODE
+		if (GET_TEAM(OBSERVER_TEAM).IsTeamObserverVisibility(eOriginTeam))
+		{
+			GC.getMap().plot(m_aTradeConnections[iNewTradeRouteIndex].m_aPlotList[ui].m_iX, m_aTradeConnections[iNewTradeRouteIndex].m_aPlotList[ui].m_iY)->setRevealed(OBSERVER_TEAM, true, true);
+		}
+#endif
 	}
 
 	m_aTradeConnections[iNewTradeRouteIndex].m_iTradeUnitLocationIndex = 0;

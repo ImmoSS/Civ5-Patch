@@ -1066,6 +1066,26 @@
 
 
 
+/*OBSERVER MOD START*/
+// Observer mode fixes
+/// Observers will see all resources
+#define AUI_PLOT_OBSERVER_SEE_ALL_RESOURCES
+/// Observers will have constant visibility over all plots
+#define AUI_PLOT_OBSERVER_SEE_ALL_PLOTS
+/// Observers are set to have met every team in the game
+#define AUI_GAME_OBSERVER_MEET_ALL_TEAMS
+/// Natural wonder pop-ups do not trigger for observers
+#define AUI_PLOT_OBSERVER_NO_NW_POPUPS
+/// Observers can now open the city screen as if they had spies in every city
+// #define AUI_GAME_OBSERVER_CAN_OPEN_CITIES
+/// All cities are set to be revealed to observers
+// #define AUI_CITY_OBSERVER_REVEALS_ALL_CITIES
+///
+#define ENHANCED_OBSERVER_MODE
+/*OBSERVER MOD END*/
+
+
+
 /*MP VOTING SYSTEM START*/
 ///
 #define MP_PLAYERS_VOTING_SYSTEM
@@ -1447,20 +1467,6 @@
 
 /// Relaxed the limits on the slice limits before turn timers are forced to expire in network multiplayer games (should help stop resyncs due to last-second moves)
 #define NQM_GAME_MORE_RELAXED_TURN_SLICE_LIMIT_FOR_NETWORK_MULTIPLAYER*/
-
-// Observer mode fixes
-/// Observers will see all resources
-#define AUI_PLOT_OBSERVER_SEE_ALL_RESOURCES
-/// Observers will have constant visibility over all plots
-#define AUI_PLOT_OBSERVER_SEE_ALL_PLOTS
-/// Observers are set to have met every team in the game
-#define AUI_GAME_OBSERVER_MEET_ALL_TEAMS
-/// Natural wonder pop-ups do not trigger for observers
-#define AUI_PLOT_OBSERVER_NO_NW_POPUPS
-/// Observers can now open the city screen as if they had spies in every city
-// #define AUI_GAME_OBSERVER_CAN_OPEN_CITIES
-/// All cities are set to be revealed to observers
-// #define AUI_CITY_OBSERVER_REVEALS_ALL_CITIES
 
 /*// Altered score calculations as an option toggleable in-game
 #define NQM_OPTIONAL_SCORING_TWEAKS
