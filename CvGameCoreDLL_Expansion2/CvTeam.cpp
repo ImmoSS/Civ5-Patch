@@ -1180,7 +1180,7 @@ void CvTeam::DoDeclareWar(TeamTypes eTeam, bool bDefensivePact, bool bMinorAllyP
 #ifdef BUMP_UNITS_OUT_MINOR_LAND
 	if (!isMinorCiv() && GET_TEAM(eTeam).isMinorCiv())
 	{
-		GC.getMap().verifyUnitValidPlot(true, eTeam);
+		GC.getMap().verifyUnitValidPlot(true, GetID(), eTeam);
 	}
 	else
 	{

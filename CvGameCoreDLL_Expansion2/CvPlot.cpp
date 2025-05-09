@@ -706,7 +706,7 @@ void CvPlot::updateCenterUnit()
 
 //	--------------------------------------------------------------------------------
 #ifdef BUMP_UNITS_OUT_MINOR_LAND
-void CvPlot::verifyUnitValidPlot(bool bIsMinor, TeamTypes eTeam)
+void CvPlot::verifyUnitValidPlot(bool bIsMinor, TeamTypes eTeam, TeamTypes eMinorTeam)
 {
 	FStaticVector<IDInfo, 50, true, c_eCiv5GameplayDLL, 0> oldUnitList;
 
@@ -761,9 +761,9 @@ void CvPlot::verifyUnitValidPlot(bool bIsMinor, TeamTypes eTeam)
 									}
 								}
 								// may want to make an extra check here about if it's owned by minor, we can still enter territory but with ignoring right of passage
-								if (!isValidDomainForLocation(*pLoopUnit) || (!bIsOwnedByMinor && !(pLoopUnit->canEnterTerritory(getTeam(), false /*bIgnoreRightOfPassage*/, isCity()))) || bIsMinor && eTeam == getTeam() && !(pLoopUnit->canEnterTerritory(getTeam(), false /*bIgnoreRightOfPassage*/, isCity(), false, bIsMinor)))
+								if (!isValidDomainForLocation(*pLoopUnit) || (!bIsOwnedByMinor && !(pLoopUnit->canEnterTerritory(getTeam(), false /*bIgnoreRightOfPassage*/, isCity()))) || bIsMinor && pLoopUnit->getTeam() == eTeam && eMinorTeam == getTeam() && !(pLoopUnit->canEnterTerritory(getTeam(), false /*bIgnoreRightOfPassage*/, isCity(), false, bIsMinor)))
 #else
-								if (!isValidDomainForLocation(*pLoopUnit) || !(pLoopUnit->canEnterTerritory(getTeam(), false /*bIgnoreRightOfPassage*/, isCity())))
+								if (!isValidDomainForLocation(*pLoopUnit) || !(pLoopUnit->canEnterTerritory(getTeam(), false /*bIgnoreRightOfPassage*/, isCity())) || bIsMinor && pLoopUnit->getTeam() == eTeam && eMinorTeam == getTeam() && !(pLoopUnit->canEnterTerritory(getTeam(), false /*bIgnoreRightOfPassage*/, isCity(), false, bIsMinor)))
 #endif
 								{
 									if (!pLoopUnit->jumpToNearestValidPlot(bIsMinor))
@@ -791,7 +791,7 @@ void CvPlot::verifyUnitValidPlot(bool bIsMinor, TeamTypes eTeam)
 					{
 						if (!(pLoopUnit->isInCombat()))
 						{
-							if (bIsMinor && eTeam == getTeam())
+							if (bIsMinor && pLoopUnit->getTeam() == eTeam && eMinorTeam == getTeam())
 							{
 								if (pLoopUnit->getTeam() != getTeam())
 								{
