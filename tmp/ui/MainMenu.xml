@@ -186,7 +186,7 @@ for EUI and vanilla UI -->
   <!-- Version Information  -->
   <Label Anchor="C,B" Offset="0,32" String="InvalidVersionNumber" Font="TwCenMT16" ID="VersionNumber"/>
   <!-- Patch Updates Checker and Changelog Button START-->
-  <Button Anchor="C,B" Size="200,28" Offset="0,0" Texture="blank.dds" NoStateChange="1" ID="PatchChangelog" />
+  <Button Anchor="C,B" Size="200,28" Offset="0,0" Texture="blank.dds" Color="0,0,0,0" NoStateChange="1" ID="PatchChangelog" />
   <Box ID="PatchNotesBGBlock" Anchor="C,C" Size="Full,Full" Color="0,0,0,160" ConsumeMouse="1" Hidden="1" >
 	<Grid Size="960,750" Anchor="C,C" Offset="0,0" Style="Grid9DetailSix140" />
 	<Grid ID="PatchNotesPopup" Size="960,750" Anchor="C,C" Offset="0,0" Style="Grid9DetailSix140" ConsumeMouse="0" >
