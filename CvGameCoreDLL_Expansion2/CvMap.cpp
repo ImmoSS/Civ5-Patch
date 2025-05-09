@@ -692,13 +692,13 @@ void CvMap::updateAdjacency()
 
 //	--------------------------------------------------------------------------------
 #ifdef BUMP_UNITS_OUT_MINOR_LAND
-void CvMap::verifyUnitValidPlot(bool bIsMinor, TeamTypes eTeam)
+void CvMap::verifyUnitValidPlot(bool bIsMinor, TeamTypes eTeam, TeamTypes eMinorTeam)
 {
 	int iI;
 
 	for (iI = 0; iI < numPlots(); iI++)
 	{
-		plotByIndexUnchecked(iI)->verifyUnitValidPlot(bIsMinor, eTeam);
+		plotByIndexUnchecked(iI)->verifyUnitValidPlot(bIsMinor, eTeam, eMinorTeam);
 	}
 }
 #else

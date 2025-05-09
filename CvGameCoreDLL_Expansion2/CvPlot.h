@@ -109,7 +109,7 @@ public:
 	void updateCenterUnit();
 
 #ifdef BUMP_UNITS_OUT_MINOR_LAND
-	void verifyUnitValidPlot(bool bIsMinor = false, TeamTypes eTeam = NO_TEAM);
+	void verifyUnitValidPlot(bool bIsMinor = false, TeamTypes eTeam = NO_TEAM, TeamTypes eMinorTeam = NO_TEAM);
 #else
 	void verifyUnitValidPlot();
 #endif
