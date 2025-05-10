@@ -1238,7 +1238,11 @@ function OnDisconnect( playerID )
 		end
 		ShowHideInviteButton();
 		-- Ingame Civ Drafter START
-		if g_DraftProgress ~= 'DRAFT_PROGRESS_INIT' and g_DraftProgress ~= 'DRAFT_PROGRESS_DEFAULT' and g_DraftProgress ~= 'DRAFT_PROGRESS_OVER' then
+		if g_DraftProgress == 'DRAFT_PROGRESS_INIT' or g_DraftProgress == 'DRAFT_PROGRESS_DEFAULT' then
+			print('disconnect: unready', playerID)
+			local product = 6 * 2 ^ 28 + playerID;  -- player disconnected (INIT stage)
+			local data = PreGame.SetLeaderKey( product, '' );
+		elseif g_DraftProgress ~= 'DRAFT_PROGRESS_OVER' then
 			print('disconnect: reset drafts')
 			local product = 4 * 2 ^ 28;  -- reset draft data (local)
 			local data = PreGame.SetLeaderKey( product, 'TXT_KEY_DRAFTS_RESET_DISC' );
@@ -1407,7 +1411,8 @@ function InputHandler( uiMsg, wParam, lParam )
 			-- Ingame Civ Drafter END
 		end
 		-- TODO: REMOVE
-		--[[if wParam == Keys.V then
+		--[[
+		if wParam == Keys.V then
     		AddPlayerBans (1,'User','4')
 		end
 		if wParam == Keys.B then
