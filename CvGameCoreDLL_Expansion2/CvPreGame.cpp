@@ -2449,7 +2449,7 @@ void setActivePlayer(PlayerTypes p)
 {
 #ifdef INGAME_CIV_DRAFTER
 	SLOG("active p %d", p);
-	if (isNetworkMultiplayerGame() || isHotSeatGame())
+	if (!gameStarted() && loadFileName().IsEmpty() && (isNetworkMultiplayerGame() || isHotSeatGame()))
 	{
 		CvString strP = CvString::format("%d", (int)p);
 		gDLL->SendRenameCity(-6, strP);

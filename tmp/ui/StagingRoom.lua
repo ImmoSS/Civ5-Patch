@@ -3438,6 +3438,10 @@ end
 -- 'events' from dll
 function OnGameplayAlertMessage( text )
 	print('alert', text)
+	if (PreGame.GetLoadFileName() ~= "") or PreGame.GameStarted() then
+		print('draft message during ongoing game - ignored')
+		return;
+	end
 	local control, text = string.match(text, '(.-)|(.*)')
 	if control == 'ban-success' then
 		local splayerID, bans = string.match(text, '(.*)%|(.*)');
