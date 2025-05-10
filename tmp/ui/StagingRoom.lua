@@ -3143,6 +3143,7 @@ function AssignDraftedCivs( civsArr )
 					end
 				end
 				local inst = playerEntry.picksIM:GetInstance()
+				inst.civID = tonumber(v)
 				table.insert(g_DraftResultInstances.Picks[playerID], inst);
 				IconHookup(leader.PortraitIndex, 64, leader.IconAtlas, inst.LeaderIcon); 
 				IconHookup(civ.PortraitIndex, 32, civ.IconAtlas, inst.LeaderSubIcon);
@@ -3370,26 +3371,44 @@ function UpdateDraftScreen()
 			end
 		end
 
-		if g_DraftProgress == 'DRAFT_PROGRESS_OVER' and Matchmaking.GetLocalID() == i then
-			g_PlayerEntries[i].statusInstance.FocusFrame:SetHide(false)
-			g_PlayerEntries[i].statusInstance.DraftPlayerBansStack:SetHide(true)
-			g_PlayerEntries[i].statusInstance.DraftPlayerBansDummy:SetHide(true)
-			g_PlayerEntries[i].statusInstance.DraftPlayerPicksStack:SetHide(true)
-			g_PlayerEntries[i].statusInstance.DraftPlayerPicksDummy:SetHide(true)
-			g_PlayerEntries[i].statusInstance.DraftPlayerPicksBigStack:SetHide(false)
-			g_PlayerEntries[i].statusInstance.DraftPlayerPicksBigDummy:SetHide(false)
-			g_PlayerEntries[i].statusInstance.BansLabel:SetHide(true)
-			g_PlayerEntries[i].statusInstance.PicksLabel:SetOffsetY(30)
-		else
-			g_PlayerEntries[i].statusInstance.FocusFrame:SetHide(true)
-			g_PlayerEntries[i].statusInstance.DraftPlayerBansStack:SetHide(false)
-			g_PlayerEntries[i].statusInstance.DraftPlayerBansDummy:SetHide(false)
-			g_PlayerEntries[i].statusInstance.DraftPlayerPicksStack:SetHide(false)
-			g_PlayerEntries[i].statusInstance.DraftPlayerPicksDummy:SetHide(false)
-			g_PlayerEntries[i].statusInstance.DraftPlayerPicksBigStack:SetHide(true)
-			g_PlayerEntries[i].statusInstance.DraftPlayerPicksBigDummy:SetHide(true)
-			g_PlayerEntries[i].statusInstance.BansLabel:SetHide(false)
-			g_PlayerEntries[i].statusInstance.PicksLabel:SetOffsetY(115)
+		if g_DraftProgress == 'DRAFT_PROGRESS_OVER' then
+			local playerID = i - 1
+			if g_DraftResultInstances.Picks[playerID] ~= nil then
+				for ind, it in next, g_DraftResultInstances.Picks[playerID] do
+					if it.civID == PreGame.GetCivilization(playerID) then
+						it.LeaderFrame:SetColor( {x=94/255, y=220/255, z=31/255, w=1 } )
+						it.LeaderSubIconFrame:SetColor( {x=94/255, y=220/255, z=31/255, w=1 } )
+						g_DraftResultInstances.PicksB[playerID][ind].LeaderFrame:SetColor( {x=94/255, y=220/255, z=31/255, w=1 } )
+						g_DraftResultInstances.PicksB[playerID][ind].LeaderSubIconFrame:SetColor( {x=94/255, y=220/255, z=31/255, w=1 } )
+					else
+						it.LeaderFrame:SetColor( {x=1, y=1, z=1, w=1 } )
+						it.LeaderSubIconFrame:SetColor( {x=1, y=1, z=1, w=1 } )
+						g_DraftResultInstances.PicksB[playerID][ind].LeaderFrame:SetColor( {x=1, y=1, z=1, w=1 } )
+						g_DraftResultInstances.PicksB[playerID][ind].LeaderSubIconFrame:SetColor( {x=1, y=1, z=1, w=1 } )
+					end
+				end
+			end
+			if Matchmaking.GetLocalID() == i then
+				g_PlayerEntries[i].statusInstance.FocusFrame:SetHide(false)
+				g_PlayerEntries[i].statusInstance.DraftPlayerBansStack:SetHide(true)
+				g_PlayerEntries[i].statusInstance.DraftPlayerBansDummy:SetHide(true)
+				g_PlayerEntries[i].statusInstance.DraftPlayerPicksStack:SetHide(true)
+				g_PlayerEntries[i].statusInstance.DraftPlayerPicksDummy:SetHide(true)
+				g_PlayerEntries[i].statusInstance.DraftPlayerPicksBigStack:SetHide(false)
+				g_PlayerEntries[i].statusInstance.DraftPlayerPicksBigDummy:SetHide(false)
+				g_PlayerEntries[i].statusInstance.BansLabel:SetHide(true)
+				g_PlayerEntries[i].statusInstance.PicksLabel:SetOffsetY(30)
+			else
+				g_PlayerEntries[i].statusInstance.FocusFrame:SetHide(true)
+				g_PlayerEntries[i].statusInstance.DraftPlayerBansStack:SetHide(false)
+				g_PlayerEntries[i].statusInstance.DraftPlayerBansDummy:SetHide(false)
+				g_PlayerEntries[i].statusInstance.DraftPlayerPicksStack:SetHide(false)
+				g_PlayerEntries[i].statusInstance.DraftPlayerPicksDummy:SetHide(false)
+				g_PlayerEntries[i].statusInstance.DraftPlayerPicksBigStack:SetHide(true)
+				g_PlayerEntries[i].statusInstance.DraftPlayerPicksBigDummy:SetHide(true)
+				g_PlayerEntries[i].statusInstance.BansLabel:SetHide(false)
+				g_PlayerEntries[i].statusInstance.PicksLabel:SetOffsetY(115)
+			end
 		end
 	end
 	if g_DraftProgress == 'DRAFT_PROGRESS_BANS' then
