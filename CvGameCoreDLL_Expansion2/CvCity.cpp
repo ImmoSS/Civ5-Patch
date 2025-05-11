@@ -7892,14 +7892,19 @@ int CvCity::getHurryCostModifier(HurryTypes eHurry, BuildingTypes eBuilding, boo
 	CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eBuilding);
 	if(pkBuildingInfo)
 	{
+#ifdef BUILDING_HURRY_COST_MODIFIER
+		return getHurryCostModifier(eHurry, pkBuildingInfo->GetHurryCostModifier(), m_pCityBuildings->GetBuildingProduction(eBuilding), bIgnoreNew, true);
+#else
 		return getHurryCostModifier(eHurry, pkBuildingInfo->GetHurryCostModifier(), m_pCityBuildings->GetBuildingProduction(eBuilding), bIgnoreNew);
+#endif
 	}
 
 	return 0;
 }
 
 //	--------------------------------------------------------------------------------
-int CvCity::getHurryCostModifier(HurryTypes eHurry, int iBaseModifier, int iProduction, bool bIgnoreNew) const
+#ifdef BUILDING_HURRY_COST_MODIFIER
+int CvCity::getHurryCostModifier(HurryTypes eHurry, int iBaseModifier, int iProduction, bool bIgnoreNew, bool bIsBuilding) const
 {
 	VALIDATE_OBJECT
 	int iModifier = 100;
@@ -7915,8 +7920,7 @@ int CvCity::getHurryCostModifier(HurryTypes eHurry, int iBaseModifier, int iProd
 	// Some places just don't care what kind of Hurry it is (leftover from Civ 4)
 	if (eHurry != NO_HURRY)
 	{
-#ifdef BUILDING_HURRY_COST_MODIFIER
-		if (eHurry != (HurryTypes)GC.getInfoTypeForString("HURRY_GOLD"))
+		if (eHurry != (HurryTypes)GC.getInfoTypeForString("HURRY_GOLD") && !bIsBuilding)
 		{
 			if (GET_PLAYER(getOwner()).getHurryModifier(eHurry) != 0)
 			{
@@ -7932,17 +7936,37 @@ int CvCity::getHurryCostModifier(HurryTypes eHurry, int iBaseModifier, int iProd
 				iModifier /= 100;
 			}
 		}
-#else
-		if(GET_PLAYER(getOwner()).getHurryModifier(eHurry) != 0)
-		{
-			iModifier *= (100 + GET_PLAYER(getOwner()).getHurryModifier(eHurry));
-			iModifier /= 100;
-		}
-#endif
 	}
 
 	return iModifier;
 }
+#else
+int CvCity::getHurryCostModifier(HurryTypes eHurry, int iBaseModifier, int iProduction, bool bIgnoreNew) const
+{
+	VALIDATE_OBJECT
+		int iModifier = 100;
+	iModifier *= std::max(0, iBaseModifier + 100);
+	iModifier /= 100;
+
+	if (iProduction == 0 && !bIgnoreNew)
+	{
+		iModifier *= std::max(0, (GC.getNEW_HURRY_MODIFIER() + 100));
+		iModifier /= 100;
+	}
+
+	// Some places just don't care what kind of Hurry it is (leftover from Civ 4)
+	if (eHurry != NO_HURRY)
+	{
+		if (GET_PLAYER(getOwner()).getHurryModifier(eHurry) != 0)
+		{
+			iModifier *= (100 + GET_PLAYER(getOwner()).getHurryModifier(eHurry));
+			iModifier /= 100;
+		}
+	}
+
+	return iModifier;
+}
+#endif
 
 
 //	--------------------------------------------------------------------------------

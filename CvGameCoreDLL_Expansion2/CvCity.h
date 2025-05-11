@@ -1153,7 +1153,11 @@ protected:
 	int getExtraProductionDifference(int iExtra, int iModifier) const;
 	int getHurryCostModifier(HurryTypes eHurry, UnitTypes eUnit, bool bIgnoreNew) const;
 	int getHurryCostModifier(HurryTypes eHurry, BuildingTypes eBuilding, bool bIgnoreNew) const;
+#ifdef BUILDING_HURRY_COST_MODIFIER
+	int getHurryCostModifier(HurryTypes eHurry, int iBaseModifier, int iProduction, bool bIgnoreNew, bool bIsBuilding = false) const;
+#else
 	int getHurryCostModifier(HurryTypes eHurry, int iBaseModifier, int iProduction, bool bIgnoreNew) const;
+#endif
 	int getHurryCost(HurryTypes eHurry, bool bExtra, UnitTypes eUnit, bool bIgnoreNew) const;
 	int getHurryCost(HurryTypes eHurry, bool bExtra, BuildingTypes eBuilding, bool bIgnoreNew) const;
 	int getHurryCost(bool bExtra, int iProductionLeft, int iHurryModifier, int iModifier) const;
