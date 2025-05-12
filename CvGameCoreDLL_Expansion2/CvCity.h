@@ -194,7 +194,11 @@ public:
 	int GetPurchaseCost(BuildingTypes eBuilding);
 	int GetFaithPurchaseCost(BuildingTypes eBuilding);
 	int GetPurchaseCost(ProjectTypes eProject);
+#ifdef BUILDING_HURRY_COST_MODIFIER
+	int GetPurchaseCostFromProduction(int iProduction, bool bIsBuilding = false);
+#else
 	int GetPurchaseCostFromProduction(int iProduction);
+#endif
 
 	int getProductionTurnsLeft(int iProductionNeeded, int iProduction, int iFirstProductionDifference, int iProductionDifference) const;
 	void setProduction(int iNewValue);

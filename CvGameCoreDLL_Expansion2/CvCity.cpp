@@ -5259,7 +5259,11 @@ int CvCity::GetPurchaseCost(BuildingTypes eBuilding)
 	if(iModifier == -1)
 		return -1;
 
+#ifdef BUILDING_HURRY_COST_MODIFIER
+	int iCost = GetPurchaseCostFromProduction(getProductionNeeded(eBuilding), true);
+#else
 	int iCost = GetPurchaseCostFromProduction(getProductionNeeded(eBuilding));
+#endif
 	iCost *= (100 + iModifier);
 	iCost /= 100;
 
@@ -5351,6 +5355,42 @@ int CvCity::GetPurchaseCost(ProjectTypes eProject)
 
 //	--------------------------------------------------------------------------------
 /// Cost of Purchasing something based on the amount of Production it requires to construct
+#ifdef BUILDING_HURRY_COST_MODIFIER
+int CvCity::GetPurchaseCostFromProduction(int iProduction, bool bIsBuilding)
+{
+	VALIDATE_OBJECT
+		int iPurchaseCost;
+
+	// Gold per Production
+	int iPurchaseCostBase = iProduction * /*30*/ GC.getGOLD_PURCHASE_GOLD_PER_PRODUCTION();
+	// Cost ramps up
+	iPurchaseCost = (int)pow((double)iPurchaseCostBase, (double) /*0.75f*/ GC.getHURRY_GOLD_PRODUCTION_EXPONENT());
+
+	// Hurry Mod (Policies, etc.)
+	HurryTypes eHurry = (HurryTypes)GC.getInfoTypeForString("HURRY_GOLD");
+
+	if (eHurry != NO_HURRY)
+	{
+		int iHurryMod = GET_PLAYER(getOwner()).getHurryModifier(eHurry);
+		if (bIsBuilding)
+		{
+			iHurryMod += getBuildingHurryCostModifier();
+		}
+
+		if (iHurryMod != 0)
+		{
+			iPurchaseCost *= (100 + iHurryMod);
+			iPurchaseCost /= 100;
+		}
+	}
+
+	// Game Speed modifier
+	iPurchaseCost *= GC.getGame().getGameSpeedInfo().getHurryPercent();
+	iPurchaseCost /= 100;
+
+	return iPurchaseCost;
+}
+#else
 int CvCity::GetPurchaseCostFromProduction(int iProduction)
 {
 	VALIDATE_OBJECT
@@ -5366,11 +5406,7 @@ int CvCity::GetPurchaseCostFromProduction(int iProduction)
 
 	if(eHurry != NO_HURRY)
 	{
-#ifdef BUILDING_HURRY_COST_MODIFIER
-		int iHurryMod = GET_PLAYER(getOwner()).getHurryModifier(eHurry) + getBuildingHurryCostModifier();
-#else
 		int iHurryMod = GET_PLAYER(getOwner()).getHurryModifier(eHurry);
-#endif
 
 		if(iHurryMod != 0)
 		{
@@ -5385,6 +5421,7 @@ int CvCity::GetPurchaseCostFromProduction(int iProduction)
 
 	return iPurchaseCost;
 }
+#endif
 
 //	--------------------------------------------------------------------------------
 void CvCity::setProduction(int iNewValue)
@@ -7920,19 +7957,19 @@ int CvCity::getHurryCostModifier(HurryTypes eHurry, int iBaseModifier, int iProd
 	// Some places just don't care what kind of Hurry it is (leftover from Civ 4)
 	if (eHurry != NO_HURRY)
 	{
-		if (eHurry != (HurryTypes)GC.getInfoTypeForString("HURRY_GOLD") && !bIsBuilding)
+		if (eHurry == (HurryTypes)GC.getInfoTypeForString("HURRY_GOLD") && bIsBuilding)
 		{
-			if (GET_PLAYER(getOwner()).getHurryModifier(eHurry) != 0)
+			if (GET_PLAYER(getOwner()).getHurryModifier(eHurry) + getBuildingHurryCostModifier() != 0)
 			{
-				iModifier *= (100 + GET_PLAYER(getOwner()).getHurryModifier(eHurry));
+				iModifier *= (100 + GET_PLAYER(getOwner()).getHurryModifier(eHurry) + getBuildingHurryCostModifier());
 				iModifier /= 100;
 			}
 		}
 		else
 		{
-			if (GET_PLAYER(getOwner()).getHurryModifier(eHurry) + getBuildingHurryCostModifier() != 0)
+			if (GET_PLAYER(getOwner()).getHurryModifier(eHurry) != 0)
 			{
-				iModifier *= (100 + GET_PLAYER(getOwner()).getHurryModifier(eHurry) + getBuildingHurryCostModifier());
+				iModifier *= (100 + GET_PLAYER(getOwner()).getHurryModifier(eHurry));
 				iModifier /= 100;
 			}
 		}

@@ -8980,7 +8980,7 @@ void CvGame::updateMoves()
 		m_kGameDeals.DoTurn();
 #endif
 #ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
-		if (GC.getGame().GetGameLeagues()->GetActiveLeague()->IsResolveSession())
+		if (GC.getGame().GetGameLeagues()->GetActiveLeague() && GC.getGame().GetGameLeagues()->GetActiveLeague()->IsResolveSession())
 		{
 			GC.getGame().GetGameLeagues()->GetActiveLeague()->SetResolveSession(false);
 			for (uint i = 0; i < GC.getGame().GetGameLeagues()->GetActiveLeague()->m_vMembers.size(); i++)
