@@ -175,7 +175,7 @@ function OnEndTurnClicked()
 			print('HasReadyUnit', player:HasReadyUnit())
 			print('HasBusyUnit', player:HasBusyUnit())
 			print('HasBusyMovingUnit', player:HasBusyMovingUnit())
-			print('HasReceivedNetTurnComplete', player:HasReceivedNetTurnComplete)
+			print('HasReceivedNetTurnComplete', player:HasReceivedNetTurnComplete())
 			local pUnit = player:GetFirstReadyUnit();
 			if (pUnit) then
 				local pPlot = pUnit:GetPlot();		
