@@ -169,6 +169,7 @@ function OnEndTurnClicked()
 	else
 		if (not UI.CanEndTurn()) then
 			print("UI thinks that we can't end turn, but the notification system disagrees");
+			print('active player', Game.GetActivePlayer())
 			print('blockingType', blockingType)
 			print('blockingNotificationIndex', blockingNotificationIndex)
 			print('TurnActive', player:IsTurnActive())
@@ -180,7 +181,8 @@ function OnEndTurnClicked()
 			if (pUnit) then
 				local pPlot = pUnit:GetPlot();		
 				print('FirstReadyUnit Name X Y', pUnit:GetName(), pPlot:GetX(), pPlot:GetY())
-			end	
+			end
+			UI.SetCanEndTurn(true)  -- crash test
 		end
 	
 		local iEndTurnControl = GameInfoTypes.CONTROL_ENDTURN;
