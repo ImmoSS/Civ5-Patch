@@ -2711,7 +2711,8 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		return false;
 
 #ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
-	if (pkBuildingInfo->IsNoHolyCityAndNoOccupiedUnhappiness() && GetCityReligions()->IsHolyCityAnyReligion())
+	const ReligionTypes eReligion = GET_PLAYER(getOwner()).GetReligions()->GetReligionCreatedByPlayer();
+	if (pkBuildingInfo->IsNoHolyCityAndNoOccupiedUnhappiness() && GetCityReligions()->IsHolyCityForReligion(eReligion))
 		return false;
 #endif
 
