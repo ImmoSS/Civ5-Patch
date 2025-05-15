@@ -338,6 +338,7 @@ function OnEndTurnDirty()
 		setEndTurnWaiting();			
 		return;
 	end
+	print('EndTurnDirty ActivePlayer:', Game.GetActivePlayer())
 	
 	local strEndTurnMessage;
 	local strButtonToolTip;
@@ -530,7 +531,7 @@ OnEndTurnDirty();
 
 -----------------------------------------------------
 function OnEndTurnBlockingChanged(ePrevEndTurnBlockingType, eNewEndTurnBlockingType)
-	
+	print('EndTurnBlockingChanged', ePrevEndTurnBlockingType, eNewEndTurnBlockingType)
 	local pPlayer = Players[Game.GetActivePlayer()];
 	if (pPlayer ~= nil) then
 		if pPlayer:IsTurnActive() then
