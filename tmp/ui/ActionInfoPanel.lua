@@ -157,7 +157,10 @@ function OnEndTurnClicked()
 			UI.LookAt(pPlot, 0);
 			UI.SelectUnit(pUnit);
 			local hex = ToHexFromGrid( Vector2(pPlot:GetX(), pPlot:GetY() ) );
-			Events.GameplayFX(hex.x, hex.y, -1);				
+			Events.GameplayFX(hex.x, hex.y, -1);	
+		else
+			print("The notification system thinks units stacked or need order, but there are no such units")
+			print("GameTurn", Game.GetGameTurn())
 		end	
 	--elseif (blockingType == EndTurnBlockingTypes.ENDTURN_BLOCKING_UNITS) then
 	--	-- Skip active Unit's turn
@@ -169,6 +172,7 @@ function OnEndTurnClicked()
 	else
 		if (not UI.CanEndTurn()) then
 			print("UI thinks that we can't end turn, but the notification system disagrees");
+			print("GameTurn", Game.GetGameTurn())
 			print('active player', Game.GetActivePlayer())
 			print('blockingType', blockingType)
 			print('blockingNotificationIndex', blockingNotificationIndex)
@@ -182,7 +186,7 @@ function OnEndTurnClicked()
 				local pPlot = pUnit:GetPlot();		
 				print('FirstReadyUnit Name X Y', pUnit:GetName(), pPlot:GetX(), pPlot:GetY())
 			end
-			UI.SetCanEndTurn(true)  -- crash test
+			-- UI.SetCanEndTurn(true)  -- crash test
 		end
 	
 		local iEndTurnControl = GameInfoTypes.CONTROL_ENDTURN;

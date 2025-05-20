@@ -19496,7 +19496,7 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 	{
 		m_bTurnActive = bNewValue;
 #ifdef EMERGENCY_LOGGING
-		SLOG("setTurnActive player: %d bNewValue: %d bDoTurn: %d", GetID(), bNewValue ? 1 : 0, bDoTurn ? 1 : 0);
+		SLOG("GameTurn: %d setTurnActive player: %d bNewValue: %d bDoTurn: %d", GC.getGame().getGameTurn(), GetID(), bNewValue ? 1 : 0, bDoTurn ? 1 : 0);
 #endif
 		DLLUI->PublishEndTurnDirty();
 
@@ -19876,7 +19876,7 @@ void CvPlayer::SetEndTurnBlocking(EndTurnBlockingTypes eBlockingType, int iNotif
 	if(m_eEndTurnBlockingType != eBlockingType || m_iEndTurnBlockingNotificationIndex != iNotificationIndex)
 	{
 #ifdef EMERGENCY_LOGGING
-		SLOG("ID %d ActivePlayer %d eBlockingType %d iNotificationIndex %d", (int)GetID(), (int)GC.getGame().getActivePlayer(), (int)eBlockingType, iNotificationIndex)
+		SLOG("GameTurn %d ID %d ActivePlayer %d eBlockingType %d iNotificationIndex %d", GC.getGame().getGameTurn(), (int)GetID(), (int)GC.getGame().getActivePlayer(), (int)eBlockingType, iNotificationIndex)
 #endif
 		bFireEvent = true;
 	}
