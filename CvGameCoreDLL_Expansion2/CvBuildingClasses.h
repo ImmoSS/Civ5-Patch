@@ -632,7 +632,7 @@ private:
 	int m_iLocalCityConnectionTradeRouteModifier;
 #endif
 #ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
-	int m_bNonAirUnitMaxHeal;
+	bool m_bNonAirUnitMaxHeal;
 #endif
 };
 
