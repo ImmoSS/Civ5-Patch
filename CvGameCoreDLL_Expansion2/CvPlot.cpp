@@ -7341,6 +7341,27 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 				iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetTerrainYieldChange(getTerrainType(), eYield);
 #endif
 			}
+#ifdef BUILDING_DOUBLE_PANTHEON
+			BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+			if (ePantheon != NO_BELIEF && pWorkingCity->getDoublePantheon() > 0)
+			{
+#ifdef BELIEF_DANCE_AURORA_NERF
+				if (ePantheon == (BeliefTypes)GC.getInfoTypeForString("BELIEF_DANCE_AURORA", true))
+				{
+					if (!isHills() || eYield == YIELD_FAITH)
+					{
+						iReligionChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetTerrainYieldChange(getTerrainType(), eYield);
+					}
+				}
+				else
+				{
+					iReligionChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetTerrainYieldChange(getTerrainType(), eYield);
+				}
+#else
+				iReligionChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetTerrainYieldChange(getTerrainType(), eYield);
+#endif
+			}
+#endif
 			iYield += iReligionChange;
 		}
 	}
@@ -7713,6 +7734,13 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 				{
 					iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetImprovementYieldChange(eImprovement, eYield);
 				}
+#ifdef BUILDING_DOUBLE_PANTHEON
+				BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+				if (ePantheon != NO_BELIEF && pWorkingCity->getDoublePantheon() > 0)
+				{
+					iReligionChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetImprovementYieldChange(eImprovement, eYield);
+				}
+#endif
 				iYield += iReligionChange;
 			}
 		}

@@ -316,6 +316,9 @@ CvCity::CvCity() :
 #ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
 	, m_iNonAirUnitMaxHeal("CvCity::m_iNonAirUnitMaxHeal", m_syncArchive)
 #endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+	, m_iDoublePantheon("CvCity::m_iDoublePantheon", m_syncArchive)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1116,6 +1119,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #endif
 #ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
 	m_iNonAirUnitMaxHeal = 0;
+#endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+	m_iDoublePantheon = 0;
 #endif
 
 	if(!bConstructorCall)
@@ -5294,6 +5300,13 @@ int CvCity::GetPurchaseCost(BuildingTypes eBuilding)
 			{
 				iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetHurryModifier(eHurry);
 			}
+#ifdef BUILDING_DOUBLE_PANTHEON
+			BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+			if (ePantheon != NO_BELIEF && getDoublePantheon() > 0)
+			{
+				iReligionChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetHurryModifier(eHurry);
+			}
+#endif
 			iCost *= (100 + iReligionChange);
 			iCost /= 100;
 		}
@@ -5778,6 +5791,16 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding, CvString* toolTipSink
 									iTempMod += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetWonderProductionModifier();
 								}
 							}
+#ifdef BUILDING_DOUBLE_PANTHEON
+							BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+							if (ePantheon != NO_BELIEF && getDoublePantheon() > 0)
+							{
+								if ((int)eEra < GC.GetGameBeliefs()->GetEntry(ePantheon)->GetObsoleteEra())
+								{
+									iTempMod += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetWonderProductionModifier();
+								}
+							}
+#endif
 							iMultiplier += iTempMod;
 							if(toolTipSink && iTempMod)
 							{
@@ -7175,6 +7198,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
 		changeNonAirUnitMaxHeal(pBuildingInfo->IsNonAirUnitMaxHeal() * iChange);
 #endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+		changeDoublePantheon(pBuildingInfo->IsDoublePantheon() * iChange);
+#endif
 
 		// Process for our player
 		for(int iI = 0; iI < MAX_PLAYERS; iI++)
@@ -7338,6 +7364,13 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 				{
 					iReligionYieldChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetCityYieldChange((YieldTypes)iYield);
 				}
+#ifdef BUILDING_DOUBLE_PANTHEON
+				BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+				if (ePantheon != NO_BELIEF && getDoublePantheon() > 0 && getPopulation() >= GC.GetGameBeliefs()->GetEntry(ePantheon)->GetMinPopulation())
+				{
+					iReligionYieldChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetCityYieldChange((YieldTypes)iYield);
+				}
+#endif
 
 				switch(iYield)
 				{
@@ -7445,6 +7478,13 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 							if (eSecondaryPantheon != NO_BELIEF)
 							{
 								iYieldFromBuilding += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetBuildingClassYieldChange(eBuildingClass, (YieldTypes)iYield);
+							}
+#endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+							BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+							if (ePantheon != NO_BELIEF && getDoublePantheon() > 0)
+							{
+								iYieldFromBuilding += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetBuildingClassYieldChange(eBuildingClass, (YieldTypes)iYield);
 							}
 #endif
 
@@ -7786,6 +7826,13 @@ int CvCity::foodDifferenceTimes100(bool bBottom, CvString* toolTipSink) const
 				{
 					iReligionGrowthMod += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetCityGrowthModifier();
 				}
+#ifdef BUILDING_DOUBLE_PANTHEON
+				BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+				if (ePantheon != NO_BELIEF && getDoublePantheon() > 0)
+				{
+					iReligionGrowthMod += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetCityGrowthModifier();
+				}
+#endif
 				iTotalMod += iReligionGrowthMod;
 				GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_FOODMOD_RELIGION", iReligionGrowthMod);
 			}
@@ -8638,6 +8685,15 @@ int CvCity::getCityAttackRangeModifier() const
 				}
 			}
 #endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+			if (pBelief == (BeliefTypes)GC.getInfoTypeForString("BELIEF_GODDESS_STRATEGY", true))
+			{
+				if (eMajority != NO_RELIGION && getDoublePantheon() > 0)
+				{
+					iTempMod++;
+				}
+			}
+#endif
 			pBelief = NO_BELIEF;
 			for (int jJ = iI + 1; jJ < pReligion->m_Beliefs.GetNumBeliefs(); jJ++)
 			{
@@ -8870,6 +8926,13 @@ int CvCity::GetJONSCultureThreshold() const
 			{
 				iReligionMod += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetPlotCultureCostModifier();
 			}
+#ifdef BUILDING_DOUBLE_PANTHEON
+			BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+			if (ePantheon != NO_BELIEF && getDoublePantheon() > 0)
+			{
+				iReligionMod += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetPlotCultureCostModifier();
+			}
+#endif
 		}
 	}
 
@@ -9156,6 +9219,13 @@ int CvCity::GetFaithPerTurn() const
 				{
 					iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetSpecialistYieldChange((SpecialistTypes)iSpecialist, YIELD_FAITH);
 				}
+#ifdef BUILDING_DOUBLE_PANTHEON
+				BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+				if (ePantheon != NO_BELIEF && getDoublePantheon() > 0)
+				{
+					iReligionChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetSpecialistYieldChange((SpecialistTypes)iSpecialist, YIELD_FAITH);
+				}
+#endif
 				iFaith += GetCityCitizens()->GetSpecialistCount((SpecialistTypes)iSpecialist) * iReligionChange;
 			}
 		}
@@ -10210,6 +10280,30 @@ int CvCity::GetLocalHappiness() const
 					iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetRiverHappiness();
 				}
 			}
+#endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+			BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+			if (ePantheon != NO_BELIEF && getDoublePantheon() > 0 && getPopulation() >= GC.GetGameBeliefs()->GetEntry(ePantheon)->GetMinPopulation())
+			{
+				iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetHappinessPerCity();
+			}
+#ifdef SACRED_WATERS_FRESH_WATER
+			if (plot()->isFreshWater())
+			{
+				if (ePantheon != NO_BELIEF)
+				{
+					iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetRiverHappiness();
+				}
+			}
+#else
+			if (plot()->isRiver())
+			{
+				if (ePantheon != NO_BELIEF)
+				{
+					iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetRiverHappiness();
+				}
+			}
+#endif
 #endif
 
 			// Buildings
@@ -11488,6 +11582,13 @@ int CvCity::getExtraSpecialistYield(YieldTypes eIndex, SpecialistTypes eSpeciali
 			{
 				iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetSpecialistYieldChange(eSpecialist, eIndex);
 			}
+#ifdef BUILDING_DOUBLE_PANTHEON
+			BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+			if (ePantheon != NO_BELIEF && getDoublePantheon() > 0)
+			{
+				iReligionChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetSpecialistYieldChange(eSpecialist, eIndex);
+			}
+#endif
 			iYieldMultiplier += iReligionChange;
 		}
 	}
@@ -12258,6 +12359,13 @@ int CvCity::getStrengthValue(bool bForRangeStrike) const
 				{
 					iReligionCityStrikeMod += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetCityRangeStrikeModifier();
 				}
+#ifdef BUILDING_DOUBLE_PANTHEON
+				BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+				if (ePantheon != NO_BELIEF && getDoublePantheon() > 0)
+				{
+					iReligionCityStrikeMod += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetCityRangeStrikeModifier();
+				}
+#endif
 				if(iReligionCityStrikeMod > 0)
 				{
 					iValue *= (100 + iReligionCityStrikeMod);
@@ -16376,6 +16484,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1005)
+	{
+# endif
+		kStream >> m_iDoublePantheon;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iDoublePantheon = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -16663,6 +16785,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
 	kStream << m_iNonAirUnitMaxHeal;
+#endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+	kStream << m_iDoublePantheon;
 #endif
 }
 
@@ -18250,5 +18375,20 @@ void CvCity::changeNonAirUnitMaxHeal(int iChange)
 {
 	VALIDATE_OBJECT
 	m_iNonAirUnitMaxHeal += iChange;
+}
+#endif
+
+#ifdef BUILDING_DOUBLE_PANTHEON
+//	----------------------------------------------------------------------------
+int CvCity::getDoublePantheon() const
+{
+	return m_iDoublePantheon;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeDoublePantheon(int iChange)
+{
+	VALIDATE_OBJECT
+	m_iDoublePantheon += iChange;
 }
 #endif

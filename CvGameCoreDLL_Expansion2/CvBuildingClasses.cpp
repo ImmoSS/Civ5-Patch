@@ -262,6 +262,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
 	m_bNonAirUnitMaxHeal(false),
 #endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+	m_bDoublePantheon(false),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -830,6 +833,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
 	m_bNonAirUnitMaxHeal = kResults.GetBool("NonAirUnitMaxHeal");
+#endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+	m_bDoublePantheon = kResults.GetBool("DoublePantheon");
 #endif
 
 	return true;
@@ -2398,6 +2404,12 @@ bool CvBuildingEntry::IsNonAirUnitMaxHeal() const
 	return m_bNonAirUnitMaxHeal;
 }
 #endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+bool CvBuildingEntry::IsDoublePantheon() const
+{
+	return m_bDoublePantheon;
+}
+#endif
 
 //=====================================
 // CvBuildingXMLEntries
@@ -3580,6 +3592,13 @@ int CvCityBuildings::GetFaithFromGreatWorks() const
 				{
 					iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetGreatWorkYieldChange(YIELD_FAITH);
 				}
+#ifdef BUILDING_DOUBLE_PANTHEON
+				BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+				if (ePantheon != NO_BELIEF && m_pCity->getDoublePantheon() > 0)
+				{
+					iReligionChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetGreatWorkYieldChange(YIELD_FAITH);
+				}
+#endif
 				iFaithPerWork += iReligionChange;
 			}
 		}

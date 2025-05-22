@@ -907,6 +907,10 @@ public:
 	int getNonAirUnitMaxHeal() const;
 	void changeNonAirUnitMaxHeal(int iChange);
 #endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+	int getDoublePantheon() const;
+	void changeDoublePantheon(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1141,6 +1145,9 @@ protected:
 #endif
 #ifdef BUILDING_NON_AIR_UNIT_MAX_HEAL
 	FAutoVariable<int, CvCity> m_iNonAirUnitMaxHeal;
+#endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+	FAutoVariable<int, CvCity> m_iDoublePantheon;
 #endif
 
 	void doGrowth();

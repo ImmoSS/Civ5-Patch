@@ -5404,6 +5404,13 @@ int CvUnit::healRate(const CvPlot* pPlot) const
 				{
 					iReligionMod += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetFriendlyHealChange();
 				}
+#ifdef BUILDING_DOUBLE_PANTHEON
+				BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+				if (ePantheon != NO_BELIEF && pClosestCity->getDoublePantheon() > 0)
+				{
+					iReligionMod += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetFriendlyHealChange();
+				}
+#endif
 				iExtraFriendlyHeal += iReligionMod;
 			}
 		}
