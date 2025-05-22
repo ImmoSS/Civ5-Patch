@@ -4888,11 +4888,14 @@ int CvCity::GetPurchaseCost(UnitTypes eUnit)
 				if (eThisPlayersUnitType == eUnit)
 				{
 					PolicyBranchTypes eBranch = (PolicyBranchTypes)GC.getInfoTypeForString("POLICY_BRANCH_PATRONAGE", true /*bHideAssert*/);
-					int iNum = GET_PLAYER(getOwner()).GetNumGoldPurchasedGreatPerson();
 
 					if ((eBranch != NO_POLICY_BRANCH_TYPE && kPlayer.GetPlayerPolicies()->IsPolicyBranchFinished(eBranch) && !kPlayer.GetPlayerPolicies()->IsPolicyBranchBlocked(eBranch)))
 					{
-						iCost = GC.getRELIGION_MIN_FAITH_FIRST_GREAT_PERSON() + iNum * GC.getRELIGION_FAITH_DELTA_NEXT_GREAT_PERSON();
+						iCost = GC.getRELIGION_MIN_FAITH_FIRST_GREAT_PERSON();
+						if (eUnitClass == (UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_SCIENTIST", true /*bHideAssert*/))
+						{
+							iCost += GC.getRELIGION_FAITH_DELTA_NEXT_GREAT_PERSON();
+						}
 					}
 				}
 			}
