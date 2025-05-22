@@ -2706,6 +2706,11 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 	CvCivilizationInfo& thisCivInfo = *GC.getCivilizationInfo(getCivilizationType());
 	int iNumBuildingClassInfos = GC.getNumBuildingClassInfos();
 
+#ifdef BUILDING_NO_HOLY_CITY_AND_NO_OCCUPIED_UNHAPPINESS
+	if (pkBuildingInfo->IsNoHolyCityAndNoOccupiedUnhappiness() && IsPuppet())
+		return false;
+#endif
+
 	// Can't construct a building to reduce occupied unhappiness if the city isn't occupied
 	if(pkBuildingInfo->IsNoOccupiedUnhappiness() && !IsOccupied())
 		return false;
