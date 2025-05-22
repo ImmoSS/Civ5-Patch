@@ -10370,6 +10370,9 @@ BuildingTypes CvCity::ChooseFreeCultureBuilding() const
 		if(pkBuildingInfo)
 		{
 			const CvBuildingClassInfo& kBuildingClassInfo = pkBuildingInfo->GetBuildingClassInfo();
+#ifdef POLICY_NUM_CITIES_FREE_CULTURE_BUILDING_ONLY_CULTURE_BUILDINGCLASS
+			if ((kBuildingClassInfo.GetID() == GC.getInfoTypeForString("BUILDINGCLASS_MONUMENT", true)) || (kBuildingClassInfo.GetID() == GC.getInfoTypeForString("BUILDINGCLASS_AMPHITHEATER", true)) || (kBuildingClassInfo.GetID() == GC.getInfoTypeForString("BUILDINGCLASS_OPERA_HOUSE", true)) || (kBuildingClassInfo.GetID() == GC.getInfoTypeForString("BUILDINGCLASS_MUSEUM", true)) || (kBuildingClassInfo.GetID() == GC.getInfoTypeForString("BUILDINGCLASS_BROADCAST_TOWER", true)))
+#endif
 			if(!isWorldWonderClass(kBuildingClassInfo) && !isNationalWonderClass(kBuildingClassInfo))
 			{
 				int iCulture = pkBuildingInfo->GetYieldChange(YIELD_CULTURE);
