@@ -7360,12 +7360,14 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 
 				int iReligionYieldChange = pReligion->m_Beliefs.GetCityYieldChange(getPopulation(), (YieldTypes)iYield);
 				BeliefTypes eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
+#ifdef BUILDING_DOUBLE_PANTHEON
+				BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+#endif
 				if (eSecondaryPantheon != NO_BELIEF && getPopulation() >= GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetMinPopulation())
 				{
 					iReligionYieldChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetCityYieldChange((YieldTypes)iYield);
 				}
 #ifdef BUILDING_DOUBLE_PANTHEON
-				BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
 				if (ePantheon != NO_BELIEF && getDoublePantheon() > 0 && getPopulation() >= GC.GetGameBeliefs()->GetEntry(ePantheon)->GetMinPopulation())
 				{
 					iReligionYieldChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetCityYieldChange((YieldTypes)iYield);
@@ -7397,6 +7399,12 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 					{
 						iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetYieldChangeTradeRoute((YieldTypes)iYield);
 					}
+#ifdef BUILDING_DOUBLE_PANTHEON
+					if (ePantheon != NO_BELIEF && getDoublePantheon() > 0 && getPopulation() >= GC.GetGameBeliefs()->GetEntry(ePantheon)->GetMinPopulation())
+					{
+						iReligionChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetYieldChangeTradeRoute((YieldTypes)iYield);
+					}
+#endif
 
 					switch(iYield)
 					{
