@@ -12308,6 +12308,45 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			// Bonus VS fortified
 			if (pOtherUnit->getFortifyTurns() > 0)
 				iModifier += attackFortifiedModifier();
+
+			// Trait (player level) bonus against higher tech units
+			iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
+			if (iTempModifier > 0)
+			{
+				// Only applies defending friendly territory
+#ifndef ASSYRIA_UA_REWORK
+				if (pBattlePlot->getOwner() == getOwner())
+#endif
+				{
+					// Check tech levels too
+#ifdef ASSYRIA_UA_REWORK
+					if (pOtherUnit && !(GET_TEAM(GET_PLAYER(pOtherUnit->getOwner()).getTeam()).isBarbarian() || GET_TEAM(GET_PLAYER(pOtherUnit->getOwner()).getTeam()).isMinorCiv()) && GET_TEAM(GET_PLAYER(pOtherUnit->getOwner()).getTeam()).GetTeamTechs()->GetNumTechsKnown() > GET_TEAM(GET_PLAYER(getOwner()).getTeam()).GetTeamTechs()->GetNumTechsKnown())
+#else
+					UnitTypes eMyUnitType = getUnitType();
+					if (pOtherUnit && pOtherUnit->IsHigherTechThan(eMyUnitType))
+#endif
+					{
+						iModifier += iTempModifier;
+					}
+				}
+			}
+
+			// Trait (player level) bonus against larger civs
+			iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsLargerCiv();
+			if (iTempModifier > 0)
+			{
+#ifdef ETHIOPIA_UA_REWORK
+				if (pOtherUnit)
+				{
+					iModifier += pOtherUnit->IsLargerCivThan(this) * iTempModifier;
+				}
+#else
+				if (pOtherUnit && pOtherUnit->IsLargerCivThan(this))
+				{
+					iModifier += iTempModifier;
+				}
+#endif
+			}
 #endif
 
 			// Bonus for fighting in one's lands
@@ -12443,6 +12482,45 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 #ifdef FIX_RANGE_DEFENSE_MOD
 		// Ranged Defense Mod
 		iModifier += rangedDefenseModifier();
+
+		// Trait (player level) bonus against higher tech units
+		iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
+		if (iTempModifier > 0)
+		{
+			// Only applies defending friendly territory
+#ifndef ASSYRIA_UA_REWORK
+			if (pBattlePlot->getOwner() == getOwner())
+#endif
+			{
+				// Check tech levels too
+#ifdef ASSYRIA_UA_REWORK
+				if (pOtherUnit && !(GET_TEAM(GET_PLAYER(pOtherUnit->getOwner()).getTeam()).isBarbarian() || GET_TEAM(GET_PLAYER(pOtherUnit->getOwner()).getTeam()).isMinorCiv()) && GET_TEAM(GET_PLAYER(pOtherUnit->getOwner()).getTeam()).GetTeamTechs()->GetNumTechsKnown() > GET_TEAM(GET_PLAYER(getOwner()).getTeam()).GetTeamTechs()->GetNumTechsKnown())
+#else
+				UnitTypes eMyUnitType = getUnitType();
+				if (pOtherUnit && pOtherUnit->IsHigherTechThan(eMyUnitType))
+#endif
+				{
+					iModifier += iTempModifier;
+				}
+			}
+		}
+
+		// Trait (player level) bonus against larger civs
+		iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsLargerCiv();
+		if (iTempModifier > 0)
+		{
+#ifdef ETHIOPIA_UA_REWORK
+			if (pOtherUnit)
+			{
+				iModifier += pOtherUnit->IsLargerCivThan(this) * iTempModifier;
+			}
+#else
+			if (pOtherUnit && pOtherUnit->IsLargerCivThan(this))
+			{
+				iModifier += iTempModifier;
+			}
+#endif
+		}
 
 		// Bonus for fighting in one's lands
 		if (plot()->IsFriendlyTerritory(getOwner()))
@@ -12692,7 +12770,46 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			// Bonus VS fortified
 			if (pOtherUnit->getFortifyTurns() > 0)
 				iModifier += attackFortifiedModifier();
+
+			// Trait (player level) bonus against higher tech units
+			iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
+			if (iTempModifier > 0)
+			{
+				// Only applies defending friendly territory
+#ifndef ASSYRIA_UA_REWORK
+				if (pBattlePlot->getOwner() == getOwner())
 #endif
+				{
+					// Check tech levels too
+#ifdef ASSYRIA_UA_REWORK
+					if (pOtherUnit && !(GET_TEAM(GET_PLAYER(pOtherUnit->getOwner()).getTeam()).isBarbarian() || GET_TEAM(GET_PLAYER(pOtherUnit->getOwner()).getTeam()).isMinorCiv()) && GET_TEAM(GET_PLAYER(pOtherUnit->getOwner()).getTeam()).GetTeamTechs()->GetNumTechsKnown() > GET_TEAM(GET_PLAYER(getOwner()).getTeam()).GetTeamTechs()->GetNumTechsKnown())
+#else
+					UnitTypes eMyUnitType = getUnitType();
+					if (pOtherUnit && pOtherUnit->IsHigherTechThan(eMyUnitType))
+#endif
+					{
+						iModifier += iTempModifier;
+					}
+				}
+			}
+#endif
+
+			// Trait (player level) bonus against larger civs
+			iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsLargerCiv();
+			if (iTempModifier > 0)
+			{
+#ifdef ETHIOPIA_UA_REWORK
+				if (pOtherUnit)
+				{
+					iModifier += pOtherUnit->IsLargerCivThan(this) * iTempModifier;
+				}
+#else
+				if (pOtherUnit && pOtherUnit->IsLargerCivThan(this))
+				{
+					iModifier += iTempModifier;
+				}
+#endif
+			}
 
 			// Rough Ground
 			if(pTargetPlot->isRoughGround())
@@ -12818,6 +12935,45 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 #ifdef FIX_RANGE_DEFENSE_MOD
 		// Ranged Defense Mod
 		iModifier += rangedDefenseModifier();
+
+		// Trait (player level) bonus against higher tech units
+		iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
+		if (iTempModifier > 0)
+		{
+			// Only applies defending friendly territory
+#ifndef ASSYRIA_UA_REWORK
+			if (pBattlePlot->getOwner() == getOwner())
+#endif
+			{
+				// Check tech levels too
+#ifdef ASSYRIA_UA_REWORK
+				if (pOtherUnit && !(GET_TEAM(GET_PLAYER(pOtherUnit->getOwner()).getTeam()).isBarbarian() || GET_TEAM(GET_PLAYER(pOtherUnit->getOwner()).getTeam()).isMinorCiv()) && GET_TEAM(GET_PLAYER(pOtherUnit->getOwner()).getTeam()).GetTeamTechs()->GetNumTechsKnown() > GET_TEAM(GET_PLAYER(getOwner()).getTeam()).GetTeamTechs()->GetNumTechsKnown())
+#else
+				UnitTypes eMyUnitType = getUnitType();
+				if (pOtherUnit && pOtherUnit->IsHigherTechThan(eMyUnitType))
+#endif
+				{
+					iModifier += iTempModifier;
+				}
+			}
+		}
+
+		// Trait (player level) bonus against larger civs
+		iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsLargerCiv();
+		if (iTempModifier > 0)
+		{
+#ifdef ETHIOPIA_UA_REWORK
+			if (pOtherUnit)
+			{
+				iModifier += pOtherUnit->IsLargerCivThan(this) * iTempModifier;
+			}
+#else
+			if (pOtherUnit && pOtherUnit->IsLargerCivThan(this))
+			{
+				iModifier += iTempModifier;
+			}
+#endif
+		}
 
 		// Bonus for fighting in one's lands
 		if (plot()->IsFriendlyTerritory(getOwner()))
