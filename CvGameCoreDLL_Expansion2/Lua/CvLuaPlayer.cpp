@@ -9814,6 +9814,9 @@ int CvLuaPlayer::lGetPlayerBuildingClassHappiness(lua_State* L)
 				int iFollowers = pkCity->GetCityReligions()->GetNumFollowers(eMajority);
 
 				const CvReligion* pReligion = pReligions->GetReligion(eMajority, pkPlayer->GetID());
+#ifdef BUILDING_DOUBLE_PANTHEON
+				BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+#endif
 				if (pReligion)
 				{
 					BeliefTypes eSecondaryPantheon = pkCity->GetCityReligions()->GetSecondaryReligionPantheonBelief();
@@ -9821,6 +9824,13 @@ int CvLuaPlayer::lGetPlayerBuildingClassHappiness(lua_State* L)
 					{
 						iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetBuildingClassHappiness(eOtherBuildingClass);
 					}
+#ifdef BUILDING_DOUBLE_PANTHEON
+					BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+					if (ePantheon != NO_BELIEF && iFollowers >= GC.GetGameBeliefs()->GetEntry(ePantheon)->GetMinPopulation())
+					{
+						iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetBuildingClassHappiness(eOtherBuildingClass);
+					}
+#endif
 				}
 			}
 		}

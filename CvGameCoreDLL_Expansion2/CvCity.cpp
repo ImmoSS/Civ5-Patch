@@ -10235,14 +10235,17 @@ int CvCity::GetLocalHappiness() const
 	if(eMajority != NO_RELIGION)
 	{
 		BeliefTypes eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
+#ifdef BUILDING_DOUBLE_PANTHEON
+		BeliefTypes ePantheon = NO_BELIEF;
+#endif
 		int iFollowers = GetCityReligions()->GetNumFollowers(eMajority);
 
 		const CvReligion* pReligion = pReligions->GetReligion(eMajority, kPlayer.GetID());
-#ifdef BUILDING_DOUBLE_PANTHEON
-		BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
-#endif
 		if(pReligion)
 		{
+#ifdef BUILDING_DOUBLE_PANTHEON
+			ePantheon = pReligion->m_Beliefs.GetBelief(0);
+#endif
 			iHappinessFromReligion += pReligion->m_Beliefs.GetHappinessPerCity(getPopulation());
 			if (eSecondaryPantheon != NO_BELIEF && getPopulation() >= GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetMinPopulation())
 			{
