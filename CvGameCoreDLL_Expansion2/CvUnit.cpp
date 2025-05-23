@@ -12309,6 +12309,9 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			if (pOtherUnit->getFortifyTurns() > 0)
 				iModifier += attackFortifiedModifier();
 
+			if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+				iModifier += GetAdjacentModifier();
+
 			// Trait (player level) bonus against higher tech units
 			iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
 			if (iTempModifier > 0)
@@ -12482,6 +12485,9 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 #ifdef FIX_RANGE_DEFENSE_MOD
 		// Ranged Defense Mod
 		iModifier += rangedDefenseModifier();
+
+		if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+			iModifier += GetAdjacentModifier();
 
 		// Trait (player level) bonus against higher tech units
 		iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
@@ -12771,6 +12777,9 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			if (pOtherUnit->getFortifyTurns() > 0)
 				iModifier += attackFortifiedModifier();
 
+			if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+				iModifier += GetAdjacentModifier();
+
 			// Trait (player level) bonus against higher tech units
 			iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
 			if (iTempModifier > 0)
@@ -12935,6 +12944,9 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 #ifdef FIX_RANGE_DEFENSE_MOD
 		// Ranged Defense Mod
 		iModifier += rangedDefenseModifier();
+
+		if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+			iModifier += GetAdjacentModifier();
 
 		// Trait (player level) bonus against higher tech units
 		iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();

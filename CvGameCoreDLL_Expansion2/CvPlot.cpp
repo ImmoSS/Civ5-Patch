@@ -7268,6 +7268,9 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 	int iYield;
 	ReligionTypes eMajority = NO_RELIGION;
 	BeliefTypes eSecondaryPantheon = NO_BELIEF;
+#ifdef BUILDING_DOUBLE_PANTHEON
+	BeliefTypes ePantheon = NO_BELIEF;
+#endif
 
 	if(isImpassable() || isMountain())
 	{
@@ -7285,6 +7288,9 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 	{
 		eMajority = pWorkingCity->GetCityReligions()->GetReligiousMajority();
 		eSecondaryPantheon = pWorkingCity->GetCityReligions()->GetSecondaryReligionPantheonBelief();
+#ifdef BUILDING_DOUBLE_PANTHEON
+		ePantheon = GC.getGame().GetGameReligions()->GetReligion(eMajority, pWorkingCity->getOwner())->m_Beliefs.GetBelief(0);
+#endif
 	}
 
 	CvAssertMsg(getTerrainType() != NO_TERRAIN, "TerrainType is not assigned a valid value");
@@ -7390,6 +7396,12 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 				{
 					iYield += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetFeatureYieldChange(FEATURE_ICE, eYield);
 				}
+#ifdef BUILDING_DOUBLE_PANTHEON
+				if (ePantheon != NO_BELIEF && pWorkingCity->getDoublePantheon() > 0)
+				{
+					iYield += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetFeatureYieldChange(FEATURE_ICE, eYield);
+				}
+#endif
 			}
 		}
 #endif
@@ -7431,6 +7443,12 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 					{
 						iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetFeatureYieldChange(getFeatureType(), eYield);
 					}
+#ifdef BUILDING_DOUBLE_PANTHEON
+					if (ePantheon != NO_BELIEF && pWorkingCity->getDoublePantheon() > 0)
+					{
+						iReligionChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetFeatureYieldChange(getFeatureType(), eYield);
+					}
+#endif
 					iYieldChange += iReligionChange;
 				}
 			}
@@ -7450,6 +7468,12 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 						{
 							iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetYieldChangeNaturalWonder(eYield);
 						}
+#ifdef BUILDING_DOUBLE_PANTHEON
+						if (ePantheon != NO_BELIEF && pWorkingCity->getDoublePantheon() > 0)
+						{
+							iReligionChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetYieldChangeNaturalWonder(eYield);
+						}
+#endif
 						iYieldChange += iReligionChange;
 
 						int iReligionMod = pReligion->m_Beliefs.GetYieldModifierNaturalWonder(eYield);
@@ -7457,6 +7481,12 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 						{
 							iReligionMod += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetYieldModifierNaturalWonder(eYield);
 						}
+#ifdef BUILDING_DOUBLE_PANTHEON
+						if (ePantheon != NO_BELIEF && pWorkingCity->getDoublePantheon() > 0)
+						{
+							iReligionMod += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetYieldModifierNaturalWonder(eYield);
+						}
+#endif
 						iMod += iReligionMod;
 					}
 				}
@@ -7524,6 +7554,12 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 					{
 						iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetResourceYieldChange(eResource, eYield);
 					}
+#ifdef BUILDING_DOUBLE_PANTHEON
+					if (ePantheon != NO_BELIEF && pWorkingCity->getDoublePantheon() > 0)
+					{
+						iReligionChange += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetResourceYieldChange(eResource, eYield);
+					}
+#endif
 					iYield += iReligionChange;
 				}
 			}

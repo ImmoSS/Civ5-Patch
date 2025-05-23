@@ -10230,6 +10230,9 @@ int CvCity::GetLocalHappiness() const
 		int iFollowers = GetCityReligions()->GetNumFollowers(eMajority);
 
 		const CvReligion* pReligion = pReligions->GetReligion(eMajority, kPlayer.GetID());
+#ifdef BUILDING_DOUBLE_PANTHEON
+		BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+#endif
 		if(pReligion)
 		{
 			iHappinessFromReligion += pReligion->m_Beliefs.GetHappinessPerCity(getPopulation());
@@ -10282,7 +10285,6 @@ int CvCity::GetLocalHappiness() const
 			}
 #endif
 #ifdef BUILDING_DOUBLE_PANTHEON
-			BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
 			if (ePantheon != NO_BELIEF && getDoublePantheon() > 0 && getPopulation() >= GC.GetGameBeliefs()->GetEntry(ePantheon)->GetMinPopulation())
 			{
 				iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetHappinessPerCity();
@@ -10349,6 +10351,18 @@ int CvCity::GetLocalHappiness() const
 						}
 #else
 						iHappinessFromReligion += pReligion->m_Beliefs.GetBuildingClassHappiness(eBuildingClass, iFollowers);
+#endif
+#ifdef RELIGIOUS_TOLERANCE_DOUBLES_OWNER_PANTHEON
+						if (eSecondaryPantheon != NO_BELIEF && iFollowers >= GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetMinPopulation())
+						{
+							iHappinessFromReligion += pBeliefs->GetEntry(eSecondaryPantheon)->GetBuildingClassHappiness(eBuildingClass);
+						}
+#endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+						if (ePantheon != NO_BELIEF && iFollowers >= GC.GetGameBeliefs()->GetEntry(ePantheon)->GetMinPopulation())
+						{
+							iHappinessFromReligion += pBeliefs->GetEntry(ePantheon)->GetBuildingClassHappiness(eBuildingClass);
+						}
 #endif
 					}
 				}
