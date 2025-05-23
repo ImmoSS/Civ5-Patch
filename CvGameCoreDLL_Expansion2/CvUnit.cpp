@@ -12444,6 +12444,11 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 		{
 			iModifier += pTraits->GetCityStateCombatModifier();
 		}
+
+#ifdef FIX_RANGE_DEFENSE_MOD
+		if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+			iModifier += GetAdjacentModifier();
+#endif
 	}
 
 	// Ranged attack mod
@@ -12916,6 +12921,11 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 		{
 			iModifier += pTraits->GetCityStateCombatModifier();
 		}
+
+#ifdef FIX_RANGE_DEFENSE_MOD
+		if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+			iModifier += GetAdjacentModifier();
+#endif
 	}
 
 	// Ranged attack mod
