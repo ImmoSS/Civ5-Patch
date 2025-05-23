@@ -3448,7 +3448,7 @@ void CvCity::DoPickResourceDemanded(bool bCurrentResourceInvalid)
 
 						if (pLoopPlot != NULL)
 						{
-							if (eResource != pLoopPlot->getResourceType() && pLoopPlot->getOwner() != NO_PLAYER)
+							if (eResource == pLoopPlot->getResourceType() && pLoopPlot->getOwner() != NO_PLAYER)
 							{
 								if (GET_PLAYER(pLoopPlot->getOwner()).isHuman() || GET_PLAYER(pLoopPlot->getOwner()).isMinorCiv())
 								{
