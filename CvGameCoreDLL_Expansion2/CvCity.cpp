@@ -10350,6 +10350,12 @@ int CvCity::GetLocalHappiness() const
 #else
 						iHappinessFromReligion += pReligion->m_Beliefs.GetBuildingClassHappiness(eBuildingClass, iFollowers);
 #endif
+#ifdef RELIGIOUS_TOLERANCE_DOUBLES_OWNER_PANTHEON
+						if (eSecondaryPantheon != NO_BELIEF && iFollowers >= GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetMinPopulation())
+						{
+							iHappinessFromReligion += pBeliefs->GetEntry(eSecondaryPantheon)->GetBuildingClassHappiness(eBuildingClass);
+						}
+#endif
 					}
 				}
 			}
