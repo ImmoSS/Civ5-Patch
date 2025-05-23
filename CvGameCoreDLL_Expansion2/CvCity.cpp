@@ -14422,6 +14422,13 @@ bool CvCity::IsCanPurchase(bool bTestPurchaseCost, bool bTestTrainable, UnitType
 				return false;
 			}
 
+#ifdef FIX_PURCHASE_ADMIRAL_IN_LAND__CITIES
+			if ((UnitClassTypes)GC.getUnitInfo(eUnitType)->GetUnitClassType() == GC.getInfoTypeForString("UNITCLASS_GREAT_ADMIRAL") && !isCoastal())
+			{
+				return false;
+			}
+#endif
+
 #ifdef FAITH_FOR_THE_FIRST_SCIENTIST
 			const UnitClassTypes eUnitClass = (UnitClassTypes)GC.getUnitInfo(eUnitType)->GetUnitClassType();
 			if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_SCIENTIST", true /*bHideAssert*/))
