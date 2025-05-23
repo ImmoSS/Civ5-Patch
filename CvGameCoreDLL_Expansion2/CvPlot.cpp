@@ -7289,7 +7289,10 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 		eMajority = pWorkingCity->GetCityReligions()->GetReligiousMajority();
 		eSecondaryPantheon = pWorkingCity->GetCityReligions()->GetSecondaryReligionPantheonBelief();
 #ifdef BUILDING_DOUBLE_PANTHEON
-		ePantheon = GC.getGame().GetGameReligions()->GetReligion(eMajority, pWorkingCity->getOwner())->m_Beliefs.GetBelief(0);
+		if (GC.getGame().GetGameReligions()->GetReligion(eMajority, pWorkingCity->getOwner()))
+		{
+			ePantheon = GC.getGame().GetGameReligions()->GetReligion(eMajority, pWorkingCity->getOwner())->m_Beliefs.GetBelief(0);
+		}
 #endif
 	}
 
