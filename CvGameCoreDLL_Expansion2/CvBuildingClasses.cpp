@@ -2700,13 +2700,12 @@ bool CvCityBuildings::IsBuildingSellable(const CvBuildingEntry& kBuilding) const
 
 	PolicyTypes ePiety = (PolicyTypes)GC.getInfoTypeForString("POLICY_PIETY", true);
 	PolicyTypes eCultualCenters = (PolicyTypes)GC.getInfoTypeForString("POLICY_CULTURAL_CENTERS", true);
-	PolicyTypes eSocialistRealism = (PolicyTypes)GC.getInfoTypeForString("POLICY_SOCIALIST_REALISM", true);
 	PolicyTypes eProfessionalArmy = (PolicyTypes)GC.getInfoTypeForString("POLICY_PROFESSIONAL_ARMY", true);
 
 	if(((BuildingClassTypes) kBuilding.GetBuildingClassType() == eShrine || (BuildingClassTypes) kBuilding.GetBuildingClassType() == eTemple) && GET_PLAYER(m_pCity->getOwner()).GetPlayerPolicies()->HasPolicy(ePiety))
 		return false;
 
-	if((BuildingClassTypes) kBuilding.GetBuildingClassType() == eMonument && (GET_PLAYER(m_pCity->getOwner()).GetPlayerPolicies()->HasPolicy(eCultualCenters) || GET_PLAYER(m_pCity->getOwner()).GetPlayerPolicies()->HasPolicy(eSocialistRealism)))
+	if((BuildingClassTypes) kBuilding.GetBuildingClassType() == eMonument && (GET_PLAYER(m_pCity->getOwner()).GetPlayerPolicies()->HasPolicy(eCultualCenters)))
 		return false;
 
 	if ((BuildingClassTypes)kBuilding.GetBuildingClassType() == eBarracks && GET_PLAYER(m_pCity->getOwner()).GetPlayerPolicies()->HasPolicy(eProfessionalArmy))
