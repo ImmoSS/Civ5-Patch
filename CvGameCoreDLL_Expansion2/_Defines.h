@@ -1353,7 +1353,7 @@
 #define SHOW_ACTUAL_POPULATION
 /// Adds UI Drafts screen for staging room -- each player bans X civs and then picks from random set of Y civs
 #define INGAME_CIV_DRAFTER
-#define EMERGENCY_LOGGING
+// #define EMERGENCY_LOGGING
 /*OTHER CHANGES END*/
 
 
