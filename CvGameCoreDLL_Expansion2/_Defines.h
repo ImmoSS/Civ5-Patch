@@ -1153,7 +1153,8 @@
 # define BUMP_SAVE_VERSION_ESPIONAGE 1000
 // 1000: v7.0   (initial)
 // 1001: v7.3b  (adds replay events)
-# define BUMP_SAVE_VERSION_GAME 1001
+// 1002: v11.1a (adds m_uiTotalTimeElapsed)
+# define BUMP_SAVE_VERSION_GAME 1002
 // 1000: v7.0   (initial)
 // 1001: v7.3   (adds Workers Bully Turn)
 // 1002: v10.2  (adds ENHANCED_GRAPHS)
