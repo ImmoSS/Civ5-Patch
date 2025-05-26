@@ -10033,7 +10033,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst
 								if (iChange > 0)
 								{
 									pLoopCity->changePopulation(iChange * GC.getBuildingInfo(eBuilding)->GetGlobalPopulationChange());
-									GetTreasury()->ChangeGold(pLoopCity->getGrowthGold() * iChange);
 								}
 #else
 								pLoopCity->setPopulation(std::max(1, (pLoopCity->getPopulation() + iChange * GC.getBuildingInfo(eBuilding)->GetGlobalPopulationChange())));
