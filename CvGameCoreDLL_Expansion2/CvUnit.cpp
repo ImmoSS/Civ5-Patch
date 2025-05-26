@@ -9050,6 +9050,16 @@ bool CvUnit::CanCultureBomb(const CvPlot* pPlot, bool bTestVisible) const
 	if(isDelayedDeath())
 		return false;
 
+#ifdef AI_CANT_DO_CULTURE_BOMB
+	if (GC.getGame().isOption("GAMEOPTION_AI_TWEAKS"))
+	{
+		if (!GET_PLAYER(getOwner()).isHuman())
+		{
+			return false;
+		}
+	}
+#endif
+
 	// Things we test for if we're going to perform this action RIGHT NOW
 	if(!bTestVisible)
 	{

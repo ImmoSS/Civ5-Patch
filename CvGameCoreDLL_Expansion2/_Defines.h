@@ -709,6 +709,8 @@
 #define AI_CANT_COUP
 ///
 #define FINISH_KICKED_PLAYER_MOVES
+///
+#define AI_CANT_DO_CULTURE_BOMB
 /*AI CHANGES END*/
 
 
