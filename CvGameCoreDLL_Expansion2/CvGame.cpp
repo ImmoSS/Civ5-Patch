@@ -2128,7 +2128,7 @@ void CvGame::updateTestEndTurn()
 						gDLL->sendTurnComplete();
 						CvAchievementUnlocker::EndTurn();
 #ifdef REPLAY_EVENTS
-						SLOG("---m_endTurnTimer commit +%f", m_endTurnTimer.Peek());
+						//SLOG("---m_endTurnTimer commit +%f", m_endTurnTimer.Peek());
 						ChangeTotalTimeElapsed(static_cast<uint>(m_endTurnTimer.Peek() * 1000));
 #endif
 						m_endTurnTimer.Start();
@@ -2220,7 +2220,7 @@ void CvGame::updateTestEndTurn()
 								{
 									GC.GetEngineUserInterface()->setCanEndTurn(true);
 #ifdef REPLAY_EVENTS
-									SLOG("---m_endTurnTimer commit +%f", m_endTurnTimer.Peek());
+									//SLOG("---m_endTurnTimer commit +%f", m_endTurnTimer.Peek());
 									ChangeTotalTimeElapsed(static_cast<uint>(m_endTurnTimer.Peek() * 1000));
 #endif
 									m_endTurnTimer.Start();
@@ -11459,7 +11459,7 @@ void CvGame::endTurnTimerSemaphoreDecrement()
 	{
 		m_endTurnTimerSemaphore = 0;
 #ifdef REPLAY_EVENTS
-		SLOG("---m_endTurnTimer commit +%f", m_endTurnTimer.Peek());
+		//SLOG("---m_endTurnTimer commit +%f", m_endTurnTimer.Peek());
 		ChangeTotalTimeElapsed(static_cast<uint>(m_endTurnTimer.Peek() * 1000));
 #endif
 		m_endTurnTimer.Start();
@@ -11471,7 +11471,7 @@ void CvGame::endTurnTimerReset()
 {
 	m_endTurnTimerSemaphore = 0;
 #ifdef REPLAY_EVENTS
-	SLOG("---m_endTurnTimer commit +%f", m_endTurnTimer.Peek());
+	//SLOG("---m_endTurnTimer commit +%f", m_endTurnTimer.Peek());
 	ChangeTotalTimeElapsed(static_cast<uint>(m_endTurnTimer.Peek() * 1000));
 #endif
 	m_endTurnTimer.Start();
