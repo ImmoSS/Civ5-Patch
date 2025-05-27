@@ -5267,6 +5267,15 @@ void CvPlayer::doTurn()
 					}
 				}
 #endif
+#ifdef DO_EXTRACT_AI_SPIES
+				if (!isHuman() && GC.getGame().isOption("GAMEOPTION_AI_TWEAKS"))
+				{
+					for (uint uiSpy = 0; uiSpy < GetEspionage()->m_aSpyList.size(); uiSpy++)
+					{
+						GetEspionage()->ExtractSpyFromCity(uiSpy);
+					}
+				}
+#endif
 #ifdef CHANGE_CITY_ORIGINAL_OWNER
 				if (GC.getGame().isNetworkMultiPlayer())
 				{
@@ -30804,6 +30813,15 @@ void CvPlayer::disconnected()
 					}
 				}
 #endif
+#ifdef DO_EXTRACT_AI_SPIES
+				if (!isHuman() && GC.getGame().isOption("GAMEOPTION_AI_TWEAKS"))
+				{
+					for (uint uiSpy = 0; uiSpy < GetEspionage()->m_aSpyList.size(); uiSpy++)
+					{
+						GetEspionage()->ExtractSpyFromCity(uiSpy);
+					}
+				}
+#endif
 #ifdef CHANGE_CITY_ORIGINAL_OWNER
 				if (GC.getGame().isNetworkMultiPlayer())
 				{
@@ -30946,6 +30964,15 @@ void CvPlayer::disconnected()
 						// Bump Units out of places they shouldn't be
 						GC.getMap().verifyUnitValidPlot();
 					}
+				}
+			}
+#endif
+#ifdef DO_EXTRACT_AI_SPIES
+			if (!isHuman() && GC.getGame().isOption("GAMEOPTION_AI_TWEAKS"))
+			{
+				for (uint uiSpy = 0; uiSpy < GetEspionage()->m_aSpyList.size(); uiSpy++)
+				{
+					GetEspionage()->ExtractSpyFromCity(uiSpy);
 				}
 			}
 #endif
