@@ -628,9 +628,9 @@ local function QuestString(majorPlayerID, minorPlayer, questID, questData1)
 			local iLeaderScore = minorPlayer:GetMinorCivContestValueForLeader(questID)
 			local iMajorScore = minorPlayer:GetMinorCivContestValueForPlayer(majorPlayerID, questID)
 			if minorPlayer:IsMinorCivContestLeader(majorPlayerID, questID) then
-				return L( "TXT_KEY_CITY_STATE_QUEST_CONTEST_FAITH_WINNING_FORMAL", iMajorScore, iMajorScore, GameDefines["MINOR_QUEST_FRIENDSHIP_CONTEST_FAITH"] )
+				return L( "TXT_KEY_CITY_STATE_QUEST_CONTEST_FAITH_WINNING_FORMAL", iMajorScore, GameDefines["MINOR_QUEST_FRIENDSHIP_CONTEST_FAITH"] )
 			else
-				return L( "TXT_KEY_CITY_STATE_QUEST_CONTEST_FAITH_LOSING_FORMAL", iLeaderScore, iMajorScore, iMajorScore, GameDefines["MINOR_QUEST_FRIENDSHIP_CONTEST_FAITH"] )
+				return L( "TXT_KEY_CITY_STATE_QUEST_CONTEST_FAITH_LOSING_FORMAL", iLeaderScore, iMajorScore, GameDefines["MINOR_QUEST_FRIENDSHIP_CONTEST_FAITH"] )
 			end
 		elseif questID == MinorCivQuestTypes.MINOR_CIV_QUEST_CONTEST_TECHS then
 			local iLeaderScore = minorPlayer:GetMinorCivContestValueForLeader(questID)
