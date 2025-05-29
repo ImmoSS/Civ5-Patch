@@ -10733,6 +10733,11 @@ bool CvUnit::IsBarbarianUnitThreateningMinor(PlayerTypes eMinor)
 	if(!isBarbarian())
 		return false;
 
+#ifdef FIX_BARBARIAN_NULL_PLOT_POINTER
+	if (!plot())
+		return false;
+#endif
+
 	// Plot owned by this minor?
 	if(plot()->getOwner() == eMinor)
 		return true;
