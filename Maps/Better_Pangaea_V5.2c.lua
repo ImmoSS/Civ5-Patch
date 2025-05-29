@@ -4523,6 +4523,139 @@ function IsNaturalWonder(plot)
 	return false;
 end
 ------------------------------------------------------------------------------
+function AssignStartingPlots:AssignLuxuryRoles()
+	-- Each region gets an individual Luxury type assigned to it.
+	-- Each Luxury type can be assigned to no more than three regions.
+	-- No more than nine total Luxury types will be assigned to regions.
+	-- Between two and four Luxury types will be assigned to City States.
+	-- Remaining Luxury types will be distributed at random or left out.
+	--
+	-- Luxury roles must be assigned before City States can be placed.
+	-- This is because civs who are forced to share their luxury type with other 
+	-- civs may get extra city states placed in their region to compensate.
+
+	self:SortRegionsByType() -- creates self.regions_sorted_by_type, which will be expanded to store all data regarding regional luxuries.
+
+	-- Assign a luxury to each region.
+	for index, region_info in ipairs(self.regions_sorted_by_type) do
+		local region_number = region_info[1];
+		local resource_ID = self:AssignLuxuryToRegion(region_number)
+		self.regions_sorted_by_type[index][2] = resource_ID; -- This line applies the assignment.
+		self.region_luxury_assignment[region_number] = resource_ID;
+		self.luxury_assignment_count[resource_ID] = self.luxury_assignment_count[resource_ID] + 1; -- Track assignments
+		--
+		print("-"); print("Region#", region_number, " of type ", self.regionTypes[region_number], " has been assigned Luxury ID#", resource_ID);
+		--
+		local already_assigned = TestMembership(self.resourceIDs_assigned_to_regions, resource_ID)
+		if not already_assigned then
+			table.insert(self.resourceIDs_assigned_to_regions, resource_ID);
+			self.iNumTypesAssignedToRegions = self.iNumTypesAssignedToRegions + 1;
+			self.iNumTypesUnassigned = self.iNumTypesUnassigned - 1;
+		end
+	end
+	
+	-- Assign three of the remaining types to be exclusive to City States.
+	-- Build options list.
+	local iNumAvailableTypes = 0;
+	local resource_IDs, resource_weights = {}, {};
+	for index, resource_options in ipairs(self.luxury_city_state_weights) do
+		local res_ID = resource_options[1];
+		local test = TestMembership(self.resourceIDs_assigned_to_regions, res_ID)
+		if test == false then
+			table.insert(resource_IDs, res_ID);
+			table.insert(resource_weights, resource_options[2]);
+			iNumAvailableTypes = iNumAvailableTypes + 1;
+		else
+			print("Luxury ID#", res_ID, "rejected by City States as already belonging to Regions.");
+		end
+	end
+	if iNumAvailableTypes < 3 then
+		print("---------------------------------------------------------------------------------------");
+		print("- Luxuries have been modified in ways disruptive to the City State Assignment Process -");
+		print("---------------------------------------------------------------------------------------");
+	end
+	-- Choose luxuries.
+	for cs_lux = 1, 3 do
+		local totalWeight = 0;
+		local res_threshold = {};
+		for i, this_weight in ipairs(resource_weights) do
+			totalWeight = totalWeight + this_weight;
+		end
+		local accumulatedWeight = 0;
+		for index, weight in ipairs(resource_weights) do
+			local threshold = (weight + accumulatedWeight) * 10000 / totalWeight;
+			table.insert(res_threshold, threshold);
+			accumulatedWeight = accumulatedWeight + resource_weights[index];
+		end
+		local use_this_ID;
+		local diceroll = Map.Rand(10000, "Choose resource type - City State Luxuries - Lua");
+		for index, threshold in ipairs(res_threshold) do
+			if diceroll < threshold then -- Choose this resource type.
+				use_this_ID = resource_IDs[index];
+				table.insert(self.resourceIDs_assigned_to_cs, use_this_ID);
+				table.remove(resource_IDs, index);
+				table.remove(resource_weights, index);
+				self.iNumTypesUnassigned = self.iNumTypesUnassigned - 1;
+				--print("-"); print("City States have been assigned Luxury ID#", use_this_ID);
+				break
+			end
+		end
+	end
+	
+	-- Assign Marble to special casing.
+	table.insert(self.resourceIDs_assigned_to_special_case, self.marble_ID);
+	self.iNumTypesUnassigned = self.iNumTypesUnassigned - 1;
+
+	-- Assign appropriate amount to be Disabled, then assign the rest to be Random.
+	local maxToDisable = self:GetDisabledLuxuriesTargetNumber()
+	self.iNumTypesDisabled = math.min(self.iNumTypesUnassigned, maxToDisable);
+	self.iNumTypesRandom = self.iNumTypesUnassigned - self.iNumTypesDisabled;
+	local remaining_resource_IDs = {};
+	for index, resource_options in ipairs(self.luxury_fallback_weights) do
+		local res_ID = resource_options[1];
+		local test1 = TestMembership(self.resourceIDs_assigned_to_regions, res_ID)
+		local test2 = TestMembership(self.resourceIDs_assigned_to_cs, res_ID)
+		if test1 == false and test2 == false then
+			table.insert(remaining_resource_IDs, res_ID);
+		end
+	end
+	local randomized_version = GetShuffledCopyOfTable(remaining_resource_IDs)
+	local countdown = math.min(self.iNumTypesUnassigned, maxToDisable);
+	for loop, resID in ipairs(randomized_version) do
+		if countdown > 0 then
+			table.insert(self.resourceIDs_not_being_used, resID);
+			countdown = countdown - 1;
+		else
+			table.insert(self.resourceIDs_assigned_to_random, resID);
+		end
+	end
+	
+	-- Debug printout of luxury assignments.
+	print("--- Luxury Assignment Table ---");
+	print("-"); print("- - Assigned to Regions - -");
+	for index, data in ipairs(self.regions_sorted_by_type) do
+		print("Region#", data[1], "has Luxury type", data[2]);
+	end
+	print("-"); print("- - Assigned to City States - -");
+	for index, type in ipairs(self.resourceIDs_assigned_to_cs) do
+		print("Luxury type", type);
+	end
+	print("-"); print("- - Assigned to Random - -");
+	for index, type in ipairs(self.resourceIDs_assigned_to_random) do
+		print("Luxury type", type);
+	end
+	print("-"); print("- - Luxuries handled via Special Case - -");
+	for index, type in ipairs(self.resourceIDs_assigned_to_special_case) do
+		print("Luxury type", type);
+	end
+	print("-"); print("- - Disabled - -");
+	for index, type in ipairs(self.resourceIDs_not_being_used) do
+		print("Luxury type", type);
+	end
+	print("- - - - - - - - - - - - - - - -");
+	--	
+end
+------------------------------------------------------------------------------
 function StartPlotSystem()
 	-- Get Resources setting input by user.
 	local res = Map.GetCustomOption(5)
