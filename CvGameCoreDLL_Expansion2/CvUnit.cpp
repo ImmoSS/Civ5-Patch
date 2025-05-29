@@ -3239,7 +3239,7 @@ void CvUnit::move(CvPlot& targetPlot, bool bShow)
 			CvUnit* pLoopUnit = ::getUnit(*pUnitNode);
 			pUnitNode = plot()->nextUnitNode(pUnitNode);
 
-			if (pLoopUnit->IsRecon() && !pLoopUnit->isOutOfRebases())
+			if (pLoopUnit->IsRecon() && pLoopUnit->getTransportUnit() == this && !pLoopUnit->isOutOfRebases())
 			{
 				pLoopUnit->setReconPlot(&targetPlot);
 			}
