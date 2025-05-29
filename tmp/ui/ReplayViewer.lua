@@ -3,6 +3,7 @@
 --     extended replay messages
 --     alternative graph colors
 --     Replay Events
+--     Graph Tooltip
 -- for EUI & vanilla UI
 -------------------------------------------------------------------
 include("InstanceManager");
@@ -177,6 +178,10 @@ g_GraphLegendInstanceManager = InstanceManager:new("GraphLegendInstance", "Graph
 g_LineSegmentInstanceManager = InstanceManager:new("GraphLineInstance","LineSegment", Controls.GraphCanvas);
 -- NEW: Replay Events
 g_ReplayEventInstanceManager = InstanceManager:new("ReplayEventInstance", "Base", Controls.ReplayEventStack);
+
+-- Graph Tooltip START
+g_GraphShown = {}
+-- Graph Tooltip END
 
 g_ReplayInfo = {};
 g_ReplayEventCategories = {};
@@ -409,6 +414,17 @@ Panels = {
 				verticalMouseGuide:SetHide(bHide);
 			end
 			
+			-- Graph Tooltip START
+			local st, ft = Panels[2].PadHorizontalValues(g_ReplayInfo.InitialTurn, g_ReplayInfo.FinalTurn)
+			local sc = {}
+			for i, player in ipairs(g_ReplayInfo.PlayerInfo) do
+				local civ = GameInfo.Civilizations[player.Civilization];
+				if (civ.Type ~= "CIVILIZATION_MINOR") then
+					local col = Panels[2].PlayerGraphColors[i]
+					sc[#sc + 1] = {Id = i, Name = Locale.Lookup(civ.ShortDescription), Color = string.format('[COLOR:%d:%d:%d:%d]', math.floor(col.Red * 255), math.floor(col.Green * 255), math.floor(col.Blue * 255), math.floor(col.Alpha * 255) )}
+				end
+			end
+			-- Graph Tooltip END
 			return function()
 				if(not graphsPanel:IsHidden()) then
 					local x,y = GetMousePos();
@@ -420,8 +436,28 @@ Panels = {
 					   yRelative > 0 and yRelative < graphDisplayHeight) then
 						DrawCursor(xRelative, yRelative);
 						ToggleHideLines(false);
+						-- Graph Tooltip START
+						local ct = math.floor(xRelative / graphDisplayWidth * (ft - st + 1))
+						local vals = {}
+						for k,v in next,sc do
+							if g_GraphShown[v.Id] then
+								vals[#vals+1] = {Name = v.Name, Val = g_ReplayInfo.PlayerInfo[v.Id].Scores[ct][Panels[2].CurrentGraphDataSetIndex] or 0, Color = v.Color}
+							end
+						end
+						local out = {}
+						table.sort(vals, function(a,b) return a.Val > b.Val end)  -- show top 10
+						for i = 1, 10 do
+							if vals[i] then
+								out[#out + 1] = string.format("%s#[ENDCOLOR]%s: %d", vals[i].Color, vals[i].Name, vals[i].Val)
+							end
+						end
+						Controls.GraphCanvas:LocalizeAndSetToolTip(string.format('%s[NEWLINE][NEWLINE]%s', Locale.Lookup('TXT_KEY_TP_TURN_COUNTER', ct), table.concat(out, '[NEWLINE]') ))
+						-- Graph Tooltip END
 					else
 						ToggleHideLines(true);
+						-- Graph Tooltip START
+						Controls.GraphCanvas:LocalizeAndSetToolTip()
+						-- Graph Tooltip END
 					end
 				else
 					ToggleHideLines(true);
@@ -726,6 +762,9 @@ Panels = {
 					-- Default city states to be unchecked.
 					local checked = civ.Type ~= "CIVILIZATION_MINOR";
 					graphLegendInstance.ShowHide:SetCheck(checked);
+					-- Graph Tooltip START
+					g_GraphShown[i] = checked
+					-- Graph Tooltip END
 					
 					graphLegendInstance.ShowHide:RegisterCheckHandler( function(bCheck)
 						local segments = panel.SegmentsByPlayer[i];
@@ -734,6 +773,9 @@ Panels = {
 								v.LineSegment:SetHide(not bCheck);
 							end
 						end
+						-- Graph Tooltip START
+						g_GraphShown[i] = bCheck
+						-- Graph Tooltip END
 					end);
 					
 					panel.GraphLegendsByPlayer[i] = graphLegendInstance;
