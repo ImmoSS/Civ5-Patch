@@ -3867,6 +3867,31 @@ function AssignStartingPlots:PlaceLuxuries()
 								shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
 								iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
 							end
+							luxury_plot_lists = self:GenerateLuxuryPlotListsAtCitySite(x, y, 3, false)
+							if iNumLeftToPlace > 0 and primary > 0 then
+								shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
+								iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+							end
+							if iNumLeftToPlace > 0 and secondary > 0 then
+								shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[secondary])
+								iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+							end
+							if iNumLeftToPlace > 0 and tertiary > 0 then
+								shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[tertiary])
+								iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+							end
+							if iNumLeftToPlace > 0 and quaternary > 0 then
+								shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
+								iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+							end
+							if iNumLeftToPlace > 0 and quinternary > 0 then
+								shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
+								iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+							end
+							if iNumLeftToPlace > 0 and sexternary > 0 then
+								shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
+								iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+							end
 							if iNumLeftToPlace == 0 then
 								print("-"); print("Placed Second Luxury type of ID#", use_this_ID, "for start located at Plot", x, y, " in Region#", region_number);
 								placed = true;
@@ -3899,6 +3924,31 @@ function AssignStartingPlots:PlaceLuxuries()
 								luxury_plot_lists = self:GenerateLuxuryPlotListsAtCitySite(x, y, 2, false)
 								shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
 								local iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+								if iNumLeftToPlace > 0 and secondary > 0 then
+									shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[secondary])
+									iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+								end
+								if iNumLeftToPlace > 0 and tertiary > 0 then
+									shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[tertiary])
+									iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+								end
+								if iNumLeftToPlace > 0 and quaternary > 0 then
+									shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
+									iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+								end
+								if iNumLeftToPlace > 0 and quinternary > 0 then
+									shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
+									iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+								end
+								if iNumLeftToPlace > 0 and sexternary > 0 then
+									shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
+									iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+								end
+								luxury_plot_lists = self:GenerateLuxuryPlotListsAtCitySite(x, y, 3, false)
+								if iNumLeftToPlace > 0 and primary > 0 then
+									shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
+									iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
+								end
 								if iNumLeftToPlace > 0 and secondary > 0 then
 									shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[secondary])
 									iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
