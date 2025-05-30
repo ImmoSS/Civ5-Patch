@@ -3651,7 +3651,7 @@ function AssignStartingPlots:PlaceLuxuries()
 		local assignment_split = self.luxury_assignment_count[res_ID];
 		local primary, secondary, tertiary, quaternary, quinternary, sexternary, luxury_plot_lists, shuf_list, iNumLeftToPlace;
 		primary, secondary, tertiary, quaternary, quinternary, sexternary = self:GetIndicesForLuxuryType(res_ID);
-		luxury_plot_lists = GenerateLuxuryPlotListsInRegionOrRange(self, region_number, 7);
+		luxury_plot_lists = GenerateLuxuryPlotListsInRegionOrRange(self, region_number, 6);
 
 		-- Calibrate number of luxuries per region to world size and number of civs
 		-- present. The amount of lux per region should be at its highest when the 
