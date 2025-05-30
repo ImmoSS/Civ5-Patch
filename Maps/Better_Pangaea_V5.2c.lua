@@ -3657,7 +3657,7 @@ function AssignStartingPlots:PlaceLuxuries()
 		-- present. The amount of lux per region should be at its highest when the 
 		-- number of civs in the game is closest to "default" for that map size.
 		local target_list = self:GetRegionLuxuryTargetNumbers()
-		local targetNum = target_list[self.iNumCivs] + placedInCap[region_number];
+		local targetNum = target_list[self.iNumCivs] + placedInCap[region_number] - 1;
 		-- Adjust target number according to Resource Setting.
 		if res == 1 then
 			targetNum = targetNum - 1;
