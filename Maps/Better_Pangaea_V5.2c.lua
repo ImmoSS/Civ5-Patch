@@ -4575,7 +4575,8 @@ function AssignStartingPlots:AssignLuxuryRoles()
 		print("---------------------------------------------------------------------------------------");
 	end
 	-- Choose luxuries.
-	for cs_lux = 1, 3 do
+	local cs_lux = 0
+	for attempt = 1, 20 do
 		local totalWeight = 0;
 		local res_threshold = {};
 		for i, this_weight in ipairs(resource_weights) do
@@ -4596,9 +4597,13 @@ function AssignStartingPlots:AssignLuxuryRoles()
 				table.remove(resource_IDs, index);
 				table.remove(resource_weights, index);
 				self.iNumTypesUnassigned = self.iNumTypesUnassigned - 1;
+				cs_lux = cs_lux + 1
 				--print("-"); print("City States have been assigned Luxury ID#", use_this_ID);
 				break
 			end
+		end
+		if cs_lux > 3 then
+			break
 		end
 	end
 	
