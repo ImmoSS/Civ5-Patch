@@ -3578,11 +3578,11 @@ function AssignStartingPlots:PlaceLuxuries()
 					end
 				end
 				]]
-				if iNumRandAllowed > 0 then
+				--[[if iNumRandAllowed > 0 then
 					for loop, res_ID in ipairs(random_types_allowed) do
 						lux_possible_for_cs[res_ID] = 25 / iNumAllowed;
 					end
-				end
+				end]]
 			end
 
 			-- If there are no allowable luxury types at this city site, then this city state gets none.
