@@ -4793,6 +4793,186 @@ function AssignStartingPlots:AssignLuxuryRoles()
 	--	
 end
 ------------------------------------------------------------------------------
+function AssignStartingPlots:AttemptToPlaceNaturalWonder(wonder_number, row_number)
+	-- Attempts to place a specific natural wonder. The "wonder_number" is a Lua index while "row_number" is an XML index.
+	local iW, iH = Map.GetGridSize();
+	local feature_type_to_place;
+	for thisFeature in GameInfo.Features() do
+		if thisFeature.Type == self.wonder_list[wonder_number] then
+			feature_type_to_place = thisFeature.ID;
+			break
+		end
+	end
+	local temp_table = self.eligibility_lists[wonder_number];
+	local candidate_plot_list = GetShuffledCopyOfTable(temp_table)
+	for loop, plotIndex in ipairs(candidate_plot_list) do
+		if self.naturalWondersData[plotIndex] == 0 then -- No collision with civ start or other NW, so place wonder here!
+			local x = (plotIndex - 1) % iW;
+			local y = (plotIndex - x - 1) / iW;
+			local plot = Map.GetPlot(x, y);
+			-- If called for, force the local terrain to conform to what the wonder needs.
+			local method_number = GameInfo.Natural_Wonder_Placement[row_number].TileChangesMethodNumber;
+			if method_number ~= -1 then
+				-- Custom method for tile changes needed by this wonder.
+				NWCustomPlacement(x, y, row_number, method_number, self)
+			else
+				-- Check the XML data for any standard type tile changes, execute any that are indicated.
+				if GameInfo.Natural_Wonder_Placement[row_number].ChangeCoreTileToMountain == true then
+					if not plot:IsMountain() then
+						plot:SetPlotType(PlotTypes.PLOT_MOUNTAIN, false, false);
+					end
+				elseif GameInfo.Natural_Wonder_Placement[row_number].ChangeCoreTileToFlatland == true then
+					if plot:GetPlotType() ~= PlotTypes.PLOT_LAND then
+						plot:SetPlotType(PlotTypes.PLOT_LAND, false, false);
+					end
+				end
+				if GameInfo.Natural_Wonder_Placement[row_number].ChangeCoreTileTerrainToGrass == true then
+					if plot:GetTerrainType() ~= TerrainTypes.TERRAIN_GRASS then
+						plot:SetTerrainType(TerrainTypes.TERRAIN_GRASS, false, false);
+					end
+				elseif GameInfo.Natural_Wonder_Placement[row_number].ChangeCoreTileTerrainToPlains == true then
+					if plot:GetTerrainType() ~= TerrainTypes.TERRAIN_PLAINS then
+						plot:SetTerrainType(TerrainTypes.TERRAIN_PLAINS, false, false);
+					end
+				end
+				if GameInfo.Natural_Wonder_Placement[row_number].SetAdjacentTilesToShallowWater == true then
+					for loop, direction in ipairs(self.direction_types) do
+						local adjPlot = Map.PlotDirection(x, y, direction)
+						if adjPlot:GetTerrainType() ~= TerrainTypes.TERRAIN_COAST then
+							adjPlot:SetTerrainType(TerrainTypes.TERRAIN_COAST, false, false)
+						end
+					end
+				end
+			end
+			-- Now place this wonder and record the placement.
+			plot:SetFeatureType(feature_type_to_place)
+			table.insert(self.placed_natural_wonder, wonder_number);
+			self:PlaceResourceImpact(x, y, 6, math.floor(iH / 5))	-- Natural Wonders layer
+			self:PlaceResourceImpact(x, y, 1, 1)					-- Strategic layer
+			self:PlaceResourceImpact(x, y, 2, 1)					-- Luxury layer
+			self:PlaceResourceImpact(x, y, 3, 1)					-- Bonus layer
+			self:PlaceResourceImpact(x, y, 5, 1)					-- City State layer
+			self:PlaceResourceImpact(x, y, 7, 1)					-- Marble layer
+			local plotIndex = y * iW + x + 1;
+			self.playerCollisionData[plotIndex] = true;				-- Record exact plot of wonder in the collision list.
+			--
+			--print("- Placed ".. self.wonder_list[wonder_number].. " in Plot", x, y);
+			--
+			return true
+		end
+	end
+	-- If reached here, this wonder was unable to be placed because all candidates are too close to an already-placed NW.
+	return false
+end
+------------------------------------------------------------------------------
+function NWCustomPlacement(x, y, row_number, method_number, AssignStartingPlots)
+	local iW, iH = Map.GetGridSize();
+	if method_number == 1 then
+		-- This method handles tile changes for the Great Barrier Reef.
+		local plot = Map.GetPlot(x, y);
+		if not plot:IsWater() then
+			plot:SetPlotType(PlotTypes.PLOT_OCEAN, false, false);
+		end
+		if plot:GetTerrainType() ~= TerrainTypes.TERRAIN_COAST then
+			plot:SetTerrainType(TerrainTypes.TERRAIN_COAST, false, false)
+		end
+		-- The Reef has a longer shape and demands unique handling. Process the extra plots.
+		local extra_direction_types = {
+			DirectionTypes.DIRECTION_EAST,
+			DirectionTypes.DIRECTION_SOUTHEAST,
+			DirectionTypes.DIRECTION_SOUTHWEST};
+		local SEPlot = Map.PlotDirection(x, y, DirectionTypes.DIRECTION_SOUTHEAST)
+		if not SEPlot:IsWater() then
+			SEPlot:SetPlotType(PlotTypes.PLOT_OCEAN, false, false);
+		end
+		if SEPlot:GetTerrainType() ~= TerrainTypes.TERRAIN_COAST then
+			SEPlot:SetTerrainType(TerrainTypes.TERRAIN_COAST, false, false)
+		end
+		if SEPlot:GetFeatureType() ~= FeatureTypes.NO_FEATURE then
+			SEPlot:SetFeatureType(FeatureTypes.NO_FEATURE, -1)
+		end
+		if SEPlot:GetResourceType(-1) ~= -1 then
+			AssignStartingPlots.amounts_of_resources_placed[SEPlot:GetResourceType(-1) + 1] = AssignStartingPlots.amounts_of_resources_placed[SEPlot:GetResourceType(-1) + 1] - 1;
+			SEPlot:SetResourceType(SEPlot:GetResourceType(-1), 1);
+		end
+		local southeastX = SEPlot:GetX();
+		local southeastY = SEPlot:GetY();
+		for loop, direction in ipairs(extra_direction_types) do -- The three plots extending another plot past the SE plot.
+			local adjPlot = Map.PlotDirection(southeastX, southeastY, direction)
+			if adjPlot:GetTerrainType() ~= TerrainTypes.TERRAIN_COAST then
+				adjPlot:SetTerrainType(TerrainTypes.TERRAIN_COAST, false, false)
+			end
+			local adjX = adjPlot:GetX();
+			local adjY = adjPlot:GetY();
+			local adjPlotIndex = adjY * iW + adjX + 1;
+		end
+		-- Now check the rest of the adjacent plots.
+		local direction_types = { -- Not checking to southeast.
+			DirectionTypes.DIRECTION_NORTHEAST,
+			DirectionTypes.DIRECTION_EAST,
+			DirectionTypes.DIRECTION_SOUTHWEST,
+			DirectionTypes.DIRECTION_WEST,
+			DirectionTypes.DIRECTION_NORTHWEST
+			};
+		for loop, direction in ipairs(direction_types) do
+			local adjPlot = Map.PlotDirection(x, y, direction)
+			if adjPlot:GetTerrainType() ~= TerrainTypes.TERRAIN_COAST then
+				adjPlot:SetTerrainType(TerrainTypes.TERRAIN_COAST, false, false)
+			end
+		end
+		-- Now place the Reef's second wonder plot. (The core method will place the main plot).
+		local feature_type_to_place;
+		for thisFeature in GameInfo.Features() do
+			if thisFeature.Type == "FEATURE_REEF" then
+				feature_type_to_place = thisFeature.ID;
+				break
+			end
+		end
+		SEPlot:SetFeatureType(feature_type_to_place);
+	
+	elseif method_number == 2 then
+		-- This method handles tile changes for the Rock of Gibraltar.
+		local plot = Map.GetPlot(x, y);
+		plot:SetPlotType(PlotTypes.PLOT_LAND, false, false);
+		plot:SetTerrainType(TerrainTypes.TERRAIN_GRASS, false, false)
+		local direction_types = {
+			DirectionTypes.DIRECTION_NORTHEAST,
+			DirectionTypes.DIRECTION_EAST,
+			DirectionTypes.DIRECTION_SOUTHEAST,
+			DirectionTypes.DIRECTION_SOUTHWEST,
+			DirectionTypes.DIRECTION_WEST,
+			DirectionTypes.DIRECTION_NORTHWEST};
+		for loop, direction in ipairs(direction_types) do
+			local adjPlot = Map.PlotDirection(x, y, direction)
+			if adjPlot:GetPlotType() == PlotTypes.PLOT_OCEAN then
+				if adjPlot:GetTerrainType() ~= TerrainTypes.TERRAIN_COAST then
+					adjPlot:SetTerrainType(TerrainTypes.TERRAIN_COAST, false, false)
+				end
+			else
+				if adjPlot:GetPlotType() ~= PlotTypes.PLOT_MOUNTAIN then
+					adjPlot:SetPlotType(PlotTypes.PLOT_MOUNTAIN, false, false);
+				end
+				if adjPlot:GetFeatureType() ~= FeatureTypes.NO_FEATURE then
+					adjPlot:SetFeatureType(FeatureTypes.NO_FEATURE, -1)
+				end
+				if adjPlot:GetResourceType(-1) ~= -1 then
+					AssignStartingPlots.amounts_of_resources_placed[adjPlot:GetResourceType(-1) + 1] = AssignStartingPlots.amounts_of_resources_placed[adjPlot:GetResourceType(-1) + 1] - 1;
+					adjPlot:SetResourceType(adjPlot:GetResourceType(-1), 1);
+				end
+			end
+		end
+
+	-- These method numbers are not needed for the core game's natural wonders;
+	-- however, this is where a modder could insert more custom methods, as needed.
+	-- Any new methods added must be called from Natural_Wonder_Placement in Civ5Features.xml - Sirian, June 2011
+	--
+	--elseif method_number == 3 then
+	--elseif method_number == 4 then
+	--elseif method_number == 5 then
+
+	end
+end
+------------------------------------------------------------------------------
 function StartPlotSystem()
 	-- Get Resources setting input by user.
 	local res = Map.GetCustomOption(5)
