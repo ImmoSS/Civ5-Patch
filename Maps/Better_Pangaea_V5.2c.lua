@@ -3232,7 +3232,40 @@ function AssignStartingPlots:FixSugarJungles()
 	end
 end
 ------------------------------------------------------------------------------
-function GenerateLuxuryPlotListsInRegionOrRange(AssignStartingPlots, region_number, range)
+function IsPlotInCSRange(AssignStartingPlots, plot_x, plot_y, range)
+	for city_state = 1, AssignStartingPlots.iNumCityStates do
+		-- First check to see if this city state number received a valid start plot.
+		if AssignStartingPlots.city_state_validity_table[city_state] == false then
+			-- This one did not! It does not exist on the map nor have valid data, so we will ignore it.
+		else
+			-- OK, it's a valid city state. Process it.
+			local x = AssignStartingPlots.cityStatePlots[city_state][1];
+			local y = AssignStartingPlots.cityStatePlots[city_state][2];
+			if Map.PlotDistance(x, y, plot_x, plot_y) <= range then
+				return true;
+			end
+		end
+	end
+
+	return false;
+end
+------------------------------------------------------------------------------
+function IsPlotInOtherRegionCapRange(AssignStartingPlots, plot_x, plot_y, this_region_number, range)
+	for loop, reg_data in ipairs(AssignStartingPlots.regions_sorted_by_type) do
+		local region_number = reg_data[1];
+		if region_number ~= this_region_number then
+			local x = AssignStartingPlots.startingPlots[region_number][1];
+			local y = AssignStartingPlots.startingPlots[region_number][2];
+			if Map.PlotDistance(x, y, plot_x, plot_y) <= range then
+				return true;
+			end
+		end
+	end
+
+	return false;
+end
+------------------------------------------------------------------------------
+function GenerateLuxuryPlotListsInRegionOrRange(AssignStartingPlots, region_number, min_range, max_range)
 	local iW, iH = Map.GetGridSize();
 	-- This function groups a region's plots in to lists, for Luxury resource assignment.
 	local region_data_table = AssignStartingPlots.regionData[region_number];
@@ -3257,7 +3290,10 @@ function GenerateLuxuryPlotListsInRegionOrRange(AssignStartingPlots, region_numb
 		for region_loop_x = 0, iWidth - 1 do
 			local x = (region_loop_x + iWestX) % iW;
 			local y = (region_loop_y + iSouthY) % iH;
-			if range == 0 or Map.PlotDistance(x, y, AssignStartingPlots.startingPlots[region_number][1], AssignStartingPlots.startingPlots[region_number][2]) <= range then
+			local isStartingPlot = x == AssignStartingPlots.startingPlots[region_number][1] and y == AssignStartingPlots.startingPlots[region_number][2]
+			local isPlotInCSRange = IsPlotInCSRange(AssignStartingPlots, x, y, 3)
+			local isPlotInOtherRegionCapRange = IsPlotInOtherRegionCapRange(AssignStartingPlots, x, y, region_number, 4)
+			if min_range <= max_range and (max_range == 0 or min_range <= Map.PlotDistance(x, y, AssignStartingPlots.startingPlots[region_number][1], AssignStartingPlots.startingPlots[region_number][2]) and Map.PlotDistance(x, y, AssignStartingPlots.startingPlots[region_number][1], AssignStartingPlots.startingPlots[region_number][2]) <= max_range) and not isStartingPlot and not isPlotInCSRange and not isPlotInOtherRegionCapRange then
 				local plotIndex = y * iW + x + 1;
 				local plot = Map.GetPlot(x, y);
 				local area_of_plot = plot:GetArea();
@@ -3651,7 +3687,7 @@ function AssignStartingPlots:PlaceLuxuries()
 		local assignment_split = self.luxury_assignment_count[res_ID];
 		local primary, secondary, tertiary, quaternary, quinternary, sexternary, luxury_plot_lists, shuf_list, iNumLeftToPlace;
 		primary, secondary, tertiary, quaternary, quinternary, sexternary = self:GetIndicesForLuxuryType(res_ID);
-		luxury_plot_lists = GenerateLuxuryPlotListsInRegionOrRange(self, region_number, 6);
+		luxury_plot_lists = GenerateLuxuryPlotListsInRegionOrRange(self, region_number, 0, 6);
 
 		-- Calibrate number of luxuries per region to world size and number of civs
 		-- present. The amount of lux per region should be at its highest when the 
@@ -3670,7 +3706,30 @@ function AssignStartingPlots:PlaceLuxuries()
 		
 		-- Place luxuries.
 		shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
-		iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumThisLuxToPlace, 0.3, -1, 0, 3, shuf_list);
+		iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumThisLuxToPlace, 0.3, 2, 0, 3, shuf_list);
+		if iNumLeftToPlace > 0 and secondary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[secondary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, 2, 0, 3, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and tertiary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[tertiary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.4, 2, 0, 2, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and quaternary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 2, 0, 2, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and quinternary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 2, 0, 2, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and sexternary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, 2, 0, 2, shuf_list);
+		end
+		luxury_plot_lists = GenerateLuxuryPlotListsInRegionOrRange(self, region_number, 4, 6);
+		shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
+		iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, -1, 0, 3, shuf_list);
 		if iNumLeftToPlace > 0 and secondary > 0 then
 			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[secondary])
 			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, -1, 0, 3, shuf_list);
@@ -3691,7 +3750,30 @@ function AssignStartingPlots:PlaceLuxuries()
 			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
 			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, -1, 0, 2, shuf_list);
 		end
-		luxury_plot_lists = GenerateLuxuryPlotListsInRegionOrRange(self, region_number, 0);
+		luxury_plot_lists = GenerateLuxuryPlotListsInRegionOrRange(self, region_number, 0, 6);
+		shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
+		iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, -1, 0, 3, shuf_list);
+		if iNumLeftToPlace > 0 and secondary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[secondary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, -1, 0, 3, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and tertiary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[tertiary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.4, -1, 0, 2, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and quaternary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quaternary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, -1, 0, 2, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and quinternary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[quinternary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, -1, 0, 2, shuf_list);
+		end
+		if iNumLeftToPlace > 0 and sexternary > 0 then
+			shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
+			iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.5, -1, 0, 2, shuf_list);
+		end
+		luxury_plot_lists = GenerateLuxuryPlotListsInRegionOrRange(self, region_number, 0, 0);
 		shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[primary])
 		iNumLeftToPlace = self:PlaceSpecificNumberOfResources(res_ID, 1, iNumLeftToPlace, 0.3, -1, 0, 3, shuf_list);
 		if iNumLeftToPlace > 0 and secondary > 0 then
