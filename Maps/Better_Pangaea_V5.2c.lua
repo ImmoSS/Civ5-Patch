@@ -2488,7 +2488,7 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 		plotType = plot:GetPlotType();
 		terrainType = plot:GetTerrainType();
 		featureType = plot:GetFeatureType();
-		resourceType = plot:GetResourceType();
+		resourceType = plot:GetResourceType(-1);
 		isFreshWater = plot:IsFreshWater();
 	
 		local iW, iH = Map.GetGridSize();
@@ -2500,13 +2500,13 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 		else
 			if plotType == PlotTypes.PLOT_MOUNTAIN or featureType == FeatureTypes.FEATURE_ICE then
 				--
-				elseif plotType == PlotTypes.PLOT_OCEAN and isCoastal then
-				--elseif plotType == PlotTypes.PLOT_OCEAN then
-				--[[if terrainType == TerrainTypes.TERRAIN_OCEAN then
-					iNumOcean = iNumOcean + 1;
-				elseif terrainType == TerrainTypes.TERRAIN_COAST then
-					iNumCoast = iNumCoast + 1;
-				end]]
+			elseif plotType == PlotTypes.PLOT_OCEAN and isCoastal then
+			--elseif plotType == PlotTypes.PLOT_OCEAN then
+			--[[if terrainType == TerrainTypes.TERRAIN_OCEAN then
+				iNumOcean = iNumOcean + 1;
+			elseif terrainType == TerrainTypes.TERRAIN_COAST then
+				iNumCoast = iNumCoast + 1;
+			end]]
 				if plot:IsLake() then
 					startFoodScore = startFoodScore + 3;
 					earlyFoodScore = earlyFoodScore + 3;
@@ -2521,18 +2521,27 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 					lateFoodScore = lateFoodScore + 5;
 					midHammerScore = midHammerScore + 1;
 					lateHammerScore = lateHammerScore + 2;
-				elseif resourceType == AssignStartingPlots.crab_ID or resourceType == AssignStartingPlots.whale_ID then
+				elseif resourceType == AssignStartingPlots.crab_ID then
 					bIsBonus = true;
 					startFoodScore = startFoodScore + 2;
-					earlyFoodScore = earlyFoodScore + 2;
+					earlyFoodScore = earlyFoodScore + 3;
 					midFoodScore = midFoodScore + 4;
 					lateFoodScore = lateFoodScore + 4;
 					midHammerScore = midHammerScore + 1;
 					lateHammerScore = lateHammerScore + 2;
+				elseif resourceType == AssignStartingPlots.whale_ID then
+					bIsBonus = true;
+					startFoodScore = startFoodScore + 2;
+					earlyFoodScore = earlyFoodScore + 2;
+					midFoodScore = midFoodScore + 3;
+					lateFoodScore = lateFoodScore + 3;
+					earlyHammerScore = earlyHammerScore + 1;
+					midHammerScore = midHammerScore + 2;
+					lateHammerScore = lateHammerScore + 3;
 				elseif resourceType == AssignStartingPlots.pearls_ID then
 					bIsBonus = true;
-					startFoodScore = startFoodScore + 1;
-					earlyFoodScore = earlyFoodScore + 1;
+					startFoodScore = startFoodScore + 2;
+					earlyFoodScore = earlyFoodScore + 2;
 					midFoodScore = midFoodScore + 3;
 					lateFoodScore = lateFoodScore + 3;
 					midHammerScore = midHammerScore + 1;
@@ -2569,10 +2578,10 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 					lateFoodScore = lateFoodScore + 2;
 				elseif resourceType == AssignStartingPlots.pearls_ID then
 					bIsBonus = true;
-					startFoodScore = startFoodScore + 1;
-					earlyFoodScore = earlyFoodScore + 1;
-					midFoodScore = midFoodScore + 1;
-					lateFoodScore = lateFoodScore + 1;
+					startFoodScore = startFoodScore + 2;
+					earlyFoodScore = earlyFoodScore + 2;
+					midFoodScore = midFoodScore + 2;
+					lateFoodScore = lateFoodScore + 2;
 				elseif featureType == FeatureTypes.FEATURE_ATOLL then
 					bIsBonus = true;
 					startFoodScore = startFoodScore + 2;
@@ -2585,7 +2594,6 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 					lateHammerScore = lateHammerScore + 1;
 				end
 			elseif plotType == PlotTypes.PLOT_HILLS and terrainType ~= TerrainTypes.TERRAIN_SNOW then
-				-- iNumHills = iNumHills + 1;
 				startHammerScore = startHammerScore + 2;
 				earlyHammerScore = earlyHammerScore + 2;
 				midHammerScore = midHammerScore + 2;
@@ -2603,7 +2611,6 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 				end
 			elseif plotType == PlotTypes.PLOT_LAND and terrainType ~= TerrainTypes.TERRAIN_SNOW then
 				if terrainType == TerrainTypes.TERRAIN_GRASS then
-					-- iNumFlatGrass = iNumFlatGrass + 1;
 					startFoodScore = startFoodScore + 2;
 					earlyFoodScore = earlyFoodScore + 2;
 					midFoodScore = midFoodScore + 2;
@@ -2618,7 +2625,6 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 						earlyFoodScore = earlyFoodScore - 1;
 					end
 				elseif terrainType == TerrainTypes.TERRAIN_PLAINS then
-					-- iNumFlatPlains = iNumFlatPlains + 1;
 					startFoodScore = startFoodScore + 1;
 					earlyFoodScore = earlyFoodScore + 1;
 					midFoodScore = midFoodScore + 1;
@@ -2634,7 +2640,6 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 						earlyHammerScore = earlyHammerScore - 1;
 					end
 				elseif terrainType == TerrainTypes.TERRAIN_TUNDRA then
-					-- iNumFlatTundra = iNumFlatTundra + 1;
 					startFoodScore = startFoodScore + 1;
 					earlyFoodScore = earlyFoodScore + 1;
 					midFoodScore = midFoodScore + 1;
@@ -2646,14 +2651,12 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 						lateHammerScore = lateHammerScore + 1;
 					end
 				elseif terrainType == TerrainTypes.TERRAIN_DESERT then
-					-- iNumFlatDesert = iNumFlatDesert + 1;
 					if featureType == FeatureTypes.FEATURE_FLOOD_PLAINS then
 						startFoodScore = startFoodScore + 2;
 						earlyFoodScore = earlyFoodScore + 2;
 						midFoodScore = midFoodScore + 2;
 						lateFoodScore = lateFoodScore + 2;
 					elseif featureType == FeatureTypes.FEATURE_OASIS then
-						bIsBonus = true;
 						startFoodScore = startFoodScore + 3;
 						earlyFoodScore = earlyFoodScore + 3;
 						midFoodScore = midFoodScore + 3;
@@ -2667,7 +2670,6 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 					end
 				end
 			elseif terrainType == TerrainTypes.TERRAIN_SNOW then
-				-- iNumSnow = iNumSnow + 1;
 				if resourceType == AssignStartingPlots.coal_ID or
 					resourceType == AssignStartingPlots.aluminum_ID or
 					resourceType == AssignStartingPlots.oil_ID or
@@ -2722,8 +2724,8 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 					bIsBonus = true;
 					startFoodScore = startFoodScore + 1;
 					earlyFoodScore = earlyFoodScore + 2;
-					midFoodScore = midFoodScore + 2;
-					lateFoodScore = lateFoodScore + 3;
+					midFoodScore = midFoodScore + 3;
+					lateFoodScore = lateFoodScore + 4;
 				elseif resourceType == AssignStartingPlots.stone_ID then
 					bIsBonus = true;
 					startHammerScore = startHammerScore + 1;
@@ -2759,8 +2761,10 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 					lateHammerScore = lateHammerScore + 2;
 				elseif resourceType == AssignStartingPlots.salt_ID then
 					bIsBonus = true;
-					startHammerScore = startHammerScore + 1;
-					earlyHammerScore = earlyHammerScore + 1;
+					startFoodScore = startFoodScore + 1;
+					earlyFoodScore = earlyFoodScore + 1;
+					midFoodScore = midFoodScore + 1;
+					lateFoodScore = lateFoodScore + 1;
 					midHammerScore = midHammerScore + 2;
 					lateHammerScore = lateHammerScore + 3;
 				elseif resourceType == AssignStartingPlots.marble_ID then
@@ -2783,14 +2787,8 @@ function PlotAnalyzer(plot, isCoastal, AssignStartingPlots)
 								midFoodScore = midFoodScore + 1;
 								lateFoodScore = lateFoodScore + 2;
 							elseif terrainType == TerrainTypes.TERRAIN_TUNDRA and featureType == FeatureTypes.FEATURE_FOREST then
-								if resourceType == AssignStartingPlots.coal_ID or
-									resourceType == AssignStartingPlots.aluminum_ID or
-									resourceType == AssignStartingPlots.oil_ID or
-									resourceType == AssignStartingPlots.uranium_ID or
-									resourceType == -1 then
-									midHammerScore = midHammerScore + 1;
-									lateHammerScore = lateHammerScore + 2;
-								end
+								midHammerScore = midHammerScore + 1;
+								lateHammerScore = lateHammerScore + 2;
 							end
 						elseif plotType == PlotTypes.PLOT_HILLS then
 							midHammerScore = midHammerScore + 1;
