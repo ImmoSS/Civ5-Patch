@@ -98,6 +98,60 @@ end
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 PangaeaFractalWorld = {};
+-------------------------------------------------------------------------------------------
+function FractalWorld:InitFractal(args)
+	if(args == nil) then args = {}; end
+	
+	local continent_grain = args.continent_grain or 2;
+	local rift_grain = args.rift_grain or -1; -- Default no rifts. Set grain to between 1 and 3 to add rifts. - Bob
+	local invert_heights = args.invert_heights or false;
+	local polar = args.polar or true;
+	local ridge_flags = args.ridge_flags or self.iFlags;
+	
+	local fracFlags = {};
+	
+	if(invert_heights) then
+		fracFlags.FRAC_INVERT_HEIGHTS = true;
+	end
+	
+	if(polar) then
+		fracFlags.FRAC_POLAR = true;
+	end
+	
+	if(rift_grain > 0 and rift_grain < 4) then
+		self.riftsFrac = Fractal.Create(self.iNumPlotsX, self.iNumPlotsY, rift_grain, {}, self.fracXExp, self.fracYExp);
+		self.continentsFrac = Fractal.CreateRifts(self.iNumPlotsX, self.iNumPlotsY, continent_grain, fracFlags, self.riftsFrac, self.fracXExp, self.fracYExp);
+	else
+		self.continentsFrac = Fractal.Create(self.iNumPlotsX, self.iNumPlotsY, continent_grain, fracFlags, self.fracXExp, self.fracYExp);	
+	end
+
+	-- Use Brian's tectonics method to weave ridgelines in to the continental fractal.
+	-- Without fractal variation, the tectonics come out too regular.
+	--
+	--[[ "The principle of the RidgeBuilder code is a modified Voronoi diagram. I 
+	added some minor randomness and the slope might be a little tricky. It was 
+	intended as a 'whole world' modifier to the fractal class. You can modify 
+	the number of plates, but that is about it." ]]-- Brian Wade - May 23, 2009
+	--
+	local WorldSizeTypes = {};
+	for row in GameInfo.Worlds() do
+		WorldSizeTypes[row.Type] = row.ID;
+	end
+	local sizekey = Map.GetWorldSize();
+	local sizevalues = {
+		[WorldSizeTypes.WORLDSIZE_DUEL]     = 4,
+		[WorldSizeTypes.WORLDSIZE_TINY]     = 8,
+		[WorldSizeTypes.WORLDSIZE_SMALL]    = 16,
+		[WorldSizeTypes.WORLDSIZE_STANDARD] = 20,
+		[WorldSizeTypes.WORLDSIZE_LARGE]    = 24,
+		[WorldSizeTypes.WORLDSIZE_HUGE]		= 32
+	}
+	--
+	local numPlates = sizevalues[sizekey] or 4
+	-- Blend a bit of ridge into the fractal.
+	-- This will do things like roughen the coastlines and build inland seas. - Brian
+	self.continentsFrac:BuildRidges(numPlates, ridge_flags, 1, 2);
+end
 ------------------------------------------------------------------------------
 function PangaeaFractalWorld.Create(fracXExp, fracYExp)
 	local gridWidth, gridHeight = Map.GetGridSize();
