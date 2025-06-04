@@ -57,22 +57,24 @@
 	</Instance>
 	
 	<ToolTipType Name="GraphToolTip" >
-		<Grid Offset="30,5" Size="60,12" Padding="8,8" Style="GridBlack8" Color="White,240" Anchor="L,T" ID="ToolTipGrid" >
-			<Stack ID="Lines" Padding="10" >
-				<Label Offset="10,10" Anchor="L,C" ID="Turn" WrapWidth="300" />
-				<Label Offset="0,0" Anchor="L,C" String=" " />
-				<Label Offset="-5,0" Anchor="R,C" ID="Name1" WrapWidth="300" />
-				<Label Offset="-5,0" Anchor="R,C" ID="Name2" WrapWidth="300" />
-				<Label Offset="-5,0" Anchor="R,C" ID="Name3" WrapWidth="300" />
-				<Label Offset="-5,0" Anchor="R,C" ID="Name4" WrapWidth="300" />
-				<Label Offset="-5,0" Anchor="R,C" ID="Name5" WrapWidth="300" />
-				<Label Offset="-5,0" Anchor="R,C" ID="Name6" WrapWidth="300" />
-				<Label Offset="-5,0" Anchor="R,C" ID="Name7" WrapWidth="300" />
-				<Label Offset="-5,0" Anchor="R,C" ID="Name8" WrapWidth="300" />
-				<Label Offset="-5,0" Anchor="R,C" ID="Name9" WrapWidth="300" />
-				<Label Offset="-5,0" Anchor="R,C" ID="Name10" WrapWidth="300" />
-			</Stack>
-		</Grid>
+		<Container ID="Root" AnchorSide="O,O" >
+			<Grid Offset="-20,5" Size="60,12" Padding="8,8" Style="GridBlack8" Color="White,240" Anchor="R,B" ID="ToolTipGrid" NoClip="1" >
+				<Stack ID="Lines" Padding="10" >
+					<Label Offset="10,10" Anchor="L,C" ID="Turn" WrapWidth="300" />
+					<Label Offset="0,0" Anchor="L,C" String=" " />
+					<Label Offset="-5,0" Anchor="R,C" ID="Name1" WrapWidth="300" />
+					<Label Offset="-5,0" Anchor="R,C" ID="Name2" WrapWidth="300" />
+					<Label Offset="-5,0" Anchor="R,C" ID="Name3" WrapWidth="300" />
+					<Label Offset="-5,0" Anchor="R,C" ID="Name4" WrapWidth="300" />
+					<Label Offset="-5,0" Anchor="R,C" ID="Name5" WrapWidth="300" />
+					<Label Offset="-5,0" Anchor="R,C" ID="Name6" WrapWidth="300" />
+					<Label Offset="-5,0" Anchor="R,C" ID="Name7" WrapWidth="300" />
+					<Label Offset="-5,0" Anchor="R,C" ID="Name8" WrapWidth="300" />
+					<Label Offset="-5,0" Anchor="R,C" ID="Name9" WrapWidth="300" />
+					<Label Offset="-5,0" Anchor="R,C" ID="Name10" WrapWidth="300" />
+				</Stack>
+			</Grid>
+		</Container>
 	</ToolTipType>
 	
 	<Grid ID="FrontEndReplayViewer" Size="960,628" Anchor="C,C" Offset="0,36" Padding="0,0" Style="Grid9DetailFive140">
