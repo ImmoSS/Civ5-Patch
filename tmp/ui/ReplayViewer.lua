@@ -1467,6 +1467,11 @@ function RefreshGraphDataSets()
 		local controlTable = {};
 		graphDataSetPulldown:BuildEntry( "InstanceOne", controlTable );
 		controlTable.Button:LocalizeAndSetText(v[1]);
+		-- NEW: text overflow tooltip
+		if controlTable.Button:GetTextControl():GetSizeX() > 470 then
+			controlTable.Button:LocalizeAndSetToolTip(v[1])
+		end
+		controlTable.Button:GetTextControl():SetTruncateWidth(470)
 
 		controlTable.Button:RegisterCallback(Mouse.eLClick, function()
 			SetCurrentGraphDataSet(v[2]);
