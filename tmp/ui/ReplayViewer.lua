@@ -254,7 +254,7 @@ Panels = {
 			for i,message in ipairs(g_ReplayInfo.Messages) do
 				if(message.Text ~= nil and #message.Text > 0) then
 					local messageInstance = g_ReplayMessageInstanceManager:GetInstance();
-				
+					if message.Timestamp == nil then message.Timestamp = 0 end
 					messageInstance.MessageText2:SetHide(true);
 				
 					-- NEW: format chat messages
@@ -415,6 +415,8 @@ Panels = {
 			end
 			
 			-- Graph Tooltip START
+			tipControls = {};
+			TTManager:GetTypeControlTable( "GraphToolTip", tipControls );
 			local st, ft = Panels[2].PadHorizontalValues(g_ReplayInfo.InitialTurn, g_ReplayInfo.FinalTurn)
 			local sc = {}
 			for i, player in ipairs(g_ReplayInfo.PlayerInfo) do
@@ -446,19 +448,19 @@ Panels = {
 						end
 						local out = {}
 						table.sort(vals, function(a,b) return a.Val > b.Val end)  -- show top 10
+						tipControls.Turn:LocalizeAndSetText('TXT_KEY_TP_TURN_COUNTER', ct)
 						for i = 1, 10 do
 							if vals[i] then
-								out[#out + 1] = string.format("%s#[ENDCOLOR]%s: %d", vals[i].Color, vals[i].Name, vals[i].Val)
+								tipControls['Name'..tostring(i)]:SetText( string.format("%s#[ENDCOLOR]%s: %d", vals[i].Color, vals[i].Name, vals[i].Val) );
+							else
+								tipControls['Name'..tostring(i)]:SetText()
 							end
 						end
-						Controls.GraphCanvas:LocalizeAndSetToolTip(string.format('%s[NEWLINE][NEWLINE]%s', Locale.Lookup('TXT_KEY_TP_TURN_COUNTER', ct), table.concat(out, '[NEWLINE]') ))
 						-- Graph Tooltip END
 					else
 						ToggleHideLines(true);
-						-- Graph Tooltip START
-						Controls.GraphCanvas:LocalizeAndSetToolTip()
-						-- Graph Tooltip END
 					end
+					tipControls.ToolTipGrid:DoAutoSize()
 				else
 					ToggleHideLines(true);
 				end
