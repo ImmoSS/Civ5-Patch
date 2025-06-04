@@ -1160,7 +1160,15 @@ function SetCurrentGraphDataSet(dataSetIndex)
 
 	local ds = GameInfo.ReplayDataSets[dataSetIndex];
 	local graphDataSetPulldownButton = Controls.GraphDataSetPulldown:GetButton();
+	graphDataSetPulldownButton:GetTextControl():SetTruncateWidth(-1)
 	graphDataSetPulldownButton:LocalizeAndSetText(ds.Description);
+	-- NEW: text overflow tooltip
+	if graphDataSetPulldownButton:GetTextControl():GetSizeX() > 470 then
+		Controls.GraphDataSetPulldown:LocalizeAndSetToolTip(ds.Description)
+		graphDataSetPulldownButton:GetTextControl():SetTruncateWidth(470)
+	else
+		Controls.GraphDataSetPulldown:LocalizeAndSetToolTip()
+	end
 	
 	local graphPanel = Panels[2];
 	graphPanel.CurrentGraphDataSetIndex = dataSetIndex;
