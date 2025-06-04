@@ -1355,8 +1355,9 @@ function Refresh()
 	for i,v in ipairs(Panels) do
 		v:Refresh();
 	end
-	
-	SetCurrentPanel(1);
+	-- NEW: show graphs panel by default
+	--SetCurrentPanel(1);
+	SetCurrentPanel(2);
 
 	-- Get First Dataset Type
 	local firstDataSet;
