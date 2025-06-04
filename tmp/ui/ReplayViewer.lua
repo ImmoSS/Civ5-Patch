@@ -442,8 +442,9 @@ Panels = {
 						local ct = math.floor(xRelative / graphDisplayWidth * (ft - st + 1))
 						local vals = {}
 						for k,v in next,sc do
-							if g_GraphShown[v.Id] then
-								vals[#vals+1] = {Name = v.Name, Val = g_ReplayInfo.PlayerInfo[v.Id].Scores[ct][Panels[2].CurrentGraphDataSetIndex] or 0, Color = v.Color}
+							local val = g_ReplayInfo.PlayerInfo[v.Id].Scores[ct][Panels[2].CurrentGraphDataSetIndex]
+							if g_GraphShown[v.Id] and val ~= nil then
+								vals[#vals+1] = {Name = v.Name, Val = val, Color = v.Color}
 							end
 						end
 						local out = {}
