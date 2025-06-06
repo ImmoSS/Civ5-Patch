@@ -1298,8 +1298,6 @@ SOURCE TO XML
 Авиабаза
 !!! TEST CS_ALLYING_WAR_RESCTRICTION !!!
 
-Давать культуру за убийство юнитов ЯО. Давать культуру за суицид юнитов об город
-
 
 TODO:
 TECHNOLOGIES
