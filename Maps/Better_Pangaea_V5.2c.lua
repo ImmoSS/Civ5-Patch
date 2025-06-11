@@ -150,7 +150,7 @@ function FractalWorld:InitFractal(args)
 	local numPlates = sizevalues[sizekey] or 4
 	-- Blend a bit of ridge into the fractal.
 	-- This will do things like roughen the coastlines and build inland seas. - Brian
-	self.continentsFrac:BuildRidges(numPlates, ridge_flags, 1, 100);
+	self.continentsFrac:BuildRidges(numPlates, ridge_flags, 1, 3);
 end
 ------------------------------------------------------------------------------
 function PangaeaFractalWorld.Create(fracXExp, fracYExp)
