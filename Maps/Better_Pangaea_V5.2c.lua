@@ -3343,8 +3343,8 @@ function GenerateLuxuryPlotListsInRegionOrRange(AssignStartingPlots, region_numb
 			local x = (region_loop_x + iWestX) % iW;
 			local y = (region_loop_y + iSouthY) % iH;
 			local isStartingPlot = x == AssignStartingPlots.startingPlots[region_number][1] and y == AssignStartingPlots.startingPlots[region_number][2]
-			local isPlotInCSRange = IsPlotInCSRange(AssignStartingPlots, x, y, 3)
-			local isPlotInOtherRegionCapRange = IsPlotInOtherRegionCapRange(AssignStartingPlots, x, y, region_number, 4)
+			local isPlotInCSRange = IsPlotInCSRange(AssignStartingPlots, x, y, 4)
+			local isPlotInOtherRegionCapRange = IsPlotInOtherRegionCapRange(AssignStartingPlots, x, y, region_number, 5)
 			if min_range <= max_range and (max_range == 0 or min_range <= Map.PlotDistance(x, y, AssignStartingPlots.startingPlots[region_number][1], AssignStartingPlots.startingPlots[region_number][2]) and Map.PlotDistance(x, y, AssignStartingPlots.startingPlots[region_number][1], AssignStartingPlots.startingPlots[region_number][2]) <= max_range) and not isStartingPlot and not isPlotInCSRange and not isPlotInOtherRegionCapRange then
 				local plotIndex = y * iW + x + 1;
 				local plot = Map.GetPlot(x, y);
