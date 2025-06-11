@@ -1364,6 +1364,8 @@
 /// Adds UI Drafts screen for staging room -- each player bans X civs and then picks from random set of Y civs
 #define INGAME_CIV_DRAFTER
 // #define EMERGENCY_LOGGING
+///
+#define SEED_LOGGING
 /*OTHER CHANGES END*/
 
 
