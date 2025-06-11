@@ -53,7 +53,7 @@ function GetMapScriptInfo()
 					"TXT_KEY_YES_BUTTON",
 					"TXT_KEY_NO_BUTTON",
 				},
-				DefaultValue = 1,
+				DefaultValue = 2,
 				SortPriority = -94,
 			},
 			{
@@ -72,7 +72,7 @@ function GetMapScriptInfo()
 					"11",
 					"12",
 				},
-				DefaultValue = 5,
+				DefaultValue = 4,
 				SortPriority = -93,
 			},
 			{
