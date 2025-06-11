@@ -1570,9 +1570,11 @@ void loadFromIni(FIGameIniParser& iniParser)
 #else
 	iniParser.GetKeyValue("CONFIG", "SyncRandSeed", &iHolder, "Random seed for game sync, or '0' for default", 0);
 	setSyncRandomSeed((iHolder!=0) ? iHolder : timeGetTime());
+	SLOG("SyncRandomSeed = %d", syncRandomSeed());
 	// Map Rand
 	iniParser.GetKeyValue("CONFIG", "MapRandSeed", &iHolder, "Random seed for map generation, or '0' for default", 0);
 	setMapRandomSeed((iHolder!=0) ? iHolder : timeGetTime());
+	SLOG("MapRandomSeed = %d", mapRandomSeed());
 #endif
 
 	//	Game Type

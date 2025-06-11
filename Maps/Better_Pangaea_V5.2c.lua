@@ -3502,6 +3502,125 @@ function AssignStartingPlots:GetIndicesForLuxuryType(resource_ID)
 	return primary, secondary, tertiary, quaternary, quinternary, sexternary;
 end
 ------------------------------------------------------------------------------
+function AssignStartingPlots:GetListOfAllowableLuxuriesAtCitySite(x, y, radius)
+	--print("-"); print("- -"); print("Getting list of luxuries allowable at city state site:", x, y, "Radius:", radius);
+	local iW, iH = Map.GetGridSize();
+	local wrapX = Map:IsWrapX();
+	local wrapY = Map:IsWrapY();
+	local odd = self.firstRingYIsOdd;
+	local even = self.firstRingYIsEven;
+	local nextX, nextY, plot_adjustments;
+	local allowed_luxuries = table.fill(false, 35);
+	
+	for ripple_radius = 1, radius do
+		local ripple_value = radius - ripple_radius + 1;
+		local currentX = x - ripple_radius;
+		local currentY = y;
+		for direction_index = 1, 6 do
+			for plot_to_handle = 1, ripple_radius do
+			 	if currentY / 2 > math.floor(currentY / 2) then
+					plot_adjustments = odd[direction_index];
+				else
+					plot_adjustments = even[direction_index];
+				end
+				nextX = currentX + plot_adjustments[1];
+				nextY = currentY + plot_adjustments[2];
+				if wrapX == false and (nextX < 0 or nextX >= iW) then
+					-- X is out of bounds.
+				elseif wrapY == false and (nextY < 0 or nextY >= iH) then
+					-- Y is out of bounds.
+				else
+					local realX = nextX;
+					local realY = nextY;
+					if wrapX then
+						realX = realX % iW;
+					end
+					if wrapY then
+						realY = realY % iH;
+					end
+					-- We've arrived at the correct x and y for the current plot.
+					local plot = Map.GetPlot(realX, realY);
+					local plotType = plot:GetPlotType()
+					local terrainType = plot:GetTerrainType()
+					local featureType = plot:GetFeatureType()
+					local plotIndex = realY * iW + realX + 1;
+					-- Check this plot for luxury placement eligibility. Set allowed luxuries to true.
+					if plotType == PlotTypes.PLOT_OCEAN then -- Testing for Water Luxury eligibility. This is more involved than land-based.
+						if terrainType == TerrainTypes.TERRAIN_COAST then
+							if plot:IsLake() == false then
+								if featureType ~= self.feature_atoll and featureType ~= FeatureTypes.FEATURE_ICE then
+									allowed_luxuries[self.whale_ID] = true;
+									allowed_luxuries[self.pearls_ID] = true;
+								end
+							end
+						end
+					-- Checking for land-based eligibility.
+					elseif plotType == PlotTypes.PLOT_HILLS and terrainType ~= TerrainTypes.TERRAIN_SNOW then
+						allowed_luxuries[self.gold_ID] = true;
+						allowed_luxuries[self.silver_ID] = true;
+						allowed_luxuries[self.gems_ID] = true;
+						if featureType == FeatureTypes.NO_FEATURE then
+							allowed_luxuries[self.marble_ID] = true;
+						end
+					elseif plotType == PlotTypes.PLOT_LAND then
+						if featureType == FeatureTypes.NO_FEATURE then
+							if terrainType == TerrainTypes.TERRAIN_TUNDRA then
+								allowed_luxuries[self.fur_ID] = true;
+								allowed_luxuries[self.silver_ID] = true;
+								allowed_luxuries[self.marble_ID] = true;
+							elseif terrainType == TerrainTypes.TERRAIN_DESERT then
+								allowed_luxuries[self.gold_ID] = true;
+								allowed_luxuries[self.marble_ID] = true;
+								allowed_luxuries[self.incense_ID] = true;
+							elseif terrainType == TerrainTypes.TERRAIN_PLAINS then
+								allowed_luxuries[self.marble_ID] = true;
+								allowed_luxuries[self.ivory_ID] = true;
+								allowed_luxuries[self.wine_ID] = true;
+								allowed_luxuries[self.incense_ID] = true;
+							elseif terrainType == TerrainTypes.TERRAIN_GRASS then
+								if plot:IsFreshWater() then
+									allowed_luxuries[self.sugar_ID] = true;
+									allowed_luxuries[self.cotton_ID] = true;
+									allowed_luxuries[self.wine_ID] = true;
+								else
+									allowed_luxuries[self.marble_ID] = true;
+									allowed_luxuries[self.ivory_ID] = true;
+									allowed_luxuries[self.cotton_ID] = true;
+									allowed_luxuries[self.wine_ID] = true;
+								end
+							end
+						elseif featureType == FeatureTypes.FEATURE_MARSH then		
+							allowed_luxuries[self.dye_ID] = true;
+							allowed_luxuries[self.sugar_ID] = true;
+						elseif featureType == FeatureTypes.FEATURE_FLOOD_PLAINS then		
+							allowed_luxuries[self.cotton_ID] = true;
+							allowed_luxuries[self.incense_ID] = true;
+						elseif featureType == FeatureTypes.FEATURE_JUNGLE then		
+							allowed_luxuries[self.gems_ID] = true;
+							allowed_luxuries[self.dye_ID] = true;
+							allowed_luxuries[self.spices_ID] = true;
+							allowed_luxuries[self.silk_ID] = true;
+							allowed_luxuries[self.sugar_ID] = true;
+							allowed_luxuries[self.cocoa_ID] = true;
+						elseif featureType == FeatureTypes.FEATURE_FOREST then		
+							allowed_luxuries[self.fur_ID] = true;
+							allowed_luxuries[self.dye_ID] = true;
+							if terrainType == TerrainTypes.TERRAIN_TUNDRA then
+								allowed_luxuries[self.silver_ID] = true;
+							else
+								allowed_luxuries[self.spices_ID] = true;
+								allowed_luxuries[self.silk_ID] = true;
+							end
+						end
+					end
+					currentX, currentY = nextX, nextY;
+				end
+			end
+		end
+	end
+	return allowed_luxuries
+end
+------------------------------------------------------------------------------
 function AssignStartingPlots:PlaceLuxuries()
 	-- This function is dependent upon AssignLuxuryRoles() and PlaceCityStates() having been executed first.
 	local iW, iH = Map.GetGridSize();
