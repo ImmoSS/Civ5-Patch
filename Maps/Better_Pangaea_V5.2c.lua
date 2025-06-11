@@ -3793,18 +3793,21 @@ function AssignStartingPlots:PlaceLuxuries()
 	
 	-- Place Luxuries at City States.
 	-- Candidates include luxuries exclusive to CS, the lux assigned to this CS's region (if in a region), and the randoms.
+	local cs_num_placed_types = {};
+	for loop, res_ID in ipairs(self.resourceIDs_assigned_to_cs) do
+		cs_num_placed_types[res_ID] = 0;
+	end
 	for city_state = 1, self.iNumCityStates do
 		-- First check to see if this city state number received a valid start plot.
 		if self.city_state_validity_table[city_state] == false then
 			-- This one did not! It does not exist on the map nor have valid data, so we will ignore it.
 		else
 			-- OK, it's a valid city state. Process it.
-			local region_number = self.city_state_region_assignments[city_state];
+			local lux_possible_for_cs = {}; -- Recorded with ID as key, weighting as data entry
+			-- Identify Allowable Luxuries assigned to City States.
 			local x = self.cityStatePlots[city_state][1];
 			local y = self.cityStatePlots[city_state][2];
 			local allowed_luxuries = self:GetListOfAllowableLuxuriesAtCitySite(x, y, 2)
-			local lux_possible_for_cs = {}; -- Recorded with ID as key, weighting as data entry
-			-- Identify Allowable Luxuries assigned to City States.
 			-- If any CS-Only types are eligible, then all combined will have a weighting of 75%
 			local cs_only_types = {};
 			for loop, res_ID in ipairs(self.resourceIDs_assigned_to_cs) do
@@ -3818,54 +3821,31 @@ function AssignStartingPlots:PlaceLuxuries()
 					lux_possible_for_cs[res_ID] = 75 / iNumCSAllowed;
 				end
 			end
-			-- Identify Allowable Random Luxuries and the Regional Luxury if any.
-			-- If any random types are eligible (plus the regional type if in a region) these combined carry a 25% weighting.
-			if self.iNumTypesRandom > 0 or region_number > 0 then
-				local random_types_allowed = {};
-				for loop, res_ID in ipairs(self.resourceIDs_assigned_to_random) do
-					if allowed_luxuries[res_ID] == true then
-						table.insert(random_types_allowed, res_ID);
-					end
-				end
-				local iNumRandAllowed = table.maxn(random_types_allowed);
-				local iNumAllowed = iNumRandAllowed;
-				--[[
-				if region_number > 0 then
-					iNumAllowed = iNumAllowed + 1; -- Adding the region type in to the mix with the random types.
-					local res_ID = self.region_luxury_assignment[region_number];
-					if allowed_luxuries[res_ID] == true then
-						lux_possible_for_cs[res_ID] = 25 / iNumAllowed;
-					end
-				end
-				]]
-				--[[if iNumRandAllowed > 0 then
-					for loop, res_ID in ipairs(random_types_allowed) do
-						lux_possible_for_cs[res_ID] = 25 / iNumAllowed;
-					end
-				end]]
-			end
 
 			-- If there are no allowable luxury types at this city site, then this city state gets none.
 			local iNumAvailableTypes = table.maxn(lux_possible_for_cs);
 			if iNumAvailableTypes == 0 then
 				--print("City State #", city_state, "has poor land, ineligible to receive a Luxury resource.");
 			else
-				-- Calculate probability thresholds for each allowable luxury type.
-				local res_threshold = {};
-				local totalWeight, accumulatedWeight = 0, 0;
-				for res_ID, this_weight in pairs(lux_possible_for_cs) do
-					totalWeight = totalWeight + this_weight;
+				local cs_available_types = {}
+				local min_cs_placed_types = -1
+				for res_ID, num_placed_types in pairs(cs_num_placed_types) do
+					if (num_placed_types < min_cs_placed_types or min_cs_placed_types == -1) and allowed_luxuries[res_ID] == true then
+						min_cs_placed_types = num_placed_types
+					end
 				end
-				for res_ID, this_weight in pairs(lux_possible_for_cs) do
-					local threshold = (this_weight + accumulatedWeight) * 10000 / totalWeight;
-					res_threshold[res_ID] = threshold;
-					accumulatedWeight = accumulatedWeight + this_weight;
+				local iNumCSAvailableTypes = 0;
+				for res_ID, num_placed_types in pairs(cs_num_placed_types) do
+					if num_placed_types == min_cs_placed_types and allowed_luxuries[res_ID] == true then
+						table.insert(cs_available_types, res_ID);
+						iNumCSAvailableTypes = iNumCSAvailableTypes + 1
+					end
 				end
 				-- Choose luxury type.
 				local use_this_ID;
-				local diceroll = Map.Rand(10000, "Choose resource type - Assign Luxury To City State - Lua");
-				for res_ID, threshold in pairs(res_threshold) do
-					if diceroll < threshold then -- Choose this resource type.
+				local diceroll = 1 + Map.Rand(iNumCSAvailableTypes, "Choose resource type - Assign Luxury To City State - Lua");
+				for loop, res_ID in pairs(cs_available_types) do
+					if diceroll == loop then -- Choose this resource type.
 						use_this_ID = res_ID;
 						break
 					end
@@ -3897,11 +3877,19 @@ function AssignStartingPlots:PlaceLuxuries()
 					shuf_list = GetShuffledCopyOfTable(luxury_plot_lists[sexternary])
 					iNumLeftToPlace = self:PlaceSpecificNumberOfResources(use_this_ID, 1, 1, 1, -1, 0, 0, shuf_list);
 				end
+				if iNumLeftToPlace == 0 then
+					cs_num_placed_types[use_this_ID] = cs_num_placed_types[use_this_ID] + 1;
+				else
+					print("-"); print("Failed to Place Luxury type of ID#", use_this_ID, "to City State#", city_state);
+				end
 				--if iNumLeftToPlace == 0 then
 					--print("-"); print("Placed Luxury ID#", use_this_ID, "at City State#", city_state, "in Region#", region_number, "located at Plot", x, y);
 				--end
 			end
 		end
+	end
+	for loop, res_ID in ipairs(self.resourceIDs_assigned_to_cs) do
+		print("CS_Lux_Distribution", res_ID, cs_num_placed_types[res_ID])
 	end
 		
 	-- Place Regional Luxuries
