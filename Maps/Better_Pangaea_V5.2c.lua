@@ -3551,65 +3551,118 @@ function AssignStartingPlots:GetListOfAllowableLuxuriesAtCitySite(x, y, radius)
 								if featureType ~= self.feature_atoll and featureType ~= FeatureTypes.FEATURE_ICE then
 									allowed_luxuries[self.whale_ID] = true;
 									allowed_luxuries[self.pearls_ID] = true;
+									allowed_luxuries[self.crab_ID] = true;
 								end
 							end
 						end
 					-- Checking for land-based eligibility.
 					elseif plotType == PlotTypes.PLOT_HILLS and terrainType ~= TerrainTypes.TERRAIN_SNOW then
-						allowed_luxuries[self.gold_ID] = true;
-						allowed_luxuries[self.silver_ID] = true;
-						allowed_luxuries[self.gems_ID] = true;
 						if featureType == FeatureTypes.NO_FEATURE then
+							allowed_luxuries[self.gold_ID] = true;
+							allowed_luxuries[self.silver_ID] = true;
+							allowed_luxuries[self.gems_ID] = true;
+							allowed_luxuries[self.copper_ID] = true;
 							allowed_luxuries[self.marble_ID] = true;
+						elseif featureType == FeatureTypes.FEATURE_FOREST then
+							allowed_luxuries[self.gold_ID] = true;
+							allowed_luxuries[self.silver_ID] = true;
+							allowed_luxuries[self.gems_ID] = true;
+							allowed_luxuries[self.copper_ID] = true;
+							allowed_luxuries[self.truffles_ID] = true;
+						elseif featureType == FeatureTypes.FEATURE_JUNGLE then
+							allowed_luxuries[self.gold_ID] = true;
+							allowed_luxuries[self.silver_ID] = true;
+							allowed_luxuries[self.gems_ID] = true;
+							allowed_luxuries[self.copper_ID] = true;
+							allowed_luxuries[self.truffles_ID] = true;
+							allowed_luxuries[self.citrus_ID] = true;
+							allowed_luxuries[self.cocoa_ID] = true;
 						end
 					elseif plotType == PlotTypes.PLOT_LAND then
 						if featureType == FeatureTypes.NO_FEATURE then
 							if terrainType == TerrainTypes.TERRAIN_TUNDRA then
 								allowed_luxuries[self.fur_ID] = true;
 								allowed_luxuries[self.silver_ID] = true;
-								allowed_luxuries[self.marble_ID] = true;
+								allowed_luxuries[self.copper_ID] = true;
+								allowed_luxuries[self.salt_ID] = true;
 							elseif terrainType == TerrainTypes.TERRAIN_DESERT then
 								allowed_luxuries[self.gold_ID] = true;
 								allowed_luxuries[self.marble_ID] = true;
 								allowed_luxuries[self.incense_ID] = true;
+								allowed_luxuries[self.salt_ID] = true;
 							elseif terrainType == TerrainTypes.TERRAIN_PLAINS then
+								allowed_luxuries[self.gold_ID] = true;
 								allowed_luxuries[self.marble_ID] = true;
 								allowed_luxuries[self.ivory_ID] = true;
+								allowed_luxuries[self.fur_ID] = true;
+								allowed_luxuries[self.dye_ID] = true;
+								allowed_luxuries[self.spices_ID] = true;
+								allowed_luxuries[self.silk_ID] = true;
 								allowed_luxuries[self.wine_ID] = true;
 								allowed_luxuries[self.incense_ID] = true;
+								allowed_luxuries[self.salt_ID] = true;
+								allowed_luxuries[self.citrus_ID] = true;
+								allowed_luxuries[self.truffles_ID] = true;
+								allowed_luxuries[self.cocoa_ID] = true;
 							elseif terrainType == TerrainTypes.TERRAIN_GRASS then
 								if plot:IsFreshWater() then
+									allowed_luxuries[self.ivory_ID] = true;
+									allowed_luxuries[self.silk_ID] = true;
 									allowed_luxuries[self.sugar_ID] = true;
 									allowed_luxuries[self.cotton_ID] = true;
 									allowed_luxuries[self.wine_ID] = true;
+									allowed_luxuries[self.cocoa_ID] = true;
 								else
+									allowed_luxuries[self.gold_ID] = true;
+									allowed_luxuries[self.silver_ID] = true;
 									allowed_luxuries[self.marble_ID] = true;
 									allowed_luxuries[self.ivory_ID] = true;
+									allowed_luxuries[self.fur_ID] = true;
+									allowed_luxuries[self.dye_ID] = true;
+									allowed_luxuries[self.spices_ID] = true;
+									allowed_luxuries[self.silk_ID] = true;
+									allowed_luxuries[self.sugar_ID] = true;
 									allowed_luxuries[self.cotton_ID] = true;
 									allowed_luxuries[self.wine_ID] = true;
+									allowed_luxuries[self.copper_ID] = true;
+									allowed_luxuries[self.citrus_ID] = true;
+									allowed_luxuries[self.truffles_ID] = true;
+									allowed_luxuries[self.cocoa_ID] = true;
 								end
 							end
-						elseif featureType == FeatureTypes.FEATURE_MARSH then		
+						elseif featureType == FeatureTypes.FEATURE_MARSH then
 							allowed_luxuries[self.dye_ID] = true;
+							allowed_luxuries[self.spices_ID] = true;
 							allowed_luxuries[self.sugar_ID] = true;
-						elseif featureType == FeatureTypes.FEATURE_FLOOD_PLAINS then		
+							allowed_luxuries[self.truffles_ID] = true;
+						elseif featureType == FeatureTypes.FEATURE_FLOOD_PLAINS then
 							allowed_luxuries[self.cotton_ID] = true;
 							allowed_luxuries[self.incense_ID] = true;
-						elseif featureType == FeatureTypes.FEATURE_JUNGLE then		
+							allowed_luxuries[self.incense_ID] = true;
+							allowed_luxuries[self.citrus_ID] = true;
+						elseif featureType == FeatureTypes.FEATURE_JUNGLE then
 							allowed_luxuries[self.gems_ID] = true;
 							allowed_luxuries[self.dye_ID] = true;
 							allowed_luxuries[self.spices_ID] = true;
 							allowed_luxuries[self.silk_ID] = true;
 							allowed_luxuries[self.sugar_ID] = true;
+							allowed_luxuries[self.citrus_ID] = true;
+							allowed_luxuries[self.truffles_ID] = true;
 							allowed_luxuries[self.cocoa_ID] = true;
-						elseif featureType == FeatureTypes.FEATURE_FOREST then		
+						elseif featureType == FeatureTypes.FEATURE_FOREST then
 							allowed_luxuries[self.fur_ID] = true;
 							allowed_luxuries[self.dye_ID] = true;
+							allowed_luxuries[self.salt_ID] = true;
 							if terrainType == TerrainTypes.TERRAIN_TUNDRA then
 								allowed_luxuries[self.silver_ID] = true;
+								allowed_luxuries[self.copper_ID] = true;
+								allowed_luxuries[self.salt_ID] = true;
 							else
 								allowed_luxuries[self.spices_ID] = true;
 								allowed_luxuries[self.silk_ID] = true;
+								allowed_luxuries[self.citrus_ID] = true;
+								allowed_luxuries[self.truffles_ID] = true;
+								allowed_luxuries[self.cocoa_ID] = true;
 							end
 						end
 					end
