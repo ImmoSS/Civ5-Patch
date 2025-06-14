@@ -310,7 +310,6 @@ function PangaeaFractalWorld:GeneratePlotTypes(args)
 		end
 		iAttempts = iAttempts + 1;
 		
-		--[[ Printout for debug use only
 		print("-"); print("--- Pangaea landmass generation, Attempt#", iAttempts, "---");
 		print("- This attempt successful: ", done);
 		print("- Total Land Plots in world:", iNumTotalLandTiles);
@@ -320,7 +319,7 @@ function PangaeaFractalWorld:GeneratePlotTypes(args)
 		print("- Rift Grain for this attempt: ", rift_dice);
 		print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
 		print(".");
-		]]--
+		
 	end
 	
 	-- Generate fractals to govern hills and mountains
