@@ -3635,8 +3635,8 @@ function AssignStartingPlots:GetListOfAllowableLuxuriesAtCitySite(x, y, radius)
 							allowed_luxuries[self.sugar_ID] = true;
 							allowed_luxuries[self.truffles_ID] = true;
 						elseif featureType == FeatureTypes.FEATURE_FLOOD_PLAINS then
+							allowed_luxuries[self.sugar_ID] = true;
 							allowed_luxuries[self.cotton_ID] = true;
-							allowed_luxuries[self.incense_ID] = true;
 							allowed_luxuries[self.incense_ID] = true;
 							allowed_luxuries[self.citrus_ID] = true;
 						elseif featureType == FeatureTypes.FEATURE_JUNGLE then
