@@ -1244,11 +1244,6 @@ function AssignStartingPlots:NormalizeStartLocation(region_number)
 	end
 	]]
 	
-	-- Add mandatory Iron, Horse, Oil to every start if Strategic Balance option is enabled.
-	if res == 5 or res == 6 then
-		self:AddStrategicBalanceResources(region_number)
-	end
-	
 	--[[
 	-- If early hammers will be too short, attempt to add a small Horse or Iron to second ring.
 	if innerHammerScore < 3 and earlyHammerScore < 6 then -- Add a small Horse or Iron to second ring.
@@ -1818,63 +1813,65 @@ function AssignStartingPlots:AddStrategicBalanceResources(region_number)
 						if wrapY then
 							realY = realY % iH;
 						end
-						-- We've arrived at the correct x and y for the current plot.
-						local plot = Map.GetPlot(realX, realY);
-						local plotType = plot:GetPlotType()
-						local terrainType = plot:GetTerrainType()
-						local featureType = plot:GetFeatureType()
-						local plotIndex = realY * iW + realX + 1;
-						-- Check this plot for resource placement eligibility.
-						if plotType == PlotTypes.PLOT_HILLS then
-							if ripple_radius < 6 then
-								table.insert(coal_list, plotIndex)
-							else
-								table.insert(coal_fallback, plotIndex)
-							end
-						elseif plotType == PlotTypes.PLOT_LAND then
-							if featureType == FeatureTypes.NO_FEATURE then
-								if terrainType == TerrainTypes.TERRAIN_TUNDRA or terrainType == TerrainTypes.TERRAIN_DESERT then
-									if ripple_radius < 6 then
-										table.insert(coal_list, plotIndex)
-										table.insert(alum_list, plotIndex)
-									else
-										table.insert(coal_fallback, plotIndex)
-										table.insert(alum_fallback, plotIndex)
-									end
-								elseif terrainType == TerrainTypes.TERRAIN_PLAINS or terrainType == TerrainTypes.TERRAIN_GRASS then
-									if ripple_radius < 6 then
-										table.insert(coal_list, plotIndex)
-										table.insert(alum_list, plotIndex)
-									else
-										table.insert(coal_fallback, plotIndex)
-										table.insert(alum_fallback, plotIndex)
-									end
-								elseif terrainType == TerrainTypes.TERRAIN_SNOW then
-									if ripple_radius < 6 then
-										table.insert(coal_list, plotIndex)
-										table.insert(alum_list, plotIndex)
-									else
-										table.insert(coal_fallback, plotIndex)
-										table.insert(alum_fallback, plotIndex)
-									end
-								end
-							elseif featureType == FeatureTypes.FEATURE_MARSH then		
-								if ripple_radius < 4 then
+						if not IsPlotInCSRange(self, realX, realY, 4) and not IsPlotInOtherRegionCapRange(self, realX, realY, region_number, 5) then
+							-- We've arrived at the correct x and y for the current plot.
+							local plot = Map.GetPlot(realX, realY);
+							local plotType = plot:GetPlotType()
+							local terrainType = plot:GetTerrainType()
+							local featureType = plot:GetFeatureType()
+							local plotIndex = realY * iW + realX + 1;
+							-- Check this plot for resource placement eligibility.
+							if plotType == PlotTypes.PLOT_HILLS then
+								if ripple_radius < 6 then
 									table.insert(coal_list, plotIndex)
-									table.insert(alum_list, plotIndex)
 								else
+									table.insert(coal_fallback, plotIndex)
+								end
+							elseif plotType == PlotTypes.PLOT_LAND then
+								if featureType == FeatureTypes.NO_FEATURE then
+									if terrainType == TerrainTypes.TERRAIN_TUNDRA or terrainType == TerrainTypes.TERRAIN_DESERT then
+										if ripple_radius < 6 then
+											table.insert(coal_list, plotIndex)
+											table.insert(alum_list, plotIndex)
+										else
+											table.insert(coal_fallback, plotIndex)
+											table.insert(alum_fallback, plotIndex)
+										end
+									elseif terrainType == TerrainTypes.TERRAIN_PLAINS or terrainType == TerrainTypes.TERRAIN_GRASS then
+										if ripple_radius < 6 then
+											table.insert(coal_list, plotIndex)
+											table.insert(alum_list, plotIndex)
+										else
+											table.insert(coal_fallback, plotIndex)
+											table.insert(alum_fallback, plotIndex)
+										end
+									elseif terrainType == TerrainTypes.TERRAIN_SNOW then
+										if ripple_radius < 6 then
+											table.insert(coal_list, plotIndex)
+											table.insert(alum_list, plotIndex)
+										else
+											table.insert(coal_fallback, plotIndex)
+											table.insert(alum_fallback, plotIndex)
+										end
+									end
+								elseif featureType == FeatureTypes.FEATURE_MARSH then		
+									if ripple_radius < 4 then
+										table.insert(coal_list, plotIndex)
+										table.insert(alum_list, plotIndex)
+									else
+										table.insert(coal_fallback, plotIndex)
+										table.insert(alum_fallback, plotIndex)
+									end
+								elseif featureType == FeatureTypes.FEATURE_FLOOD_PLAINS then
+									table.insert(coal_fallback, plotIndex)
+									table.insert(alum_fallback, plotIndex)
+								elseif featureType == FeatureTypes.FEATURE_JUNGLE or featureType == FeatureTypes.FEATURE_FOREST then
 									table.insert(coal_fallback, plotIndex)
 									table.insert(alum_fallback, plotIndex)
 								end
-							elseif featureType == FeatureTypes.FEATURE_FLOOD_PLAINS then
-								table.insert(coal_fallback, plotIndex)
-								table.insert(alum_fallback, plotIndex)
-							elseif featureType == FeatureTypes.FEATURE_JUNGLE or featureType == FeatureTypes.FEATURE_FOREST then
-								table.insert(coal_fallback, plotIndex)
-								table.insert(alum_fallback, plotIndex)
 							end
+							currentX, currentY = nextX, nextY;
 						end
-						currentX, currentY = nextX, nextY;
 					end
 				end
 			end
@@ -5213,6 +5210,14 @@ function StartPlotSystem()
 
 	print("Placing Resources and City States.");
 	start_plot_database:PlaceResourcesAndCityStates()
+
+	-- Add mandatory Iron, Horse, Oil to every start if Strategic Balance option is enabled.
+	local iNumStarts = table.maxn(start_plot_database.startingPlots);
+	for region_number = 1, iNumStarts do
+		if res == 5 or res == 6 then
+			start_plot_database:AddStrategicBalanceResources(region_number)
+		end
+	end
 
 	NormalizePlotAreas(start_plot_database);
 
