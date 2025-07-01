@@ -18359,7 +18359,7 @@ void CvCity::changeHappinessForFilledGreatWorkSlot(int iChange)
 //	----------------------------------------------------------------------------
 int CvCity::getFoodBonusIfNoCitiesAround() const
 {
-	int iRange = 5;
+	int iRange = 4;
 	for (int iDX = -(iRange); iDX <= iRange; iDX++)
 	{
 		for (int iDY = -(iRange); iDY <= iRange; iDY++)
