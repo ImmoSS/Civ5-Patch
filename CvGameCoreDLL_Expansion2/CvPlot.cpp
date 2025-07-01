@@ -8008,7 +8008,7 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 #ifdef GREECE_UA_REWORK
 			if (GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateFriendshipModifier() > 0)
 			{
-				if (pWorkingCity != NULL && pWorkingCity->getOwner() == ePlayer && isMountain() && !IsNaturalWonder())
+				if (getOwner() == ePlayer && isMountain() && !IsNaturalWonder())
 				{
 					if (eYield == YIELD_FOOD || eYield == YIELD_PRODUCTION)
 					{
