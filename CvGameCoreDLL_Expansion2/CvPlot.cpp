@@ -7837,7 +7837,11 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 		eRoute = getRouteType();
 	}
 
+#ifdef FIX_CALCAULATE_NATURE_YIELD_RESEARCHED_RESOURCE_YIELD_DISPLAY
+	iYield = calculateNatureYield(eYield, GET_PLAYER(GC.getGame().getActivePlayer()).getTeam());
+#else
 	iYield = calculateNatureYield(eYield, ((ePlayer != NO_PLAYER) ? GET_PLAYER(ePlayer).getTeam() : NO_TEAM));
+#endif
 
 #ifdef POLICY_PLOT_EXTRA_YIELD_FROM_TRADE_ROUTES
 	if (getOwner() != NO_PLAYER)
@@ -10710,7 +10714,11 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 	}
 
 	// Nature yield
+#ifdef FIX_CALCAULATE_NATURE_YIELD_RESEARCHED_RESOURCE_YIELD_DISPLAY
+	iYield = calculateNatureYield(eYield, GET_PLAYER(ePlayer).getTeam(), bIgnoreFeature);
+#else
 	iYield = calculateNatureYield(eYield, getTeam(), bIgnoreFeature);
+#endif
 
 	ImprovementTypes eImprovement = (ImprovementTypes)GC.getBuildInfo(eBuild)->getImprovement();
 
