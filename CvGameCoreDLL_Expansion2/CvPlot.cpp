@@ -10940,6 +10940,22 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 				iYield += pWorkingCity->GetTerrainExtraYield(getTerrainType(), eYield);
 #endif
 			}
+#ifdef GREECE_UA_REWORK
+			if (GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateFriendshipModifier() > 0)
+			{
+				if (getOwner() == ePlayer && isMountain() && !IsNaturalWonder())
+				{
+					if (eYield == YIELD_FOOD || eYield == YIELD_PRODUCTION)
+					{
+						iYield += 1;
+					}
+					else if (eYield == YIELD_FAITH)
+					{
+						iYield += 2;
+					}
+				}
+			}
+#endif
 		}
 
 #ifdef BUILDING_IMPROVEMENT_YIELD_CHANGE
