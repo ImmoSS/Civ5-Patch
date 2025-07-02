@@ -16,7 +16,7 @@ include("TerrainGenerator");
 function GetMapScriptInfo()
 	local world_age, temperature, rainfall, sea_level, resources = GetCoreMapOptions()
 	return {
-		Name = "Better Pangaea V5.3",
+		Name = "Better Pangaea V5.3a",
 		Description = "TXT_KEY_MAP_PANGAEA_HELP",
 		IsAdvancedMap = false,
 		IconIndex = 0,
@@ -90,6 +90,15 @@ function GetMapScriptInfo()
 				DefaultValue = 4,
 				SortPriority = -92,
 			},
+			{
+				Name = "TXT_KEY_BUILID_RIDGES",
+				Values = {
+					"TXT_KEY_NO_BUTTON",
+					"TXT_KEY_YES_BUTTON",
+				},
+				DefaultValue = 2,
+				SortPriority = -91,
+			},
 		},
 	}
 end
@@ -150,7 +159,9 @@ function FractalWorld:InitFractal(args)
 	local numPlates = sizevalues[sizekey] or 4
 	-- Blend a bit of ridge into the fractal.
 	-- This will do things like roughen the coastlines and build inland seas. - Brian
-	self.continentsFrac:BuildRidges(numPlates, ridge_flags, 1, 3);
+	if Map.GetCustomOption(9) == 2 then
+		self.continentsFrac:BuildRidges(numPlates, ridge_flags, 1, 2);
+	end
 end
 ------------------------------------------------------------------------------
 function PangaeaFractalWorld.Create(fracXExp, fracYExp)
