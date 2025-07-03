@@ -5746,7 +5746,7 @@ int CvMinorCivAI::GetFriendshipChangePerTurnTimes100(PlayerTypes ePlayer)
 		int iBaseFriendisp = GetBaseFriendshipWithMajor(ePlayer);
 		if (pEspionage->IsAnySurveillanceEstablished(GetPlayer()->GetID()))
 		{
-			iShift += min(kPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_SPY_INFLUENCE), (90 - iBaseFriendisp) * 100 / GC.getGame().getGameSpeedInfo().getGoldGiftMod());
+			iShift += min(kPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_SPY_INFLUENCE), max((90 - iBaseFriendisp) * 10000 / GC.getGame().getGameSpeedInfo().getGoldGiftMod(), 0));
 		}
 #endif
 		
