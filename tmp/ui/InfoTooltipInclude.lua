@@ -705,7 +705,7 @@ function GetCultureTooltip(pCity)
 		-- Puppet modifier
 		if (pCity:IsPuppet()) then
 			-- iAmount = GameDefines.PUPPET_CULTURE_MODIFIER;
-			iAmount = -(Players[pCity:GetOwner()]:GetCultureCityModifier() + pCity:GetCultureRateModifier() + pCity:GetCapitalCultureModPerDiplomat() + 10 * Teams[Players[pCity:GetOwner()]:GetTeam()]:GetTeamTechs():GetTechCount(80))
+			iAmount = -(100 + Players[pCity:GetOwner()]:GetCultureCityModifier() + pCity:GetCultureRateModifier() + pCity:GetCapitalCultureModPerDiplomat() + 10 * Teams[Players[pCity:GetOwner()]:GetTeam()]:GetTeamTechs():GetTechCount(80))
 			if (pCity:GetNumWorldWonders() > 0) then
 				iAmount = iAmount - Players[pCity:GetOwner()]:GetCultureWonderMultiplier()
 			end
