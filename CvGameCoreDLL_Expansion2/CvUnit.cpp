@@ -3180,9 +3180,6 @@ void CvUnit::fightInterceptor(const CvPlot& pPlot)
 //	--------------------------------------------------------------------------------
 void CvUnit::move(CvPlot& targetPlot, bool bShow)
 {
-	// SLOG("%d", CvPreGame::mapRandomSeed());
-	// SLOG("%d", CvPreGame::syncRandomSeed());
-
 	VALIDATE_OBJECT
 	CvAssert(canMoveOrAttackInto(targetPlot, MOVEFLAG_PRETEND_CORRECT_EMBARK_STATE) || isOutOfAttacks());
 
