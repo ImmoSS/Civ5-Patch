@@ -1876,6 +1876,9 @@ void CvCity::updateYield()
 		if(pLoopPlot != NULL)
 		{
 			pLoopPlot->updateYield();
+#ifdef FIX_NOT_REVEALED_WORKING_CITY_TILE_YIELD_DISPLAY
+			pLoopPlot->updateSymbols();
+#endif
 		}
 	}
 }
@@ -11866,6 +11869,9 @@ bool CvCity::setRevealed(TeamTypes eIndex, bool bNewValue)
 	if(isRevealed(eIndex, false) != bNewValue)
 	{
 		m_abRevealed.setAt(eIndex, bNewValue);
+#ifdef FIX_NOT_REVEALED_WORKING_CITY_TILE_YIELD_DISPLAY
+		updateYield();
+#endif
 
 		return true;
 	}
