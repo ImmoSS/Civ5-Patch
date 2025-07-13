@@ -301,6 +301,9 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
 	, m_iNumGoldSpentOnGPBuys(0)
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
+	, m_iNumGoldSpentOnTilesBuys(0)
+#endif
 	, m_iExtraLeagueVotes(0)
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 	, m_iMaxExtraVotesFromMinors(0)
@@ -1174,6 +1177,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
 	m_iNumGoldSpentOnGPBuys = 0;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
+	m_iNumGoldSpentOnTilesBuys = 0;
 #endif
 	m_iExtraLeagueVotes = 0;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
@@ -11190,6 +11196,16 @@ int CvPlayer::GetNumGoldSpentOnGPBuys() const
 void CvPlayer::ChangeNumGoldSpentOnGPBuys(int iChange)
 {
 	m_iNumGoldSpentOnGPBuys = (m_iNumGoldSpentOnGPBuys + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
+int CvPlayer::GetNumGoldSpentOnTilesBuys() const
+{
+	return m_iNumGoldSpentOnTilesBuys;
+}
+void CvPlayer::ChangeNumGoldSpentOnTilesBuys(int iChange)
+{
+	m_iNumGoldSpentOnTilesBuys = (m_iNumGoldSpentOnTilesBuys + iChange);
 }
 #endif
 
@@ -26502,6 +26518,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
 		kStream >> m_iNumGoldSpentOnGPBuys;
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
+		kStream >> m_iNumGoldSpentOnTilesBuys;
+#endif
 # endif
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
@@ -26648,6 +26667,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
 		m_iNumGoldSpentOnGPBuys = 0;
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
+		m_iNumGoldSpentOnTilesBuys = 0;
+#endif
 	}
 	else if (uiVersion >= 1003)
 	{
@@ -26791,6 +26813,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
 		m_iNumGoldSpentOnGPBuys = 0;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
+		m_iNumGoldSpentOnTilesBuys = 0;
 #endif
 	}
 	else if (uiVersion == 1002)
@@ -26936,6 +26961,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
 		m_iNumGoldSpentOnGPBuys = 0;
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
+		m_iNumGoldSpentOnTilesBuys = 0;
+#endif
 	}
 	else if (uiVersion == 1001)
 	{
@@ -27080,6 +27108,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
 		m_iNumGoldSpentOnGPBuys = 0;
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
+		m_iNumGoldSpentOnTilesBuys = 0;
+#endif
 	}
 	else
 	{
@@ -27223,6 +27254,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
 		m_iNumGoldSpentOnGPBuys = 0;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
+		m_iNumGoldSpentOnTilesBuys = 0;
 #endif
 	}
 #endif
@@ -28469,6 +28503,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
 	kStream << m_iNumGoldSpentOnGPBuys;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
+	kStream << m_iNumGoldSpentOnTilesBuys;
 #endif
 	kStream << m_iExtraLeagueVotes;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
@@ -32108,6 +32145,9 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS"), iGameTurn, GetNumGoldSpentOnGPBuys());
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMGOLDONTILESBUYS"), iGameTurn, GetNumGoldSpentOnTilesBuys());
 #endif
 
 /*#ifdef ENHANCED_GRAPHS
