@@ -463,6 +463,10 @@ public:
 	int GetCultureFromKills() const;
 	void ChangeCultureFromKills(int iChange);
 #endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
+	int GetNumGoldSpentOnGPBuys() const;
+	void ChangeNumGoldSpentOnGPBuys(int iChange);
+#endif
 
 	int GetNumUnitsOutOfSupply() const;
 
@@ -2113,6 +2117,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 	int m_iCultureFromKills;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
+	int m_iNumGoldSpentOnGPBuys;
 #endif
 	int m_iExtraLeagueVotes;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS

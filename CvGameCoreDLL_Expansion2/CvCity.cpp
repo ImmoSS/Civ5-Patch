@@ -14768,7 +14768,27 @@ void CvCity::Purchase(UnitTypes eUnitType, BuildingTypes eBuildingType, ProjectT
 				kPlayer.GetTreasury()->LogExpenditure((CvString)pGameUnit->GetText(), iGoldCost, 2);
 			}
 #ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
-			kPlayer.ChangeNumGoldSpentOnUnitBuys(iGoldCost);
+#ifdef POLICY_ALLOWS_GP_BUYS_FOR_GOLD
+			CvUnitEntry* pkUnitInfo = GC.getUnitInfo(eUnitType);
+			const UnitClassTypes eUnitClass = (UnitClassTypes)pkUnitInfo->GetUnitClassType();
+			if (!(eUnitClass == GC.getInfoTypeForString("UNITCLASS_WRITER") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_ARTIST") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_MUSICIAN") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_SCIENTIST") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_ENGINEER") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_MERCHANT") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_GREAT_GENERAL") ||
+				eUnitClass == GC.getInfoTypeForString("UNITCLASS_GREAT_ADMIRAL")))
+			{
+				kPlayer.ChangeNumGoldSpentOnUnitBuys(iGoldCost);
+			}
+#ifdef EG_REPLAYDATASET_NUMGOLDONGREATPEOPLEBUYS
+			else
+			{
+				kPlayer.ChangeNumGoldSpentOnGPBuys(iGoldCost);
+			}
+#endif
+#endif
 #endif
 		// Building
 		}else if(eBuildingType != NO_BUILDING){
