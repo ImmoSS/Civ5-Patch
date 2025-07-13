@@ -456,6 +456,8 @@ public:
 	void ChangeNumGoldSpentOnUgrades(int iChange);
 #endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
+	int GetCultureFromKills() const;
+	void ChangeCultureFromKills(int iChange);
 #endif
 
 	int GetNumUnitsOutOfSupply() const;

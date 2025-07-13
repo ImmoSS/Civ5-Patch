@@ -1355,6 +1355,9 @@
 ///
 /// Fourth Bunch of Enhanced Graphs
 ///
+#define EG_REPLAYDATASET_CULTUREFROMKILLS
+///
+///
 #endif
 ///
 #define GRAPHS_REAL_TOTAL_CULTURE
