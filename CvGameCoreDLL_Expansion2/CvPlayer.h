@@ -455,6 +455,10 @@ public:
 	int GetNumGoldSpentOnUgrades() const;
 	void ChangeNumGoldSpentOnUgrades(int iChange);
 #endif
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+	int GetGoldFromKills() const;
+	void ChangeGoldFromKills(int iChange);
+#endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 	int GetCultureFromKills() const;
 	void ChangeCultureFromKills(int iChange);
@@ -2103,6 +2107,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
 	int m_iNumGoldSpentOnUgrades;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+	int m_iGoldFromKills;
 #endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 	int m_iCultureFromKills;

@@ -292,6 +292,9 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
 	, m_iNumGoldSpentOnUgrades(0)
 #endif
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+	, m_iGoldFromKills(0)
+#endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 	, m_iCultureFromKills(0)
 #endif
@@ -1159,6 +1162,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
 	m_iNumGoldSpentOnUgrades = 0;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+	m_iGoldFromKills = 0;
 #endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 	m_iCultureFromKills = 0;
@@ -11150,6 +11156,16 @@ void CvPlayer::ChangeNumGoldSpentOnUgrades(int iChange)
 	m_iNumGoldSpentOnUgrades = (m_iNumGoldSpentOnUgrades + iChange);
 }
 #endif
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+int CvPlayer::GetGoldFromKills() const
+{
+	return m_iGoldFromKills;
+}
+void CvPlayer::ChangeGoldFromKills(int iChange)
+{
+	m_iGoldFromKills = (m_iGoldFromKills + m_iGoldFromKills);
+}
+#endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 int CvPlayer::GetCultureFromKills() const
 {
@@ -12408,6 +12424,9 @@ void CvPlayer::DoYieldBonusFromKill(YieldTypes eYield, UnitTypes eAttackingUnitT
 				{
 				case YIELD_GOLD:
 					GetTreasury()->ChangeGold(iValue);
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+					ChangeGoldFromKills(iValue);
+#endif
 					break;
 				case YIELD_CULTURE:
 #ifdef HONOR_CULTURE_CAP
@@ -26458,6 +26477,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
 		kStream >> m_iNumGoldSpentOnUgrades;
 #endif
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+		kStream >> m_iGoldFromKills;
+#endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 		kStream >> m_iCultureFromKills;
 #endif
@@ -26598,6 +26620,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
 		kStream >> m_iNumGoldSpentOnUgrades;
 #endif
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+		m_iGoldFromKills = 0;
+#endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 		m_iCultureFromKills = 0;
 #endif
@@ -26735,6 +26760,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
 		m_iNumGoldSpentOnUgrades = 0;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+		m_iGoldFromKills = 0;
 #endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 		m_iCultureFromKills = 0;
@@ -26874,6 +26902,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
 		m_iNumGoldSpentOnUgrades = 0;
 #endif
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+		m_iGoldFromKills = 0;
+#endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 		m_iCultureFromKills = 0;
 #endif
@@ -27012,6 +27043,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
 		m_iNumGoldSpentOnUgrades = 0;
 #endif
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+		m_iGoldFromKills = 0;
+#endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 		m_iCultureFromKills = 0;
 #endif
@@ -27149,6 +27183,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
 		m_iNumGoldSpentOnUgrades = 0;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+		m_iGoldFromKills = 0;
 #endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 		m_iCultureFromKills = 0;
@@ -28389,6 +28426,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
 	kStream << m_iNumGoldSpentOnUgrades;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+	kStream << m_iGoldFromKills;
 #endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 	kStream << m_iCultureFromKills;
@@ -32016,6 +32056,9 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 
 		/// Fourth Bunch of Enhanced Graphs
+#ifdef EG_REPLAYDATASET_GOLDEFROMKILLS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_GOLDFROMKILLS"), iGameTurn, GetGoldFromKills());
+#endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CULTUREFROMKILLS"), iGameTurn, GetCultureFromKills());
 #endif

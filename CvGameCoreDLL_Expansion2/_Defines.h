@@ -1355,6 +1355,7 @@
 ///
 /// Fourth Bunch of Enhanced Graphs
 ///
+#define EG_REPLAYDATASET_GOLDEFROMKILLS
 #define EG_REPLAYDATASET_CULTUREFROMKILLS
 ///
 ///
