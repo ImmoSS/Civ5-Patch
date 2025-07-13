@@ -304,6 +304,9 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
 	, m_iNumGoldSpentOnTilesBuys(0)
 #endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
+	, m_iNumGoldFromPillage(0)
+#endif
 	, m_iExtraLeagueVotes(0)
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 	, m_iMaxExtraVotesFromMinors(0)
@@ -1180,6 +1183,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
 	m_iNumGoldSpentOnTilesBuys = 0;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
+	m_iNumGoldFromPillage = 0;
 #endif
 	m_iExtraLeagueVotes = 0;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
@@ -11206,6 +11212,16 @@ int CvPlayer::GetNumGoldSpentOnTilesBuys() const
 void CvPlayer::ChangeNumGoldSpentOnTilesBuys(int iChange)
 {
 	m_iNumGoldSpentOnTilesBuys = (m_iNumGoldSpentOnTilesBuys + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
+int CvPlayer::GetNumGoldFromPillage() const
+{
+	return m_iNumGoldFromPillage;
+}
+void CvPlayer::ChangeNumGoldFromPillage(int iChange)
+{
+	m_iNumGoldFromPillage = (m_iNumGoldFromPillage + iChange);
 }
 #endif
 
@@ -26521,6 +26537,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
 		kStream >> m_iNumGoldSpentOnTilesBuys;
 #endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
+		kStream >> m_iNumGoldFromPillage;
+#endif
 # endif
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
@@ -26670,6 +26689,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
 		m_iNumGoldSpentOnTilesBuys = 0;
 #endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
+		m_iNumGoldFromPillage = 0;
+#endif
 	}
 	else if (uiVersion >= 1003)
 	{
@@ -26816,6 +26838,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
 		m_iNumGoldSpentOnTilesBuys = 0;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
+		m_iNumGoldFromPillage = 0;
 #endif
 	}
 	else if (uiVersion == 1002)
@@ -26964,6 +26989,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
 		m_iNumGoldSpentOnTilesBuys = 0;
 #endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
+		m_iNumGoldFromPillage = 0;
+#endif
 	}
 	else if (uiVersion == 1001)
 	{
@@ -27111,6 +27139,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
 		m_iNumGoldSpentOnTilesBuys = 0;
 #endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
+		m_iNumGoldFromPillage = 0;
+#endif
 	}
 	else
 	{
@@ -27257,6 +27288,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
 		m_iNumGoldSpentOnTilesBuys = 0;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
+		m_iNumGoldFromPillage = 0;
 #endif
 	}
 #endif
@@ -28506,6 +28540,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
 	kStream << m_iNumGoldSpentOnTilesBuys;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
+	kStream << m_iNumGoldFromPillage;
 #endif
 	kStream << m_iExtraLeagueVotes;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
@@ -32148,6 +32185,9 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMGOLDONTILESBUYS"), iGameTurn, GetNumGoldSpentOnTilesBuys());
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_GOLDFROMPILLAGING"), iGameTurn, GetNumGoldFromPillage());
 #endif
 
 /*#ifdef ENHANCED_GRAPHS
