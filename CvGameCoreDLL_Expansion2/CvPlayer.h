@@ -455,6 +455,8 @@ public:
 	int GetNumGoldSpentOnUgrades() const;
 	void ChangeNumGoldSpentOnUgrades(int iChange);
 #endif
+#ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
+#endif
 
 	int GetNumUnitsOutOfSupply() const;
 
@@ -2099,6 +2101,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
 	int m_iNumGoldSpentOnUgrades;
+#endif
+#ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
+	int m_iCultureFromKills;
 #endif
 	int m_iExtraLeagueVotes;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS

@@ -26305,7 +26305,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iEspionageModifier;
 	kStream >> m_iSpyStartingRank;
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= 1007)
+	if (uiVersion >= 1013)
 	{
 #ifdef EG_REPLAYDATASET_NUMSTOLENSCIENCE
 		kStream >> m_iNumStolenScience;
@@ -26441,6 +26441,141 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 # endif
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else if (uiVersion >= 1007)
+	{
+#ifdef EG_REPLAYDATASET_NUMSTOLENSCIENCE
+		kStream >> m_iNumStolenScience;
+#endif
+#ifdef EG_REPLAYDATASET_NUMTRAINEDUNITS
+		kStream >> m_iNumTrainedUnits;
+#endif
+#ifdef EG_REPLAYDATASET_NUMKILLEDUNITS
+		kStream >> m_iNumKilledUnits;
+#endif
+#ifdef EG_REPLAYDATASET_NUMLOSTUNITS
+		kStream >> m_iNumLostUnits;
+#endif
+#ifdef EG_REPLAYDATASET_DAMAGEDEALTTOUNITS
+		kStream >> m_iUnitsDamageDealt;
+#endif
+#ifdef EG_REPLAYDATASET_DAMAGETAKENBYUNITS
+		kStream >> m_iUnitsDamageTaken;
+#endif
+#ifdef EG_REPLAYDATASET_DAMAGEDEALTTOCITIES
+		kStream >> m_iCitiesDamageDealt;
+#endif
+#ifdef EG_REPLAYDATASET_DAMAGETAKENBYCITIES
+		kStream >> m_iCitiesDamageTaken;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALNUMOFSCIENTISTS
+		kStream >> m_iNumScientistsTotal;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALNUMOFENGINEERS
+		kStream >> m_iNumEngineersTotal;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALNUMOFMERCHANTS
+		kStream >> m_iNumMerchantsTotal;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALNUMOFWRITERS
+		kStream >> m_iNumWritersTotal;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALNUMOFARTISTS
+		kStream >> m_iNumArtistsTotal;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALNUMOFMUSICIANS
+		kStream >> m_iNumMusiciansTotal;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALNUMOFGENERALS
+		kStream >> m_iNumGeneralsTotal;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALNUMOFADMIRALS
+		kStream >> m_iNumAdmiralsTotal;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALNUMOFPROPHETS
+		kStream >> m_iNumProphetsTotal;
+#endif
+#ifdef EG_REPLAYDATASET_LOSTHAMMERSFROMLOSTWONDERS
+		kStream >> m_iProductionGoldFromWonders;
+#endif
+#ifdef EG_REPLAYDATASET_TOTALCHOPS
+		kStream >> m_iNumChops;
+#endif
+#ifdef EG_REPLAYDATASET_NUMTIMESOPENEDDEMOGRAPHICS
+		kStream >> m_iNumTimesOpenedDemographics;
+#endif
+#ifdef EG_REPLAYDATASET_NUMOFBORNSCIENTISTS
+		kStream >> m_bMayaBoostScientist;
+#endif
+#ifdef EG_REPLAYDATASET_NUMOFBORNENGINEERS
+		kStream >> m_bMayaBoostEngineers;
+#endif
+#ifdef EG_REPLAYDATASET_NUMOFBORNMERCHANTS
+		kStream >> m_bMayaBoostMerchants;
+#endif
+#ifdef EG_REPLAYDATASET_NUMOFBORNWRITERS
+		kStream >> m_bMayaBoostWriters;
+#endif
+#ifdef EG_REPLAYDATASET_NUMOFBORNARTISTS
+		kStream >> m_bMayaBoostArtists;
+#endif
+#ifdef EG_REPLAYDATASET_NUMOFBORNMUSICIANS
+		kStream >> m_bMayaBoostMusicians;
+#endif
+#ifdef EG_REPLAYDATASET_SCIENTISTSTOTALSCIENCEBOOST
+		kStream >> m_iScientistsTotalScienceBoost;
+#endif
+#ifdef EG_REPLAYDATASET_ENGINEERSTOTALHURRYBOOST
+		kStream >> m_iEngineersTotalHurryBoost;
+#endif
+#ifdef EG_REPLAYDATASET_MERCHANTSTOTALTRADEBOOST
+		kStream >> m_iMerchantsTotalTradeBoost;
+#endif
+#ifdef EG_REPLAYDATASET_WRITERSTOTALCULTUREBOOST
+		kStream >> m_iWritersTotalCultureBoost;
+#endif
+#ifdef EG_REPLAYDATASET_MUSICIANSTOTALTOURISMBOOST
+		kStream >> m_iMusiciansTotalTourismBoost;
+#endif
+#ifdef EG_REPLAYDATASET_POPULATIONLOSTFROMNUKES
+		kStream >> m_iNumPopulationLostFromNukes;
+#endif
+#ifdef EG_REPLAYDATASET_CSQUESTSCOMPLETED
+		kStream >> m_iNumCSQuestsCompleted;
+#endif
+#ifdef EG_REPLAYDATASET_ALLIEDCS
+		kStream >> m_iNumAlliedCS;
+#endif
+#ifdef EG_REPLAYDATASET_TIMESENTEREDCITYSCREEN
+		kStream >> m_iTimesEnteredCityScreen;
+#endif
+#ifdef EG_REPLAYDATASET_DIEDSPIES
+		kStream >> m_iNumDiedSpies;
+#endif
+#ifdef EG_REPLAYDATASET_KILLEDSPIES
+		kStream >> m_iNumKilledSpies;
+#endif
+#ifdef EG_REPLAYDATASET_FOODFROMCS
+		kStream >> m_iFoodFromMinorsTimes100;
+#endif
+#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+		kStream >> m_iProductionFromMinorsTimes100;
+#endif
+#ifdef EG_REPLAYDATASET_UNITSFROMCS
+		kStream >> m_iNumUnitsFromMinors;
+#endif
+#ifdef EG_REPLAYDATASET_NUMCREATEDWORLDWONDERS
+		kStream >> m_iNumCreatedWorldWonders;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONBUILDINGBUYS
+		kStream >> m_iNumGoldSpentOnBuildingBuys;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
+		kStream >> m_iNumGoldSpentOnUnitBuys;
+#endif
+#ifdef EG_REPLAYDATASET_NUMGOLDONUPGRADES
+		kStream >> m_iNumGoldSpentOnUgrades;
+#endif
 	}
 	else if (uiVersion >= 1003)
 	{
