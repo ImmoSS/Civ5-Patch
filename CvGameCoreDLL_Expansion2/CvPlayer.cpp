@@ -11193,7 +11193,7 @@ int CvPlayer::GetGoldFromKills() const
 }
 void CvPlayer::ChangeGoldFromKills(int iChange)
 {
-	m_iGoldFromKills = (m_iGoldFromKills + m_iGoldFromKills);
+	m_iGoldFromKills = (m_iGoldFromKills + iChange);
 }
 #endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMKILLS
