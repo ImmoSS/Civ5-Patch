@@ -14991,6 +14991,14 @@ void CvCity::Purchase(UnitTypes eUnitType, BuildingTypes eBuildingType, ProjectT
 #endif
 
 			kPlayer.ChangeFaith(-iFaithCost);
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+			CvUnitEntry* pkUnitInfo = GC.getUnitInfo(eUnitType);
+			const UnitClassTypes eUnitClass = (UnitClassTypes)pkUnitInfo->GetUnitClassType();
+			if (pkUnitInfo->GetCombat() > 0)
+			{
+				kPlayer.ChangeNumFaithSpentOnMilitaryUnits(iFaithCost);
+			}
+#endif
 
 			UnitClassTypes eUnitClass = pUnit->getUnitClassType();
 			if (eUnitClass == GC.getInfoTypeForString("UNITCLASS_WRITER"))

@@ -310,6 +310,9 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
 	, m_iNumGoldFromPlunder(0)
 #endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+	, m_iNumFaithSpentOnMilitaryUnits(0)
+#endif
 	, m_iExtraLeagueVotes(0)
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 	, m_iMaxExtraVotesFromMinors(0)
@@ -1192,6 +1195,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
 	m_iNumGoldFromPlunder = 0;
+#endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+	m_iNumFaithSpentOnMilitaryUnits = 0;
 #endif
 	m_iExtraLeagueVotes = 0;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
@@ -11238,6 +11244,16 @@ int CvPlayer::GetNumGoldFromPlunder() const
 void CvPlayer::ChangeNumGoldFromPlunder(int iChange)
 {
 	m_iNumGoldFromPlunder = (m_iNumGoldFromPlunder + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+int CvPlayer::GetNumFaithSpentOnMilitaryUnits() const
+{
+	return m_iNumFaithSpentOnMilitaryUnits;
+}
+void CvPlayer::ChangeNumFaithSpentOnMilitaryUnits(int iChange)
+{
+	m_iNumFaithSpentOnMilitaryUnits = (m_iNumFaithSpentOnMilitaryUnits + iChange);
 }
 #endif
 
@@ -26559,6 +26575,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
 		kStream >> m_iNumGoldFromPlunder;
 #endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+		kStream >> m_iNumFaithSpentOnMilitaryUnits;
+#endif
 # endif
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
@@ -26714,6 +26733,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
 		m_iNumGoldFromPlunder = 0;
 #endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+		m_iNumFaithSpentOnMilitaryUnits = 0;
+#endif
 	}
 	else if (uiVersion >= 1003)
 	{
@@ -26866,6 +26888,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
 		m_iNumGoldFromPlunder = 0;
+#endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+		m_iNumFaithSpentOnMilitaryUnits = 0;
 #endif
 	}
 	else if (uiVersion == 1002)
@@ -27020,6 +27045,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
 		m_iNumGoldFromPlunder = 0;
 #endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+		m_iNumFaithSpentOnMilitaryUnits = 0;
+#endif
 	}
 	else if (uiVersion == 1001)
 	{
@@ -27173,6 +27201,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
 		m_iNumGoldFromPlunder = 0;
 #endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+		m_iNumFaithSpentOnMilitaryUnits = 0;
+#endif
 	}
 	else
 	{
@@ -27325,6 +27356,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
 		m_iNumGoldFromPlunder = 0;
+#endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+		m_iNumFaithSpentOnMilitaryUnits = 0;
 #endif
 	}
 #endif
@@ -28580,6 +28614,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
 	kStream << m_iNumGoldFromPlunder;
+#endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+	kStream << m_iNumFaithSpentOnMilitaryUnits;
 #endif
 	kStream << m_iExtraLeagueVotes;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
@@ -32228,6 +32265,9 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 #ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_GOLDFROMPLUNDERING"), iGameTurn, GetNumGoldFromPlunder());
+#endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMFAITHONMILITARYUNITS"), iGameTurn, GetNumFaithSpentOnMilitaryUnits());
 #endif
 
 /*#ifdef ENHANCED_GRAPHS

@@ -479,6 +479,10 @@ public:
 	int GetNumGoldFromPlunder() const;
 	void ChangeNumGoldFromPlunder(int iChange);
 #endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+	int GetNumFaithSpentOnMilitaryUnits() const;
+	void ChangeNumFaithSpentOnMilitaryUnits(int iChange);
+#endif
 
 	int GetNumUnitsOutOfSupply() const;
 
@@ -2141,6 +2145,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
 	int m_iNumGoldFromPlunder;
+#endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+	int m_iNumFaithSpentOnMilitaryUnits;
 #endif
 	int m_iExtraLeagueVotes;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
