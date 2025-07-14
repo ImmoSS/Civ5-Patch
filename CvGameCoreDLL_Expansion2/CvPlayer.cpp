@@ -32112,12 +32112,15 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PERCENTSPECIALISTCITIZENS"), iGameTurn, iPercentSpecialistCitizens);
 #endif
 
-#ifdef  EG_REPLAYDATASET_EFFECTIVESCIENCEPERTURN
+#if defined EG_REPLAYDATASET_EFFECTIVESCIENCEPERTURN || defined EG_REPLAYDATASET_EFFECTIVECULTUREPERTURN
+		int iMod;
+#endif
+#ifdef EG_REPLAYDATASET_EFFECTIVESCIENCEPERTURN
 		int iEffectiveSciencePerTurn = GetScience();
 #ifdef NO_PUPPET_TECH_COST_MOD
-		int iMod = GetPlayerTechs()->GetNumCitiesResearchCostModifier(GetMaxEffectiveCities());
+		iMod = GetPlayerTechs()->GetNumCitiesResearchCostModifier(GetMaxEffectiveCities());
 #else
-		int iMod = GetPlayerTechs()->GetNumCitiesResearchCostModifier(GetMaxEffectiveCities(/*bIncludePuppets*/ true));
+		iMod = GetPlayerTechs()->GetNumCitiesResearchCostModifier(GetMaxEffectiveCities(/*bIncludePuppets*/ true));
 #endif
 		iEffectiveSciencePerTurn *= (100 + GetPlayerTechs()->GetNumCitiesResearchCostModifier(1));
 		iEffectiveSciencePerTurn /= (100 + iMod);
@@ -32249,7 +32252,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 #ifdef EG_REPLAYDATASET_EFFECTIVECULTUREPERTURN
 		int iEffectiveCulturePerTurn = GetJONSCultureEverGenerated();
-		int iMod = (GetMaxEffectiveCities() - 1) * GC.getMap().getWorldInfo().GetNumCitiesPolicyCostMod();
+		iMod = (GetMaxEffectiveCities() - 1) * GC.getMap().getWorldInfo().GetNumCitiesPolicyCostMod();
 		iEffectiveCulturePerTurn *= 100;
 		iEffectiveCulturePerTurn /= (100 + iMod);
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVECULTUREPERTURN"), iGameTurn, iEffectiveCulturePerTurn);
