@@ -307,6 +307,9 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
 	, m_iNumGoldFromPillage(0)
 #endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+	, m_iNumGoldFromPlunder(0)
+#endif
 	, m_iExtraLeagueVotes(0)
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 	, m_iMaxExtraVotesFromMinors(0)
@@ -1186,6 +1189,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
 	m_iNumGoldFromPillage = 0;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+	m_iNumGoldFromPlunder = 0;
 #endif
 	m_iExtraLeagueVotes = 0;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
@@ -11222,6 +11228,16 @@ int CvPlayer::GetNumGoldFromPillage() const
 void CvPlayer::ChangeNumGoldFromPillage(int iChange)
 {
 	m_iNumGoldFromPillage = (m_iNumGoldFromPillage + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+int CvPlayer::GetNumGoldFromPlunder() const
+{
+	return m_iNumGoldFromPlunder;
+}
+void CvPlayer::ChangeNumGoldFromPlunder(int iChange)
+{
+	m_iNumGoldFromPlunder = (m_iNumGoldFromPlunder + iChange);
 }
 #endif
 
@@ -26540,6 +26556,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
 		kStream >> m_iNumGoldFromPillage;
 #endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+		kStream >> m_iNumGoldFromPlunder;
+#endif
 # endif
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
@@ -26692,6 +26711,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
 		m_iNumGoldFromPillage = 0;
 #endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+		m_iNumGoldFromPlunder = 0;
+#endif
 	}
 	else if (uiVersion >= 1003)
 	{
@@ -26841,6 +26863,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
 		m_iNumGoldFromPillage = 0;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+		m_iNumGoldFromPlunder = 0;
 #endif
 	}
 	else if (uiVersion == 1002)
@@ -26992,6 +27017,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
 		m_iNumGoldFromPillage = 0;
 #endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+		m_iNumGoldFromPlunder = 0;
+#endif
 	}
 	else if (uiVersion == 1001)
 	{
@@ -27142,6 +27170,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
 		m_iNumGoldFromPillage = 0;
 #endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+		m_iNumGoldFromPlunder = 0;
+#endif
 	}
 	else
 	{
@@ -27291,6 +27322,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #endif
 #ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
 		m_iNumGoldFromPillage = 0;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+		m_iNumGoldFromPlunder = 0;
 #endif
 	}
 #endif
@@ -28543,6 +28577,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
 	kStream << m_iNumGoldFromPillage;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+	kStream << m_iNumGoldFromPlunder;
 #endif
 	kStream << m_iExtraLeagueVotes;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
@@ -32188,6 +32225,9 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 #ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_GOLDFROMPILLAGING"), iGameTurn, GetNumGoldFromPillage());
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_GOLDFROMPLUNDERING"), iGameTurn, GetNumGoldFromPlunder());
 #endif
 
 /*#ifdef ENHANCED_GRAPHS

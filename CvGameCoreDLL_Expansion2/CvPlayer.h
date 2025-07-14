@@ -475,6 +475,10 @@ public:
 	int GetNumGoldFromPillage() const;
 	void ChangeNumGoldFromPillage(int iChange);
 #endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+	int GetNumGoldFromPlunder() const;
+	void ChangeNumGoldFromPlunder(int iChange);
+#endif
 
 	int GetNumUnitsOutOfSupply() const;
 
@@ -2134,6 +2138,9 @@ protected:
 #endif
 #ifdef EG_REPLAYDATASET_GOLDFROMPILLAGING
 	int m_iNumGoldFromPillage;
+#endif
+#ifdef EG_REPLAYDATASET_GOLDFROMPLUNDERING
+	int m_iNumGoldFromPlunder;
 #endif
 	int m_iExtraLeagueVotes;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
