@@ -32156,7 +32156,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_UNITSFROMCS"), iGameTurn, GetNumUnitsFromMinors());
 #endif
 
-#if defined EG_REPLAYDATASET_TOURISMPERTURN || defined EG_REPLAYDATASET_NUMWORLDWONDERS
+#if defined EG_REPLAYDATASET_TOURISMPERTURN || defined EG_REPLAYDATASET_NUMWORLDWONDERS || defined EG_REPLAYDATASET_FOODFROMTRADEROUTES_TIMES100
 		int iLoopCity;
 #endif
 #ifdef EG_REPLAYDATASET_TOURISMPERTURN
@@ -32268,6 +32268,14 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 #ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMFAITHONMILITARYUNITS"), iGameTurn, GetNumFaithSpentOnMilitaryUnits());
+#endif
+#ifdef EG_REPLAYDATASET_FOODFROMTRADEROUTES_TIMES100
+		int iNumFoodFromTradeRoutesTimes100 = 0;
+		for (CvCity* pLoopCity = firstCity(&iLoopCity); pLoopCity != NULL; pLoopCity = nextCity(&iLoopCity))
+		{
+			iNumFoodFromTradeRoutesTimes100 += GetTrade()->GetTradeValuesAtCityTimes100(pLoopCity, YIELD_FOOD);
+		}
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FOODFROMTRADEROUTES_TIMES100"), iGameTurn, iNumFoodFromTradeRoutesTimes100);
 #endif
 
 /*#ifdef ENHANCED_GRAPHS
