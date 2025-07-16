@@ -2004,7 +2004,7 @@ local function GetCultureTooltip( city )
 	-- local puppetMod = city:IsPuppet() and GameDefines.PUPPET_CULTURE_MODIFIER or 0
 	local puppetMod = 0
 	if city:IsPuppet() then
-		puppetMod = -(100 + (cityOwner and cityOwner:GetCultureCityModifier() or 0) + city:GetCultureRateModifier() + city:GetCapitalCultureModPerDiplomat() + (city:GetNumWorldWonders() > 0 and cityOwner and cityOwner:GetCultureWonderMultiplier() or 0) + (10 * Teams[cityOwner:GetTeam()]:GetTeamTechs():GetTechCount(80) or 0))
+		puppetMod = -((cityOwner and cityOwner:GetCultureCityModifier() or 0) + city:GetCultureRateModifier() + city:GetCapitalCultureModPerDiplomat() + (city:GetNumWorldWonders() > 0 and cityOwner and cityOwner:GetCultureWonderMultiplier() or 0) + (10 * Teams[cityOwner:GetTeam()]:GetTeamTechs():GetTechCount(80) or 0))
 	end
 	if puppetMod ~= 0 then
 		tips:insertLocalized( "TXT_KEY_PRODMOD_PUPPET", puppetMod )
