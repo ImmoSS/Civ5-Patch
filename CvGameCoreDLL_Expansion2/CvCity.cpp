@@ -436,7 +436,11 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	{
 		if(GET_TEAM((TeamTypes)iI).isAlive())
 		{
+#ifdef FIX_NOT_REVEALED_WORKING_CITY_TILE_YIELD_DISPLAY
+			if(pPlot->isRevealed(((TeamTypes)iI)))
+#else
 			if(pPlot->isVisible(((TeamTypes)iI)))
+#endif
 			{
 				setRevealed(((TeamTypes)iI), true);
 			}
