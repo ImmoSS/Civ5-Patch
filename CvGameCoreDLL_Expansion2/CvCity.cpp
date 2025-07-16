@@ -9027,9 +9027,6 @@ int CvCity::getJONSCulturePerTurn() const
 	if(IsPuppet())
 	{
 		iModifier += GC.getPUPPET_CULTURE_MODIFIER();
-#ifdef NO_SCIENCE_AND_CULTURE_FROM_PUPPETS
-		iModifier = 0;
-#endif
 	}
 
 	iCulture *= iModifier;
@@ -11158,9 +11155,6 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 		{
 		case YIELD_SCIENCE:
 			iTempMod = GC.getPUPPET_SCIENCE_MODIFIER();
-#ifdef NO_SCIENCE_AND_CULTURE_FROM_PUPPETS
-			iTempMod = -(iModifier + 100);
-#endif
 			iModifier += iTempMod;
 			if(iTempMod != 0 && toolTipSink)
 				GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_PUPPET", iTempMod);
