@@ -584,6 +584,8 @@
 #define UI_GET_PRESSURE
 ///
 #define BELIEF_HALF_FAITH_IN_CITY
+// Notifications will display beliefs when religions are founded, enhanced, or reformed
+#define UI_RELIGION_NOTIFICATION_SHOW_BELIEFS
 /*RELIGION CHANGES END*/
 
 
