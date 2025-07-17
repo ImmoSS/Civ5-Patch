@@ -4,6 +4,7 @@
 --     alternative graph colors
 --     Replay Events
 --     Graph Tooltip
+--     Fractional Values
 -- for EUI & vanilla UI
 -------------------------------------------------------------------
 include("InstanceManager");
@@ -452,7 +453,7 @@ Panels = {
 						tipControls.Turn:LocalizeAndSetText('TXT_KEY_TP_TURN_COUNTER', ct)
 						for i = 1, 10 do
 							if vals[i] then
-								tipControls['Name'..tostring(i)]:SetText( string.format("%s#[ENDCOLOR]%s: %d", vals[i].Color, vals[i].Name, vals[i].Val) );
+								tipControls['Name'..tostring(i)]:SetText( string.format("%s#[ENDCOLOR]%s: %s", vals[i].Color, vals[i].Name, tostring(vals[i].Val)) );
 							else
 								tipControls['Name'..tostring(i)]:SetText()
 							end
@@ -1584,6 +1585,11 @@ function GenerateReplayInfoFromCurrentGame()
 					end
 					
 					local turnData = scores[turn];
+					-- Fractional Values START
+					if ds:sub(-9):lower() == '_times100' then
+						value = value / 100
+					end
+					-- Fractional Values END
 					turnData[ds] = value;
 				end
 			end
