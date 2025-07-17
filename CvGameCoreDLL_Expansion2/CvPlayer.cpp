@@ -32251,8 +32251,22 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CULTUREFROMKILLS"), iGameTurn, GetCultureFromKills());
 #endif
 #ifdef EG_REPLAYDATASET_EFFECTIVECULTUREPERTURN
-		int iEffectiveCulturePerTurn = GetJONSCultureEverGenerated();
-		iMod = (GetMaxEffectiveCities() - 1) * GC.getMap().getWorldInfo().GetNumCitiesPolicyCostMod();
+		int iEffectiveCulturePerTurn = GetTotalJONSCulturePerTurn();
+		iMod = GC.getMap().getWorldInfo().GetNumCitiesPolicyCostMod();
+		int iPolicyModDiscount = GetNumCitiesPolicyCostDiscount();
+		if(iPolicyModDiscount != 0)
+		{
+			iMod = iMod * (100 + iPolicyModDiscount);
+			iMod /= 100;
+		}
+
+		int iNumCities = GetMaxEffectiveCities();
+
+		iMod = (100 + (iNumCities - 1) * iMod);
+		iMod /= 100;
+
+		iMod *= (100 + getPolicyCostModifier());
+		iMod /= 100;
 		iEffectiveCulturePerTurn *= 100;
 		iEffectiveCulturePerTurn /= (100 + iMod);
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVECULTUREPERTURN"), iGameTurn, iEffectiveCulturePerTurn);
