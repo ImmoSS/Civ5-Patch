@@ -12954,6 +12954,9 @@ void CvCity::BuyPlot(int iPlotX, int iPlotY)
 	CvPlayer& thisPlayer = GET_PLAYER(getOwner());
 	thisPlayer.GetTreasury()->LogExpenditure("", iCost, 1);
 	thisPlayer.GetTreasury()->ChangeGold(-iCost);
+#ifdef EG_REPLAYDATASET_NUMGOLDONTILESBUYS
+	thisPlayer.ChangeNumGoldSpentOnTilesBuys(iCost);
+#endif
 	thisPlayer.ChangeNumPlotsBought(1);
 
 	// See if there's anyone else nearby that could get upset by this action
