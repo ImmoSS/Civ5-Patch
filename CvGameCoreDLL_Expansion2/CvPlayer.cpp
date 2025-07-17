@@ -32288,6 +32288,9 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		}
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PRODUCTIONFROMTRADEROUTES_TIMES100"), iGameTurn, iNumProductionFromTradeRoutesTimes100);
 #endif
+#ifdef EG_REPLAYDATASET_ANARCHYTURNS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_ANARCHYTURNS"), iGameTurn, GetAnarchyNumTurns());
+#endif
 
 /*#ifdef ENHANCED_GRAPHS
 		const char* szDataSetName;
