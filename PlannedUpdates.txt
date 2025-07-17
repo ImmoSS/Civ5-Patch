@@ -1339,7 +1339,7 @@ SOURCE TO XML
 Очки веры [ICON_PEACE], потраченные на покупку военных юнитов | OK
 Еда [ICON_FOOD] за ход от [ICON_INTERNATIONAL_TRADE] торговых путей | OK
 Производство [ICON_PRODUCTION] за ход от [ICON_INTERNATIONAL_TRADE] торговых путей | OK
-Ходы [ICON_HAPPINESS_4] анархия | НЕ ТЕСТИЛ
+Ходы [ICON_HAPPINESS_4] анархии | НЕ ТЕСТИЛ
 
 
 
