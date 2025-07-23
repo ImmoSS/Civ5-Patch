@@ -10243,6 +10243,15 @@ void CvGame::generateReplayKeys()
 							CREATE TABLE main.BuildingClassTypes (TypeID INTEGER NOT NULL, BuildingClassType TEXT);\
 							INSERT INTO main.BuildingClassTypes VALUES (0,'Common'),(1,'National Wonder'),(2,'World Wonder'),(3,'Religious');", NULL, 0, &err);
 		SLOG("BuildingClassTypes %s", err);
+		// CityNames
+		sqlite3_exec(db, "DROP TABLE IF EXISTS main.CityNames;\
+							CREATE TABLE main.CityNames AS\
+							SELECT CityName, IFNULL(Text, CityName) AS Text FROM db2.Civilization_CityNames\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.Civilization_CityNames.CityName\
+							UNION ALL\
+							SELECT CityName, IFNULL(Text, CityName) AS Text FROM db2.MinorCivilization_CityNames\
+							LEFT JOIN db3.Language_en_US ON db3.Language_en_US.Tag = db2.MinorCivilization_CityNames.CityName;", NULL, 0, &err);
+		SLOG("CityNames %s", err);
 		// CivKeys
 		sqlite3_exec(db, "DROP TABLE IF EXISTS main.CivKeys;\
 							CREATE TABLE main.CivKeys AS\
