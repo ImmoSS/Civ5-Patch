@@ -10107,7 +10107,16 @@ void CvGame::exportReplayDatasets()
 								sqlite3_bind_int(stmt, 3, uiTurn);
 								sqlite3_bind_int(stmt, 4, ID);
 								sqlite3_bind_int(stmt, 5, iLoopPlayer);
-								sqlite3_bind_int(stmt, 6, iValue);
+								if (strDataSetName.substr(strDataSetName.length() - 9).compare("_TIMES100") == 0)
+								{
+									double dValue = static_cast<double>(iValue) / 100.0;
+									sqlite3_bind_double(stmt, 6, dValue);
+								}
+								else
+								{
+									sqlite3_bind_int(stmt, 6, iValue);
+								}
+
 								rc = sqlite3_step(stmt);
 								if (rc != SQLITE_DONE) {
 									SLOG("execution step failed or has another row ready: %s", sqlite3_errmsg(db));
