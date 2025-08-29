@@ -7200,7 +7200,25 @@ void CvPlot::updateWorkingCity()
 		}
 		else
 		{
+#ifdef FIX_UPDATE_WORKING_CITY_IF_NULL_BESTCITY
+			// Remove Citizen from this plot if another City's using it
+			if (pOldWorkingCity != NULL)
+			{
+				// Remove citizen
+				pOldWorkingCity->GetCityCitizens()->SetWorkingPlot(this, false);
+			}
+#endif
+
 			m_workingCity.reset();
+
+#ifdef FIX_UPDATE_WORKING_CITY_IF_NULL_BESTCITY
+			// If we told a City to stop working this plot, tell it to do something else instead
+			if (pOldWorkingCity != NULL)
+			{
+				// Re-add citizen somewhere else
+				pOldWorkingCity->GetCityCitizens()->DoAddBestCitizenFromUnassigned();
+			}
+#endif
 		}
 
 		updateYield();
