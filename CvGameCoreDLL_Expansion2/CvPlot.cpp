@@ -5256,6 +5256,16 @@ void CvPlot::setOwner(PlayerTypes eNewValue, int iAcquiringCityID, bool bCheckUn
 
 			pUnitNode = headUnitNode();
 
+#ifdef CITIZENS_CITY_OVERRIDE_BUG_FIX
+			if (isOwned())
+			{
+				if (getWorkingCity())
+				{
+					getWorkingCity()->GetCityCitizens()->SetForcedWorkingPlot(this, false);
+				}
+			}
+#endif
+
 			// ACTUALLY CHANGE OWNERSHIP HERE
 			m_eOwner = eNewValue;
 
