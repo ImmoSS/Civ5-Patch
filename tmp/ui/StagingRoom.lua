@@ -3459,23 +3459,28 @@ function OnGameplayAlertMessage( text )
 			Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_TT2')
 		end
 	elseif control == 'ban-failure' then
-		local playerID = tonumber(text) or -1;
+		local shostID, splayerID, bans = string.match(text, '(.*):(.*):(.*);');
+		print('ban-failure/ hostID splayerID, bans', shostID, splayerID, bans)
+		local hostID = tonumber(shostID) or -1;
+		local playerID = tonumber(splayerID) or -1;
 		local pName = Matchmaking.GetPlayerList()[playerID + 1].playerName or Locale.Lookup('TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME', playerID + 1);
-		if Matchmaking.GetLocalID() == playerID then
-			AddDraftStatus('--- ban again');
-			if Controls.DraftConfirmBansButton:IsDisabled() then
-				Controls.DraftConfirmBansButton:SetDisabled(false);
-				local civtbl = {}
-				for k,v in pairs(g_SelectedCivs) do
-					table.insert(civtbl, GameInfo.Civilizations[k] and Locale.Lookup(GameInfo.Civilizations[k].ShortDescription))
+		if Matchmaking.GetHostID() == hostID then
+			if Matchmaking.GetLocalID() == playerID then
+				AddDraftStatus(Locale.Lookup('TXT_KEY_DRAFT_STATUS_BAN_REJECTED', pName));
+				if Controls.DraftConfirmBansButton:IsDisabled() then
+					Controls.DraftConfirmBansButton:SetDisabled(false);
+					local civtbl = {}
+					for k,v in pairs(g_SelectedCivs) do
+						table.insert(civtbl, GameInfo.Civilizations[k] and Locale.Lookup(GameInfo.Civilizations[k].ShortDescription))
+					end
+					table.sort(civtbl, function(astr,bstr)
+						local a0, b0
+						if astr:match("The ") then a0 = astr:sub(5) else a0 = astr end
+						if bstr:match("The ") then b0 = bstr:sub(5) else b0 = bstr end
+						return a0 < b0
+					end);
+					Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_TT', next(civtbl) and table.concat(civtbl, ', ') or '[ENDCOLOR]{TXT_KEY_MP_NO_PROPOSAL}')
 				end
-				table.sort(civtbl, function(astr,bstr)
-					local a0, b0
-					if astr:match("The ") then a0 = astr:sub(5) else a0 = astr end
-					if bstr:match("The ") then b0 = bstr:sub(5) else b0 = bstr end
-					return a0 < b0
-				end);
-				Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_TT', next(civtbl) and table.concat(civtbl, ', ') or '[ENDCOLOR]{TXT_KEY_MP_NO_PROPOSAL}')
 			end
 		end
 	elseif control == 'ready' then
