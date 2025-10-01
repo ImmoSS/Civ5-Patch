@@ -7538,6 +7538,15 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 #else
 			pBestCity->changePopulation(kGoodyInfo.getPopulation());
 #endif
+#ifdef UPDATE_CITY_BANNER_ON_POP_RUIN
+			if ((pBestCity->getOwner() == GC.getGame().getActivePlayer()) && pBestCity->isCitySelected())
+			{
+				DLLUI->setDirty(CityScreen_DIRTY_BIT, true);
+			}
+
+			auto_ptr<ICvCity1> pCity = GC.WrapCityPointer(pBestCity);
+			DLLUI->SetSpecificCityInfoDirty(pCity.get(), CITY_UPDATE_TYPE_BANNER);
+#endif
 		}
 	}
 
