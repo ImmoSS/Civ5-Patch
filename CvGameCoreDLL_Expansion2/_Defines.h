@@ -999,6 +999,8 @@
 #define FIX_UPDATE_WORKING_CITY_IF_NULL_BESTCITY
 ///
 #define FIX_SWAP_OVER_PLOT_UNIT_LIMIT
+/// Clears replay datasets on CvPlayer::Reset()
+#define FIX_DATASETS_REINITIALIZATION
 /*BUGS FIXES END*/
 
 

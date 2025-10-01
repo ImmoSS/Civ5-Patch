@@ -713,6 +713,10 @@ CvPlayer::CvPlayer() :
 
 	m_aiGreatWorkYieldChange.clear();
 	m_aiSiphonLuxuryCount.clear();
+#ifdef FIX_DATASETS_REINITIALIZATION
+	m_ReplayDataSets.clear();
+	m_ReplayDataSetValues.clear();
+#endif
 
 	reset(NO_PLAYER, true);
 }
@@ -1793,6 +1797,10 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_aUnitExtraCosts.clear();
 	}
 
+#ifdef FIX_DATASETS_REINITIALIZATION
+	m_ReplayDataSets.clear();
+	m_ReplayDataSetValues.clear();
+#endif
 	m_cities.RemoveAll();
 
 	m_units.RemoveAll();
