@@ -6,6 +6,7 @@
 --     Community Remarks
 --     Ingame Civ Drafter
 --     Emote Picker Menu
+--     Quick delete text with Ctrl+Backspace
 -- for EUI and vanilla UI
 -------------------------------------------------
 include( "IconSupport" );
@@ -2259,11 +2260,30 @@ Events.GameMessageChat.Add( OnChat );
 
 -------------------------------------------------
 -------------------------------------------------
-function SendChat( text )
-    if( string.len( text ) > 0 ) then
-        Network.SendChat( text );
+function SendChat( text, control, focus )
+    -- ctrl+backspace START
+    if string.find(text, '\127') then
+        local s1, s2 = string.match(text, '(.-)\127(.*)')
+        local r = 0
+        s1, r = s1:gsub('[^%p%s]+[%p%s]*$', function(m) return '\127'..m end)
+        if r > 0 then
+            s1 = s1:match('(.-)\127')
+            Controls.ChatEntry:SetText(s1)
+        else
+            s1 = Locale.Substring(s1, 1, Locale.Length(s1) - 1)
+            Controls.ChatEntry:SetText(s1)
+        end
+        UI.PostKeyMessage(Keys.VK_END)
+        ContextPtr:SetUpdate(function() ContextPtr:ClearUpdate(); Controls.ChatEntry:SetText(string.format('%s%s', Controls.ChatEntry:GetText(), s2)) end)
+        text = string.format('%s%s', s1, s2)
     end
-    Controls.ChatEntry:ClearString();
+    -- ctrl+backspace END
+    if focus then  -- enter pressed
+    	if( string.len( text ) > 0 ) then
+    	    Network.SendChat( text );
+    	end
+        Controls.ChatEntry:ClearString();
+    end
 end
 Controls.ChatEntry:RegisterCallback( SendChat );
 
