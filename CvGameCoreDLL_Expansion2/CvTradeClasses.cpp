@@ -2314,6 +2314,14 @@ int CvPlayerTrade::GetTradeConnectionValueTimes100 (const TradeConnection& kTrad
 		{
 			switch (eYield)
 			{
+#ifdef TRAIT_INTERNATIONAL_TRADE_ROUTE_YIELD_CHANGES
+			case YIELD_FOOD:
+			case YIELD_PRODUCTION:
+				{
+					iValue = m_pPlayer->GetPlayerTraits()->GetInternationalTradeRoteYieldChangesTimes100(eYield);
+				}
+				break;
+#endif
 			case YIELD_GOLD:
 				{
 					int iBaseValue = GetTradeConnectionBaseValueTimes100(kTradeConnection, eYield, bAsOriginPlayer);
