@@ -3221,9 +3221,26 @@ void CvCityBuildings::SetNumFreeBuilding(BuildingTypes eIndex, int iNewValue)
 
 		if (iOldNumBuilding > 0 && iNewValue > 0)
 		{
+#ifdef FIX_FREE_BUILIDNG_STUCKING
+			if (IsBuildingSellable(*GC.getBuildingInfo(eIndex)))
+			{
+				DoSellBuilding(eIndex);
+				m_pCity->processBuilding(eIndex, iNewValue, true);
+			}
+			else
+			{
+				if (GC.getBuildingInfo(eIndex)->GetGoldMaintenance() != 0)
+				{
+					
+					GET_PLAYER(m_pCity->getOwner()).GetTreasury()->ChangeBaseBuildingGoldMaintenance(-GC.getBuildingInfo(eIndex)->GetGoldMaintenance() * iOldNumBuilding);
+				}
+			}
+			m_paiNumFreeBuilding[eIndex] = iNewValue;
+#else
 			DoSellBuilding(eIndex);
 			m_paiNumFreeBuilding[eIndex] = iNewValue;
-			m_pCity->processBuilding(eIndex, iNewValue, true);			
+			m_pCity->processBuilding(eIndex, iNewValue, true);
+#endif
 		}
 		
 		else

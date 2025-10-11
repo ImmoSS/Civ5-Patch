@@ -1001,6 +1001,8 @@
 #define FIX_SWAP_OVER_PLOT_UNIT_LIMIT
 /// Clears replay datasets on CvPlayer::Reset()
 #define FIX_DATASETS_REINITIALIZATION
+///
+#define FIX_FREE_BUILIDNG_STUCKING
 /*BUGS FIXES END*/
 
 

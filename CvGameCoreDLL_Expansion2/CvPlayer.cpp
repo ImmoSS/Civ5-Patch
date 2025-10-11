@@ -10210,11 +10210,22 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst
 		}
 	}
 
+#ifdef FIX_FREE_BUILIDNG_STUCKING
+	if (bFirst && iChange > 0)
+	{
+		if (pBuildingInfo->GetFreeBuildingClass() != NO_BUILDINGCLASS)
+		{
+			BuildingTypes eFreeBuilding = (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(pBuildingInfo->GetFreeBuildingClass());
+			changeFreeBuildingCount(eFreeBuilding, iChange);
+		}
+	}
+#else
 	if(pBuildingInfo->GetFreeBuildingClass() != NO_BUILDINGCLASS)
 	{
 		BuildingTypes eFreeBuilding = (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(pBuildingInfo->GetFreeBuildingClass());
 		changeFreeBuildingCount(eFreeBuilding, iChange);
 	}
+#endif
 
 	// Unit upgrade cost mod
 	ChangeUnitUpgradeCostMod(pBuildingInfo->GetUnitUpgradeCostMod() * iChange);
