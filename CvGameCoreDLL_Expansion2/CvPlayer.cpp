@@ -25426,9 +25426,19 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		if(iMod != 0)
 			ChangeGreatWorkYieldChange(eYield, iMod);
 
+#ifdef POLICY_SPECIALIST_EXTRA_YIELDS_BY_SPECIALIST_TYPE
+		for (iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
+		{
+			SpecialistTypes eSpecialist = (SpecialistTypes)iJ;
+			iMod = pPolicy->GetSpecialistExtraYield(iJ, iI) * iChange;
+			if (iMod != 0)
+				changeSpecialistExtraYield(eSpecialist, eYield, iMod);
+		}
+#else
 		iMod = pPolicy->GetSpecialistExtraYield(iI) * iChange;
 		if(iMod != 0)
 			changeSpecialistExtraYield(eYield, iMod);
+#endif
 
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 		iMod = pPolicy->GetGoldenAgeYieldModifier(iI) * iChange;

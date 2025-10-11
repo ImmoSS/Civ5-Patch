@@ -204,8 +204,12 @@ public:
 	int* GetCapitalYieldModifierArray() const;
 	int GetGreatWorkYieldChange(int i) const;
 	int* GetGreatWorkYieldChangeArray() const;
+#ifdef POLICY_SPECIALIST_EXTRA_YIELDS_BY_SPECIALIST_TYPE
+	int GetSpecialistExtraYield(int i, int j) const;
+#else
 	int GetSpecialistExtraYield(int i) const;
 	int* GetSpecialistExtraYieldArray() const;
+#endif
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 	int GetGoldenAgeYieldModifier(int i) const;
 	int* GetGoldenAgeYieldModifierArray() const;
@@ -555,7 +559,11 @@ private:
 	int* m_piCapitalYieldPerPopChange;
 	int* m_piCapitalYieldModifier;
 	int* m_piGreatWorkYieldChange;
+#ifdef POLICY_SPECIALIST_EXTRA_YIELDS_BY_SPECIALIST_TYPE
+	int** m_ppiSpecialistExtraYield;
+#else
 	int* m_piSpecialistExtraYield;
+#endif
 #ifdef POLICY_GOLDEN_AGE_YIELD_MOD
 	int* m_piGoldenAgeYieldModifier;
 #endif
