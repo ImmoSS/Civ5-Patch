@@ -1894,7 +1894,11 @@ int CvPlayerTrade::GetTradeConnectionBaseValueTimes100(const TradeConnection& kT
 				iAdjustedTechDifference = max(iCeilTechDifference, 1);
 			}
 
-			return  iAdjustedTechDifference * 100;
+#ifdef TRADE_ROUTES_SCIENCE_MOD
+			return iAdjustedTechDifference * 100 * TRADE_ROUTES_SCIENCE_MOD;
+#else
+			return iAdjustedTechDifference * 100;
+#endif
 		}
 		else
 		{
