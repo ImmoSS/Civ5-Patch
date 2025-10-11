@@ -265,6 +265,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_DOUBLE_PANTHEON
 	m_bDoublePantheon(false),
 #endif
+#ifdef NO_OUTCOMING_INTERNATIONAL_CARAVAN_PILLAGE
+	m_bNoOutcomingInternationlCaravanPillage(false),
+#endif
 	m_iNumThemingBonuses(0)
 {
 }
@@ -836,6 +839,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef BUILDING_DOUBLE_PANTHEON
 	m_bDoublePantheon = kResults.GetBool("DoublePantheon");
+#endif
+#ifdef NO_OUTCOMING_INTERNATIONAL_CARAVAN_PILLAGE
+	m_bNoOutcomingInternationlCaravanPillage = kResults.GetBool("NoOutcomingInternationlCaravanPillage");
 #endif
 
 	return true;
@@ -2408,6 +2414,13 @@ bool CvBuildingEntry::IsNonAirUnitMaxHeal() const
 bool CvBuildingEntry::IsDoublePantheon() const
 {
 	return m_bDoublePantheon;
+}
+#endif
+
+#ifdef NO_OUTCOMING_INTERNATIONAL_CARAVAN_PILLAGE
+bool CvBuildingEntry::IsNoOutcomingInternationlCaravanPillage() const
+{
+	return m_bNoOutcomingInternationlCaravanPillage;
 }
 #endif
 

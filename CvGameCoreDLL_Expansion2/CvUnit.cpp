@@ -6608,19 +6608,29 @@ bool CvUnit::canPlunderTradeRoute(const CvPlot* pPlot, bool bOnlyTestVisibility)
 				return false;
 			}
 
-#ifdef POLICY_NO_CARGO_PILLAGE
+#if defined POLICY_NO_CARGO_PILLAGE || defined NO_OUTCOMING_INTERNATIONAL_CARAVAN_PILLAGE
 			CvGameTrade* pTrade = GC.getGame().GetGameTrade();
 			int iTradeConnectionIndex = pTrade->GetIndexFromID(aiTradeUnitsAtPlot[0]);
-			PlayerTypes ePlayer = pTrade->GetOwnerFromID(aiTradeUnitsAtPlot[0]);
 
 			if (iTradeConnectionIndex < 0)
 			{
 				return false;
 			}
-
 			TradeConnection* pTradeConnection = &(pTrade->m_aTradeConnections[iTradeConnectionIndex]);
+#endif
+
+#ifdef POLICY_NO_CARGO_PILLAGE
+			PlayerTypes ePlayer = pTrade->GetOwnerFromID(aiTradeUnitsAtPlot[0]);
 			DomainTypes eDomain = pTradeConnection->m_eDomain;
 			if (eDomain == DOMAIN_SEA && GET_PLAYER(ePlayer).IsNoCargoPillage())
+			{
+				return false;
+			}
+#endif
+
+#ifdef POLICY_NO_CARGO_PILLAGE
+			CvCity* pOriginCity = pTrade->GetOriginCity(*pTradeConnection);
+			if (pOriginCity->getNoOutcomingInternationlCaravanPillage() > 0)
 			{
 				return false;
 			}
