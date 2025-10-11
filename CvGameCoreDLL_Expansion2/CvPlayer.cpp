@@ -8464,6 +8464,26 @@ void CvPlayer::found(int iX, int iY)
 		}
 	}
 #endif
+#ifdef TRAIT_FREE_UNIT_IN_CAPITAL_FOUNDATION
+	if (pCity->isCapital())
+	{
+		UnitClassTypes eCapitalUnitClass = (UnitClassTypes)GET_PLAYER(GetID()).GetPlayerTraits()->GetFreeUnitOnCapitalFoundation();
+		CvUnitClassInfo* pkCapitalUnitClassInfo = GC.getUnitClassInfo(eCapitalUnitClass);
+		if (pkCapitalUnitClassInfo)
+		{
+			CvUnit* pNewUnit = NULL;
+			pNewUnit = initUnit((UnitTypes)pkCapitalUnitClassInfo->getDefaultUnitIndex(), iX, iY);
+
+			CvAssert(pNewUnit);
+			
+			if (pNewUnit)
+			{
+				pNewUnit->jumpToNearestValidPlot();
+				pNewUnit->finishMoves();
+			}
+		}
+	}
+#endif
 #ifdef CREATE_APOLLO_PROGRAM_WITH_CAP_FOUND
 	ProjectTypes eApolloProgram = (ProjectTypes)GC.getInfoTypeForString("PROJECT_APOLLO_PROGRAM", true);
 	if (isHuman() && eApolloProgram != NO_PROJECT)
