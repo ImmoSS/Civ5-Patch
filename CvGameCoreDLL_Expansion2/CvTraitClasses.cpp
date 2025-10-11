@@ -128,6 +128,9 @@ CvTraitEntry::CvTraitEntry() :
 #ifdef BUILDING_CLASS_YIELD_CHANGES
 	m_ppiBuildingClassYieldChanges(NULL),
 #endif
+#ifdef TRAIT_INTERNATIONAL_TRADE_ROUTE_YIELD_CHANGES
+	m_paiInternationalTradeRoteYieldChangesTimes100(NULL),
+#endif
 	m_ppiUnimprovedFeatureYieldChanges(NULL)
 {
 }
@@ -918,6 +921,14 @@ int CvTraitEntry::GetGoldForLuxuryExport() const
 }
 #endif
 
+#ifdef TRAIT_INTERNATIONAL_TRADE_ROUTE_YIELD_CHANGES
+///
+int CvTraitEntry::GetInternationalTradeRoteYieldChangesTimes100(int i) const
+{
+	return m_paiInternationalTradeRoteYieldChangesTimes100 ? m_paiInternationalTradeRoteYieldChangesTimes100[i] : -1;
+}
+#endif
+
 /// Load XML data
 bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& kUtility)
 {
@@ -1079,6 +1090,9 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 #endif
 #ifdef RUSSIA_UA_REWORK
 	kUtility.SetYields(m_paiRiverCityYieldChange, "Trait_RiverCityYieldChange", "TraitType", szTraitType);
+#endif
+#ifdef TRAIT_INTERNATIONAL_TRADE_ROUTE_YIELD_CHANGES
+	kUtility.SetYields(m_paiInternationalTradeRoteYieldChangesTimes100, "Trait_InternationalTradeRoteYieldChangesTimes100", "TraitType", szTraitType);
 #endif
 
 	const int iNumTerrains = GC.getNumTerrainInfos();
@@ -1678,6 +1692,12 @@ void CvPlayerTraits::InitPlayerTraits()
 #ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
 			m_iGoldForLuxuryExport += trait->GetGoldForLuxuryExport();
 #endif
+#ifdef TRAIT_INTERNATIONAL_TRADE_ROUTE_YIELD_CHANGES
+			for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
+			{
+				m_iInternationalTradeRoteYieldChangesTimes100[iYield] = trait->GetInternationalTradeRoteYieldChangesTimes100(iYield);
+			}
+#endif
 		}
 	}
 }
@@ -1877,6 +1897,12 @@ void CvPlayerTraits::Reset()
 #endif
 #ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
 	m_iGoldForLuxuryExport = 0;
+#endif
+#ifdef TRAIT_INTERNATIONAL_TRADE_ROUTE_YIELD_CHANGES
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
+	{
+		m_iInternationalTradeRoteYieldChangesTimes100[iYield] = 0;
+	}
 #endif
 }
 
@@ -3095,6 +3121,24 @@ void CvPlayerTraits::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef TRAIT_INTERNATIONAL_TRADE_ROUTE_YIELD_CHANGES
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1001)
+	{
+# endif
+		ArrayWrapper<int> kInternationalTradeRoteYieldChangesTimes100(NUM_YIELD_TYPES, m_iInternationalTradeRoteYieldChangesTimes100);
+		kStream >> kInternationalTradeRoteYieldChangesTimes100;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
+		{
+			m_iInternationalTradeRoteYieldChangesTimes100[iYield] = 0;
+		}
+	}
+# endif
+#endif
 }
 
 /// Serialization write
@@ -3263,6 +3307,9 @@ void CvPlayerTraits::Write(FDataStream& kStream)
 #endif
 #ifdef TRAIT_GOLD_FOR_LUXURY_EXPORT
 	kStream << m_iGoldForLuxuryExport;
+#endif
+#ifdef TRAIT_INTERNATIONAL_TRADE_ROUTE_YIELD_CHANGES
+	kStream << ArrayWrapper<int>(NUM_YIELD_TYPES, m_iInternationalTradeRoteYieldChangesTimes100);
 #endif
 }
 
