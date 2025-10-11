@@ -30564,7 +30564,18 @@ void CvPlayer::setTimeCSWarAllowingMinor(PlayerTypes ePlayer, PlayerTypes eMinor
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 bool CvPlayer::IsDelayedPolicy() const
 {
+#ifdef BLITZ_MODE
+	if (GC.getGame().isOption("GAMEOPTION_BLITZ_MODE"))
+	{
+		return false;
+	}
+	else
+	{
+		return m_bIsDelayedPolicy;
+	}
+#else
 	return m_bIsDelayedPolicy;
+#endif
 }
 
 void CvPlayer::setIsDelayedPolicy(bool bValue)
