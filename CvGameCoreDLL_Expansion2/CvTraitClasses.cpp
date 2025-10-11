@@ -3148,7 +3148,7 @@ void CvPlayerTraits::Read(FDataStream& kStream)
 #endif
 #ifdef TRAIT_INTERNATIONAL_TRADE_ROUTE_YIELD_CHANGES
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= 1001)
+	if (uiVersion >= 1002)
 	{
 # endif
 		ArrayWrapper<int> kInternationalTradeRoteYieldChangesTimes100(NUM_YIELD_TYPES, m_iInternationalTradeRoteYieldChangesTimes100);

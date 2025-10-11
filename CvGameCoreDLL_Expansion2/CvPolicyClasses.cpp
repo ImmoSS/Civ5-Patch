@@ -596,7 +596,7 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #ifdef POLICY_SPECIALIST_EXTRA_YIELDS_BY_SPECIALIST_TYPE
 	//SpecialistExtraYields
 	{
-		kUtility.Initialize2DArray(m_ppiSpecialistExtraYield, "Specialists", "YieldType"); 
+		kUtility.Initialize2DArray(m_ppiSpecialistExtraYield, "Specialists", "Yields"); 
 
 		std::string strKey("Policy_SpecialistExtraYields");
 		Database::Results* pResults = kUtility.GetResults(strKey);
