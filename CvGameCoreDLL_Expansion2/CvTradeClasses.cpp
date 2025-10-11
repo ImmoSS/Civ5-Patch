@@ -1874,7 +1874,11 @@ int CvPlayerTrade::GetTradeConnectionBaseValueTimes100(const TradeConnection& kT
 				int iInfluenceBoost = GET_PLAYER(kTradeConnection.m_eOriginOwner).GetCulture()->GetInfluenceTradeRouteScienceBonus(kTradeConnection.m_eDestOwner);
 				iAdjustedTechDifference += iInfluenceBoost;
 
+#ifdef TRADE_ROUTES_SCIENCE_MOD
+				return iAdjustedTechDifference * 100 * TRADE_ROUTES_SCIENCE_MOD;
+#else
 				return iAdjustedTechDifference * 100;
+#endif
 			}
 		}
 	}
