@@ -1387,6 +1387,12 @@ bool CvPlayerEspionage::CanMoveSpyTo(CvCity* pCity, uint uiSpyIndex, bool bAsDip
 
 	if (bAsDiplomat)
 	{
+#ifdef DO_CANCEL_DEALS_WITH_AI
+		if (!pCity->isHuman() && GC.getGame().isOption("GAMEOPTION_AI_TWEAKS"))
+		{
+			return false;
+		}
+#endif
 		// diplomatic spy must be in capital
 		if (!pCity->isCapital() || pCity->getOwner() == m_pPlayer->GetID())
 		{
