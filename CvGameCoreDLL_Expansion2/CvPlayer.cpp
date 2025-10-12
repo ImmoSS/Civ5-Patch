@@ -675,6 +675,9 @@ CvPlayer::CvPlayer() :
 	, m_bGoldGeneral(false)
 	, m_bGoldAdmiral(false)
 #endif
+#ifdef POLICY_SPY_DETECTION
+	, m_iSpyDetection(0)
+#endif
 {
 	m_pPlayerPolicies = FNEW(CvPlayerPolicies, c_eCiv5GameplayDLL, 0);
 	m_pEconomicAI = FNEW(CvEconomicAI, c_eCiv5GameplayDLL, 0);
@@ -1506,6 +1509,9 @@ void CvPlayer::uninit()
 	m_bGoldMerchant = false;
 	m_bGoldGeneral = false;
 	m_bGoldAdmiral = false;
+#endif
+#ifdef POLICY_SPY_DETECTION
+	m_iSpyDetection = 0;
 #endif
 
 	m_eID = NO_PLAYER;
@@ -25797,6 +25803,9 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		}
 	}
 #endif
+#ifdef POLICY_SPY_DETECTION
+	ChangeSpyDetection(pPolicy->IsSpyDetection() * iChange);
+#endif
 
 	// Not really techs but this is what we use (for now)
 	for(iI = 0; iI < GC.getNUM_AND_TECH_PREREQS(); iI++)
@@ -28320,6 +28329,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef POLICY_SPY_DETECTION
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1014)
+	{
+# endif
+	kStream >> m_iSpyDetection;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iSpyDetection = 0;
+	}
+# endif
+#endif
 
 	m_pPlayerPolicies->Read(kStream);
 	m_pEconomicAI->Read(kStream);
@@ -29051,6 +29074,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_bGoldMerchant;
 	kStream << m_bGoldGeneral;
 	kStream << m_bGoldAdmiral;
+#endif
+#ifdef POLICY_SPY_DETECTION
+	kStream << m_iSpyDetection;
 #endif
 
 	m_pPlayerPolicies->Write(kStream);
@@ -30684,6 +30710,18 @@ void CvPlayer::SetGoldGreatPerson(UnitClassTypes eUnitClass, bool bValue)
 	{
 		m_bGoldAdmiral = bValue;
 	}
+}
+#endif
+
+#ifdef POLICY_SPY_DETECTION
+bool CvPlayer::IsSpyDetection() const
+{
+	return m_iSpyDetection > 0;
+}
+
+void CvPlayer::ChangeSpyDetection(int iChange)
+{
+	m_iSpyDetection += iChange;
 }
 #endif
 

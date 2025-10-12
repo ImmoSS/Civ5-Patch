@@ -284,6 +284,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 #ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
 	m_paiLeagueSessionYieldBoostPerDelegate(NULL),
 #endif
+#ifdef POLICY_SPY_DETECTION
+	m_bSpyDetection(false),
+#endif
 	m_eFreeBuildingOnConquest(NO_BUILDING)
 {
 }
@@ -582,6 +585,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 #ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_MINOR
 	m_iHappinessPerTradeRouteToMinor = kResults.GetInt("HappinessPerTradeRouteToMinor");
+#endif
+#ifdef POLICY_SPY_DETECTION
+	m_bSpyDetection = kResults.GetBool("SpyDetection");
 #endif
 
 	//Arrays
@@ -2281,6 +2287,14 @@ int CvPolicyEntry::GetLeagueSessionYieldBoostPerDelegate(int i) const
 	CvAssertMsg(i < GC.getNumYieldInfos(), "Index out of bounds");
 	CvAssertMsg(i > -1, "Index out of bounds");
 	return m_paiLeagueSessionYieldBoostPerDelegate[i];
+}
+#endif
+
+#ifdef POLICY_SPY_DETECTION
+///
+bool CvPolicyEntry::IsSpyDetection() const
+{
+	return m_bSpyDetection;
 }
 #endif
 
