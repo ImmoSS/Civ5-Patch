@@ -320,6 +320,9 @@ public:
 #ifdef POLICY_LEAGUE_SESSION_YIELD_BOOST_PER_DELEGATE
 	int GetLeagueSessionYieldBoostPerDelegate(int i) const;
 #endif
+#ifdef POLICY_SPY_DETECTION
+	bool IsSpyDetection() const;
+#endif
 
 private:
 	int m_iTechPrereq;
@@ -545,6 +548,9 @@ private:
 #endif
 #ifdef POLICY_HAPPINESS_PER_TRADE_ROUTE_TO_MINOR
 	int m_iHappinessPerTradeRouteToMinor;
+#endif
+#ifdef POLICY_SPY_DETECTION
+	bool m_bSpyDetection;
 #endif
 
 	// Arrays
