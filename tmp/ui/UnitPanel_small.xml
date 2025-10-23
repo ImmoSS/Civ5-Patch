@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- edit: Ingame Hotkey Manager for vanilla UI -->
 <Context ColorSet="Beige_Black" Font="TwCenMT20" FontStyle="Shadow" >
 
 
@@ -139,6 +140,9 @@
   <Instance Name="UnitAction" >
     <GridButton Anchor="R,T" ID="UnitActionButton" Size="36,36" Offset="0,0"  Style="SmallButton2"  Hidden="0" ToolTipType="TypeUnitAction">
       <Image Anchor="C,C" Offset="0,0" Size="45,45" Texture="UnitActions360.dds" ID="UnitActionIcon" />
+      <!-- Ingame Hotkey Manager START -->
+      <Label ID="UnitHotkey" Anchor="R,T" Offset="-2,-4" Font="TwCenMT14" FontStyle="Stroke" Color0="0,0,0,255" Color1="Black,155" TruncateWidth="47" />
+      <!-- Ingame Hotkey Manager END -->
     </GridButton>
   </Instance>
 
@@ -178,6 +182,9 @@
       <ShowOnMouseOver>
         <Image Size="36,36" Anchor="C,C"  Texture="Assets/UI/Art/Icons/BuildCityGold36.dds" />
       </ShowOnMouseOver>
+      <!-- Ingame Hotkey Manager START -->
+      <Label ID="BuildCityHotkey" Anchor="R,T" Offset="-2,-4" Font="TwCenMT14" FontStyle="Stroke" Color0="0,0,0,255" Color1="Black,155" TruncateWidth="47" />
+      <!-- Ingame Hotkey Manager END -->
 
     </Button>
 
