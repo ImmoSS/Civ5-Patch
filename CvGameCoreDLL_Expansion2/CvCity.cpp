@@ -17293,6 +17293,10 @@ CityTaskResult CvCity::rangeStrike(int iX, int iY)
 	}
 #endif
 	setMadeAttack(true);
+#ifdef CITY_BANNER_MISSING_UPDATES_FIX
+	auto_ptr<ICvCity1> pCity = GC.WrapCityPointer(this);
+	DLLUI->SetSpecificCityInfoDirty(pCity.get(), CITY_UPDATE_TYPE_BANNER);
+#endif
 
 	// No City
 	if(!pPlot->isCity())

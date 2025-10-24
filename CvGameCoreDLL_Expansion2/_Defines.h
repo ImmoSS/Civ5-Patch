@@ -851,7 +851,7 @@
 #define CHANGE_CITY_ORIGINAL_OWNER
 ///
 #define UPDATE_UNIT_PROMOTIONS_ON_ACQUIRED_PLOT
-/// Fixes the city banner not updating after receiving food ruin
+/// Fixes the city banner not updating after receiving food ruin, range strike, moving spy
 #define CITY_BANNER_MISSING_UPDATES_FIX
 /*CITIES CHANGES END*/
 
