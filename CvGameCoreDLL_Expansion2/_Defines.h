@@ -852,7 +852,7 @@
 ///
 #define UPDATE_UNIT_PROMOTIONS_ON_ACQUIRED_PLOT
 /// Fixes the city banner not updating after receiving food ruin
-#define UPDATE_CITY_BANNER_ON_POP_RUIN
+#define CITY_BANNER_MISSING_UPDATES_FIX
 /*CITIES CHANGES END*/
 
 
