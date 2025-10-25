@@ -1320,6 +1320,9 @@ void CvDllNetMessageHandler::ResponseMinorCivBullyGold(PlayerTypes ePlayer, Play
 	vArgs.push_back(iGold);
 	GC.getGame().addReplayEvent(REPLAYEVENT_MinorCivBullyGold, ePlayer, vArgs);
 #endif
+#ifdef NET_FIX_EXPLOITABLE_MINOR_BULLY_GOLD
+	iGold = GET_PLAYER(eMinor).GetMinorCivAI()->GetBullyGoldAmount(ePlayer);
+#endif
 	GET_PLAYER(eMinor).GetMinorCivAI()->DoMajorBullyGold(ePlayer, iGold);
 }
 //------------------------------------------------------------------------------
