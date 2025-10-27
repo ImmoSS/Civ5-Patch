@@ -853,6 +853,8 @@
 #define UPDATE_UNIT_PROMOTIONS_ON_ACQUIRED_PLOT
 /// Fixes the city banner not updating after receiving food ruin, range strike, moving spy
 #define CITY_BANNER_MISSING_UPDATES_FIX
+/// provides a method to change the bSave value (endless repeat) for a city order; after construction repeated orders stay at the beginning of the production queue
+#define LUA_CITY_METHOD_SET_REPEAT_ORDER
 /*CITIES CHANGES END*/
 
 
