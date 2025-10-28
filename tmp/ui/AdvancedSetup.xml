@@ -11,7 +11,7 @@
                     <Image Anchor="L,T" Offset="0,0" Size="64,64"   Texture="Assets/UI/Art/Icons/LeaderPortraits512.dds"  ID="Portrait"/>
                 </Image>
 
-                <PullDown  Anchor="L,T" Style="GenericPullDown" ScrollThreshold="110" Size="289,27" AutoSizePopUp="1" SpaceForScroll="1" Offset="118,6" ID="CivPulldown">
+                <PullDown  Anchor="L,T" Style="GenericPullDown" ScrollThreshold="240" Size="289,27" AutoSizePopUp="1" SpaceForScroll="1" Offset="118,6" ID="CivPulldown">
                     <Label Anchor="L,C" ColorSet="Beige_Black" Font="TwCenMT18" FontStyle="Shadow" String="1." Offset="6.0" ID="CivNumberIndex" Hidden="1" />
                 </PullDown>
 
