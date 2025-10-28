@@ -678,6 +678,9 @@ CvPlayer::CvPlayer() :
 #ifdef POLICY_SPY_DETECTION
 	, m_iSpyDetection(0)
 #endif
+#ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
+	, m_iBorderObstacleCount(0)
+#endif
 {
 	m_pPlayerPolicies = FNEW(CvPlayerPolicies, c_eCiv5GameplayDLL, 0);
 	m_pEconomicAI = FNEW(CvEconomicAI, c_eCiv5GameplayDLL, 0);
@@ -1512,6 +1515,9 @@ void CvPlayer::uninit()
 #endif
 #ifdef POLICY_SPY_DETECTION
 	m_iSpyDetection = 0;
+#endif
+#ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
+	m_iBorderTransitionObstacleCount = 0;
 #endif
 
 	m_eID = NO_PLAYER;
@@ -5966,10 +5972,17 @@ void CvPlayer::DoUnitReset()
 			}
 			else
 			{
+#ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
+				if (pLoopUnit->IsHurt() && !(pLoopUnit->plot()->getOwner() != NO_PLAYER && pLoopUnit->plot()->getOwner() != pLoopUnit->getOwner() && GET_PLAYER(pLoopUnit->plot()->getOwner()).isBorderTransitionObstacle() && pLoopUnit->getDomainType() == DOMAIN_LAND))
+				{
+					pLoopUnit->doHeal();
+				}
+#else
 				if(pLoopUnit->IsHurt())
 				{
 					pLoopUnit->doHeal();
 				}
+#endif
 			}
 		}
 
@@ -10307,6 +10320,9 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst
 	changeBorderObstacleCount(pBuildingInfo->IsPlayerBorderObstacle() * iChange);
 #ifdef TEMPLE_ARTEMIS_NO_YIELD_MOD_BUT_GROWTH
 	ChangeCityGrowthMod(pBuildingInfo->GetGlobalYieldModifier(int(YIELD_FOOD)) * iChange);
+#endif
+#ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
+	changeBorderTransitionObstacleCount(pBuildingInfo->IsPlayerBorderTransitionObstacle() * iChange);
 #endif
 
 	changeSpaceProductionModifier(pBuildingInfo->GetGlobalSpaceProductionModifier() * iChange);
@@ -28343,6 +28359,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1015)
+	{
+# endif
+		kStream >> m_iBorderTransitionObstacleCount;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iBorderTransitionObstacleCount = 0;
+	}
+# endif
+#endif
 
 	m_pPlayerPolicies->Read(kStream);
 	m_pEconomicAI->Read(kStream);
@@ -29077,6 +29107,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #endif
 #ifdef POLICY_SPY_DETECTION
 	kStream << m_iSpyDetection;
+#endif
+#ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
+	kStream << m_iBorderTransitionObstacleCount;
 #endif
 
 	m_pPlayerPolicies->Write(kStream);
@@ -30722,6 +30755,30 @@ bool CvPlayer::IsSpyDetection() const
 void CvPlayer::ChangeSpyDetection(int iChange)
 {
 	m_iSpyDetection += iChange;
+}
+#endif
+
+#ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
+//	--------------------------------------------------------------------------------
+int CvPlayer::getBorderTransitionObstacleCount() const
+{
+	return m_iBorderTransitionObstacleCount;
+}
+
+//	--------------------------------------------------------------------------------
+bool CvPlayer::isBorderTransitionObstacle() const
+{
+	return (getBorderTransitionObstacleCount() > 0);
+}
+
+//	--------------------------------------------------------------------------------
+void CvPlayer::changeBorderTransitionObstacleCount(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iBorderTransitionObstacleCount = (m_iBorderTransitionObstacleCount + iChange);
+		CvAssert(getBorderTransitionObstacleCount() >= 0);
+	}
 }
 #endif
 
