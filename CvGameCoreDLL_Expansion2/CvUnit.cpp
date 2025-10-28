@@ -1636,7 +1636,7 @@ bool CvUnit::getCaptureDefinition(CvUnitCaptureDefinition* pkCaptureDef, PlayerT
 	if(pkCaptureDef)
 		*pkCaptureDef = kCaptureDef;
 
-#ifdef DUEL_CANT_CAPTURE_CS_WORKER
+/*#ifdef DUEL_CANT_CAPTURE_CS_WORKER
 	if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF") && GetOriginalOwner() != NO_PLAYER && GET_PLAYER(GetOriginalOwner()).isMinorCiv())
 	{
 		return false;
@@ -1648,7 +1648,7 @@ bool CvUnit::getCaptureDefinition(CvUnitCaptureDefinition* pkCaptureDef, PlayerT
 	{
 		return false;
 	}
-#endif
+#endif*/
 
 	return kCaptureDef.eCaptureUnitType != NO_UNIT && kCaptureDef.eCapturingPlayer != NO_PLAYER;
 }
