@@ -20,6 +20,7 @@ copy /y "%patchfolder%\tmp\ui\CCVotePopup.xml" "%patchfolder%\UI\CCVotePopup.xml
 copy /y "%patchfolder%\tmp\ui\EndGameMenu.lua" "%patchfolder%\UI\EndGameMenu.lua" > nul
 copy /y "%patchfolder%\tmp\ui\ProposalChartPopup.lua" "%patchfolder%\UI\ProposalChartPopup.lua" > nul
 copy /y "%patchfolder%\tmp\ui\ProposalChartPopup.xml" "%patchfolder%\UI\ProposalChartPopup.xml" > nul
+copy /y "%patchfolder%\tmp\ui\AdvancedSetup.xml" "%patchfolder%\UI\AdvancedSetup.xml" > nul
 copy /y "%patchfolder%\tmp\ui\AdvancedSetup.lua" "%patchfolder%\UI\AdvancedSetup.lua" > nul
 copy /y "%patchfolder%\tmp\ui\StagingRoom.lua" "%patchfolder%\UI\StagingRoom.lua" > nul
 copy /y "%patchfolder%\tmp\ui\StagingRoom.xml" "%patchfolder%\UI\StagingRoom.xml" > nul
