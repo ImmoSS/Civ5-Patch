@@ -1650,6 +1650,13 @@ bool CvUnit::getCaptureDefinition(CvUnitCaptureDefinition* pkCaptureDef, PlayerT
 	}
 #endif*/
 
+#ifdef NO_MINORS_WORKERS_CAPTURE
+	if (GetOriginalOwner() != NO_PLAYER && GET_PLAYER(GetOriginalOwner()).isMinorCiv())
+	{
+		return false;
+	}
+#endif
+
 	return kCaptureDef.eCaptureUnitType != NO_UNIT && kCaptureDef.eCapturingPlayer != NO_PLAYER;
 }
 
