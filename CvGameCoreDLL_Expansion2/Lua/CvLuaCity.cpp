@@ -4234,7 +4234,7 @@ int CvLuaCity::lIsEnemySpyDetected(lua_State* L)
 	for (int iLoopPlayer = 0; iLoopPlayer < MAX_MAJOR_CIVS; iLoopPlayer++)
 	{
 		PlayerTypes eLoopPlayer = (PlayerTypes)iLoopPlayer;
-		if (eLoopPlayer != pkCity->getOwner() && GET_PLAYER(pkCity->getOwner()).IsSpyDetection() && GET_PLAYER(eLoopPlayer).GetEspionage()->HasEstablishedSurveillanceInCity(pkCity) && GET_PLAYER(pkCity->getOwner()).GetEspionage()->GetSpyIndexInCity(pkCity))
+		if (eLoopPlayer != pkCity->getOwner() && GET_PLAYER(pkCity->getOwner()).IsSpyDetection() && GET_PLAYER(eLoopPlayer).GetEspionage()->HasEstablishedSurveillanceInCity(pkCity) && pkCity->GetCityEspionage()->HasCounterSpy())
 		{
 			bSpyDetected = true;
 			break;
