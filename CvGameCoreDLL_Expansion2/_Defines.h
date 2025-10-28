@@ -1021,6 +1021,8 @@
 #define FIX_FREE_BUILIDNG_STUCKING
 /// CS gold tribute amount being sent by the client
 #define NET_FIX_EXPLOITABLE_MINOR_BULLY_GOLD
+///
+#define FIX_HAS_COUNTER_SPY
 /*BUGS FIXES END*/
 
 
