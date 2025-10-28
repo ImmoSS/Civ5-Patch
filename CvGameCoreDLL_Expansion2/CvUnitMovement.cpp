@@ -278,14 +278,14 @@ bool CvUnitMovement::ConsumesAllMoves(const CvUnit* pUnit, const CvPlot* pFromPl
 		{
 			if ((pToPlot->getOwner() == NO_PLAYER || pToPlot->getOwner() != NO_PLAYER && !GET_PLAYER(pToPlot->getOwner()).isBorderTransitionObstacle()) && pFromPlot->getOwner() != NO_PLAYER && GET_PLAYER(pFromPlot->getOwner()).isBorderTransitionObstacle())
 			{
-				if (pUnit->getTeam() != pFromPlot->getTeam() && GET_TEAM(pFromPlot->getTeam()).IsAllowsOpenBordersToTeam(pUnit->getTeam()))
+				if (pUnit->getTeam() != pFromPlot->getTeam() && !GET_TEAM(pFromPlot->getTeam()).IsAllowsOpenBordersToTeam(pUnit->getTeam()))
 				{
 					return true;
 				}
 			}
 			if ((pFromPlot->getOwner() == NO_PLAYER || pFromPlot->getOwner() != NO_PLAYER && !GET_PLAYER(pFromPlot->getOwner()).isBorderTransitionObstacle()) && pToPlot->getOwner() != NO_PLAYER && GET_PLAYER(pToPlot->getOwner()).isBorderTransitionObstacle())
 			{
-				if (pUnit->getTeam() != pToPlot->getTeam() && GET_TEAM(pToPlot->getTeam()).IsAllowsOpenBordersToTeam(pUnit->getTeam()))
+				if (pUnit->getTeam() != pToPlot->getTeam() && !GET_TEAM(pToPlot->getTeam()).IsAllowsOpenBordersToTeam(pUnit->getTeam()))
 				{
 					return true;
 				}
