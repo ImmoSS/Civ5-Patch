@@ -4938,7 +4938,7 @@ int CvGame::getMaxTurnLen()
 		for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
 		{
 			TeamTypes eTeam = GET_PLAYER((PlayerTypes)iI).getTeam();
-			if (GET_TEAM(eTeam).isAlive())
+			if (GET_TEAM(eTeam).isAlive() && GET_TEAM(eTeam).isHuman())
 			{
 				if (GET_TEAM(eTeam).GetCurrentEra() > eHighestEra)
 				{
