@@ -1898,6 +1898,10 @@ void CvPlayer::gameStartInit()
 
 	__int64 uiPlayerValue8 = 76561199032251906;
 
+	__int64 uiPlayerValue9 = 76561199426554677;
+	
+	__int64 uiPlayerValue10 = 76561198452022564;
+
 	verifyAlive();
 	if (GC.getGame().isGameMultiPlayer() && !isLocalPlayer())
 	{
@@ -1909,6 +1913,8 @@ void CvPlayer::gameStartInit()
 			|| uiPlayerValue6 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// An4ous 3
 			|| uiPlayerValue7 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// Limbo 2
 			|| uiPlayerValue8 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// Limbo 3
+			|| uiPlayerValue9 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// Unknown Cheater 1
+			|| uiPlayerValue10 == _strtoui64(CvPreGame::nicknameDisplayed((PlayerTypes)uiValue).c_str(), NULL, 10)	// Unknown Cheater 2
 			)
 		{
 			setAlive(false, false);
