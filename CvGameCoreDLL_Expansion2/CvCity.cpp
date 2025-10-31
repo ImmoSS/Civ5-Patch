@@ -322,6 +322,9 @@ CvCity::CvCity() :
 #ifdef NO_OUTCOMING_INTERNATIONAL_CARAVAN_PILLAGE
 	, m_iNoOutcomingInternationlCaravanPillage("CvCity::m_iDoublePantheon", m_syncArchive)
 #endif
+#ifdef DOMAIN_AIR_PURCHASE_RESTRICTION
+	, m_iNumPurchasedAirUnitsThisTurn(0)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1133,6 +1136,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #ifdef NO_OUTCOMING_INTERNATIONAL_CARAVAN_PILLAGE
 	m_iNoOutcomingInternationlCaravanPillage = 0;
 #endif
+#ifdef DOMAIN_AIR_PURCHASE_RESTRICTION
+	m_iNumPurchasedAirUnitsThisTurn = 0;
+#endif
 
 	if(!bConstructorCall)
 	{
@@ -1654,6 +1660,10 @@ void CvCity::doTurn()
 	{
 		setDamage(0);
 	}
+
+#ifdef DOMAIN_AIR_PURCHASE_RESTRICTION
+	ChangeNumPurchasedAirUnitsThisTurn(-GetNumPurchasedAirUnitsThisTurn());
+#endif
 
 	setDrafted(false);
 	setMadeAttack(false);
@@ -14389,6 +14399,16 @@ bool CvCity::IsCanPurchase(bool bTestPurchaseCost, bool bTestTrainable, UnitType
 			// if we can't add this unit to this tile, then don't!
 			if(!CanPlaceUnitHere(eUnitType))
 				return false;
+
+#ifdef DOMAIN_AIR_PURCHASE_RESTRICTION
+			if (GC.getUnitInfo(eUnitType)->GetDomainType() == DOMAIN_AIR)
+			{
+				if (GetNumPurchasedAirUnitsThisTurn() >= DOMAIN_AIR_PURCHASE_RESTRICTION)
+				{
+					return false;
+				}
+			}
+#endif
 		}
 	}
 
@@ -14810,6 +14830,12 @@ void CvCity::Purchase(UnitTypes eUnitType, BuildingTypes eBuildingType, ProjectT
 			{
 				kPlayer.GetTreasury()->LogExpenditure((CvString)pGameUnit->GetText(), iGoldCost, 2);
 			}
+#ifdef DOMAIN_AIR_PURCHASE_RESTRICTION
+			if (GC.getUnitInfo(eUnitType)->GetDomainType() == DOMAIN_AIR)
+			{
+				ChangeNumPurchasedAirUnitsThisTurn(1);
+			}
+#endif
 #ifdef EG_REPLAYDATASET_NUMGOLDONUNITBUYS
 #ifdef POLICY_ALLOWS_GP_BUYS_FOR_GOLD
 			CvUnitEntry* pkUnitInfo = GC.getUnitInfo(eUnitType);
@@ -16626,6 +16652,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef DOMAIN_AIR_PURCHASE_RESTRICTION
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1007)
+	{
+# endif
+		kStream >> m_iNumPurchasedAirUnitsThisTurn;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iNumPurchasedAirUnitsThisTurn = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -16919,6 +16959,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef NO_OUTCOMING_INTERNATIONAL_CARAVAN_PILLAGE
 	kStream << m_iNoOutcomingInternationlCaravanPillage;
+#endif
+#ifdef DOMAIN_AIR_PURCHASE_RESTRICTION
+	kStream << m_iNumPurchasedAirUnitsThisTurn;
 #endif
 }
 
@@ -18548,5 +18591,18 @@ void CvCity::changeNoOutcomingInternationlCaravanPillage(int iChange)
 {
 	VALIDATE_OBJECT
 		m_iNoOutcomingInternationlCaravanPillage += iChange;
+}
+#endif
+
+#ifdef DOMAIN_AIR_PURCHASE_RESTRICTION
+int CvCity::GetNumPurchasedAirUnitsThisTurn() const
+{
+	VALIDATE_OBJECT
+	return m_iNumPurchasedAirUnitsThisTurn;
+}
+void CvCity::ChangeNumPurchasedAirUnitsThisTurn(int iChange)
+{
+	VALIDATE_OBJECT
+	m_iNumPurchasedAirUnitsThisTurn = m_iNumPurchasedAirUnitsThisTurn + iChange;
 }
 #endif
