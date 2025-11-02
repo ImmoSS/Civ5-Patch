@@ -1642,6 +1642,7 @@ SOURCE TO XML
 
 Авиабаза
 !!! TEST CS_ALLYING_WAR_RESCTRICTION !!!
+Занавес, суды
 
 
 TODO:
