@@ -73,6 +73,17 @@ end
 -----------------------------------------------------------------
 function CityScreenClosed()
 	
+	Events.ClearHexHighlightStyle( "Culture" )
+	Events.ClearHexHighlightStyle( "WorkedFill" )
+	Events.ClearHexHighlightStyle( "WorkedOutline" )
+	Events.ClearHexHighlightStyle( "OverlapFill" )
+	Events.ClearHexHighlightStyle( "OverlapOutline" )
+	Events.ClearHexHighlightStyle( "VacantFill" )
+	Events.ClearHexHighlightStyle( "VacantOutline" )
+	Events.ClearHexHighlightStyle( "EnemyFill" )
+	Events.ClearHexHighlightStyle( "EnemyOutline" )
+	Events.ClearHexHighlightStyle( "BuyFill" )
+	Events.ClearHexHighlightStyle( "BuyOutline" )
 	-- NEW: enhanced graphs START
 	gPreviousCity = nil;
 	-- enhanced graphs END
@@ -2083,6 +2094,18 @@ function UpdateWorkingHexes()
     end
     
 	if (UI.IsCityScreenUp()) then   
+
+		Events.ClearHexHighlightStyle( "Culture" )
+		Events.ClearHexHighlightStyle( "WorkedFill" )
+		Events.ClearHexHighlightStyle( "WorkedOutline" )
+		Events.ClearHexHighlightStyle( "OverlapFill" )
+		Events.ClearHexHighlightStyle( "OverlapOutline" )
+		Events.ClearHexHighlightStyle( "VacantFill" )
+		Events.ClearHexHighlightStyle( "VacantOutline" )
+		Events.ClearHexHighlightStyle( "EnemyFill" )
+		Events.ClearHexHighlightStyle( "EnemyOutline" )
+		Events.ClearHexHighlightStyle( "BuyFill" )
+		Events.ClearHexHighlightStyle( "BuyOutline" )
 	
 		-- display worked plots
 		g_PlotButtonIM:ResetInstances();
@@ -2118,6 +2141,10 @@ function UpdateWorkingHexes()
 							controlTable.PlotButtonImage:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_CITYVIEW_FORCED_WORK_TILE") );
 							controlTable.PlotButtonImage:SetVoid1( i );
 							controlTable.PlotButtonImage:RegisterCallback( Mouse.eLCLick, PlotButtonClicked);
+							if not InStrategicView() then
+								Events.SerialEventHexHighlight( hexPos , true, nil, "WorkedFill" )
+								Events.SerialEventHexHighlight( hexPos , true, nil, "WorkedOutline" )
+							end
 							
 							DoTestViewingModeOnly(controlTable);
 							
@@ -2130,6 +2157,10 @@ function UpdateWorkingHexes()
 							controlTable.PlotButtonImage:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_CITYVIEW_GUVNA_WORK_TILE") );
 							controlTable.PlotButtonImage:SetVoid1( i );
 							controlTable.PlotButtonImage:RegisterCallback( Mouse.eLCLick, PlotButtonClicked);
+							if not InStrategicView() then
+								Events.SerialEventHexHighlight( hexPos , true, nil, "WorkedFill" )
+								Events.SerialEventHexHighlight( hexPos , true, nil, "WorkedOutline" )
+							end
 							
 							DoTestViewingModeOnly(controlTable);
 							
@@ -2142,6 +2173,10 @@ function UpdateWorkingHexes()
 							controlTable.PlotButtonImage:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_CITYVIEW_NUTHA_CITY_TILE") );
 							controlTable.PlotButtonImage:SetVoid1( i );
 							controlTable.PlotButtonImage:RegisterCallback( Mouse.eLCLick, PlotButtonClicked);
+							if not InStrategicView() then
+								Events.SerialEventHexHighlight( hexPos , true, nil, "OverlapFill" )
+								Events.SerialEventHexHighlight( hexPos , true, nil, "OverlapOutline" )
+							end
 							
 							DoTestViewingModeOnly(controlTable);
 							
@@ -2154,6 +2189,10 @@ function UpdateWorkingHexes()
 							controlTable.PlotButtonImage:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_CITYVIEW_BLOCKADED_CITY_TILE") );
 							controlTable.PlotButtonImage:SetVoid1( -1 );
 							controlTable.PlotButtonImage:RegisterCallback( Mouse.eLCLick, PlotButtonClicked);
+							if not InStrategicView() then
+								Events.SerialEventHexHighlight( hexPos , true, nil, "EnemyFill" )
+								Events.SerialEventHexHighlight( hexPos , true, nil, "EnemyOutline" )
+							end
 							
 							DoTestViewingModeOnly(controlTable);
 							
@@ -2166,6 +2205,10 @@ function UpdateWorkingHexes()
 							controlTable.PlotButtonImage:SetToolTipString( Locale.ConvertTextKey("TXT_KEY_CITYVIEW_ENEMY_UNIT_CITY_TILE") );
 							controlTable.PlotButtonImage:SetVoid1( -1 );
 							controlTable.PlotButtonImage:RegisterCallback( Mouse.eLCLick, PlotButtonClicked);
+							if not InStrategicView() then
+								Events.SerialEventHexHighlight( hexPos , true, nil, "EnemyFill" )
+								Events.SerialEventHexHighlight( hexPos , true, nil, "EnemyOutline" )
+							end
 							
 							DoTestViewingModeOnly(controlTable);
 							
@@ -2179,6 +2222,15 @@ function UpdateWorkingHexes()
 							controlTable.PlotButtonImage:SetVoid1( i );
 							controlTable.PlotButtonImage:RegisterCallback( Mouse.eLCLick, PlotButtonClicked);
 							bNoHighlight = true;
+							if not InStrategicView() then
+								if plot:GetWorkingCity():GetID() ~= pCity:GetID() then
+									Events.SerialEventHexHighlight( hexPos , true, nil, "OverlapFill" )
+									Events.SerialEventHexHighlight( hexPos , true, nil, "OverlapOutline" )
+								else
+									Events.SerialEventHexHighlight( hexPos , true, nil, "VacantFill" )
+									Events.SerialEventHexHighlight( hexPos , true, nil, "VacantOutline" )
+								end
+							end
 							
 							DoTestViewingModeOnly(controlTable);
 							
