@@ -158,7 +158,7 @@ set text="-- coded by bc1 from 1.0.3.276 brave new world code"
 FIND %text% "UI_bc1\CityView\CityView.lua" > nul 2>&1 && (
   copy /y "%patchfolder%\tmp\eui\CityView.lua" "%patchfolder%\UI\CityView.lua" > nul
 ) || (
-  copy /y "%patchfolder%\tmp\ui\CityView.lua" "%patchfolder%\UI\CityView.lua" > nul
+  copy /y "%patchfolder%\tmp\ui\CityView_1.lua" "%patchfolder%\UI\CityView.lua" > nul
 )
 REM -------------------------------------------------
 set text="-- coded by bc1 from Civ V 1.0.3.276 code"
