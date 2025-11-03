@@ -19788,11 +19788,11 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 
 						doTurn();
 
-						doTurnUnits();
-
 #ifdef DO_TURN_CHANGE_ORDER
 						DoUnitReset();
 #endif
+
+						doTurnUnits();
 					}
 				}
 
