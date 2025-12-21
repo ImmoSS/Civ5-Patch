@@ -27053,7 +27053,7 @@
 			<RivalTerritory>false</RivalTerritory> 
 			<MustSetUpToRangedAttack>false</MustSetUpToRangedAttack> 
 			<RangedSupportFire>false</RangedSupportFire> 
-			<CanMoveAfterAttacking>false</CanMoveAfterAttacking> 
+			<CanMoveAfterAttacking>true</CanMoveAfterAttacking> 
 			<AlwaysHeal>false</AlwaysHeal> 
 			<HealOutsideFriendly>false</HealOutsideFriendly> 
 			<HillsDoubleMove>false</HillsDoubleMove> 
