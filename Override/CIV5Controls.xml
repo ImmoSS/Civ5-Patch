@@ -6942,7 +6942,7 @@
 			<NeutralHealChange>0</NeutralHealChange> 
 			<FriendlyHealChange>0</FriendlyHealChange> 
 			<SameTileHealChange>0</SameTileHealChange> 
-			<AdjacentTileHealChange>5</AdjacentTileHealChange> 
+			<AdjacentTileHealChange>10</AdjacentTileHealChange> 
 			<EnemyDamageChance>0</EnemyDamageChance> 
 			<NeutralDamageChance>0</NeutralDamageChance> 
 			<EnemyDamage>0</EnemyDamage> 
@@ -7072,11 +7072,11 @@
 			<NumInterceptionChange>0</NumInterceptionChange> 
 			<EvasionChange>0</EvasionChange> 
 			<CargoChange>0</CargoChange> 
-			<EnemyHealChange>5</EnemyHealChange> 
-			<NeutralHealChange>5</NeutralHealChange> 
+			<EnemyHealChange>10</EnemyHealChange> 
+			<NeutralHealChange>10</NeutralHealChange> 
 			<FriendlyHealChange>0</FriendlyHealChange> 
 			<SameTileHealChange>0</SameTileHealChange> 
-			<AdjacentTileHealChange>5</AdjacentTileHealChange> 
+			<AdjacentTileHealChange>10</AdjacentTileHealChange> 
 			<EnemyDamageChance>0</EnemyDamageChance> 
 			<NeutralDamageChance>0</NeutralDamageChance> 
 			<EnemyDamage>0</EnemyDamage> 
@@ -26448,11 +26448,11 @@
 			<NumInterceptionChange>0</NumInterceptionChange> 
 			<EvasionChange>0</EvasionChange> 
 			<CargoChange>0</CargoChange> 
-			<EnemyHealChange>15</EnemyHealChange> 
-			<NeutralHealChange>15</NeutralHealChange> 
-			<FriendlyHealChange>15</FriendlyHealChange> 
+			<EnemyHealChange>20</EnemyHealChange> 
+			<NeutralHealChange>20</NeutralHealChange> 
+			<FriendlyHealChange>20</FriendlyHealChange> 
 			<SameTileHealChange>0</SameTileHealChange> 
-			<AdjacentTileHealChange>15</AdjacentTileHealChange> 
+			<AdjacentTileHealChange>20</AdjacentTileHealChange> 
 			<EnemyDamageChance>0</EnemyDamageChance> 
 			<NeutralDamageChance>0</NeutralDamageChance> 
 			<EnemyDamage>0</EnemyDamage> 
