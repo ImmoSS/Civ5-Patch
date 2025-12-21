@@ -27381,7 +27381,7 @@
 			<RoughDefense>0</RoughDefense> 
 			<AttackFortifiedMod>0</AttackFortifiedMod> 
 			<AttackWoundedMod>0</AttackWoundedMod> 
-			<FlankAttackModifier>50</FlankAttackModifier> 
+			<FlankAttackModifier>100</FlankAttackModifier> 
 			<NearbyEnemyCombatMod>0</NearbyEnemyCombatMod> 
 			<NearbyEnemyCombatRange>0</NearbyEnemyCombatRange> 
 			<UpgradeDiscount>0</UpgradeDiscount> 
