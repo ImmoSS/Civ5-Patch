@@ -4505,7 +4505,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -4636,7 +4636,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -4768,7 +4768,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -4900,7 +4900,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -5031,7 +5031,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -5163,7 +5163,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -5295,7 +5295,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -5426,7 +5426,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -5558,7 +5558,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -5690,7 +5690,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -5821,7 +5821,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -5953,7 +5953,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -6085,7 +6085,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -6216,7 +6216,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -6348,7 +6348,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -6479,7 +6479,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -6618,7 +6618,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -6752,7 +6752,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -6884,7 +6884,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -7018,7 +7018,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -7149,7 +7149,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>true</Amphib> 
@@ -7282,7 +7282,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -7417,7 +7417,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -7548,7 +7548,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -7683,7 +7683,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -7815,7 +7815,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -7949,7 +7949,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -8080,7 +8080,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -8213,7 +8213,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -8345,7 +8345,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -8482,7 +8482,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -8616,7 +8616,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -8748,7 +8748,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -8880,7 +8880,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -9018,7 +9018,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -9152,7 +9152,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -9292,7 +9292,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -9423,7 +9423,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -9555,7 +9555,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -9687,7 +9687,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -9818,7 +9818,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -9950,7 +9950,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -10082,7 +10082,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -10213,7 +10213,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -10345,7 +10345,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -10477,7 +10477,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -10608,7 +10608,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -10740,7 +10740,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -10871,7 +10871,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -11001,7 +11001,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -11132,7 +11132,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -11266,7 +11266,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -11397,7 +11397,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -11532,7 +11532,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -11664,7 +11664,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -11797,7 +11797,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -11932,7 +11932,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -12066,7 +12066,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -12200,7 +12200,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -12331,7 +12331,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -12463,7 +12463,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -12594,7 +12594,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -12724,7 +12724,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -12855,7 +12855,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -12986,7 +12986,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -13115,7 +13115,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -13245,7 +13245,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -13375,7 +13375,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -13506,7 +13506,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -13637,7 +13637,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -13767,7 +13767,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -13898,7 +13898,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -14029,7 +14029,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -14159,7 +14159,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -14290,7 +14290,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -14421,7 +14421,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -14551,7 +14551,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -14682,7 +14682,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -14814,7 +14814,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -14945,7 +14945,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -15077,7 +15077,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -15208,7 +15208,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -15338,7 +15338,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -15469,7 +15469,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -15600,7 +15600,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -15730,7 +15730,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -15860,7 +15860,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -15990,7 +15990,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -16120,7 +16120,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -16250,7 +16250,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -16380,7 +16380,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -16510,7 +16510,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -16640,7 +16640,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -16771,7 +16771,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -16902,7 +16902,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -17032,7 +17032,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -17162,7 +17162,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -17292,7 +17292,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -17422,7 +17422,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -17552,7 +17552,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -17682,7 +17682,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -17812,7 +17812,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -17942,7 +17942,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -18072,7 +18072,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -18202,7 +18202,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -18332,7 +18332,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -18462,7 +18462,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -18592,7 +18592,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -18722,7 +18722,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -18852,7 +18852,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -18982,7 +18982,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -19112,7 +19112,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -19242,7 +19242,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -19372,7 +19372,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -19502,7 +19502,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -19632,7 +19632,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -19762,7 +19762,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -19892,7 +19892,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -20022,7 +20022,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -20152,7 +20152,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -20282,7 +20282,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -20412,7 +20412,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -20542,7 +20542,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -20672,7 +20672,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -20802,7 +20802,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -20932,7 +20932,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -21062,7 +21062,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -21192,7 +21192,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -21322,7 +21322,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -21452,7 +21452,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -21582,7 +21582,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -21712,7 +21712,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -21842,7 +21842,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -21972,7 +21972,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -22102,7 +22102,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -22232,7 +22232,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -22362,7 +22362,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -22492,7 +22492,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -22622,7 +22622,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -22752,7 +22752,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -22883,7 +22883,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -23014,7 +23014,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -23144,7 +23144,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -23274,7 +23274,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -23404,7 +23404,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -23534,7 +23534,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -23664,7 +23664,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -23794,7 +23794,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -23924,7 +23924,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -24054,7 +24054,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -24184,7 +24184,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -24314,7 +24314,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -24444,7 +24444,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -24574,7 +24574,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -24704,7 +24704,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -24834,7 +24834,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -24964,7 +24964,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -25094,7 +25094,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -25224,7 +25224,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -25354,7 +25354,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -25484,7 +25484,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -25614,7 +25614,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -25744,7 +25744,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -25874,7 +25874,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -26004,7 +26004,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -26134,7 +26134,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -26264,7 +26264,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -26394,7 +26394,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -26524,7 +26524,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -26654,7 +26654,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -26784,7 +26784,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -26914,7 +26914,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -27044,7 +27044,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -27174,7 +27174,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -27304,7 +27304,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -27434,7 +27434,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -27564,7 +27564,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -27694,7 +27694,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -27824,7 +27824,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -27954,7 +27954,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -28084,7 +28084,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -28214,7 +28214,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -28344,7 +28344,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -28474,7 +28474,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -28604,7 +28604,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -28734,7 +28734,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -28865,7 +28865,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -28996,7 +28996,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -29126,7 +29126,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -29256,7 +29256,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -29386,7 +29386,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -29516,7 +29516,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -29646,7 +29646,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -29776,7 +29776,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -29906,7 +29906,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -30036,7 +30036,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -30166,7 +30166,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -30296,7 +30296,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -30426,7 +30426,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -30556,7 +30556,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -30686,7 +30686,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -30816,7 +30816,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -30946,7 +30946,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -31076,7 +31076,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -31206,7 +31206,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -31336,7 +31336,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -31466,7 +31466,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -31596,7 +31596,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -31726,7 +31726,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -31856,7 +31856,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -31986,7 +31986,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -32116,7 +32116,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -32246,7 +32246,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -32376,7 +32376,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -32506,7 +32506,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -32636,7 +32636,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -32766,7 +32766,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -32896,7 +32896,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -33026,7 +33026,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -33157,7 +33157,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -33287,7 +33287,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -33418,7 +33418,7 @@
 			<CannotBeChosen>false</CannotBeChosen> 
 			<LostWithUpgrade>true</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -33548,7 +33548,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
@@ -33678,7 +33678,7 @@
 			<CannotBeChosen>true</CannotBeChosen> 
 			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
+			<InstaHeal>true</InstaHeal> 
 			<Leader>false</Leader> 
 			<Blitz>false</Blitz> 
 			<Amphib>false</Amphib> 
