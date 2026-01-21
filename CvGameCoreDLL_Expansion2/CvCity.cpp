@@ -17521,9 +17521,7 @@ int CvCity::rangeCombatDamage(const CvUnit* pDefender, CvCity* pCity, bool bIncl
 	int iAttackerDamage = /*250*/ GC.getRANGE_ATTACK_SAME_STRENGTH_MIN_DAMAGE();
 
 	int iAttackerRoll = 0;
-#ifdef BLITZ_MODE
-	if(bIncludeRand && !GC.getGame().isOption("GAMEOPTION_BLITZ_MODE"))
-#else
+#ifndef NO_RAND_DAMAGE
 	if(bIncludeRand)
 #endif
 	{
@@ -17580,9 +17578,7 @@ int CvCity::GetAirStrikeDefenseDamage(const CvUnit* pAttacker, bool bIncludeRand
 	int iDefenderDamage = /*200*/ GC.getAIR_STRIKE_SAME_STRENGTH_MIN_DEFENSE_DAMAGE() * iDefenderDamageRatio / GetMaxHitPoints();
 
 	int iDefenderRoll = 0;
-#ifdef BLITZ_MODE
-	if(bIncludeRand && !GC.getGame().isOption("GAMEOPTION_BLITZ_MODE"))
-#else
+#ifndef NO_RAND_DAMAGE
 	if(bIncludeRand)
 #endif
 	{

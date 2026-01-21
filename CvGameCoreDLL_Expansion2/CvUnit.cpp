@@ -3119,9 +3119,7 @@ int CvUnit::getCombatDamage(int iStrength, int iOpponentStrength, int iCurrentDa
 
 	// Don't use rand when calculating projected combat results
 	int iRoll = 0;
-#ifdef BLITZ_MODE
-	if(bIncludeRand && !GC.getGame().isOption("GAMEOPTION_BLITZ_MODE"))
-#else
+#ifndef NO_RAND_DAMAGE
 	if(bIncludeRand)
 #endif
 	{
@@ -13263,9 +13261,7 @@ int CvUnit::GetAirCombatDamage(const CvUnit* pDefender, CvCity* pCity, bool bInc
 	iAttackerDamage /= GC.getMAX_HIT_POINTS();
 
 	int iAttackerRoll = 0;
-#ifdef BLITZ_MODE
-	if(bIncludeRand && !GC.getGame().isOption("GAMEOPTION_BLITZ_MODE"))
-#else
+#ifndef NO_RAND_DAMAGE
 	if(bIncludeRand)
 #endif
 	{
@@ -13374,9 +13370,7 @@ int CvUnit::GetRangeCombatDamage(const CvUnit* pDefender, CvCity* pCity, bool bI
 	iAttackerDamage /= GC.getMAX_HIT_POINTS();
 
 	int iAttackerRoll = 0;
-#ifdef BLITZ_MODE
-	if(bIncludeRand && !GC.getGame().isOption("GAMEOPTION_BLITZ_MODE"))
-#else
+#ifndef NO_RAND_DAMAGE
 	if(bIncludeRand)
 #endif
 	{
@@ -13457,9 +13451,7 @@ int CvUnit::GetAirStrikeDefenseDamage(const CvUnit* pAttacker, bool bIncludeRand
 	int iDefenderDamage = /*200*/ GC.getAIR_STRIKE_SAME_STRENGTH_MIN_DEFENSE_DAMAGE() * iDefenderDamageRatio / GC.getMAX_HIT_POINTS();
 
 	int iDefenderRoll = 0;
-#ifdef BLITZ_MODE
-	if(bIncludeRand && !GC.getGame().isOption("GAMEOPTION_BLITZ_MODE"))
-#else
+#ifndef NO_RAND_DAMAGE
 	if(bIncludeRand)
 #endif
 	{
@@ -13661,9 +13653,7 @@ int CvUnit::GetInterceptionDamage(const CvUnit* pAttacker, bool bIncludeRand) co
 	int iInterceptorDamage = /*400*/ GC.getINTERCEPTION_SAME_STRENGTH_MIN_DAMAGE() * iInterceptorDamageRatio / GC.getMAX_HIT_POINTS();
 
 	int iInterceptorRoll = 0;
-#ifdef BLITZ_MODE
-	if(bIncludeRand && !GC.getGame().isOption("GAMEOPTION_BLITZ_MODE"))
-#else
+#ifndef NO_RAND_DAMAGE
 	if(bIncludeRand)
 #endif
 	{
