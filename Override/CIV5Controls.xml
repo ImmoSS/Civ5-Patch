@@ -27532,8 +27532,8 @@
 			<ExtraWithdrawal>0</ExtraWithdrawal> 
 			<EmbarkExtraVisibility>0</EmbarkExtraVisibility> 
 			<EmbarkDefenseModifier>0</EmbarkDefenseModifier> 
-			<CapitalDefenseModifier>30</CapitalDefenseModifier> 
-			<CapitalDefenseFalloff>-3</CapitalDefenseFalloff> 
+			<CapitalDefenseModifier>50</CapitalDefenseModifier> 
+			<CapitalDefenseFalloff>-5</CapitalDefenseFalloff> 
 			<CityAttackPlunderModifier>0</CityAttackPlunderModifier> 
 			<ReligiousStrengthLossRivalTerritory>0</ReligiousStrengthLossRivalTerritory> 
 			<TradeMissionInfluenceModifier>0</TradeMissionInfluenceModifier> 
