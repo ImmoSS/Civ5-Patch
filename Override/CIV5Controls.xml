@@ -33788,6 +33788,8 @@
 			<PediaType>PEDIA_HEAL</PediaType> 
 			<PediaEntry>TXT_KEY_PROMOTION_MEDIC</PediaEntry> 
 		</Row>
+
+		<Delete Type="PROMOTION_INSTA_HEAL" />
 	</UnitPromotions> 
 
 </GameData> 
