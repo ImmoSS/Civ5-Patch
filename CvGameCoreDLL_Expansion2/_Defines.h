@@ -865,6 +865,8 @@
 #define CITY_BANNER_MISSING_UPDATES_FIX
 /// provides a method to change the bSave value (endless repeat) for a city order; after construction repeated orders stay at the beginning of the production queue
 #define LUA_CITY_METHOD_SET_REPEAT_ORDER
+///
+#define BUILDING_CAPITAL_GOLD_MODIFIER
 /*CITIES CHANGES END*/
 
 
@@ -1218,7 +1220,8 @@
 // 1005: v11.1  (adds BUILDING_DOUBLE_PANTHEON)
 // 1006: v11.4  (adds NO_OUTCOMING_INTERNATIONAL_CARAVAN_PILLAGE)
 // 1007: v11.5  (adds DOMAIN_AIR_PURCHASE_RESTRICTION)
-# define BUMP_SAVE_VERSION_CITY 1007
+// 1008: v12.0  (adds BUILDING_CAPITAL_GOLD_MODIFIER)
+# define BUMP_SAVE_VERSION_CITY 1008
 // 1000: v7.0   (initial)
 # define BUMP_SAVE_VERSION_ESPIONAGE 1000
 // 1000: v7.0   (initial)

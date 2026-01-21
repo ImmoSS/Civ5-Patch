@@ -325,6 +325,9 @@ CvCity::CvCity() :
 #ifdef DOMAIN_AIR_PURCHASE_RESTRICTION
 	, m_iNumPurchasedAirUnitsThisTurn(0)
 #endif
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+	, m_iCapitalGoldModifier(0)
+#endif
 {
 	OBJECT_ALLOCATED
 	FSerialization::citiesToCheck.insert(this);
@@ -1138,6 +1141,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #endif
 #ifdef DOMAIN_AIR_PURCHASE_RESTRICTION
 	m_iNumPurchasedAirUnitsThisTurn = 0;
+#endif
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+	m_iCapitalGoldModifier = 0;
 #endif
 
 	if(!bConstructorCall)
@@ -7142,6 +7148,13 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 					ChangeBaseYieldRateFromBuildings(eYield, iBuildingClassBonus * iChange);
 				}
 			}
+
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+			if (eYield == YIELD_GOLD && isCapital())
+			{
+				changeYieldRateModifier(eYield, (pBuildingInfo->GetCapitalGoldModifier() * iChange));
+			}
+#endif
 		}
 
 		if(GC.getBuildingInfo(eBuilding)->GetSpecialistType() != NO_SPECIALIST)
@@ -7226,6 +7239,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #endif
 #ifdef NO_OUTCOMING_INTERNATIONAL_CARAVAN_PILLAGE
 		changeNoOutcomingInternationlCaravanPillage(pBuildingInfo->IsNoOutcomingInternationlCaravanPillage() * iChange);
+#endif
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+		changeCapitalGoldModifier(pBuildingInfo->GetCapitalGoldModifier() * iChange);
 #endif
 
 		// Process for our player
@@ -16667,6 +16683,20 @@ void CvCity::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1008)
+	{
+# endif
+		kStream >> m_iCapitalGoldModifier;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iCapitalGoldModifier = 0;
+	}
+# endif
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -16963,6 +16993,9 @@ void CvCity::write(FDataStream& kStream) const
 #endif
 #ifdef DOMAIN_AIR_PURCHASE_RESTRICTION
 	kStream << m_iNumPurchasedAirUnitsThisTurn;
+#endif
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+	kStream << m_iCapitalGoldModifier;
 #endif
 }
 
@@ -18601,5 +18634,20 @@ void CvCity::ChangeNumPurchasedAirUnitsThisTurn(int iChange)
 {
 	VALIDATE_OBJECT
 	m_iNumPurchasedAirUnitsThisTurn = m_iNumPurchasedAirUnitsThisTurn + iChange;
+}
+#endif
+
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+//	----------------------------------------------------------------------------
+int CvCity::getCapitalGoldModifier() const
+{
+	return m_iCapitalGoldModifier;
+}
+
+//	----------------------------------------------------------------------------
+void CvCity::changeCapitalGoldModifier(int iChange)
+{
+	VALIDATE_OBJECT
+	m_iCapitalGoldModifier += iChange;
 }
 #endif
