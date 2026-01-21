@@ -3121,13 +3121,13 @@ int CvUnit::getCombatDamage(int iStrength, int iOpponentStrength, int iCurrentDa
 	int iRoll = 0;
 #ifndef NO_RAND_DAMAGE
 	if(bIncludeRand)
-#endif
 	{
 		iRoll = /*400*/ GC.getGame().getJonRandNum(GC.getATTACK_SAME_STRENGTH_POSSIBLE_EXTRA_DAMAGE(), "Unit Combat Damage");
 		iRoll *= iDamageRatio;
 		iRoll /= GC.getMAX_HIT_POINTS();
 	}
 	else
+#endif
 	{
 		iRoll = /*400*/ GC.getATTACK_SAME_STRENGTH_POSSIBLE_EXTRA_DAMAGE();
 		iRoll -= 1;	// Subtract 1 here, because this is the amount normally "lost" when doing a rand roll
@@ -13263,13 +13263,13 @@ int CvUnit::GetAirCombatDamage(const CvUnit* pDefender, CvCity* pCity, bool bInc
 	int iAttackerRoll = 0;
 #ifndef NO_RAND_DAMAGE
 	if(bIncludeRand)
-#endif
 	{
 		iAttackerRoll = /*300*/ GC.getGame().getJonRandNum(GC.getRANGE_ATTACK_SAME_STRENGTH_POSSIBLE_EXTRA_DAMAGE(), "Unit Ranged Combat Damage");
 		iAttackerRoll *= iAttackerDamageRatio;
 		iAttackerRoll /= GC.getMAX_HIT_POINTS();
 	}
 	else
+#endif
 	{
 		iAttackerRoll = /*300*/ GC.getRANGE_ATTACK_SAME_STRENGTH_POSSIBLE_EXTRA_DAMAGE();
 		iAttackerRoll -= 1;	// Subtract 1 here, because this is the amount normally "lost" when doing a rand roll
@@ -13372,13 +13372,13 @@ int CvUnit::GetRangeCombatDamage(const CvUnit* pDefender, CvCity* pCity, bool bI
 	int iAttackerRoll = 0;
 #ifndef NO_RAND_DAMAGE
 	if(bIncludeRand)
-#endif
 	{
 		iAttackerRoll = /*300*/ GC.getGame().getJonRandNum(GC.getRANGE_ATTACK_SAME_STRENGTH_POSSIBLE_EXTRA_DAMAGE(), "Unit Ranged Combat Damage");
 		iAttackerRoll *= iAttackerDamageRatio;
 		iAttackerRoll /= GC.getMAX_HIT_POINTS();
 	}
 	else
+#endif
 	{
 		iAttackerRoll = /*300*/ GC.getRANGE_ATTACK_SAME_STRENGTH_POSSIBLE_EXTRA_DAMAGE();
 		iAttackerRoll -= 1;	// Subtract 1 here, because this is the amount normally "lost" when doing a rand roll
@@ -13453,13 +13453,13 @@ int CvUnit::GetAirStrikeDefenseDamage(const CvUnit* pAttacker, bool bIncludeRand
 	int iDefenderRoll = 0;
 #ifndef NO_RAND_DAMAGE
 	if(bIncludeRand)
-#endif
 	{
 		iDefenderRoll = /*200*/ GC.getGame().getJonRandNum(GC.getAIR_STRIKE_SAME_STRENGTH_POSSIBLE_EXTRA_DEFENSE_DAMAGE(), "Unit Air Strike Combat Damage");
 		iDefenderRoll *= iDefenderDamageRatio;
 		iDefenderRoll /= GC.getMAX_HIT_POINTS();
 	}
 	else
+#endif
 	{
 		iDefenderRoll = /*200*/ GC.getAIR_STRIKE_SAME_STRENGTH_POSSIBLE_EXTRA_DEFENSE_DAMAGE();
 		iDefenderRoll -= 1;	// Subtract 1 here, because this is the amount normally "lost" when doing a rand roll
@@ -13655,13 +13655,13 @@ int CvUnit::GetInterceptionDamage(const CvUnit* pAttacker, bool bIncludeRand) co
 	int iInterceptorRoll = 0;
 #ifndef NO_RAND_DAMAGE
 	if(bIncludeRand)
-#endif
 	{
 		iInterceptorRoll = /*300*/ GC.getGame().getJonRandNum(GC.getINTERCEPTION_SAME_STRENGTH_POSSIBLE_EXTRA_DAMAGE(), "Interception Combat Damage");
 		iInterceptorRoll *= iInterceptorDamageRatio;
 		iInterceptorRoll /= GC.getMAX_HIT_POINTS();
 	}
 	else
+#endif
 	{
 		iInterceptorRoll = /*300*/ GC.getINTERCEPTION_SAME_STRENGTH_POSSIBLE_EXTRA_DAMAGE();
 		iInterceptorRoll -= 1;	// Subtract 1 here, because this is the amount normally "lost" when doing a rand roll
