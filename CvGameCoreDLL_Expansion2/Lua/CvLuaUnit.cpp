@@ -2649,10 +2649,22 @@ int CvLuaUnit::lGetCulturalInfluenceDefenseModifier(lua_State* L)
 //int GetRangedAttackModifier();
 int CvLuaUnit::lGetRangedAttackModifier(lua_State* L)
 {
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+	CvUnit* pkUnit = GetInstance(L);
+	CvPlot* pkPlot = CvLuaPlot::GetInstance(L, 2);
+
+	int iResult = pkUnit->GetRangedAttackModifier();
+	if (!pkUnit->plot()->isAdjacent(pkPlot))
+	{
+		iResult += pkUnit->getUnitInfo().GetOuterRingsRangeAttackPenalty();
+	}
+	lua_pushinteger(L, iResult);
+#else
 	CvUnit* pkUnit = GetInstance(L);
 
 	const int iResult = pkUnit->GetRangedAttackModifier();
 	lua_pushinteger(L, iResult);
+#endif
 	return 1;
 }
 //------------------------------------------------------------------------------

@@ -99,6 +99,9 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef UNIT_NUKE_DEFENSE
 	m_iNukeDefense(0),
 #endif
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+	m_iOuterRingsRangeAttackPenalty(0),
+#endif
 	m_pbUpgradeUnitClass(NULL),
 	m_pbUnitAIType(NULL),
 	m_pbNotUnitAIType(NULL),
@@ -222,6 +225,9 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 	m_iNumExoticGoods = kResults.GetInt("NumExoticGoods");
 #ifdef UNIT_NUKE_DEFENSE
 	m_iNukeDefense = kResults.GetInt("NukeDefense");
+#endif
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+	m_iOuterRingsRangeAttackPenalty = kResults.GetInt("OuterRingsRangeAttackPenalty");
 #endif
 
 	m_strUnitArtInfoTag = kResults.GetText("UnitArtInfo");
@@ -944,6 +950,14 @@ int CvUnitEntry::GetNumExoticGoods() const
 int CvUnitEntry::GetNukeDefense() const
 {
 	return m_iNukeDefense;
+}
+#endif
+
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+///
+int CvUnitEntry::GetOuterRingsRangeAttackPenalty() const
+{
+	return m_iOuterRingsRangeAttackPenalty;
 }
 #endif
 

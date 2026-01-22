@@ -512,7 +512,7 @@ function UpdateCombatOddsUnitVsCity(pMyUnit, pCity)
 				end
 				
 			else
-				iModifier = pMyUnit:GetRangedAttackModifier();
+				iModifier = pMyUnit:GetRangedAttackModifier(pToPlot);
 				if (iModifier ~= 0) then
 					controlTable = g_MyCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_RANGED_ATTACK_MODIFIER" );
@@ -1189,7 +1189,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 			end
 			
 			if(bRanged) then
-				iModifier = pMyUnit:GetRangedAttackModifier();
+				iModifier = pMyUnit:GetRangedAttackModifier(pToPlot);
 				if (iModifier ~= 0) then
 					controlTable = g_MyCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_RANGED_ATTACK_MODIFIER" );

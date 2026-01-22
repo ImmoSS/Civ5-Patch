@@ -12561,6 +12561,23 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 	if (bForRangedAttack)
 	{
 		iModifier += GetRangedAttackModifier();
+
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+		if (pCity != NULL)
+		{
+			if (!pCity->plot()->isAdjacent(plot()))
+			{
+				iModifier += getUnitInfo().GetOuterRingsRangeAttackPenalty();
+			}
+		}
+		if (pOtherUnit != NULL)
+		{
+			if (!pOtherUnit->plot()->isAdjacent(plot()))
+			{
+				iModifier += getUnitInfo().GetOuterRingsRangeAttackPenalty();
+			}
+		}
+#endif
 	}
 
 	// This unit on offense
@@ -13038,6 +13055,23 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 	if(bForRangedAttack)
 	{
 		iModifier += GetRangedAttackModifier();
+
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+		if (pCity != NULL)
+		{
+			if (!pCity->plot()->isAdjacent(plot()))
+			{
+				iModifier += getUnitInfo().GetOuterRingsRangeAttackPenalty();
+			}
+		}
+		if (pOtherUnit != NULL)
+		{
+			if (!pOtherUnit->plot()->isAdjacent(plot()))
+			{
+				iModifier += getUnitInfo().GetOuterRingsRangeAttackPenalty();
+			}
+		}
+#endif
 	}
 
 	// This unit on offense
