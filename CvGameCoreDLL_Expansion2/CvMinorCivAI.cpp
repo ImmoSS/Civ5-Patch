@@ -8842,19 +8842,19 @@ int CvMinorCivAI::GetScienceFlatAlliesBonus(PlayerTypes ePlayer, EraTypes eAssum
 	// Modern era or Later
 	if (eCurrentEra >= eModern)
 	{
-		iScienceBonus += 18;
+		iScienceBonus += 15;
 	}
 
 	// Industrial era or Later
 	else if (eCurrentEra >= eIndustrial)
 	{
-		iScienceBonus += 12;
+		iScienceBonus += 10;
 	}
 
 	// Renaissance era or Later
 	else if (eCurrentEra >= eRenaissance)
 	{
-		iScienceBonus += 8;
+		iScienceBonus += 7;
 	}
 
 	// Medieval era or later
