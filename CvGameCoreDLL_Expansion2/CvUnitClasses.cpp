@@ -105,6 +105,9 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
 	m_iInnerRingRangeAttackBonus(0),
 #endif
+#ifdef UNIT_FIGHT_WELL_DAMAGE
+	m_bFightWellDamaged(false),
+#endif
 	m_pbUpgradeUnitClass(NULL),
 	m_pbUnitAIType(NULL),
 	m_pbNotUnitAIType(NULL),
@@ -234,6 +237,9 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #endif
 #ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
 	m_iInnerRingRangeAttackBonus = kResults.GetInt("InnerRingRangeAttackBonus");
+#endif
+#ifdef UNIT_FIGHT_WELL_DAMAGE
+	m_bFightWellDamaged = kResults.GetBool("FightWellDamaged");
 #endif
 
 	m_strUnitArtInfoTag = kResults.GetText("UnitArtInfo");
@@ -972,6 +978,14 @@ int CvUnitEntry::GetOuterRingsRangeAttackPenalty() const
 int CvUnitEntry::GetInnerRingRangeAttackBonus() const
 {
 	return m_iInnerRingRangeAttackBonus;
+}
+#endif
+
+#ifdef UNIT_FIGHT_WELL_DAMAGE
+///
+bool CvUnitEntry::IsFightWellDamaged() const
+{
+	return m_bFightWellDamaged;
 }
 #endif
 

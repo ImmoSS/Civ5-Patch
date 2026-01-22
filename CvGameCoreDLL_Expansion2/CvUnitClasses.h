@@ -124,6 +124,9 @@ public:
 #ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
 	int GetInnerRingRangeAttackBonus() const;
 #endif
+#ifdef UNIT_FIGHT_WELL_DAMAGE
+	bool IsFightWellDamaged() const;
+#endif
 
 	float GetUnitMaxSpeed() const;
 	float GetUnitPadTime() const;
@@ -266,6 +269,9 @@ private:
 #endif
 #ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
 	int m_iInnerRingRangeAttackBonus;
+#endif
+#ifdef UNIT_FIGHT_WELL_DAMAGE
+	bool m_bFightWellDamaged;
 #endif
 
 	// This is not loaded from XML, but cached so we don't have to recalculate every time

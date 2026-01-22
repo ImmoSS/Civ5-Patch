@@ -3109,6 +3109,13 @@ int CvUnit::getCombatDamage(int iStrength, int iOpponentStrength, int iCurrentDa
 	{
 		// Mod (Policies, etc.)
 		iWoundedDamageMultiplier += GET_PLAYER(getOwner()).GetWoundedUnitDamageMod();
+#ifdef UNIT_FIGHT_WELL_DAMAGE
+		if (getUnitInfo().IsFightWellDamaged())
+		{
+			iWoundedDamageMultiplier -= GC.getWOUNDED_DAMAGE_MULTIPLIER();
+			iWoundedDamageMultiplier = std::max(iWoundedDamageMultiplier, 0);
+		}
+#endif
 
 		iDamageRatio = GC.getMAX_HIT_POINTS() - (iCurrentDamage * iWoundedDamageMultiplier / 100);
 	}
