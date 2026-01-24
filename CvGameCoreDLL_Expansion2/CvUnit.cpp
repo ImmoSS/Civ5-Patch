@@ -12562,35 +12562,35 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 	{
 		iModifier += GetRangedAttackModifier();
 
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
 		if (pCity != NULL)
 		{
 			if (!pCity->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetOuterRingsRangeAttackPenalty();
+				iModifier += getUnitInfo().GetOuterRingsRangeAttackMod();
 			}
 		}
 		if (pOtherUnit != NULL)
 		{
 			if (!pOtherUnit->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetOuterRingsRangeAttackPenalty();
+				iModifier += getUnitInfo().GetOuterRingsRangeAttackMod();
 			}
 		}
 #endif
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 		if (pCity != NULL)
 		{
 			if (pCity->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetInnerRingRangeAttackBonus();
+				iModifier += getUnitInfo().GetInnerRingRangeAttackMod();
 			}
 		}
 		if (pOtherUnit != NULL)
 		{
 			if (pOtherUnit->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetInnerRingRangeAttackBonus();
+				iModifier += getUnitInfo().GetInnerRingRangeAttackMod();
 			}
 		}
 #endif
@@ -13072,35 +13072,35 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 	{
 		iModifier += GetRangedAttackModifier();
 
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
 		if (pCity != NULL)
 		{
 			if (!pCity->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetOuterRingsRangeAttackPenalty();
+				iModifier += getUnitInfo().GetOuterRingsRangeAttackMod();
 			}
 		}
 		if (pOtherUnit != NULL)
 		{
 			if (!pOtherUnit->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetOuterRingsRangeAttackPenalty();
+				iModifier += getUnitInfo().GetOuterRingsRangeAttackMod();
 			}
 		}
 #endif
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 		if (pCity != NULL)
 		{
 			if (pCity->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetInnerRingRangeAttackBonus();
+				iModifier += getUnitInfo().GetInnerRingRangeAttackMod();
 			}
 		}
 		if (pOtherUnit != NULL)
 		{
 			if (pOtherUnit->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetInnerRingRangeAttackBonus();
+				iModifier += getUnitInfo().GetInnerRingRangeAttackMod();
 			}
 		}
 #endif

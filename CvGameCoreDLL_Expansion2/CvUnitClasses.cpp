@@ -99,11 +99,11 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef UNIT_NUKE_DEFENSE
 	m_iNukeDefense(0),
 #endif
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
 	m_iOuterRingsRangeAttackPenalty(0),
 #endif
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
-	m_iInnerRingRangeAttackBonus(0),
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
+	m_iInnerRingRangeAttackMod(0),
 #endif
 	m_pbUpgradeUnitClass(NULL),
 	m_pbUnitAIType(NULL),
@@ -229,11 +229,11 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #ifdef UNIT_NUKE_DEFENSE
 	m_iNukeDefense = kResults.GetInt("NukeDefense");
 #endif
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
 	m_iOuterRingsRangeAttackPenalty = kResults.GetInt("OuterRingsRangeAttackPenalty");
 #endif
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
-	m_iInnerRingRangeAttackBonus = kResults.GetInt("InnerRingRangeAttackBonus");
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
+	m_iInnerRingRangeAttackMod = kResults.GetInt("InnerRingRangeAttackMod");
 #endif
 
 	m_strUnitArtInfoTag = kResults.GetText("UnitArtInfo");
@@ -959,19 +959,19 @@ int CvUnitEntry::GetNukeDefense() const
 }
 #endif
 
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
 ///
-int CvUnitEntry::GetOuterRingsRangeAttackPenalty() const
+int CvUnitEntry::GetOuterRingsRangeAttackMod() const
 {
 	return m_iOuterRingsRangeAttackPenalty;
 }
 #endif
 
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 ///
-int CvUnitEntry::GetInnerRingRangeAttackBonus() const
+int CvUnitEntry::GetInnerRingRangeAttackMod() const
 {
-	return m_iInnerRingRangeAttackBonus;
+	return m_iInnerRingRangeAttackMod;
 }
 #endif
 

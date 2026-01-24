@@ -2649,25 +2649,25 @@ int CvLuaUnit::lGetCulturalInfluenceDefenseModifier(lua_State* L)
 //int GetRangedAttackModifier();
 int CvLuaUnit::lGetRangedAttackModifier(lua_State* L)
 {
-#if defined UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY || defined UNIT_INNER_RING_RANGE_ATTACK_BONUS
+#if defined UNIT_OUTER_RINGS_RANGE_ATTACK_MOD || defined UNIT_INNER_RING_RANGE_ATTACK_MOD
 	CvUnit* pkUnit = GetInstance(L);
 	CvPlot* pkPlot = CvLuaPlot::GetInstance(L, 2);
 
 	int iResult = pkUnit->GetRangedAttackModifier();
 #endif
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
 	if (!pkUnit->plot()->isAdjacent(pkPlot))
 	{
-		iResult += pkUnit->getUnitInfo().GetOuterRingsRangeAttackPenalty();
+		iResult += pkUnit->getUnitInfo().GetOuterRingsRangeAttackMod();
 	}
 #endif
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 	if (pkUnit->plot()->isAdjacent(pkPlot))
 	{
-		iResult += pkUnit->getUnitInfo().GetInnerRingRangeAttackBonus();
+		iResult += pkUnit->getUnitInfo().GetInnerRingRangeAttackMod();
 	}
 #endif
-#if defined UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY || defined UNIT_INNER_RING_RANGE_ATTACK_BONUS
+#if defined UNIT_OUTER_RINGS_RANGE_ATTACK_MOD || defined UNIT_INNER_RING_RANGE_ATTACK_MOD
 	lua_pushinteger(L, iResult);
 #else
 	CvUnit* pkUnit = GetInstance(L);
