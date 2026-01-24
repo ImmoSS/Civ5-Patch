@@ -265,7 +265,7 @@ private:
 	int m_iNukeDefense;
 #endif
 #ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
-	int m_iOuterRingsRangeAttackPenalty;
+	int m_iOuterRingsRangeAttackMod;
 #endif
 #ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 	int m_iInnerRingRangeAttackMod;

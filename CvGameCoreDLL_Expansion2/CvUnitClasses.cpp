@@ -100,7 +100,7 @@ CvUnitEntry::CvUnitEntry(void) :
 	m_iNukeDefense(0),
 #endif
 #ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
-	m_iOuterRingsRangeAttackPenalty(0),
+	m_iOuterRingsRangeAttackMod(0),
 #endif
 #ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 	m_iInnerRingRangeAttackMod(0),
@@ -233,7 +233,7 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 	m_iNukeDefense = kResults.GetInt("NukeDefense");
 #endif
 #ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
-	m_iOuterRingsRangeAttackPenalty = kResults.GetInt("OuterRingsRangeAttackPenalty");
+	m_iOuterRingsRangeAttackMod = kResults.GetInt("OuterRingsRangeAttackMod");
 #endif
 #ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 	m_iInnerRingRangeAttackMod = kResults.GetInt("InnerRingRangeAttackMod");
@@ -969,7 +969,7 @@ int CvUnitEntry::GetNukeDefense() const
 ///
 int CvUnitEntry::GetOuterRingsRangeAttackMod() const
 {
-	return m_iOuterRingsRangeAttackPenalty;
+	return m_iOuterRingsRangeAttackMod;
 }
 #endif
 
