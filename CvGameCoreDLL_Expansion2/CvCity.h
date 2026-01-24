@@ -924,6 +924,10 @@ public:
 	int GetNumPurchasedAirUnitsThisTurn() const;
 	void ChangeNumPurchasedAirUnitsThisTurn(int iChange);
 #endif
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+	int getCapitalGoldModifier() const;
+	void changeCapitalGoldModifier(int iChange);
+#endif
 
 	int iScratch; // know the scope of your validity
 
@@ -1167,6 +1171,9 @@ protected:
 #endif
 #ifdef DOMAIN_AIR_PURCHASE_RESTRICTION
 	int m_iNumPurchasedAirUnitsThisTurn;
+#endif
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+	int m_iCapitalGoldModifier;
 #endif
 
 	void doGrowth();

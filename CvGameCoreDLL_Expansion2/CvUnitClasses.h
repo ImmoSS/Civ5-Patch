@@ -118,6 +118,12 @@ public:
 #ifdef UNIT_NUKE_DEFENSE
 	int GetNukeDefense() const;
 #endif
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+	int GetOuterRingsRangeAttackPenalty() const;
+#endif
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
+	int GetInnerRingRangeAttackBonus() const;
+#endif
 
 	float GetUnitMaxSpeed() const;
 	float GetUnitPadTime() const;
@@ -254,6 +260,12 @@ private:
 	int m_iNumExoticGoods;
 #ifdef UNIT_NUKE_DEFENSE
 	int m_iNukeDefense;
+#endif
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+	int m_iOuterRingsRangeAttackPenalty;
+#endif
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
+	int m_iInnerRingRangeAttackBonus;
 #endif
 
 	// This is not loaded from XML, but cached so we don't have to recalculate every time
