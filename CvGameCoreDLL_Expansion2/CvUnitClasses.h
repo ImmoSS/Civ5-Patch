@@ -124,6 +124,9 @@ public:
 #ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 	int GetInnerRingRangeAttackMod() const;
 #endif
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+	int GetSameTypeAdjacentMod() const;
+#endif
 
 	float GetUnitMaxSpeed() const;
 	float GetUnitPadTime() const;
@@ -266,6 +269,9 @@ private:
 #endif
 #ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 	int m_iInnerRingRangeAttackMod;
+#endif
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+	int m_iSameTypeAdjacentMod;
 #endif
 
 	// This is not loaded from XML, but cached so we don't have to recalculate every time

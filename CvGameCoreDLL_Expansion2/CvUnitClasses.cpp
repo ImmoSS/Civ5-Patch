@@ -105,6 +105,9 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 	m_iInnerRingRangeAttackMod(0),
 #endif
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+	m_iSameTypeAdjacentMod(0),
+#endif
 	m_pbUpgradeUnitClass(NULL),
 	m_pbUnitAIType(NULL),
 	m_pbNotUnitAIType(NULL),
@@ -234,6 +237,9 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #endif
 #ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 	m_iInnerRingRangeAttackMod = kResults.GetInt("InnerRingRangeAttackMod");
+#endif
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+	m_iSameTypeAdjacentMod = kResults.GetInt("SameTypeAdjacentMod");
 #endif
 
 	m_strUnitArtInfoTag = kResults.GetText("UnitArtInfo");
@@ -972,6 +978,14 @@ int CvUnitEntry::GetOuterRingsRangeAttackMod() const
 int CvUnitEntry::GetInnerRingRangeAttackMod() const
 {
 	return m_iInnerRingRangeAttackMod;
+}
+#endif
+
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+///
+int CvUnitEntry::GetSameTypeAdjacentMod() const
+{
+	return m_iSameTypeAdjacentMod;
 }
 #endif
 
