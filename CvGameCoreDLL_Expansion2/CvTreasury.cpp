@@ -507,6 +507,11 @@ int CvTreasury::GetGoldPerTurnFromReligion() const
 					}
 				}
 			}
+			BeliefTypes eSecondaryPantheon = pLoopCity->GetCityReligions()->GetSecondaryReligionPantheonBelief();
+			if (eSecondaryPantheon != NO_BELIEF)
+			{
+				iGoldPerRiverOrCoastalCity += 1;
+			}
 		}
 	}
 

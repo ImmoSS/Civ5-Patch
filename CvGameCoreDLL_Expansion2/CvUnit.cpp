@@ -11489,6 +11489,10 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvUnit* pOtherUnit, const CvPlot
 	if(IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
 		iModifier += GetAdjacentModifier();
 
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+	iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
+#endif
+
 #ifndef GOLDEN_AGE_ATTACK_BONUS_MODIFIER
 	// Our empire fights well in Golden Ages?
 	if(kPlayer.isGoldenAge())
@@ -12425,6 +12429,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
 				iModifier += GetAdjacentModifier();
 
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+			iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
+#endif
+
 			// Trait (player level) bonus against higher tech units
 			iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
 			if (iTempModifier > 0)
@@ -12562,6 +12570,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 		if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
 			iModifier += GetAdjacentModifier();
 #endif
+
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+		iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
+#endif
 	}
 
 	// Ranged attack mod
@@ -12569,35 +12581,35 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 	{
 		iModifier += GetRangedAttackModifier();
 
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
 		if (pCity != NULL)
 		{
 			if (!pCity->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetOuterRingsRangeAttackPenalty();
+				iModifier += getUnitInfo().GetOuterRingsRangeAttackMod();
 			}
 		}
 		if (pOtherUnit != NULL)
 		{
 			if (!pOtherUnit->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetOuterRingsRangeAttackPenalty();
+				iModifier += getUnitInfo().GetOuterRingsRangeAttackMod();
 			}
 		}
 #endif
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 		if (pCity != NULL)
 		{
 			if (pCity->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetInnerRingRangeAttackBonus();
+				iModifier += getUnitInfo().GetInnerRingRangeAttackMod();
 			}
 		}
 		if (pOtherUnit != NULL)
 		{
 			if (pOtherUnit->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetInnerRingRangeAttackBonus();
+				iModifier += getUnitInfo().GetInnerRingRangeAttackMod();
 			}
 		}
 #endif
@@ -12639,6 +12651,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 
 		if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
 			iModifier += GetAdjacentModifier();
+
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+		iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
+#endif
 
 		// Trait (player level) bonus against higher tech units
 		iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
@@ -12931,6 +12947,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
 				iModifier += GetAdjacentModifier();
 
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+			iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
+#endif
+
 			// Trait (player level) bonus against higher tech units
 			iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
 			if (iTempModifier > 0)
@@ -13072,6 +13092,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 		if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
 			iModifier += GetAdjacentModifier();
 #endif
+
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+		iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
+#endif
 	}
 
 	// Ranged attack mod
@@ -13079,35 +13103,35 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 	{
 		iModifier += GetRangedAttackModifier();
 
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
 		if (pCity != NULL)
 		{
 			if (!pCity->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetOuterRingsRangeAttackPenalty();
+				iModifier += getUnitInfo().GetOuterRingsRangeAttackMod();
 			}
 		}
 		if (pOtherUnit != NULL)
 		{
 			if (!pOtherUnit->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetOuterRingsRangeAttackPenalty();
+				iModifier += getUnitInfo().GetOuterRingsRangeAttackMod();
 			}
 		}
 #endif
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 		if (pCity != NULL)
 		{
 			if (pCity->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetInnerRingRangeAttackBonus();
+				iModifier += getUnitInfo().GetInnerRingRangeAttackMod();
 			}
 		}
 		if (pOtherUnit != NULL)
 		{
 			if (pOtherUnit->plot()->isAdjacent(plot()))
 			{
-				iModifier += getUnitInfo().GetInnerRingRangeAttackBonus();
+				iModifier += getUnitInfo().GetInnerRingRangeAttackMod();
 			}
 		}
 #endif
@@ -13136,6 +13160,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 
 		if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
 			iModifier += GetAdjacentModifier();
+
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+		iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
+#endif
 
 		// Trait (player level) bonus against higher tech units
 		iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
@@ -14677,6 +14705,61 @@ int CvUnit::GetNumSpecificEnemyUnitsAdjacent(const CvUnit* pUnitToExclude, const
 
 	return iNumEnemiesAdjacent;
 }
+
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+//	--------------------------------------------------------------------------------
+int CvUnit::GetNumSpecificFriendlyUnitsAdjacent(const CvUnit* pUnitToExclude, const CvUnit* pUnitCompare) const
+{
+	int iNumFriendlyAdjacent = 0;
+
+	TeamTypes eMyTeam = getTeam();
+
+	CvPlot* pLoopPlot;
+	IDInfo* pUnitNode;
+
+	CvUnit* pLoopUnit;
+	TeamTypes eTheirTeam;
+
+	for (int iI = 0; iI < NUM_DIRECTION_TYPES; iI++)
+	{
+		pLoopPlot = plotDirection(getX(), getY(), ((DirectionTypes)iI));
+
+		if (pLoopPlot != NULL)
+		{
+			pUnitNode = pLoopPlot->headUnitNode();
+
+			// Loop through all units on this plot
+			while (pUnitNode != NULL)
+			{
+				pLoopUnit = ::getUnit(*pUnitNode);
+				pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
+
+				// No NULL, and no unit we want to exclude
+				if (pLoopUnit && pLoopUnit != pUnitToExclude)
+				{
+					// Must be a combat Unit
+					if (pLoopUnit->IsCombatUnit())
+					{
+						eTheirTeam = pLoopUnit->getTeam();
+
+						// This team which this unit belongs to must be at war with us
+						if (eTheirTeam == eMyTeam)
+						{
+
+							if (pLoopUnit->getUnitType() == pUnitCompare->getUnitType())
+							{
+								iNumFriendlyAdjacent++;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return iNumFriendlyAdjacent;
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 /// Is there a friendly Unit adjacent to us?

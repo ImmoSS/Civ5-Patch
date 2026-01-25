@@ -10342,23 +10342,6 @@ int CvCity::GetLocalHappiness() const
 			{
 				iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetHappinessPerCity();
 			}
-#ifdef SACRED_WATERS_FRESH_WATER
-			if (plot()->isFreshWater())
-			{
-				if (ePantheon != NO_BELIEF)
-				{
-					iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetRiverHappiness();
-				}
-			}
-#else
-			if (plot()->isRiver())
-			{
-				if (ePantheon != NO_BELIEF)
-				{
-					iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetRiverHappiness();
-				}
-			}
-#endif
 #endif
 
 			// Buildings

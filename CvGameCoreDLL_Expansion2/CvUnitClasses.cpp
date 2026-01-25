@@ -99,11 +99,14 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef UNIT_NUKE_DEFENSE
 	m_iNukeDefense(0),
 #endif
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
-	m_iOuterRingsRangeAttackPenalty(0),
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
+	m_iOuterRingsRangeAttackMod(0),
 #endif
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
-	m_iInnerRingRangeAttackBonus(0),
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
+	m_iInnerRingRangeAttackMod(0),
+#endif
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+	m_iSameTypeAdjacentMod(0),
 #endif
 #ifdef UNIT_FIGHT_WELL_DAMAGE
 	m_bFightWellDamaged(false),
@@ -232,11 +235,14 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #ifdef UNIT_NUKE_DEFENSE
 	m_iNukeDefense = kResults.GetInt("NukeDefense");
 #endif
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
-	m_iOuterRingsRangeAttackPenalty = kResults.GetInt("OuterRingsRangeAttackPenalty");
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
+	m_iOuterRingsRangeAttackMod = kResults.GetInt("OuterRingsRangeAttackMod");
 #endif
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
-	m_iInnerRingRangeAttackBonus = kResults.GetInt("InnerRingRangeAttackBonus");
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
+	m_iInnerRingRangeAttackMod = kResults.GetInt("InnerRingRangeAttackMod");
+#endif
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+	m_iSameTypeAdjacentMod = kResults.GetInt("SameTypeAdjacentMod");
 #endif
 #ifdef UNIT_FIGHT_WELL_DAMAGE
 	m_bFightWellDamaged = kResults.GetBool("FightWellDamaged");
@@ -965,19 +971,27 @@ int CvUnitEntry::GetNukeDefense() const
 }
 #endif
 
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
 ///
-int CvUnitEntry::GetOuterRingsRangeAttackPenalty() const
+int CvUnitEntry::GetOuterRingsRangeAttackMod() const
 {
-	return m_iOuterRingsRangeAttackPenalty;
+	return m_iOuterRingsRangeAttackMod;
 }
 #endif
 
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
 ///
-int CvUnitEntry::GetInnerRingRangeAttackBonus() const
+int CvUnitEntry::GetInnerRingRangeAttackMod() const
 {
-	return m_iInnerRingRangeAttackBonus;
+	return m_iInnerRingRangeAttackMod;
+}
+#endif
+
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+///
+int CvUnitEntry::GetSameTypeAdjacentMod() const
+{
+	return m_iSameTypeAdjacentMod;
 }
 #endif
 

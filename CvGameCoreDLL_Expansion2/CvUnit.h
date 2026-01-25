@@ -602,6 +602,9 @@ public:
 	bool IsEnemyCityAdjacent() const;
 	bool IsEnemyCityAdjacent(const CvCity* pSpecifyCity) const;
 	int GetNumSpecificEnemyUnitsAdjacent(const CvUnit* pUnitToExclude = NULL, const CvUnit* pUnitCompare = NULL) const;
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+	int GetNumSpecificFriendlyUnitsAdjacent(const CvUnit* pUnitToExclude = NULL, const CvUnit* pUnitCompare = NULL) const;
+#endif
 	bool IsFriendlyUnitAdjacent(bool bCombatUnit) const;
 
 	int GetAdjacentModifier() const;

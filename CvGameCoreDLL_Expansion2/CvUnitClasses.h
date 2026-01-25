@@ -118,11 +118,14 @@ public:
 #ifdef UNIT_NUKE_DEFENSE
 	int GetNukeDefense() const;
 #endif
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
-	int GetOuterRingsRangeAttackPenalty() const;
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
+	int GetOuterRingsRangeAttackMod() const;
 #endif
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
-	int GetInnerRingRangeAttackBonus() const;
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
+	int GetInnerRingRangeAttackMod() const;
+#endif
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+	int GetSameTypeAdjacentMod() const;
 #endif
 #ifdef UNIT_FIGHT_WELL_DAMAGE
 	bool IsFightWellDamaged() const;
@@ -264,11 +267,14 @@ private:
 #ifdef UNIT_NUKE_DEFENSE
 	int m_iNukeDefense;
 #endif
-#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_PENALTY
-	int m_iOuterRingsRangeAttackPenalty;
+#ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
+	int m_iOuterRingsRangeAttackMod;
 #endif
-#ifdef UNIT_INNER_RING_RANGE_ATTACK_BONUS
-	int m_iInnerRingRangeAttackBonus;
+#ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
+	int m_iInnerRingRangeAttackMod;
+#endif
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+	int m_iSameTypeAdjacentMod;
 #endif
 #ifdef UNIT_FIGHT_WELL_DAMAGE
 	bool m_bFightWellDamaged;
