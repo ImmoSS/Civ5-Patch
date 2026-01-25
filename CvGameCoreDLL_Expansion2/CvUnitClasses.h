@@ -130,6 +130,9 @@ public:
 #ifdef UNIT_FIGHT_WELL_DAMAGE
 	bool IsFightWellDamaged() const;
 #endif
+#ifdef UNIT_LEVEL_EXPIRIENCE_MODIFIER
+	int GetLevelExperienceModifier() const;
+#endif
 
 	float GetUnitMaxSpeed() const;
 	float GetUnitPadTime() const;
@@ -278,6 +281,9 @@ private:
 #endif
 #ifdef UNIT_FIGHT_WELL_DAMAGE
 	bool m_bFightWellDamaged;
+#endif
+#ifdef UNIT_LEVEL_EXPIRIENCE_MODIFIER
+	int m_iLevelExperienceModifier;
 #endif
 
 	// This is not loaded from XML, but cached so we don't have to recalculate every time

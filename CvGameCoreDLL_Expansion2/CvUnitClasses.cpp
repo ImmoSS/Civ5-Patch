@@ -111,6 +111,9 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef UNIT_FIGHT_WELL_DAMAGE
 	m_bFightWellDamaged(false),
 #endif
+#ifdef UNIT_LEVEL_EXPIRIENCE_MODIFIER
+	m_iLevelExperienceModifier(0),
+#endif
 	m_pbUpgradeUnitClass(NULL),
 	m_pbUnitAIType(NULL),
 	m_pbNotUnitAIType(NULL),
@@ -246,6 +249,9 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #endif
 #ifdef UNIT_FIGHT_WELL_DAMAGE
 	m_bFightWellDamaged = kResults.GetBool("FightWellDamaged");
+#endif
+#ifdef UNIT_LEVEL_EXPIRIENCE_MODIFIER
+	m_iLevelExperienceModifier = kResults.GetInt("LevelExperienceModifier");
 #endif
 
 	m_strUnitArtInfoTag = kResults.GetText("UnitArtInfo");
@@ -1000,6 +1006,14 @@ int CvUnitEntry::GetSameTypeAdjacentMod() const
 bool CvUnitEntry::IsFightWellDamaged() const
 {
 	return m_bFightWellDamaged;
+}
+#endif
+
+#ifdef UNIT_LEVEL_EXPIRIENCE_MODIFIER
+///
+int CvUnitEntry::GetLevelExperienceModifier() const
+{
+	return m_iLevelExperienceModifier;
 }
 #endif
 

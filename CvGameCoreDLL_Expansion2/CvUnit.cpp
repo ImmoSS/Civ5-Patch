@@ -1243,8 +1243,13 @@ void CvUnit::convert(CvUnit* pUnit, bool bIsUpgrade)
 	}
 
 	setLevel(pUnit->getLevel());
+#ifdef UNIT_LEVEL_EXPIRIENCE_MODIFIER
+	int iOldModifier = std::max(1, 100 + GET_PLAYER(pUnit->getOwner()).getLevelExperienceModifier() + pUnit->getUnitInfo().GetLevelExperienceModifier());
+	int iOurModifier = std::max(1, 100 + GET_PLAYER(getOwner()).getLevelExperienceModifier() + getUnitInfo().GetLevelExperienceModifier());
+#else
 	int iOldModifier = std::max(1, 100 + GET_PLAYER(pUnit->getOwner()).getLevelExperienceModifier());
 	int iOurModifier = std::max(1, 100 + GET_PLAYER(getOwner()).getLevelExperienceModifier());
+#endif
 	setExperience(std::max(0, (pUnit->getExperience() * iOurModifier) / iOldModifier));
 
 	setName(pUnit->getNameNoDesc());
@@ -13923,7 +13928,11 @@ int CvUnit::experienceNeeded() const
 
 	int iExperienceNeeded = /*10*/ GC.getEXPERIENCE_PER_LEVEL() * iExperienceMultiplier;
 
+#ifdef UNIT_LEVEL_EXPIRIENCE_MODIFIER
+	const int iModifier = GET_PLAYER(getOwner()).getLevelExperienceModifier() + getUnitInfo().GetLevelExperienceModifier();
+#else
 	const int iModifier = GET_PLAYER(getOwner()).getLevelExperienceModifier();
+#endif
 	if(0 != iModifier)
 	{
 		float fTemp = (float) iExperienceNeeded;
