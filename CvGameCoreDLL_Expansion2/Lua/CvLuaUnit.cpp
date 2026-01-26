@@ -253,6 +253,9 @@ void CvLuaUnit::PushMethods(lua_State* L, int t)
 	Method(WithdrawalProbability);
 
 	Method(GetAdjacentModifier);
+#ifdef UNIT_NO_ADJACENT_MOD
+	Method(GetNoAdjacentMod);
+#endif
 	Method(GetAttackModifier);
 	Method(GetDefenseModifier);
 #ifdef FIX_RANGE_DEFENSE_MOD
@@ -2606,6 +2609,18 @@ int CvLuaUnit::lGetAdjacentModifier(lua_State* L)
 	lua_pushinteger(L, iResult);
 	return 1;
 }
+#ifdef UNIT_NO_ADJACENT_MOD
+//------------------------------------------------------------------------------
+//int GetNoAdjacentMod();
+int CvLuaUnit::lGetNoAdjacentMod(lua_State* L)
+{
+	CvUnit* pkUnit = GetInstance(L);
+
+	const int iResult = pkUnit->IsFriendlyUnitAdjacent(true) ? 0 : pkUnit->getUnitInfo().GetNoAdjacentMod();
+	lua_pushinteger(L, iResult);
+	return 1;
+}
+#endif
 //------------------------------------------------------------------------------
 //int getAttackModifier();
 int CvLuaUnit::lGetAttackModifier(lua_State* L)
