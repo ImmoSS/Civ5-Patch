@@ -2598,7 +2598,11 @@ int CvLuaUnit::lGetAdjacentModifier(lua_State* L)
 {
 	CvUnit* pkUnit = GetInstance(L);
 
+#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+	const int iResult = pkUnit->GetAdjacentModifier() + pkUnit->GetNumSpecificFriendlyUnitsAdjacent(NULL, pkUnit) * pkUnit->getUnitInfo().GetSameTypeAdjacentMod();
+#else
 	const int iResult = pkUnit->GetAdjacentModifier();
+#endif
 	lua_pushinteger(L, iResult);
 	return 1;
 }
