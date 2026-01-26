@@ -609,7 +609,7 @@ function UpdateCombatOddsUnitVsCity(pMyUnit, pCity)
 			iModifier = pMyUnit:GetNoAdjacentMod();
 			if (iModifier ~= 0) then
 				local bCombatUnit = true;
-				if (~pMyUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
+				if (not pMyUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
 					controlTable = g_MyCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NO_ADJACENT_FRIEND_UNIT_BONUS" );
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
@@ -1086,7 +1086,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 			iModifier = pMyUnit:GetNoAdjacentMod();
 			if (iModifier ~= 0) then
 				local bCombatUnit = true;
-				if (~pMyUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
+				if (not pMyUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
 					controlTable = g_MyCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NO_ADJACENT_FRIEND_UNIT_BONUS" );
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
@@ -1392,7 +1392,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				iModifier = pTheirUnit:GetNoAdjacentMod();
 				if (iModifier ~= 0) then
 					local bCombatUnit = true;
-					if (~pTheirUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
+					if (not pTheirUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
 						controlTable = g_MyCombatDataIM:GetInstance();
 						controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NO_ADJACENT_FRIEND_UNIT_BONUS" );
 						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
@@ -1919,7 +1919,7 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 		iModifier = pTheirUnit:GetNoAdjacentMod();
 		if (iModifier ~= 0) then
 			local bCombatUnit = true;
-			if (~pTheirUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
+			if (not pTheirUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
 				controlTable = g_MyCombatDataIM:GetInstance();
 				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NO_ADJACENT_FRIEND_UNIT_BONUS" );
 				controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
