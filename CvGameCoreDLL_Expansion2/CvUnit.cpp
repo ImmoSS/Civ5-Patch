@@ -11498,6 +11498,11 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvUnit* pOtherUnit, const CvPlot
 	iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
 #endif
 
+#ifdef UNIT_NO_ADJACENT_MOD
+	if (!IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+		iModifier += getUnitInfo().GetNoAdjacentMod();
+#endif
+
 #ifndef GOLDEN_AGE_ATTACK_BONUS_MODIFIER
 	// Our empire fights well in Golden Ages?
 	if(kPlayer.isGoldenAge())
@@ -12448,6 +12453,11 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
 #endif
 
+#ifdef UNIT_NO_ADJACENT_MOD
+			if (!IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+				iModifier += getUnitInfo().GetNoAdjacentMod();
+#endif
+
 			// Trait (player level) bonus against higher tech units
 			iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
 			if (iTempModifier > 0)
@@ -12588,6 +12598,11 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 
 #ifdef UNIT_SAME_TYPE_ADJACENT_MOD
 		iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
+#endif
+
+#ifdef UNIT_NO_ADJACENT_MOD
+		if (!IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+			iModifier += getUnitInfo().GetNoAdjacentMod();
 #endif
 	}
 
@@ -12971,6 +12986,11 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
 #endif
 
+#ifdef UNIT_NO_ADJACENT_MOD
+			if (!IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+				iModifier += getUnitInfo().GetNoAdjacentMod();
+#endif
+
 			// Trait (player level) bonus against higher tech units
 			iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
 			if (iTempModifier > 0)
@@ -13116,6 +13136,11 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 #ifdef UNIT_SAME_TYPE_ADJACENT_MOD
 		iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
 #endif
+
+#ifdef UNIT_NO_ADJACENT_MOD
+		if (!IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+			iModifier += getUnitInfo().GetNoAdjacentMod();
+#endif
 	}
 
 	// Ranged attack mod
@@ -13183,6 +13208,11 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 
 #ifdef UNIT_SAME_TYPE_ADJACENT_MOD
 		iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
+#endif
+
+#ifdef UNIT_NO_ADJACENT_MOD
+		if (!IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+			iModifier += getUnitInfo().GetNoAdjacentMod();
 #endif
 
 		// Trait (player level) bonus against higher tech units

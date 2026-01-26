@@ -604,6 +604,17 @@ function UpdateCombatOddsUnitVsCity(pMyUnit, pCity)
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 				end
 			end
+
+			-- No Adjacent Modifier
+			iModifier = pMyUnit:GetNoAdjacentMod();
+			if (iModifier ~= 0) then
+				local bCombatUnit = true;
+				if (~pMyUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
+					controlTable = g_MyCombatDataIM:GetInstance();
+					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NO_ADJACENT_FRIEND_UNIT_BONUS" );
+					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+				end
+			end
 			
 			-- Policy Attack bonus
 			local iTurns = pMyPlayer:GetAttackBonusTurns();
@@ -1070,6 +1081,17 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 				end
 			end
+
+			-- No Adjacent Modifier
+			iModifier = pMyUnit:GetNoAdjacentMod();
+			if (iModifier ~= 0) then
+				local bCombatUnit = true;
+				if (~pMyUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
+					controlTable = g_MyCombatDataIM:GetInstance();
+					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NO_ADJACENT_FRIEND_UNIT_BONUS" );
+					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+				end
+			end
 			
 			-- Attack Modifier
 			iModifier = pMyUnit:GetAttackModifier();
@@ -1362,6 +1384,17 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 					if (pTheirUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
 						controlTable = g_TheirCombatDataIM:GetInstance();
 						controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_ADJACENT_FRIEND_UNIT_BONUS" );
+						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
+					end
+				end
+
+				-- No Adjacent Modifier
+				iModifier = pTheirUnit:GetNoAdjacentMod();
+				if (iModifier ~= 0) then
+					local bCombatUnit = true;
+					if (~pTheirUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
+						controlTable = g_MyCombatDataIM:GetInstance();
+						controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NO_ADJACENT_FRIEND_UNIT_BONUS" );
 						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 					end
 				end
@@ -1878,6 +1911,17 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 			if (theirUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
 				controlTable = g_TheirCombatDataIM:GetInstance();
 				controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_ADJACENT_FRIEND_UNIT_BONUS" );
+				controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
+			end
+		end
+
+		-- No Adjacent Modifier
+		iModifier = pTheirUnit:GetNoAdjacentMod();
+		if (iModifier ~= 0) then
+			local bCombatUnit = true;
+			if (~pTheirUnit:IsFriendlyUnitAdjacent(bCombatUnit)) then
+				controlTable = g_MyCombatDataIM:GetInstance();
+				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NO_ADJACENT_FRIEND_UNIT_BONUS" );
 				controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 			end
 		end

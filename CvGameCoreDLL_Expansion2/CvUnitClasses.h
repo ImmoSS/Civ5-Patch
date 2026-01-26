@@ -136,6 +136,9 @@ public:
 #ifdef UNIT_HEALTHY_MOD
 	int GetHealthyMod() const;
 #endif
+#ifdef UNIT_NO_ADJACENT_MOD
+	int GetNoAdjacentMod() const;
+#endif
 
 	float GetUnitMaxSpeed() const;
 	float GetUnitPadTime() const;
@@ -290,6 +293,9 @@ private:
 #endif
 #ifdef UNIT_HEALTHY_MOD
 	int m_iHealthyMod;
+#endif
+#ifdef UNIT_NO_ADJACENT_MOD
+	int m_iNoAdjacentMod;
 #endif
 
 	// This is not loaded from XML, but cached so we don't have to recalculate every time

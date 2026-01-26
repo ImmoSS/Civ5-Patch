@@ -262,6 +262,9 @@ protected:
 	static int lWithdrawalProbability(lua_State* L);
 
 	static int lGetAdjacentModifier(lua_State* L);
+#ifdef UNIT_NO_ADJACENT_MOD
+	static int lGetNoAdjacentMod(lua_State* L);
+#endif
 	static int lGetAttackModifier(lua_State* L);
 	static int lGetDefenseModifier(lua_State* L);
 #ifdef FIX_RANGE_DEFENSE_MOD

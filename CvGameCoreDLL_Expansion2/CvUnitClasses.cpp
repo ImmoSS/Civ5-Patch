@@ -117,6 +117,9 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef UNIT_HEALTHY_MOD
 	m_iHealthyMod(0),
 #endif
+#ifdef UNIT_NO_ADJACENT_MOD
+	m_iNoAdjacentMod(0),
+#endif
 	m_pbUpgradeUnitClass(NULL),
 	m_pbUnitAIType(NULL),
 	m_pbNotUnitAIType(NULL),
@@ -258,6 +261,9 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #endif
 #ifdef UNIT_HEALTHY_MOD
 	m_iHealthyMod = kResults.GetInt("HealthyMod");
+#endif
+#ifdef UNIT_NO_ADJACENT_MOD
+	m_iNoAdjacentMod = kResults.GetInt("NoAdjacentMod");
 #endif
 
 	m_strUnitArtInfoTag = kResults.GetText("UnitArtInfo");
@@ -1028,6 +1034,14 @@ int CvUnitEntry::GetLevelExperienceModifier() const
 int CvUnitEntry::GetHealthyMod() const
 {
 	return m_iHealthyMod;
+}
+#endif
+
+#ifdef UNIT_NO_ADJACENT_MOD
+///
+int CvUnitEntry::GetNoAdjacentMod() const
+{
+	return m_iNoAdjacentMod;
 }
 #endif
 
