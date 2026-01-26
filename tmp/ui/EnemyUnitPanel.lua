@@ -1158,7 +1158,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 			
 			-- HealthyMod
 			if (pTheirUnit:GetDamage() == 0) then
-				iModifier = pMyUnit:GetHealthyMod();
+				iModifier = pMyUnit:HealthyModifier();
 
 				if (iModifier ~= 0) then
 					controlTable = g_MyCombatDataIM:GetInstance();
@@ -1562,7 +1562,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 			
 				-- HealthyMod
 				if (pTheirUnit:GetDamage() == 0) then
-					iModifier = pMyUnit:GetHealthyMod();
+					iModifier = pMyUnit:HealthyModifier();
 
 					if (iModifier ~= 0) then
 						controlTable = g_MyCombatDataIM:GetInstance();
