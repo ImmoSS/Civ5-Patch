@@ -11911,6 +11911,11 @@ int CvUnit::GetMaxAttackStrength(const CvPlot* pFromPlot, const CvPlot* pToPlot,
 		// Bonus VS wounded
 		if(pDefender->getDamage() > 0)
 			iModifier += attackWoundedModifier();
+
+#ifdef UNIT_HEALTHY_MOD
+		if (pDefender->getDamage() == 0)
+			iModifier += getUnitInfo().GetHealthyMod();
+#endif
 	}
 
 	// Unit can't drop below 10% strength
@@ -12367,6 +12372,11 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 		// Bonus VS wounded
 		if (pOtherUnit->getDamage() > 0)
 			iModifier += attackWoundedModifier();
+
+#ifdef UNIT_HEALTHY_MOD
+		if (pOtherUnit->getDamage() == 0)
+			iModifier += getUnitInfo().GetHealthyMod();
+#endif
 
 		// Bonus against city states?
 		if (GET_PLAYER(pOtherUnit->getOwner()).isMinorCiv())
@@ -12889,6 +12899,11 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 		// Bonus VS wounded
 		if(pOtherUnit->getDamage() > 0)
 			iModifier += attackWoundedModifier();
+
+#ifdef UNIT_HEALTHY_MOD
+		if (pOtherUnit->getDamage() == 0)
+			iModifier += getUnitInfo().GetHealthyMod();
+#endif
 
 		// Bonus against city states?
 		if(GET_PLAYER(pOtherUnit->getOwner()).isMinorCiv())

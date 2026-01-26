@@ -133,6 +133,9 @@ public:
 #ifdef UNIT_LEVEL_EXPIRIENCE_MODIFIER
 	int GetLevelExperienceModifier() const;
 #endif
+#ifdef UNIT_HEALTHY_MOD
+	int GetHealthyMod() const;
+#endif
 
 	float GetUnitMaxSpeed() const;
 	float GetUnitPadTime() const;
@@ -284,6 +287,9 @@ private:
 #endif
 #ifdef UNIT_LEVEL_EXPIRIENCE_MODIFIER
 	int m_iLevelExperienceModifier;
+#endif
+#ifdef UNIT_HEALTHY_MOD
+	int m_iHealthyMod;
 #endif
 
 	// This is not loaded from XML, but cached so we don't have to recalculate every time

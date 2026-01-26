@@ -114,6 +114,9 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef UNIT_LEVEL_EXPIRIENCE_MODIFIER
 	m_iLevelExperienceModifier(0),
 #endif
+#ifdef UNIT_HEALTHY_MOD
+	m_iHealthyMod(0),
+#endif
 	m_pbUpgradeUnitClass(NULL),
 	m_pbUnitAIType(NULL),
 	m_pbNotUnitAIType(NULL),
@@ -252,6 +255,9 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #endif
 #ifdef UNIT_LEVEL_EXPIRIENCE_MODIFIER
 	m_iLevelExperienceModifier = kResults.GetInt("LevelExperienceModifier");
+#endif
+#ifdef UNIT_HEALTHY_MOD
+	m_iHealthyMod = kResults.GetInt("HealthyMod");
 #endif
 
 	m_strUnitArtInfoTag = kResults.GetText("UnitArtInfo");
@@ -1014,6 +1020,14 @@ bool CvUnitEntry::IsFightWellDamaged() const
 int CvUnitEntry::GetLevelExperienceModifier() const
 {
 	return m_iLevelExperienceModifier;
+}
+#endif
+
+#ifdef UNIT_HEALTHY_MOD
+///
+int CvUnitEntry::GetHealthyMod() const
+{
+	return m_iHealthyMod;
 }
 #endif
 

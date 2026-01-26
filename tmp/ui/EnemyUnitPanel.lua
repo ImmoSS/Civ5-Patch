@@ -1155,6 +1155,17 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 				end
 			end
+			
+			-- HealthyMod
+			if (pTheirUnit:GetDamage() == 0) then
+				iModifier = pMyUnit:GetHealthyMod();
+
+				if (iModifier ~= 0) then
+					controlTable = g_MyCombatDataIM:GetInstance();
+					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_BONUS_VS_HEALTHY_UNITS" );
+					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+				end
+			end
 
 			-- HillsAttackModifier
 			if (pToPlot:IsHills()) then
@@ -1547,6 +1558,17 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 					--kDomainInfo.CacheResult(kResult);
 
 					--strString.append(GetLocalizedText("TXT_KEY_COMBAT_PLOT_MOD_VS_TYPE", iModifier, kDomainInfo.GetDescription()));
+				end
+			
+				-- HealthyMod
+				if (pTheirUnit:GetDamage() == 0) then
+					iModifier = pMyUnit:GetHealthyMod();
+
+					if (iModifier ~= 0) then
+						controlTable = g_MyCombatDataIM:GetInstance();
+						controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_BONUS_VS_HEALTHY_UNITS" );
+						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
+					end
 				end
 		
 				-- Range Defense Modifier

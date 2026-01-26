@@ -273,6 +273,9 @@ void CvLuaUnit::PushMethods(lua_State* L, int t)
 	Method(RoughRangedAttackModifier);
 	Method(AttackFortifiedModifier);
 	Method(AttackWoundedModifier);
+#ifdef UNIT_HEALTHY_MOD
+	Method(HealthyModifier);
+#endif
 	Method(FlankAttackModifier);
 	Method(RoughDefenseModifier);
 	Method(TerrainAttackModifier);
@@ -2777,6 +2780,18 @@ int CvLuaUnit::lAttackWoundedModifier(lua_State* L)
 	lua_pushinteger(L, iResult);
 	return 1;
 }
+#ifdef UNIT_HEALTHY_MOD
+//------------------------------------------------------------------------------
+//int HealthyModifier();
+int CvLuaUnit::lHealthyModifier(lua_State* L)
+{
+	CvUnit* pkUnit = GetInstance(L);
+
+	const int iResult = pkUnit->getUnitInfo().GetHealthyMod();
+	lua_pushinteger(L, iResult);
+	return 1;
+}
+#endif
 //------------------------------------------------------------------------------
 //int FlankAttackModifier();
 int CvLuaUnit::lFlankAttackModifier(lua_State* L)
