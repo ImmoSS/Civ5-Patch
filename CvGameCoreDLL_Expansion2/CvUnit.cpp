@@ -14730,7 +14730,7 @@ int CvUnit::GetNumSpecificEnemyUnitsAdjacent(const CvUnit* pUnitToExclude, const
 	return iNumEnemiesAdjacent;
 }
 
-#ifdef UNIT_SAME_TYPE_ADJACENT_MOD
+#ifdef UNIT_NUM_SPECIFIC_FRIENDLY_UNITS_ADJACENT
 //	--------------------------------------------------------------------------------
 int CvUnit::GetNumSpecificFriendlyUnitsAdjacent(const CvUnit* pUnitToExclude, const CvUnit* pUnitCompare) const
 {
