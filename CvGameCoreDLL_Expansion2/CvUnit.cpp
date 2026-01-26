@@ -12686,6 +12686,11 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 		iModifier += GetNumSpecificFriendlyUnitsAdjacent(NULL, this) * getUnitInfo().GetSameTypeAdjacentMod();
 #endif
 
+#ifdef UNIT_NO_ADJACENT_MOD
+		if (!IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
+			iModifier += getUnitInfo().GetNoAdjacentMod();
+#endif
+
 		// Trait (player level) bonus against higher tech units
 		iTempModifier = GET_PLAYER(getOwner()).GetPlayerTraits()->GetCombatBonusVsHigherTech();
 		if (iTempModifier > 0)
