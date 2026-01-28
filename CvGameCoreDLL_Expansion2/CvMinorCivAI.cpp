@@ -8116,6 +8116,24 @@ int CvMinorCivAI::GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssu
 	if(eCurrentEra == NO_ERA)
 		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
 
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	if (eCurrentEra < 1)
+		iBonus = 100;
+	else if (eCurrentEra < 2)
+		iBonus = 200;
+	else if (eCurrentEra < 3)
+		iBonus = 200;
+	else if (eCurrentEra < 4)
+		iBonus = 200;
+	else if (eCurrentEra < 5)
+		iBonus = 300;
+	else if (eCurrentEra < 6)
+		iBonus = 300;
+	else if (eCurrentEra < 7)
+		iBonus = 300;
+	else
+		iBonus = 300;
+#else
 	EraTypes eRenaissance = (EraTypes) GC.getInfoTypeForString("ERA_RENAISSANCE", true);
 
 	// Medieval era or sooner
@@ -8124,7 +8142,8 @@ int CvMinorCivAI::GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssu
 
 	// Renaissance era or later
 	else
-		iBonus = /*200*/ GC.getFRIENDS_CAPITAL_FOOD_BONUS_AMOUNT_POST_RENAISSANCE();
+		iBonus = /*200*/ GC.getFRIENDS_CAPITAL_FOOD_BONUS_AMOUNT_POST_RENAISSANCE() + 200;
+#endif
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
@@ -8153,6 +8172,24 @@ int CvMinorCivAI::GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAs
 	if(eCurrentEra == NO_ERA)
 		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
 
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	if (eCurrentEra < 1)
+		iBonus = 0;
+	else if (eCurrentEra < 2)
+		iBonus = 0;
+	else if (eCurrentEra < 3)
+		iBonus = 0;
+	else if (eCurrentEra < 4)
+		iBonus = 0;
+	else if (eCurrentEra < 5)
+		iBonus = 0;
+	else if (eCurrentEra < 6)
+		iBonus = 0;
+	else if (eCurrentEra < 7)
+		iBonus = 0;
+	else
+		iBonus = 0;
+#else
 	EraTypes eRenaissance = (EraTypes) GC.getInfoTypeForString("ERA_RENAISSANCE", true);
 
 	// Medieval era or sooner
@@ -8162,6 +8199,7 @@ int CvMinorCivAI::GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAs
 	// Renaissance era or later
 	else
 		iBonus = /*0*/ GC.getFRIENDS_OTHER_CITIES_FOOD_BONUS_AMOUNT_POST_RENAISSANCE();
+#endif
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
@@ -8184,7 +8222,32 @@ int CvMinorCivAI::GetAlliesCapitalFoodBonus(PlayerTypes ePlayer, int iLeagueMod)
 int CvMinorCivAI::GetAlliesCapitalFoodBonus(PlayerTypes ePlayer)
 #endif
 {
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	int iBonus;
+
+	EraTypes eCurrentEra = NO_ERA;
+	if (eCurrentEra == NO_ERA)
+		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
+
+	if (eCurrentEra < 1)
+		iBonus = 100;
+	else if (eCurrentEra < 2)
+		iBonus = 100;
+	else if (eCurrentEra < 3)
+		iBonus = 100;
+	else if (eCurrentEra < 4)
+		iBonus = 100;
+	else if (eCurrentEra < 5)
+		iBonus = 100;
+	else if (eCurrentEra < 6)
+		iBonus = 100;
+	else if (eCurrentEra < 7)
+		iBonus = 300;
+	else
+		iBonus = 300;
+#else
 	int iBonus = /*100*/ GC.getALLIES_CAPITAL_FOOD_BONUS_AMOUNT();
+#endif
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
@@ -8207,7 +8270,32 @@ int CvMinorCivAI::GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer, int iLeagueMo
 int CvMinorCivAI::GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer)
 #endif
 {
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	int iBonus;
+
+	EraTypes eCurrentEra = NO_ERA;
+	if (eCurrentEra == NO_ERA)
+		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
+
+	if (eCurrentEra < 1)
+		iBonus = 0;
+	else if (eCurrentEra < 2)
+		iBonus = 0;
+	else if (eCurrentEra < 3)
+		iBonus = 100;
+	else if (eCurrentEra < 4)
+		iBonus = 100;
+	else if (eCurrentEra < 5)
+		iBonus = 100;
+	else if (eCurrentEra < 6)
+		iBonus = 100;
+	else if (eCurrentEra < 7)
+		iBonus = 100;
+	else
+		iBonus = 200;
+#else
 	int iBonus = /*100*/ GC.getALLIES_OTHER_CITIES_FOOD_BONUS_AMOUNT();
+#endif
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
@@ -8957,6 +9045,24 @@ int CvMinorCivAI::GetFriendsCapitalProductionBonus(PlayerTypes ePlayer, EraTypes
 	if (eCurrentEra == NO_ERA)
 		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
 
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	if (eCurrentEra < 1)
+		iBonus = 100;
+	else if (eCurrentEra < 2)
+		iBonus = 200;
+	else if (eCurrentEra < 3)
+		iBonus = 200;
+	else if (eCurrentEra < 4)
+		iBonus = 200;
+	else if (eCurrentEra < 5)
+		iBonus = 300;
+	else if (eCurrentEra < 6)
+		iBonus = 300;
+	else if (eCurrentEra < 7)
+		iBonus = 300;
+	else
+		iBonus = 300;
+#else
 	EraTypes eRenaissance = (EraTypes)GC.getInfoTypeForString("ERA_RENAISSANCE", true);
 
 	// Medieval era or sooner
@@ -8966,6 +9072,7 @@ int CvMinorCivAI::GetFriendsCapitalProductionBonus(PlayerTypes ePlayer, EraTypes
 	// Renaissance era or later
 	else
 		iBonus = 200;
+#endif
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
@@ -8994,6 +9101,24 @@ int CvMinorCivAI::GetFriendsOtherCityProductionBonus(PlayerTypes ePlayer, EraTyp
 	if (eCurrentEra == NO_ERA)
 		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
 
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	if (eCurrentEra < 1)
+		iBonus = 0;
+	else if (eCurrentEra < 2)
+		iBonus = 0;
+	else if (eCurrentEra < 3)
+		iBonus = 0;
+	else if (eCurrentEra < 4)
+		iBonus = 0;
+	else if (eCurrentEra < 5)
+		iBonus = 0;
+	else if (eCurrentEra < 6)
+		iBonus = 0;
+	else if (eCurrentEra < 7)
+		iBonus = 0;
+	else
+		iBonus = 0;
+#else
 	EraTypes eRenaissance = (EraTypes)GC.getInfoTypeForString("ERA_RENAISSANCE", true);
 
 	// Medieval era or sooner
@@ -9003,6 +9128,7 @@ int CvMinorCivAI::GetFriendsOtherCityProductionBonus(PlayerTypes ePlayer, EraTyp
 	// Renaissance era or later
 	else
 		iBonus = 0;
+#endif
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
@@ -9025,7 +9151,32 @@ int CvMinorCivAI::GetAlliesCapitalProductionBonus(PlayerTypes ePlayer, int iLeag
 int CvMinorCivAI::GetAlliesCapitalProductionBonus(PlayerTypes ePlayer)
 #endif
 {
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	int iBonus;
+
+	EraTypes eCurrentEra = NO_ERA;
+	if (eCurrentEra == NO_ERA)
+		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
+
+	if (eCurrentEra < 1)
+		iBonus = 100;
+	else if (eCurrentEra < 2)
+		iBonus = 100;
+	else if (eCurrentEra < 3)
+		iBonus = 100;
+	else if (eCurrentEra < 4)
+		iBonus = 100;
+	else if (eCurrentEra < 5)
+		iBonus = 100;
+	else if (eCurrentEra < 6)
+		iBonus = 100;
+	else if (eCurrentEra < 7)
+		iBonus = 300;
+	else
+		iBonus = 300;
+#else
 	int iBonus = 0;
+#endif
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
@@ -9048,7 +9199,32 @@ int CvMinorCivAI::GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer, int iLe
 int CvMinorCivAI::GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer)
 #endif
 {
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	int iBonus;
+
+	EraTypes eCurrentEra = NO_ERA;
+	if (eCurrentEra == NO_ERA)
+		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
+
+	if (eCurrentEra < 1)
+		iBonus = 0;
+	else if (eCurrentEra < 2)
+		iBonus = 0;
+	else if (eCurrentEra < 3)
+		iBonus = 100;
+	else if (eCurrentEra < 4)
+		iBonus = 100;
+	else if (eCurrentEra < 5)
+		iBonus = 100;
+	else if (eCurrentEra < 6)
+		iBonus = 100;
+	else if (eCurrentEra < 7)
+		iBonus = 100;
+	else
+		iBonus = 200;
+#else
 	int iBonus = 100;
+#endif
 
 	// Modify the bonus if called for by our trait
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
