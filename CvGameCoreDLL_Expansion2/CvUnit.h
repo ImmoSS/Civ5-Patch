@@ -642,6 +642,10 @@ public:
 	int unitClassAttackModifier(UnitClassTypes eUnitClass) const;
 	int unitClassDefenseModifier(UnitClassTypes eUnitClass) const;
 	int unitCombatModifier(UnitCombatTypes eUnitCombat) const;
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+	int unitCombatAttack(UnitCombatTypes eUnitCombat) const;
+	int unitCombatDefense(UnitCombatTypes eUnitCombat) const;
+#endif
 	int domainModifier(DomainTypes eDomain) const;
 
 	bool IsHasNoValidMove() const;
@@ -1135,6 +1139,12 @@ public:
 
 	int getExtraUnitCombatModifier(UnitCombatTypes eIndex) const;
 	void changeExtraUnitCombatModifier(UnitCombatTypes eIndex, int iChange);
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+	int getExtraUnitCombatAttack(UnitCombatTypes eIndex) const;
+	void changeExtraUnitCombatAttack(UnitCombatTypes eIndex, int iChange);
+	int getExtraUnitCombatDefense(UnitCombatTypes eIndex) const;
+	void changeExtraUnitCombatDefense(UnitCombatTypes eIndex, int iChange);
+#endif
 
 	int getUnitClassModifier(UnitClassTypes eIndex) const;
 	void changeUnitClassModifier(UnitClassTypes eIndex, int iChange);
@@ -1531,6 +1541,10 @@ protected:
 	FAutoVariable<std::vector<int>, CvUnit> m_extraFeatureAttackPercent;
 	FAutoVariable<std::vector<int>, CvUnit> m_extraFeatureDefensePercent;
 	FAutoVariable<std::vector<int>, CvUnit> m_extraUnitCombatModifier;
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+	FAutoVariable<std::vector<int>, CvUnit> m_extraUnitCombatAttack;
+	FAutoVariable<std::vector<int>, CvUnit> m_extraUnitCombatDefense;
+#endif
 	FAutoVariable<std::vector<int>, CvUnit> m_unitClassModifier;
 	int m_iMissionTimer;
 	FAutoVariable<int, CvUnit> m_iMissionAIX;

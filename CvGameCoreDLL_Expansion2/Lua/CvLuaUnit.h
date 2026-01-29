@@ -298,6 +298,10 @@ protected:
 	static int lUnitClassAttackModifier(lua_State* L);
 	static int lUnitClassDefenseModifier(lua_State* L);
 	static int lUnitCombatModifier(lua_State* L);
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+	static int lUnitCombatAttack(lua_State* L);
+	static int lUnitCombatDefense(lua_State* L);
+#endif
 	static int lDomainModifier(lua_State* L);
 	static int lGetStrategicResourceCombatPenalty(lua_State* L);
 	static int lGetUnhappinessCombatPenalty(lua_State* L);
@@ -460,6 +464,10 @@ protected:
 	static int lGetExtraFeatureAttackPercent(lua_State* L);
 	static int lGetExtraFeatureDefensePercent(lua_State* L);
 	static int lGetExtraUnitCombatModifier(lua_State* L);
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+	static int lGetExtraUnitCombatAttack(lua_State* L);
+	static int lGetExtraUnitCombatDefense(lua_State* L);
+#endif
 	static int lGetUnitClassModifier(lua_State* L);
 
 	static int lCanAcquirePromotion(lua_State* L);

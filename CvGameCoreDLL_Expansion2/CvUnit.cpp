@@ -322,6 +322,10 @@ CvUnit::CvUnit() :
 	, m_extraFeatureAttackPercent("CvUnit::m_extraFeatureAttackPercent", m_syncArchive/*, true*/)
 	, m_extraFeatureDefensePercent("CvUnit::m_extraFeatureDefensePercent", m_syncArchive/*, true*/)
 	, m_extraUnitCombatModifier("CvUnit::m_extraUnitCombatModifier", m_syncArchive/*, true*/)
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+	, m_extraUnitCombatAttack("CvUnit::m_extraUnitCombatAttack", m_syncArchive/*, true*/)
+	, m_extraUnitCombatDefense("CvUnit::m_extraUnitCombatDefense", m_syncArchive/*, true*/)
+#endif
 	, m_unitClassModifier("CvUnit::m_unitClassModifier", m_syncArchive/*, true*/)
 	, m_iMissionTimer(0)
 	, m_iMissionAIX("CvUnit::m_iMissionAIX", m_syncArchive)
@@ -1054,9 +1058,19 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 		CvAssertMsg((0 < GC.getNumUnitCombatClassInfos()), "GC.getNumUnitCombatClassInfos() is not greater than zero but an array is being allocated in CvUnit::reset");
 		m_extraUnitCombatModifier.clear();
 		m_extraUnitCombatModifier.resize(GC.getNumUnitCombatClassInfos());
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+		m_extraUnitCombatAttack.clear();
+		m_extraUnitCombatAttack.resize(GC.getNumUnitCombatClassInfos());
+		m_extraUnitCombatDefense.clear();
+		m_extraUnitCombatDefense.resize(GC.getNumUnitCombatClassInfos());
+#endif
 		for(int i = 0; i < GC.getNumUnitCombatClassInfos(); i++)
 		{
 			m_extraUnitCombatModifier.setAt(i,0);
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+			m_extraUnitCombatAttack.setAt(i,0);
+			m_extraUnitCombatDefense.setAt(i,0);
+#endif
 		}
 
 		m_unitClassModifier.clear();
@@ -1155,6 +1169,10 @@ void CvUnit::uninitInfos()
 	m_extraFeatureAttackPercent.clear();
 	m_extraFeatureDefensePercent.clear();
 	m_extraUnitCombatModifier.clear();
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+	m_extraUnitCombatAttack.clear();
+	m_extraUnitCombatDefense.clear();
+#endif
 	m_unitClassModifier.clear();
 }
 
@@ -11909,6 +11927,12 @@ int CvUnit::GetMaxAttackStrength(const CvPlot* pFromPlot, const CvPlot* pToPlot,
 		iTempModifier = unitClassAttackModifier(pDefender->getUnitClassType());
 		iModifier += iTempModifier;
 
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+		// Unit combat Attack VS other unit
+		if (pDefender->getUnitCombatType() != NO_UNITCOMBAT)
+			iModifier += unitCombatAttack(pDefender->getUnitCombatType());
+#endif
+
 		// Bonus VS fortified
 		if(pDefender->getFortifyTurns() > 0)
 			iModifier += attackFortifiedModifier();
@@ -12049,6 +12073,12 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 		// Unit Class Defense Modifier
 		iTempModifier = unitClassDefenseModifier(pAttacker->getUnitClassType());
 		iModifier += iTempModifier;
+
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+		// Unit combat defense VS other unit
+		if (pAttacker->getUnitCombatType() != NO_UNITCOMBAT)
+			iModifier += unitCombatDefense(pAttacker->getUnitCombatType());
+#endif
 	}
 
 	// Unit can't drop below 10% strength
@@ -12427,6 +12457,12 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			// Unit Class Attack Mod
 			iModifier += unitClassAttackModifier(pOtherUnit->getUnitClassType());
 
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+			// Unit combat modifier VS other unit
+			if (pOtherUnit->getUnitCombatType() != NO_UNITCOMBAT)
+				iModifier += unitCombatAttack(pOtherUnit->getUnitCombatType());
+#endif
+
 			////////////////////////
 			// KNOWN BATTLE PLOT
 			////////////////////////
@@ -12565,6 +12601,12 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 
 			// Unit Class Defense Mod
 			iModifier += unitClassDefenseModifier(pOtherUnit->getUnitClassType());
+
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+			// Unit combat defense VS other unit
+			if (pOtherUnit->getUnitCombatType() != NO_UNITCOMBAT)
+				iModifier += unitCombatDefense(pOtherUnit->getUnitCombatType());
+#endif
 		}
 	}
 
@@ -12969,6 +13011,12 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			// Unit Class Attack Mod
 			iModifier += unitClassAttackModifier(pOtherUnit->getUnitClassType());
 
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+			// Unit combat modifier VS other unit
+			if (pOtherUnit->getUnitCombatType() != NO_UNITCOMBAT)
+				iModifier += unitCombatAttack(pOtherUnit->getUnitCombatType());
+#endif
+
 			////////////////////////
 			// KNOWN BATTLE PLOT
 			////////////////////////
@@ -13107,6 +13155,12 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 
 			// Unit Class Defense Mod
 			iModifier += unitClassDefenseModifier(pOtherUnit->getUnitClassType());
+
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+			// Unit combat defense VS other unit
+			if (pOtherUnit->getUnitCombatType() != NO_UNITCOMBAT)
+				iModifier += unitCombatDefense(pOtherUnit->getUnitCombatType());
+#endif
 		}
 	}
 
@@ -15151,6 +15205,26 @@ int CvUnit::unitCombatModifier(UnitCombatTypes eUnitCombat) const
 	CvAssertMsg(eUnitCombat < GC.getNumUnitCombatClassInfos(), "eUnitCombat is expected to be within maximum bounds (invalid Index)");
 	return (getExtraUnitCombatModifier(eUnitCombat));
 }
+
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+//	--------------------------------------------------------------------------------
+int CvUnit::unitCombatAttack(UnitCombatTypes eUnitCombat) const
+{
+	VALIDATE_OBJECT
+		CvAssertMsg(eUnitCombat >= 0, "eUnitCombat is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eUnitCombat < GC.getNumUnitCombatClassInfos(), "eUnitCombat is expected to be within maximum bounds (invalid Index)");
+	return (getExtraUnitCombatAttack(eUnitCombat));
+}
+
+//	--------------------------------------------------------------------------------
+int CvUnit::unitCombatDefense(UnitCombatTypes eUnitCombat) const
+{
+	VALIDATE_OBJECT
+		CvAssertMsg(eUnitCombat >= 0, "eUnitCombat is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eUnitCombat < GC.getNumUnitCombatClassInfos(), "eUnitCombat is expected to be within maximum bounds (invalid Index)");
+	return (getExtraUnitCombatDefense(eUnitCombat));
+}
+#endif
 
 
 //	--------------------------------------------------------------------------------
@@ -20176,6 +20250,46 @@ void CvUnit::changeExtraUnitCombatModifier(UnitCombatTypes eIndex, int iChange)
 	m_extraUnitCombatModifier.setAt(eIndex, m_extraUnitCombatModifier[eIndex] + iChange);
 }
 
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+//	--------------------------------------------------------------------------------
+int CvUnit::getExtraUnitCombatAttack(UnitCombatTypes eIndex) const
+{
+	VALIDATE_OBJECT
+	CvAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eIndex < GC.getNumUnitCombatClassInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
+	return m_extraUnitCombatAttack[eIndex];
+}
+
+
+//	--------------------------------------------------------------------------------
+void CvUnit::changeExtraUnitCombatAttack(UnitCombatTypes eIndex, int iChange)
+{
+	VALIDATE_OBJECT
+	CvAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eIndex < GC.getNumUnitCombatClassInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
+	m_extraUnitCombatAttack.setAt(eIndex, m_extraUnitCombatAttack[eIndex] + iChange);
+}
+
+//	--------------------------------------------------------------------------------
+int CvUnit::getExtraUnitCombatDefense(UnitCombatTypes eIndex) const
+{
+	VALIDATE_OBJECT
+	CvAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eIndex < GC.getNumUnitCombatClassInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
+	return m_extraUnitCombatDefense[eIndex];
+}
+
+
+//	--------------------------------------------------------------------------------
+void CvUnit::changeExtraUnitCombatDefense(UnitCombatTypes eIndex, int iChange)
+{
+	VALIDATE_OBJECT
+	CvAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eIndex < GC.getNumUnitCombatClassInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
+	m_extraUnitCombatDefense.setAt(eIndex, m_extraUnitCombatDefense[eIndex] + iChange);
+}
+#endif
+
 
 //	--------------------------------------------------------------------------------
 int CvUnit::getUnitClassModifier(UnitClassTypes eIndex) const
@@ -20603,6 +20717,10 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 		for(iI = 0; iI < GC.getNumUnitCombatClassInfos(); iI++)
 		{
 			changeExtraUnitCombatModifier(((UnitCombatTypes)iI), (thisPromotion.GetUnitCombatModifierPercent(iI) * iChange));
+#ifdef PROMOTION_ADVANCED_UNIT_COMBAT_MODS
+			changeExtraUnitCombatAttack(((UnitCombatTypes)iI), (thisPromotion.GetUnitCombatAttackPercent(iI) * iChange));
+			changeExtraUnitCombatDefense(((UnitCombatTypes)iI), (thisPromotion.GetUnitCombatDefensePercent(iI) * iChange));
+#endif
 		}
 
 		for(iI = 0; iI < GC.getNumUnitClassInfos(); iI++)

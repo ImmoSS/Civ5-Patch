@@ -1141,6 +1141,23 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				end
 			end
 
+			-- UnitCombatAttack
+			if (pTheirUnit:GetUnitCombatType() ~= -1) then
+				iModifier = pMyUnit:UnitCombatAttack(pTheirUnit:GetUnitCombatType());
+
+				if (iModifier > 0) then
+					controlTable = g_MyCombatDataIM:GetInstance();
+					local unitClassType = Locale.ConvertTextKey(GameInfo.UnitCombatInfos[pTheirUnit:GetUnitCombatType()].Description);
+					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_BONUS_VS_CLASS", unitClassType );
+					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+				elseif (iModifier < 0) then
+					controlTable = g_MyCombatDataIM:GetInstance();
+					local unitClassType = Locale.ConvertTextKey(GameInfo.UnitCombatInfos[pTheirUnit:GetUnitCombatType()].Description);
+					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_PENALTY_VS_CLASS", unitClassType );
+					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+				end
+			end
+
 			-- DomainModifier
 			iModifier = pMyUnit:DomainModifier(pTheirUnit:GetDomainType());
 			if (iModifier ~= 0) then
@@ -1577,6 +1594,27 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 						--strString.append(GetLocalizedText("TXT_KEY_COMBAT_PLOT_MOD_VS_TYPE", iModifier, GC.getUnitCombatClassInfo(pMyUnit:getUnitCombatType()).GetTextKey()));
 					--end
 				--end
+
+				-- UnitCombatDefense
+				if (pMyUnit:GetUnitCombatType() ~= -1) then
+					if (GameInfo.UnitCombatInfos[pMyUnit:GetUnitCombatType()].ID == 15) then
+						iModifier = 0;
+					else
+						iModifier = pTheirUnit:UnitCombatDefense(pMyUnit:GetUnitCombatType());
+					end
+
+					if (iModifier > 0) then
+						controlTable = g_TheirCombatDataIM:GetInstance();
+						local unitClassType = Locale.ConvertTextKey(GameInfo.UnitCombatInfos[pMyUnit:GetUnitCombatType()].Description);
+						controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_BONUS_VS_CLASS", unitClassType );
+						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
+					elseif (iModifier < 0) then
+						controlTable = g_TheirCombatDataIM:GetInstance();
+						local unitClassType = Locale.ConvertTextKey(GameInfo.UnitCombatInfos[pMyUnit:GetUnitCombatType()].Description);
+						controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_PENALTY_VS_CLASS", unitClassType );
+						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
+					end
+				end
 
 				-- DomainModifier
 				iModifier = pTheirUnit:DomainModifier(pMyUnit:GetDomainType());
