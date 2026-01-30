@@ -627,6 +627,11 @@ public:
 
 	int GetBaseYieldRateFromReligion(YieldTypes eIndex) const;
 	void ChangeBaseYieldRateFromReligion(YieldTypes eIndex, int iChange);
+
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+	int GetYieldModFromReligion(YieldTypes eIndex) const;
+	void ChangeYieldModFromReligion(YieldTypes eIndex, int iChange);
+#endif
 	// END Base Yield
 
 	int GetYieldPerPopTimes100(YieldTypes eIndex) const;
@@ -1042,6 +1047,9 @@ protected:
 	FAutoVariable<std::vector<int>, CvCity> m_aiBaseYieldRateFromSpecialists;
 	FAutoVariable<std::vector<int>, CvCity> m_aiBaseYieldRateFromMisc;
 	std::vector<int> m_aiBaseYieldRateFromReligion;
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+	std::vector<int> m_aiYieldModFromReligion;
+#endif
 	FAutoVariable<std::vector<int>, CvCity> m_aiYieldRateModifier;
 	FAutoVariable<std::vector<int>, CvCity> m_aiYieldPerPop;
 	std::vector<int> m_aiYieldPerReligion;
