@@ -8142,7 +8142,7 @@ int CvMinorCivAI::GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssu
 
 	// Renaissance era or later
 	else
-		iBonus = /*200*/ GC.getFRIENDS_CAPITAL_FOOD_BONUS_AMOUNT_POST_RENAISSANCE() + 200;
+		iBonus = /*200*/ GC.getFRIENDS_CAPITAL_FOOD_BONUS_AMOUNT_POST_RENAISSANCE();
 #endif
 
 	// Modify the bonus if called for by our trait
@@ -8234,17 +8234,17 @@ int CvMinorCivAI::GetAlliesCapitalFoodBonus(PlayerTypes ePlayer)
 	else if (eCurrentEra < 2)
 		iBonus = 100;
 	else if (eCurrentEra < 3)
-		iBonus = 100;
+		iBonus = 0;
 	else if (eCurrentEra < 4)
-		iBonus = 100;
+		iBonus = 0;
 	else if (eCurrentEra < 5)
-		iBonus = 100;
+		iBonus = 0;
 	else if (eCurrentEra < 6)
-		iBonus = 100;
+		iBonus = 0;
 	else if (eCurrentEra < 7)
-		iBonus = 300;
+		iBonus = 200;
 	else
-		iBonus = 300;
+		iBonus = 100;
 #else
 	int iBonus = /*100*/ GC.getALLIES_CAPITAL_FOOD_BONUS_AMOUNT();
 #endif
@@ -9163,17 +9163,17 @@ int CvMinorCivAI::GetAlliesCapitalProductionBonus(PlayerTypes ePlayer)
 	else if (eCurrentEra < 2)
 		iBonus = 100;
 	else if (eCurrentEra < 3)
-		iBonus = 100;
+		iBonus = 0;
 	else if (eCurrentEra < 4)
-		iBonus = 100;
+		iBonus = 0;
 	else if (eCurrentEra < 5)
-		iBonus = 100;
+		iBonus = 0;
 	else if (eCurrentEra < 6)
-		iBonus = 100;
+		iBonus = 0;
 	else if (eCurrentEra < 7)
-		iBonus = 300;
+		iBonus = 200;
 	else
-		iBonus = 300;
+		iBonus = 100;
 #else
 	int iBonus = 0;
 #endif
