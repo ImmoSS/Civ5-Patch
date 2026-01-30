@@ -16170,11 +16170,13 @@ void CvCity::read(FDataStream& kStream)
 	{
 # endif
 		kStream >> m_iProcessOverflowProductionTimes100;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
 	else
 	{
 		m_iProcessOverflowProductionTimes100 = 0;
 	}
+# endif
 #endif
 	kStream >> m_aiDomainFreeExperience;
 	kStream >> m_aiDomainProductionModifier;
