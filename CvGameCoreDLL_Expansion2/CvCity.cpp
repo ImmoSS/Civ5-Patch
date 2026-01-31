@@ -6016,14 +6016,21 @@ int CvCity::getProductionDifferenceTimes100(int /*iProductionNeeded*/, int /*iPr
 	int iBaseProduction = getBaseYieldRate(YIELD_PRODUCTION) * 100;
 	iBaseProduction += (GetYieldPerPopTimes100(YIELD_PRODUCTION) * getPopulation());
 
+#ifdef PRODUCTION_FROM_TRADE_ROUTES_SHIFT_TO_BASE
+	int iTradeYield = GET_PLAYER(m_eOwner).GetTrade()->GetTradeValuesAtCityTimes100(this, YIELD_PRODUCTION);
+	iBaseProduction += iTradeYield;
+#endif
+
 	int iModifiedProduction = iBaseProduction * getBaseYieldRateModifier(YIELD_PRODUCTION, iProductionModifier);
 	iModifiedProduction /= 100;
 
 	iModifiedProduction += iOverflow;
 	iModifiedProduction += iFoodProduction;
 
+#ifndef PRODUCTION_FROM_TRADE_ROUTES_SHIFT_TO_BASE
 	int iTradeYield = GET_PLAYER(m_eOwner).GetTrade()->GetTradeValuesAtCityTimes100(this, YIELD_PRODUCTION);
 	iModifiedProduction += iTradeYield;
+#endif
 
 	return iModifiedProduction;
 }
