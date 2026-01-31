@@ -7620,7 +7620,7 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 
 
 
-							ChangeYieldModFromReligion((YieldTypes)iYield, 0);
+							ChangeYieldModFromReligion((YieldTypes)iYield, iYieldModFromBuilding);
 #endif
 						}
 					}
@@ -7919,10 +7919,13 @@ int CvCity::foodDifferenceTimes100(bool bBottom, CvString* toolTipSink) const
 #ifdef BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
 		iCityGrowthMod += getFoodBonusIfNoCitiesAround();
 #endif
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+		iCityGrowthMod += GetYieldModFromReligion(YIELD_FOOD);
+#endif
 		if(iCityGrowthMod != 0)
 		{
 			iTotalMod += iCityGrowthMod;
-#if defined BUILDING_FOOD_YIELD_MODIFIERS_GROTH || defined BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND
+#if defined BUILDING_FOOD_YIELD_MODIFIERS_GROTH || defined BUILDING_FOOD_BONUS_IF_NO_CITIES_AROUND || defined BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
 			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_FOODMOD_PLAYER", GET_PLAYER(getOwner()).GetCityGrowthMod());
 #else
 			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_FOODMOD_PLAYER", iCityGrowthMod);
@@ -11117,6 +11120,9 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 			iTempMod += (GC.getBuildingInfo(eBuilding)->GetYieldModifier(YIELD_PRODUCTION) ) * GetCityBuildings()->GetNumBuilding(eBuilding);
 		}
 	}
+#endif
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+	iTempMod += GetYieldModFromReligion(eIndex);
 #endif
 #ifdef BUILDING_FOOD_YIELD_MODIFIERS_GROTH
 	if (eIndex != YIELD_FOOD)

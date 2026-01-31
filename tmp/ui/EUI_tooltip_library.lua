@@ -713,6 +713,7 @@ local function GetHelpTextForBuilding( buildingID, bExcludeName, bExcludeHeader,
 			end
 			if city and gk_mode then
 				yieldChange = yieldChange + city:GetReligionBuildingClassYieldChange( buildingClassID, yieldID )
+				yieldModifier = yieldModifier + city:GetReligionBuildingClassYieldModifier( buildingClassID, yieldID )
 				if bnw_mode then
 					yieldChange = yieldChange + city:GetLeagueBuildingClassYieldChange( buildingClassID, yieldID )
 				end
@@ -1082,6 +1083,11 @@ local function GetHelpTextForBuilding( buildingID, bExcludeName, bExcludeHeader,
 			for row in GameInfo.Belief_BuildingClassYieldChanges( thisBuildingClassType ) do
 				if row.BeliefType and (row.YieldChange or 0)~=0 then
 					items[row.BeliefType] = S( "%s %+i%s", items[row.BeliefType] or "", row.YieldChange, tostring(YieldIcons[row.YieldType]) )
+				end
+			end
+			for row in GameInfo.Belief_BuildingClassYieldModifiers( thisBuildingClassType ) do
+				if row.BeliefType and (row.YieldMod or 0)~=0 then
+					items[row.BeliefType] = S( "%s %+i%%%s", items[row.BeliefType] or "", row.YieldMod, tostring(YieldIcons[row.YieldType]) )
 				end
 			end
 			if maxGlobalInstances > 0 then -- world wonder

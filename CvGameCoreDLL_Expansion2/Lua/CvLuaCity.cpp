@@ -291,6 +291,9 @@ void CvLuaCity::PushMethods(lua_State* L, int t)
 	Method(AdoptReligionFully);
 	Method(GetReligionBuildingClassHappiness);
 	Method(GetReligionBuildingClassYieldChange);
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+	Method(GetReligionBuildingClassYieldModifier);
+#endif
 	Method(GetLeagueBuildingClassYieldChange);
 	Method(GetNumTradeRoutesAddingPressure);
 
@@ -2633,6 +2636,70 @@ int CvLuaCity::lGetReligionBuildingClassYieldChange(lua_State* L)
 	return 1;
 }
 #ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+//------------------------------------------------------------------------------
+//int GetReligionBuildingClassYieldModifier(eBuildingClass, eYieldType) const;
+int CvLuaCity::lGetReligionBuildingClassYieldModifier(lua_State* L)
+{
+	int iYieldFromBuilding = 0;
+
+	CvCity* pkCity = GetInstance(L);
+	BuildingClassTypes eBuildingClass = (BuildingClassTypes)lua_tointeger(L, 2);
+	YieldTypes eYieldType = (YieldTypes)lua_tointeger(L, 3);
+
+	ReligionTypes eMajority = pkCity->GetCityReligions()->GetReligiousMajority();
+	if (eMajority != NO_RELIGION)
+	{
+		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eMajority, pkCity->getOwner());
+		if (pReligion)
+		{
+			int iFollowers = pkCity->GetCityReligions()->GetNumFollowers(eMajority);
+#ifdef REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
+			CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
+
+			for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
+			{
+				if (pReligion->m_Beliefs.HasBelief((BeliefTypes)i))
+				{
+					if (iFollowers >= pBeliefs->GetEntry(i)->GetMinFollowers())
+					{
+						if (pBeliefs->GetEntry(i)->IsReformationBelief())
+						{
+							if (pReligion->m_eFounder == pkCity->getOwner())
+							{
+								iYieldFromBuilding += pBeliefs->GetEntry(i)->GetBuildingClassYieldMod(eBuildingClass, eYieldType);
+							}
+						}
+						else
+						{
+							iYieldFromBuilding += pBeliefs->GetEntry(i)->GetBuildingClassYieldMod(eBuildingClass, eYieldType);
+						}
+					}
+				}
+			}
+#else
+			iYieldFromBuilding += pReligion->m_Beliefs.GetBuildingClassYieldMod(eBuildingClass, eYieldType, iFollowers);
+#endif
+			BeliefTypes eSecondaryPantheon = pkCity->GetCityReligions()->GetSecondaryReligionPantheonBelief();
+			if (eSecondaryPantheon != NO_BELIEF)
+			{
+				iFollowers = pkCity->GetCityReligions()->GetNumFollowers(pkCity->GetCityReligions()->GetSecondaryReligion());
+				if (iFollowers >= GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetMinFollowers())
+				{
+					iYieldFromBuilding += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetBuildingClassYieldMod(eBuildingClass, eYieldType);
+				}
+			}
+#ifdef BUILDING_DOUBLE_PANTHEON
+			BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+			if (ePantheon != NO_BELIEF && pkCity->getDoublePantheon() > 0)
+			{
+				iYieldFromBuilding += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetBuildingClassYieldMod(eBuildingClass, eYieldType);
+			}
+#endif
+		}
+	}
+	lua_pushinteger(L, iYieldFromBuilding);
+	return 1;
+}
 #endif
 //------------------------------------------------------------------------------
 //int GetLeagueBuildingClassYieldChange(eBuildingClass, eYieldType) const;

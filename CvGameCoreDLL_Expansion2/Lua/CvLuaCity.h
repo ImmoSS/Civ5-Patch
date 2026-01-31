@@ -291,6 +291,9 @@ protected:
 	static int lAdoptReligionFully(lua_State* L);
 	static int lGetReligionBuildingClassHappiness(lua_State* L);
 	static int lGetReligionBuildingClassYieldChange(lua_State* L);
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+	static int lGetReligionBuildingClassYieldModifier(lua_State* L);
+#endif
 	static int lGetLeagueBuildingClassYieldChange(lua_State* L);
 	static int lGetNumTradeRoutesAddingPressure(lua_State* L);
 
