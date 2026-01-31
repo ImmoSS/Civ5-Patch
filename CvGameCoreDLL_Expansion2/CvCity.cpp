@@ -853,6 +853,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_aiBaseYieldRateFromSpecialists.resize(NUM_YIELD_TYPES);
 	m_aiBaseYieldRateFromMisc.resize(NUM_YIELD_TYPES);
 	m_aiBaseYieldRateFromReligion.resize(NUM_YIELD_TYPES);
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+	m_aiYieldModFromReligion.resize(NUM_YIELD_TYPES);
+#endif
 	m_aiYieldPerPop.resize(NUM_YIELD_TYPES);
 	m_aiYieldPerReligion.resize(NUM_YIELD_TYPES);
 	m_aiYieldRateModifier.resize(NUM_YIELD_TYPES);
@@ -874,6 +877,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_aiBaseYieldRateFromSpecialists.setAt(iI, 0);
 		m_aiBaseYieldRateFromMisc.setAt(iI, 0);
 		m_aiBaseYieldRateFromReligion[iI] = 0;
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+		m_aiYieldModFromReligion[iI] = 0;
+#endif
 		m_aiYieldPerPop.setAt(iI, 0);
 		m_aiYieldPerReligion[iI] = 0;
 		m_aiYieldRateModifier.setAt(iI, 0);
@@ -7571,11 +7577,57 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 								ChangeBaseYieldRateFromReligion((YieldTypes)iYield, iYieldFromBuilding);
 								break;
 							}
+
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+#ifdef REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
+							int iYieldModFromBuilding = 0;
+
+							for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
+							{
+								if (pReligion->m_Beliefs.HasBelief((BeliefTypes)i))
+								{
+									if (iFollowers >= pBeliefs->GetEntry(i)->GetMinFollowers())
+									{
+										if (pBeliefs->GetEntry(i)->IsReformationBelief())
+										{
+											if (pReligion->m_eFounder == getOwner())
+											{
+												iYieldModFromBuilding += pBeliefs->GetEntry(i)->GetBuildingClassYieldMod(eBuildingClass, (YieldTypes)iYield);
+											}
+										}
+										else
+										{
+											iYieldModFromBuilding += pBeliefs->GetEntry(i)->GetBuildingClassYieldMod(eBuildingClass, (YieldTypes)iYield);
+										}
+									}
+								}
+							}
+#else
+							int iYieldModFromBuilding = pReligion->m_Beliefs.GetBuildingClassYieldMod(eBuildingClass, (YieldTypes)iYield, iFollowers);
+#endif
+#ifdef FIX_POLICY_FREE_RELIGION
+							if (eSecondaryPantheon != NO_BELIEF)
+							{
+								iYieldModFromBuilding += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetBuildingClassYieldMod(eBuildingClass, (YieldTypes)iYield);
+							}
+#endif
+#ifdef BUILDING_DOUBLE_PANTHEON
+							if (ePantheon != NO_BELIEF && getDoublePantheon() > 0)
+							{
+								iYieldModFromBuilding += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetBuildingClassYieldMod(eBuildingClass, (YieldTypes)iYield);
+							}
+#endif
+
+
+
+							ChangeYieldModFromReligion((YieldTypes)iYield, 0);
+#endif
 						}
 					}
 				}
 			}
 		}
+
 	}
 
 	GET_PLAYER(getOwner()).UpdateReligion();
@@ -11529,6 +11581,41 @@ void CvCity::ChangeBaseYieldRateFromReligion(YieldTypes eIndex, int iChange)
 		}
 	}
 }
+
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+//	--------------------------------------------------------------------------------
+/// Yield mod from Religion
+int CvCity::GetYieldModFromReligion(YieldTypes eIndex) const
+{
+	VALIDATE_OBJECT
+	CvAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
+
+	return m_aiYieldModFromReligion[eIndex];
+}
+
+//	--------------------------------------------------------------------------------
+/// Yield mod from Religion
+void CvCity::ChangeYieldModFromReligion(YieldTypes eIndex, int iChange)
+{
+	VALIDATE_OBJECT
+	CvAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
+
+	if (iChange != 0)
+	{
+		m_aiYieldModFromReligion[eIndex] = m_aiYieldModFromReligion[eIndex] + iChange;
+
+		if (getTeam() == GC.getGame().getActiveTeam())
+		{
+			if (isCitySelected())
+			{
+				DLLUI->setDirty(CityScreen_DIRTY_BIT, true);
+			}
+		}
+	}
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 /// Extra yield for each pop point
@@ -16225,6 +16312,23 @@ void CvCity::read(FDataStream& kStream)
 	kStream >> m_aiBaseYieldRateFromSpecialists;
 	kStream >> m_aiBaseYieldRateFromMisc;
 	kStream >> m_aiBaseYieldRateFromReligion;
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1008)
+	{
+# endif
+		kStream >> m_aiYieldModFromReligion;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
+		{
+			m_aiYieldModFromReligion[iI] = 0;
+		}
+	}
+# endif
+#endif
 	kStream >> m_aiYieldPerPop;
 	if (uiVersion >= 4)
 	{
@@ -16248,11 +16352,13 @@ void CvCity::read(FDataStream& kStream)
 	{
 # endif
 		kStream >> m_iProcessOverflowProductionTimes100;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
 	else
 	{
 		m_iProcessOverflowProductionTimes100 = 0;
 	}
+# endif
 #endif
 	kStream >> m_aiDomainFreeExperience;
 	kStream >> m_aiDomainProductionModifier;
@@ -16876,6 +16982,9 @@ void CvCity::write(FDataStream& kStream) const
 	kStream << m_aiBaseYieldRateFromSpecialists;
 	kStream << m_aiBaseYieldRateFromMisc;
 	kStream << m_aiBaseYieldRateFromReligion;
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+	kStream << m_aiYieldModFromReligion;
+#endif
 	kStream << m_aiYieldPerPop;
 	kStream << m_aiYieldPerReligion;
 	kStream << m_aiYieldRateModifier;

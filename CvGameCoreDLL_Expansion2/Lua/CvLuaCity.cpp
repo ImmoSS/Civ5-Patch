@@ -2628,6 +2628,8 @@ int CvLuaCity::lGetReligionBuildingClassYieldChange(lua_State* L)
 	lua_pushinteger(L, iYieldFromBuilding);
 	return 1;
 }
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+#endif
 //------------------------------------------------------------------------------
 //int GetLeagueBuildingClassYieldChange(eBuildingClass, eYieldType) const;
 int CvLuaCity::lGetLeagueBuildingClassYieldChange(lua_State* L)
