@@ -504,6 +504,9 @@ void CvLuaCity::PushMethods(lua_State* L, int t)
 #ifdef LUA_CITY_METHOD_GET_TRADE_VALUES_AT_CITY_TIMES_100
 	Method(GetTradeValuesAtCityTimes100);
 #endif
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	Method(GetYieldFromMinorsTimes100);
+#endif
 }
 //------------------------------------------------------------------------------
 void CvLuaCity::HandleMissingInstance(lua_State* L)
@@ -4291,6 +4294,38 @@ int CvLuaCity::lGetTradeValuesAtCityTimes100(lua_State* L)
 	YieldTypes eYield = (YieldTypes)lua_tointeger(L, 2);
 
 	int iReturnValue = GET_PLAYER(pkCity->getOwner()).GetTrade()->GetTradeValuesAtCityTimes100(pkCity, eYield);
+	lua_pushinteger(L, iReturnValue);
+
+	return 1;
+}
+#endif
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+//------------------------------------------------------------------------------
+//bool GetYieldFromMinorsTimes100(YieldTypes eYield);
+int CvLuaCity::lGetYieldFromMinorsTimes100(lua_State* L)
+{
+	CvCity* pkCity = GetInstance(L);
+	const YieldTypes eYield = (YieldTypes)lua_tointeger(L, 2);
+
+	int iReturnValue = 0;
+	switch (eYield)
+	{
+	case YIELD_FOOD:
+		iReturnValue = GET_PLAYER(pkCity->getOwner()).GetFoodFromMinorsTimes100() % 1024;
+		if (pkCity->isCapital())
+		{
+			iReturnValue += GET_PLAYER(pkCity->getOwner()).GetFoodFromMinorsTimes100() / 1024;
+		}
+		break;
+	case YIELD_PRODUCTION:
+		iReturnValue = GET_PLAYER(pkCity->getOwner()).GetProductionFromMinorsTimes100() % 1024;
+		if (pkCity->isCapital())
+		{
+			iReturnValue += GET_PLAYER(pkCity->getOwner()).GetProductionFromMinorsTimes100() / 1024;
+		}
+		break;
+	}
+
 	lua_pushinteger(L, iReturnValue);
 
 	return 1;

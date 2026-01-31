@@ -6577,8 +6577,13 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		}
 		if (bAllies)		// Allies bonus
 		{
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+			iCapitalFoodTimes100 += GetAlliesCapitalFoodBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+			iOtherCitiesFoodTimes100 += GetAlliesOtherCityFoodBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#else
 			iCapitalFoodTimes100 += GetAlliesCapitalFoodBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
 			iOtherCitiesFoodTimes100 += GetAlliesOtherCityFoodBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#endif
 		}
 #else
 		if(bFriends)	// Friends bonus
@@ -6608,8 +6613,10 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		}
 		if (!(eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))))
 		{
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 			GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iCapitalFoodTimes100);
 			GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iOtherCitiesFoodTimes100);
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 			GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * iCapitalFoodTimes100 + iOtherCitiesFoodTimes100);
 #endif
@@ -6679,8 +6686,13 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		}
 		if (bAllies)		// Allies bonus
 		{
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+			iCapitalProductionTimes100 += GetAlliesCapitalProductionBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+			iOtherCitiesProductionTimes100 += GetAlliesOtherCityProductionBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#else
 			iCapitalProductionTimes100 += GetAlliesCapitalProductionBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
 			iOtherCitiesProductionTimes100 += GetAlliesOtherCityProductionBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#endif
 		}
 #else
 		if (bFriends)	// Friends bonus
@@ -6710,8 +6722,10 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 		}
 		if (!(eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))))
 		{
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 			GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iCapitalProductionTimes100);
 			GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iOtherCitiesProductionTimes100);
+#endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 			GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * iCapitalProductionTimes100 + iOtherCitiesProductionTimes100);
 #endif
@@ -7274,7 +7288,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			if(iOldFood != iNewFood)
 			{
 				bSomethingChanged = true;
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 				GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * (iNewFood - iOldFood));
 #endif
@@ -7287,7 +7303,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			if(iOldFood != iNewFood)
 			{
 				bSomethingChanged = true;
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 				GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(iNewFood - iOldFood);
 #endif
@@ -7306,12 +7324,18 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 
 			// Capital
 			iOldFood = GetAlliesCapitalFoodBonus(ePlayer);
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+			iNewFood = GetAlliesCapitalFoodBonus(ePlayer, eNewEra);
+#else
 			iNewFood = GetAlliesCapitalFoodBonus(ePlayer);
+#endif
 
 			if(iOldFood != iNewFood)
 			{
 				bSomethingChanged = true;
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 				GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * (iNewFood - iOldFood));
 #endif
@@ -7319,12 +7343,18 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 
 			// Other Cities
 			iOldFood = GetAlliesOtherCityFoodBonus(ePlayer);
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+			iNewFood = GetAlliesOtherCityFoodBonus(ePlayer, eNewEra);
+#else
 			iNewFood = GetAlliesOtherCityFoodBonus(ePlayer);
+#endif
 
 			if(iOldFood != iNewFood)
 			{
 				bSomethingChanged = true;
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#endif
 #ifdef EG_REPLAYDATASET_FOODFROMCS
 				GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(iNewFood - iOldFood);
 #endif
@@ -7466,7 +7496,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			if (iOldProduction != iNewProduction)
 			{
 				bSomethingChanged = true;
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 				GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * (iNewProduction - iOldProduction));
 #endif
@@ -7479,7 +7511,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			if (iOldProduction != iNewProduction)
 			{
 				bSomethingChanged = true;
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 				GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(iNewProduction - iOldProduction);
 #endif
@@ -7493,12 +7527,18 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 
 			// Capital
 			iOldProduction = GetAlliesCapitalProductionBonus(ePlayer);
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+			iNewProduction = GetAlliesCapitalProductionBonus(ePlayer, eNewEra);
+#else
 			iNewProduction = GetAlliesCapitalProductionBonus(ePlayer);
+#endif
 
 			if (iOldProduction != iNewProduction)
 			{
 				bSomethingChanged = true;
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 				GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * (iNewProduction - iOldProduction));
 #endif
@@ -7506,12 +7546,18 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 
 			// Other Cities
 			iOldProduction = GetAlliesOtherCityProductionBonus(ePlayer);
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+			iNewProduction = GetAlliesOtherCityProductionBonus(ePlayer, eNewEra);
+#else
 			iNewProduction = GetAlliesOtherCityProductionBonus(ePlayer);
+#endif
 
 			if (iOldProduction != iNewProduction)
 			{
 				bSomethingChanged = true;
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
+#endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
 				GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(iNewProduction - iOldProduction);
 #endif
@@ -8217,15 +8263,23 @@ int CvMinorCivAI::GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAs
 
 // Food bonus when Allies with a minor - additive with general city bonus
 #ifdef NEW_LEAGUE_RESOLUTIONS
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+int CvMinorCivAI::GetAlliesCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra, int iLeagueMod)
+#else
 int CvMinorCivAI::GetAlliesCapitalFoodBonus(PlayerTypes ePlayer, int iLeagueMod)
+#endif
+#else
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+int CvMinorCivAI::GetAlliesCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra)
 #else
 int CvMinorCivAI::GetAlliesCapitalFoodBonus(PlayerTypes ePlayer)
+#endif
 #endif
 {
 #ifdef CHANGE_FOOD_PROD_MINORS_SCALE
 	int iBonus;
 
-	EraTypes eCurrentEra = NO_ERA;
+	EraTypes eCurrentEra = eAssumeEra;
 	if (eCurrentEra == NO_ERA)
 		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
 
@@ -8265,15 +8319,23 @@ int CvMinorCivAI::GetAlliesCapitalFoodBonus(PlayerTypes ePlayer)
 
 // Food bonus when Allies with a minor
 #ifdef NEW_LEAGUE_RESOLUTIONS
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+int CvMinorCivAI::GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra, int iLeagueMod)
+#else
 int CvMinorCivAI::GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer, int iLeagueMod)
+#endif
+#else
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+int CvMinorCivAI::GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra)
 #else
 int CvMinorCivAI::GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer)
+#endif
 #endif
 {
 #ifdef CHANGE_FOOD_PROD_MINORS_SCALE
 	int iBonus;
 
-	EraTypes eCurrentEra = NO_ERA;
+	EraTypes eCurrentEra = eAssumeEra;
 	if (eCurrentEra == NO_ERA)
 		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
 
@@ -8334,8 +8396,13 @@ int CvMinorCivAI::GetCurrentCapitalFoodBonus(PlayerTypes ePlayer)
 #endif
 	{
 #ifdef NEW_LEAGUE_RESOLUTIONS
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+		iAmount += GetAlliesCapitalFoodBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+		iAmount += GetAlliesOtherCityFoodBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#else
 		iAmount += GetAlliesCapitalFoodBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
 		iAmount += GetAlliesOtherCityFoodBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#endif
 #else
 		iAmount += GetAlliesCapitalFoodBonus(ePlayer);
 		iAmount += GetAlliesOtherCityFoodBonus(ePlayer);
@@ -8383,7 +8450,11 @@ int CvMinorCivAI::GetCurrentOtherCityFoodBonus(PlayerTypes ePlayer)
 #endif
 #ifdef NEW_LEAGUE_RESOLUTIONS
 	{
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+		iAmount += GetAlliesOtherCityFoodBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#else
 		iAmount += GetAlliesOtherCityFoodBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#endif
 	}
 #else
 		iAmount += GetAlliesOtherCityFoodBonus(ePlayer);
@@ -9146,15 +9217,23 @@ int CvMinorCivAI::GetFriendsOtherCityProductionBonus(PlayerTypes ePlayer, EraTyp
 
 // Production bonus when Allies with a minor - additive with general city bonus
 #ifdef NEW_LEAGUE_RESOLUTIONS
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+int CvMinorCivAI::GetAlliesCapitalProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra, int iLeagueMod)
+#else
 int CvMinorCivAI::GetAlliesCapitalProductionBonus(PlayerTypes ePlayer, int iLeagueMod)
+#endif
+#else
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+int CvMinorCivAI::GetAlliesCapitalProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA)
 #else
 int CvMinorCivAI::GetAlliesCapitalProductionBonus(PlayerTypes ePlayer)
+#endif
 #endif
 {
 #ifdef CHANGE_FOOD_PROD_MINORS_SCALE
 	int iBonus;
 
-	EraTypes eCurrentEra = NO_ERA;
+	EraTypes eCurrentEra = eAssumeEra;
 	if (eCurrentEra == NO_ERA)
 		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
 
@@ -9194,15 +9273,23 @@ int CvMinorCivAI::GetAlliesCapitalProductionBonus(PlayerTypes ePlayer)
 
 // Production bonus when Allies with a minor
 #ifdef NEW_LEAGUE_RESOLUTIONS
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+int CvMinorCivAI::GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra, int iLeagueMod)
+#else
 int CvMinorCivAI::GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer, int iLeagueMod)
+#endif
+#else
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+int CvMinorCivAI::GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA)
 #else
 int CvMinorCivAI::GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer)
+#endif
 #endif
 {
 #ifdef CHANGE_FOOD_PROD_MINORS_SCALE
 	int iBonus;
 
-	EraTypes eCurrentEra = NO_ERA;
+	EraTypes eCurrentEra = eAssumeEra;
 	if (eCurrentEra == NO_ERA)
 		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
 
@@ -9263,8 +9350,13 @@ int CvMinorCivAI::GetCurrentCapitalProductionBonus(PlayerTypes ePlayer)
 #endif
 	{
 #ifdef NEW_LEAGUE_RESOLUTIONS
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+		iAmount += GetAlliesCapitalProductionBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+		iAmount += GetAlliesOtherCityProductionBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#else
 		iAmount += GetAlliesCapitalProductionBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
 		iAmount += GetAlliesOtherCityProductionBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#endif
 #else
 		iAmount += GetAlliesCapitalProductionBonus(ePlayer);
 		iAmount += GetAlliesOtherCityProductionBonus(ePlayer);
@@ -9313,7 +9405,11 @@ int CvMinorCivAI::GetCurrentOtherCityProductionBonus(PlayerTypes ePlayer)
 #endif
 #ifdef NEW_LEAGUE_RESOLUTIONS
 	{
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+		iAmount += GetAlliesOtherCityProductionBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#else
 		iAmount += GetAlliesOtherCityProductionBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#endif
 	}
 #else
 		iAmount += GetAlliesOtherCityProductionBonus(ePlayer);
@@ -11471,8 +11567,13 @@ CvString CvMinorCivAI::GetStatusChangeDetails(PlayerTypes ePlayer, bool bAdd, bo
 		if(bAllies)		// Allies bonus
 		{
 #ifdef NEW_LEAGUE_RESOLUTIONS
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+			iCapitalFoodTimes100 += GetAlliesCapitalFoodBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+			iOtherCitiesFoodTimes100 += GetAlliesOtherCityFoodBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#else
 			iCapitalFoodTimes100 += GetAlliesCapitalFoodBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
 			iOtherCitiesFoodTimes100 += GetAlliesOtherCityFoodBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#endif
 #else
 			iCapitalFoodTimes100 += GetAlliesCapitalFoodBonus(ePlayer);
 			iOtherCitiesFoodTimes100 += GetAlliesOtherCityFoodBonus(ePlayer);
@@ -11625,8 +11726,13 @@ CvString CvMinorCivAI::GetStatusChangeDetails(PlayerTypes ePlayer, bool bAdd, bo
 		if (bAllies)		// Allies bonus
 		{
 #ifdef NEW_LEAGUE_RESOLUTIONS
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+			iCapitalProductionTimes100 += GetAlliesCapitalProductionBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+			iOtherCitiesProductionTimes100 += GetAlliesOtherCityProductionBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#else
 			iCapitalProductionTimes100 += GetAlliesCapitalProductionBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
 			iOtherCitiesProductionTimes100 += GetAlliesOtherCityProductionBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
+#endif
 #else
 			iCapitalProductionTimes100 += GetAlliesCapitalProductionBonus(ePlayer);
 			iOtherCitiesProductionTimes100 += GetAlliesOtherCityProductionBonus(ePlayer);

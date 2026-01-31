@@ -427,11 +427,11 @@ public:
 	int GetNumKilledSpies() const;
 	void ChangeNumKilledSpies(int iChange);
 #endif
-#ifdef EG_REPLAYDATASET_FOODFROMCS
+#if defined EG_REPLAYDATASET_FOODFROMCS || defined CHANGE_FOOD_PROD_MINORS_SCALE
 	int GetFoodFromMinorsTimes100() const;
 	void ChangeFoodFromMinorsTimes100(int iChange);
 #endif
-#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+#if defined EG_REPLAYDATASET_PRODUCTIONFROMCS || defined CHANGE_FOOD_PROD_MINORS_SCALE
 	int GetProductionFromMinorsTimes100() const;
 	void ChangeProductionFromMinorsTimes100(int iChange);
 #endif

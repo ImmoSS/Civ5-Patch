@@ -443,13 +443,23 @@ public:
 #ifdef NEW_LEAGUE_RESOLUTIONS
 	int GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);
 	int GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	int GetAlliesCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);
+	int GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);
+#else
 	int GetAlliesCapitalFoodBonus(PlayerTypes ePlayer, int iLeagueMod = 0);
 	int GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer, int iLeagueMod = 0);
+#endif
 #else
 	int GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
 	int GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	int GetAlliesCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
+	int GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
+#else
 	int GetAlliesCapitalFoodBonus(PlayerTypes ePlayer);
 	int GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer);
+#endif
 #endif
 	int GetCurrentCapitalFoodBonus(PlayerTypes ePlayer);
 	int GetCurrentOtherCityFoodBonus(PlayerTypes ePlayer);
@@ -478,13 +488,23 @@ public:
 #ifdef NEW_LEAGUE_RESOLUTIONS
 	int GetFriendsCapitalProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);
 	int GetFriendsOtherCityProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	int GetAlliesCapitalProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);
+	int GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);
+#else
 	int GetAlliesCapitalProductionBonus(PlayerTypes ePlayer, int iLeagueMod = 0);
 	int GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer, int iLeagueMod = 0);
+#endif
 #else
 	int GetFriendsCapitalProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
 	int GetFriendsOtherCityProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	int GetAlliesCapitalProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
+	int GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
+#else
 	int GetAlliesCapitalProductionBonus(PlayerTypes ePlayer);
 	int GetAlliesOtherCityProductionBonus(PlayerTypes ePlayer);
+#endif
 #endif
 	int GetCurrentCapitalProductionBonus(PlayerTypes ePlayer);
 	int GetCurrentOtherCityProductionBonus(PlayerTypes ePlayer);

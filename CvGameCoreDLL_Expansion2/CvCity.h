@@ -660,6 +660,10 @@ public:
 
 	int GetTradeYieldModifier(YieldTypes eIndex, CvString* toolTipSink = NULL) const;
 
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	int GetYieldModifierFromMinors(YieldTypes eIndex, CvString* toolTipSink = NULL) const;
+#endif
+
 	// END Yield
 
 	int getDomainFreeExperience(DomainTypes eIndex) const;

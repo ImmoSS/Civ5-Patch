@@ -514,6 +514,9 @@ protected:
 #ifdef LUA_CITY_METHOD_GET_TRADE_VALUES_AT_CITY_TIMES_100
 	static int lGetTradeValuesAtCityTimes100(lua_State* L);
 #endif
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	static int lGetYieldFromMinorsTimes100(lua_State* L);
+#endif
 };
 
 #endif //CVLUACITY_H
