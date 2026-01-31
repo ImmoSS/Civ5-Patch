@@ -138,6 +138,9 @@ public:
 #endif
 #ifdef UNIT_NO_ADJACENT_MOD
 	int GetNoAdjacentMod() const;
+#ifdef UNIT_RANGE_ATTACK_AREA_DAMAGE_MOD
+#endif
+	int GetRangeAttackAreaDamageMod() const;
 #endif
 
 	float GetUnitMaxSpeed() const;
@@ -296,6 +299,9 @@ private:
 #endif
 #ifdef UNIT_NO_ADJACENT_MOD
 	int m_iNoAdjacentMod;
+#endif
+#ifdef UNIT_RANGE_ATTACK_AREA_DAMAGE_MOD
+	int m_iRangeAttackAreaDamageMod;
 #endif
 
 	// This is not loaded from XML, but cached so we don't have to recalculate every time

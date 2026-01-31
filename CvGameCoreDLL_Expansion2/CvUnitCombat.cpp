@@ -873,6 +873,103 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 					//set damage but don't update entity damage visibility
 					pkDefender->changeDamage(iDamage, pkAttacker->getOwner());
 
+#ifdef UNIT_RANGE_ATTACK_AREA_DAMAGE_MOD
+					int iSplashDamageMod = pkAttacker->getUnitInfo().GetRangeAttackAreaDamageMod();
+					if (iSplashDamageMod > 0)
+					{
+						for (int iDX = -1; iDX <= 1; iDX++)
+						{
+							for (int iDY = -1; iDY <= 1; iDY++)
+							{
+								CvPlot* pLoopPlot = plotXYWithRangeCheck(pkTargetPlot->getX(), pkTargetPlot->getY(), iDX, iDY, 1);
+
+								if (pLoopPlot != NULL && pLoopPlot != pkTargetPlot)
+								{
+									CvCity* pLoopCity = pLoopPlot->getPlotCity();
+
+									FFastSmallFixedList<IDInfo, 25, true, c_eCiv5GameplayDLL > oldUnits;
+									IDInfo* pUnitNode = pLoopPlot->headUnitNode();
+
+									while (pUnitNode != NULL)
+									{
+										oldUnits.insertAtEnd(pUnitNode);
+										pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
+									}
+
+									pUnitNode = oldUnits.head();
+
+									while (pUnitNode != NULL)
+									{
+										CvUnit* pLoopUnit = ::getUnit(*pUnitNode);
+										pUnitNode = oldUnits.next(pUnitNode);
+
+										if (pLoopUnit != NULL)
+										{
+											if (pLoopUnit != pkAttacker && pLoopUnit->GetGarrisonedCity() == NULL)
+											{
+												int iSplashDamage = pkAttacker->GetRangeCombatDamage(pLoopUnit, /*pCity*/ NULL, /*bIncludeRand*/ true);
+												iSplashDamage *= iSplashDamageMod;
+												iSplashDamage /= 100;
+
+												// pLoopUnit died
+												if (iSplashDamage + pLoopUnit->getDamage() >= GC.getMAX_HIT_POINTS())
+												{
+													if (pkAttacker->getOwner() == GC.getGame().getActivePlayer())
+													{
+														strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_ATTACK_BY_AIR_AND_DEATH", pkAttacker->getNameKey(), pLoopUnit->getNameKey());
+														pkDLLInterface->AddMessage(uiParentEventID, pkAttacker->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), strBuffer/*, "AS2D_COMBAT", MESSAGE_TYPE_INFO, pkDefender->getUnitInfo().GetButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), pkTargetPlot->getX(), pkTargetPlot->getY()*/);
+													}
+
+													strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_ARE_ATTACKED_BY_AIR_AND_DEATH", pLoopUnit->getNameKey(), pkAttacker->getNameKey());
+													CvNotifications* pNotifications = GET_PLAYER(pLoopUnit->getOwner()).GetNotifications();
+													if (pNotifications)
+													{
+														Localization::String strSummary = Localization::Lookup("TXT_KEY_UNIT_LOST");
+														pNotifications->Add(NOTIFICATION_UNIT_DIED, strBuffer, strSummary.toUTF8(), pLoopUnit->getX(), pLoopUnit->getY(), (int)pLoopUnit->getUnitType(), pLoopUnit->getOwner());
+													}
+
+													bTargetDied = true;
+
+													CvPlayerAI& kAttackerOwner = GET_PLAYER(pkAttacker->getOwner());
+													kAttackerOwner.GetPlayerAchievements().KilledUnitWithUnit(pkAttacker, pLoopUnit);
+
+													ApplyPostCombatTraitEffects(pkAttacker, pLoopUnit);
+
+													if (bBarbarian)
+													{
+														pLoopUnit->DoTestBarbarianThreatToMinorsWithThisUnitsDeath(pkAttacker->getOwner());
+													}
+												}
+												// Nobody died
+												else
+												{
+													if (pkAttacker->getOwner() == GC.getGame().getActivePlayer())
+													{
+														strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_ATTACK_BY_AIR", pkAttacker->getNameKey(), pLoopUnit->getNameKey(), iSplashDamage);
+														pkDLLInterface->AddMessage(uiParentEventID, pkAttacker->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), strBuffer/*, "AS2D_COMBAT", MESSAGE_TYPE_INFO, pkDefender->getUnitInfo().GetButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), pkTargetPlot->getX(), pkTargetPlot->getY()*/);
+													}
+													strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_ARE_ATTACKED_BY_AIR", pLoopUnit->getNameKey(), pkAttacker->getNameKey(), iSplashDamage);
+												}
+
+												//red icon over attacking unit
+												if (pLoopUnit->getOwner() == GC.getGame().getActivePlayer())
+												{
+													pkDLLInterface->AddMessage(uiParentEventID, pLoopUnit->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), strBuffer/*, "AS2D_COMBAT", MESSAGE_TYPE_INFO, pkAttacker->m_pUnitInfo->GetButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pkAttacker->getX(), pkAttacker->getY(), true, true*/);
+												}
+												//white icon over defending unit
+												//pkDLLInterface->AddMessage(uiParentEventID, pkDefender->getOwner(), false, 0, ""/*, "AS2D_COMBAT", MESSAGE_TYPE_DISPLAY_ONLY, pkDefender->getUnitInfo().GetButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pkDefender->getX(), pkDefender->getY(), true, true*/);
+
+												//set damage but don't update entity damage visibility
+												pLoopUnit->changeDamage(iSplashDamage, pkAttacker->getOwner());
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+#endif
+
 					// Update experience
 #ifdef HALF_EXP_FROM_FIGHT_AGAINST_AI
 					bool bHalfGeneralExp;
@@ -933,6 +1030,107 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 						//red icon over attacking unit
 						pkDLLInterface->AddMessage(uiParentEventID, pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), strBuffer/*, "AS2D_COMBAT", MESSAGE_TYPE_INFO, pkAttacker->m_pUnitInfo->GetButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pkAttacker->getX(), pkAttacker->getY(), true, true*/);
 					}
+
+#ifdef UNIT_RANGE_ATTACK_AREA_DAMAGE_MOD
+					int iSplashDamageMod = pkAttacker->getUnitInfo().GetRangeAttackAreaDamageMod();
+					if (iSplashDamageMod > 0)
+					{
+						for (int iDX = -1; iDX <= 1; iDX++)
+						{
+							for (int iDY = -1; iDY <= 1; iDY++)
+							{
+								CvPlot* pLoopPlot = plotXYWithRangeCheck(pkTargetPlot->getX(), pkTargetPlot->getY(), iDX, iDY, 1);
+
+								if (pLoopPlot != NULL && pLoopPlot != pkTargetPlot)
+								{
+									CvCity* pLoopCity = pLoopPlot->getPlotCity();
+
+									FFastSmallFixedList<IDInfo, 25, true, c_eCiv5GameplayDLL > oldUnits;
+									IDInfo* pUnitNode = pLoopPlot->headUnitNode();
+
+									while (pUnitNode != NULL)
+									{
+										oldUnits.insertAtEnd(pUnitNode);
+										pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
+									}
+
+									pUnitNode = oldUnits.head();
+
+									while (pUnitNode != NULL)
+									{
+										CvUnit* pLoopUnit = ::getUnit(*pUnitNode);
+										pUnitNode = oldUnits.next(pUnitNode);
+
+										if (pLoopUnit != NULL)
+										{
+											if (pLoopUnit != pkAttacker && pLoopUnit->GetGarrisonedCity() == NULL)
+											{
+												int iSplashDamage = pkAttacker->GetRangeCombatDamage(pLoopUnit, /*pCity*/ NULL, /*bIncludeRand*/ true);
+												iSplashDamage *= iSplashDamageMod;
+												iSplashDamage /= 100;
+
+												if (iSplashDamage + pLoopUnit->getDamage() > GC.getMAX_HIT_POINTS())
+												{
+													iSplashDamage = GC.getMAX_HIT_POINTS() - pLoopUnit->getDamage();
+												}
+												// pLoopUnit died
+												if (iSplashDamage + pLoopUnit->getDamage() >= GC.getMAX_HIT_POINTS())
+												{
+													if (pkAttacker->getOwner() == GC.getGame().getActivePlayer())
+													{
+														strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_ATTACK_BY_AIR_AND_DEATH", pkAttacker->getNameKey(), pLoopUnit->getNameKey());
+														pkDLLInterface->AddMessage(uiParentEventID, pkAttacker->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), strBuffer/*, "AS2D_COMBAT", MESSAGE_TYPE_INFO, pkDefender->getUnitInfo().GetButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), pkTargetPlot->getX(), pkTargetPlot->getY()*/);
+													}
+
+													strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_ARE_ATTACKED_BY_AIR_AND_DEATH", pLoopUnit->getNameKey(), pkAttacker->getNameKey());
+													CvNotifications* pNotifications = GET_PLAYER(pLoopUnit->getOwner()).GetNotifications();
+													if (pNotifications)
+													{
+														Localization::String strSummary = Localization::Lookup("TXT_KEY_UNIT_LOST");
+														pNotifications->Add(NOTIFICATION_UNIT_DIED, strBuffer, strSummary.toUTF8(), pLoopUnit->getX(), pLoopUnit->getY(), (int)pLoopUnit->getUnitType(), pLoopUnit->getOwner());
+													}
+
+													bTargetDied = true;
+
+													CvPlayerAI& kAttackerOwner = GET_PLAYER(pkAttacker->getOwner());
+													kAttackerOwner.GetPlayerAchievements().KilledUnitWithUnit(pkAttacker, pLoopUnit);
+
+													ApplyPostCombatTraitEffects(pkAttacker, pLoopUnit);
+
+													if (bBarbarian)
+													{
+														pLoopUnit->DoTestBarbarianThreatToMinorsWithThisUnitsDeath(pkAttacker->getOwner());
+													}
+												}
+												// Nobody died
+												else
+												{
+													if (pkAttacker->getOwner() == GC.getGame().getActivePlayer())
+													{
+														strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_ATTACK_BY_AIR", pkAttacker->getNameKey(), pLoopUnit->getNameKey(), iSplashDamage);
+														pkDLLInterface->AddMessage(uiParentEventID, pkAttacker->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), strBuffer/*, "AS2D_COMBAT", MESSAGE_TYPE_INFO, pkDefender->getUnitInfo().GetButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), pkTargetPlot->getX(), pkTargetPlot->getY()*/);
+													}
+													strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_ARE_ATTACKED_BY_AIR", pLoopUnit->getNameKey(), pkAttacker->getNameKey(), iSplashDamage);
+												}
+
+												//red icon over attacking unit
+												if (pLoopUnit->getOwner() == GC.getGame().getActivePlayer())
+												{
+													pkDLLInterface->AddMessage(uiParentEventID, pLoopUnit->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), strBuffer/*, "AS2D_COMBAT", MESSAGE_TYPE_INFO, pkAttacker->m_pUnitInfo->GetButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pkAttacker->getX(), pkAttacker->getY(), true, true*/);
+												}
+												//white icon over defending unit
+												//pkDLLInterface->AddMessage(uiParentEventID, pkDefender->getOwner(), false, 0, ""/*, "AS2D_COMBAT", MESSAGE_TYPE_DISPLAY_ONLY, pkDefender->getUnitInfo().GetButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pkDefender->getX(), pkDefender->getY(), true, true*/);
+
+												//set damage but don't update entity damage visibility
+												pLoopUnit->changeDamage(iSplashDamage, pkAttacker->getOwner());
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+#endif
 				}
 
 				pCity->clearCombat();

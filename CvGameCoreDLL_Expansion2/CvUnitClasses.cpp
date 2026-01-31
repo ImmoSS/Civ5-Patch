@@ -120,6 +120,9 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef UNIT_NO_ADJACENT_MOD
 	m_iNoAdjacentMod(0),
 #endif
+#ifdef UNIT_RANGE_ATTACK_AREA_DAMAGE_MOD
+	m_iRangeAttackAreaDamageMod(0),
+#endif
 	m_pbUpgradeUnitClass(NULL),
 	m_pbUnitAIType(NULL),
 	m_pbNotUnitAIType(NULL),
@@ -264,6 +267,9 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #endif
 #ifdef UNIT_NO_ADJACENT_MOD
 	m_iNoAdjacentMod = kResults.GetInt("NoAdjacentMod");
+#endif
+#ifdef UNIT_RANGE_ATTACK_AREA_DAMAGE_MOD
+	m_iRangeAttackAreaDamageMod = kResults.GetInt("RangeAttackAreaDamageMod");
 #endif
 
 	m_strUnitArtInfoTag = kResults.GetText("UnitArtInfo");
@@ -1042,6 +1048,13 @@ int CvUnitEntry::GetHealthyMod() const
 int CvUnitEntry::GetNoAdjacentMod() const
 {
 	return m_iNoAdjacentMod;
+}
+#endif
+#ifdef UNIT_RANGE_ATTACK_AREA_DAMAGE_MOD
+///
+int CvUnitEntry::GetRangeAttackAreaDamageMod() const
+{
+	return m_iRangeAttackAreaDamageMod;
 }
 #endif
 
