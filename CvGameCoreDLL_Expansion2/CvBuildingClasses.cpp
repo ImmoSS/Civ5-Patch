@@ -850,7 +850,7 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_bPlayerBorderTransitionObstacle = kResults.GetBool("BorderTransitionObstacle");
 #endif
 #ifdef BUILDING_CAPITAL_GOLD_MODIFIER
-	m_iCapitalGoldModifier = kResults.GetInt("m_iCapitalGoldModifier");
+	m_iCapitalGoldModifier = kResults.GetInt("CapitalGoldModifier");
 #endif
 
 	return true;
