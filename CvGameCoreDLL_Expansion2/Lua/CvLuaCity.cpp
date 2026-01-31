@@ -1416,7 +1416,11 @@ int CvLuaCity::lGetYieldModifierTooltip(lua_State* L)
 	// City Yield Rate Modifier
 	pkCity->getBaseYieldRateModifier(eYield, 0, &toolTip);
 
+#ifdef PRODUCTION_FROM_TRADE_ROUTES_SHIFT_TO_BASE
+	if (eYield != YIELD_FOOD && eYield != YIELD_PRODUCTION)
+#else
 	if (eYield != YIELD_FOOD)
+#endif
 	{
 		// Trade Yield Modifier
 		pkCity->GetTradeYieldModifier(eYield, &toolTip);
