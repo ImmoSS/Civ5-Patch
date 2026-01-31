@@ -511,6 +511,9 @@ protected:
 #ifdef LUA_CITY_METHOD_SET_REPEAT_ORDER
 	static int lIsOrderRepeat(lua_State* L);
 #endif
+#ifdef LUA_CITY_METHOD_GET_TRADE_VALUES_AT_CITY_TIMES_100
+	static int lGetTradeValuesAtCityTimes100(lua_State* L);
+#endif
 };
 
 #endif //CVLUACITY_H

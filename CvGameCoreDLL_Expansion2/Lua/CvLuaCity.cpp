@@ -501,6 +501,9 @@ void CvLuaCity::PushMethods(lua_State* L, int t)
 #ifdef LUA_CITY_METHOD_SET_REPEAT_ORDER
 	Method(IsOrderRepeat);
 #endif
+#ifdef LUA_CITY_METHOD_GET_TRADE_VALUES_AT_CITY_TIMES_100
+	Method(GetTradeValuesAtCityTimes100);
+#endif
 }
 //------------------------------------------------------------------------------
 void CvLuaCity::HandleMissingInstance(lua_State* L)
@@ -4275,6 +4278,20 @@ int CvLuaCity::lIsOrderRepeat(lua_State* L)
 
 	bool bRepeat = pkCity->IsOrderRepeat(iNum);
 	lua_pushboolean(L, bRepeat);
+
+	return 1;
+}
+#endif
+#ifdef LUA_CITY_METHOD_GET_TRADE_VALUES_AT_CITY_TIMES_100
+//------------------------------------------------------------------------------
+//bool GetTradeValuesAtCityTimes100(YieldTypes eYield);
+int CvLuaCity::lGetTradeValuesAtCityTimes100(lua_State* L)
+{
+	const CvCity* pkCity = GetInstance(L);
+	YieldTypes eYield = (YieldTypes)lua_tointeger(L, 2);
+
+	int iReturnValue = GET_PLAYER(pkCity->getOwner()).GetTrade()->GetTradeValuesAtCityTimes100(pkCity, eYield);
+	lua_pushinteger(L, iReturnValue);
 
 	return 1;
 }
