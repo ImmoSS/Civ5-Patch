@@ -904,20 +904,29 @@ function GetYieldTooltip(pCity, iYieldType, iBase, iTotal, strIconString, strMod
 		strYieldBreakdown = strYieldBreakdown .. "[NEWLINE]";
 	end
 	
+	-- Base Yield from Trade Routes
+	local iYieldFromTradeRoutes = 0
 	if (iYieldType == YieldTypes.YIELD_FOOD) then
 		local iYieldFromTrade = pCity:GetTradeValuesAtCityTimes100(YieldTypes.YIELD_FOOD);
+		iYieldFromTradeRoutes = iYieldFromTradeRoutes + pCity:GetTradeValuesAtCityTimes100(YieldTypes.YIELD_FOOD)/100
 		if (iYieldFromTrade ~= 0) then
 			strYieldBreakdown = strYieldBreakdown .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_FOOD_FROM_TRADE_ROUTES", iYieldFromTrade/100);
 			strYieldBreakdown = strYieldBreakdown .. "[NEWLINE]";
 		end
-	end
-	
-	if (iYieldType == YieldTypes.YIELD_PRODUCTION) then
+	elseif (iYieldType == YieldTypes.YIELD_PRODUCTION) then
 		local iYieldFromTrade = pCity:GetTradeValuesAtCityTimes100(YieldTypes.YIELD_PRODUCTION);
+		iYieldFromTradeRoutes = iYieldFromTradeRoutes + pCity:GetTradeValuesAtCityTimes100(YieldTypes.YIELD_PRODUCTION)/100
 		if (iYieldFromTrade ~= 0) then
 			strYieldBreakdown = strYieldBreakdown .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_PRODUCTION_FROM_TRADE_ROUTES", iYieldFromTrade/100);
 			strYieldBreakdown = strYieldBreakdown .. "[NEWLINE]";
 		end
+	end
+
+	-- Base Yield from Minors
+	local iYieldFromMinors = pCity:GetYieldFromMinorsTimes100(iYieldType);
+	if (iYieldFromReligion ~= 0) then
+		strYieldBreakdown = strYieldBreakdown .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_YIELD_FROM_MINORS", iYieldFromMinors/100, strIconString);
+		strYieldBreakdown = strYieldBreakdown .. "[NEWLINE]";
 	end
 		
 	local strExtraBaseString = "";
@@ -942,6 +951,8 @@ function GetYieldTooltip(pCity, iYieldType, iBase, iTotal, strIconString, strMod
 			--end
 		end
 	end
+
+	iBase = iBase + iYieldFromTradeRoutes
 	
 	local strTotal;
 	if (iTotal >= 0) then

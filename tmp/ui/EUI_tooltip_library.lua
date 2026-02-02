@@ -1674,6 +1674,18 @@ local function GetYieldTooltip( city, yieldID, baseYield, totalYield, yieldIconS
 		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_YIELD_FROM_RELIGION", city:GetBaseYieldRateFromReligion( yieldID ), yieldIconString )
 	end
 
+	-- Base Yield from Trade Routes
+	if yieldID == YieldTypes.YIELD_FOOD then
+		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_FOOD_FROM_TRADE_ROUTES", city:GetTradeValuesAtCityTimes100( yieldID )/100 )
+		baseYield = baseYield + city:GetTradeValuesAtCityTimes100( yieldID )/100
+	elseif yieldID == YieldTypes.YIELD_PRODUCTION then
+		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_PRODUCTION_FROM_TRADE_ROUTES", city:GetTradeValuesAtCityTimes100( yieldID )/100 )
+		baseYield = baseYield + city:GetTradeValuesAtCityTimes100( yieldID )/100
+	end
+
+	-- Base Yield from Minors
+	tips:insertLocalizedBulletIfNonZero( "TXT_KEY_YIELD_FROM_MINORS", city:iYieldFromMinors( yieldID ) / 100, yieldIconString )
+
 	if civBE_mode then
 		-- Yield from Production Processes
 		local yieldFromProcesses = city:GetYieldRateFromProductionProcesses( yieldID )
@@ -1687,10 +1699,7 @@ local function GetYieldTooltip( city, yieldID, baseYield, totalYield, yieldIconS
 
 	-- Food eaten by pop
 	if yieldID == YieldTypes.YIELD_FOOD then
-		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_FOOD_FROM_TRADE_ROUTES", city:GetTradeValuesAtCityTimes100( yieldID )/100 )
 		strModifiersString = "[NEWLINE][ICON_BULLET]" .. L( "TXT_KEY_YIELD_EATEN_BY_POP", city:FoodConsumption( true, 0 ), yieldIconString ) .. strModifiersString
-	elseif yieldID == YieldTypes.YIELD_PRODUCTION then
-		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_PRODUCTION_FROM_TRADE_ROUTES", city:GetTradeValuesAtCityTimes100( yieldID )/100 )
 	elseif civBE_mode then
 		local yieldFromTrade = city:GetYieldPerTurnFromTrade( yieldID )
 		if yieldFromTrade ~= 0 then
