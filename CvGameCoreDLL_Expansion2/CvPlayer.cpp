@@ -3532,6 +3532,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 		{
 			if(getCapitalCity() != NULL)
 			{
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+				pNewCity->changeCapitalGoldModifier(getCapitalCity()->getCapitalGoldModifier());
+#endif
 				getCapitalCity()->GetCityBuildings()->SetNumRealBuilding(eCapitalBuilding, 0);
 			}
 			CvAssertMsg(!(pNewCity->GetCityBuildings()->GetNumRealBuilding(eCapitalBuilding)), "(pBestCity->getNumRealBuilding(eCapitalBuilding)) did not return false as expected");
@@ -6837,6 +6840,9 @@ void CvPlayer::findNewCapital()
 	{
 		if(pOldCapital != NULL)
 		{
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+			pBestCity->changeCapitalGoldModifier(pOldCapital->getCapitalGoldModifier());
+#endif
 			pOldCapital->GetCityBuildings()->SetNumRealBuilding(eCapitalBuilding, 0);
 		}
 		CvAssertMsg(!(pBestCity->GetCityBuildings()->GetNumRealBuilding(eCapitalBuilding)), "(pBestCity->getNumRealBuilding(eCapitalBuilding)) did not return false as expected");
