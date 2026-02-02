@@ -2556,11 +2556,15 @@ bool CvGameReligions::CheckSpawnGreatProphet(CvPlayer& kPlayer)
 
 	int iChance = GC.getRELIGION_BASE_CHANCE_PROPHET_SPAWN();
 	iChance += (iFaith - iCost);
+#ifdef NO_RANDOM_PROPHET
+	iChance = 1000;
+#else
 #ifdef DUEL_NO_RANDOM_PROPHET
 	if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
 	{
 		iChance = 1000;
 	}
+#endif
 #endif
 
 	int iRand = GC.getGame().getJonRandNum(100, "Religion: spawn Great Prophet roll.");
@@ -2578,6 +2582,9 @@ bool CvGameReligions::CheckSpawnGreatProphet(CvPlayer& kPlayer)
 	if(pSpawnCity != NULL && pSpawnCity->getOwner() == kPlayer.GetID())
 	{
 		pSpawnCity->GetCityCitizens()->DoSpawnGreatPerson(eUnit, false /*bIncrementCount*/, true);
+#ifdef NO_RANDOM_PROPHET
+		kPlayer.ChangeFaith(-iCost);
+#else
 #ifdef DUEL_NO_RANDOM_PROPHET
 		if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
 		{
@@ -2593,6 +2600,7 @@ bool CvGameReligions::CheckSpawnGreatProphet(CvPlayer& kPlayer)
 #else
 		kPlayer.SetFaith(0);
 #endif
+#endif
 	}
 	else
 	{
@@ -2600,6 +2608,9 @@ bool CvGameReligions::CheckSpawnGreatProphet(CvPlayer& kPlayer)
 		if(pSpawnCity != NULL)
 		{
 			pSpawnCity->GetCityCitizens()->DoSpawnGreatPerson(eUnit, false /*bIncrementCount*/, true);
+#ifdef NO_RANDOM_PROPHET
+			kPlayer.ChangeFaith(-iCost);
+#else
 #ifdef DUEL_NO_RANDOM_PROPHET
 			if (GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
 			{
@@ -2614,6 +2625,7 @@ bool CvGameReligions::CheckSpawnGreatProphet(CvPlayer& kPlayer)
 			}
 #else
 			kPlayer.SetFaith(0);
+#endif
 #endif
 		}
 	}
@@ -2836,7 +2848,19 @@ void CvPlayerReligions::ChangeNumProphetsSpawned(int iValue)
 /// How much will the next prophet cost this player?
 int CvPlayerReligions::GetCostNextProphet(bool bIncludeBeliefDiscounts, bool bAdjustForSpeedDifficulty) const
 {
+#ifdef NO_RANDOM_PROPHET
+	int iCost;
+	if (m_iNumProphetsSpawned > 0)
+	{
+		iCost = GC.getGame().GetGameReligions()->GetFaithGreatProphetNumber(m_iNumProphetsSpawned + 1);
+	}
+	else
+	{
+		iCost = GC.getGame().GetGameReligions()->GetFaithGreatProphetNumber(m_iNumProphetsSpawned + 2);
+	}
+#else
 	int iCost = GC.getGame().GetGameReligions()->GetFaithGreatProphetNumber(m_iNumProphetsSpawned + 1);
+#endif
 
 	// Boost to faith due to belief?
 	ReligionTypes ePlayerReligion = GetReligionCreatedByPlayer();
