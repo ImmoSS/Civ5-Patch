@@ -3496,6 +3496,12 @@ int CvPlayerPolicies::GetNumCitiesPolicyCostMod(int iNumCities) const
 	// Mod for City Count
 	int iMod = GC.getMap().getWorldInfo().GetNumCitiesPolicyCostMod();	// Default is 40, gets smaller on larger maps
 	int iPolicyModDiscount = m_pPlayer->GetNumCitiesPolicyCostDiscount();
+#ifdef POLICY_COST_DISCOUNT_THRESHOLD
+	if (m_pPlayer->GetNumPolicies() >= POLICY_COST_DISCOUNT_THRESHOLD)
+	{
+		iPolicyModDiscount += POLICY_COST_DISCOUNT_VALUE;
+	}
+#endif
 	if (iPolicyModDiscount != 0)
 	{
 		iMod = iMod * (100 + iPolicyModDiscount);
@@ -3534,6 +3540,12 @@ int CvPlayerPolicies::GetNextPolicyCost()
 	// Mod for City Count
 	int iMod = GC.getMap().getWorldInfo().GetNumCitiesPolicyCostMod();	// Default is 40, gets smaller on larger maps
 	int iPolicyModDiscount = m_pPlayer->GetNumCitiesPolicyCostDiscount();
+#ifdef POLICY_COST_DISCOUNT_THRESHOLD
+	if (m_pPlayer->GetNumPolicies() >= POLICY_COST_DISCOUNT_THRESHOLD)
+	{
+		iPolicyModDiscount += POLICY_COST_DISCOUNT_VALUE;
+	}
+#endif
 	if(iPolicyModDiscount != 0)
 	{
 		iMod = iMod * (100 + iPolicyModDiscount);
