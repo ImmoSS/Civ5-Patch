@@ -10206,6 +10206,16 @@ void CvUnit::promote(PromotionTypes ePromotion, int iLeaderUnitId)
 	// Set that we have this Promotion
 	else
 	{
+#ifdef INSTA_HEAL_EVERYPROMOTION
+#ifdef PROMOTION_INSTA_HEAL_LOCKED
+		if (!isInstaHealLocked())
+		{
+			changeDamage(-GC.getINSTA_HEAL_RATE());
+		}
+#else
+		changeDamage(-GC.getINSTA_HEAL_RATE());
+#endif
+#endif
 		setHasPromotion(ePromotion, true);
 
 		ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
