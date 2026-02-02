@@ -3553,8 +3553,8 @@ int CvPlayerPolicies::GetNextPolicyCost()
 #ifdef POLICY_COST_DISCOUNT_THRESHOLD
 	if (m_pPlayer->GetNumPolicies() >= POLICY_COST_DISCOUNT_THRESHOLD)
 	{
-		iMod *= (100 + POLICY_COST_DISCOUNT_VALUE);
-		iMod /= 100;
+		iCost *= (100 + POLICY_COST_DISCOUNT_VALUE);
+		iCost /= 100;
 	}
 #endif
 
