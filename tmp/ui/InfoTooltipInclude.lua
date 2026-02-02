@@ -924,7 +924,7 @@ function GetYieldTooltip(pCity, iYieldType, iBase, iTotal, strIconString, strMod
 
 	-- Base Yield from Minors
 	local iYieldFromMinors = pCity:GetYieldFromMinorsTimes100(iYieldType);
-	if (iYieldFromReligion ~= 0) then
+	if (iYieldFromMinors ~= 0) then
 		strYieldBreakdown = strYieldBreakdown .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_YIELD_FROM_MINORS", iYieldFromMinors/100, strIconString);
 		strYieldBreakdown = strYieldBreakdown .. "[NEWLINE]";
 	end
@@ -952,7 +952,7 @@ function GetYieldTooltip(pCity, iYieldType, iBase, iTotal, strIconString, strMod
 		end
 	end
 
-	iBase = iBase + iYieldFromTradeRoutes
+	iBase = iBase + iYieldFromTradeRoutes + iYieldFromMinors
 	
 	local strTotal;
 	if (iTotal >= 0) then

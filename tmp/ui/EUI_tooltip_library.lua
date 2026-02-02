@@ -1684,7 +1684,8 @@ local function GetYieldTooltip( city, yieldID, baseYield, totalYield, yieldIconS
 	end
 
 	-- Base Yield from Minors
-	tips:insertLocalizedBulletIfNonZero( "TXT_KEY_YIELD_FROM_MINORS", city:iYieldFromMinors( yieldID ) / 100, yieldIconString )
+	tips:insertLocalizedBulletIfNonZero( "TXT_KEY_YIELD_FROM_MINORS", city:GetYieldFromMinorsTimes100( yieldID ) / 100, yieldIconString )
+	baseYield = baseYield + city:GetYieldFromMinorsTimes100( yieldID ) / 100
 
 	if civBE_mode then
 		-- Yield from Production Processes
