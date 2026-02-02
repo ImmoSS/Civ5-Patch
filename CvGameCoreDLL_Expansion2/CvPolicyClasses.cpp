@@ -832,7 +832,11 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 		Database::Results* pResults = kUtility.GetResults(sqlKey);
 		if(pResults == NULL)
 		{
+#ifdef POLICY_FREE_PROMOTION_UNIT_COMBAT
+			const char* szSQL = "select UnitPromotions.ID, UnitCombatInfos.ID  from Policy_FreePromotionUnitCombats inner join UnitPromotions on PromotionType = UnitPromotions.Type inner join UnitCombatInfos on UnitCombatType = UnitCombatInfos.Type where PolicyType = ?";
+#else
 			const char* szSQL = "select UnitPromotions.ID, UnitCombatInfos.ID  from Policy_FreePromotionUnitCombats, UnitPromotions, UnitCombatInfos where PolicyType = ? and PromotionType = UnitPromotions.ID and UnitCombatType = UnitCombatInfos.ID";
+#endif
 			pResults = kUtility.PrepareResults(sqlKey, szSQL);
 		}
 
