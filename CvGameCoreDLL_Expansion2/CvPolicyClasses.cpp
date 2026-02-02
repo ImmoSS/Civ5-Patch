@@ -3496,12 +3496,6 @@ int CvPlayerPolicies::GetNumCitiesPolicyCostMod(int iNumCities) const
 	// Mod for City Count
 	int iMod = GC.getMap().getWorldInfo().GetNumCitiesPolicyCostMod();	// Default is 40, gets smaller on larger maps
 	int iPolicyModDiscount = m_pPlayer->GetNumCitiesPolicyCostDiscount();
-#ifdef POLICY_COST_DISCOUNT_THRESHOLD
-	if (m_pPlayer->GetNumPolicies() >= POLICY_COST_DISCOUNT_THRESHOLD)
-	{
-		iPolicyModDiscount += POLICY_COST_DISCOUNT_VALUE;
-	}
-#endif
 	if (iPolicyModDiscount != 0)
 	{
 		iMod = iMod * (100 + iPolicyModDiscount);
@@ -3540,12 +3534,6 @@ int CvPlayerPolicies::GetNextPolicyCost()
 	// Mod for City Count
 	int iMod = GC.getMap().getWorldInfo().GetNumCitiesPolicyCostMod();	// Default is 40, gets smaller on larger maps
 	int iPolicyModDiscount = m_pPlayer->GetNumCitiesPolicyCostDiscount();
-#ifdef POLICY_COST_DISCOUNT_THRESHOLD
-	if (m_pPlayer->GetNumPolicies() >= POLICY_COST_DISCOUNT_THRESHOLD)
-	{
-		iPolicyModDiscount += POLICY_COST_DISCOUNT_VALUE;
-	}
-#endif
 	if(iPolicyModDiscount != 0)
 	{
 		iMod = iMod * (100 + iPolicyModDiscount);
@@ -3561,6 +3549,14 @@ int CvPlayerPolicies::GetNextPolicyCost()
 	// Policy Cost Mod
 	iCost *= (100 + m_pPlayer->getPolicyCostModifier());
 	iCost /= 100;
+
+#ifdef POLICY_COST_DISCOUNT_THRESHOLD
+	if (m_pPlayer->GetNumPolicies() >= POLICY_COST_DISCOUNT_THRESHOLD)
+	{
+		iMod *= (100 + POLICY_COST_DISCOUNT_VALUE);
+		iMod /= 100;
+	}
+#endif
 
 	// Game Speed Mod
 	iCost *= GC.getGame().getGameSpeedInfo().getCulturePercent();

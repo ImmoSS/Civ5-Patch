@@ -32557,12 +32557,6 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		int iEffectiveCulturePerTurn = GetTotalJONSCulturePerTurn();
 		iMod = GC.getMap().getWorldInfo().GetNumCitiesPolicyCostMod();
 		int iPolicyModDiscount = GetNumCitiesPolicyCostDiscount();
-#ifdef POLICY_COST_DISCOUNT_THRESHOLD
-		if (GetNumPolicies() >= POLICY_COST_DISCOUNT_THRESHOLD)
-		{
-			iPolicyModDiscount += POLICY_COST_DISCOUNT_VALUE;
-		}
-#endif
 		if(iPolicyModDiscount != 0)
 		{
 			iMod = iMod * (100 + iPolicyModDiscount);
@@ -32575,6 +32569,14 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 
 		iMod *= (100 + getPolicyCostModifier());
 		iMod /= 100;
+
+#ifdef POLICY_COST_DISCOUNT_THRESHOLD
+		if (GetNumPolicies() >= POLICY_COST_DISCOUNT_THRESHOLD)
+		{
+			iMod *= (100 + POLICY_COST_DISCOUNT_VALUE);
+			iMod /= 100;
+		}
+#endif
 
 		iEffectiveCulturePerTurn *= 100;
 		iEffectiveCulturePerTurn /= (iMod);
