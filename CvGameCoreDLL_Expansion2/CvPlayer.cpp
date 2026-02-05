@@ -3532,13 +3532,16 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 		{
 			if(getCapitalCity() != NULL)
 			{
-#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
-				pNewCity->changeCapitalGoldModifier(getCapitalCity()->getCapitalGoldModifier());
-#endif
 				getCapitalCity()->GetCityBuildings()->SetNumRealBuilding(eCapitalBuilding, 0);
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+				getCapitalCity()->changeYieldRateModifier(YIELD_GOLD, -getCapitalCity()->getCapitalGoldModifier());
+#endif
 			}
 			CvAssertMsg(!(pNewCity->GetCityBuildings()->GetNumRealBuilding(eCapitalBuilding)), "(pBestCity->getNumRealBuilding(eCapitalBuilding)) did not return false as expected");
 			pNewCity->GetCityBuildings()->SetNumRealBuilding(eCapitalBuilding, 1);
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+			pNewCity->changeYieldRateModifier(YIELD_GOLD, pNewCity->getCapitalGoldModifier());
+#endif
 		}
 	}
 
@@ -6840,13 +6843,13 @@ void CvPlayer::findNewCapital()
 	{
 		if(pOldCapital != NULL)
 		{
-#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
-			pBestCity->changeCapitalGoldModifier(pOldCapital->getCapitalGoldModifier());
-#endif
 			pOldCapital->GetCityBuildings()->SetNumRealBuilding(eCapitalBuilding, 0);
 		}
 		CvAssertMsg(!(pBestCity->GetCityBuildings()->GetNumRealBuilding(eCapitalBuilding)), "(pBestCity->getNumRealBuilding(eCapitalBuilding)) did not return false as expected");
 		pBestCity->GetCityBuildings()->SetNumRealBuilding(eCapitalBuilding, 1);
+#ifdef BUILDING_CAPITAL_GOLD_MODIFIER
+		pBestCity->changeYieldRateModifier(YIELD_GOLD, pBestCity->getCapitalGoldModifier());
+#endif
 	}
 }
 
