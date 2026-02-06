@@ -137,7 +137,7 @@ public:
 	void DoStartQuestUsingExistingData(CvMinorCivQuest* pExistingQuest);
 	bool DoFinishQuest();
 #ifdef QUESTS_SYSTEM_OVERHAUL
-	void DoEveryTurnReward();
+	int GetEveryTurnReward();
 #endif
 	bool DoCancelQuest();
 

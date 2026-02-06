@@ -1585,16 +1585,16 @@ bool CvMinorCivQuest::DoFinishQuest()
 }
 
 #ifdef QUESTS_SYSTEM_OVERHAUL
-void CvMinorCivQuest::DoEveryTurnReward()
+int CvMinorCivQuest::GetEveryTurnReward()
 {
 	if (!IsComplete())
-		return;
+		return 0;
 
 	if (IsHandled())
-		return;
+		return 0;
 
 	if (!IsRewardEveryTurn())
-		return;
+		return 0;
 
 	CvPlayer* pMinor = &GET_PLAYER(m_eMinor);
 
@@ -1608,131 +1608,7 @@ void CvMinorCivQuest::DoEveryTurnReward()
 	iLength /= 100;
 	pMinor->GetMinorCivAI()->ChangeFriendshipWithMajor(m_eAssignedPlayer, GetInfluenceReward() / iLength, /*bFromQuest*/ true);
 
-	bool bNowFriends = pMinor->GetMinorCivAI()->IsFriends(m_eAssignedPlayer);
-	bool bNowAllies = pMinor->GetMinorCivAI()->IsAllies(m_eAssignedPlayer);
-	PlayerTypes eNewAlly = pMinor->GetMinorCivAI()->GetAlly();
-	int iNewInf = pMinor->GetMinorCivAI()->GetEffectiveFriendshipWithMajor(m_eAssignedPlayer);
-	int iInfChange = iNewInf - iOldInf;
-
-	Localization::String strMessage;
-	Localization::String strSummary;
-	CivsList veNamesToShow;
-
-	// BUILD A ROUTE
-	if (m_eType == MINOR_CIV_QUEST_ROUTE)
-	{
-	}
-
-	// KILL A CAMP
-	else if (m_eType == MINOR_CIV_QUEST_KILL_CAMP)
-	{
-	}
-
-	// CONNECT A RESOURCE
-	else if (m_eType == MINOR_CIV_QUEST_CONNECT_RESOURCE)
-	{
-	}
-
-	// CONSTRUCT A WONDER
-	else if (m_eType == MINOR_CIV_QUEST_CONSTRUCT_WONDER)
-	{
-	}
-
-	// GREAT PERSON
-	else if (m_eType == MINOR_CIV_QUEST_GREAT_PERSON)
-	{
-	}
-
-	// KILL ANOTHER CITY STATE
-	else if (m_eType == MINOR_CIV_QUEST_KILL_CITY_STATE)
-	{
-	}
-
-	// FIND ANOTHER PLAYER
-	else if (m_eType == MINOR_CIV_QUEST_FIND_PLAYER)
-	{
-	}
-
-	// FIND NATURAL WONDER
-	else if (m_eType == MINOR_CIV_QUEST_FIND_NATURAL_WONDER)
-	{
-	}
-
-	// Give gold
-	else if (m_eType == MINOR_CIV_QUEST_GIVE_GOLD)
-	{
-	}
-
-	// Pledge to protect
-	else if (m_eType == MINOR_CIV_QUEST_PLEDGE_TO_PROTECT)
-	{
-	}
-
-	// Culture contest
-	else if (m_eType == MINOR_CIV_QUEST_CONTEST_CULTURE)
-	{
-	}
-
-	// Faith contest
-	else if (m_eType == MINOR_CIV_QUEST_CONTEST_FAITH)
-	{
-	}
-
-	// Techs contest
-	else if (m_eType == MINOR_CIV_QUEST_CONTEST_TECHS)
-	{
-	}
-
-	// Invest
-	else if (m_eType == MINOR_CIV_QUEST_INVEST)
-	{
-	}
-
-	// Bully target City-State
-	else if (m_eType == MINOR_CIV_QUEST_BULLY_CITY_STATE)
-	{
-	}
-
-	// Denounce target Major
-	else if (m_eType == MINOR_CIV_QUEST_DENOUNCE_MAJOR)
-	{
-	}
-
-	// Spread your religion to us
-	else if (m_eType == MINOR_CIV_QUEST_SPREAD_RELIGION)
-	{
-	}
-
-	// Connect A Trade Route
-	if (m_eType == MINOR_CIV_QUEST_TRADE_ROUTE)
-	{
-	}
-
-	// Update the UI with the changed data, in case it is open
-	if (m_eAssignedPlayer == GC.getGame().getActivePlayer())
-	{
-		GC.GetEngineUserInterface()->setDirty(GameData_DIRTY_BIT, true);
-	}
-
-	CvString sMessage = strMessage.toUTF8();
-	CvString sSummary = strSummary.toUTF8();
-
-	// This quest involved multiple minors, so grab their names for the notification
-	if (veNamesToShow.size() > 0)
-	{
-		sMessage = sMessage + pMinor->GetMinorCivAI()->GetNamesListAsString(veNamesToShow);
-	}
-
-	// This quest reward changed our status, so grab that info for the notification
-	if ((!bWasFriends && bNowFriends) || (!bWasAllies && bNowAllies))
-	{
-		pair<CvString, CvString> statusChangeStrings = pMinor->GetMinorCivAI()->GetStatusChangeNotificationStrings(m_eAssignedPlayer, /*bAdd*/true, bNowFriends, bNowAllies, eOldAlly, eNewAlly);
-		sMessage = sMessage + "[NEWLINE][NEWLINE]" + statusChangeStrings.first;
-	}
-
-	// pMinor->GetMinorCivAI()->AddQuestNotification(sMessage, sSummary, m_eAssignedPlayer);
-
-	return;
+	return GetInfluenceReward() / iLength;
 }
 #endif
 
@@ -3725,9 +3601,6 @@ void CvMinorCivAI::DoCompletedQuestsForPlayer(PlayerTypes ePlayer, MinorCivQuest
 			if (itr_quest->IsComplete())
 			{
 				int iOldFriendshipTimes100 = GetEffectiveFriendshipWithMajorTimes100(ePlayer);
-#ifdef QUESTS_SYSTEM_OVERHAUL
-				itr_quest->DoEveryTurnReward();
-#endif
 				bool bCompleted = itr_quest->DoFinishQuest();
 				int iNewFriendshipTimes100 = GetEffectiveFriendshipWithMajorTimes100(ePlayer);
 				
@@ -6045,16 +5918,7 @@ int CvMinorCivAI::GetFriendshipChangePerTurnTimes100(PlayerTypes ePlayer)
 	{
 		if (itr_quest->IsComplete() && itr_quest->IsRewardEveryTurn())
 		{
-			int iLength = GC.getMINOR_QUEST_STANDARD_CONTEST_LENGTH();
-			iLength *= GC.getGame().getGameSpeedInfo().getGreatPeoplePercent();
-			iLength /= 100;
-			int iChange = itr_quest->GetInfluenceReward();
-			if (GET_PLAYER(ePlayer).getMinorQuestFriendshipMod() != 0)
-			{
-				iChange *= (100 + GET_PLAYER(ePlayer).getMinorQuestFriendshipMod());
-				iChange /= 100;
-			}
-			iChangeThisTurn += 100 * (iChange / iLength);
+			iChangeThisTurn += itr_quest->GetEveryTurnReward();
 		}
 	}
 #endif
