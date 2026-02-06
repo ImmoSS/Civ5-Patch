@@ -62,7 +62,7 @@ function GetCityStateStatusRow(iMajor, iMinor)
 	local pMajorTeam = Teams[iMajorTeam];
 	local pMinorTeam = Teams[iMinorTeam];
 	
-	local iInf = pMinor:GetMinorCivFriendshipWithMajor(iMajor);
+	local iInf = pMinor:GetMinorCivFriendshipWithMajor(iMajor) / 100;
 	local bWar = pMajorTeam:IsAtWar(iMinorTeam);
 	local bCanBully = pMinor:CanMajorBullyGold(iMajor);
 	local bAllies = pMinor:IsAllies(iMajor);
@@ -109,7 +109,7 @@ function UpdateCityStateStatusBar(iMajor, iMinor, posBarCtrl, negBarCtrl, barMar
 	end
 	
 	local info = GetCityStateStatusRow(iMajor, iMinor);
-	local iInf = pMinor:GetMinorCivFriendshipWithMajor(iMajor);
+	local iInf = pMinor:GetMinorCivFriendshipWithMajor(iMajor) / 100;
 	
 	if (info.PositiveStatusMeter ~= nil) then
 		local percentFull = math.abs(iInf) / kPosInfRange;
@@ -199,7 +199,7 @@ function GetCityStateStatusText(iMajor, iMinor)
 		strStatusText = Locale.ConvertTextKey("TXT_KEY_WAR");
 		strStatusText = "[COLOR_NEGATIVE_TEXT]" .. strStatusText .. "[ENDCOLOR]";
 		
-	elseif (pMinor:GetMinorCivFriendshipWithMajor(iMajor) < GameDefines["FRIENDSHIP_THRESHOLD_NEUTRAL"]) then
+	elseif (pMinor:GetMinorCivFriendshipWithMajor(iMajor) / 100 < GameDefines["FRIENDSHIP_THRESHOLD_NEUTRAL"]) then
 		-- Afraid
 		if (bCanBully) then
 			strStatusText = Locale.ConvertTextKey("TXT_KEY_AFRAID");
@@ -234,7 +234,7 @@ function GetCityStateStatusToolTip(iMajor, iMinor, bFullInfo)
 	local bCanBully = pMinor:CanMajorBullyGold(iMajor);
 	
 	local strShortDescKey = pMinor:GetCivilizationShortDescriptionKey();
-	local iInfluence = pMinor:GetMinorCivFriendshipWithMajor(iMajor);
+	local iInfluence = pMinor:GetMinorCivFriendshipWithMajor(iMajor) / 100;
 	local iInfluenceChangeThisTurn = pMinor:GetFriendshipChangePerTurnTimes100(iMajor) / 100;
 	local iInfluenceAnchor = pMinor:GetMinorCivFriendshipAnchorWithMajor(iMajor);
 	
@@ -439,11 +439,11 @@ function GetAllyToolTip(iActivePlayer, iMinor)
 	local pActivePlayer = Players[iActivePlayer];
 	local pMinor = Players[iMinor];
 	if (pActivePlayer ~= nil and pMinor ~= nil) then
-		local iActivePlayerInf = pMinor:GetMinorCivFriendshipWithMajor(iActivePlayer);
+		local iActivePlayerInf = pMinor:GetMinorCivFriendshipWithMajor(iActivePlayer) / 100;
 		local iAlly = pMinor:GetAlly();
 		-- Has an ally
 		if (iAlly ~= nil and iAlly ~= -1) then
-			local iAllyInf = pMinor:GetMinorCivFriendshipWithMajor(iAlly);
+			local iAllyInf = pMinor:GetMinorCivFriendshipWithMajor(iAlly) / 100;
 			-- Not us
 			if (iAlly ~= iActivePlayer) then
 				-- Someone we know

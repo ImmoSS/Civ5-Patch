@@ -154,7 +154,7 @@ function GetCityStateStatusRow( majorPlayerID, minorPlayerID )
 			return kMinorAfraid
 
 		-- Angry
-		elseif minorPlayer:GetMinorCivFriendshipWithMajor(majorPlayerID) < GameDefines.FRIENDSHIP_THRESHOLD_NEUTRAL then
+		elseif minorPlayer:GetMinorCivFriendshipWithMajor(majorPlayerID) / 100 < GameDefines.FRIENDSHIP_THRESHOLD_NEUTRAL then
 			return kMinorAngry
 
 		-- Neutral
@@ -179,7 +179,7 @@ function UpdateCityStateStatusBar(majorPlayerID, minorPlayerID, posBarCtrl, negB
 	if majorPlayer and minorPlayer then
 
 		local info = GetCityStateStatusRow(majorPlayerID, minorPlayerID)
-		local iInf = minorPlayer:GetMinorCivFriendshipWithMajor(majorPlayerID)
+		local iInf = minorPlayer:GetMinorCivFriendshipWithMajor(majorPlayerID) / 100
 
 		if iInf >= 0 then
 			local percentFull = math_abs(iInf) / kPosInfRange
@@ -243,7 +243,7 @@ function GetCityStateStatusText( majorPlayerID, minorPlayerID )
 		local majorTeam = Teams[majorTeamID]
 
 		local isAtWar = majorTeam:IsAtWar(minorTeamID)
-		local majorInfluenceWithMinor = minorPlayer:GetMinorCivFriendshipWithMajor(majorPlayerID)
+		local majorInfluenceWithMinor = minorPlayer:GetMinorCivFriendshipWithMajor(majorPlayerID) / 100
 
 		-- Status
 
@@ -379,7 +379,7 @@ function GetCityStateStatusToolTip( majorPlayerID, minorPlayerID, isFullInfo )
 		local minorTeam = Teams[minorTeamID]
 
 		local strShortDesc = minorPlayer:GetCivilizationShortDescription()
-		local influenceAccumulated = minorPlayer:GetMinorCivFriendshipWithMajor(majorPlayerID)
+		local influenceAccumulated = minorPlayer:GetMinorCivFriendshipWithMajor(majorPlayerID) / 100
 
 		-- Name
 		local tip = strShortDesc
@@ -496,12 +496,12 @@ function GetAllyToolTip( majorPlayerID, minorPlayerID )
 	local majorPlayer = Players[majorPlayerID]
 	local minorPlayer = Players[minorPlayerID]
 	if majorPlayer and minorPlayer then
-		local minorCivFriendshipWithMajor = minorPlayer:GetMinorCivFriendshipWithMajor(majorPlayerID)
+		local minorCivFriendshipWithMajor = minorPlayer:GetMinorCivFriendshipWithMajor(majorPlayerID) / 100
 		local allyID = minorPlayer:GetAlly()
 		local ally = Players[allyID]
 		-- Has an ally
 		if ally then
-			local minorCivFriendshipWithAlly = minorPlayer:GetMinorCivFriendshipWithMajor(allyID)
+			local minorCivFriendshipWithAlly = minorPlayer:GetMinorCivFriendshipWithMajor(allyID) / 100
 			-- Not us
 			if allyID ~= majorPlayerID then
 				-- Someone we know
@@ -779,10 +779,10 @@ function GetCityStateStatusAlly( majorPlayerID, minorPlayerID, isFullInfo )
 		toolTip = L("TXT_KEY_CITY_STATE_ALLY_TT")
 	elseif majorPlayer and minorPlayer then
 		local allyID = minorPlayer:GetAlly()
-		local minorCivFriendshipWithMajor = minorPlayer:GetMinorCivFriendshipWithMajor(majorPlayerID)
+		local minorCivFriendshipWithMajor = minorPlayer:GetMinorCivFriendshipWithMajor(majorPlayerID) / 100
 		if allyID and allyID ~= -1 then -- already has an ally
 
-			local minorCivFriendshipAlly = minorPlayer:GetMinorCivFriendshipWithMajor(allyID) - minorCivFriendshipWithMajor + 1	-- needs to pass up the current ally, not just match
+			local minorCivFriendshipAlly = minorPlayer:GetMinorCivFriendshipWithMajor(allyID) / 100 - minorCivFriendshipWithMajor + 1	-- needs to pass up the current ally, not just match
 			local ally = Players[allyID]
 
 			if Teams[majorPlayer:GetTeam()]:IsHasMet(ally:GetTeam()) then

@@ -6177,7 +6177,11 @@ int CvLuaPlayer::lGetMinorCivFriendshipWithMajor(lua_State* L)
 	CvPlayerAI* pkPlayer = GetInstance(L);
 	const PlayerTypes ePlayer = (PlayerTypes) lua_tointeger(L, 2);
 
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	const int iResult = pkPlayer->GetMinorCivAI()->GetEffectiveFriendshipWithMajorTimes100(ePlayer);
+#else
 	const int iResult = pkPlayer->GetMinorCivAI()->GetEffectiveFriendshipWithMajor(ePlayer);
+#endif
 	lua_pushinteger(L, iResult);
 	return 1;
 }
