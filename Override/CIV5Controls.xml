@@ -33812,9 +33812,9 @@
 		</Row>
 		<Row> 
 			<ID>241</ID> 
-			<Type>PROMOTION_RANGED_AMBUSH_1</Type> 
-			<Description>TXT_KEY_PROMOTION_RANGED_AMBUSH_1</Description> 
-			<Help>TXT_KEY_PROMOTION_RANGED_AMBUSH_1_HELP</Help> 
+			<Type>PROMOTION_BONUS_AGAINST_ARMOR_1</Type> 
+			<Description>TXT_KEY_PROMOTION_BONUS_AGAINST_ARMOR_1</Description> 
+			<Help>TXT_KEY_PROMOTION_BONUS_AGAINST_ARMOR_1_HELP</Help> 
 			<PortraitIndex>3</PortraitIndex> 
 			<IconAtlas>PROMOTION_ATLAS</IconAtlas> 
 			<HotKeyPriority>0</HotKeyPriority> 
@@ -33941,7 +33941,7 @@
 			<PromotionPrereqOr1>PROMOTION_ACCURACY_1</PromotionPrereqOr1> 
 			<PromotionPrereqOr2>PROMOTION_BARRAGE_1</PromotionPrereqOr2> 
 			<PediaType>PEDIA_RANGED</PediaType> 
-			<PediaEntry>TXT_KEY_PROMOTION_RANGED_AMBUSH_1</PediaEntry> 
+			<PediaEntry>TXT_KEY_PROMOTION_BONUS_AGAINST_ARMOR_1</PediaEntry> 
 		</Row>
 
 		<Delete Type="PROMOTION_INSTA_HEAL" />
