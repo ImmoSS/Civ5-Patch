@@ -125,11 +125,20 @@ public:
 	bool IsObsolete();
 	bool IsHandled();
 	void SetHandled(bool bValue);
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	bool IsOneShotReward() const;
+	void SetOneShotReward(bool bValue);
+	bool IsRewardEveryTurn() const;
+	void SetRewardEveryTurn(bool bValue);
+#endif
 
 	// Starting and finishing
 	void DoStartQuest(int iStartTurn);
 	void DoStartQuestUsingExistingData(CvMinorCivQuest* pExistingQuest);
 	bool DoFinishQuest();
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	void DoEveryTurnReward();
+#endif
 	bool DoCancelQuest();
 
 	// Public data
@@ -140,6 +149,10 @@ public:
 	int m_iData1;
 	int m_iData2;
 	bool m_bHandled;
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	bool m_bOneShotReward;
+	bool m_bRewardEveryTurn;
+#endif
 };
 FDataStream& operator>>(FDataStream&, CvMinorCivQuest&);
 FDataStream& operator<<(FDataStream&, const CvMinorCivQuest&);
@@ -308,6 +321,9 @@ public:
 	int GetQuestData1(PlayerTypes ePlayer, MinorCivQuestTypes eType) const;
 	int GetQuestData2(PlayerTypes ePlayer, MinorCivQuestTypes eType) const;
 	int GetQuestTurnsRemaining(PlayerTypes ePlayer, MinorCivQuestTypes eType, int iGameTurn) const;
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	bool IsQuestOneShotReward(PlayerTypes ePlayer, MinorCivQuestTypes eType) const;
+#endif
 	bool IsContestLeader(PlayerTypes ePlayer, MinorCivQuestTypes eType);
 	int GetContestValueForLeader(MinorCivQuestTypes eType);
 	int GetContestValueForPlayer(PlayerTypes ePlayer, MinorCivQuestTypes eType);

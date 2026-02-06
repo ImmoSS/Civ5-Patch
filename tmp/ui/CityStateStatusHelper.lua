@@ -581,6 +581,7 @@ end
 function GetActiveQuestToolTip(iMajor, iMinor)
 	local iMajor = Game.GetActivePlayer();
 	local pMajor = Players[iMajor];
+	local iQuestLength = math.floor( GameDefines["MINOR_QUEST_STANDARD_CONTEST_LENGTH"] * GameInfo.GameSpeeds[PreGame.GetGameSpeed()].GreatPeoplePercent / 100 )
 	local pMinor = Players[iMinor];
 	
 	local sToolTipText = "";
@@ -603,13 +604,18 @@ function GetActiveQuestToolTip(iMajor, iMinor)
 			local iQuestData1 = pMinor:GetQuestData1(iMajor, eType);
 			local iQuestData2 = pMinor:GetQuestData2(iMajor, eType);
 			local iTurnsRemaining = pMinor:GetQuestTurnsRemaining(iMajor, eType, Game.GetGameTurn()); -- add 1 since began on CS's turn (1 before), and avoids "0 turns remaining"
+			local bQuestOneShotReward = pMinor:IsQuestOneShotReward(iMajor, eType);
 			
 			if (eType == MinorCivQuestTypes.MINOR_CIV_QUEST_ROUTE) then
 				sToolTipText = sToolTipText .. Locale.Lookup( "TXT_KEY_CITY_STATE_QUEST_ROUTE_FORMAL", math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_ROUTE"] * (100 + pMajor:GetMinorQuestFriendshipMod()) / 100 ) );
 			elseif (eType == MinorCivQuestTypes.MINOR_CIV_QUEST_KILL_CAMP) then
 				sToolTipText = sToolTipText .. Locale.Lookup( "TXT_KEY_CITY_STATE_QUEST_KILL_CAMP_FORMAL", math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_KILL_CAMP"] * (100 + pMajor:GetMinorQuestFriendshipMod()) / 100 ) );
 			elseif (eType == MinorCivQuestTypes.MINOR_CIV_QUEST_CONNECT_RESOURCE) then
-				sToolTipText = sToolTipText .. Locale.Lookup( "TXT_KEY_CITY_STATE_QUEST_CONNECT_RESOURCE_FORMAL", GameInfo.Resources[iQuestData1].Description, math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_CONNECT_RESOURCE"] * (100 + pMajor:GetMinorQuestFriendshipMod()) / 100 ) );
+				if not bQuestOneShotReward then
+					ToolTipText = sToolTipText .. Locale.Lookup( "TXT_KEY_CITY_STATE_QUEST_CONNECT_RESOURCE_FORMAL", GameInfo.Resources[iQuestData1].Description, math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_CONNECT_RESOURCE"] * (100 + pMajor:GetMinorQuestFriendshipMod()) / 200 ), math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_CONNECT_RESOURCE"] * (100 + pMajor:GetMinorQuestFriendshipMod()) / (100 * iQuestLength) ) );
+				else
+					ToolTipText = sToolTipText .. Locale.Lookup( "TXT_KEY_CITY_STATE_QUEST_CONNECT_RESOURCE_FORMAL", GameInfo.Resources[iQuestData1].Description, math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_CONNECT_RESOURCE"] * (100 + pMajor:GetMinorQuestFriendshipMod()) / (100 * iQuestLength) ) );
+				end
 			elseif (eType == MinorCivQuestTypes.MINOR_CIV_QUEST_CONSTRUCT_WONDER) then
 				sToolTipText = sToolTipText .. Locale.Lookup( "TXT_KEY_CITY_STATE_QUEST_CONSTRUCT_WONDER_FORMAL", GameInfo.Buildings[iQuestData1].Description, math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_CONSTRUCT_WONDER"] * (100 + pMajor:GetMinorQuestFriendshipMod()) / 100 ) );
 			elseif (eType == MinorCivQuestTypes.MINOR_CIV_QUEST_GREAT_PERSON) then
@@ -657,7 +663,11 @@ function GetActiveQuestToolTip(iMajor, iMinor)
 			elseif (eType == MinorCivQuestTypes.MINOR_CIV_QUEST_SPREAD_RELIGION) then
 				sToolTipText = sToolTipText .. Locale.Lookup( "TXT_KEY_CITY_STATE_QUEST_SPREAD_RELIGION_FORMAL", Game.GetReligionName(iQuestData1), math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_SPREAD_RELIGION"] * (100 + pMajor:GetMinorQuestFriendshipMod()) / 100 ) );
 			elseif (eType == MinorCivQuestTypes.MINOR_CIV_QUEST_TRADE_ROUTE) then
-				sToolTipText = sToolTipText .. Locale.Lookup("TXT_KEY_CITY_STATE_QUEST_TRADE_ROUTE_FORMAL", math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_TRADE_ROUTE"] * (100 + pMajor:GetMinorQuestFriendshipMod()) / 100 ) );
+				if not bQuestOneShotReward then
+					sToolTipText = sToolTipText .. Locale.Lookup("TXT_KEY_CITY_STATE_QUEST_TRADE_ROUTE_FORMAL", math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_TRADE_ROUTE"] * (100 + pMajor:GetMinorQuestFriendshipMod()) / 200 ), math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_TRADE_ROUTE"] * (100 + pMajor:GetMinorQuestFriendshipMod()) / (100 * iQuestLength) ) );
+				else
+					sToolTipText = sToolTipText .. Locale.Lookup("TXT_KEY_CITY_STATE_QUEST_TRADE_ROUTE_FORMAL", math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_TRADE_ROUTE"] * (100 + pMajor:GetMinorQuestFriendshipMod()) / (100 * iQuestLength) ) );
+				end
 			end
 			
 			if (iTurnsRemaining >= 0) then

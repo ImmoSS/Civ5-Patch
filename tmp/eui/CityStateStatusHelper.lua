@@ -596,12 +596,18 @@ end
 
 local function QuestString(majorPlayerID, minorPlayer, questID, questData1)
 	local majorPlayer = Players[majorPlayerID]
+	local questLength = math.floor( GameDefines["MINOR_QUEST_STANDARD_CONTEST_LENGTH"] * GameInfo.GameSpeeds[PreGame.GetGameSpeed()].GreatPeoplePercent / 100 )
+	local questOneShotReward = minorPlayer:IsQuestOneShotReward(majorPlayerID, questID);
 	if questID == MinorCivQuestTypes.MINOR_CIV_QUEST_ROUTE then
 		return L( "TXT_KEY_CITY_STATE_QUEST_ROUTE_FORMAL", math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_ROUTE"] * (100 + majorPlayer:GetMinorQuestFriendshipMod()) / 100 ) )
 	elseif questID == MinorCivQuestTypes.MINOR_CIV_QUEST_KILL_CAMP then
 		return L( "TXT_KEY_CITY_STATE_QUEST_KILL_CAMP_FORMAL", math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_KILL_CAMP"] * (100 + majorPlayer:GetMinorQuestFriendshipMod()) / 100 ) )
 	elseif questID == MinorCivQuestTypes.MINOR_CIV_QUEST_CONNECT_RESOURCE then
-		return L( "TXT_KEY_CITY_STATE_QUEST_CONNECT_RESOURCE_FORMAL", GameInfo.Resources[questData1].Description, math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_CONNECT_RESOURCE"] * (100 + majorPlayer:GetMinorQuestFriendshipMod()) / 100 ) )
+		if not questOneShotReward then
+			return L( "TXT_KEY_CITY_STATE_QUEST_CONNECT_RESOURCE_FORMAL", GameInfo.Resources[questData1].Description, math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_CONNECT_RESOURCE"] * (100 + majorPlayer:GetMinorQuestFriendshipMod()) / 200 ), math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_CONNECT_RESOURCE"] * (100 + majorPlayer:GetMinorQuestFriendshipMod()) / (100 * questLength) ) )
+		else
+			return L( "TXT_KEY_CITY_STATE_QUEST_CONNECT_RESOURCE_FORMAL_ONE_SHOT", GameInfo.Resources[questData1].Description, math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_CONNECT_RESOURCE"] * (100 + majorPlayer:GetMinorQuestFriendshipMod()) / (100 * questLength) ) )
+		end
 	elseif questID == MinorCivQuestTypes.MINOR_CIV_QUEST_CONSTRUCT_WONDER then
 		return L( "TXT_KEY_CITY_STATE_QUEST_CONSTRUCT_WONDER_FORMAL", GameInfo.Buildings[questData1].Description, math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_CONSTRUCT_WONDER"] * (100 + majorPlayer:GetMinorQuestFriendshipMod()) / 100 ) )
 	elseif questID == MinorCivQuestTypes.MINOR_CIV_QUEST_GREAT_PERSON then
@@ -651,7 +657,11 @@ local function QuestString(majorPlayerID, minorPlayer, questID, questData1)
 			return L( "TXT_KEY_CITY_STATE_QUEST_SPREAD_RELIGION_FORMAL", Game_GetReligionName(questData1), math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_SPREAD_RELIGION"] * (100 + majorPlayer:GetMinorQuestFriendshipMod()) / 100 ) )
 		elseif bnw_mode then
 			if questID == MinorCivQuestTypes.MINOR_CIV_QUEST_TRADE_ROUTE then
-				return L("TXT_KEY_CITY_STATE_QUEST_TRADE_ROUTE_FORMAL", math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_TRADE_ROUTE"] * (100 + majorPlayer:GetMinorQuestFriendshipMod()) / 100 ) )
+				if not questOneShotReward then
+					return L("TXT_KEY_CITY_STATE_QUEST_TRADE_ROUTE_FORMAL", math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_TRADE_ROUTE"] * (100 + majorPlayer:GetMinorQuestFriendshipMod()) / 200 ), math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_TRADE_ROUTE"] * (100 + majorPlayer:GetMinorQuestFriendshipMod()) / (100 * questLength) ) )
+				else
+					return L("TXT_KEY_CITY_STATE_QUEST_TRADE_ROUTE_FORMAL_ONE_SHOT", math.floor( GameDefines["MINOR_QUEST_FRIENDSHIP_TRADE_ROUTE"] * (100 + majorPlayer:GetMinorQuestFriendshipMod()) / (100 * questLength) ) )
+				end
 			end
 		end
 	end

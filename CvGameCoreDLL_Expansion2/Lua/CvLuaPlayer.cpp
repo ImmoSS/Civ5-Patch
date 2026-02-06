@@ -577,6 +577,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(GetQuestData1);
 	Method(GetQuestData2);
 	Method(GetQuestTurnsRemaining);
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	Method(IsQuestOneShotReward);
+#endif
 	Method(IsMinorCivContestLeader);
 	Method(GetMinorCivContestValueForLeader);
 	Method(GetMinorCivContestValueForPlayer);
@@ -6378,6 +6381,19 @@ int CvLuaPlayer::lGetQuestTurnsRemaining(lua_State* L)
 	lua_pushinteger(L, iResult);
 	return 1;
 }
+#ifdef QUESTS_SYSTEM_OVERHAUL
+//------------------------------------------------------------------------------
+int CvLuaPlayer::lIsQuestOneShotReward(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	const PlayerTypes ePlayer = (PlayerTypes)lua_tointeger(L, 2);
+	const MinorCivQuestTypes eType = (MinorCivQuestTypes)lua_tointeger(L, 3);
+
+	const bool iResult = pkPlayer->GetMinorCivAI()->IsQuestOneShotReward(ePlayer, eType);
+	lua_pushboolean(L, iResult);
+	return 1;
+}
+#endif
 //------------------------------------------------------------------------------
 int CvLuaPlayer::lIsMinorCivContestLeader(lua_State* L)
 {

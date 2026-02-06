@@ -565,6 +565,9 @@ protected:
 	static int lGetMinorCivNumDisplayedQuestsForPlayer(lua_State* L);
 	static int lGetQuestData1(lua_State* L);
 	static int lGetQuestData2(lua_State* L);
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	static int lIsQuestOneShotReward(lua_State* L);
+#endif
 	static int lGetQuestTurnsRemaining(lua_State* L);
 	static int lIsMinorCivContestLeader(lua_State* L);
 	static int lGetMinorCivContestValueForLeader(lua_State* L);

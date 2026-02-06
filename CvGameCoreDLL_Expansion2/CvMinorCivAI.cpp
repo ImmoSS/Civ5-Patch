@@ -34,6 +34,10 @@ CvMinorCivQuest::CvMinorCivQuest()
 	m_iData1 = NO_QUEST_DATA; /* -1 */
 	m_iData2 = NO_QUEST_DATA; /* -1 */
 	m_bHandled = false;
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	m_bOneShotReward = false;
+	m_bRewardEveryTurn = false;
+#endif
 }
 
 // Constructor
@@ -46,6 +50,10 @@ CvMinorCivQuest::CvMinorCivQuest(PlayerTypes eMinor, PlayerTypes eAssignedPlayer
 	m_iData1 = NO_QUEST_DATA; /* -1 */
 	m_iData2 = NO_QUEST_DATA; /* -1 */
 	m_bHandled = false;
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	m_bOneShotReward = false;
+	m_bRewardEveryTurn = false;
+#endif
 }
 
 CvMinorCivQuest::~CvMinorCivQuest()
@@ -865,6 +873,28 @@ void CvMinorCivQuest::SetHandled(bool bValue)
 	m_bHandled = bValue;
 }
 
+#ifdef QUESTS_SYSTEM_OVERHAUL
+bool CvMinorCivQuest::IsOneShotReward() const
+{
+	return m_bOneShotReward;
+}
+
+void CvMinorCivQuest::SetOneShotReward(bool bValue)
+{
+	m_bOneShotReward = bValue;
+}
+
+bool CvMinorCivQuest::IsRewardEveryTurn() const
+{
+	return m_bRewardEveryTurn;
+}
+
+void CvMinorCivQuest::SetRewardEveryTurn(bool bValue)
+{
+	m_bRewardEveryTurn = bValue;
+}
+#endif
+
 // Initializes data to track quest progress and sends notification to player.
 // NOTE: Some types initialize data using randomness here. So two otherwise equivalent quests may be initialized with different data.
 // NOTE: Should only be called once.
@@ -912,6 +942,9 @@ void CvMinorCivQuest::DoStartQuest(int iStartTurn)
 		FAssertMsg(eResource != NO_RESOURCE, "MINOR CIV AI: For some reason we got NO_RESOURCE when starting a quest for a major to find a Resource. Please send Jon this with your last 5 autosaves and what changelist # you're playing. Bad things are probably going to happen.");
 
 		m_iData1 = eResource;
+#ifdef QUESTS_SYSTEM_OVERHAUL
+		m_bRewardEveryTurn = true;
+#endif
 
 		const char* strResourceName = GC.getResourceInfo(eResource)->GetDescriptionKey();
 
@@ -1182,6 +1215,9 @@ void CvMinorCivQuest::DoStartQuest(int iStartTurn)
 	// Connect a trade Route
 	else if(m_eType == MINOR_CIV_QUEST_TRADE_ROUTE)
 	{
+#ifdef QUESTS_SYSTEM_OVERHAUL
+		m_bRewardEveryTurn = true;
+#endif
 		strMessage = Localization::Lookup("TXT_KEY_NOTIFICATION_QUEST_START_TRADE_ROUTE");
 		strSummary = Localization::Lookup("TXT_KEY_NOTIFICATION_SUMMARY_QUEST_START_TRADE_ROUTE");
 	}
@@ -1269,7 +1305,21 @@ bool CvMinorCivQuest::DoFinishQuest()
 	if (IsHandled())
 		return false;
 
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	if (IsRewardEveryTurn())
+	{
+		if (IsOneShotReward())
+			return false;
+
+		SetOneShotReward(true);
+	}
+	else
+	{
+		SetHandled(true); // We are handling the end of the quest, and this should only happen once
+	}
+#else
 	SetHandled(true); // We are handling the end of the quest, and this should only happen once
+#endif
 
 	CvPlayer* pMinor = &GET_PLAYER(m_eMinor);
 
@@ -1278,7 +1328,18 @@ bool CvMinorCivQuest::DoFinishQuest()
 	PlayerTypes eOldAlly = pMinor->GetMinorCivAI()->GetAlly();
 	int iOldInf = pMinor->GetMinorCivAI()->GetEffectiveFriendshipWithMajor(m_eAssignedPlayer);
 
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	if (IsRewardEveryTurn())
+	{
+		pMinor->GetMinorCivAI()->ChangeFriendshipWithMajor(m_eAssignedPlayer, GetInfluenceReward() / 2, /*bFromQuest*/ true);
+	}
+	else
+	{
+		pMinor->GetMinorCivAI()->ChangeFriendshipWithMajor(m_eAssignedPlayer, GetInfluenceReward(), /*bFromQuest*/ true);
+	}
+#else
 	pMinor->GetMinorCivAI()->ChangeFriendshipWithMajor(m_eAssignedPlayer, GetInfluenceReward(), /*bFromQuest*/ true);
+#endif
 	
 	bool bNowFriends = pMinor->GetMinorCivAI()->IsFriends(m_eAssignedPlayer);
 	bool bNowAllies = pMinor->GetMinorCivAI()->IsAllies(m_eAssignedPlayer);
@@ -1523,6 +1584,158 @@ bool CvMinorCivQuest::DoFinishQuest()
 	return true;
 }
 
+#ifdef QUESTS_SYSTEM_OVERHAUL
+void CvMinorCivQuest::DoEveryTurnReward()
+{
+	if (!IsComplete())
+		return;
+
+	if (IsHandled())
+		return;
+
+	if (!IsRewardEveryTurn())
+		return;
+
+	CvPlayer* pMinor = &GET_PLAYER(m_eMinor);
+
+	bool bWasFriends = pMinor->GetMinorCivAI()->IsFriends(m_eAssignedPlayer);
+	bool bWasAllies = pMinor->GetMinorCivAI()->IsAllies(m_eAssignedPlayer);
+	PlayerTypes eOldAlly = pMinor->GetMinorCivAI()->GetAlly();
+	int iOldInf = pMinor->GetMinorCivAI()->GetEffectiveFriendshipWithMajor(m_eAssignedPlayer);
+
+	int iLength = GC.getMINOR_QUEST_STANDARD_CONTEST_LENGTH();
+	iLength *= GC.getGame().getGameSpeedInfo().getGreatPeoplePercent();
+	iLength /= 100;
+	pMinor->GetMinorCivAI()->ChangeFriendshipWithMajor(m_eAssignedPlayer, GetInfluenceReward() / iLength, /*bFromQuest*/ true);
+
+	bool bNowFriends = pMinor->GetMinorCivAI()->IsFriends(m_eAssignedPlayer);
+	bool bNowAllies = pMinor->GetMinorCivAI()->IsAllies(m_eAssignedPlayer);
+	PlayerTypes eNewAlly = pMinor->GetMinorCivAI()->GetAlly();
+	int iNewInf = pMinor->GetMinorCivAI()->GetEffectiveFriendshipWithMajor(m_eAssignedPlayer);
+	int iInfChange = iNewInf - iOldInf;
+
+	Localization::String strMessage;
+	Localization::String strSummary;
+	CivsList veNamesToShow;
+
+	// BUILD A ROUTE
+	if (m_eType == MINOR_CIV_QUEST_ROUTE)
+	{
+	}
+
+	// KILL A CAMP
+	else if (m_eType == MINOR_CIV_QUEST_KILL_CAMP)
+	{
+	}
+
+	// CONNECT A RESOURCE
+	else if (m_eType == MINOR_CIV_QUEST_CONNECT_RESOURCE)
+	{
+	}
+
+	// CONSTRUCT A WONDER
+	else if (m_eType == MINOR_CIV_QUEST_CONSTRUCT_WONDER)
+	{
+	}
+
+	// GREAT PERSON
+	else if (m_eType == MINOR_CIV_QUEST_GREAT_PERSON)
+	{
+	}
+
+	// KILL ANOTHER CITY STATE
+	else if (m_eType == MINOR_CIV_QUEST_KILL_CITY_STATE)
+	{
+	}
+
+	// FIND ANOTHER PLAYER
+	else if (m_eType == MINOR_CIV_QUEST_FIND_PLAYER)
+	{
+	}
+
+	// FIND NATURAL WONDER
+	else if (m_eType == MINOR_CIV_QUEST_FIND_NATURAL_WONDER)
+	{
+	}
+
+	// Give gold
+	else if (m_eType == MINOR_CIV_QUEST_GIVE_GOLD)
+	{
+	}
+
+	// Pledge to protect
+	else if (m_eType == MINOR_CIV_QUEST_PLEDGE_TO_PROTECT)
+	{
+	}
+
+	// Culture contest
+	else if (m_eType == MINOR_CIV_QUEST_CONTEST_CULTURE)
+	{
+	}
+
+	// Faith contest
+	else if (m_eType == MINOR_CIV_QUEST_CONTEST_FAITH)
+	{
+	}
+
+	// Techs contest
+	else if (m_eType == MINOR_CIV_QUEST_CONTEST_TECHS)
+	{
+	}
+
+	// Invest
+	else if (m_eType == MINOR_CIV_QUEST_INVEST)
+	{
+	}
+
+	// Bully target City-State
+	else if (m_eType == MINOR_CIV_QUEST_BULLY_CITY_STATE)
+	{
+	}
+
+	// Denounce target Major
+	else if (m_eType == MINOR_CIV_QUEST_DENOUNCE_MAJOR)
+	{
+	}
+
+	// Spread your religion to us
+	else if (m_eType == MINOR_CIV_QUEST_SPREAD_RELIGION)
+	{
+	}
+
+	// Connect A Trade Route
+	if (m_eType == MINOR_CIV_QUEST_TRADE_ROUTE)
+	{
+	}
+
+	// Update the UI with the changed data, in case it is open
+	if (m_eAssignedPlayer == GC.getGame().getActivePlayer())
+	{
+		GC.GetEngineUserInterface()->setDirty(GameData_DIRTY_BIT, true);
+	}
+
+	CvString sMessage = strMessage.toUTF8();
+	CvString sSummary = strSummary.toUTF8();
+
+	// This quest involved multiple minors, so grab their names for the notification
+	if (veNamesToShow.size() > 0)
+	{
+		sMessage = sMessage + pMinor->GetMinorCivAI()->GetNamesListAsString(veNamesToShow);
+	}
+
+	// This quest reward changed our status, so grab that info for the notification
+	if ((!bWasFriends && bNowFriends) || (!bWasAllies && bNowAllies))
+	{
+		pair<CvString, CvString> statusChangeStrings = pMinor->GetMinorCivAI()->GetStatusChangeNotificationStrings(m_eAssignedPlayer, /*bAdd*/true, bNowFriends, bNowAllies, eOldAlly, eNewAlly);
+		sMessage = sMessage + "[NEWLINE][NEWLINE]" + statusChangeStrings.first;
+	}
+
+	// pMinor->GetMinorCivAI()->AddQuestNotification(sMessage, sSummary, m_eAssignedPlayer);
+
+	return;
+}
+#endif
+
 // Do any cleanup and notifications for when a quest is cancelled (ex. becomes obsolete)
 bool CvMinorCivQuest::DoCancelQuest()
 {
@@ -1651,6 +1864,32 @@ FDataStream& operator>>(FDataStream& loadFrom, CvMinorCivQuest& writeTo)
 	{
 		writeTo.m_bHandled = false;
 	}
+#ifdef QUESTS_SYSTEM_OVERHAUL
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= BUMP_SAVE_VERSION_MINOR_CIV_AI)
+	{
+# endif
+		loadFrom >> writeTo.m_bOneShotReward;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		writeTo.m_bOneShotReward = false;
+	}
+# endif
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= BUMP_SAVE_VERSION_MINOR_CIV_AI)
+	{
+# endif
+		loadFrom >> writeTo.m_bRewardEveryTurn;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		writeTo.m_bRewardEveryTurn = false;
+	}
+# endif
+#endif
 
 	return loadFrom;
 }
@@ -1659,6 +1898,9 @@ FDataStream& operator>>(FDataStream& loadFrom, CvMinorCivQuest& writeTo)
 FDataStream& operator<<(FDataStream& saveTo, const CvMinorCivQuest& readFrom)
 {
 	uint uiVersion = 2;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	uiVersion = BUMP_SAVE_VERSION_MINOR_CIV_AI;
+#endif
 	saveTo << uiVersion;
 
 	saveTo << readFrom.m_eType;
@@ -1666,6 +1908,10 @@ FDataStream& operator<<(FDataStream& saveTo, const CvMinorCivQuest& readFrom)
 	saveTo << readFrom.m_iData1;
 	saveTo << readFrom.m_iData2;
 	saveTo << readFrom.m_bHandled;
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	saveTo << readFrom.m_bOneShotReward;
+	saveTo << readFrom.m_bRewardEveryTurn;
+#endif
 
 	return saveTo;
 }
@@ -3436,7 +3682,18 @@ WeightedCivsList CvMinorCivAI::CalculateFriendshipFromQuests()
 			{
 				if (itr_quest->IsComplete())
 				{
+#ifdef QUESTS_SYSTEM_OVERHAUL
+					if (itr_quest->IsRewardEveryTurn())
+					{
+						iInfTimes100 += (itr_quest->GetInfluenceReward() * 100 / 2);
+					}
+					else
+					{
+						iInfTimes100 += (itr_quest->GetInfluenceReward() * 100);
+					}
+#else
 					iInfTimes100 += (itr_quest->GetInfluenceReward() * 100);
+#endif
 				}
 			}
 		}
@@ -3468,6 +3725,9 @@ void CvMinorCivAI::DoCompletedQuestsForPlayer(PlayerTypes ePlayer, MinorCivQuest
 			if (itr_quest->IsComplete())
 			{
 				int iOldFriendshipTimes100 = GetEffectiveFriendshipWithMajorTimes100(ePlayer);
+#ifdef QUESTS_SYSTEM_OVERHAUL
+				itr_quest->DoEveryTurnReward();
+#endif
 				bool bCompleted = itr_quest->DoFinishQuest();
 				int iNewFriendshipTimes100 = GetEffectiveFriendshipWithMajorTimes100(ePlayer);
 				
@@ -4885,6 +5145,25 @@ int CvMinorCivAI::GetQuestTurnsRemaining(PlayerTypes ePlayer, MinorCivQuestTypes
 	return CvMinorCivQuest::NO_TURN;
 }
 
+#ifdef QUESTS_SYSTEM_OVERHAUL
+bool CvMinorCivAI::IsQuestOneShotReward(PlayerTypes ePlayer, MinorCivQuestTypes eType) const
+{
+	CvAssertMsg(ePlayer >= 0, "ePlayer is expected to be non-negative (invalid Index)");
+	CvAssertMsg(ePlayer < MAX_MAJOR_CIVS, "ePlayer is expected to be within maximum bounds (invalid Index)");
+	if (ePlayer < 0 || ePlayer >= MAX_MAJOR_CIVS) return false;
+
+	for (uint iQuestLoop = 0; iQuestLoop < m_QuestsGiven[ePlayer].size(); iQuestLoop++)
+	{
+		if (m_QuestsGiven[ePlayer][iQuestLoop].GetType() == eType)
+		{
+			return m_QuestsGiven[ePlayer][iQuestLoop].IsOneShotReward();
+		}
+	}
+
+	return false;
+}
+#endif
+
 bool CvMinorCivAI::IsContestLeader(PlayerTypes ePlayer, MinorCivQuestTypes eType)
 {
 	CvAssertMsg(ePlayer >= 0, "ePlayer is expected to be non-negative (invalid Index)");
@@ -5759,6 +6038,26 @@ int CvMinorCivAI::GetFriendshipChangePerTurnTimes100(PlayerTypes ePlayer)
 	// Mod everything by game speed
 	iChangeThisTurn *= GC.getGame().getGameSpeedInfo().getGoldGiftMod();
 	iChangeThisTurn /= 100;
+
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	QuestListForPlayer::iterator itr_quest;
+	for (itr_quest = m_QuestsGiven[ePlayer].begin(); itr_quest != m_QuestsGiven[ePlayer].end(); itr_quest++)
+	{
+		if (itr_quest->IsComplete() && itr_quest->IsRewardEveryTurn())
+		{
+			int iLength = GC.getMINOR_QUEST_STANDARD_CONTEST_LENGTH();
+			iLength *= GC.getGame().getGameSpeedInfo().getGreatPeoplePercent();
+			iLength /= 100;
+			int iChange = itr_quest->GetInfluenceReward();
+			if (GET_PLAYER(ePlayer).getMinorQuestFriendshipMod() != 0)
+			{
+				iChange *= (100 + GET_PLAYER(ePlayer).getMinorQuestFriendshipMod());
+				iChange /= 100;
+			}
+			iChangeThisTurn += 100 * (iChange / iLength);
+		}
+	}
+#endif
 
 	return iChangeThisTurn;
 }
