@@ -1045,6 +1045,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 #ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
 	Method(GetBuildingClassTourismChanges);
 #endif
+#ifdef LUA_METHOD_GET_MINOR_QUEST_FRIENDSHIP_MOD
+	Method(GetMinorQuestFriendshipMod);
+#endif
 
 
 }
@@ -11352,5 +11355,12 @@ int CvLuaPlayer::lGetBuildingClassTourismChanges(lua_State* L)
 
 	lua_pushinteger(L, iTourismFromBuilding);
 	return 1;
+}
+#endif
+
+#ifdef LUA_METHOD_GET_MINOR_QUEST_FRIENDSHIP_MOD
+int CvLuaPlayer::lGetMinorQuestFriendshipMod(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::getMinorQuestFriendshipMod);
 }
 #endif

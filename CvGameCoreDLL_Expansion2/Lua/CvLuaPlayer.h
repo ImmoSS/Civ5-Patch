@@ -1052,6 +1052,9 @@ protected:
 #ifdef POLICY_BUILDINGCLASS_TOURISM_CHANGES
 	static int lGetBuildingClassTourismChanges(lua_State* L);
 #endif
+#ifdef LUA_METHOD_GET_MINOR_QUEST_FRIENDSHIP_MOD
+	static int lGetMinorQuestFriendshipMod(lua_State* L);
+#endif
 };
 
 #endif //CVLUAPLAYER_H
