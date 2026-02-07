@@ -202,6 +202,9 @@ CvCity::CvCity() :
 	, m_bFeatureSurrounded("CvCity::m_bFeatureSurrounded", m_syncArchive)
 	, m_ePreviousOwner("CvCity::m_ePreviousOwner", m_syncArchive)
 	, m_eOriginalOwner("CvCity::m_eOriginalOwner", m_syncArchive)
+#ifdef CITY_MINOR_MAJORITY_OWNER
+	, m_eMinorMajorityOwner("CvCity::m_eMinorMajorityOwner", m_syncArchive)
+#endif
 	, m_ePlayersReligion("CvCity::m_ePlayersReligion", m_syncArchive)
 	, m_aiSeaPlotYield("CvCity::m_aiSeaPlotYield", m_syncArchive)
 	, m_aiRiverPlotYield("CvCity::m_aiRiverPlotYield", m_syncArchive)
@@ -841,6 +844,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_eOwner = eOwner;
 	m_ePreviousOwner = NO_PLAYER;
 	m_eOriginalOwner = eOwner;
+#ifdef CITY_MINOR_MAJORITY_OWNER
+	m_eMinorMajorityOwner = NO_PLAYER;
+#endif
 	m_ePlayersReligion = NO_PLAYER;
 
 
@@ -9756,6 +9762,16 @@ void CvCity::ChangeNoOccupiedUnhappinessCount(int iChange)
 		}
 	}
 #endif
+#ifdef CITY_MINOR_MAJORITY_OWNER
+	if (getOwner() != NO_PLAYER && getOriginalOwner() != NO_PLAYER)
+	{
+		if (GET_PLAYER(getOriginalOwner()).isMinorCiv())
+		{
+			setMinorMajorityOwner(getOwner());
+			SetOccupied(false);
+		}
+	}
+#endif
 }
 
 
@@ -10952,6 +10968,24 @@ void CvCity::setOriginalOwner(PlayerTypes eNewValue)
 	VALIDATE_OBJECT
 	m_eOriginalOwner = eNewValue;
 }
+
+
+#ifdef CITY_MINOR_MAJORITY_OWNER
+//	--------------------------------------------------------------------------------
+PlayerTypes CvCity::getMinorMajorityOwner() const
+{
+	VALIDATE_OBJECT
+	return m_eMinorMajorityOwner;
+}
+
+
+//	--------------------------------------------------------------------------------
+void CvCity::setMinorMajorityOwner(PlayerTypes eNewValue)
+{
+	VALIDATE_OBJECT
+	m_eMinorMajorityOwner = eNewValue;
+}
+#endif
 
 
 //	--------------------------------------------------------------------------------
@@ -16319,6 +16353,20 @@ void CvCity::read(FDataStream& kStream)
 	kStream >> m_eOwner;
 	kStream >> m_ePreviousOwner;
 	kStream >> m_eOriginalOwner;
+#ifdef CITY_MINOR_MAJORITY_OWNER
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1008)
+	{
+# endif
+		kStream >> m_eMinorMajorityOwner;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_eMinorMajorityOwner = NO_PLAYER;
+	}
+# endif
+#endif
 	kStream >> m_ePlayersReligion;
 
 	kStream >> m_aiSeaPlotYield;
@@ -16989,6 +17037,9 @@ void CvCity::write(FDataStream& kStream) const
 	kStream << m_eOwner;
 	kStream << m_ePreviousOwner;
 	kStream << m_eOriginalOwner;
+#ifdef CITY_MINOR_MAJORITY_OWNER
+	kStream << m_eMinorMajorityOwner;
+#endif
 	kStream << m_ePlayersReligion;
 
 	kStream << m_aiSeaPlotYield;

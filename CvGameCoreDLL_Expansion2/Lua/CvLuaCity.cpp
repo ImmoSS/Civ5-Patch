@@ -366,6 +366,9 @@ void CvLuaCity::PushMethods(lua_State* L, int t)
 	Method(GetTeam);
 	Method(GetPreviousOwner);
 	Method(GetOriginalOwner);
+#ifdef CITY_MINOR_MAJORITY_OWNER
+	Method(GetMinorMajorityOwner);
+#endif
 #ifdef CHANGE_CITY_ORIGINAL_OWNER
 	Method(GetCapitalOriginalOwner);
 #endif
@@ -3129,6 +3132,14 @@ int CvLuaCity::lGetOriginalOwner(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvCity::getOriginalOwner);
 }
+#ifdef CITY_MINOR_MAJORITY_OWNER
+//------------------------------------------------------------------------------
+//PlayerTypes getMinorMajorityOwner();
+int CvLuaCity::lGetMinorMajorityOwner(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvCity::getMinorMajorityOwner);
+}
+#endif
 #ifdef CHANGE_CITY_ORIGINAL_OWNER
 //------------------------------------------------------------------------------
 //PlayerTypes getCapitalOriginalOwner();

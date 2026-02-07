@@ -584,6 +584,11 @@ public:
 	PlayerTypes getOriginalOwner() const;
 	void setOriginalOwner(PlayerTypes eNewValue);
 
+#ifdef CITY_MINOR_MAJORITY_OWNER
+	PlayerTypes getMinorMajorityOwner() const;
+	void setMinorMajorityOwner(PlayerTypes eNewValue);
+#endif
+
 	PlayerTypes GetPlayersReligion() const;
 	void SetPlayersReligion(PlayerTypes eNewValue);
 
@@ -1040,6 +1045,9 @@ protected:
 
 	FAutoVariable<PlayerTypes, CvCity> m_ePreviousOwner;
 	FAutoVariable<PlayerTypes, CvCity> m_eOriginalOwner;
+#ifdef CITY_MINOR_MAJORITY_OWNER
+	FAutoVariable<PlayerTypes, CvCity> m_eMinorMajorityOwner;
+#endif
 	FAutoVariable<PlayerTypes, CvCity> m_ePlayersReligion;
 
 	FAutoVariable<std::vector<int>, CvCity> m_aiSeaPlotYield;

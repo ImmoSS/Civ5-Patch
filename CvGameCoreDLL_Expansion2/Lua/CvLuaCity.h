@@ -368,6 +368,9 @@ protected:
 	static int lGetTeam(lua_State* L);
 	static int lGetPreviousOwner(lua_State* L);
 	static int lGetOriginalOwner(lua_State* L);
+#ifdef CITY_MINOR_MAJORITY_OWNER
+	static int lGetMinorMajorityOwner(lua_State* L);
+#endif
 #ifdef CHANGE_CITY_ORIGINAL_OWNER
 	static int lGetCapitalOriginalOwner(lua_State* L);
 #endif

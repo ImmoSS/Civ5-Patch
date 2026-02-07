@@ -2445,6 +2445,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 #else
 	PlayerTypes eOriginalOwner;
 #endif
+#ifdef CITY_MINOR_MAJORITY_OWNER
+	PlayerTypes eMinorMajorityOwner = pOldCity->getMinorMajorityOwner();
+#endif
 	BuildingTypes eBuilding;
 	bool bRecapture;
 	int iCaptureGold;
@@ -3039,6 +3042,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 	{
 		pNewCity->setPreviousOwner(NO_PLAYER);
 		pNewCity->setOriginalOwner(m_eID);
+#ifdef CITY_MINOR_MAJORITY_OWNER
+		pNewCity->setMinorMajorityOwner(NO_PLAYER);
+#endif
 		pNewCity->setGameTurnFounded(GC.getGame().getGameTurn());
 		pNewCity->SetEverCapital(false);
 		AwardFreeBuildings(pNewCity);
@@ -3048,6 +3054,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 	{
 		pNewCity->setPreviousOwner(eOldOwner);
 		pNewCity->setOriginalOwner(eOriginalOwner);
+#ifdef CITY_MINOR_MAJORITY_OWNER
+		pNewCity->setMinorMajorityOwner(eMinorMajorityOwner);
+#endif
 		pNewCity->setGameTurnFounded(iGameTurnFounded);
 		pNewCity->SetEverCapital(bEverCapital);
 	}
@@ -3654,7 +3663,12 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 		}
 
 		// Is this City being Occupied?
+		SLOG("%d MinorMajorityOwnerID", pNewCity->getMinorMajorityOwner());
+#ifdef CITY_MINOR_MAJORITY_OWNER
+		if (pNewCity->getOriginalOwner() != GetID() && pNewCity->getMinorMajorityOwner() != GetID())
+#else
 		if(pNewCity->getOriginalOwner() != GetID())
+#endif
 		{
 			pNewCity->SetOccupied(true);
 
@@ -3712,7 +3726,11 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 				{
 					pNewCity->DoCreatePuppet();
 				}
+#ifdef CITY_MINOR_MAJORITY_OWNER
+				else if (pNewCity->getOriginalOwner() != GetID() && pNewCity->getMinorMajorityOwner() != GetID() || GetPlayerTraits()->IsNoAnnexing() || bIsMinorCivBuyout)
+#else
 				else if (pNewCity->getOriginalOwner() != GetID() || GetPlayerTraits()->IsNoAnnexing() || bIsMinorCivBuyout)
+#endif
 				{
 					if(GC.getGame().getActivePlayer() == GetID())
 					{
