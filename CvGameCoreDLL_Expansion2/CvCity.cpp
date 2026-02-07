@@ -7752,11 +7752,23 @@ bool CvCity::IsOriginalCapital() const
 {
 	VALIDATE_OBJECT
 
+#ifdef CHANGE_CITY_ORIGINAL_OWNER
+	for (int iLoopPlayer = 0; iLoopPlayer < MAX_PLAYERS; iLoopPlayer++)
+	{
+		PlayerTypes ePlayer = (PlayerTypes)iLoopPlayer;
+		CvPlayerAI& kPlayer = GET_PLAYER(ePlayer);
+		if (getX() == kPlayer.GetOriginalCapitalX() && getY() == kPlayer.GetOriginalCapitalY())
+		{
+			return true;
+		}
+	}
+#else
 	CvPlayerAI& kPlayer = GET_PLAYER(m_eOriginalOwner);
 	if (getX() == kPlayer.GetOriginalCapitalX() && getY() == kPlayer.GetOriginalCapitalY())
 	{
 		return true;
 	}
+#endif
 
 	return false;
 }
@@ -9737,7 +9749,7 @@ void CvCity::ChangeNoOccupiedUnhappinessCount(int iChange)
 #ifdef CHANGE_CITY_ORIGINAL_OWNER
 	if (iChange > 0 && GC.getGame().isNetworkMultiPlayer() && getOwner() != NO_PLAYER && GET_PLAYER(getOwner()).isHuman() && getOriginalOwner() != NO_PLAYER)
 	{
-		if (!GET_PLAYER(getOriginalOwner()).isHuman() && !GET_PLAYER(getOriginalOwner()).isMinorCiv() && !IsOriginalCapital())
+		if (!GET_PLAYER(getOriginalOwner()).isHuman() && !GET_PLAYER(getOriginalOwner()).isMinorCiv())
 		{
 			setOriginalOwner(getOwner());
 			SetOccupied(false);

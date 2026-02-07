@@ -366,6 +366,9 @@ void CvLuaCity::PushMethods(lua_State* L, int t)
 	Method(GetTeam);
 	Method(GetPreviousOwner);
 	Method(GetOriginalOwner);
+#ifdef CHANGE_CITY_ORIGINAL_OWNER
+	Method(GetCapitalOriginalOwner);
+#endif
 	Method(GetSeaPlotYield);
 	Method(GetRiverPlotYield);
 	Method(GetLakePlotYield);
@@ -3126,6 +3129,28 @@ int CvLuaCity::lGetOriginalOwner(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvCity::getOriginalOwner);
 }
+#ifdef CHANGE_CITY_ORIGINAL_OWNER
+//------------------------------------------------------------------------------
+//PlayerTypes getCapitalOriginalOwner();
+int CvLuaCity::lGetCapitalOriginalOwner(lua_State* L)
+{
+	CvCity* pkCity = GetInstance(L);
+	for (int iLoopPlayer = 0; iLoopPlayer < MAX_PLAYERS; iLoopPlayer++)
+	{
+		PlayerTypes ePlayer = (PlayerTypes)iLoopPlayer;
+		CvPlayerAI& kPlayer = GET_PLAYER(ePlayer);
+		if (pkCity->getX() == kPlayer.GetOriginalCapitalX() && pkCity->getY() == kPlayer.GetOriginalCapitalY())
+		{
+			const PlayerTypes eResult = ePlayer;
+			lua_pushinteger(L, eResult);
+			return 1;
+		}
+	}
+
+	lua_pushinteger(L, NO_PLAYER);
+	return 1;
+}
+#endif
 //------------------------------------------------------------------------------
 //int getSeaPlotYield(YieldTypes eIndex);
 int CvLuaCity::lGetSeaPlotYield(lua_State* L)

@@ -5380,7 +5380,7 @@ void CvPlayer::doTurn()
 							CvCity* pLoopCity = NULL;
 							for (pLoopCity = GET_PLAYER(eLoopPlayer).firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(eLoopPlayer).nextCity(&iCityLoop))
 							{
-								if ((int)pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && !pLoopCity->IsOriginalCapital())
+								if ((int)pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS)
 								{
 									if (!GET_PLAYER(pLoopCity->getOriginalOwner()).isHuman() && pLoopCity->getOriginalOwner() == GetID())
 									{
@@ -6892,9 +6892,13 @@ bool CvPlayer::canRaze(CvCity* pCity, bool bIgnoreCapitals) const
 	}
 
 	// No razing of capitals
+#ifdef CHANGE_CITY_ORIGINAL_OWNER
+	bool bOriginalCapital = pCity->IsOriginalCapital();
+#else
 	CvPlayer* pOriginalOwner = &GET_PLAYER(pCity->getOriginalOwner());
 	bool bOriginalCapital =	pCity->getX() == pOriginalOwner->GetOriginalCapitalX() &&
 	                        pCity->getY() == pOriginalOwner->GetOriginalCapitalY();
+#endif
 
 	if(!bIgnoreCapitals && pCity->IsEverCapital() && bOriginalCapital)
 	{
@@ -31541,7 +31545,7 @@ void CvPlayer::disconnected()
 							CvCity* pLoopCity = NULL;
 							for (pLoopCity = GET_PLAYER(eLoopPlayer).firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(eLoopPlayer).nextCity(&iCityLoop))
 							{
-								if ((int)pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && !pLoopCity->IsOriginalCapital())
+								if ((int)pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS)
 								{
 									if (pLoopCity->getOriginalOwner() == GetID())
 									{
@@ -31695,7 +31699,7 @@ void CvPlayer::disconnected()
 						CvCity* pLoopCity = NULL;
 						for (pLoopCity = GET_PLAYER(eLoopPlayer).firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(eLoopPlayer).nextCity(&iCityLoop))
 						{
-							if ((int)pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && !pLoopCity->IsOriginalCapital())
+							if ((int)pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS)
 							{
 								if (pLoopCity->getOriginalOwner() == GetID())
 								{
