@@ -966,15 +966,7 @@ local function UpdateTopPanelNow()
 
 		local sciencePerTurnTimes100 = g_activePlayer:GetScienceTimes100()
 
-		-- local strSciencePerTurn = S( "+%.0f", sciencePerTurnTimes100 / 100 )
-		local strSciencePerTurn = ""
-		if (sciencePerTurnTimes100 % 100) == 0 then
-			strSciencePerTurn = S( "+%.0f", sciencePerTurnTimes100 / 100 )
-		elseif (sciencePerTurnTimes100 % 10) == 0 then
-			strSciencePerTurn = S( "+%.1f", sciencePerTurnTimes100 / 100 )
-		else
-			strSciencePerTurn = S( "+%.2f", sciencePerTurnTimes100 / 100 )
-		end
+		local strSciencePerTurn = S( "+%.0f", sciencePerTurnTimes100 / 100 )
 
 		-- Gold being deducted from our Science ?
 		if g_activePlayer:GetScienceFromBudgetDeficitTimes100() == 0 then
@@ -1583,44 +1575,71 @@ g_toolTipHandler.SciencePerTurn = function()-- control )
 		-- if we have one, update the tech picture
 		showPortrait = tech and IconHookup( tech.PortraitIndex, size, tech.IconAtlas, tipControls.ItemPortrait )
 
-		tips:insert( g_scienceTextColor )
-		tips:insert( S( "%+g", sciencePerTurnTimes100 / 100 ) .. "[ENDCOLOR] " .. L"TXT_KEY_REPLAY_DATA_SCIENCEPERTURN" )
+		-- tips:insert( g_scienceTextColor )
+		-- tips:insert( S( "%+g", sciencePerTurnTimes100 / 100 ) .. "[ENDCOLOR] " .. L"TXT_KEY_REPLAY_DATA_SCIENCEPERTURN" )
+		tips:insert("")
+
+		local iBase = 0
 
 		-- Science LOSS from Budget Deficits
 		tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_BUDGET_DEFICIT", g_activePlayer:GetScienceFromBudgetDeficitTimes100() / 100 )
+		iBase = iBase + g_activePlayer:GetScienceFromBudgetDeficitTimes100() / 100
 
 		-- Science from Cities
 		tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_CITIES", g_activePlayer:GetScienceFromCitiesTimes100(true) / 100 )
+		iBase = iBase + g_activePlayer:GetScienceFromCitiesTimes100() / 100
 
 		-- Science from Trade Routes
 		tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_ITR", ( g_activePlayer:GetScienceFromCitiesTimes100(false) - g_activePlayer:GetScienceFromCitiesTimes100(true) ) / 100 )
+		iBase = iBase + ( g_activePlayer:GetScienceFromCitiesTimes100(false) - g_activePlayer:GetScienceFromCitiesTimes100(true) ) / 100
 
 		-- Science from Other Players
 		tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_MINORS", (g_activePlayer:GetScienceFromOtherPlayersTimes100() + g_activePlayer:GetSciencePerTurnFromMinorCivsTimes100()) / 100 )
+		iBase = iBase + (g_activePlayer:GetScienceFromOtherPlayersTimes100() + g_activePlayer:GetSciencePerTurnFromMinorCivsTimes100()) / 100
 
 		-- Science from Religion
 		tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_RELIGION", g_activePlayer:GetSciencePerTurnFromReligionTimes100() / 100 )
+		iBase = iBase + g_activePlayer:GetSciencePerTurnFromReligionTimes100() / 100
 
 		if civ5_mode then
 			-- Science from Happiness
 			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_HAPPINESS", g_activePlayer:GetScienceFromHappinessTimes100() / 100 )
+			iBase = iBase + g_activePlayer:GetScienceFromHappinessTimes100() / 100
 
 			-- Science from Vassals / Compatibility with Putmalk's Civ IV Diplomacy Features Mod
 			if g_activePlayer.GetScienceFromVassalTimes100 then
 				tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_VASSALS", g_activePlayer:GetScienceFromVassalTimes100() / 100 )
+				iBase = iBase + g_activePlayer:GetScienceFromVassalTimes100() / 100
 			end
 
 			-- Compatibility with Gazebo's City-State Diplomacy Mod (CSD) for Brave New World v23
 			if g_activePlayer.GetScienceRateFromMinorAllies and g_activePlayer.GetScienceRateFromLeagueAid then
 				tips:insertLocalizedIfNonZero( "TXT_KEY_MINOR_SCIENCE_FROM_LEAGUE_ALLIES", g_activePlayer:GetScienceRateFromMinorAllies() )
+				iBase = iBase + g_activePlayer:GetScienceRateFromMinorAllies() / 100
 				tips:insertLocalizedIfNonZero( "TXT_KEY_SCIENCE_FUNDING_FROM_LEAGUE", g_activePlayer:GetScienceRateFromLeagueAid() )
+				iBase = iBase + g_activePlayer:GetScienceRateFromLeagueAid() / 100
 			end
 
 			-- Science from Research Agreements
 			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_RESEARCH_AGREEMENTS", g_activePlayer:GetScienceFromResearchAgreementsTimes100() / 100 )
+			iBase = iBase + g_activePlayer:GetScienceFromResearchAgreementsTimes100() / 100
 
-		-- Scince from influenced civs
+			-- Scince from influenced civs
 			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_SCIENCE_FROM_INFLUENCED_CIVS", g_activePlayer:GetSciencePerTurnFromInfluencedCivsTimes100() / 100 )
+			iBase = iBase + g_activePlayer:GetSciencePerTurnFromInfluencedCivsTimes100() / 100
+
+			local iMod = 0;
+			local iNumCapitalsScienceMod = 5 * math.max(g_activePlayer:GetNumCapitalsControlled() - 1, 0);
+			iMod = iMod + iNumCapitalsScienceMod;
+
+			if iMod ~= 0 then
+				tips:insert( "----------------" )
+				tips:insertLocalizedIfNonZero( "TXT_KEY_YIELD_BASE", iBase, "[ICON_RESEARCH]" )
+				tips:insertLocalizedIfNonZero( "TXT_KEY_TP_NUM_CAPITALS_SCIENCE_MOD", iNumCapitalsScienceMod )
+			end
+
+			tips:insert( "----------------" )
+			tips:insertLocalizedIfNonZero( "TXT_KEY_YIELD_TOTAL", g_activePlayer:GetScienceTimes100() / 100, "[ICON_RESEARCH]" )
 
 			-- Show Research Agreements
 
@@ -2104,9 +2123,10 @@ if civ5_mode then
 			local extraHappinessPerCity = g_activePlayer:GetExtraHappinessPerCity() * g_activePlayer:GetNumCities()
 			local leagueHappiness = bnw_mode and g_activePlayer:GetHappinessFromLeagues() or 0
 			local FutureTechHappiness = 5 * g_activeTeam:GetTeamTechs():GetTechCount(80);
+			local NumCapitalsHappiness = 5 * math.max(g_activePlayer:GetNumCapitalsControlled() - 1, 0);
 			local totalHappiness = g_activePlayer:GetHappiness()
 			local happinessFromVassals = g_activePlayer.GetHappinessFromVassals and g_activePlayer:GetHappinessFromVassals() or 0	-- Compatibility with Putmalk's Civ IV Diplomacy Features Mod
-			local handicapHappiness = totalHappiness - policiesHappiness - resourcesHappiness - cityHappiness - buildingHappiness - garrisonedUnitsHappiness - minorCivHappiness - tradeRouteHappiness - religionHappiness - naturalWonderHappiness - extraHappinessPerCity - leagueHappiness - FutureTechHappiness - happinessFromVassals	-- Compatibility with Putmalk's Civ IV Diplomacy Features Mod
+			local handicapHappiness = totalHappiness - policiesHappiness - resourcesHappiness - cityHappiness - buildingHappiness - garrisonedUnitsHappiness - minorCivHappiness - tradeRouteHappiness - religionHappiness - naturalWonderHappiness - extraHappinessPerCity - leagueHappiness - FutureTechHappiness - NumCapitalsHappiness - happinessFromVassals	-- Compatibility with Putmalk's Civ IV Diplomacy Features Mod
 
 			if g_activePlayer:IsEmpireVeryUnhappy() then
 
@@ -2192,6 +2212,7 @@ if civ5_mode then
 			tips:insertLocalizedBulletIfNonZero( "TXT_KEY_TP_HAPPINESS_CITY_STATE_FRIENDSHIP", minorCivHappiness )
 			tips:insertLocalizedBulletIfNonZero( "TXT_KEY_TP_HAPPINESS_LEAGUES", leagueHappiness )
 			tips:insertLocalizedBulletIfNonZero( "TXT_KEY_TP_HAPPINESS_FUTURE_TECH", FutureTechHappiness )
+			tips:insertLocalizedBulletIfNonZero( "TXT_KEY_TP_HAPPINESS_NUM_CAPITALS", NumCapitalsHappiness )
 			tips:insertLocalizedBulletIfNonZero( "TXT_KEY_TP_HAPPINESS_VASSALS", happinessFromVassals )	-- Compatibility with Putmalk's Civ IV Diplomacy Features Mod
 
 			-- Happiness from Luxury Variety

@@ -1237,6 +1237,10 @@
 ///
 #define PLAYER_GET_NUM_CAPITALS_CONTROLLED
 ///
+#ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
+#define PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+#endif
+///
 // #define TRADE_ROUTES_SCIENCE_MOD 3
 // Maintain backwards compatibility with older versions
 // Starting from v7.0

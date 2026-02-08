@@ -11555,6 +11555,9 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvUnit* pOtherUnit, const CvPlot
 #ifdef FUTURE_TECH_RESEARCHING_BONUSES
 	iModifier += 10 * GET_TEAM(kPlayer.getTeam()).GetTeamTechs()->GetTechCount((TechTypes)GC.getInfoTypeForString("TECH_FUTURE_TECH", true));
 #endif
+#ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+	iModifier -= 5 * std::max(kPlayer.GetNumCapitalsControlled() - 1, 0);
+#endif
 
 	////////////////////////
 	// KNOWN BATTLE PLOT
@@ -12370,6 +12373,9 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 #ifdef FUTURE_TECH_RESEARCHING_BONUSES
 	iModifier += 10 * GET_TEAM(kPlayer.getTeam()).GetTeamTechs()->GetTechCount((TechTypes)GC.getInfoTypeForString("TECH_FUTURE_TECH", true));
 #endif
+#ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+	iModifier -= 5 * std::max(kPlayer.GetNumCapitalsControlled() - 1, 0);
+#endif
 
 #ifdef POLICY_ATTACK_BONUS_TURNS_RANGE_MODIFIER
 	// Temporary attack bonus (Policies, etc.)
@@ -12923,6 +12929,9 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 
 #ifdef FUTURE_TECH_RESEARCHING_BONUSES
 	iModifier += 10 * GET_TEAM(kPlayer.getTeam()).GetTeamTechs()->GetTechCount((TechTypes)GC.getInfoTypeForString("TECH_FUTURE_TECH", true));
+#endif
+#ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+	iModifier -= 5 * std::max(kPlayer.GetNumCapitalsControlled() - 1, 0);
 #endif
 
 #ifdef POLICY_ATTACK_BONUS_TURNS_RANGE_MODIFIER

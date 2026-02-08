@@ -1172,6 +1172,14 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 
 				--strString.append(GetLocalizedText("TXT_KEY_COMBAT_PLOT_MOD_VS_TYPE", iModifier, kDomainInfo.GetDescription()));
 			end
+		
+			-- Number of Capitals Modifier
+			iModifier = 5 * math.max(pTheirPlayer:GetNumCapitalsControlled() - 1, 0)
+			if (iModifier ~= 0) then
+				controlTable = g_MyCombatDataIM:GetInstance();
+				controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_NUM_CAPITALS_MODIFIER" );
+				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+			end
 			
 			-- attackFortifiedMod
 			if (pTheirUnit:GetFortifyTurns() > 0) then
@@ -1657,6 +1665,14 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				if (iModifier ~= 0) then
 					controlTable = g_TheirCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_CULTURAL_INFLUENCE_BONUS" );
+					controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
+				end
+		
+				-- Number of Capitals Modifier
+				iModifier = 5 * math.max(pMyPlayer:GetNumCapitalsControlled() - 1, 0)
+				if (iModifier ~= 0) then
+					controlTable = g_TheirCombatDataIM:GetInstance();
+					controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_NUM_CAPITALS_MODIFIER" );
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 				end
 				

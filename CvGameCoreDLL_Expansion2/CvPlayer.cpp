@@ -13364,6 +13364,10 @@ void CvPlayer::DoUpdateHappiness()
 	m_iHappiness += 5 * GET_TEAM(getTeam()).GetTeamTechs()->GetTechCount((TechTypes)GC.getInfoTypeForString("TECH_FUTURE_TECH", true));
 #endif
 
+#ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+	m_iHappiness += 5 * std::max(GetNumCapitalsControlled() - 1, 0);
+#endif
+
 	if(isLocalPlayer() && GetExcessHappiness() >= 100)
 	{
 		gDLL->UnlockAchievement(ACHIEVEMENT_XP2_45);
@@ -20654,6 +20658,9 @@ int CvPlayer::GetScienceTimes100() const
 		return 0;
 
 	int iValue = 0;
+#if defined PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+	int iMod = 0;
+#endif
 
 	// Science from our Cities
 	iValue += GetScienceFromCitiesTimes100(false);
@@ -20680,6 +20687,15 @@ int CvPlayer::GetScienceTimes100() const
 
 #ifdef SCIENCE_FROM_INFLUENCED_CIVS
 	iValue += GetSciencePerTurnFromInfluencedCivsTimes100();
+#endif
+
+#ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+	iMod += 5 * std::max(GetNumCapitalsControlled() - 1, 0);
+#endif
+
+#if defined PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+	iValue *= (100 + iMod);
+	iValue /= 100;
 #endif
 
 	return max(iValue, 0);
