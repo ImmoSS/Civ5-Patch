@@ -1235,6 +1235,8 @@
 ///
 #define REVEAL_MAP_GAME_OVER
 ///
+#define PLAYER_GET_NUM_CAPITALS_CONTROLLED
+///
 // #define TRADE_ROUTES_SCIENCE_MOD 3
 // Maintain backwards compatibility with older versions
 // Starting from v7.0

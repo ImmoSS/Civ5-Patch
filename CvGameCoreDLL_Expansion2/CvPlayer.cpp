@@ -31943,6 +31943,25 @@ bool CvPlayer::hasTurnTimerExpired()
 	return GC.getGame().hasTurnTimerExpired(GetID());
 }
 
+#ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
+int CvPlayer::GetNumCapitalsControlled() const
+{
+	int iNumCapitalsControlled = 0;
+
+	int iCityLoop;
+	const CvCity* pLoopCity = NULL;
+	for (pLoopCity = firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = nextCity(&iCityLoop))
+	{
+		if (pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && pLoopCity->IsOriginalCapital())
+		{
+			iNumCapitalsControlled += 1;
+		}
+	}
+
+	return iNumCapitalsControlled;
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 void CvPlayer::doArmySize()
 {

@@ -1058,6 +1058,9 @@ protected:
 #ifdef LUA_METHOD_GET_MINOR_QUEST_FRIENDSHIP_MOD
 	static int lGetMinorQuestFriendshipMod(lua_State* L);
 #endif
+#ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
+	static int lGetNumCapitalsControlled(lua_State* L);
+#endif
 };
 
 #endif //CVLUAPLAYER_H

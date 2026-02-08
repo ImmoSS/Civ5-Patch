@@ -1914,6 +1914,10 @@ public:
 
 	bool hasTurnTimerExpired();
 
+#ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
+	int GetNumCapitalsControlled() const;
+#endif
+
 protected:
 	class ConqueredByBoolField
 	{

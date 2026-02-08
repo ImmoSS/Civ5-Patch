@@ -1051,6 +1051,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 #ifdef LUA_METHOD_GET_MINOR_QUEST_FRIENDSHIP_MOD
 	Method(GetMinorQuestFriendshipMod);
 #endif
+#ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
+	Method(GetNumCapitalsControlled);
+#endif
 
 
 }
@@ -11382,5 +11385,12 @@ int CvLuaPlayer::lGetBuildingClassTourismChanges(lua_State* L)
 int CvLuaPlayer::lGetMinorQuestFriendshipMod(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvPlayerAI::getMinorQuestFriendshipMod);
+}
+#endif
+
+#ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
+int CvLuaPlayer::lGetNumCapitalsControlled(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::GetNumCapitalsControlled);
 }
 #endif
