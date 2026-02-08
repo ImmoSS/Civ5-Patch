@@ -695,6 +695,7 @@ function GetCultureTooltip(pCity)
 				strCultureToolTip = strCultureToolTip .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_CULTURE_WONDER_BONUS", iAmount);
 			end
 		end
+		
 		-- Future Tech modifier
 		local iAmount = 10 * Teams[Players[pCity:GetOwner()]:GetTeam()]:GetTeamTechs():GetTechCount(80);
 		if (iAmount ~= 0) then
