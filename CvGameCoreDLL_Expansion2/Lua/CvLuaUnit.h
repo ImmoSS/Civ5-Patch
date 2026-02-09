@@ -268,6 +268,9 @@ protected:
 #ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 	static int lGetLowHealthCombatModifier(lua_State* L);
 #endif
+#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
+	static int lIsIgnoreTerrainAndCoverBonuses(lua_State* L);
+#endif
 	static int lGetAttackModifier(lua_State* L);
 	static int lGetDefenseModifier(lua_State* L);
 #ifdef FIX_RANGE_DEFENSE_MOD

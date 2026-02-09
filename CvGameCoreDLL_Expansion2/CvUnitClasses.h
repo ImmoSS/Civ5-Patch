@@ -148,6 +148,9 @@ public:
 #ifdef UNIT_FORTIFICATION_MODIFIER
 	int GetFortificationModifier() const;
 #endif
+#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
+	bool IsIgnoreTerrainAndCoverBonuses() const;
+#endif
 
 	float GetUnitMaxSpeed() const;
 	float GetUnitPadTime() const;
@@ -314,6 +317,9 @@ private:
 #endif
 #ifdef UNIT_FORTIFICATION_MODIFIER
 	int m_iFortificationModifier;
+#endif
+#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
+	bool m_bIgnoreTerrainAndCoverBonuses;
 #endif
 
 	// This is not loaded from XML, but cached so we don't have to recalculate every time

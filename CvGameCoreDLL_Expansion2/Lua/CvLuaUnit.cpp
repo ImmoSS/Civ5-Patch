@@ -259,6 +259,9 @@ void CvLuaUnit::PushMethods(lua_State* L, int t)
 #ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 	Method(GetLowHealthCombatModifier);
 #endif
+#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
+	Method(IsIgnoreTerrainAndCoverBonuses);
+#endif
 	Method(GetAttackModifier);
 	Method(GetDefenseModifier);
 #ifdef FIX_RANGE_DEFENSE_MOD
@@ -2641,6 +2644,18 @@ int CvLuaUnit::lGetLowHealthCombatModifier(lua_State* L)
 
 	const int iResult = pkUnit->getDamage() < 50 ? 0 : pkUnit->getUnitInfo().GetLowHealthCombatModifier();
 	lua_pushinteger(L, iResult);
+	return 1;
+}
+#endif
+#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
+//------------------------------------------------------------------------------
+//int IsIgnoreTerrainAndCoverBonuses();
+int CvLuaUnit::lIsIgnoreTerrainAndCoverBonuses(lua_State* L)
+{
+	CvUnit* pkUnit = GetInstance(L);
+
+	const bool bResult = pkUnit->getUnitInfo().IsIgnoreTerrainAndCoverBonuses();
+	lua_pushboolean(L, bResult);
 	return 1;
 }
 #endif

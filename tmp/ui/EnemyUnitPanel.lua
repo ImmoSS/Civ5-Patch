@@ -1452,7 +1452,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				iModifier = pToPlot:DefenseModifier(pTheirUnit:GetTeam(), false, false);
 				if (iModifier < 0 or not pTheirUnit:NoDefensiveBonus()) then
 
-					if (iModifier ~= 0) then
+					if (iModifier ~= 0 and not pMyUnit:IsIgnoreTerrainAndCoverBonuses()) then
 						controlTable = g_TheirCombatDataIM:GetInstance();
 						controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_TERRAIN_MODIFIER" );
 						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
@@ -1677,7 +1677,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				-- Range Defense Modifier
 				if (bRanged) then
 					iModifier = pTheirUnit:RangedDefenseModifier();
-					if (iModifier ~= 0) then
+					if (iModifier ~= 0 and not pMyUnit:IsIgnoreTerrainAndCoverBonuses()) then
 						controlTable = g_TheirCombatDataIM:GetInstance();
 						controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_RANGE_DEFENSE_BONUS" );
 						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );

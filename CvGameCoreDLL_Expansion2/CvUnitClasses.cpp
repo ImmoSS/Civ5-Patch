@@ -129,6 +129,9 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef UNIT_FORTIFICATION_MODIFIER
 	m_iFortificationModifier(0),
 #endif
+#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
+	m_bIgnoreTerrainAndCoverBonuses(false),
+#endif
 	m_pbUpgradeUnitClass(NULL),
 	m_pbUnitAIType(NULL),
 	m_pbNotUnitAIType(NULL),
@@ -282,6 +285,9 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #endif
 #ifdef UNIT_FORTIFICATION_MODIFIER
 	m_iFortificationModifier = kResults.GetInt("FortificationModifier");
+#endif
+#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
+	m_bIgnoreTerrainAndCoverBonuses = kResults.GetBool("IgnoreTerrainAndCoverBonuses");
 #endif
 
 	m_strUnitArtInfoTag = kResults.GetText("UnitArtInfo");
@@ -1084,6 +1090,14 @@ int CvUnitEntry::GetLowHealthCombatModifier() const
 int CvUnitEntry::GetFortificationModifier() const
 {
 	return m_iFortificationModifier;
+}
+#endif
+
+#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
+///
+bool CvUnitEntry::IsIgnoreTerrainAndCoverBonuses() const
+{
+	return m_bIgnoreTerrainAndCoverBonuses;
 }
 #endif
 
