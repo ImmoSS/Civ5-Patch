@@ -5912,14 +5912,22 @@ int CvMinorCivAI::GetFriendshipChangePerTurnTimes100(PlayerTypes ePlayer)
 	iChangeThisTurn /= 100;
 
 #ifdef QUESTS_SYSTEM_OVERHAUL
+	int iRewardEveryTurn = 0;
 	QuestListForPlayer::iterator itr_quest;
 	for (itr_quest = m_QuestsGiven[ePlayer].begin(); itr_quest != m_QuestsGiven[ePlayer].end(); itr_quest++)
 	{
 		if (itr_quest->IsComplete() && itr_quest->IsRewardEveryTurn())
 		{
-			iChangeThisTurn += 100 * itr_quest->GetEveryTurnReward();
+			iRewardEveryTurn += 100 * itr_quest->GetEveryTurnReward();
 		}
 	}
+	if (GET_PLAYER(ePlayer).getMinorQuestFriendshipMod() != 0)
+	{
+		iRewardEveryTurn *= (100 + GET_PLAYER(ePlayer).getMinorQuestFriendshipMod());
+		iRewardEveryTurn /= 100;
+	}
+
+	iChangeThisTurn += iRewardEveryTurn;
 #endif
 
 	return iChangeThisTurn;
