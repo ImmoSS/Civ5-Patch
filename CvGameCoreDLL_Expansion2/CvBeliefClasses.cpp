@@ -1405,7 +1405,11 @@ int CvReligionBeliefs:: GetWonderProductionModifier(EraTypes eWonderEra) const
 	{
 		if(HasBelief((BeliefTypes)i))
 		{
+#ifdef ENHANCED_WONDER_PRODUCTION_MODIFIER
+			if ((int)eWonderEra < (int)pBeliefs->GetEntry(i)->GetObsoleteEra() || pBeliefs->GetEntry(i)->GetObsoleteEra() == NO_ERA)
+#else
 			if((int)eWonderEra < (int)pBeliefs->GetEntry(i)->GetObsoleteEra())
+#endif
 			{
 				rtnValue += pBeliefs->GetEntry(i)->GetWonderProductionModifier();
 			}

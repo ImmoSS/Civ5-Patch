@@ -5843,7 +5843,37 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding, CvString* toolTipSink
 						eEra = (EraTypes)pEntry->GetEra();
 						if(eEra != NO_ERA)
 						{
+#ifdef REFORMATION_BELIEFS_ONLY_FOR_FOUNDERS
+							CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
+							iTempMod = 0;
+
+							for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
+							{
+								if (pReligion->m_Beliefs.HasBelief((BeliefTypes)i))
+								{
+#ifdef ENHANCED_WONDER_PRODUCTION_MODIFIER
+									if ((int)eEra < (int)pBeliefs->GetEntry(i)->GetObsoleteEra() || pBeliefs->GetEntry(i)->GetObsoleteEra() == NO_ERA)
+#else
+									if ((int)eWonderEra < (int)pBeliefs->GetEntry(i)->GetObsoleteEra())
+#endif
+									{
+										if (pBeliefs->GetEntry(i)->IsReformationBelief())
+										{
+											if (pReligion->m_eFounder == getOwner())
+											{
+												iTempMod += pBeliefs->GetEntry(i)->GetWonderProductionModifier();
+											}
+										}
+										else
+										{
+											iTempMod += pBeliefs->GetEntry(i)->GetWonderProductionModifier();
+										}
+									}
+								}
+							}
+#else
 							iTempMod = pReligion->m_Beliefs.GetWonderProductionModifier(eEra);
+#endif
 							BeliefTypes eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
 							if (eSecondaryPantheon != NO_BELIEF)
 							{
