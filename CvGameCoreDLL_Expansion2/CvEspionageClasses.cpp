@@ -1663,6 +1663,9 @@ int CvPlayerEspionage::CalcPerTurn(int iSpyState, CvCity* pCity, int iSpyIndex)
 			int iPlayerEspionageModifier = GET_PLAYER(eCityOwner).GetEspionageModifier();
 			int iTheirPoliciesEspionageModifier = GET_PLAYER(eCityOwner).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_STEAL_TECH_SLOWER_MODIFIER);
 			int iMyPoliciesEspionageModifier = m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_STEAL_TECH_FASTER_MODIFIER);
+#ifdef UNDERGROUND_SECT_REWORK
+			iPlayerEspionageModifier += m_pPlayer->GetReligions()->GetSpyPressure() * 50;
+#endif
 			int iFinalModifier = (iBaseYieldRate * (100 + iCityEspionageModifier + iPlayerEspionageModifier + iTheirPoliciesEspionageModifier + iMyPoliciesEspionageModifier)) / 100;
 
 			int iResult = max(iFinalModifier, 1);
