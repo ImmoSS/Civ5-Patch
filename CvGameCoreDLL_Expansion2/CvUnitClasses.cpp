@@ -126,6 +126,9 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 	m_iLowHealthCombatModifier(0),
 #endif
+#ifdef UNIT_FORTIFICATION_MODIFIER
+	m_iFortificationModifier(0),
+#endif
 	m_pbUpgradeUnitClass(NULL),
 	m_pbUnitAIType(NULL),
 	m_pbNotUnitAIType(NULL),
@@ -276,6 +279,9 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #endif
 #ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 	m_iLowHealthCombatModifier = kResults.GetInt("LowHealthCombatModifier");
+#endif
+#ifdef UNIT_FORTIFICATION_MODIFIER
+	m_iFortificationModifier = kResults.GetInt("FortificationModifier");
 #endif
 
 	m_strUnitArtInfoTag = kResults.GetText("UnitArtInfo");
@@ -1070,6 +1076,14 @@ int CvUnitEntry::GetRangeAttackAreaDamageMod() const
 int CvUnitEntry::GetLowHealthCombatModifier() const
 {
 	return m_iLowHealthCombatModifier;
+}
+#endif
+
+#ifdef UNIT_FORTIFICATION_MODIFIER
+///
+int CvUnitEntry::GetFortificationModifier() const
+{
+	return m_iFortificationModifier;
 }
 #endif
 

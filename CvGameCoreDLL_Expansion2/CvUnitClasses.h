@@ -145,6 +145,9 @@ public:
 #ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 	int GetLowHealthCombatModifier() const;
 #endif
+#ifdef UNIT_FORTIFICATION_MODIFIER
+	int GetFortificationModifier() const;
+#endif
 
 	float GetUnitMaxSpeed() const;
 	float GetUnitPadTime() const;
@@ -308,6 +311,9 @@ private:
 #endif
 #ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 	int m_iLowHealthCombatModifier;
+#endif
+#ifdef UNIT_FORTIFICATION_MODIFIER
+	int m_iFortificationModifier;
 #endif
 
 	// This is not loaded from XML, but cached so we don't have to recalculate every time

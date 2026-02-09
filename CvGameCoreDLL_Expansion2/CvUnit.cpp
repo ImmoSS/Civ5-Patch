@@ -14045,6 +14045,9 @@ int CvUnit::fortifyModifier() const
 	
 		// Apply modifiers
 		int iMod = GET_PLAYER(getOwner()).getUnitFortificationModifier();
+#ifdef UNIT_FORTIFICATION_MODIFIER
+		iMod += getUnitInfo().GetFortificationModifier();
+#endif
 		if(iMod != 0)
 		{
 			iValue = ((100 + iMod) / 100) * iValue;
