@@ -38,13 +38,7 @@ function UpdateData()
 					strScienceText = string.format("[COLOR:255:60:60:255]" .. Locale.ConvertTextKey("TXT_KEY_NO_SCIENCE") .. "[/COLOR]");
 				-- We have science
 				else
-					if (sciencePerTurn % 100) == 0 then
-						strScienceText = string.format("+%i", sciencePerTurn / 100);
-					elseif (sciencePerTurn % 10) == 0 then
-						strScienceText = string.format("+%.1f", sciencePerTurn / 100);
-					else
-						strScienceText = string.format("+%.2f", sciencePerTurn / 100);
-					end
+					strScienceText = string.format("+%g", sciencePerTurn / 100);
 
 					local iGoldPerTurn = pPlayer:CalculateGoldRate();
 					

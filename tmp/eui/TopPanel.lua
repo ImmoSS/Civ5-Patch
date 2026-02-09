@@ -967,13 +967,7 @@ local function UpdateTopPanelNow()
 		local sciencePerTurnTimes100 = g_activePlayer:GetScienceTimes100()
 
 		local strSciencePerTurn = ""
-		if (sciencePerTurnTimes100 % 100) == 0 then
-			strSciencePerTurn = S( "+%.0f", sciencePerTurnTimes100 / 100 )
-		elseif (sciencePerTurnTimes100 % 10) == 0 then
-			strSciencePerTurn = S( "+%.1f", sciencePerTurnTimes100 / 100 )
-		else
-			strSciencePerTurn = S( "+%.2f", sciencePerTurnTimes100 / 100 )
-		end
+		strSciencePerTurn = S( "+%g", sciencePerTurnTimes100 / 100 )
 
 		-- Gold being deducted from our Science ?
 		if g_activePlayer:GetScienceFromBudgetDeficitTimes100() == 0 then
@@ -1642,6 +1636,7 @@ g_toolTipHandler.SciencePerTurn = function()-- control )
 			if iMod ~= 0 then
 				tips:insert( "----------------" )
 				tips:insertLocalizedIfNonZero( "TXT_KEY_YIELD_BASE", iBase, "[ICON_RESEARCH]" )
+				tips:insert( "" )
 				tips:insertLocalizedIfNonZero( "TXT_KEY_TP_NUM_CAPITALS_SCIENCE_MOD", iNumCapitalsScienceMod )
 			end
 
@@ -2841,6 +2836,7 @@ g_toolTipHandler.CultureString = function()-- control )
 		if iMod ~= 0 then
 			tips:insert( "----------------" )
 			tips:insertLocalizedIfNonZero( "TXT_KEY_YIELD_BASE", iBase, "[ICON_CULTURE]" )
+			tips:insert( "" )
 			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_CULTURE_FROM_GOLDEN_AGE", iGoldenAgeMod )
 			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_CULTURE_FROM_BONUS_TURNS", iBonusTurnsMod, g_activePlayer:GetCultureBonusTurns() )
 		end
