@@ -3663,7 +3663,6 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 		}
 
 		// Is this City being Occupied?
-		SLOG("%d MinorMajorityOwnerID", pNewCity->getMinorMajorityOwner());
 #ifdef CITY_MINOR_MAJORITY_OWNER
 		if (pNewCity->getOriginalOwner() != GetID() && pNewCity->getMinorMajorityOwner() != GetID())
 #else

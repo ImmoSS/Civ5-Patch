@@ -9763,13 +9763,10 @@ void CvCity::ChangeNoOccupiedUnhappinessCount(int iChange)
 	}
 #endif
 #ifdef CITY_MINOR_MAJORITY_OWNER
-	if (getOwner() != NO_PLAYER && getOriginalOwner() != NO_PLAYER)
+	if (iChange > 0 && GC.getGame().isNetworkMultiPlayer() && getOwner() != NO_PLAYER && GET_PLAYER(getOriginalOwner()).isMinorCiv() && getOriginalOwner() != NO_PLAYER)
 	{
-		if (GET_PLAYER(getOriginalOwner()).isMinorCiv())
-		{
-			setMinorMajorityOwner(getOwner());
-			SetOccupied(false);
-		}
+		setMinorMajorityOwner(getOwner());
+		SetOccupied(false);
 	}
 #endif
 }
