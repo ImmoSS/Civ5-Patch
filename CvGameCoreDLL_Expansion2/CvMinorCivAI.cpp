@@ -1606,7 +1606,6 @@ int CvMinorCivQuest::GetEveryTurnReward()
 	int iLength = GC.getMINOR_QUEST_STANDARD_CONTEST_LENGTH();
 	iLength *= GC.getGame().getGameSpeedInfo().getGreatPeoplePercent();
 	iLength /= 100;
-	pMinor->GetMinorCivAI()->ChangeFriendshipWithMajor(m_eAssignedPlayer, GetInfluenceReward() / iLength, /*bFromQuest*/ true);
 
 	return GetInfluenceReward() / iLength;
 }
@@ -5918,7 +5917,7 @@ int CvMinorCivAI::GetFriendshipChangePerTurnTimes100(PlayerTypes ePlayer)
 	{
 		if (itr_quest->IsComplete() && itr_quest->IsRewardEveryTurn())
 		{
-			iChangeThisTurn += itr_quest->GetEveryTurnReward();
+			iChangeThisTurn += 100 * itr_quest->GetEveryTurnReward();
 		}
 	}
 #endif
