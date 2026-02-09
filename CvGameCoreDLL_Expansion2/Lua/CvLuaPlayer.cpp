@@ -242,6 +242,21 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 
 	Method(GetJONSCultureEverGenerated);
 
+#ifdef PLAYER_CULTURE_TIMES_100
+	Method(GetTotalJONSCulturePerTurnTimes100);
+
+	Method(GetJONSCulturePerTurnFromCitiesTimes100);
+
+	Method(GetCulturePerTurnFromReligionTimes100);
+	Method(GetCulturePerTurnFromBonusTurnsTimes100);
+
+	Method(GetJONSCultureTimes100);
+	Method(SetJONSCultureTimes100);
+	Method(ChangeJONSCultureTimes100);
+
+	Method(GetJONSCultureEverGeneratedTimes100);
+#endif
+
 	Method(GetLastTurnLifetimeCulture);
 	Method(GetInfluenceOn);
 	Method(GetLastTurnInfluenceOn);
@@ -2441,6 +2456,56 @@ int CvLuaPlayer::lGetJONSCultureEverGenerated(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvPlayerAI::GetJONSCultureEverGenerated);
 }
+#ifdef PLAYER_CULTURE_TIMES_100
+//------------------------------------------------------------------------------
+//void GetTotalJONSCulturePerTurnTimes100(int iNewValue);
+int CvLuaPlayer::lGetTotalJONSCulturePerTurnTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::GetTotalJONSCulturePerTurnTimes100);
+}
+//------------------------------------------------------------------------------
+//void GetJONSCulturePerTurnFromCitiesTimes100(int iChange);
+int CvLuaPlayer::lGetJONSCulturePerTurnFromCitiesTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::GetJONSCulturePerTurnFromCitiesTimes100);
+}
+//------------------------------------------------------------------------------
+//int GetCulturePerTurnFromReligionTimes100();
+int CvLuaPlayer::lGetCulturePerTurnFromReligionTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::GetCulturePerTurnFromReligionTimes100);
+}
+//------------------------------------------------------------------------------
+//void GetCulturePerTurnFromBonusTurnsTimes100(int iNewValue);
+int CvLuaPlayer::lGetCulturePerTurnFromBonusTurnsTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::GetCulturePerTurnFromBonusTurnsTimes100);
+}
+//------------------------------------------------------------------------------
+//void getJONSCultureTimes100(int iChange);
+int CvLuaPlayer::lGetJONSCultureTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::getJONSCultureTimes100);
+}
+//------------------------------------------------------------------------------
+//int setJONSCultureTimes100();
+int CvLuaPlayer::lSetJONSCultureTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::setJONSCultureTimes100);
+}
+//------------------------------------------------------------------------------
+//int changeJONSCultureTimes100();
+int CvLuaPlayer::lChangeJONSCultureTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::changeJONSCultureTimes100);
+}
+//------------------------------------------------------------------------------
+//int GetJONSCultureEverGeneratedTimes100();
+int CvLuaPlayer::lGetJONSCultureEverGeneratedTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::GetJONSCultureEverGeneratedTimes100);
+}
+#endif
 //------------------------------------------------------------------------------
 //int GetLastTurnLifetimeCulture();
 int CvLuaPlayer::lGetLastTurnLifetimeCulture(lua_State* L)

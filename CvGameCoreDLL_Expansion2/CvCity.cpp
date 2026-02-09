@@ -143,6 +143,9 @@ CvCity::CvCity() :
 	, m_iJONSCulturePerTurnFromPolicies("CvCity::m_iJONSCulturePerTurnFromPolicies", m_syncArchive)
 	, m_iJONSCulturePerTurnFromSpecialists("CvCity::m_iJONSCulturePerTurnFromSpecialists", m_syncArchive)
 	, m_iJONSCulturePerTurnFromReligion("CvCity::m_iJONSCulturePerTurnFromReligion", m_syncArchive)
+#ifdef PLAYER_CULTURE_TIMES_100
+	, m_iJONSCultureStoredTimes100("CvCity::m_iJONSCultureStoredTimes100", m_syncArchive)
+#endif
 	, m_iFaithPerTurnFromBuildings(0)
 	, m_iFaithPerTurnFromPolicies(0)
 	, m_iFaithPerTurnFromReligion(0)
@@ -774,6 +777,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iJONSCulturePerTurnFromPolicies = 0;
 	m_iJONSCulturePerTurnFromSpecialists = 0;
 	m_iJONSCulturePerTurnFromReligion = 0;
+#ifdef PLAYER_CULTURE_TIMES_100
+	m_iJONSCultureStoredTimes100 = 0;
+#endif
 	m_iFaithPerTurnFromBuildings = 0;
 	m_iFaithPerTurnFromPolicies = 0;
 	m_iFaithPerTurnFromReligion = 0;
@@ -1740,6 +1746,19 @@ void CvCity::doTurn()
 		DoTestResourceDemanded();
 #endif
 
+#ifdef PLAYER_CULTURE_TIMES_100
+		// Culture accumulation
+		if (getJONSCulturePerTurnTimes100() > 0)
+		{
+			ChangeJONSCultureStoredTimes100(getJONSCulturePerTurnTimes100());
+		}
+
+		// Enough Culture to acquire a new Plot?
+		if (GetJONSCultureStoredTimes100() >= GetJONSCultureThresholdTimes100())
+		{
+			DoJONSCultureLevelIncrease();
+		}
+#else
 		// Culture accumulation
 		if(getJONSCulturePerTurn() > 0)
 		{
@@ -1751,6 +1770,7 @@ void CvCity::doTurn()
 		{
 			DoJONSCultureLevelIncrease();
 		}
+#endif
 
 		// Resource Demanded Counter
 		if(GetResourceDemandedCountdown() > 0)
@@ -8918,8 +8938,12 @@ void CvCity::changeCityExtraHeal(int iChange)
 /// Amount of Culture in this City
 int CvCity::GetJONSCultureStored() const
 {
+#ifdef PLAYER_CULTURE_TIMES_100
+	return GetJONSCultureStoredTimes100() / 100;
+#else
 	VALIDATE_OBJECT
 	return m_iJONSCultureStored;
+#endif
 }
 
 //	--------------------------------------------------------------------------------
@@ -8969,8 +8993,13 @@ void CvCity::DoJONSCultureLevelIncrease()
 {
 	VALIDATE_OBJECT
 
+#ifdef PLAYER_CULTURE_TIMES_100
+	int iOverflow = GetJONSCultureStoredTimes100() - GetJONSCultureThresholdTimes100();
+	SetJONSCultureStoredTimes100(iOverflow);
+#else
 	int iOverflow = GetJONSCultureStored() - GetJONSCultureThreshold();
 	SetJONSCultureStored(iOverflow);
+#endif
 	ChangeJONSCultureLevel(1);
 
 	CvPlot* pPlotToAcquire = GetNextBuyablePlot();
@@ -9103,6 +9132,9 @@ int CvCity::GetJONSCultureThreshold() const
 //	--------------------------------------------------------------------------------
 int CvCity::getJONSCulturePerTurn() const
 {
+#ifdef PLAYER_CULTURE_TIMES_100
+	return getJONSCulturePerTurnTimes100() / 100;
+#else
 	VALIDATE_OBJECT
 
 	// No culture during Resistance
@@ -9157,6 +9189,7 @@ int CvCity::getJONSCulturePerTurn() const
 	iCulture /= 100;
 
 	return iCulture;
+#endif
 }
 
 //	--------------------------------------------------------------------------------
@@ -9505,6 +9538,99 @@ void CvCity::changeCultureRateModifier(int iChange)
 		m_iCultureRateModifier = (m_iCultureRateModifier + iChange);
 	}
 }
+
+#ifdef PLAYER_CULTURE_TIMES_100
+//	--------------------------------------------------------------------------------
+/// Amount of Culture in this City
+int CvCity::GetJONSCultureStoredTimes100() const
+{
+	VALIDATE_OBJECT
+	return m_iJONSCultureStoredTimes100;
+}
+
+//	--------------------------------------------------------------------------------
+/// Sets the amount of Culture in this City
+void CvCity::SetJONSCultureStoredTimes100(int iValue)
+{
+	VALIDATE_OBJECT
+	m_iJONSCultureStoredTimes100 = iValue;
+}
+
+//	--------------------------------------------------------------------------------
+/// Changes the amount of Culture in this City
+void CvCity::ChangeJONSCultureStoredTimes100(int iChange)
+{
+	VALIDATE_OBJECT
+	SetJONSCultureStoredTimes100(GetJONSCultureStoredTimes100() + iChange);
+}
+
+//	--------------------------------------------------------------------------------
+/// Amount of Culture needed in this City to acquire a new Plot
+int CvCity::GetJONSCultureThresholdTimes100() const
+{
+	return GetJONSCultureThreshold() * 100;
+}
+
+
+//	--------------------------------------------------------------------------------
+int CvCity::getJONSCulturePerTurnTimes100() const
+{
+	VALIDATE_OBJECT
+
+	// No culture during Resistance
+	if(IsResistance() || IsRazing())
+	{
+		return 0;
+	}
+
+	int iCulture = GetBaseJONSCulturePerTurn() * 100;
+
+	int iModifier = 100;
+
+	// City modifier
+	iModifier += getCultureRateModifier();
+	// Player modifier
+	iModifier += GET_PLAYER(getOwner()).GetJONSCultureCityModifier();
+#ifdef POLICY_CAPITAL_CULTURE_MOD_PER_DIPLOMAT
+	if (isCapital())
+	{
+		int iNumDiplomats = 0;
+		for (uint ui = 0; ui < GET_PLAYER(getOwner()).GetEspionage()->m_aSpyList.size(); ui++)
+		{
+			if (GET_PLAYER(getOwner()).GetEspionage()->IsDiplomat(ui) && GET_PLAYER(getOwner()).GetEspionage()->m_aSpyList[ui].m_eSpyState == SPY_STATE_SCHMOOZE)
+			{
+				iNumDiplomats++;
+			}	
+		}
+		iModifier += iNumDiplomats * GET_PLAYER(getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_CAPITAL_CULTURE_MOD_PER_DIPLOMAT);
+	}
+#endif
+
+#ifdef FLOURISHING_OF_ARTS_REWORK
+	if (GetCityCulture()->GetNumGreatWorks() > 0)
+		iModifier += GET_PLAYER(getOwner()).GetCultureWonderMultiplier() * GetCityCulture()->GetNumGreatWorks();
+#else
+	// Wonder here?
+	if(getNumWorldWonders() > 0)
+		iModifier += GET_PLAYER(getOwner()).GetCultureWonderMultiplier();
+#endif
+
+#ifdef FUTURE_TECH_RESEARCHING_BONUSES
+	iModifier += 10 * GET_TEAM(getTeam()).GetTeamTechs()->GetTechCount((TechTypes)GC.getInfoTypeForString("TECH_FUTURE_TECH", true));
+#endif
+
+	// Puppet?
+	if(IsPuppet())
+	{
+		iModifier += GC.getPUPPET_CULTURE_MODIFIER();
+	}
+
+	iCulture *= iModifier;
+	iCulture /= 100;
+
+	return iCulture;
+}
+#endif
 
 
 //	--------------------------------------------------------------------------------
@@ -16261,6 +16387,20 @@ void CvCity::read(FDataStream& kStream)
 	kStream >> m_iJONSCulturePerTurnFromPolicies;
 	kStream >> m_iJONSCulturePerTurnFromSpecialists;
 	kStream >> m_iJONSCulturePerTurnFromReligion;
+#ifdef PLAYER_CULTURE_TIMES_100
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1008)
+	{
+# endif
+		kStream >> m_iJONSCultureStoredTimes100;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iJONSCultureStoredTimes100 = 0;
+	}
+# endif
+#endif
 	kStream >> m_iFaithPerTurnFromBuildings;
 
 	kStream >> m_iFaithPerTurnFromPolicies;
@@ -16971,6 +17111,9 @@ void CvCity::write(FDataStream& kStream) const
 	kStream << m_iJONSCulturePerTurnFromPolicies;
 	kStream << m_iJONSCulturePerTurnFromSpecialists;
 	kStream << m_iJONSCulturePerTurnFromReligion;
+#ifdef PLAYER_CULTURE_TIMES_100
+	kStream << m_iJONSCultureStoredTimes100;
+#endif
 	kStream << m_iFaithPerTurnFromBuildings;
 	kStream << m_iFaithPerTurnFromPolicies;
 	kStream << m_iFaithPerTurnFromReligion;

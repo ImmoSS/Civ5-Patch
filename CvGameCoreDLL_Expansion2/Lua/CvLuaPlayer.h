@@ -233,6 +233,21 @@ protected:
 
 	static int lGetJONSCultureEverGenerated(lua_State* L);
 
+#ifdef PLAYER_CULTURE_TIMES_100
+	static int lGetTotalJONSCulturePerTurnTimes100(lua_State* L);
+
+	static int lGetJONSCulturePerTurnFromCitiesTimes100(lua_State* L);
+
+	static int lGetCulturePerTurnFromReligionTimes100(lua_State* L);
+	static int lGetCulturePerTurnFromBonusTurnsTimes100(lua_State* L);
+
+	static int lGetJONSCultureTimes100(lua_State* L);
+	static int lSetJONSCultureTimes100(lua_State* L);
+	static int lChangeJONSCultureTimes100(lua_State* L);
+
+	static int lGetJONSCultureEverGeneratedTimes100(lua_State* L);
+#endif
+
 	static int lGetLastTurnLifetimeCulture(lua_State* L);
 	static int lGetInfluenceOn(lua_State* L);
 	static int lGetLastTurnInfluenceOn(lua_State* L);

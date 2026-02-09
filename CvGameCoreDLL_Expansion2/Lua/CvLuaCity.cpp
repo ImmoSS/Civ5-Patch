@@ -252,6 +252,15 @@ void CvLuaCity::PushMethods(lua_State* L, int t)
 	Method(GetCultureRateModifier);
 	Method(ChangeCultureRateModifier);
 
+#ifdef PLAYER_CULTURE_TIMES_100
+	Method(GetJONSCultureStoredTimes100);
+	Method(SetJONSCultureStoredTimes100);
+	Method(ChangeJONSCultureStoredTimes100);
+	Method(GetJONSCultureThresholdTimes100);
+
+	Method(GetJONSCulturePerTurnTimes100);
+#endif
+
 	Method(GetNumGreatWorks);
 	Method(GetNumGreatWorkSlots);
 	Method(GetBaseTourism);
@@ -2235,6 +2244,39 @@ int CvLuaCity::lChangeCultureRateModifier(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvCity::changeCultureRateModifier);
 }
+#ifdef PLAYER_CULTURE_TIMES_100
+//------------------------------------------------------------------------------
+//int GetJONSCultureStoredTimes100() const;
+int CvLuaCity::lGetJONSCultureStoredTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvCity::GetJONSCultureStoredTimes100);
+}
+//------------------------------------------------------------------------------
+//void SetJONSCultureStoredTimes100(int iValue);
+int CvLuaCity::lSetJONSCultureStoredTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvCity::SetJONSCultureStoredTimes100);
+}
+//------------------------------------------------------------------------------
+//void ChangeJONSCultureStoredTimes100(int iChange);
+int CvLuaCity::lChangeJONSCultureStoredTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvCity::ChangeJONSCultureStoredTimes100);
+}
+//------------------------------------------------------------------------------
+//int GetJONSCultureThresholdTimes100() const;
+int CvLuaCity::lGetJONSCultureThresholdTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvCity::GetJONSCultureThresholdTimes100);
+}
+
+//------------------------------------------------------------------------------
+//int getJONSCulturePerTurnTimes100() const;
+int CvLuaCity::lGetJONSCulturePerTurnTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvCity::getJONSCulturePerTurnTimes100);
+}
+#endif
 //------------------------------------------------------------------------------
 //int GetNumGreatWorks();
 int CvLuaCity::lGetNumGreatWorks(lua_State* L)

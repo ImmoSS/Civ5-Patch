@@ -663,25 +663,27 @@ function GetCultureTooltip(pCity)
 			
 			strCultureToolTip = strCultureToolTip .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_CULTURE_FROM_TRAITS", iCultureFromTraits);
 		end
+
+		strCultureToolTip = strCultureToolTip .. "[NEWLINE]" .. "----------------"
 		
 		-- Empire Culture modifier
 		local iAmount = Players[pCity:GetOwner()]:GetCultureCityModifier();
 		if (iAmount ~= 0) then
-			strCultureToolTip = strCultureToolTip .. "[NEWLINE][NEWLINE]";
+			strCultureToolTip = strCultureToolTip .. "[NEWLINE]";
 			strCultureToolTip = strCultureToolTip .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_CULTURE_PLAYER_MOD", iAmount);
 		end
 		
 		-- City Culture modifier
 		local iAmount = pCity:GetCultureRateModifier();
 		if (iAmount ~= 0) then
-			strCultureToolTip = strCultureToolTip .. "[NEWLINE][NEWLINE]";
+			strCultureToolTip = strCultureToolTip .. "[NEWLINE]";
 			strCultureToolTip = strCultureToolTip .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_CULTURE_CITY_MOD", iAmount);
 		end
 		
 		-- Policy Culture modifier
 		local iAmount = pCity:GetCapitalCultureModPerDiplomat();
 		if (iAmount ~= 0) then
-			strCultureToolTip = strCultureToolTip .. "[NEWLINE][NEWLINE]";
+			strCultureToolTip = strCultureToolTip .. "[NEWLINE]";
 			strCultureToolTip = strCultureToolTip .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_CULTURE_POLICY_MOD", iAmount);
 		end
 		
@@ -691,7 +693,7 @@ function GetCultureTooltip(pCity)
 			iAmount = Players[pCity:GetOwner()]:GetCultureWonderMultiplier();
 			
 			if (iAmount ~= 0) then
-				strCultureToolTip = strCultureToolTip .. "[NEWLINE][NEWLINE]";
+				strCultureToolTip = strCultureToolTip .. "[NEWLINE]";
 				strCultureToolTip = strCultureToolTip .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_CULTURE_WONDER_BONUS", iAmount);
 			end
 		end
@@ -699,7 +701,7 @@ function GetCultureTooltip(pCity)
 		-- Future Tech modifier
 		local iAmount = 10 * Teams[Players[pCity:GetOwner()]:GetTeam()]:GetTeamTechs():GetTechCount(80);
 		if (iAmount ~= 0) then
-			strCultureToolTip = strCultureToolTip .. "[NEWLINE][NEWLINE]";
+			strCultureToolTip = strCultureToolTip .. "[NEWLINE]";
 			strCultureToolTip = strCultureToolTip .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_CULTURE_FUTURE_TECH_BONUS", iAmount);
 		end
 		
@@ -716,8 +718,8 @@ function GetCultureTooltip(pCity)
 	
 	
 	-- Tile growth
-	local iCulturePerTurn = pCity:GetJONSCulturePerTurn();
-	local iCultureStored = pCity:GetJONSCultureStored();
+	local iCulturePerTurn = pCity:GetJONSCulturePerTurnTimes100() / 100;
+	local iCultureStored = pCity:GetJONSCultureStoredTimes100() / 100;
 	local iCultureNeeded = pCity:GetJONSCultureThreshold();
 
 	strCultureToolTip = strCultureToolTip .. "[NEWLINE][NEWLINE]";

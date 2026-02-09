@@ -403,6 +403,16 @@ public:
 	int getCultureRateModifier() const;
 	void changeCultureRateModifier(int iChange);
 
+#ifdef PLAYER_CULTURE_TIMES_100
+	int GetJONSCultureStoredTimes100() const;
+	void SetJONSCultureStoredTimes100(int iValue);
+	void ChangeJONSCultureStoredTimes100(int iChange);
+
+	int GetJONSCultureThresholdTimes100() const;
+
+	int getJONSCulturePerTurnTimes100() const;
+#endif
+
 	// END Culture
 #ifdef BELIEF_HALF_FAITH_IN_CITY
 	int GetFaithMod() const;
@@ -982,6 +992,9 @@ protected:
 	FAutoVariable<int, CvCity> m_iJONSCulturePerTurnFromPolicies;
 	FAutoVariable<int, CvCity> m_iJONSCulturePerTurnFromSpecialists;
 	FAutoVariable<int, CvCity> m_iJONSCulturePerTurnFromReligion;
+#ifdef PLAYER_CULTURE_TIMES_100
+	FAutoVariable<int, CvCity> m_iJONSCultureStoredTimes100;
+#endif
 	int m_iFaithPerTurnFromBuildings;
 	int m_iFaithPerTurnFromPolicies;
 	int m_iFaithPerTurnFromReligion;

@@ -1945,8 +1945,8 @@ local function GetCultureTooltip( city )
 	local culturePerTurn, cultureStored, cultureNeeded, cultureFromBuildings, cultureFromPolicies, cultureFromSpecialists, cultureFromTraits, baseCulturePerTurn
 	-- Thanks fo Firaxis Cleverness...
 	if civ5_mode then
-		culturePerTurn = city:GetJONSCulturePerTurn()
-		cultureStored = city:GetJONSCultureStored()
+		culturePerTurn = city:GetJONSCulturePerTurnTimes100() / 100
+		cultureStored = city:GetJONSCultureStoredTimes100() / 100
 		cultureNeeded = city:GetJONSCultureThreshold()
 		cultureFromBuildings = city:GetJONSCulturePerTurnFromBuildings()
 		cultureFromPolicies = city:GetJONSCulturePerTurnFromPolicies()

@@ -587,6 +587,24 @@ public:
 
 	int GetCultureYieldFromPreviousTurns(int iGameTurn, int iNumPreviousTurnsToCount);
 
+#ifdef PLAYER_CULTURE_TIMES_100
+	int GetTotalJONSCulturePerTurnTimes100() const;
+
+	int GetJONSCulturePerTurnFromCitiesTimes100() const;
+
+	int GetCulturePerTurnFromReligionTimes100() const;
+
+	int GetCulturePerTurnFromBonusTurnsTimes100() const;
+
+	int getJONSCultureTimes100() const;
+	void setJONSCultureTimes100(int iNewValue);
+	void changeJONSCultureTimes100(int iChange);
+
+	int GetJONSCultureEverGeneratedTimes100() const;
+	void SetJONSCultureEverGeneratedTimes100(int iNewValue);
+	void ChangeJONSCultureEverGeneratedTimes100(int iChange);
+#endif
+
 #ifdef POLICY_BUILDINGS_SPECIALIST_COUNT_CHANGE
 	int getBuildingScecialistCountChange(BuildingTypes eIndex1, SpecialistTypes eIndex2) const;
 	void changeBuildingScecialistCountChange(BuildingTypes eIndex1, SpecialistTypes eIndex2, int iChange);
@@ -1989,6 +2007,10 @@ protected:
 	FAutoVariable<int, CvPlayer> m_iCulturePerWonder;
 	FAutoVariable<int, CvPlayer> m_iCultureWonderMultiplier;
 	FAutoVariable<int, CvPlayer> m_iCulturePerTechResearched;
+#ifdef PLAYER_CULTURE_TIMES_100
+	FAutoVariable<int, CvPlayer> m_iJONSCultureTimes100;
+	FAutoVariable<int, CvPlayer> m_iJONSCultureEverGeneratedTimes100;
+#endif
 	int m_iFaith;
 	int m_iFaithEverGenerated;
 	FAutoVariable<int, CvPlayer> m_iHappiness;

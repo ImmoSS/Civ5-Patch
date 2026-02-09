@@ -252,6 +252,14 @@ protected:
 	static int lGetCultureRateModifier(lua_State* L);
 	static int lChangeCultureRateModifier(lua_State* L);
 
+#ifdef PLAYER_CULTURE_TIMES_100
+	static int lGetJONSCultureStoredTimes100(lua_State* L);
+	static int lSetJONSCultureStoredTimes100(lua_State* L);
+	static int lChangeJONSCultureStoredTimes100(lua_State* L);
+	static int lGetJONSCultureThresholdTimes100(lua_State* L);
+	static int lGetJONSCulturePerTurnTimes100(lua_State* L);
+#endif
+
 	static int lGetNumGreatWorks(lua_State* L);
 	static int lGetNumGreatWorkSlots(lua_State* L);
 	static int lGetBaseTourism(lua_State* L);
