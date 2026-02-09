@@ -31,14 +31,20 @@ function UpdateData()
 				strScienceText = Locale.ConvertTextKey("TXT_KEY_TOP_PANEL_SCIENCE_OFF");
 			else
 			
-				local sciencePerTurn = pPlayer:GetScience();
+				local sciencePerTurn = pPlayer:GetScienceTimes100();
 			
 				-- No Science
 				if (sciencePerTurn <= 0) then
 					strScienceText = string.format("[COLOR:255:60:60:255]" .. Locale.ConvertTextKey("TXT_KEY_NO_SCIENCE") .. "[/COLOR]");
 				-- We have science
 				else
-					strScienceText = string.format("+%i", sciencePerTurn);
+					if (sciencePerTurn % 100) == 0 then
+						strScienceText = string.format("+%i", sciencePerTurn / 100);
+					elseif (sciencePerTurn % 10) == 0 then
+						strScienceText = string.format("+%.1f", sciencePerTurn / 100);
+					else
+						strScienceText = string.format("+%.2f", sciencePerTurn / 100);
+					end
 
 					local iGoldPerTurn = pPlayer:CalculateGoldRate();
 					
