@@ -142,6 +142,9 @@ public:
 #endif
 	int GetRangeAttackAreaDamageMod() const;
 #endif
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
+	int GetLowHealthCombatModifier() const;
+#endif
 
 	float GetUnitMaxSpeed() const;
 	float GetUnitPadTime() const;
@@ -302,6 +305,9 @@ private:
 #endif
 #ifdef UNIT_RANGE_ATTACK_AREA_DAMAGE_MOD
 	int m_iRangeAttackAreaDamageMod;
+#endif
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
+	int m_iLowHealthCombatModifier;
 #endif
 
 	// This is not loaded from XML, but cached so we don't have to recalculate every time

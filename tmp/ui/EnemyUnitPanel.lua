@@ -615,6 +615,14 @@ function UpdateCombatOddsUnitVsCity(pMyUnit, pCity)
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 				end
 			end
+
+			-- Low Health Modifier
+			iModifier = pMyUnit:GetLowHealthCombatModifier();
+			if (iModifier ~= 0) then
+				controlTable = g_MyCombatDataIM:GetInstance();
+				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_LOW_HEALTH_COMBAT_MOD" );
+				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+			end
 			
 			-- Policy Attack bonus
 			local iTurns = pMyPlayer:GetAttackBonusTurns();
@@ -1092,6 +1100,14 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 				end
 			end
+
+			-- Low Health Modifier
+			iModifier = pMyUnit:GetLowHealthCombatModifier();
+			if (iModifier ~= 0) then
+				controlTable = g_MyCombatDataIM:GetInstance();
+				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_LOW_HEALTH_COMBAT_MOD" );
+				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+			end
 			
 			-- Attack Modifier
 			iModifier = pMyUnit:GetAttackModifier();
@@ -1422,6 +1438,14 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 						controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NO_ADJACENT_FRIEND_UNIT_BONUS" );
 						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 					end
+				end
+
+				-- Low Health Modifier
+				iModifier = pTheirUnit:GetLowHealthCombatModifier();
+				if (iModifier ~= 0) then
+					controlTable = g_MyCombatDataIM:GetInstance();
+					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_LOW_HEALTH_COMBAT_MOD" );
+					controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 				end
 
 				-- Plot Defense
@@ -1978,6 +2002,14 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_NO_ADJACENT_FRIEND_UNIT_BONUS" );
 				controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 			end
+		end
+
+		-- Low Health Modifier
+		iModifier = theirUnit:GetLowHealthCombatModifier();
+		if (iModifier ~= 0) then
+			controlTable = g_MyCombatDataIM:GetInstance();
+			controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_LOW_HEALTH_COMBAT_MOD" );
+			controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 		end
 		
 		-- Plot Defense

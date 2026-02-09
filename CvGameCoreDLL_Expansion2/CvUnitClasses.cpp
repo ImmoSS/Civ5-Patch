@@ -123,6 +123,9 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef UNIT_RANGE_ATTACK_AREA_DAMAGE_MOD
 	m_iRangeAttackAreaDamageMod(0),
 #endif
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
+	m_iLowHealthCombatModifier(0),
+#endif
 	m_pbUpgradeUnitClass(NULL),
 	m_pbUnitAIType(NULL),
 	m_pbNotUnitAIType(NULL),
@@ -270,6 +273,9 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #endif
 #ifdef UNIT_RANGE_ATTACK_AREA_DAMAGE_MOD
 	m_iRangeAttackAreaDamageMod = kResults.GetInt("RangeAttackAreaDamageMod");
+#endif
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
+	m_iLowHealthCombatModifier = kResults.GetInt("LowHealthCombatModifier");
 #endif
 
 	m_strUnitArtInfoTag = kResults.GetText("UnitArtInfo");
@@ -1050,11 +1056,20 @@ int CvUnitEntry::GetNoAdjacentMod() const
 	return m_iNoAdjacentMod;
 }
 #endif
+
 #ifdef UNIT_RANGE_ATTACK_AREA_DAMAGE_MOD
 ///
 int CvUnitEntry::GetRangeAttackAreaDamageMod() const
 {
 	return m_iRangeAttackAreaDamageMod;
+}
+#endif
+
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
+///
+int CvUnitEntry::GetLowHealthCombatModifier() const
+{
+	return m_iLowHealthCombatModifier;
 }
 #endif
 
