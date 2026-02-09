@@ -2833,12 +2833,17 @@ g_toolTipHandler.CultureString = function()-- control )
 		end
 		iMod = iMod + iBonusTurnsMod
 
+		-- Num Capitals Culture mod
+		local iNumCapitalsCultureMod = 5 * math.max(g_activePlayer:GetNumCapitalsControlled() - 1, 0);
+		iMod = iMod + iNumCapitalsCultureMod;
+
 		if iMod ~= 0 then
 			tips:insert( "----------------" )
 			tips:insertLocalizedIfNonZero( "TXT_KEY_YIELD_BASE", iBase, "[ICON_CULTURE]" )
 			tips:insert( "" )
 			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_CULTURE_FROM_GOLDEN_AGE", iGoldenAgeMod )
 			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_CULTURE_FROM_BONUS_TURNS", iBonusTurnsMod, g_activePlayer:GetCultureBonusTurns() )
+			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_NUM_CAPITALS_CULTURE_MOD", iNumCapitalsCultureMod )
 		end
 
 		tips:insert( "----------------" )

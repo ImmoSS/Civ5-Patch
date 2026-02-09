@@ -535,6 +535,7 @@ function ScienceTipHandler( control )
 		strModText = strModText .. "[NEWLINE]----------------";
 		local iMod = 0;
 
+		-- Num Capitals Science mod
 		local iNumCapitalsScienceMod = 5 * math.max(pPlayer:GetNumCapitalsControlled() - 1, 0);
 		iMod = iMod + iNumCapitalsScienceMod;
 		if (iNumCapitalsScienceMod ~= 0) then
@@ -1130,6 +1131,13 @@ function CultureTipHandler( control )
 		iMod = iMod + iBonusTurnsMod;
 		if (iBonusTurnsMod ~= 0) then
 			strModText = strModText .. "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_TP_CULTURE_FROM_BONUS_TURNS", iGoldenAgeMod, pPlayer:GetCultureBonusTurns());
+		end
+
+		-- Num Capitals Culture mod
+		local iNumCapitalsCultureMod = 5 * math.max(pPlayer:GetNumCapitalsControlled() - 1, 0);
+		iMod = iMod + iNumCapitalsCultureMod;
+		if (iNumCapitalsCultureMod ~= 0) then
+			strModText = strModText .. "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_TP_NUM_CAPITALS_CULTURE_MOD", iNumCapitalsCultureMod);
 		end
 
 		if iMod ~= 0 then

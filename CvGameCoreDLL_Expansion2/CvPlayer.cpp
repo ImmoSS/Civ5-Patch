@@ -12014,6 +12014,10 @@ int CvPlayer::GetTotalJONSCulturePerTurn() const
 		iCulturePerTurn += ((iCulturePerTurn * GC.getGOLDEN_AGE_CULTURE_MODIFIER()) / 100);
 #endif
 	}
+	
+#ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+	// iCultureMod += 5 * std::max(GetNumCapitalsControlled() - 1, 0); // Unused part
+#endif
 
 	return iCulturePerTurn;
 #endif
@@ -12565,6 +12569,10 @@ int CvPlayer::GetTotalJONSCulturePerTurnTimes100() const
 		iCultureMod += GC.getGOLDEN_AGE_CULTURE_MODIFIER();
 #endif
 	}
+
+#ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+	iCultureMod += 5 * std::max(GetNumCapitalsControlled() - 1, 0);
+#endif
 
 	iCulturePerTurn *= (100 + iCultureMod);
 	iCulturePerTurn /= 100;
