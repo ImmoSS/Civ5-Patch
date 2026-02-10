@@ -11990,7 +11990,7 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 	// Defense against Ranged
 	if(bFromRangedAttack)
 #ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
-		if (!pAttacker->getUnitInfo().IsIgnoreTerrainAndCoverBonuses())
+		if (pAttacker != NULL && !pAttacker->getUnitInfo().IsIgnoreTerrainAndCoverBonuses())
 #endif
 		iModifier += rangedDefenseModifier();
 
