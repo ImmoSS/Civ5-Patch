@@ -5657,7 +5657,16 @@ void CvUnit::doHeal()
 	VALIDATE_OBJECT
 	if(!isBarbarian())
 	{
+#ifdef LACK_OF_STRATEGIC_RESOURCE_HEAL_PENALTY
+		int iHealRate = healRate(plot());
+		if (GetStrategicResourceCombatPenalty() != 0)
+		{
+			iHealRate = std::min(GC.getENEMY_HEAL_RATE(), iHealRate);
+		}
+		changeDamage(-iHealRate);
+#else
 		changeDamage(-(healRate(plot())));
+#endif
 	}
 }
 
