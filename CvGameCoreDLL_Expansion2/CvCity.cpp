@@ -7454,6 +7454,9 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 	for(int iYield = 0; iYield <= YIELD_SCIENCE; iYield++)
 	{
 		m_aiBaseYieldRateFromReligion[iYield] = 0;
+#ifdef BELIEF_BUILDING_CLASS_YIELD_MODIFIERS
+		m_aiYieldModFromReligion[iYield] = 0;
+#endif
 	}
 
 	for(int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
