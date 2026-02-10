@@ -14080,7 +14080,12 @@ int CvUnit::fortifyModifier() const
 #endif
 		if(iMod != 0)
 		{
+#ifdef FIX_FORTIFY_MODIFIER
+			iValue *= (100 + iMod);
+			iValue /= 100;
+#else
 			iValue = ((100 + iMod) / 100) * iValue;
+#endif
 		}
 
 		if(iValue < 0)
