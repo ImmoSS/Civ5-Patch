@@ -6936,7 +6936,11 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 		ChangeTradeRouteRecipientBonus(pBuildingInfo->GetTradeRouteRecipientBonus() * iChange);
 		
 
+#ifdef FIX_CITY_ESPIONAGE_UPDATE_SPIES
+		if (pBuildingInfo->AffectSpiesNow() && iChange != 0)
+#else
 		if (pBuildingInfo->AffectSpiesNow() && iChange > 0)
+#endif
 		{
 			for (uint ui = 0; ui < MAX_MAJOR_CIVS; ui++)
 			{

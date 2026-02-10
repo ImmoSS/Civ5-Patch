@@ -13356,6 +13356,9 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 					pEspionage->CreateSpy();
 				}
 			}
+#ifdef FIX_CITY_ESPIONAGE_UPDATE_SPIES
+			GetEspionage()->UpdateSpies();
+#endif
 		}
 	}
 #endif
@@ -26663,6 +26666,13 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 	{
 		GetEspionage()->UpdateSpies();
 	}
+#ifdef FIX_CITY_ESPIONAGE_UPDATE_SPIES
+	if (pPolicy->GetStealTechSlowerModifier() != 0)
+	{
+		GetEspionage()->UpdateSpies();
+	}
+#endif
+	
 
 	CvPlot *pLoopPlot;
 	ResourceTypes eResource;
