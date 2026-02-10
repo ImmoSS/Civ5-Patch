@@ -905,7 +905,7 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 
 										if (pLoopUnit != NULL)
 										{
-											if (pLoopUnit != pkAttacker && pLoopUnit->GetGarrisonedCity() == NULL && pLoopUnit->isInvisible(pkAttacker->getTeam(), false))
+											if (pLoopUnit != pkAttacker && pLoopUnit->GetGarrisonedCity() == NULL && !pLoopUnit->isInvisible(pkAttacker->getTeam(), false))
 											{
 												int iSplashDamage = pkAttacker->GetRangeCombatDamage(pLoopUnit, /*pCity*/ NULL, /*bIncludeRand*/ true);
 												iSplashDamage *= iSplashDamageMod;
@@ -1063,7 +1063,7 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 
 										if (pLoopUnit != NULL)
 										{
-											if (pLoopUnit != pkAttacker && pLoopUnit->GetGarrisonedCity() == NULL && pLoopUnit->isInvisible(pkAttacker->getTeam(), false))
+											if (pLoopUnit != pkAttacker && pLoopUnit->GetGarrisonedCity() == NULL && !pLoopUnit->isInvisible(pkAttacker->getTeam(), false))
 											{
 												int iSplashDamage = pkAttacker->GetRangeCombatDamage(pLoopUnit, /*pCity*/ NULL, /*bIncludeRand*/ true);
 												iSplashDamage *= iSplashDamageMod;
