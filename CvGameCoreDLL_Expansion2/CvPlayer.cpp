@@ -2871,9 +2871,17 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 	}
 
 #ifdef AUI_PLAYER_FIX_ACQUIRE_CITY_NO_CITY_LOSSES_ON_RECAPTURE
+#ifdef CITY_MINOR_MAJORITY_OWNER
+	bRecapture = GET_PLAYER(eOriginalOwner).getTeam() == getTeam() || GET_PLAYER(eMinorMajorityOwner).getTeam() == getTeam();
+#else
 	bRecapture = GET_PLAYER(eOriginalOwner).getTeam() == getTeam();
+#endif
+#else
+#ifdef CITY_MINOR_MAJORITY_OWNER
+	bRecapture = GET_PLAYER(eMinorMajorityOwner).getTeam() == getTeam();
 #else
 	bRecapture = false; //((eHighestCulturePlayer != NO_PLAYER) ? (GET_PLAYER(eHighestCulturePlayer).getTeam() == getTeam()) : false);
+#endif
 #endif
 
 	// Returning spies back to pool
