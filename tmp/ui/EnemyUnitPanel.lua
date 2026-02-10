@@ -615,14 +615,6 @@ function UpdateCombatOddsUnitVsCity(pMyUnit, pCity)
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 				end
 			end
-
-			-- Low Health Modifier
-			iModifier = pMyUnit:GetLowHealthCombatModifier();
-			if (iModifier ~= 0) then
-				controlTable = g_MyCombatDataIM:GetInstance();
-				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_LOW_HEALTH_COMBAT_MOD" );
-				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
-			end
 			
 			-- Policy Attack bonus
 			local iTurns = pMyPlayer:GetAttackBonusTurns();
@@ -1100,14 +1092,6 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
 				end
 			end
-
-			-- Low Health Modifier
-			iModifier = pMyUnit:GetLowHealthCombatModifier();
-			if (iModifier ~= 0) then
-				controlTable = g_MyCombatDataIM:GetInstance();
-				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_LOW_HEALTH_COMBAT_MOD" );
-				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
-			end
 			
 			-- Attack Modifier
 			iModifier = pMyUnit:GetAttackModifier();
@@ -1441,7 +1425,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				end
 
 				-- Low Health Modifier
-				iModifier = pTheirUnit:GetLowHealthCombatModifier();
+				iModifier = pTheirUnit:GetLowHealthDefenseModifier();
 				if (iModifier ~= 0) then
 					controlTable = g_TheirCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_LOW_HEALTH_COMBAT_MOD" );
@@ -2005,7 +1989,7 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 		end
 
 		-- Low Health Modifier
-		iModifier = theirUnit:GetLowHealthCombatModifier();
+		iModifier = theirUnit:GetLowHealthDefenseModifier();
 		if (iModifier ~= 0) then
 			controlTable = g_TheirCombatDataIM:GetInstance();
 			controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_LOW_HEALTH_COMBAT_MOD" );
