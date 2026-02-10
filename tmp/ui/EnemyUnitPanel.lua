@@ -1443,7 +1443,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 				-- Low Health Modifier
 				iModifier = pTheirUnit:GetLowHealthCombatModifier();
 				if (iModifier ~= 0) then
-					controlTable = g_MyCombatDataIM:GetInstance();
+					controlTable = g_TheirCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_LOW_HEALTH_COMBAT_MOD" );
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 				end
@@ -2007,7 +2007,7 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 		-- Low Health Modifier
 		iModifier = theirUnit:GetLowHealthCombatModifier();
 		if (iModifier ~= 0) then
-			controlTable = g_MyCombatDataIM:GetInstance();
+			controlTable = g_TheirCombatDataIM:GetInstance();
 			controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_LOW_HEALTH_COMBAT_MOD" );
 			controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 		end
