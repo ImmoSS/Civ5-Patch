@@ -8532,6 +8532,12 @@ void CvPlayer::found(int iX, int iY)
 				CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eLoopBuilding);
 				if(pkBuildingInfo)
 				{
+#ifdef TRAIT_FREE_BUILDINGS_AFTER_ERA
+					if (GET_PLAYER(GetID()).GetPlayerTraits()->IsFreeBuildingsAfterEra(eBuildingClass, GetCurrentEra()))
+					{
+						pCity->GetCityBuildings()->SetNumRealBuilding(eLoopBuilding, 1);
+					} else
+#endif
 					if(pkBuildingInfo->GetFreeStartEra() != NO_ERA)
 					{
 						if(GC.getGame().getStartEra() >= pkBuildingInfo->GetFreeStartEra())

@@ -198,6 +198,9 @@ public:
 #ifdef TRAIT_FREE_UNIT_IN_CAPITAL_FOUNDATION
 	int GetFreeUnitOnCapitalFoundation() const;
 #endif
+#ifdef TRAIT_FREE_BUILDINGS_AFTER_ERA
+	bool IsFreeBuildingsAfterEra(const int buildingClassID, const int eraID) const;
+#endif
 
 	virtual bool CacheResults(Database::Results& kResults, CvDatabaseUtility& kUtility);
 
@@ -340,6 +343,9 @@ protected:
 #endif
 #ifdef TRAIT_FREE_UNIT_IN_CAPITAL_FOUNDATION
 	int m_iFreeUnitOnCapitalFoundation;
+#endif
+#ifdef TRAIT_FREE_BUILDINGS_AFTER_ERA
+	std::multimap<int, int> m_pFreeBuildingsAfterEra;
 #endif
 
 private:
@@ -859,6 +865,9 @@ public:
 	{
 		return m_iFreeUnitOnCapitalFoundation;
 	};
+#endif
+#ifdef TRAIT_FREE_BUILDINGS_AFTER_ERA
+	bool IsFreeBuildingsAfterEra(const int buildingClassID, const int eraID) const;
 #endif
 
 	// Serialization

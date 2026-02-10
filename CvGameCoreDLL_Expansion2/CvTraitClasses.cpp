@@ -940,6 +940,29 @@ int CvTraitEntry::GetFreeUnitOnCapitalFoundation() const
 }
 #endif
 
+#ifdef TRAIT_FREE_BUILDINGS_AFTER_ERA
+bool CvTraitEntry::IsFreeBuildingsAfterEra(const int buildingClassID, const int eraID) const
+{
+	std::multimap<int, int>::const_iterator it = m_pFreeBuildingsAfterEra.find(buildingClassID);
+	if (it != m_pFreeBuildingsAfterEra.end())
+	{
+		// get an iterator to the element that is one past the last element associated with key
+		std::multimap<int, int>::const_iterator lastElement = m_pFreeBuildingsAfterEra.upper_bound(buildingClassID);
+
+		// for each element in the sequence [itr, lastElement)
+		for (; it != lastElement; ++it)
+		{
+			if (it->second >= eraID)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+#endif
+
 /// Load XML data
 bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& kUtility)
 {
@@ -1371,6 +1394,34 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 	}
 #endif
 
+#ifdef TRAIT_FREE_BUILDINGS_AFTER_ERA
+	{
+		m_pFreeBuildingsAfterEra.clear();
+		std::string sqlKey = "m_pFreeBuildingsAfterEra";
+		Database::Results* pResults = kUtility.GetResults(sqlKey);
+		if (pResults == NULL)
+		{
+			const char* szSQL = "select BuildingClasses.ID, Eras.ID  from Trait_FreeBuildingsAfterEra inner join BuildingClasses on BuildingClassType = BuildingClasses.Type inner join Eras on EraType = Eras.Type where TraitType = ?";
+			pResults = kUtility.PrepareResults(sqlKey, szSQL);
+		}
+
+		pResults->Bind(1, szTraitType);
+
+		while (pResults->Step())
+		{
+			const int BuildingClassID = pResults->GetInt(0);
+			const int EraID = pResults->GetInt(1);
+
+			m_pFreeBuildingsAfterEra.insert(std::pair<int, int>(BuildingClassID, EraID));
+		}
+
+		pResults->Reset();
+
+		//Trim capacity
+		std::multimap<int, int>(m_pFreeBuildingsAfterEra).swap(m_pFreeBuildingsAfterEra);
+	}
+#endif
+
 	return true;
 }
 
@@ -1716,6 +1767,9 @@ void CvPlayerTraits::InitPlayerTraits()
 			{
 				m_iInternationalTradeRoteYieldChangesTimes100[iYield] = trait->GetInternationalTradeRoteYieldChangesTimes100(iYield);
 			}
+#endif
+#ifdef TRAIT_FREE_UNIT_IN_CAPITAL_FOUNDATION
+			m_iFreeUnitOnCapitalFoundation = trait->GetFreeUnitOnCapitalFoundation();
 #endif
 #ifdef TRAIT_FREE_UNIT_IN_CAPITAL_FOUNDATION
 			m_iFreeUnitOnCapitalFoundation = trait->GetFreeUnitOnCapitalFoundation();
@@ -2695,6 +2749,30 @@ bool CvPlayerTraits::IsFreeMayaGreatPersonChoice() const
 
 	return ((int)m_aMayaBonusChoices.size() >= iNumGreatPeopleTypes);
 }
+
+#ifdef TRAIT_FREE_BUILDINGS_AFTER_ERA
+bool CvPlayerTraits::IsFreeBuildingsAfterEra(const int buildingClassID, const int eraID) const
+{
+	CvAssertMsg((buildingClassID >= 0), "promotionID is less than zero");
+	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
+	{
+		const TraitTypes eTrait = static_cast<TraitTypes>(iI);
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(eTrait);
+		if (pkTraitInfo)
+		{
+			if (HasTrait(eTrait))
+			{
+				if (pkTraitInfo->IsFreeBuildingsAfterEra(buildingClassID, eraID))
+				{
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+#endif
 
 // SERIALIZATION METHODS
 
