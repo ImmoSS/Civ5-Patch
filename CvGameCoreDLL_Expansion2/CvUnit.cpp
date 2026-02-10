@@ -5371,7 +5371,7 @@ bool CvUnit::canHeal(const CvPlot* pPlot, bool bTestVisible) const
 #ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
 	if (pPlot->getOwner() != NO_PLAYER && pPlot->getOwner() != getOwner() && GET_PLAYER(pPlot->getOwner()).isBorderTransitionObstacle() && getDomainType() == DOMAIN_LAND)
 	{
-		return false;
+		// return false;
 	}
 #endif
 
@@ -7493,7 +7493,7 @@ bool CvUnit::pillage()
 #ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
 	if (pPlot->getOwner() != NO_PLAYER && GET_PLAYER(pPlot->getOwner()).isBorderTransitionObstacle())
 	{
-		bSuccessfulNonRoadPillage = false;
+		// bSuccessfulNonRoadPillage = false;
 	}
 #endif
 	if(bSuccessfulNonRoadPillage)
