@@ -6152,12 +6152,30 @@ int CvPlot::getNumResourceForPlayer(PlayerTypes ePlayer) const
 					}
 				}
 
+#if defined IMPROVEMENT_DOUBLES_STRATEGIC_RESOURCE
+				int iQuantityMod = 0;
+				if (GET_PLAYER(ePlayer).GetPlayerTraits()->GetResourceQuantityModifier(eResource) > 0)
+				{
+					iQuantityMod += GET_PLAYER(ePlayer).GetPlayerTraits()->GetResourceQuantityModifier(eResource);
+				}
+#endif
+#ifdef IMPROVEMENT_DOUBLES_STRATEGIC_RESOURCE
+				if (GC.getImprovementInfo(getImprovementType())->IsDoublesStrategicResource())
+				{
+					iQuantityMod += 100;
+				}
+#endif
+#if defined IMPROVEMENT_DOUBLES_STRATEGIC_RESOURCE
+				iRtnValue *= 100 + iQuantityMod;
+				iRtnValue /= 100;
+#else
 				if(GET_PLAYER(ePlayer).GetPlayerTraits()->GetResourceQuantityModifier(eResource) > 0)
 				{
 					int iQuantityMod = GET_PLAYER(ePlayer).GetPlayerTraits()->GetResourceQuantityModifier(eResource);
 					iRtnValue *= 100 + iQuantityMod;
 					iRtnValue /= 100;
 				}
+#endif
 			}
 		}
 	}

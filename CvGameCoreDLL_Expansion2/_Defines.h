@@ -1257,6 +1257,8 @@
 ///
 #define PLAYER_CULTURE_TIMES_100
 ///
+#define IMPROVEMENT_DOUBLES_STRATEGIC_RESOURCE
+///
 // #define TRADE_ROUTES_SCIENCE_MOD 3
 // Maintain backwards compatibility with older versions
 // Starting from v7.0
