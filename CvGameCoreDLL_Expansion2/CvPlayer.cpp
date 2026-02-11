@@ -6048,17 +6048,17 @@ void CvPlayer::DoUnitReset()
 			}
 			else
 			{
-#ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
+/*#ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
 				if (pLoopUnit->IsHurt() && !(pLoopUnit->plot()->getOwner() != NO_PLAYER && pLoopUnit->plot()->getOwner() != pLoopUnit->getOwner() && GET_PLAYER(pLoopUnit->plot()->getOwner()).isBorderTransitionObstacle() && pLoopUnit->getDomainType() == DOMAIN_LAND))
 				{
 					pLoopUnit->doHeal();
 				}
-#else
+#else*/
 				if(pLoopUnit->IsHurt())
 				{
 					pLoopUnit->doHeal();
 				}
-#endif
+// #endif
 			}
 		}
 
