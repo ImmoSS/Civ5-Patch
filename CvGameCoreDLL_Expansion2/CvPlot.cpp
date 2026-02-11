@@ -6162,7 +6162,8 @@ int CvPlot::getNumResourceForPlayer(PlayerTypes ePlayer, ImprovementTypes eImpro
 				}
 #endif
 #if defined IMPROVEMENT_DOUBLES_STRATEGIC_RESOURCE && defined ADVANCED_GET_NUM_RESOURCE_FOR_PLAYER
-				if (GC.getImprovementInfo(eImprovement) && GC.getImprovementInfo(getImprovementType())->IsDoublesStrategicResource())
+				ImprovementTypes eCurrentEmprovement = eImprovement != NO_IMPROVEMENT ? eImprovement : getImprovementType();
+				if (GC.getImprovementInfo(eCurrentEmprovement) && GC.getImprovementInfo(eCurrentEmprovement)->IsDoublesStrategicResource())
 				{
 					iQuantityMod += 100;
 				}
