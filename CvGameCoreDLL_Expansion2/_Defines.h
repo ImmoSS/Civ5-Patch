@@ -1261,6 +1261,10 @@
 ///
 #define IMPROVEMENT_DOUBLES_STRATEGIC_RESOURCE
 ///
+#ifdef IMPROVEMENT_DOUBLES_STRATEGIC_RESOURCE
+#define ADVANCED_GET_NUM_RESOURCE_FOR_PLAYER
+#endif
+///
 // #define TRADE_ROUTES_SCIENCE_MOD 3
 // Maintain backwards compatibility with older versions
 // Starting from v7.0

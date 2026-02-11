@@ -6116,7 +6116,9 @@ void CvPlot::changeNumResource(int iChange)
 }
 
 //	--------------------------------------------------------------------------------
-int CvPlot::getNumResourceForPlayer(PlayerTypes ePlayer) const
+#ifdef ADVANCED_GET_NUM_RESOURCE_FOR_PLAYER
+int CvPlot::getNumResourceForPlayer(PlayerTypes ePlayer, ImprovementTypes eImprovement) const
+#endif
 {
 	int iRtnValue = m_iResourceNum;
 
@@ -6159,8 +6161,8 @@ int CvPlot::getNumResourceForPlayer(PlayerTypes ePlayer) const
 					iQuantityMod += GET_PLAYER(ePlayer).GetPlayerTraits()->GetResourceQuantityModifier(eResource);
 				}
 #endif
-#ifdef IMPROVEMENT_DOUBLES_STRATEGIC_RESOURCE
-				if (GC.getImprovementInfo(getImprovementType()) && GC.getImprovementInfo(getImprovementType())->IsDoublesStrategicResource())
+#if defined IMPROVEMENT_DOUBLES_STRATEGIC_RESOURCE && defined ADVANCED_GET_NUM_RESOURCE_FOR_PLAYER
+				if (GC.getImprovementInfo(eImprovement) && GC.getImprovementInfo(getImprovementType())->IsDoublesStrategicResource())
 				{
 					iQuantityMod += 100;
 				}
@@ -6510,7 +6512,11 @@ void CvPlot::setImprovementType(ImprovementTypes eNewValue, PlayerTypes eBuilder
 					{
 						if(GC.getImprovementInfo(eOldImprovement)->IsImprovementResourceTrade(getResourceType()))
 						{
+#ifdef ADVANCED_GET_NUM_RESOURCE_FOR_PLAYER
+							owningPlayer.changeNumResourceTotal(getResourceType(), -getNumResourceForPlayer(owningPlayerID, eOldImprovement));
+#else
 							owningPlayer.changeNumResourceTotal(getResourceType(), -getNumResourceForPlayer(owningPlayerID));
+#endif
 
 							// Disconnect resource link
 							if(GetResourceLinkedCity() != NULL)
