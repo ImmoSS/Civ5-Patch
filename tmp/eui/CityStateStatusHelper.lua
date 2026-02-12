@@ -275,7 +275,7 @@ function GetCityStateStatusText( majorPlayerID, minorPlayerID )
 			strStatusText = "[COLOR_WHITE]" .. L("TXT_KEY_CITY_STATE_PERSONALITY_NEUTRAL")
 		end
 		strStatusText = strStatusText .. "[ENDCOLOR]"
-		if not isAtWar then
+		if true then
 			strStatusText = strStatusText .. " " .. majorInfluenceWithMinor .. "[ICON_INFLUENCE]"
 			if not gk_mode and majorInfluenceWithMinor ~= 0 then
 				strStatusText = strStatusText .. (" (%+g[ICON_INFLUENCE] / "):format(minorPlayer:GetFriendshipChangePerTurnTimes100(majorPlayerID) / 100).. L"TXT_KEY_DO_TURN" .. ")" --"TXT_KEY_CITY_STATE_TITLE_TOOL_TIP_CURRENT"

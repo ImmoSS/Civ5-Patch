@@ -958,7 +958,7 @@ bool CvTraitEntry::IsFreeBuildingsAfterEra(const int buildingClassID, const int 
 		// for each element in the sequence [itr, lastElement)
 		for (; it != lastElement; ++it)
 		{
-			if (it->second >= eraID)
+			if (it->second <= eraID)
 			{
 				return true;
 			}

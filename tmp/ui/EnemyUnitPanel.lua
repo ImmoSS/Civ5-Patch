@@ -1175,7 +1175,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 		
 			-- Number of Capitals Modifier
 			iModifier = 5 * math.max(pTheirPlayer:GetNumCapitalsControlled() - 1, 0)
-			if (iModifier ~= 0) then
+			if (iModifier ~= 0 and pMyPlayer:IsHuman() and pTheirPlayer:IsHuman()) then
 				controlTable = g_MyCombatDataIM:GetInstance();
 				controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_NUM_CAPITALS_MODIFIER" );
 				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
@@ -1678,7 +1678,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 		
 				-- Number of Capitals Modifier
 				iModifier = 5 * math.max(pMyPlayer:GetNumCapitalsControlled() - 1, 0)
-				if (iModifier ~= 0) then
+				if (iModifier ~= 0 and pMyPlayer:IsHuman() and pTheirPlayer:IsHuman()) then
 					controlTable = g_TheirCombatDataIM:GetInstance();
 					controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_NUM_CAPITALS_MODIFIER" );
 					controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );

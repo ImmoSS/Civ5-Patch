@@ -11770,7 +11770,7 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvUnit* pOtherUnit, const CvPlot
 		}
 
 #ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
-		if (GET_PLAYER(pOtherUnit->getOwner()).isHuman())
+		if (GET_PLAYER(pOtherUnit->getOwner()).isHuman() && GET_PLAYER(getOwner()).isHuman())
 		{
 			iModifier += 5 * std::max(GET_PLAYER(pOtherUnit->getOwner()).GetNumCapitalsControlled() - 1, 0);
 		}
@@ -12476,7 +12476,7 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			}
 
 #ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
-			if (GET_PLAYER(pOtherUnit->getOwner()).isHuman())
+			if (GET_PLAYER(pOtherUnit->getOwner()).isHuman() && GET_PLAYER(getOwner()).isHuman())
 			{
 				iModifier += 5 * std::max(GET_PLAYER(pOtherUnit->getOwner()).GetNumCapitalsControlled() - 1, 0);
 			}
@@ -13058,7 +13058,7 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			}
 
 #ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
-			if (GET_PLAYER(pOtherUnit->getOwner()).isHuman())
+			if (GET_PLAYER(pOtherUnit->getOwner()).isHuman() && GET_PLAYER(getOwner()).isHuman())
 			{
 				iModifier += 5 * std::max(GET_PLAYER(pOtherUnit->getOwner()).GetNumCapitalsControlled() - 1, 0);
 			}

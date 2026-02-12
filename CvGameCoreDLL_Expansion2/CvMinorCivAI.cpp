@@ -6565,8 +6565,13 @@ void CvMinorCivAI::DoFriendshipChangeEffects(PlayerTypes ePlayer, int iOldFriend
 	{
 #endif
 	// No old ally and our friendship is now above the threshold, OR our friendship is now higher than a previous ally
+#ifdef QUESTS_SYSTEM_OVERHAUL
+	if((eOldAlly == NO_PLAYER && bNowAboveAlliesThreshold)
+	        || (eOldAlly != NO_PLAYER && GetBaseFriendshipWithMajorTimes100(ePlayer) > GetBaseFriendshipWithMajorTimes100(eOldAlly)))
+#else
 	if((eOldAlly == NO_PLAYER && bNowAboveAlliesThreshold)
 	        || (eOldAlly != NO_PLAYER && GetEffectiveFriendshipWithMajor(ePlayer) > GetEffectiveFriendshipWithMajor(eOldAlly)))
+#endif
 	{
 		bAdd = true;
 		bAllies = true;
