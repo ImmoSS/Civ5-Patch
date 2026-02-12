@@ -134,6 +134,9 @@ CvTraitEntry::CvTraitEntry() :
 #ifdef TRAIT_FREE_UNIT_IN_CAPITAL_FOUNDATION
 	m_iFreeUnitOnCapitalFoundation(NO_UNITCLASS),
 #endif
+#ifdef TRAIT_EXTRA_FOUNDED_CITY_TERRITORY_CLAIM_RANGE_AFTER_ERA
+	m_paiExtraFoundedCityTerritoryClaimRangeAfterEra(NULL),
+#endif
 	m_ppiUnimprovedFeatureYieldChanges(NULL)
 {
 }
@@ -963,6 +966,14 @@ bool CvTraitEntry::IsFreeBuildingsAfterEra(const int buildingClassID, const int 
 }
 #endif
 
+#ifdef TRAIT_EXTRA_FOUNDED_CITY_TERRITORY_CLAIM_RANGE_AFTER_ERA
+///
+int CvTraitEntry::GetExtraFoundedCityTerritoryClaimRangeAfterEra(int i) const
+{
+	return m_paiExtraFoundedCityTerritoryClaimRangeAfterEra ? m_paiExtraFoundedCityTerritoryClaimRangeAfterEra[i] : 0;
+}
+#endif
+
 /// Load XML data
 bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& kUtility)
 {
@@ -1401,7 +1412,7 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 		Database::Results* pResults = kUtility.GetResults(sqlKey);
 		if (pResults == NULL)
 		{
-			const char* szSQL = "select BuildingClasses.ID, Eras.ID  from Trait_FreeBuildingsAfterEra inner join BuildingClasses on BuildingClassType = BuildingClasses.Type inner join Eras on EraType = Eras.Type where TraitType = ?";
+			const char* szSQL = "select BuildingClasses.ID, Eras.ID from Trait_FreeBuildingsAfterEra inner join BuildingClasses on BuildingClassType = BuildingClasses.Type inner join Eras on EraType = Eras.Type where TraitType = ?";
 			pResults = kUtility.PrepareResults(sqlKey, szSQL);
 		}
 
@@ -1419,6 +1430,32 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 
 		//Trim capacity
 		std::multimap<int, int>(m_pFreeBuildingsAfterEra).swap(m_pFreeBuildingsAfterEra);
+	}
+#endif
+
+#ifdef TRAIT_EXTRA_FOUNDED_CITY_TERRITORY_CLAIM_RANGE_AFTER_ERA
+	//ExtraFoundedCityTerritoryClaimRangeAfterEra
+	{
+		kUtility.InitializeArray(m_paiExtraFoundedCityTerritoryClaimRangeAfterEra, NUM_ERA_TYPES, 0);
+
+		std::string sqlKey = "Trait_ExtraFoundedCityTerritoryClaimRangeAfterEra";
+		Database::Results* pResults = kUtility.GetResults(sqlKey);
+		if (pResults == NULL)
+		{
+			const char* szSQL = "select Eras.ID, NumTiles from Trait_ExtraFoundedCityTerritoryClaimRangeAfterEra inner join Eras on EraType = Eras.Type where TraitType = ?";
+			pResults = kUtility.PrepareResults(sqlKey, szSQL);
+		}
+
+		pResults->Bind(1, szTraitType);
+
+		while (pResults->Step())
+		{
+			const int iEraID = pResults->GetInt(0);
+			CvAssert(iEraID > -1 && iEraID < NUM_ERA_TYPES);
+
+			const int iNumTiles = pResults->GetInt(1);
+			m_paiExtraFoundedCityTerritoryClaimRangeAfterEra[iEraID] = iNumTiles;
+		}
 	}
 #endif
 
@@ -1774,6 +1811,12 @@ void CvPlayerTraits::InitPlayerTraits()
 #ifdef TRAIT_FREE_UNIT_IN_CAPITAL_FOUNDATION
 			m_iFreeUnitOnCapitalFoundation = trait->GetFreeUnitOnCapitalFoundation();
 #endif
+#ifdef TRAIT_EXTRA_FOUNDED_CITY_TERRITORY_CLAIM_RANGE_AFTER_ERA
+			for (int iEra = 0; iEra < GC.getNumEraInfos(); iEra++)
+			{
+				m_paiExtraFoundedCityTerritoryClaimRangeAfterEra[iEra] = trait->GetExtraFoundedCityTerritoryClaimRangeAfterEra(iEra);
+			}
+#endif
 		}
 	}
 }
@@ -1982,6 +2025,12 @@ void CvPlayerTraits::Reset()
 #endif
 #ifdef TRAIT_FREE_UNIT_IN_CAPITAL_FOUNDATION
 	m_iFreeUnitOnCapitalFoundation = -1;
+#endif
+#ifdef TRAIT_EXTRA_FOUNDED_CITY_TERRITORY_CLAIM_RANGE_AFTER_ERA
+	for (int iEra = 0; iEra < GC.getNumEraInfos(); iEra++)
+	{
+		m_paiExtraFoundedCityTerritoryClaimRangeAfterEra[iEra] = 0;
+	}
 #endif
 }
 
@@ -2774,6 +2823,21 @@ bool CvPlayerTraits::IsFreeBuildingsAfterEra(const int buildingClassID, const in
 }
 #endif
 
+#ifdef TRAIT_EXTRA_FOUNDED_CITY_TERRITORY_CLAIM_RANGE_AFTER_ERA
+int CvPlayerTraits::GetExtraFoundedCityTerritoryClaimRangeAfterEra(EraTypes eEra) const
+{
+	for (int iI = 0; iI <= (int)eEra; iI++)
+	{
+		if (m_paiExtraFoundedCityTerritoryClaimRangeAfterEra[iI] > 0)
+		{
+			return m_paiExtraFoundedCityTerritoryClaimRangeAfterEra[iI];
+		}
+	}
+
+	return 0;
+};
+#endif
+
 // SERIALIZATION METHODS
 
 /// Serialization read
@@ -3256,6 +3320,24 @@ void CvPlayerTraits::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef TRAIT_EXTRA_FOUNDED_CITY_TERRITORY_CLAIM_RANGE_AFTER_ERA
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1003)
+	{
+# endif
+		ArrayWrapper<int> kExtraFoundedCityTerritoryClaimRangeAfterEra(GC.getNumEraInfos(), m_paiExtraFoundedCityTerritoryClaimRangeAfterEra);
+		kStream >> kExtraFoundedCityTerritoryClaimRangeAfterEra;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		for (int iEra = 0; iEra < GC.getNumEraInfos(); iEra++)
+		{
+			m_paiExtraFoundedCityTerritoryClaimRangeAfterEra[iEra] = 0;
+		}
+	}
+# endif
+#endif
 }
 
 /// Serialization write
@@ -3430,6 +3512,9 @@ void CvPlayerTraits::Write(FDataStream& kStream)
 #endif
 #ifdef TRAIT_FREE_UNIT_IN_CAPITAL_FOUNDATION
 	kStream << m_iFreeUnitOnCapitalFoundation;
+#endif
+#ifdef TRAIT_EXTRA_FOUNDED_CITY_TERRITORY_CLAIM_RANGE_AFTER_ERA
+	kStream << ArrayWrapper<int>(GC.getNumEraInfos(), m_paiExtraFoundedCityTerritoryClaimRangeAfterEra);
 #endif
 }
 

@@ -8509,6 +8509,9 @@ void CvPlayer::found(int iX, int iY)
 		return;
 
 	int iExtraTerritoryClaim = GetPlayerTraits()->GetExtraFoundedCityTerritoryClaimRange();
+#ifdef TRAIT_EXTRA_FOUNDED_CITY_TERRITORY_CLAIM_RANGE_AFTER_ERA
+	iExtraTerritoryClaim += GetPlayerTraits()->GetExtraFoundedCityTerritoryClaimRangeAfterEra(GetCurrentEra());
+#endif
 	for (int i = 0; i < iExtraTerritoryClaim; i++)
 	{
 		CvPlot* pPlotToAcquire = pCity->GetNextBuyablePlot();
