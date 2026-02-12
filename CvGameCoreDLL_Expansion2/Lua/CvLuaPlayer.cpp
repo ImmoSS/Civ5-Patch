@@ -6250,15 +6250,15 @@ int CvLuaPlayer::lGetMinorCivFriendshipWithMajor(lua_State* L)
 
 #ifdef QUESTS_SYSTEM_OVERHAUL
 #ifdef UI_SHOW_BASE_MINOR_CIV_FRIENDSHIP_WITH_MAJOR
-	const int iResult = pkPlayer->GetMinorCivAI()->GetEffectiveFriendshipWithMajorTimes100(ePlayer);
-#else
 	const int iResult = pkPlayer->GetMinorCivAI()->GetBaseFriendshipWithMajorTimes100(ePlayer);
+#else
+	const int iResult = pkPlayer->GetMinorCivAI()->GetEffectiveFriendshipWithMajorTimes100(ePlayer);
 #endif
 #else
 #ifdef UI_SHOW_BASE_MINOR_CIV_FRIENDSHIP_WITH_MAJOR
-	const int iResult = pkPlayer->GetMinorCivAI()->GetEffectiveFriendshipWithMajor(ePlayer);
-#else
 	const int iResult = pkPlayer->GetMinorCivAI()->GetBaseFriendshipWithMajor(ePlayer);
+#else
+	const int iResult = pkPlayer->GetMinorCivAI()->GetEffectiveFriendshipWithMajor(ePlayer);
 #endif
 #endif
 	lua_pushinteger(L, iResult);
