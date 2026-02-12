@@ -491,7 +491,11 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	GetCityCitizens()->DoFoundCity();
 
 	// Default starting population
+#ifdef TRAIT_FREE_POPULATION_AFTER_ERA
+	changePopulation(GC.getINITIAL_CITY_POPULATION() + GC.getGame().getStartEraInfo().getFreePopulation() + owningPlayer.GetPlayerTraits()->GetiFreePopulationAfterEra(owningPlayer.GetCurrentEra()));
+#else
 	changePopulation(GC.getINITIAL_CITY_POPULATION() + GC.getGame().getStartEraInfo().getFreePopulation());
+#endif
 	// Free population from things (e.g. Policies)
 	changePopulation(GET_PLAYER(getOwner()).GetNewCityExtraPopulation());
 

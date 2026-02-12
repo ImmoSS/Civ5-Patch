@@ -137,6 +137,9 @@ CvTraitEntry::CvTraitEntry() :
 #ifdef TRAIT_EXTRA_FOUNDED_CITY_TERRITORY_CLAIM_RANGE_AFTER_ERA
 	m_paiExtraFoundedCityTerritoryClaimRangeAfterEra(NULL),
 #endif
+#ifdef TRAIT_FREE_POPULATION_AFTER_ERA
+	m_paiFreePopulationAfterEra(NULL),
+#endif
 	m_ppiUnimprovedFeatureYieldChanges(NULL)
 {
 }
@@ -974,6 +977,14 @@ int CvTraitEntry::GetExtraFoundedCityTerritoryClaimRangeAfterEra(int i) const
 }
 #endif
 
+#ifdef TRAIT_FREE_POPULATION_AFTER_ERA
+///
+int CvTraitEntry::GetFreePopulationAfterEra(int i) const
+{
+	return m_paiFreePopulationAfterEra ? m_paiFreePopulationAfterEra[i] : 0;
+}
+#endif
+
 /// Load XML data
 bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& kUtility)
 {
@@ -1459,6 +1470,32 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 	}
 #endif
 
+#ifdef TRAIT_FREE_POPULATION_AFTER_ERA
+	//FreePopulationAfterEra
+	{
+		kUtility.InitializeArray(m_paiFreePopulationAfterEra, NUM_ERA_TYPES, 0);
+
+		std::string sqlKey = "Trait_FreePopulationAfterEra";
+		Database::Results* pResults = kUtility.GetResults(sqlKey);
+		if (pResults == NULL)
+		{
+			const char* szSQL = "select Eras.ID, Population from Trait_FreePopulationAfterEra inner join Eras on EraType = Eras.Type where TraitType = ?";
+			pResults = kUtility.PrepareResults(sqlKey, szSQL);
+		}
+
+		pResults->Bind(1, szTraitType);
+
+		while (pResults->Step())
+		{
+			const int iEraID = pResults->GetInt(0);
+			CvAssert(iEraID > -1 && iEraID < NUM_ERA_TYPES);
+
+			const int iPopulation = pResults->GetInt(1);
+			m_paiFreePopulationAfterEra[iEraID] = iPopulation;
+		}
+	}
+#endif
+
 	return true;
 }
 
@@ -1817,6 +1854,12 @@ void CvPlayerTraits::InitPlayerTraits()
 				m_paiExtraFoundedCityTerritoryClaimRangeAfterEra[iEra] = trait->GetExtraFoundedCityTerritoryClaimRangeAfterEra(iEra);
 			}
 #endif
+#ifdef TRAIT_FREE_POPULATION_AFTER_ERA
+			for (int iEra = 0; iEra < GC.getNumEraInfos(); iEra++)
+			{
+				m_paiFreePopulationAfterEra[iEra] = trait->GetFreePopulationAfterEra(iEra);
+			}
+#endif
 		}
 	}
 }
@@ -2030,6 +2073,12 @@ void CvPlayerTraits::Reset()
 	for (int iEra = 0; iEra < GC.getNumEraInfos(); iEra++)
 	{
 		m_paiExtraFoundedCityTerritoryClaimRangeAfterEra[iEra] = 0;
+	}
+#endif
+#ifdef TRAIT_FREE_POPULATION_AFTER_ERA
+	for (int iEra = 0; iEra < GC.getNumEraInfos(); iEra++)
+	{
+		m_paiFreePopulationAfterEra[iEra] = 0;
 	}
 #endif
 }
@@ -2838,6 +2887,21 @@ int CvPlayerTraits::GetExtraFoundedCityTerritoryClaimRangeAfterEra(EraTypes eEra
 };
 #endif
 
+#ifdef TRAIT_FREE_POPULATION_AFTER_ERA
+int CvPlayerTraits::GetiFreePopulationAfterEra(EraTypes eEra) const
+{
+	for (int iI = 0; iI <= (int)eEra; iI++)
+	{
+		if (m_paiFreePopulationAfterEra[iI] > 0)
+		{
+			return m_paiFreePopulationAfterEra[iI];
+		}
+	}
+
+	return 0;
+};
+#endif
+
 // SERIALIZATION METHODS
 
 /// Serialization read
@@ -3338,6 +3402,24 @@ void CvPlayerTraits::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef TRAIT_FREE_POPULATION_AFTER_ERA
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1003)
+	{
+# endif
+		ArrayWrapper<int> kFreePopulationAfterEra(GC.getNumEraInfos(), m_paiFreePopulationAfterEra);
+		kStream >> kFreePopulationAfterEra;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		for (int iEra = 0; iEra < GC.getNumEraInfos(); iEra++)
+		{
+			m_paiFreePopulationAfterEra[iEra] = 0;
+		}
+	}
+# endif
+#endif
 }
 
 /// Serialization write
@@ -3515,6 +3597,9 @@ void CvPlayerTraits::Write(FDataStream& kStream)
 #endif
 #ifdef TRAIT_EXTRA_FOUNDED_CITY_TERRITORY_CLAIM_RANGE_AFTER_ERA
 	kStream << ArrayWrapper<int>(GC.getNumEraInfos(), m_paiExtraFoundedCityTerritoryClaimRangeAfterEra);
+#endif
+#ifdef TRAIT_FREE_POPULATION_AFTER_ERA
+	kStream << ArrayWrapper<int>(GC.getNumEraInfos(), m_paiFreePopulationAfterEra);
 #endif
 }
 

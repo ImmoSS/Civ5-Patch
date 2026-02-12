@@ -25242,7 +25242,11 @@ int CvPlayer::getAdvancedStartPopCost(bool bAdd, CvCity* pCity)
 		{
 			--iPopulation;
 
+#ifdef TRAIT_FREE_POPULATION_AFTER_ERA
+			if (iPopulation < GC.getINITIAL_CITY_POPULATION() + GC.getGame().getStartEraInfo().getFreePopulation() + GetPlayerTraits()->GetiFreePopulationAfterEra(GetCurrentEra()))
+#else
 			if(iPopulation < GC.getINITIAL_CITY_POPULATION() + GC.getGame().getStartEraInfo().getFreePopulation())
+#endif
 			{
 				return -1;
 			}
@@ -30122,7 +30126,11 @@ int CvPlayer::getNewCityProductionValue() const
 
 	iValue += (GC.getADVANCED_START_CITY_COST() * kGame.getGameSpeedInfo().getGrowthPercent()) / 100;
 
+#ifdef TRAIT_FREE_POPULATION_AFTER_ERA
+	int iPopulation = GC.getINITIAL_CITY_POPULATION() + kGame.getStartEraInfo().getFreePopulation() + GetPlayerTraits()->GetiFreePopulationAfterEra(GetCurrentEra());
+#else
 	int iPopulation = GC.getINITIAL_CITY_POPULATION() + kGame.getStartEraInfo().getFreePopulation();
+#endif
 	for(int i = 1; i <= iPopulation; ++i)
 	{
 		iValue += (getGrowthThreshold(i) * GC.getADVANCED_START_POPULATION_COST()) / 100;
