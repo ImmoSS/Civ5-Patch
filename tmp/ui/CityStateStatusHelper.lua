@@ -63,7 +63,7 @@ function GetCityStateStatusRow(iMajor, iMinor)
 	local pMinorTeam = Teams[iMinorTeam];
 	
 	local iInf = pMinor:GetMinorCivFriendshipWithMajor(iMajor) / 100;
-	local bWar = pMajorTeam:IsAtWar(iMinorTeam);
+	local bWar = false --pMajorTeam:IsAtWar(iMinorTeam);
 	local bCanBully = pMinor:CanMajorBullyGold(iMajor);
 	local bAllies = pMinor:IsAllies(iMajor);
 	
