@@ -850,6 +850,10 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 						{
 							gDLL->UnlockAchievement(ACHIEVEMENT_ONEHITKILL);
 						}
+
+#ifdef FIX_TEST_PROMOTION_READY
+						pkAttacker->testPromotionReady();
+#endif
 					}
 					// Nobody died
 					else
@@ -860,6 +864,18 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 							pkDLLInterface->AddMessage(uiParentEventID, pkAttacker->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), strBuffer/*, "AS2D_COMBAT", MESSAGE_TYPE_INFO, pkDefender->getUnitInfo().GetButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), pkTargetPlot->getX(), pkTargetPlot->getY()*/);
 						}
 						strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_ARE_ATTACKED_BY_AIR", pkDefender->getNameKey(), pkAttacker->getNameKey(), iDamage);
+
+#ifdef FIX_TEST_PROMOTION_READY
+#ifdef PROMOTION_INSTA_HEAL_LOCKED
+						if (GET_PLAYER(pkDefender->getOwner()).isTurnActive())
+						{
+							pkDefender->testPromotionReady();
+						}
+#else
+						pkDefender->testPromotionReady();
+#endif
+						pkAttacker->testPromotionReady();
+#endif
 					}
 
 					//red icon over attacking unit
@@ -1274,6 +1290,19 @@ void CvUnitCombat::ResolveRangedCityVsUnitCombat(const CvCombatInfo& kCombatInfo
 						CvPlayer& kAttackingPlayer = GET_PLAYER(pkAttacker->getOwner());
 						kAttackingPlayer.DoYieldsFromKill(NO_UNIT, pkDefender->getUnitType(), pkDefender->getX(), pkDefender->getY(), pkDefender->isBarbarian(), 0);
 					}
+#ifdef FIX_TEST_PROMOTION_READY
+					else
+					{
+#ifdef PROMOTION_INSTA_HEAL_LOCKED
+						if (GET_PLAYER(pkDefender->getOwner()).isTurnActive())
+						{
+							pkDefender->testPromotionReady();
+						}
+#else
+						pkDefender->testPromotionReady();
+#endif
+#endif
+					}
 
 					//set damage but don't update entity damage visibility
 					pkDefender->changeDamage(iDamage, pkAttacker->getOwner());
@@ -1510,6 +1539,10 @@ void CvUnitCombat::ResolveCityMeleeCombat(const CvCombatInfo& kCombatInfo, uint 
 				pkAttacker->UnitMove(pkPlot, true, pkAttacker);
 
 				bCityConquered = true;
+
+#ifdef FIX_TEST_PROMOTION_READY
+				pkAttacker->testPromotionReady();
+#endif
 			}
 		}
 		// Neither side lost
@@ -1526,6 +1559,10 @@ void CvUnitCombat::ResolveCityMeleeCombat(const CvCombatInfo& kCombatInfo, uint 
 				GC.GetEngineUserInterface()->AddMessage(uiParentEventID, pkDefender->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), strBuffer/*, "AS2D_THEIR_WITHDRAWL", MESSAGE_TYPE_INFO, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pkPlot->getX(), pkPlot->getY()*/);
 			}
 			pkAttacker->changeMoves(-GC.getMOVE_DENOMINATOR());
+
+#ifdef FIX_TEST_PROMOTION_READY
+			pkAttacker->testPromotionReady();
+#endif
 
 			ApplyPostCityCombatEffects(pkAttacker, pkDefender, iAttackerDamageInflicted);
 		}
@@ -1879,6 +1916,17 @@ void CvUnitCombat::ResolveAirUnitVsCombat(const CvCombatInfo& kCombatInfo, uint 
 							}
 						}
 
+#ifdef FIX_TEST_PROMOTION_READY
+#ifdef PROMOTION_INSTA_HEAL_LOCKED
+						if (GET_PLAYER(pkDefender->getOwner()).isTurnActive())
+						{
+							pkDefender->testPromotionReady();
+						}
+#else
+						pkDefender->testPromotionReady();
+#endif
+#endif
+
 						ApplyPostCombatTraitEffects(pkDefender, pkAttacker);
 					}
 					// Defender died
@@ -1907,6 +1955,8 @@ void CvUnitCombat::ResolveAirUnitVsCombat(const CvCombatInfo& kCombatInfo, uint 
 
 						bTargetDied = true;
 
+						pkAttacker->testPromotionReady();
+
 						ApplyPostCombatTraitEffects(pkAttacker, pkDefender);
 					}
 					// Nobody died
@@ -1930,6 +1980,18 @@ void CvUnitCombat::ResolveAirUnitVsCombat(const CvCombatInfo& kCombatInfo, uint 
 								pkDLLInterface->AddMessage(uiParentEventID, pkDefender->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), strBuffer/*, "AS2D_COMBAT", MESSAGE_TYPE_INFO, pkDefender->getUnitInfo().GetButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pkTargetPlot->getX(), pkTargetPlot->getY()*/);
 							}
 						}
+
+#ifdef FIX_TEST_PROMOTION_READY
+#ifdef PROMOTION_INSTA_HEAL_LOCKED
+						if (GET_PLAYER(pkDefender->getOwner()).isTurnActive())
+						{
+							pkDefender->testPromotionReady();
+						}
+#else
+						pkDefender->testPromotionReady();
+#endif
+#endif
+						pkAttacker->testPromotionReady();
 					}
 				}
 
@@ -1973,6 +2035,12 @@ void CvUnitCombat::ResolveAirUnitVsCombat(const CvCombatInfo& kCombatInfo, uint 
 							pkDLLInterface->AddMessage(uiParentEventID, pkAttacker->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), strBuffer/*, GC.getEraInfo(GC.getGame().getCurrentEra())->getAudioUnitDefeatScript(), MESSAGE_TYPE_INFO, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pkTargetPlot->getX(), pkTargetPlot->getY()*/);
 						}
 					}
+#ifdef FIX_TEST_PROMOTION_READY
+					else
+					{
+						pkAttacker->testPromotionReady();
+					}
+#endif
 
 					if(pCity->getOwner() == iActivePlayerID)
 					{
