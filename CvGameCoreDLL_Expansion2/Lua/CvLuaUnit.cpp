@@ -2725,7 +2725,7 @@ int CvLuaUnit::lGetRangedAttackModifier(lua_State* L)
 	}
 #endif
 #ifdef UNIT_INNER_RING_RANGE_ATTACK_MOD
-	if (pkUnit->plot()->isAdjacent(pkPlot))
+	if (plotDistance(pkPlot->getX(), pkPlot->getY(), pkUnit->plot()->getX(), pkUnit->plot()->getY()) < 2 + pkUnit->getExtraRange())
 	{
 		iResult += pkUnit->getUnitInfo().GetInnerRingRangeAttackMod();
 	}
