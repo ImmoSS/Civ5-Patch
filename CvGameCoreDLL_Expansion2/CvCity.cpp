@@ -5017,7 +5017,7 @@ int CvCity::GetPurchaseCost(UnitTypes eUnit)
 #ifdef FOREIGN_LEGION_COST_PURCHASE
 		if (eUnit == (UnitTypes)GC.getInfoTypeForString("UNIT_FRENCH_FOREIGNLEGION"))
 		{
-			iCost *= 81;
+			iCost *= 73;
 			iCost /= 100;
 		}
 #endif
@@ -5066,7 +5066,7 @@ int CvCity::GetPurchaseCost(UnitTypes eUnit)
 #ifdef FOREIGN_LEGION_COST_PURCHASE
 	if(eUnit == (UnitTypes)GC.getInfoTypeForString("UNIT_FRENCH_FOREIGNLEGION"))
 	{
-		iCost *= 81;
+		iCost *= 73;
 		iCost /= 100;
 	}
 #endif
