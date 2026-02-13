@@ -4631,6 +4631,16 @@ int CvCityCulture::GetTourismMultiplier(PlayerTypes ePlayer, bool bIgnoreReligio
 			}
 		}
 #endif
+#ifdef POLICY_HAPPY_TOURISM_MODIFIER
+		int iHappyMod = kCityPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_HAPPY);
+		if (iHappyMod > 0)
+		{
+			if (kCityPlayer.GetExcessHappiness() > 0)
+			{
+				iMultiplier += iHappyMod;
+			}
+		}
+#endif
 	}
 
 	// LATER add top science city and research agreement with this player???
