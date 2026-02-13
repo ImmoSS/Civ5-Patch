@@ -852,6 +852,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #ifdef BUILDING_CAPITAL_GOLD_MODIFIER
 	m_iCapitalGoldModifier = kResults.GetInt("CapitalGoldModifier");
 #endif
+#ifdef BUILDING_ATTRITION_INSIDE_BORDERS
+	m_iAttritionInsideBorders = kResults.GetInt("AttritionInsideBorders");
+#endif
 
 	return true;
 }
@@ -2444,6 +2447,13 @@ bool CvBuildingEntry::IsPlayerBorderTransitionObstacle() const
 int CvBuildingEntry::GetCapitalGoldModifier() const
 {
 	return m_iCapitalGoldModifier;
+}
+#endif
+
+#ifdef BUILDING_ATTRITION_INSIDE_BORDERS
+int CvBuildingEntry::GetAttritionInsideBorders() const
+{
+	return m_iAttritionInsideBorders;
 }
 #endif
 
