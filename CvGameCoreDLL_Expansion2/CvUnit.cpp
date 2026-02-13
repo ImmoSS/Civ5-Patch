@@ -5368,10 +5368,10 @@ bool CvUnit::canHeal(const CvPlot* pPlot, bool bTestVisible) const
 		return false;
 	}
 
-#ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
-	if (pPlot->getOwner() != NO_PLAYER && pPlot->getOwner() != getOwner() && GET_PLAYER(pPlot->getOwner()).isBorderTransitionObstacle() && getDomainType() == DOMAIN_LAND)
+#ifdef BUILDING_ATTRITION_INSIDE_BORDERS
+	if (pPlot->getOwner() != NO_PLAYER && pPlot->getOwner() != getOwner() && GET_PLAYER(pPlot->getOwner()).getAttritionInsideBorders() > 0 && getDomainType() == DOMAIN_LAND)
 	{
-		// return false;
+		return false;
 	}
 #endif
 
@@ -5695,6 +5695,14 @@ void CvUnit::DoAttrition()
 			}
 		}
 	}
+
+#ifdef BUILDING_ATTRITION_INSIDE_BORDERS
+	if (getOwner() != pPlot->getOwner() && GET_TEAM(getTeam()).isAtWar(pPlot->getTeam()) && GET_PLAYER(pPlot->getOwner()).getAttritionInsideBorders() > 0)
+	{
+		strAppendText = GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DAMAGED_ATTRITION");
+		changeDamage(GET_PLAYER(pPlot->getOwner()).getAttritionInsideBorders(), NO_PLAYER, 0.0, &strAppendText);
+	}
+#endif
 
 	// slewis - helicopters take attrition when ending their turn over mountains.
 	if(getDomainType() == DOMAIN_LAND && pPlot->isMountain() && !canMoveAllTerrain())
@@ -7499,10 +7507,10 @@ bool CvUnit::pillage()
 		bSuccessfulNonRoadPillage = false;
 	}
 #endif
-#ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
-	if (pPlot->getOwner() != NO_PLAYER && GET_PLAYER(pPlot->getOwner()).isBorderTransitionObstacle())
+#ifdef BUILDING_ATTRITION_INSIDE_BORDERS
+	if (pPlot->getOwner() != NO_PLAYER && GET_PLAYER(pPlot->getOwner()).getAttritionInsideBorders() > 0)
 	{
-		// bSuccessfulNonRoadPillage = false;
+		bSuccessfulNonRoadPillage = false;
 	}
 #endif
 	if(bSuccessfulNonRoadPillage)

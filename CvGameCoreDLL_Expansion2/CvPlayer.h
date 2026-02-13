@@ -1847,6 +1847,10 @@ public:
 	bool isBorderTransitionObstacle() const;
 	void changeBorderTransitionObstacleCount(int iChange);
 #endif
+#ifdef BUILDING_ATTRITION_INSIDE_BORDERS
+	int getAttritionInsideBorders() const;
+	void changeAttritionInsideBorders(int iChange);
+#endif
 
 	CvPlayerPolicies* GetPlayerPolicies() const;
 	CvPlayerTraits* GetPlayerTraits() const;
@@ -2690,6 +2694,9 @@ protected:
 #endif
 #ifdef BUILDING_BORDER_TRANSITION_OBSTACLE
 	int m_iBorderTransitionObstacleCount;
+#endif
+#ifdef BUILDING_ATTRITION_INSIDE_BORDERS
+	int m_iAttritionInsideBorders;
 #endif
 };
 
