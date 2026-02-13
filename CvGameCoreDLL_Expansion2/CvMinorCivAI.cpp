@@ -661,6 +661,12 @@ bool CvMinorCivQuest::IsExpired()
 		if (GC.getGame().getGameTurn() == GetEndTurn() && !IsComplete())
 			return true;
 #endif
+
+#ifdef EXPIRATION_CONDITIONS_FOR_SOME_QUESTS
+		ResourceTypes eResource = (ResourceTypes)m_iData1;
+		if (GC.getGame().GetGameLeagues()->IsLuxuryHappinessBanned(m_eAssignedPlayer, eResource))
+			return true;
+#endif
 	}
 
 	// CONSTRUCT A WONDER
@@ -850,6 +856,11 @@ bool CvMinorCivQuest::IsExpired()
 	{
 #ifdef ALL_QUESTS_GET_END_TURN
 		if (GC.getGame().getGameTurn() == GetEndTurn() && !IsComplete())
+			return true;
+#endif
+
+#ifdef EXPIRATION_CONDITIONS_FOR_SOME_QUESTS
+		if ((GET_PLAYER(m_eAssignedPlayer).IsAllowedToTradeWith(m_eMinor)))
 			return true;
 #endif
 	}
@@ -3951,6 +3962,11 @@ bool CvMinorCivAI::IsValidQuestForPlayer(PlayerTypes ePlayer, MinorCivQuestTypes
 
 		if(eResource == NO_RESOURCE)
 			return false;
+
+#ifdef EXPIRATION_CONDITIONS_FOR_SOME_QUESTS
+		if (!GC.getGame().GetGameLeagues()->IsLuxuryHappinessBanned(ePlayer, eResource))
+			return false;
+#endif
 	}
 	// CONSTRUCT A WONDER
 	else if(eQuest == MINOR_CIV_QUEST_CONSTRUCT_WONDER)
@@ -4175,6 +4191,11 @@ bool CvMinorCivAI::IsValidQuestForPlayer(PlayerTypes ePlayer, MinorCivQuestTypes
 		if(!GC.getGame().GetGameTrade()->CanCreateTradeRoute(ePlayer,GetPlayer()->GetID(), DOMAIN_LAND) &&
 			!GC.getGame().GetGameTrade()->CanCreateTradeRoute(ePlayer,GetPlayer()->GetID(), DOMAIN_SEA))
 			return false;
+
+#ifdef EXPIRATION_CONDITIONS_FOR_SOME_QUESTS
+		if (!(GET_PLAYER(ePlayer).IsAllowedToTradeWith(GetPlayer()->GetID())))
+			return false;
+#endif
 	}
 	return true;
 }
