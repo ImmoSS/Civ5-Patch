@@ -496,10 +496,11 @@ int CvTreasury::GetGoldPerTurnFromReligion() const
 	{
 		if (pLoopCity->plot()->isFreshWater()/* || pLoopCity->plot()->isCoastalLand()*/)
 		{
+			ReligionTypes eMajority = pLoopCity->GetCityReligions()->GetReligiousMajority();
+			const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eMajority, m_pPlayer->GetID());
 			for (int i = 0; i < pBeliefs->GetNumBeliefs(); i++)
 			{
-				ReligionTypes eMajority = pLoopCity->GetCityReligions()->GetReligiousMajority();
-				if (eMajority != NO_RELIGION && pReligions->GetReligion(eMajority, m_pPlayer->GetID())->m_Beliefs.HasBelief((BeliefTypes)i))
+				if (eMajority != NO_RELIGION && pReligion->m_Beliefs.HasBelief((BeliefTypes)i))
 				{
 					if (pBeliefs->GetEntry(i)->GetRiverHappiness() > 0)
 					{
@@ -512,6 +513,13 @@ int CvTreasury::GetGoldPerTurnFromReligion() const
 			{
 				iGoldPerRiverOrCoastalCity += 1;
 			}
+#ifdef BUILDING_DOUBLE_PANTHEON
+			BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+			if (ePantheon != NO_BELIEF && pLoopCity->getDoublePantheon() > 0)
+			{
+				iGoldPerRiverOrCoastalCity += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetRiverHappiness();
+			}
+#endif
 		}
 	}
 
