@@ -12033,7 +12033,11 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 	if(pInPlot != NULL)
 	{
 		// No TERRAIN bonuses for this Unit?
+#ifdef FIX_DEFINE_MODIFIER
+		iTempModifier = pInPlot->defenseModifier(getTeam(), false);
+#else
 		iTempModifier = pInPlot->defenseModifier(getTeam(), (pAttacker != NULL) ? pAttacker->ignoreBuildingDefense() : true);
+#endif
 
 		// If we receive normal defensive bonuses OR iTempModifier is actually a PENALTY, then add in the mod
 		if(!noDefensiveBonus() || iTempModifier < 0)
@@ -12165,7 +12169,11 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 	if (pInPlot != NULL)
 	{
 		// No TERRAIN bonuses for this Unit?
+#ifdef FIX_DEFINE_MODIFIER
+		iTempModifier = pInPlot->defenseModifier(getTeam(), false);
+#else
 		iTempModifier = pInPlot->defenseModifier(getTeam(), (pAttacker != NULL) ? pAttacker->ignoreBuildingDefense() : true);
+#endif
 
 		// If we receive normal defensive bonuses OR iTempModifier is actually a PENALTY, then add in the mod
 		if (!noDefensiveBonus() || iTempModifier < 0)
