@@ -14,6 +14,9 @@
 #include "CvLuaUnit.h"
 #include "../CvMinorCivAI.h"
 #include "../CvUnitCombat.h"
+#ifdef INCLUDE_GAMECOREUTILS_IN_LUA_UNIT
+#include "../CvGameCoreUtils.h"
+#endif
 
 //Utility macro for registering methods
 #define Method(Name)			\

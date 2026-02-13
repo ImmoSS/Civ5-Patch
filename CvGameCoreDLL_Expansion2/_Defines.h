@@ -1016,6 +1016,8 @@
 #define FIX_AIR_STRIKE_WHEN_DECLARING_WAR
 // Fixes incorrect plot distance calculation for wrapped maps
 #define GAMECOREUTILS_FIX_PLOT_DISTANCE
+///
+#define INCLUDE_GAMECOREUTILS_IN_LUA_UNIT
 /// Fix bug of SetImprovementType when caused by placing Citadels on hided resource on enemy's territory
 #define FIX_SET_IMPROVEMENT_TYPE
 ///
