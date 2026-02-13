@@ -2375,40 +2375,37 @@ bool CvPlayerEspionage::AttemptCoup(uint uiSpyIndex)
 	{
 		if (ePreviousAlly != NO_PLAYER)
 		{
-			if (ePreviousAlly != NO_PLAYER)
+			if (GET_PLAYER(ePreviousAlly).isHuman() && GET_PLAYER(m_pPlayer->GetID()).isHuman() && GET_PLAYER(ePreviousAlly).getTeam() != GET_PLAYER(m_pPlayer->GetID()).getTeam())
 			{
-				if (GET_PLAYER(ePreviousAlly).isHuman() && GET_PLAYER(m_pPlayer->GetID()).isHuman() && GET_PLAYER(ePreviousAlly).getTeam() != GET_PLAYER(m_pPlayer->GetID()).getTeam())
-				{
-					CvGame& kGame = GC.getGame();
+				CvGame& kGame = GC.getGame();
 #ifdef GAME_UPDATE_TURN_TIMER_ONCE_PER_TURN
-					float fGameTurnEnd = kGame.getPreviousTurnLen();
+				float fGameTurnEnd = kGame.getPreviousTurnLen();
 #else
-					float fGameTurnEnd = static_cast<float>(kGame.getMaxTurnLen());
+				float fGameTurnEnd = static_cast<float>(kGame.getMaxTurnLen());
 #endif
-					float fTimeElapsed = kGame.getTimeElapsed();
-					float fCSAllyingWarRestrictionTimer;
+				float fTimeElapsed = kGame.getTimeElapsed();
+				float fCSAllyingWarRestrictionTimer;
 #ifdef BLITZ_MODE
-					if (GC.getGame().isOption("GAMEOPTION_BLITZ_MODE"))
-					{
-						fCSAllyingWarRestrictionTimer = CS_ALLYING_WAR_RESCTRICTION_TIMER / 4;
-					}
-					else
-					{
-						fCSAllyingWarRestrictionTimer = CS_ALLYING_WAR_RESCTRICTION_TIMER;
-					}
-#else
+				if (GC.getGame().isOption("GAMEOPTION_BLITZ_MODE"))
+				{
+					fCSAllyingWarRestrictionTimer = CS_ALLYING_WAR_RESCTRICTION_TIMER / 4;
+				}
+				else
+				{
 					fCSAllyingWarRestrictionTimer = CS_ALLYING_WAR_RESCTRICTION_TIMER;
+				}
+#else
+				fCSAllyingWarRestrictionTimer = CS_ALLYING_WAR_RESCTRICTION_TIMER;
 #endif
-					if (fGameTurnEnd - fTimeElapsed > fCSAllyingWarRestrictionTimer)
-					{
-						GET_PLAYER(m_pPlayer->GetID()).setTurnCSWarAllowingMinor(ePreviousAlly, eCityOwner, kGame.getGameTurn());
-						GET_PLAYER(m_pPlayer->GetID()).setTimeCSWarAllowingMinor(ePreviousAlly, eCityOwner, fTimeElapsed + fCSAllyingWarRestrictionTimer);
-					}
-					else
-					{
-						GET_PLAYER(m_pPlayer->GetID()).setTurnCSWarAllowingMinor(ePreviousAlly, eCityOwner, kGame.getGameTurn() + 1);
-						GET_PLAYER(m_pPlayer->GetID()).setTimeCSWarAllowingMinor(ePreviousAlly, eCityOwner, fCSAllyingWarRestrictionTimer - (fGameTurnEnd - fTimeElapsed));
-					}
+				if (fGameTurnEnd - fTimeElapsed > fCSAllyingWarRestrictionTimer)
+				{
+					GET_PLAYER(m_pPlayer->GetID()).setTurnCSWarAllowingMinor(ePreviousAlly, eCityOwner, kGame.getGameTurn());
+					GET_PLAYER(m_pPlayer->GetID()).setTimeCSWarAllowingMinor(ePreviousAlly, eCityOwner, fTimeElapsed + fCSAllyingWarRestrictionTimer);
+				}
+				else
+				{
+					GET_PLAYER(m_pPlayer->GetID()).setTurnCSWarAllowingMinor(ePreviousAlly, eCityOwner, kGame.getGameTurn() + 1);
+					GET_PLAYER(m_pPlayer->GetID()).setTimeCSWarAllowingMinor(ePreviousAlly, eCityOwner, fCSAllyingWarRestrictionTimer - (fGameTurnEnd - fTimeElapsed));
 				}
 			}
 			if (GET_PLAYER(ePreviousAlly).isHuman())
@@ -2652,40 +2649,37 @@ bool CvPlayerEspionage::AttemptCoup(uint uiSpyIndex)
 	{
 		if (ePreviousAlly != NO_PLAYER)
 		{
-			if (ePreviousAlly != NO_PLAYER)
+			if (GET_PLAYER(ePreviousAlly).isHuman() && GET_PLAYER(m_pPlayer->GetID()).isHuman() && GET_PLAYER(ePreviousAlly).getTeam() != GET_PLAYER(m_pPlayer->GetID()).getTeam())
 			{
-				if (GET_PLAYER(ePreviousAlly).isHuman() && GET_PLAYER(m_pPlayer->GetID()).isHuman() && GET_PLAYER(ePreviousAlly).getTeam() != GET_PLAYER(m_pPlayer->GetID()).getTeam())
-				{
-					CvGame& kGame = GC.getGame();
+				CvGame& kGame = GC.getGame();
 #ifdef GAME_UPDATE_TURN_TIMER_ONCE_PER_TURN
-					float fGameTurnEnd = kGame.getPreviousTurnLen();
+				float fGameTurnEnd = kGame.getPreviousTurnLen();
 #else
-					float fGameTurnEnd = static_cast<float>(kGame.getMaxTurnLen());
+				float fGameTurnEnd = static_cast<float>(kGame.getMaxTurnLen());
 #endif
-					float fTimeElapsed = kGame.getTimeElapsed();
-					float fCSAllyingWarRestrictionTimer;
+				float fTimeElapsed = kGame.getTimeElapsed();
+				float fCSAllyingWarRestrictionTimer;
 #ifdef BLITZ_MODE
-					if (GC.getGame().isOption("GAMEOPTION_BLITZ_MODE"))
-					{
-						fCSAllyingWarRestrictionTimer = CS_ALLYING_WAR_RESCTRICTION_TIMER / 4;
-					}
-					else
-					{
-						fCSAllyingWarRestrictionTimer = CS_ALLYING_WAR_RESCTRICTION_TIMER;
-					}
-#else
+				if (GC.getGame().isOption("GAMEOPTION_BLITZ_MODE"))
+				{
+					fCSAllyingWarRestrictionTimer = CS_ALLYING_WAR_RESCTRICTION_TIMER / 4;
+				}
+				else
+				{
 					fCSAllyingWarRestrictionTimer = CS_ALLYING_WAR_RESCTRICTION_TIMER;
+				}
+#else
+				fCSAllyingWarRestrictionTimer = CS_ALLYING_WAR_RESCTRICTION_TIMER;
 #endif
-					if (fGameTurnEnd - fTimeElapsed > fCSAllyingWarRestrictionTimer)
-					{
-						GET_PLAYER(m_pPlayer->GetID()).setTurnCSWarAllowingMinor(ePreviousAlly, eCityOwner, kGame.getGameTurn());
-						GET_PLAYER(m_pPlayer->GetID()).setTimeCSWarAllowingMinor(ePreviousAlly, eCityOwner, fTimeElapsed + fCSAllyingWarRestrictionTimer);
-					}
-					else
-					{
-						GET_PLAYER(m_pPlayer->GetID()).setTurnCSWarAllowingMinor(ePreviousAlly, eCityOwner, kGame.getGameTurn() + 1);
-						GET_PLAYER(m_pPlayer->GetID()).setTimeCSWarAllowingMinor(ePreviousAlly, eCityOwner, fCSAllyingWarRestrictionTimer - (fGameTurnEnd - fTimeElapsed));
-					}
+				if (fGameTurnEnd - fTimeElapsed > fCSAllyingWarRestrictionTimer)
+				{
+					GET_PLAYER(m_pPlayer->GetID()).setTurnCSWarAllowingMinor(ePreviousAlly, eCityOwner, kGame.getGameTurn());
+					GET_PLAYER(m_pPlayer->GetID()).setTimeCSWarAllowingMinor(ePreviousAlly, eCityOwner, fTimeElapsed + fCSAllyingWarRestrictionTimer);
+				}
+				else
+				{
+					GET_PLAYER(m_pPlayer->GetID()).setTurnCSWarAllowingMinor(ePreviousAlly, eCityOwner, kGame.getGameTurn() + 1);
+					GET_PLAYER(m_pPlayer->GetID()).setTimeCSWarAllowingMinor(ePreviousAlly, eCityOwner, fCSAllyingWarRestrictionTimer - (fGameTurnEnd - fTimeElapsed));
 				}
 			}
 			if (GET_PLAYER(ePreviousAlly).isHuman())
