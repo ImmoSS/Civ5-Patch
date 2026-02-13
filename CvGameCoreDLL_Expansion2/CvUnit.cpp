@@ -12722,14 +12722,14 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 #ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
 		if (pCity != NULL)
 		{
-			if (!pCity->plot()->isAdjacent(plot()))
+			if (plotDistance(pCity->plot()->getX(), pCity->plot()->getY(), plot()->getX(), plot()->getY()) > 1 + getExtraRange())
 			{
 				iModifier += getUnitInfo().GetOuterRingsRangeAttackMod();
 			}
 		}
 		if (pOtherUnit != NULL)
 		{
-			if (!pOtherUnit->plot()->isAdjacent(plot()))
+			if (plotDistance(pOtherUnit->plot()->getX(), pOtherUnit->plot()->getY(), plot()->getX(), plot()->getY()) > 1 + getExtraRange())
 			{
 				iModifier += getUnitInfo().GetOuterRingsRangeAttackMod();
 			}
@@ -13310,14 +13310,14 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 #ifdef UNIT_OUTER_RINGS_RANGE_ATTACK_MOD
 		if (pCity != NULL)
 		{
-			if (!pCity->plot()->isAdjacent(plot()))
+			if (plotDistance(pCity->plot()->getX(), pCity->plot()->getY(), plot()->getX(), plot()->getY()) > 1 + getExtraRange())
 			{
 				iModifier += getUnitInfo().GetOuterRingsRangeAttackMod();
 			}
 		}
 		if (pOtherUnit != NULL)
 		{
-			if (!pOtherUnit->plot()->isAdjacent(plot()))
+			if (plotDistance(pOtherUnit->plot()->getX(), pOtherUnit->plot()->getY(), plot()->getX(), plot()->getY()) > 1 + getExtraRange())
 			{
 				iModifier += getUnitInfo().GetOuterRingsRangeAttackMod();
 			}
