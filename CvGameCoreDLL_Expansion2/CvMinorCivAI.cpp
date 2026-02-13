@@ -6309,6 +6309,10 @@ void CvMinorCivAI::SetAlly(PlayerTypes eNewAlly)
 #endif
 	}
 
+#ifdef AUTO_PEACE_WITH_MINOR_ON_COUP
+	if (IsAtWarWithPlayersTeam(eNewAlly))
+		GET_TEAM(GetPlayer()->getTeam()).makePeace(GET_PLAYER(eNewAlly).getTeam());
+#endif
 	m_eAlly = eNewAlly;
 	m_iTurnAllied = GC.getGame().getGameTurn();
 
