@@ -1750,7 +1750,7 @@ FDataStream& operator>>(FDataStream& loadFrom, CvMinorCivQuest& writeTo)
 	}
 #ifdef QUESTS_SYSTEM_OVERHAUL
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= BUMP_SAVE_VERSION_MINOR_CIV_AI)
+	if (uiVersion >= 1000)
 	{
 # endif
 		loadFrom >> writeTo.m_bOneShotReward;
@@ -1762,7 +1762,7 @@ FDataStream& operator>>(FDataStream& loadFrom, CvMinorCivQuest& writeTo)
 	}
 # endif
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
-	if (uiVersion >= BUMP_SAVE_VERSION_MINOR_CIV_AI)
+	if (uiVersion >= 1000)
 	{
 # endif
 		loadFrom >> writeTo.m_bRewardEveryTurn;
@@ -1783,7 +1783,7 @@ FDataStream& operator<<(FDataStream& saveTo, const CvMinorCivQuest& readFrom)
 {
 	uint uiVersion = 2;
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
-	uiVersion = BUMP_SAVE_VERSION_MINOR_CIV_AI;
+	uiVersion = BUMP_SAVE_VERSION_MINOR_CIV_QUEST;
 #endif
 	saveTo << uiVersion;
 
