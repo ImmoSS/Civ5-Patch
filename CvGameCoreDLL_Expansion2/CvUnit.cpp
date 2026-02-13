@@ -12004,9 +12004,6 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 
 	// Defense against Ranged
 	if(bFromRangedAttack)
-#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
-		if (pAttacker != NULL && !pAttacker->getUnitInfo().IsIgnoreTerrainAndCoverBonuses())
-#endif
 		iModifier += rangedDefenseModifier();
 
 	// Tourism Defense
@@ -12041,10 +12038,21 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 
 		// If we receive normal defensive bonuses OR iTempModifier is actually a PENALTY, then add in the mod
 		if(!noDefensiveBonus() || iTempModifier < 0)
-#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
-			if (pAttacker != NULL && !pAttacker->getUnitInfo().IsIgnoreTerrainAndCoverBonuses())
-#endif
+#if defined UNIT_IGNORE_TERRAIN_DEFENSE && defined FIX_DEFENSE_MODIFIER
+			if (pAttacker != NULL)
+			{
+				if (pAttacker->getUnitInfo().IsIgnoreTerrainDefense() && plot()->defenseModifier(getTeam(), true) > 0)
+				{
+					iModifier += iTempModifier - plot()->defenseModifier(getTeam(), true);
+				}
+				else
+				{
+					iModifier += iTempModifier;
+				}
+			}
+#else
 			iModifier += iTempModifier;
+#endif
 
 		// Fortification
 		iTempModifier = fortifyModifier();
@@ -12758,10 +12766,21 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 
 		// If we receive normal defensive bonuses OR iTempModifier is actually a PENALTY, then add in the mod
 		if (!noDefensiveBonus() || iTempModifier < 0)
-#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
-			if (pOtherUnit != NULL && !pOtherUnit->getUnitInfo().IsIgnoreTerrainAndCoverBonuses())
-#endif
+#if defined UNIT_IGNORE_TERRAIN_DEFENSE && defined FIX_DEFENSE_MODIFIER
+			if (pOtherUnit != NULL)
+			{
+				if (pOtherUnit->getUnitInfo().IsIgnoreTerrainDefense() && plot()->defenseModifier(getTeam(), true) > 0)
+				{
+					iModifier += iTempModifier - plot()->defenseModifier(getTeam(), true);
+				}
+				else
+				{
+					iModifier += iTempModifier;
+				}
+			}
+#else
 			iModifier += iTempModifier;
+#endif
 
 		iModifier += getDefenseModifier();
 
@@ -12778,9 +12797,6 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 
 #ifdef FIX_RANGE_DEFENSE_MOD
 		// Ranged Defense Mod
-#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
-		if (pOtherUnit != NULL && !pOtherUnit->getUnitInfo().IsIgnoreTerrainAndCoverBonuses())
-#endif
 		iModifier += rangedDefenseModifier();
 
 		if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
@@ -13229,9 +13245,6 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 		{
 #ifndef FIX_RANGE_DEFENSE_MOD
 			// Ranged Defense Mod
-#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
-			if (pOtherUnit != NULL && !pOtherUnit->getUnitInfo().IsIgnoreTerrainAndCoverBonuses())
-#endif
 			iModifier += rangedDefenseModifier();
 #endif
 
@@ -13341,18 +13354,26 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 
 		// If we receive normal defensive bonuses OR iTempModifier is actually a PENALTY, then add in the mod
 		if(!noDefensiveBonus() || iTempModifier < 0)
-#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
-			if (pOtherUnit != NULL && !pOtherUnit->getUnitInfo().IsIgnoreTerrainAndCoverBonuses())
-#endif
+#if defined UNIT_IGNORE_TERRAIN_DEFENSE && defined FIX_DEFENSE_MODIFIER
+			if (pOtherUnit != NULL)
+			{
+				if (pOtherUnit->getUnitInfo().IsIgnoreTerrainDefense() && plot()->defenseModifier(getTeam(), true) > 0)
+				{
+					iModifier += iTempModifier - plot()->defenseModifier(getTeam(), true);
+				}
+				else
+				{
+					iModifier += iTempModifier;
+				}
+			}
+#else
 			iModifier += iTempModifier;
+#endif
 
 		iModifier += getDefenseModifier();
 
 #ifdef FIX_RANGE_DEFENSE_MOD
 		// Ranged Defense Mod
-#ifdef UNIT_IGNORE_TERRAIN_AND_COVER_BONUSES
-		if (pOtherUnit != NULL && !pOtherUnit->getUnitInfo().IsIgnoreTerrainAndCoverBonuses())
-#endif
 		iModifier += rangedDefenseModifier();
 
 		if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
