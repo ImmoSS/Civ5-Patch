@@ -635,7 +635,7 @@ void CvHomelandAI::FindHomelandTargets()
 
 						// Get weight for this sentry point
 						int iWeight = iOutsidePlots * 100;
-#ifdef FIX_DEFINE_MODIFIER
+#ifdef FIX_DEFENSE_MODIFIER
 						iWeight += pLoopPlot->defenseModifier(eTeam, false);
 #else
 						iWeight += pLoopPlot->defenseModifier(eTeam, true);

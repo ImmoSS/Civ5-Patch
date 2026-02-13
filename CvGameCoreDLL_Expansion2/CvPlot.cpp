@@ -3026,7 +3026,7 @@ int CvPlot::getUnitPower(PlayerTypes eOwner) const
 
 
 //	--------------------------------------------------------------------------------
-#ifdef FIX_DEFINE_MODIFIER
+#ifdef FIX_DEFENSE_MODIFIER
 int CvPlot::defenseModifier(TeamTypes eDefender, bool bIgnoreBuilding, bool bHelp) const
 {
 	CvCity* pCity;

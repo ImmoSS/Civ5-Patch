@@ -1514,7 +1514,7 @@ void CvTacticalAI::FindTacticalTargets()
 
 				// ... defensive bastion?
 				else if(m_pPlayer->GetID() == pLoopPlot->getOwner() &&
-#ifdef FIX_DEFINE_MODIFIER
+#ifdef FIX_DEFENSE_MODIFIER
 					pLoopPlot->defenseModifier(m_pPlayer->getTeam(), false) > 0 &&
 #else
 					pLoopPlot->defenseModifier(m_pPlayer->getTeam(), true) > 0 &&

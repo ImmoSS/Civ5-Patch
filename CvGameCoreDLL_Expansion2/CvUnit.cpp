@@ -12033,7 +12033,7 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 	if(pInPlot != NULL)
 	{
 		// No TERRAIN bonuses for this Unit?
-#ifdef FIX_DEFINE_MODIFIER
+#ifdef FIX_DEFENSE_MODIFIER
 		iTempModifier = pInPlot->defenseModifier(getTeam(), false);
 #else
 		iTempModifier = pInPlot->defenseModifier(getTeam(), (pAttacker != NULL) ? pAttacker->ignoreBuildingDefense() : true);
@@ -12169,7 +12169,7 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 	if (pInPlot != NULL)
 	{
 		// No TERRAIN bonuses for this Unit?
-#ifdef FIX_DEFINE_MODIFIER
+#ifdef FIX_DEFENSE_MODIFIER
 		iTempModifier = pInPlot->defenseModifier(getTeam(), false);
 #else
 		iTempModifier = pInPlot->defenseModifier(getTeam(), (pAttacker != NULL) ? pAttacker->ignoreBuildingDefense() : true);
