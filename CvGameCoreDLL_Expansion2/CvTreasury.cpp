@@ -514,10 +514,13 @@ int CvTreasury::GetGoldPerTurnFromReligion() const
 				iGoldPerRiverOrCoastalCity += 1;
 			}
 #ifdef BUILDING_DOUBLE_PANTHEON
-			BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
-			if (ePantheon != NO_BELIEF && pLoopCity->getDoublePantheon() > 0)
+			if (pReligion)
 			{
-				iGoldPerRiverOrCoastalCity += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetRiverHappiness();
+				BeliefTypes ePantheon = pReligion->m_Beliefs.GetBelief(0);
+				if (ePantheon != NO_BELIEF && pLoopCity->getDoublePantheon() > 0)
+				{
+					iGoldPerRiverOrCoastalCity += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetRiverHappiness();
+				}
 			}
 #endif
 		}
