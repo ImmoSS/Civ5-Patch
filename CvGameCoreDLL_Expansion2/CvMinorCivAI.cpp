@@ -5951,9 +5951,11 @@ int CvMinorCivAI::GetEffectiveFriendshipWithMajorTimes100(PlayerTypes ePlayer)
 	CvAssertMsg(ePlayer < MAX_MAJOR_CIVS, "ePlayer is expected to be within maximum bounds (invalid Index)");
 	if(ePlayer < 0 || ePlayer >= MAX_MAJOR_CIVS) return 0; // as defined during Reset()
 
+#ifndef EFFECTIVE_FRIENDSHIP_EQUALS_BASEFRIENDSHIP
 	// Are we at war?
 	if(IsAtWarWithPlayersTeam(ePlayer))
 		return (100 * /*-60*/GC.getMINOR_FRIENDSHIP_AT_WAR());
+#endif
 
 	return GetBaseFriendshipWithMajorTimes100(ePlayer);
 }
@@ -6307,6 +6309,10 @@ void CvMinorCivAI::SetAlly(PlayerTypes eNewAlly)
 #endif
 	}
 
+#ifdef AUTO_PEACE_WITH_MINOR_ON_COUP
+	if (IsAtWarWithPlayersTeam(eNewAlly))
+		GET_TEAM(GetPlayer()->getTeam()).makePeace(GET_PLAYER(eNewAlly).getTeam());
+#endif
 	m_eAlly = eNewAlly;
 	m_iTurnAllied = GC.getGame().getGameTurn();
 
