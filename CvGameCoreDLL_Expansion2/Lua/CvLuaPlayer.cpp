@@ -1069,6 +1069,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 #ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
 	Method(GetNumCapitalsControlled);
 #endif
+#ifdef COUP_SYSTEM_REWORK
+	Method(GetMinorCoupGoal);
+#endif
 
 
 }
@@ -11465,5 +11468,26 @@ int CvLuaPlayer::lGetMinorQuestFriendshipMod(lua_State* L)
 int CvLuaPlayer::lGetNumCapitalsControlled(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvPlayerAI::GetNumCapitalsControlled);
+}
+#endif
+
+#ifdef COUP_SYSTEM_REWORK
+//------------------------------------------------------------------------------
+//int GetMinorCoupGoal(PlayerTypes eMajor);
+int CvLuaPlayer::lGetMinorCoupGoal(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	PlayerTypes eMajor = (PlayerTypes)lua_tointeger(L, 2);
+	int iReturnValue = 100;
+	int iBullyMetric = pkPlayer->GetMinorCivAI()->CalculateBullyMetric(eMajor, /*bForUnit*/false);
+
+	if (pkPlayer->GetMinorCivAI()->CanMajorBullyUnit(eMajor, iBullyMetric))
+	{
+		iReturnValue -= 30;
+	}
+
+	lua_pushinteger(L, iReturnValue);
+
+	return 1;
 }
 #endif

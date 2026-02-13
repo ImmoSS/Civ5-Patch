@@ -534,6 +534,9 @@ protected:
 #ifdef CHANGE_FOOD_PROD_MINORS_SCALE
 	static int lGetYieldFromMinorsTimes100(lua_State* L);
 #endif
+#ifdef COUP_SYSTEM_REWORK
+	static int lGetMinorCityEspionageCoupAmount(lua_State* L);
+#endif
 };
 
 #endif //CVLUACITY_H

@@ -10,25 +10,25 @@
 						<Image Size="21,21" Anchor="R,C" Offset="2,0" Texture="Esp_Spy_Upgrades21.dds" ID="AgentRank"/>
 					</Grid>
 					<Image Size="45,45" Anchor="L,T" Offset="10,20" Texture="Esp_FramedIcons45_Expansion.dds" TextureOffset="0,45" ID="AgentIcon" ToolTip="Secret"/>
-          <Image Size="45,45" Anchor="L,T" Offset="10,20" Texture="Esp_Diplomat_FramedIcon45.dds" ID="DiplomatIcon" ToolTip="Secret" Hidden="true"/>
+          		<Image Size="45,45" Anchor="L,T" Offset="10,20" Texture="Esp_Diplomat_FramedIcon45.dds" ID="DiplomatIcon" ToolTip="Secret" Hidden="true"/>
 				</Box>
-				<Box Size="116,40" Color="0,0,0,0" ID="AgentLocationActionsPanel">
+				<Box Size="178,40" Color="0,0,0,0" ID="AgentLocationActionsPanel">
 					<Stack Size="116,20" StackGrowth="Right">
 						<Box Size="32,32" Anchor="L,T" Offset="0,-5" Color="0,0,0,0">
 							<Image ID="AgentLocationIconBG" Size="32.32" Anchor="C,C" Offset="0,0" TextureOffset="32,0" Texture="CivIconBGSizes.dds"/>
 							<Image ID="AgentLocationIconShadow" Size="24.24" Anchor="C,C" Offset="1,1" Texture="CivSymbolAtlas16.dds" Color="Black.128"/>
 							<Image ID="AgentLocationIcon" Size="24.24" Offset="0,0" Anchor="C,C" Texture="CivSymbolsColor256.dds"/>
-              <Image ID="CivIconHighlight" Size="32.32" Anchor="C,C" Offset="0,0" TextureOffset="32,0" Texture="CivIconBGSizes_Highlight.dds"/>
+              				<Image ID="CivIconHighlight" Size="32.32" Anchor="C,C" Offset="0,0" TextureOffset="32,0" Texture="CivIconBGSizes_Highlight.dds"/>
 						</Box>
 						<Label ID="AgentLocation" Anchor="L,T" Offset="0,5" TruncateWidth="120" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
 					</Stack>
-					<Stack Size="116,20" Offset="0,20" Anchor="C,T" StackGrowth="Bottom" ID="AgentActivitiesStack">
-						<GridButton Size="96,26" Style="SmallButton" ID="ViewCityButton" ToolTip="TXT_KEY_EO_VIEW_TOOLTIP">
+					<Stack Size="178,20" Offset="0,20" Anchor="C,T" StackGrowth="Bottom" ID="AgentActivitiesStack">
+						<GridButton Size="160,26" Style="SmallButton" ID="ViewCityButton" ToolTip="TXT_KEY_EO_VIEW_TOOLTIP">
 							<Image Size="20,20" Texture="Esp_ViewCity20.dds" Offset="5,5" Anchor="L,T"/>
 							<Label ID="ViewCityButtonLabel" String="TXT_KEY_EO_VIEW" Offset="0,0" Anchor="C,C"/>
 						</GridButton>
-						<GridButton Size="96,26" Style="SmallButton" ID="StageCoupButton" String="TXT_KEY_EO_COUP" ToolTip="TXT_KEY_EO_COUP_TT" Hidden="1"/>
-						<GridButton Size="96,26" Style="SmallButton" ID="RelocateButton" String="TXT_KEY_EO_RELOCATE" ToolTip="TXT_KEY_EO_RELOCATE_TOOLTIP"/>
+						<GridButton Size="160,26" Style="SmallButton" ID="StageCoupButton" String="TXT_KEY_EO_COUP" ToolTip="TXT_KEY_EO_COUP_TT" Hidden="1"/>
+						<GridButton Size="160,26" Style="SmallButton" ID="RelocateButton" String="TXT_KEY_EO_RELOCATE" ToolTip="TXT_KEY_EO_RELOCATE_TOOLTIP"/>
 					</Stack>
 				</Box>
 				<Box Size="218,40" Color="0,0,0,0" ID="AgentActivityPanel">
@@ -210,14 +210,14 @@
 		</Box>
 	</Instance>
 	<Box Style="BGBlock_ClearTopBar"/>
-	<Grid Size="990,653" Anchor="C,C" Offset="0,6" Padding="0,0" Style="Grid9DetailFive140">
+	<Grid Size="1052,653" Anchor="C,C" Offset="0,6" Padding="0,0" Style="Grid9DetailFive140">
 		<!-- Decoration -->
 		<!-- Top -->
 		<Image Anchor="C,T" AnchorSide="I.O" Size="256,64" Offset="0,-14" Texture="assets\UI\Art\Icons\Top512IconTrim.dds">
 			<Image ID="Icon" Size="64,64" Offset="-1,-1" Anchor="C,C" Texture="EspionageSpyIcons64_Expansion.dds"/>
 		</Image>
-		<Image ID="ModernBackground" Anchor="L,T" Offset="20,73" Texture="Espionage_Background953x567.dds" Size="953,470"/>
-		<Image ID="EarlyBackground" Anchor="L,T" Offset="20,73" Texture="Espionage_medieval_BKGRND.dds" Size="953,470" Hidden="1"/>
+		<Image ID="ModernBackground" Anchor="L,T" Offset="51,73" Texture="Espionage_Background953x567.dds" Size="953,470"/>
+		<Image ID="EarlyBackground" Anchor="L,T" Offset="51,73" Texture="Espionage_medieval_BKGRND.dds" Size="953,470" Hidden="1"/>
    
     <!-- Side treatments -->
     <Box Style="MenuLeftSideTreatment"/>
@@ -225,10 +225,10 @@
     
 		<Label Style="MenuTitleCaption" String="TXT_KEY_EO_TITLE" />
 		<!-- Internal Space-->
-		<Box Size="954,566" Offset="19,44" Color="0,0,0,0">
+		<Box Size="1016,566" Offset="19,44" Color="0,0,0,0">
 			<Label Anchor="C,C" ID="LabelEspionageNotStartedYet" String="TXT_KEY_ESPIONAGE_NOT_STARTED_YET" ColorSet="Beige_Black_Alpha" Font="TwCenMT22" FontStyle="Shadow"/>
-			<Box Anchor="C,T" Size="954,32" Offset="0,0" Color="0.0.0.128" ID="TabPanel">
-				<Stack Anchor="C,T" Size="971,32" Offset="0,0" Padding="0" StackGrowth="Right">
+			<Box Anchor="C,T" Size="1016,32" Offset="0,0" Color="0.0.0.128" ID="TabPanel">
+				<Stack Anchor="C,T" Size="1033,32" Offset="0,0" Padding="0" StackGrowth="Right">
 					<Button Anchor="L,T" Size="300,24" Offset="0,0" String="TXT_KEY_EO_OVERVIEW" ToolTip="TXT_KEY_EO_OVERVIEW_TT" ID="TabButtonOverview">
 						<ShowOnMouseOver>
 							<AlphaAnim Anchor="L,C" Size="300,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1">
@@ -248,23 +248,23 @@
 						<Grid Anchor="C,C" Offset="0,1" Size="300,26" Style="Grid9FrameTurns" Hidden="1" ID="IntrigueSelectHighlight"/>
 					</Button>
 				</Stack>
-				<Image Anchor="C,B" Offset="0,0" Texture="HorizontalTrim.dds" Size="971.5"/>
+				<Image Anchor="C,B" Offset="0,0" Texture="HorizontalTrim.dds" Size="1033.5"/>
 			</Box>
-			<Box Size="954,464" Offset="0,30" Color="0,0,0,0" ID="OverviewPanel" Hidden="1">
+			<Box Size="1016,464" Offset="0,30" Color="0,0,0,0" ID="OverviewPanel" Hidden="1">
 				<!-- Agent List-->
-				<Box Size="479,464" Offset="0,0" Color="0,0,0,0" ID="AgentsListBox" Hidden="0">
-					<Stack Size="479,464" Anchor="L,T" StackGrowth="Bottom">
-						<Box Size="484,22" Color="0,0,0,0">
+				<Box Size="541,464" Offset="0,0" Color="0,0,0,0" ID="AgentsListBox" Hidden="0">
+					<Stack Size="541,464" Anchor="L,T" StackGrowth="Bottom">
+						<Box Size="546,22" Color="0,0,0,0">
 							<Label Anchor="C,B" String="TXT_KEY_EO_AGENTS" ColorSet="Beige_Black_Alpha" Font="TwCenMT22" FontStyle="Shadow"/>
 						</Box>
-						<Box Size="484,20" Color="0,0,0,0">
-							<Stack Size="484,20" StackGrowth="Right">
+						<Box Size="546,20" Color="0,0,0,0">
+							<Stack Size="546,20" StackGrowth="Right">
 								<Box Size="116,18" Color="0,0,0,0">
 									<TextButton Offset="20,0" Anchor="L,B" Font="TwCenMT20" ColorSet="Beige_Black_Alpha" String="TXT_KEY_EO_NAME_RANK" FontStyle="Shadow" MouseOverStyle="SoftShadow" ConsumeMouse="1" ID="ASortByNameRank">
 										<Image Anchor="L,C" AnchorSide="O.I" Offset="2,0" Texture="assets/UI/Art/Controls/9 Grids/SelectedUp.dds" Size="18,18" ID="ASortByNameRankImage"/>
 									</TextButton>
 								</Box>
-								<Box Size="116,18" Color="0,0,0,0">
+								<Box Size="178,18" Color="0,0,0,0">
 									<TextButton Offset="0,0" Anchor="C,B" Font="TwCenMT20" ColorSet="Beige_Black_Alpha" String="TXT_KEY_EO_LOCATION" FontStyle="Shadow" MouseOverStyle="SoftShadow" ConsumeMouse="1" ID="ASortByLocation">
 										<Image Anchor="L,C" AnchorSide="O.I" Offset="2,0" Texture="assets/UI/Art/Controls/9 Grids/SelectedUp.dds" Size="18,18" ID="ASortByLocationImage"/>
 									</TextButton>
@@ -276,10 +276,10 @@
 								</Box>
 							</Stack>
 						</Box>
-						<Box Size="479,5" Color="0,0,0,0">
+						<Box Size="541,5" Color="0,0,0,0">
 							<Image Anchor="C,B" Offset="0,1" Texture="bar400x2.dds" Size="400,1"/>
 						</Box>
-						<ScrollPanel Vertical="1" Size="451,417" Offset="0,0" AutoScrollBar="0" ID="AgentScrollPanel">
+						<ScrollPanel Vertical="1" Size="512,417" Offset="0,0" AutoScrollBar="0" ID="AgentScrollPanel">
 							<!-- Scroll Controls -->
 							<ScrollBar Style="VertSlider" Length="381" Anchor="R,C" AnchorSide="O,I"/>
 							<UpButton Style="ScrollBarUp" Anchor="R,T" AnchorSide="O,I"/>
@@ -289,10 +289,10 @@
 					</Stack>
 					<Label Anchor="C,C" String="TXT_KEY_NO_MORE_SPIES" WrapWidth="450" ColorSet="Beige_Black_Alpha" Font="TwCenMT22" FontStyle="Shadow" ID="NoMoreSpiesLabel"/>
 				</Box>
-				<Box Size="479,464" Offset="0,0" Color="0,0,0,0" ID="AgentMovePanel" Hidden="1">
+				<Box Size="541,464" Offset="0,0" Color="0,0,0,0" ID="AgentMovePanel" Hidden="1">
 					<Image Anchor="R,T" Offset="10,0" Texture="VerticalTrim.dds" Size="5,464"/>
-					<Box Size="465,80" Color="19,32,46,120" Offset="0,5" ID="Base">
-						<Stack Size="465,40" StackGrowth="Right">
+					<Box Size="526,80" Color="19,32,46,120" Offset="0,5" ID="Base">
+						<Stack Size="526,40" StackGrowth="Right">
 							<Box Size="116,40" Color="0,0,0,0">
 								<Label ID="AgentName" String="Pickles" Anchor="L,T" Offset="10,4" TruncateWidth="116" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
 								<Grid Style="Grid9Frame27" Size="65,35" Anchor="L,T" Offset="15,25">
@@ -300,13 +300,13 @@
 								</Grid>
 								<Image Size="45,45" Anchor="L,T" Offset="10,20" Texture="Esp_FramedIcons45_Expansion.dds" TextureOffset="0,45" ID="AgentIcon" ToolTip="Secret"/>
 							</Box>
-							<Box Size="116,40" Color="0,0,0,0" ID="AgentLocationActionsPanel">
-								<Stack Size="116,20" Anchor="L,T" StackGrowth="Right">
+							<Box Size="178,40" Color="0,0,0,0" ID="AgentLocationActionsPanel">
+								<Stack Size="178,20" Anchor="L,T" StackGrowth="Right">
 									<Box Size="32,32" Anchor="L,T" Offset="0,-5" Color="0,0,0,0">
 										<Image ID="AgentLocationIconBG" Size="32.32" Anchor="C,C" Offset="0,0" TextureOffset="32,0" Texture="CivIconBGSizes.dds"/>
 										<Image ID="AgentLocationIconShadow" Size="24.24" Anchor="C,C" Offset="1,1" Texture="CivSymbolAtlas16.dds" Color="Black.128"/>
 										<Image ID="AgentLocationIcon" Size="24.24" Offset="0,0" Anchor="C,C" Texture="CivSymbolsColor256.dds"/>
-                    <Image ID="CivIconHighlight" Size="32.32" Anchor="C,C" Offset="0,0" TextureOffset="32,0" Texture="CivIconBGSizes_Highlight.dds"/>
+                    					<Image ID="CivIconHighlight" Size="32.32" Anchor="C,C" Offset="0,0" TextureOffset="32,0" Texture="CivIconBGSizes_Highlight.dds"/>
 									</Box>
 									<Label ID="AgentLocation" String="Mexico" Anchor="L,T" Offset="0,5" TruncateWidth="152" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
 								</Stack>
@@ -421,14 +421,14 @@
 					</Stack>
 				</Box>
 			</Box>
-			<Box Size="954,463" Offset="0,31" Color="0,0,0,0" ID="IntriguePanel" Hidden="1">
-				<Stack Size="954,20" StackGrowth="Right" ID="IntrigueMessageHeaders">
+			<Box Size="1016,463" Offset="0,31" Color="0,0,0,0" ID="IntriguePanel" Hidden="1">
+				<Stack Size="1016,20" StackGrowth="Right" ID="IntrigueMessageHeaders">
 					<Box Size="100,18" Color="0,0,0,0">
 						<TextButton Offset="0,0" Anchor="C,B" Font="TwCenMT20" ColorSet="Beige_Black_Alpha" String="TXT_KEY_EO_INTRIGUE_TURN" FontStyle="Shadow" MouseOverStyle="SoftShadow" ConsumeMouse="1" ID="IntrigueSortByTurn">
 							<Image Anchor="L,C" AnchorSide="O.I" Offset="2,0" Texture="assets/UI/Art/Controls/9 Grids/SelectedUp.dds" Size="18,18" ID="IntrigueSortByTurnImg"/>
 						</TextButton>
 					</Box>
-					<Box Size="250,18" Color="0,0,0,0">
+					<Box Size="312,18" Color="0,0,0,0">
 						<TextButton Offset="0,0" Anchor="C,B" Font="TwCenMT20" ColorSet="Beige_Black_Alpha" String="TXT_KEY_EO_INTRIGUE_FROM" FontStyle="Shadow" MouseOverStyle="SoftShadow" ConsumeMouse="1" ID="IntrigueSortByFrom">
 							<Image Anchor="L,C" AnchorSide="O.I" Offset="2,0" Texture="assets/UI/Art/Controls/9 Grids/SelectedUp.dds" Size="18,18" ID="IntrigueSortByFromImg"/>
 						</TextButton>
@@ -439,7 +439,7 @@
 						</TextButton>
 					</Box>
 				</Stack>
-				<ScrollPanel Vertical="1" Size="936,443" Offset="0,24" AutoScrollBar="0" ID="IntrigueMessageScrollPanel">
+				<ScrollPanel Vertical="1" Size="998,443" Offset="0,24" AutoScrollBar="0" ID="IntrigueMessageScrollPanel">
 					<!-- Scroll Controls -->
 					<ScrollBar Style="VertSlider" Length="427" Anchor="R,C" AnchorSide="O,I"/>
 					<UpButton Style="ScrollBarUp" Anchor="R,T" AnchorSide="O,I"/>
@@ -449,13 +449,13 @@
 				<Label Anchor="C,C" Offset="0,10" WrapWidth="440" ID="NoIntrigueAvailable" Hidden="1" String="TXT_KEY_EO_NO_INTRIGUE_AVAILABLE" Font="TwCenMT22" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"/>
 			</Box>
 		</Box>
-		<Box Anchor="C,B" AnchorSide="I.I" Offset="0,54" Size="927,56" Color="255,255,255,0">
+		<Box Anchor="C,B" AnchorSide="I.I" Offset="0,54" Size="989,56" Color="255,255,255,0">
 			<!-- Close Button  -->
 			<GridButton Anchor="L,B" Style="SmallButton" Size="150,32" Offset="14,0" StateOffsetIncrement="0,0" ID="CloseButton" Hidden="1">
 				<Label Anchor="C,C" Offset="0,0" String="TXT_KEY_CLOSE" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"/>
 			</GridButton>
 		</Box>
-		<Image Anchor="C,B" Offset="0,110" Texture="HorizontalTrim.dds" Size="971.5"/>
+		<Image Anchor="C,B" Offset="0,110" Texture="HorizontalTrim.dds" Size="1033.5"/>
 	</Grid>
 	<!-- Confirmation Popup -->
 	<Box Color="Black.200" Size="Full.Full" ID="ChooseConfirm" Hidden="1" ConsumeMouseOver="1">

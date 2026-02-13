@@ -1076,6 +1076,9 @@ protected:
 #ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
 	static int lGetNumCapitalsControlled(lua_State* L);
 #endif
+#ifdef COUP_SYSTEM_REWORK
+	static int lGetMinorCoupGoal(lua_State* L);
+#endif
 };
 
 #endif //CVLUAPLAYER_H

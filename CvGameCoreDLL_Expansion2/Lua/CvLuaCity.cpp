@@ -525,6 +525,9 @@ void CvLuaCity::PushMethods(lua_State* L, int t)
 #ifdef CHANGE_FOOD_PROD_MINORS_SCALE
 	Method(GetYieldFromMinorsTimes100);
 #endif
+#ifdef COUP_SYSTEM_REWORK
+	Method(GetMinorCityEspionageCoupAmount);
+#endif
 }
 //------------------------------------------------------------------------------
 void CvLuaCity::HandleMissingInstance(lua_State* L)
@@ -4477,6 +4480,20 @@ int CvLuaCity::lGetYieldFromMinorsTimes100(lua_State* L)
 		break;
 	}
 
+	lua_pushinteger(L, iReturnValue);
+
+	return 1;
+}
+#endif
+#ifdef COUP_SYSTEM_REWORK
+//------------------------------------------------------------------------------
+//int GetMinorCityEspionageCoupAmount(PlayerTypes eMajor);
+int CvLuaCity::lGetMinorCityEspionageCoupAmount(lua_State* L)
+{
+	const CvCity* pkCity = GetInstance(L);
+	PlayerTypes eMajor = (PlayerTypes)lua_tointeger(L, 2);
+
+	int iReturnValue = pkCity->GetCityEspionage()->m_aiCoupAmount[eMajor];
 	lua_pushinteger(L, iReturnValue);
 
 	return 1;

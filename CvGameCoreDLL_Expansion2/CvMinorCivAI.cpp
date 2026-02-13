@@ -1340,6 +1340,15 @@ bool CvMinorCivQuest::DoFinishQuest()
 #else
 	pMinor->GetMinorCivAI()->ChangeFriendshipWithMajor(m_eAssignedPlayer, GetInfluenceReward(), /*bFromQuest*/ true);
 #endif
+
+#ifdef COUP_SYSTEM_REWORK
+	CvCity* pLoopCity = NULL;
+	int iLoop = 0;
+	for (pLoopCity = pMinor->firstCity(&iLoop); pLoopCity != NULL; pLoopCity = pMinor->nextCity(&iLoop))
+	{
+		pLoopCity->GetCityEspionage()->m_aiCoupAmount[m_eAssignedPlayer] = pLoopCity->GetCityEspionage()->m_aiCoupAmount[m_eAssignedPlayer] + 30;
+	}
+#endif
 	
 	bool bNowFriends = pMinor->GetMinorCivAI()->IsFriends(m_eAssignedPlayer);
 	bool bNowAllies = pMinor->GetMinorCivAI()->IsAllies(m_eAssignedPlayer);
