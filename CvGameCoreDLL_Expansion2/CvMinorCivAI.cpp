@@ -6439,6 +6439,10 @@ bool CvMinorCivAI::IsAllies(PlayerTypes ePlayer) const
 /// Is ePlayer Friends with this minor?
 bool CvMinorCivAI::IsFriends(PlayerTypes ePlayer)
 {
+#ifdef EFFECTIVE_FRIENDSHIP_EQUALS_BASEFRIENDSHIP
+	if (IsAtWarWithPlayersTeam(ePlayer))
+		return false;
+#endif
 	return IsFriendshipAboveFriendsThreshold(GetEffectiveFriendshipWithMajor(ePlayer));
 }
 
@@ -6532,14 +6536,17 @@ void CvMinorCivAI::DoFriendshipChangeEffects(PlayerTypes ePlayer, int iOldFriend
 
 	bool bWasAboveFriendsThreshold = IsFriendshipAboveFriendsThreshold(iOldFriendship);
 	bool bNowAboveFriendsThreshold = IsFriendshipAboveFriendsThreshold(iNewFriendship);
-	SLOG("iOldFriendship = %d, iNewFriendship = %d", iOldFriendship, iNewFriendship);
 
 	// If we are Friends now, mark that we've been Friends at least once this game
 	if(bNowAboveFriendsThreshold)
 		SetEverFriends(ePlayer, true);
 
 	// Add Friends Bonus
+#ifdef EFFECTIVE_FRIENDSHIP_EQUALS_BASEFRIENDSHIP
+	if (!bWasAboveFriendsThreshold && bNowAboveFriendsThreshold && !IsAtWarWithPlayersTeam(ePlayer))
+#else
 	if(!bWasAboveFriendsThreshold && bNowAboveFriendsThreshold)
+#endif
 	{
 		bAdd = true;
 		bFriends = true;
@@ -6565,7 +6572,11 @@ void CvMinorCivAI::DoFriendshipChangeEffects(PlayerTypes ePlayer, int iOldFriend
 #endif
 	}
 	// Remove Friends bonus
+#ifdef EFFECTIVE_FRIENDSHIP_EQUALS_BASEFRIENDSHIP
+	else if (bWasAboveFriendsThreshold && !bNowAboveFriendsThreshold && !IsAtWarWithPlayersTeam(ePlayer))
+#else
 	else if(bWasAboveFriendsThreshold && !bNowAboveFriendsThreshold)
+#endif
 	{
 		bAdd = false;
 		bFriends = true;
