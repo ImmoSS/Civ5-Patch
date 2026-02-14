@@ -2305,11 +2305,9 @@ bool CvPlayerEspionage::AttemptCoup(uint uiSpyIndex)
 		// send notification to other civs if they have met this minor
 		bool bMetMinor = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isHasMet(GET_PLAYER(eCityOwner).getTeam());
 		bool bNotify = false;
-		int iFriendship = pMinorCivAI->GetEffectiveFriendshipWithMajor(ePlayer);
-		int iRelationshipAnchor = pMinorCivAI->GetFriendshipAnchorWithMajor(ePlayer);
-		bool bFriends = pMinorCivAI->IsFriends(ePlayer);
+		bool bAllies = pMinorCivAI->IsAllies(ePlayer);
 
-		if (iFriendship > iRelationshipAnchor || bFriends)
+		if (bAllies)
 		{
 			bNotify = true;
 		}
@@ -2334,7 +2332,6 @@ bool CvPlayerEspionage::AttemptCoup(uint uiSpyIndex)
 			strNotification = Localization::Lookup("TXT_KEY_NOTIFICATION_SPY_STAGE_COUP_SUCCESS");
 			strNotification << m_pPlayer->getCivilizationShortDescriptionKey();
 			strNotification << pCity->getNameKey();
-			//strNotification << GET_PLAYER(ePreviousAlly).getCivilizationAdjectiveKey();
 			pNotifications->Add(eNotification, strNotification.toUTF8(), strSummary.toUTF8(), pCity->getX(), pCity->getY(), -1);
 		}
 	}
@@ -2355,8 +2352,6 @@ bool CvPlayerEspionage::AttemptCoup(uint uiSpyIndex)
 		strNotification << GetSpyRankName(m_aSpyList[uiSpyIndex].m_eRank);
 		strNotification << m_pPlayer->getCivilizationInfo().getSpyNames(m_aSpyList[uiSpyIndex].m_iName);
 		strNotification << pCity->getNameKey();
-		strNotification << m_pPlayer->getCivilizationAdjectiveKey();
-		//strNotification << GET_PLAYER(ePreviousAlly).getCivilizationAdjectiveKey();
 		pNotifications->Add(eNotification, strNotification.toUTF8(), strSummary.toUTF8(), pCity->getX(), pCity->getY(), -1);
 	}
 
