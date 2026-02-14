@@ -860,7 +860,7 @@ bool CvMinorCivQuest::IsExpired()
 #endif
 
 #ifdef EXPIRATION_CONDITIONS_FOR_SOME_QUESTS
-		if ((GET_PLAYER(m_eAssignedPlayer).IsAllowedToTradeWith(m_eMinor)))
+		if (!GET_PLAYER(m_eAssignedPlayer).IsAllowedToTradeWith(m_eMinor))
 			return true;
 #endif
 	}
@@ -3964,7 +3964,7 @@ bool CvMinorCivAI::IsValidQuestForPlayer(PlayerTypes ePlayer, MinorCivQuestTypes
 			return false;
 
 #ifdef EXPIRATION_CONDITIONS_FOR_SOME_QUESTS
-		if (!GC.getGame().GetGameLeagues()->IsLuxuryHappinessBanned(ePlayer, eResource))
+		if (GC.getGame().GetGameLeagues()->IsLuxuryHappinessBanned(ePlayer, eResource))
 			return false;
 #endif
 	}
