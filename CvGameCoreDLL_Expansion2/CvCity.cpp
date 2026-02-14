@@ -10608,14 +10608,14 @@ int CvCity::GetLocalHappiness() const
 #ifdef DUEL_SACRED_WATERS_CHANGE
 			if (GC.getGame().isNetworkMultiPlayer() && GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
 			{
-				if (plot()->isRiver())
+				if (getDoublePantheon() > 0 && plot()->isRiver())
 				{
 					iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetRiverHappiness();
 				}
 			}
 			else
 			{
-				if (plot()->isFreshWater())
+				if (getDoublePantheon() > 0 && plot()->isFreshWater())
 				{
 					iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(ePantheon)->GetRiverHappiness();
 				}
