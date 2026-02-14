@@ -4465,17 +4465,23 @@ int CvLuaCity::lGetYieldFromMinorsTimes100(lua_State* L)
 	switch (eYield)
 	{
 	case YIELD_FOOD:
-		iReturnValue = GET_PLAYER(pkCity->getOwner()).GetOtherCitiesFoodPerTurnFromMinorCivsTimes100();
 		if (pkCity->isCapital())
 		{
-			iReturnValue += GET_PLAYER(pkCity->getOwner()).GetCapitalFoodPerTurnFromMinorCivsTimes100();
+			iReturnValue = GET_PLAYER(pkCity->getOwner()).GetCapitalFoodPerTurnFromMinorCivsTimes100();
+		}
+		else
+		{
+			iReturnValue = GET_PLAYER(pkCity->getOwner()).GetOtherCitiesFoodPerTurnFromMinorCivsTimes100();
 		}
 		break;
 	case YIELD_PRODUCTION:
-		iReturnValue = GET_PLAYER(pkCity->getOwner()).GetOtherCitiesProductionPerTurnFromMinorCivsTimes100();
 		if (pkCity->isCapital())
 		{
-			iReturnValue += GET_PLAYER(pkCity->getOwner()).GetCapitalProductionPerTurnFromMinorCivsTimes100();
+			iReturnValue = GET_PLAYER(pkCity->getOwner()).GetCapitalProductionPerTurnFromMinorCivsTimes100();
+		}
+		else
+		{
+			iReturnValue = GET_PLAYER(pkCity->getOwner()).GetOtherCitiesProductionPerTurnFromMinorCivsTimes100();
 		}
 		break;
 	}

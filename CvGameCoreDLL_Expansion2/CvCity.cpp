@@ -11580,18 +11580,24 @@ int CvCity::getYieldRateTimes100(YieldTypes eIndex, bool bIgnoreTrade) const
 	switch (eIndex)
 	{
 	case YIELD_FOOD:
-		iYieldFromMinors = GET_PLAYER(m_eOwner).GetOtherCitiesFoodPerTurnFromMinorCivsTimes100();
 		if (isCapital())
 		{
-			iYieldFromMinors += GET_PLAYER(m_eOwner).GetCapitalFoodPerTurnFromMinorCivsTimes100();
+			iYieldFromMinors = GET_PLAYER(m_eOwner).GetCapitalFoodPerTurnFromMinorCivsTimes100();
+		}
+		else
+		{
+			iYieldFromMinors = GET_PLAYER(m_eOwner).GetOtherCitiesFoodPerTurnFromMinorCivsTimes100();
 		}
 		iModifiedYield += iYieldFromMinors;
 		break;
 	case YIELD_PRODUCTION:
-		iYieldFromMinors = GET_PLAYER(m_eOwner).GetOtherCitiesProductionPerTurnFromMinorCivsTimes100();
 		if (isCapital())
 		{
-			iYieldFromMinors += GET_PLAYER(m_eOwner).GetCapitalProductionPerTurnFromMinorCivsTimes100();
+			iYieldFromMinors = GET_PLAYER(m_eOwner).GetCapitalProductionPerTurnFromMinorCivsTimes100();
+		}
+		else
+		{
+			iYieldFromMinors = GET_PLAYER(m_eOwner).GetOtherCitiesProductionPerTurnFromMinorCivsTimes100();
 		}
 		iModifiedYield += iYieldFromMinors;
 		break;
