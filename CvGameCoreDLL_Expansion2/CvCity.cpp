@@ -6088,10 +6088,10 @@ int CvCity::getProductionDifferenceTimes100(int /*iProductionNeeded*/, int /*iPr
 #endif
 
 #ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-	int iYieldFromMinors = GET_PLAYER(m_eOwner).GetProductionFromMinorsTimes100() % 1024;
+	int iYieldFromMinors = GET_PLAYER(m_eOwner).GetOtherCitiesProductionPerTurnFromMinorCivsTimes100();
 	if (isCapital())
 	{
-		iYieldFromMinors += GET_PLAYER(m_eOwner).GetProductionFromMinorsTimes100() / 1024;
+		iYieldFromMinors += GET_PLAYER(m_eOwner).GetCapitalProductionPerTurnFromMinorCivsTimes100();
 	}
 	iBaseProduction += iYieldFromMinors;
 #endif
@@ -11580,18 +11580,18 @@ int CvCity::getYieldRateTimes100(YieldTypes eIndex, bool bIgnoreTrade) const
 	switch (eIndex)
 	{
 	case YIELD_FOOD:
-		iYieldFromMinors = GET_PLAYER(m_eOwner).GetFoodFromMinorsTimes100() % 1024;
+		iYieldFromMinors = GET_PLAYER(m_eOwner).GetOtherCitiesFoodPerTurnFromMinorCivsTimes100();
 		if (isCapital())
 		{
-			iYieldFromMinors += GET_PLAYER(m_eOwner).GetFoodFromMinorsTimes100() / 1024;
+			iYieldFromMinors += GET_PLAYER(m_eOwner).GetCapitalFoodPerTurnFromMinorCivsTimes100();
 		}
 		iModifiedYield += iYieldFromMinors;
 		break;
 	case YIELD_PRODUCTION:
-		iYieldFromMinors = GET_PLAYER(m_eOwner).GetProductionFromMinorsTimes100() % 1024;
+		iYieldFromMinors = GET_PLAYER(m_eOwner).GetOtherCitiesProductionPerTurnFromMinorCivsTimes100();
 		if (isCapital())
 		{
-			iYieldFromMinors += GET_PLAYER(m_eOwner).GetProductionFromMinorsTimes100() / 1024;
+			iYieldFromMinors += GET_PLAYER(m_eOwner).GetCapitalProductionPerTurnFromMinorCivsTimes100();
 		}
 		iModifiedYield += iYieldFromMinors;
 		break;
@@ -12133,45 +12133,6 @@ int CvCity::GetTradeYieldModifier(YieldTypes eIndex, CvString* toolTipSink) cons
 	}
 	return iReturnValue;
 }
-
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-//	--------------------------------------------------------------------------------
-int CvCity::GetYieldModifierFromMinors(YieldTypes eIndex, CvString* toolTipSink) const
-{
-	int iReturnValue = 0;
-	if (toolTipSink)
-	{
-		switch (eIndex)
-		{
-		case YIELD_FOOD:
-			iReturnValue = GET_PLAYER(m_eOwner).GetFoodFromMinorsTimes100() % 1024;
-			if (isCapital())
-			{
-				iReturnValue += GET_PLAYER(m_eOwner).GetFoodFromMinorsTimes100() / 1024;
-			}
-			if (iReturnValue != 0)
-			{
-				*toolTipSink += "[NEWLINE][BULLET]";
-				*toolTipSink += GetLocalizedText("TXT_KEY_FOOD_FROM_TRADE_ROUTES", iReturnValue / 100.0f);
-			}
-			break;
-		case YIELD_PRODUCTION:
-			iReturnValue = GET_PLAYER(m_eOwner).GetProductionFromMinorsTimes100() % 1024;
-			if (isCapital())
-			{
-				iReturnValue += GET_PLAYER(m_eOwner).GetProductionFromMinorsTimes100() / 1024;
-			}
-			if (iReturnValue != 0)
-			{
-				*toolTipSink += "[NEWLINE][BULLET]";
-				*toolTipSink += GetLocalizedText("TXT_KEY_PRODUCTION_FROM_TRADE_ROUTES", iReturnValue / 100.0f);
-			}
-			break;
-		}
-	}
-	return iReturnValue;
-}
-#endif
 
 //	--------------------------------------------------------------------------------
 int CvCity::getDomainFreeExperience(DomainTypes eIndex) const
