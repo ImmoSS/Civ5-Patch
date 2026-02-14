@@ -3099,7 +3099,7 @@ int CvPlayerCulture::GetTourismModifierWith(PlayerTypes ePlayer) const
 	int iNumCapitalsControlled = 15 * std::max(m_pPlayer->GetNumCapitalsControlled() - 1, 0);
 	if (iNumCapitalsControlled > 0)
 	{
-		iMultiplier += iHappyMod;
+		iMultiplier += iNumCapitalsControlled;
 	}
 #endif
 
@@ -3223,7 +3223,7 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 	int iNumCapitalsControlled = 15 * std::max(m_pPlayer->GetNumCapitalsControlled() - 1, 0);
 	if (iNumCapitalsControlled > 0)
 	{
-		szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_NUM_CAPITALS_CONTROLLED", iHappyMod) + "[ENDCOLOR]";
+		szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_NUM_CAPITALS_CONTROLLED", iNumCapitalsControlled) + "[ENDCOLOR]";
 	}
 #endif
 
@@ -4601,6 +4601,14 @@ int CvCityCulture::GetTourismMultiplier(PlayerTypes ePlayer, bool bIgnoreReligio
 	}
 #endif
 
+#ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+	int iNumCapitalsControlled = 15 * std::max(kCityPlayer.GetNumCapitalsControlled() - 1, 0);
+	if (iNumCapitalsControlled > 0)
+	{
+		iMultiplier += iNumCapitalsControlled;
+	}
+#endif
+
 	if (!bIgnorePolicies)
 	{
 		int iLessHappyMod = kCityPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TOURISM_MOD_LESS_HAPPY);
@@ -4655,13 +4663,6 @@ int CvCityCulture::GetTourismMultiplier(PlayerTypes ePlayer, bool bIgnoreReligio
 			{
 				iMultiplier += iHappyMod;
 			}
-		}
-#endif
-#ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
-		int iNumCapitalsControlled = 15 * std::max(kCityPlayer.GetNumCapitalsControlled() - 1, 0);
-		if (iNumCapitalsControlled > 0)
-		{
-			iMultiplier += iHappyMod;
 		}
 #endif
 	}
