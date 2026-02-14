@@ -10048,7 +10048,11 @@ int CvMinorCivAI::CalculateBullyMetric(PlayerTypes eBullyPlayer, bool bForUnit, 
 	//
 	// -999 ~ -0
 	// **************************
+#ifdef EFFECTIVE_FRIENDSHIP_EQUALS_BASEFRIENDSHIP
+	if (IsAtWarWithPlayersTeam(eBullyPlayer) || GetEffectiveFriendshipWithMajor(eBullyPlayer) < GC.getFRIENDSHIP_THRESHOLD_CAN_BULLY())
+#else
 	if(GetEffectiveFriendshipWithMajor(eBullyPlayer) < GC.getFRIENDSHIP_THRESHOLD_CAN_BULLY())
+#endif
 	{
 		int iInfluenceScore = iFailScore;
 		iScore += iInfluenceScore;
