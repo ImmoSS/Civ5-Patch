@@ -32424,6 +32424,116 @@ int CvPlayer::GetNumCapitalsControlled() const
 }
 #endif
 
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+//	--------------------------------------------------------------------------------
+int CvPlayer::GetCapitalFoodPerTurnFromMinorTimes100(PlayerTypes eMinor) const
+{
+	int iAmount = 0;
+
+	if (GET_PLAYER(eMinor).isAlive())
+	{
+		iAmount += GET_PLAYER(eMinor).GetMinorCivAI()->GetCurrentCapitalFoodBonus(GetID());
+	}
+
+	return iAmount;
+}
+
+//	--------------------------------------------------------------------------------
+int CvPlayer::GetCapitalFoodPerTurnFromMinorCivsTimes100() const
+{
+	int iAmount = 0;
+	PlayerTypes eMinor;
+	for (int iMinorLoop = MAX_MAJOR_CIVS; iMinorLoop < MAX_CIV_PLAYERS; iMinorLoop++)
+	{
+		eMinor = (PlayerTypes)iMinorLoop;
+		iAmount += GetCapitalFoodPerTurnFromMinorTimes100(eMinor);
+	}
+
+	return iAmount;
+}
+
+//	--------------------------------------------------------------------------------
+int CvPlayer::GetOtherCitiesFoodPerTurnFromMinorTimes100(PlayerTypes eMinor) const
+{
+	int iAmount = 0;
+
+	if (GET_PLAYER(eMinor).isAlive())
+	{
+		iAmount += GET_PLAYER(eMinor).GetMinorCivAI()->GetCurrentOtherCityFoodBonus(GetID());
+	}
+
+	return iAmount;
+}
+
+//	--------------------------------------------------------------------------------
+int CvPlayer::GetOtherCitiesFoodPerTurnFromMinorCivsTimes100() const
+{
+	int iAmount = 0;
+	PlayerTypes eMinor;
+	for (int iMinorLoop = MAX_MAJOR_CIVS; iMinorLoop < MAX_CIV_PLAYERS; iMinorLoop++)
+	{
+		eMinor = (PlayerTypes)iMinorLoop;
+		iAmount += GetOtherCitiesFoodPerTurnFromMinorTimes100(eMinor);
+	}
+
+	return iAmount;
+}
+
+//	--------------------------------------------------------------------------------
+int CvPlayer::GetCapitalProductionPerTurnFromMinorTimes100(PlayerTypes eMinor) const
+{
+	int iAmount = 0;
+
+	if (GET_PLAYER(eMinor).isAlive())
+	{
+		iAmount += GET_PLAYER(eMinor).GetMinorCivAI()->GetCurrentCapitalProductionBonus(GetID());
+	}
+
+	return iAmount;
+}
+
+//	--------------------------------------------------------------------------------
+int CvPlayer::GetCapitalProductionPerTurnFromMinorCivsTimes100() const
+{
+	int iAmount = 0;
+	PlayerTypes eMinor;
+	for (int iMinorLoop = MAX_MAJOR_CIVS; iMinorLoop < MAX_CIV_PLAYERS; iMinorLoop++)
+	{
+		eMinor = (PlayerTypes)iMinorLoop;
+		iAmount += GetCapitalProductionPerTurnFromMinorTimes100(eMinor);
+	}
+
+	return iAmount;
+}
+
+//	--------------------------------------------------------------------------------
+int CvPlayer::GetOtherCitiesProductionPerTurnFromMinorTimes100(PlayerTypes eMinor) const
+{
+	int iAmount = 0;
+
+	if (GET_PLAYER(eMinor).isAlive())
+	{
+		iAmount += GET_PLAYER(eMinor).GetMinorCivAI()->GetCurrentOtherCityProductionBonus(GetID());
+	}
+
+	return iAmount;
+}
+
+//	--------------------------------------------------------------------------------
+int CvPlayer::GetOtherCitiesProductionPerTurnFromMinorCivsTimes100() const
+{
+	int iAmount = 0;
+	PlayerTypes eMinor;
+	for (int iMinorLoop = MAX_MAJOR_CIVS; iMinorLoop < MAX_CIV_PLAYERS; iMinorLoop++)
+	{
+		eMinor = (PlayerTypes)iMinorLoop;
+		iAmount += GetOtherCitiesProductionPerTurnFromMinorTimes100(eMinor);
+	}
+
+	return iAmount;
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 void CvPlayer::doArmySize()
 {
@@ -32945,11 +33055,43 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 
 #ifdef EG_REPLAYDATASET_FOODFROMCS
+#ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
+		int iFoodFromMinersTimes100 = 0;
+		for (int iI = 0; iI < getNumCities(); iI++)
+		{
+			CvCity* pCity = getCity(iI);
+			if (pCity != NULL)
+			{
+				iFoodFromMinersTimes100 = GetOtherCitiesFoodPerTurnFromMinorCivsTimes100();
+				if (pCity->isCapital())
+				{
+					iFoodFromMinersTimes100 += GetCapitalFoodPerTurnFromMinorCivsTimes100();
+				}
+			}
+		}
+#else
 		int iFoodFromMinersTimes100 = GetFoodFromMinorsTimes100() / 1024 + getNumCities() * (GetFoodFromMinorsTimes100() % 1024);
+#endif
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FOODFROMCS"), iGameTurn, iFoodFromMinersTimes100 / 100);
 #endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
+#ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
+		int iProductionFromMinersTimes100 = 0;
+		for (int iI = 0; iI < getNumCities(); iI++)
+		{
+			CvCity* pCity = getCity(iI);
+			if (pCity != NULL)
+			{
+				iFoodFromMinersTimes100 = GetOtherCitiesProductionPerTurnFromMinorCivsTimes100();
+				if (pCity->isCapital())
+				{
+					iFoodFromMinersTimes100 += GetCapitalProductionPerTurnFromMinorCivsTimes100();
+				}
+			}
+		}
+#else
 		int iProductionFromMinersTimes100 = GetProductionFromMinorsTimes100() / 1024 + getNumCities() * (GetProductionFromMinorsTimes100() % 1024);
+#endif
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PRODUCTIONFROMCS"), iGameTurn, iProductionFromMinersTimes100 / 100);
 #endif
 #ifdef EG_REPLAYDATASET_CULTUREFROMCS

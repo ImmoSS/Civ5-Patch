@@ -1502,6 +1502,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 		}
 		// Refresh yield
 	}
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 #ifdef NEW_LEAGUE_RESOLUTIONS
 	if (GetEffects()->iCSBonuModifier != 0)
 	{
@@ -1539,12 +1540,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					if (iOldFood != iNewFood)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
-#endif
-#ifdef EG_REPLAYDATASET_FOODFROMCS
-						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * (iNewFood - iOldFood));
-#endif
 					}
 
 					// Other Cities
@@ -1553,12 +1549,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					if (iOldFood != iNewFood)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
-#endif
-#ifdef EG_REPLAYDATASET_FOODFROMCS
-						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(iNewFood - iOldFood);
-#endif
 					}
 				}
 
@@ -1574,38 +1565,20 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					// Capital
 					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer);
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer, NO_ERA, GetEffects()->iCSBonuModifier);
-#else
 					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer, GetEffects()->iCSBonuModifier);
-#endif
 
 					if (iOldFood != iNewFood)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
-#endif
-#ifdef EG_REPLAYDATASET_FOODFROMCS
-						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * (iNewFood - iOldFood));
-#endif
 					}
 
 					// Other Cities
 					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer);
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer, NO_ERA, GetEffects()->iCSBonuModifier);
-#else
 					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer, GetEffects()->iCSBonuModifier);
-#endif
 
 					if (iOldFood != iNewFood)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
-#endif
-#ifdef EG_REPLAYDATASET_FOODFROMCS
-						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(iNewFood - iOldFood);
-#endif
 					}
 				}
 			}
@@ -1635,12 +1608,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					if (iOldProduction != iNewProduction)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
-#endif
-#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * (iNewProduction - iOldProduction));
-#endif
 					}
 
 					// Other Cities
@@ -1649,12 +1617,7 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					if (iOldProduction != iNewProduction)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
-#endif
-#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(iNewProduction - iOldProduction);
-#endif
 					}
 				}
 
@@ -1670,43 +1633,26 @@ void CvActiveResolution::DoEffects(PlayerTypes ePlayer)
 
 					// Capital
 					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer);
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer, NO_ERA, GetEffects()->iCSBonuModifier);
-#else
 					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer, GetEffects()->iCSBonuModifier);
-#endif
 
 					if (iOldProduction != iNewProduction)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
-#endif
-#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * (iNewProduction - iOldProduction));
-#endif
 					}
 
 					// Other Cities
 					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer);
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer, NO_ERA, GetEffects()->iCSBonuModifier);
-#else
 					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer, GetEffects()->iCSBonuModifier);
-#endif
 
 					if (iOldProduction != iNewProduction)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
-#endif
-#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(iNewProduction - iOldProduction);
-#endif
 					}
 				}
 			}
 		}
 	}
+#endif
 	if (GetEffects()->bNoSpiesInCS)
 	{
 		for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_CIV_PLAYERS; iMinor++)
@@ -1923,6 +1869,7 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 		}
 		// Refresh yield
 	}
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 #ifdef NEW_LEAGUE_RESOLUTIONS
 	if (GetEffects()->iCSBonuModifier != 0)
 	{
@@ -1960,12 +1907,7 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 
 					if (iOldFood != iNewFood)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
-#endif
-#ifdef EG_REPLAYDATASET_FOODFROMCS
-						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * (iNewFood - iOldFood));
-#endif
 					}
 
 					// Other Cities
@@ -1974,12 +1916,7 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 
 					if (iOldFood != iNewFood)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
-#endif
-#ifdef EG_REPLAYDATASET_FOODFROMCS
-						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(iNewFood - iOldFood);
-#endif
 					}
 				}
 
@@ -1994,39 +1931,21 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 					int iOldFood, iNewFood;
 
 					// Capital
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer, NO_ERA, GetEffects()->iCSBonuModifier);
-#else
 					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer, GetEffects()->iCSBonuModifier);
-#endif
 					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer);
 
 					if (iOldFood != iNewFood)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
-#endif
-#ifdef EG_REPLAYDATASET_FOODFROMCS
-						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * (iNewFood - iOldFood));
-#endif
 					}
 
 					// Other Cities
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer, NO_ERA, GetEffects()->iCSBonuModifier);
-#else
 					iOldFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer, GetEffects()->iCSBonuModifier);
-#endif
 					iNewFood = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer);
 
 					if (iOldFood != iNewFood)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
-#endif
-#ifdef EG_REPLAYDATASET_FOODFROMCS
-						GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(iNewFood - iOldFood);
-#endif
 					}
 				}
 			}
@@ -2056,12 +1975,7 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 
 					if (iOldProduction != iNewProduction)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
-#endif
-#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * (iNewProduction - iOldProduction));
-#endif
 					}
 
 					// Other Cities
@@ -2070,12 +1984,7 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 
 					if (iOldProduction != iNewProduction)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
-#endif
-#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(iNewProduction - iOldProduction);
-#endif
 					}
 				}
 
@@ -2090,50 +1999,27 @@ void CvActiveResolution::RemoveEffects(PlayerTypes ePlayer)
 					int iOldProduction, iNewProduction;
 
 					// Capital
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer, NO_ERA, GetEffects()->iCSBonuModifier);
-#else
 					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer, GetEffects()->iCSBonuModifier);
-#endif
 					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer);
 
 					if (iOldProduction != iNewProduction)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
-#endif
-#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * (iNewProduction - iOldProduction));
-#endif
 					}
 
 					// Other Cities
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer, NO_ERA, GetEffects()->iCSBonuModifier);
-#else
 					iOldProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer, GetEffects()->iCSBonuModifier);
-#endif
 					iNewProduction = GET_PLAYER(eLoopMinor).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer);
 
 					if (iOldProduction != iNewProduction)
 					{
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 						GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iNewProduction - iOldProduction);
-#endif
-#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-						GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(iNewProduction - iOldProduction);
-#endif
 					}
 				}
 			}
 		}
-		if (GetEffects()->bNoSpiesInCS)
-		{
-		}
-		if (GetEffects()->bDoubleResourceHappiness)
-		{
-		}
 	}
+#endif
 #endif
 
 	m_iTurnEnacted = -1;

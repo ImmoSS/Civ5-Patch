@@ -427,11 +427,11 @@ public:
 	int GetNumKilledSpies() const;
 	void ChangeNumKilledSpies(int iChange);
 #endif
-#if defined EG_REPLAYDATASET_FOODFROMCS || defined CHANGE_FOOD_PROD_MINORS_SCALE
+#if defined EG_REPLAYDATASET_FOODFROMCS
 	int GetFoodFromMinorsTimes100() const;
 	void ChangeFoodFromMinorsTimes100(int iChange);
 #endif
-#if defined EG_REPLAYDATASET_PRODUCTIONFROMCS || defined CHANGE_FOOD_PROD_MINORS_SCALE
+#if defined EG_REPLAYDATASET_PRODUCTIONFROMCS
 	int GetProductionFromMinorsTimes100() const;
 	void ChangeProductionFromMinorsTimes100(int iChange);
 #endif
@@ -1941,6 +1941,18 @@ public:
 
 #ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
 	int GetNumCapitalsControlled() const;
+#endif
+
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
+	int GetCapitalFoodPerTurnFromMinorTimes100(PlayerTypes eMinor) const;
+	int GetCapitalFoodPerTurnFromMinorCivsTimes100() const;
+	int GetOtherCitiesFoodPerTurnFromMinorTimes100(PlayerTypes eMinor) const;
+	int GetOtherCitiesFoodPerTurnFromMinorCivsTimes100() const;
+
+	int GetCapitalProductionPerTurnFromMinorTimes100(PlayerTypes eMinor) const;
+	int GetCapitalProductionPerTurnFromMinorCivsTimes100() const;
+	int GetOtherCitiesProductionPerTurnFromMinorTimes100(PlayerTypes eMinor) const;
+	int GetOtherCitiesProductionPerTurnFromMinorCivsTimes100() const;
 #endif
 
 protected:

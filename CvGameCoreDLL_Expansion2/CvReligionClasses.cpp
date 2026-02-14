@@ -1216,10 +1216,13 @@ void CvGameReligions::EnhanceReligion(PlayerTypes ePlayer, ReligionTypes eReligi
 			}
 			if (eMajority == eReligion)
 			{
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				bool bFriends = GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->IsFriends(ePlayer);
 				bool bAllies = GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->IsAllies(ePlayer);
+#endif
 				MinorCivTraitTypes eTrait = GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetTrait();
-
+				
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				if (eTrait == MINOR_CIV_TRAIT_MARITIME)
 				{
 					int iCapitalFoodTimes100 = 0;
@@ -1238,26 +1241,16 @@ void CvGameReligions::EnhanceReligion(PlayerTypes ePlayer, ReligionTypes eReligi
 					if (!bAllies)
 					{
 #ifdef NEW_LEAGUE_RESOLUTIONS
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-						iCapitalFoodTimes100 += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
-						iOtherCitiesFoodTimes100 += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
-#else
 						iCapitalFoodTimes100 += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
 						iOtherCitiesFoodTimes100 += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
-#endif
 #else
 						iCapitalFoodTimes100 += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetAlliesCapitalFoodBonus(ePlayer);
 						iOtherCitiesFoodTimes100 += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(ePlayer);
 #endif
 					}
 
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 					GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iCapitalFoodTimes100);
 					GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iOtherCitiesFoodTimes100);
-#endif
-#ifdef EG_REPLAYDATASET_FOODFROMCS
-					GET_PLAYER(ePlayer).ChangeFoodFromMinorsTimes100(1024 * iCapitalFoodTimes100 + iOtherCitiesFoodTimes100);
-#endif
 				}
 
 				if (eTrait == MINOR_CIV_TRAIT_MANUFACTORY)
@@ -1278,27 +1271,18 @@ void CvGameReligions::EnhanceReligion(PlayerTypes ePlayer, ReligionTypes eReligi
 					if (!bAllies)
 					{
 #ifdef NEW_LEAGUE_RESOLUTIONS
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-						iCapitalProductionTimes100 += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
-						iOtherCitiesProductionTimes100 += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
-#else
 						iCapitalProductionTimes100 += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
 						iOtherCitiesProductionTimes100 += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer, GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer));
-#endif
 #else
 						iCapitalProductionTimes100 += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetAlliesCapitalProductionBonus(ePlayer);
 						iOtherCitiesProductionTimes100 += GET_PLAYER((PlayerTypes)iI).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(ePlayer);
 #endif
 					}
 
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 					GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_PRODUCTION, iCapitalProductionTimes100);
 					GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_PRODUCTION, iOtherCitiesProductionTimes100);
-#endif
-#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-					GET_PLAYER(ePlayer).ChangeProductionFromMinorsTimes100(1024 * iCapitalProductionTimes100 + iOtherCitiesProductionTimes100);
-#endif
 				}
+#endif
 
 				if (eTrait == MINOR_CIV_TRAIT_MILITARISTIC)
 				{
@@ -4431,6 +4415,7 @@ void CvCityReligions::CityConvertsReligion(ReligionTypes eMajority, ReligionType
 #ifdef RELIGIOUS_UNITY_CS_BONUS
 	if (GET_PLAYER(m_pCity->getOwner()).isAlive() && GET_PLAYER(m_pCity->getOwner()).isMinorCiv())
 	{
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 		if (eOldMajority > RELIGION_PANTHEON && GC.getGame().GetGameReligions()->GetReligion(eOldMajority, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY")))
 		{
 			bool bFriends = GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->IsFriends(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
@@ -4455,26 +4440,16 @@ void CvCityReligions::CityConvertsReligion(ReligionTypes eMajority, ReligionType
 				if (!bAllies)
 				{
 #ifdef NEW_LEAGUE_RESOLUTIONS
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-					iCapitalFoodTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalFoodBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder));
-					iOtherCitiesFoodTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder));
-#else
 					iCapitalFoodTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalFoodBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder));
 					iOtherCitiesFoodTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder));
-#endif
 #else
 					iCapitalFoodTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalFoodBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
 					iOtherCitiesFoodTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
 #endif
 				}
 
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				GET_PLAYER(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder).ChangeCapitalYieldChange(YIELD_FOOD, iCapitalFoodTimes100);
 				GET_PLAYER(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder).ChangeCityYieldChange(YIELD_FOOD, iOtherCitiesFoodTimes100);
-#endif
-#ifdef EG_REPLAYDATASET_FOODFROMCS
-				GET_PLAYER(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder).ChangeFoodFromMinorsTimes100(1024 * iCapitalFoodTimes100 + iOtherCitiesFoodTimes100);
-#endif
 			}
 
 			if (eTrait == MINOR_CIV_TRAIT_MANUFACTORY)
@@ -4495,34 +4470,28 @@ void CvCityReligions::CityConvertsReligion(ReligionTypes eMajority, ReligionType
 				if (!bAllies)
 				{
 #ifdef NEW_LEAGUE_RESOLUTIONS
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-					iCapitalProductionTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalProductionBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder));
-					iOtherCitiesProductionTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder));
-#else
 					iCapitalProductionTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalProductionBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder));
 					iOtherCitiesProductionTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder));
-#endif
 #else
 					iCapitalProductionTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalProductionBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
 					iOtherCitiesProductionTimes100 -= GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder);
 #endif
 				}
 
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				GET_PLAYER(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder).ChangeCapitalYieldChange(YIELD_PRODUCTION, iCapitalProductionTimes100);
 				GET_PLAYER(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder).ChangeCityYieldChange(YIELD_PRODUCTION, iOtherCitiesProductionTimes100);
-#endif
-#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-				GET_PLAYER(pReligions->GetReligion(eOldMajority, NO_PLAYER)->m_eFounder).ChangeProductionFromMinorsTimes100(1024 * iCapitalProductionTimes100 + iOtherCitiesProductionTimes100);
-#endif
 			}
 		}
+#endif
 		if (eMajority > RELIGION_PANTHEON && GC.getGame().GetGameReligions()->GetReligion(eMajority, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY")))
 		{
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 			bool bFriends = GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->IsFriends(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
 			bool bAllies = GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->IsAllies(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
+#endif
 			MinorCivTraitTypes eTrait = GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetTrait();
 
+#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 			if (eTrait == MINOR_CIV_TRAIT_MARITIME)
 			{
 			int iCapitalFoodTimes100 = 0;
@@ -4541,26 +4510,16 @@ void CvCityReligions::CityConvertsReligion(ReligionTypes eMajority, ReligionType
 				if (!bAllies)
 				{
 #ifdef NEW_LEAGUE_RESOLUTIONS
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-					iCapitalFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder));
-					iOtherCitiesFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder));
-#else
 					iCapitalFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder));
 					iOtherCitiesFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder));
-#endif
 #else
 					iCapitalFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
 					iOtherCitiesFoodTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityFoodBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
 #endif
 				}
 
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				GET_PLAYER(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder).ChangeCapitalYieldChange(YIELD_FOOD, iCapitalFoodTimes100);
 				GET_PLAYER(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder).ChangeCityYieldChange(YIELD_FOOD, iOtherCitiesFoodTimes100);
-#endif
-#ifdef EG_REPLAYDATASET_FOODFROMCS
-				GET_PLAYER(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder).ChangeFoodFromMinorsTimes100(1024 * iCapitalFoodTimes100 + iOtherCitiesFoodTimes100);
-#endif
 			}
 
 			if (eTrait == MINOR_CIV_TRAIT_MANUFACTORY)
@@ -4581,27 +4540,18 @@ void CvCityReligions::CityConvertsReligion(ReligionTypes eMajority, ReligionType
 				if (!bAllies)
 				{
 #ifdef NEW_LEAGUE_RESOLUTIONS
-#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
-					iCapitalProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder));
-					iOtherCitiesProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, NO_ERA, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder));
-#else
 					iCapitalProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder));
 					iOtherCitiesProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder, GC.getGame().GetGameLeagues()->GetCSBonuModifier(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder));
-#endif
 #else
 					iCapitalProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesCapitalProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
 					iOtherCitiesProductionTimes100 += GET_PLAYER(m_pCity->getOwner()).GetMinorCivAI()->GetAlliesOtherCityProductionBonus(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder);
 #endif
 				}
 
-#ifndef CHANGE_FOOD_PROD_MINORS_SCALE
 				GET_PLAYER(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder).ChangeCapitalYieldChange(YIELD_PRODUCTION, iCapitalProductionTimes100);
 				GET_PLAYER(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder).ChangeCityYieldChange(YIELD_PRODUCTION, iOtherCitiesProductionTimes100);
-#endif
-#ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-				GET_PLAYER(pReligions->GetReligion(eMajority, NO_PLAYER)->m_eFounder).ChangeProductionFromMinorsTimes100(1024 * iCapitalProductionTimes100 + iOtherCitiesProductionTimes100);
-#endif
 			}
+#endif
 
 			if (eTrait == MINOR_CIV_TRAIT_MILITARISTIC)
 			{
