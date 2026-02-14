@@ -1301,8 +1301,8 @@ void CvUnitCombat::ResolveRangedCityVsUnitCombat(const CvCombatInfo& kCombatInfo
 #else
 						pkDefender->testPromotionReady();
 #endif
-#endif
 					}
+#endif
 
 					//set damage but don't update entity damage visibility
 					pkDefender->changeDamage(iDamage, pkAttacker->getOwner());
