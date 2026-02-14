@@ -2,8 +2,8 @@
 <!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Scott Lewis (Firaxis Games) -->
 <Context ColorSet="Beige_Black_Alpha" Font="TwCenMT16" FontStyle="Shadow">
 	<Instance Name="AgentInstance">
-		<Box Size="451,80" Color="255,255,255,80" ID="Base">
-			<Stack Size="451,40" StackGrowth="Right">
+		<Box Size="513,80" Color="255,255,255,80" ID="Base">
+			<Stack Size="513,40" StackGrowth="Right">
 				<Box Size="116,40" Color="0,0,0,0">
 					<Label ID="AgentName" Anchor="L,T" Offset="10,4" TruncateWidth="105" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
 					<Grid Style="Grid9Frame27" Size="65,35" Anchor="L,T" Offset="15,25">
@@ -46,10 +46,10 @@
 					</Box>
 				</Box>
 			</Stack>
-			<Box Size="451,80" Color="0,0,0,200" ID="AgentKIAPanel" Hidden="1">
+			<Box Size="513,80" Color="0,0,0,200" ID="AgentKIAPanel" Hidden="1">
 				<Label Anchor="C,C" ColorSet="Red_Black" Font="TwCenMT22" FontStyle="Shadow" String="TXT_KEY_EO_KIA"/>
 			</Box>
-			<Image Anchor="L,B" Offset="0,0" Texture="BlueBar500x3.dds" Size="451,3"/>
+			<Image Anchor="L,B" Offset="0,0" Texture="BlueBar500x3.dds" Size="513,3"/>
 		</Box>
 	</Instance>
 	<Instance Name="MyCityInstance">
@@ -277,7 +277,7 @@
 							</Stack>
 						</Box>
 						<Box Size="541,5" Color="0,0,0,0">
-							<Image Anchor="C,B" Offset="0,1" Texture="bar400x2.dds" Size="400,1"/>
+							<Image Anchor="C,B" Offset="0,1" Texture="bar400x2.dds" Size="462,1"/>
 						</Box>
 						<ScrollPanel Vertical="1" Size="512,417" Offset="0,0" AutoScrollBar="0" ID="AgentScrollPanel">
 							<!-- Scroll Controls -->
