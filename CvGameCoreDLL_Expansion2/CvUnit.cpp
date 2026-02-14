@@ -12538,6 +12538,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			if (pOtherUnit->getFortifyTurns() > 0)
 				iModifier += attackFortifiedModifier();
 
+			// Bonus VS wounded
+			if (pOtherUnit->getDamage() > 0)
+				iModifier += attackWoundedModifier();
+
 			if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
 				iModifier += GetAdjacentModifier();
 
@@ -13121,6 +13125,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			// Bonus VS fortified
 			if (pOtherUnit->getFortifyTurns() > 0)
 				iModifier += attackFortifiedModifier();
+
+			// Bonus VS wounded
+			if (pOtherUnit->getDamage() > 0)
+				iModifier += attackWoundedModifier();
 
 			if (IsFriendlyUnitAdjacent(/*bCombatUnit*/ true))
 				iModifier += GetAdjacentModifier();
