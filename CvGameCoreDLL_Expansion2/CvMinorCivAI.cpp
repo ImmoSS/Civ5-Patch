@@ -7889,6 +7889,9 @@ int CvMinorCivAI::GetCultureFlatAlliesBonus(PlayerTypes ePlayer, EraTypes eAssum
 /// Flat-rate culture bonus
 int CvMinorCivAI::GetCurrentCultureFlatBonus(PlayerTypes ePlayer)
 {
+#ifdef PLAYER_CULTURE_TIMES_100
+	return GetCurrentCultureFlatBonusTimes100(ePlayer) / 100;
+#else
 	CvAssertMsg(ePlayer >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	CvAssertMsg(ePlayer < MAX_PLAYERS, "ePlayer is expected to be within maximum bounds (invalid Index)");
 	if(ePlayer < 0 || ePlayer >= MAX_PLAYERS) return 0;
@@ -7937,6 +7940,7 @@ int CvMinorCivAI::GetCurrentCultureFlatBonus(PlayerTypes ePlayer)
 	}
 
 	return iAmount;
+#endif
 }
 
 //antonjs: This feature was prototyped, but later removed. Rewrite this function to add the bonus back in.
@@ -7992,6 +7996,9 @@ int CvMinorCivAI::GetCurrentCulturePerBuildingBonus(PlayerTypes ePlayer)
 
 int CvMinorCivAI::GetCurrentCultureBonus(PlayerTypes ePlayer)
 {
+#ifdef PLAYER_CULTURE_TIMES_100
+	return GetCurrentCultureBonusTimes100(ePlayer) / 100;
+#else
 	CvAssertMsg(ePlayer >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	CvAssertMsg(ePlayer < MAX_PLAYERS, "ePlayer is expected to be within maximum bounds (invalid Index)");
 	if(ePlayer < 0 || ePlayer >= MAX_PLAYERS) return 0;
@@ -8002,6 +8009,7 @@ int CvMinorCivAI::GetCurrentCultureBonus(PlayerTypes ePlayer)
 	iAmount += GetCurrentCulturePerBuildingBonus(ePlayer); //antonjs: This feature was prototyped, but later removed. Its value is 0 (no bonus).
 
 	return iAmount;
+#endif
 }
 
 #ifdef PLAYER_CULTURE_TIMES_100
