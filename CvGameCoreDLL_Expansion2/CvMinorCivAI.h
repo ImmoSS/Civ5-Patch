@@ -440,6 +440,11 @@ public:
 	int GetCurrentCulturePerBuildingBonus(PlayerTypes ePlayer);
 	int GetCurrentCultureBonus(PlayerTypes ePlayer);
 
+#ifdef PLAYER_CULTURE_TIMES_100
+	int GetCurrentCultureFlatBonusTimes100(PlayerTypes ePlayer);
+	int GetCurrentCultureBonusTimes100(PlayerTypes ePlayer);
+#endif
+
 	// Happiness bonuses
 	int GetHappinessFlatFriendshipBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);
 	int GetHappinessFlatAlliesBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA);

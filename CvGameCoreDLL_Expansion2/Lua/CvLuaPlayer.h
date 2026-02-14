@@ -238,6 +238,9 @@ protected:
 
 	static int lGetJONSCulturePerTurnFromCitiesTimes100(lua_State* L);
 
+	static int lGetCulturePerTurnFromMinorCivsTimes100(lua_State* L);
+	static int lGetCulturePerTurnFromMinorTimes100(lua_State* L);
+
 	static int lGetCulturePerTurnFromReligionTimes100(lua_State* L);
 	static int lGetCulturePerTurnFromBonusTurnsTimes100(lua_State* L);
 
@@ -603,6 +606,10 @@ protected:
 	static int lGetMinorCivCurrentCulturePerBuildingBonus(lua_State* L);
 	static int lGetCurrentCultureBonus(lua_State* L); // DEPRECATED, use lGetMinorCivCurrentCultureBonus instead
 	static int lGetMinorCivCurrentCultureBonus(lua_State* L);
+#ifdef PLAYER_CULTURE_TIMES_100
+	static int lGetMinorCivCurrentCultureFlatBonusTimes100(lua_State* L);
+	static int lGetMinorCivCurrentCultureBonusTimes100(lua_State* L);
+#endif
 #ifdef NEW_CITY_STATES_TYPES
 	static int lGetMinorCivCurrentScienceBonus(lua_State* L);
 #endif

@@ -592,6 +592,9 @@ public:
 
 	int GetJONSCulturePerTurnFromCitiesTimes100() const;
 
+	int GetCulturePerTurnFromMinorCivsTimes100() const;
+	int GetCulturePerTurnFromMinorTimes100(PlayerTypes eMinor) const;
+
 	int GetCulturePerTurnFromReligionTimes100() const;
 
 	int GetCulturePerTurnFromBonusTurnsTimes100() const;

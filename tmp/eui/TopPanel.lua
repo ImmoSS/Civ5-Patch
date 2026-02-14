@@ -2786,7 +2786,7 @@ g_toolTipHandler.CultureString = function()-- control )
 
 		if civ5_mode then
 			-- Culture from Minor Civs
-			local culturePerTurnFromMinorCivs = g_activePlayer:GetJONSCulturePerTurnFromMinorCivs()
+			local culturePerTurnFromMinorCivs = g_activePlayer:GetJONSCulturePerTurnFromMinorCivsTimes100() / 100
 			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_CULTURE_FROM_MINORS", culturePerTurnFromMinorCivs )
 			iBase = iBase + culturePerTurnFromMinorCivs
 

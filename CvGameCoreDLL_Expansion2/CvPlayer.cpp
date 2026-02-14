@@ -12143,6 +12143,9 @@ void CvPlayer::ChangeJONSCulturePerTurnFromMinorCivs(int /*iChange*/)
 /// Culture per turn from all minor civs
 int CvPlayer::GetCulturePerTurnFromMinorCivs() const
 {
+#ifdef PLAYER_CULTURE_TIMES_100
+	return GetCulturePerTurnFromMinorCivsTimes100();
+#else
 	int iAmount = 0;
 	PlayerTypes eMinor;
 	for(int iMinorLoop = MAX_MAJOR_CIVS; iMinorLoop < MAX_CIV_PLAYERS; iMinorLoop++)
@@ -12152,12 +12155,16 @@ int CvPlayer::GetCulturePerTurnFromMinorCivs() const
 	}
 
 	return iAmount;
+#endif
 }
 
 //	--------------------------------------------------------------------------------
 // Culture per turn from a minor civ
 int CvPlayer::GetCulturePerTurnFromMinor(PlayerTypes eMinor) const
 {
+#ifdef PLAYER_CULTURE_TIMES_100
+	return GetCulturePerTurnFromMinorTimes100(eMinor);
+#else
 	int iAmount = 0;
 
 	if(GET_PLAYER(eMinor).isAlive())
@@ -12167,6 +12174,7 @@ int CvPlayer::GetCulturePerTurnFromMinor(PlayerTypes eMinor) const
 	}
 
 	return iAmount;
+#endif
 }
 
 //	--------------------------------------------------------------------------------
@@ -12569,7 +12577,7 @@ int CvPlayer::GetTotalJONSCulturePerTurnTimes100() const
 	iCulturePerTurn += GetJONSCulturePerTurnForFree() * 100;
 
 	// Culture from Minor Civs
-	iCulturePerTurn += GetCulturePerTurnFromMinorCivs() * 100;
+	iCulturePerTurn += GetCulturePerTurnFromMinorCivsTimes100();
 
 	// Culture from Religion
 	iCulturePerTurn += GetCulturePerTurnFromReligionTimes100();
@@ -12625,6 +12633,36 @@ int CvPlayer::GetJONSCulturePerTurnFromCitiesTimes100() const
 }
 
 //	--------------------------------------------------------------------------------
+/// Culture per turn from all minor civs
+int CvPlayer::GetCulturePerTurnFromMinorCivsTimes100() const
+{
+	int iAmount = 0;
+	PlayerTypes eMinor;
+	for (int iMinorLoop = MAX_MAJOR_CIVS; iMinorLoop < MAX_CIV_PLAYERS; iMinorLoop++)
+	{
+		eMinor = (PlayerTypes)iMinorLoop;
+		iAmount += GetCulturePerTurnFromMinorTimes100(eMinor);
+	}
+
+	return iAmount;
+}
+
+//	--------------------------------------------------------------------------------
+// Culture per turn from a minor civ
+int CvPlayer::GetCulturePerTurnFromMinorTimes100(PlayerTypes eMinor) const
+{
+	int iAmount = 0;
+
+	if (GET_PLAYER(eMinor).isAlive())
+	{
+		// Includes flat bonus and any bonus from cultural buildings
+		iAmount += GET_PLAYER(eMinor).GetMinorCivAI()->GetCurrentCultureBonusTimes100(GetID());
+	}
+
+	return iAmount;
+}
+
+//	--------------------------------------------------------------------------------
 /// Culture per turn from religion
 int CvPlayer::GetCulturePerTurnFromReligionTimes100() const
 {
@@ -12636,7 +12674,7 @@ int CvPlayer::GetCulturePerTurnFromReligionTimes100() const
 	iOtherCulturePerTurn += GetJONSCulturePerTurnFromExcessHappiness() * 100;
 	iOtherCulturePerTurn += GetJONSCulturePerTurnFromTraits() * 100;
 	iOtherCulturePerTurn += GetJONSCulturePerTurnForFree() * 100;
-	iOtherCulturePerTurn += GetCulturePerTurnFromMinorCivs() * 100;
+	iOtherCulturePerTurn += GetCulturePerTurnFromMinorCivsTimes100();
 
 	// Founder beliefs
 	CvGameReligions* pReligions = GC.getGame().GetGameReligions();
@@ -12696,7 +12734,7 @@ int CvPlayer::GetCulturePerTurnFromBonusTurnsTimes100() const
 		iOtherCulturePerTurn += GetJONSCulturePerTurnFromExcessHappiness() * 100;
 		iOtherCulturePerTurn += GetJONSCulturePerTurnFromTraits() * 100;
 		iOtherCulturePerTurn += GetJONSCulturePerTurnForFree() * 100;
-		iOtherCulturePerTurn += GetCulturePerTurnFromMinorCivs() * 100;
+		iOtherCulturePerTurn += GetCulturePerTurnFromMinorCivsTimes100();
 		iOtherCulturePerTurn += GetCulturePerTurnFromReligionTimes100();
 
 		iValue += ((iOtherCulturePerTurn * GC.getTEMPORARY_CULTURE_BOOST_MOD()) / 100);

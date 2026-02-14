@@ -8004,6 +8004,70 @@ int CvMinorCivAI::GetCurrentCultureBonus(PlayerTypes ePlayer)
 	return iAmount;
 }
 
+#ifdef PLAYER_CULTURE_TIMES_100
+int CvMinorCivAI::GetCurrentCultureFlatBonusTimes100(PlayerTypes ePlayer)
+{
+	CvAssertMsg(ePlayer >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	CvAssertMsg(ePlayer < MAX_PLAYERS, "ePlayer is expected to be within maximum bounds (invalid Index)");
+	if (ePlayer < 0 || ePlayer >= MAX_PLAYERS) return 0;
+
+	// Don't give a bonus to a minor civ player
+	if (ePlayer >= MAX_MAJOR_CIVS)
+		return 0;
+
+	// Only give a bonus if we are Cultural trait
+	if (GetTrait() != MINOR_CIV_TRAIT_CULTURED)
+		return 0;
+
+	int iAmount = 0;
+
+#ifdef RELIGIOUS_UNITY_CS_BONUS
+	ReligionTypes eFoundedReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(ePlayer);
+	ReligionTypes eMajority = NO_RELIGION;
+	if (m_pPlayer->getCapitalCity())
+	{
+		eMajority = m_pPlayer->getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+	}
+	if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+		|| IsAllies(ePlayer))
+		iAmount += GetCultureFlatAlliesBonus(ePlayer);
+
+	if (eFoundedReligion > NO_RELIGION && eFoundedReligion == eMajority && GC.getGame().GetGameReligions()->GetReligion(eFoundedReligion, NO_PLAYER)->m_Beliefs.HasBelief((BeliefTypes)GC.getInfoTypeForString("BELIEF_RELIGIOUS_UNITY"))
+		|| IsFriends(ePlayer))
+		iAmount += GetCultureFlatFriendshipBonus(ePlayer);
+#else
+	if (IsAllies(ePlayer))
+		iAmount += GetCultureFlatAlliesBonus(ePlayer);
+
+	if (IsFriends(ePlayer))
+		iAmount += GetCultureFlatFriendshipBonus(ePlayer);
+#endif
+
+	// Modify the bonus if called for by our trait
+	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#ifdef NEW_LEAGUE_RESOLUTIONS
+	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(ePlayer);
+#endif
+	iAmount *= (iModifier + 100);
+
+	return iAmount;
+}
+
+int CvMinorCivAI::GetCurrentCultureBonusTimes100(PlayerTypes ePlayer)
+{
+	CvAssertMsg(ePlayer >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	CvAssertMsg(ePlayer < MAX_PLAYERS, "ePlayer is expected to be within maximum bounds (invalid Index)");
+	if (ePlayer < 0 || ePlayer >= MAX_PLAYERS) return 0;
+
+	int iAmount = 0;
+
+	iAmount += GetCurrentCultureFlatBonusTimes100(ePlayer);
+	iAmount += GetCurrentCulturePerBuildingBonus(ePlayer) * 100; //antonjs: This feature was prototyped, but later removed. Its value is 0 (no bonus).
+
+	return iAmount;
+}
+#endif
+
 /// Flat happiness bonus from friendship with a minor
 int CvMinorCivAI::GetHappinessFlatFriendshipBonus(PlayerTypes ePlayer, EraTypes eAssumeEra)
 {

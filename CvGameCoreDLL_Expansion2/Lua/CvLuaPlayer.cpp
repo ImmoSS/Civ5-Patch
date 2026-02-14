@@ -247,6 +247,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 
 	Method(GetJONSCulturePerTurnFromCitiesTimes100);
 
+	Method(GetCulturePerTurnFromMinorCivsTimes100);
+	Method(GetCulturePerTurnFromMinorTimes100);
+
 	Method(GetCulturePerTurnFromReligionTimes100);
 	Method(GetCulturePerTurnFromBonusTurnsTimes100);
 
@@ -615,6 +618,10 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(GetMinorCivCurrentCulturePerBuildingBonus);
 	Method(GetCurrentCultureBonus); // DEPRECATED
 	Method(GetMinorCivCurrentCultureBonus);
+#ifdef PLAYER_CULTURE_TIMES_100
+	Method(GetMinorCivCurrentCultureFlatBonusTimes100);
+	Method(GetMinorCivCurrentCultureBonusTimes100);
+#endif
 #ifdef NEW_CITY_STATES_TYPES
 	Method(GetMinorCivCurrentScienceBonus);
 #endif
@@ -2471,6 +2478,18 @@ int CvLuaPlayer::lGetTotalJONSCulturePerTurnTimes100(lua_State* L)
 int CvLuaPlayer::lGetJONSCulturePerTurnFromCitiesTimes100(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvPlayerAI::GetJONSCulturePerTurnFromCitiesTimes100);
+}
+//------------------------------------------------------------------------------
+//int GetCulturePerTurnFromMinorCivsTimes100();
+int CvLuaPlayer::lGetCulturePerTurnFromMinorCivsTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::GetCulturePerTurnFromMinorCivsTimes100);
+}
+//------------------------------------------------------------------------------
+//int GetCulturePerTurnFromMinorTimes100(int iMinor);
+int CvLuaPlayer::lGetCulturePerTurnFromMinorTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::GetCulturePerTurnFromMinorTimes100);
 }
 //------------------------------------------------------------------------------
 //int GetCulturePerTurnFromReligionTimes100();
@@ -6636,6 +6655,24 @@ int CvLuaPlayer::lGetMinorCivCurrentCultureBonus(lua_State* L)
 	lua_pushinteger(L, pkPlayer->GetMinorCivAI()->GetCurrentCultureBonus(ePlayer));
 	return 1;
 }
+#ifdef PLAYER_CULTURE_TIMES_100
+//------------------------------------------------------------------------------
+int CvLuaPlayer::lGetMinorCivCurrentCultureFlatBonusTimes100(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	PlayerTypes ePlayer = (PlayerTypes)lua_tointeger(L, 2);
+	lua_pushinteger(L, pkPlayer->GetMinorCivAI()->GetCurrentCultureFlatBonusTimes100(ePlayer));
+	return 1;
+}
+//------------------------------------------------------------------------------
+int CvLuaPlayer::lGetMinorCivCurrentCultureBonusTimes100(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	PlayerTypes ePlayer = (PlayerTypes)lua_tointeger(L, 2);
+	lua_pushinteger(L, pkPlayer->GetMinorCivAI()->GetCurrentCultureBonusTimes100(ePlayer));
+	return 1;
+}
+#endif
 #ifdef NEW_CITY_STATES_TYPES
 //------------------------------------------------------------------------------
 int CvLuaPlayer::lGetMinorCivCurrentScienceBonus(lua_State* L)

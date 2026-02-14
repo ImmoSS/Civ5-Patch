@@ -327,7 +327,7 @@ function GetCityStateStatusToolTip(iMajor, iMinor, bFullInfo)
 		end
 		
 		-- Friendship bonuses
-		local iCultureBonus = pMinor:GetMinorCivCurrentCultureBonus(iMajor);
+		local iCultureBonus = pMinor:GetMinorCivCurrentCultureBonusTimes100(iMajor) / 100;
 		if (iCultureBonus ~= 0) then
 			strStatusTT = strStatusTT .. "[NEWLINE][NEWLINE]";
 			strStatusTT = strStatusTT .. Locale.ConvertTextKey("TXT_KEY_CSTATE_CULTURE_BONUS", iCultureBonus);

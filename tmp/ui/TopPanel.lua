@@ -1047,7 +1047,7 @@ function CultureTipHandler( control )
 		end
 	
 		-- Culture from Minor Civs
-		local iCultureFromMinors = pPlayer:GetCulturePerTurnFromMinorCivs();
+		local iCultureFromMinors = pPlayer:GetCulturePerTurnFromMinorCivsTimes100() / 100;
 		iBase = iBase + iCultureFromMinors
 		if (iCultureFromMinors ~= 0) then
 		

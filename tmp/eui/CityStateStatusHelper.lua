@@ -334,7 +334,7 @@ function GetCityStateBonuses( majorPlayerID, minorPlayerID )
 		end
 
 		if gk_mode then
-			local cultureBonus = minorPlayer:GetMinorCivCurrentCultureBonus(majorPlayerID)
+			local cultureBonus = minorPlayer:GetMinorCivCurrentCultureBonusTimes100(majorPlayerID) / 100
 			if cultureBonus ~= 0 then
 				table_insert( tips, L("TXT_KEY_CSTATE_CULTURE_BONUS", cultureBonus) )
 			end
