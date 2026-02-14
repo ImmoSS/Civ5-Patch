@@ -6331,7 +6331,7 @@ void CvMinorCivAI::SetAlly(PlayerTypes eNewAlly)
 	}
 
 #ifdef AUTO_PEACE_WITH_MINOR_ON_ALLYING
-	if (IsAtWarWithPlayersTeam(eNewAlly))
+	if (eNewAlly != NO_PLAYER && IsAtWarWithPlayersTeam(eNewAlly))
 		GET_TEAM(GetPlayer()->getTeam()).makePeace(GET_PLAYER(eNewAlly).getTeam());
 #endif
 	m_eAlly = eNewAlly;
@@ -6532,6 +6532,7 @@ void CvMinorCivAI::DoFriendshipChangeEffects(PlayerTypes ePlayer, int iOldFriend
 
 	bool bWasAboveFriendsThreshold = IsFriendshipAboveFriendsThreshold(iOldFriendship);
 	bool bNowAboveFriendsThreshold = IsFriendshipAboveFriendsThreshold(iNewFriendship);
+	SLOG("iOldFriendship = %d, iNewFriendship = %d", iOldFriendship, iNewFriendship);
 
 	// If we are Friends now, mark that we've been Friends at least once this game
 	if(bNowAboveFriendsThreshold)
