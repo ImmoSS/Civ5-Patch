@@ -21103,8 +21103,7 @@ int CvPlayer::GetSciencePerTurnFromMinorTimes100(PlayerTypes eMinor) const
 	if (GET_PLAYER(eMinor).isAlive())
 	{
 		// Includes flat bonus and any bonus from scientific buildings
-		iAmount += GET_PLAYER(eMinor).GetMinorCivAI()->GetCurrentScienceBonus(GetID());
-		iAmount *= 100;
+		iAmount += GET_PLAYER(eMinor).GetMinorCivAI()->GetCurrentScienceBonusTimes100(GetID());
 	}
 
 	return iAmount;

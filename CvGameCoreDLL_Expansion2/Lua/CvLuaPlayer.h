@@ -611,7 +611,7 @@ protected:
 	static int lGetMinorCivCurrentCultureBonusTimes100(lua_State* L);
 #endif
 #ifdef NEW_CITY_STATES_TYPES
-	static int lGetMinorCivCurrentScienceBonus(lua_State* L);
+	static int lGetMinorCivCurrentScienceBonusTimes100(lua_State* L);
 #endif
 	static int lGetMinorCivHappinessFriendshipBonus(lua_State* L); // DEPRECATED
 	static int lGetMinorCivCurrentHappinessFlatBonus(lua_State* L);

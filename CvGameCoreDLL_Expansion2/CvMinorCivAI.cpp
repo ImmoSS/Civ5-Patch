@@ -9327,6 +9327,17 @@ int CvMinorCivAI::GetScienceFlatAlliesBonus(PlayerTypes ePlayer, EraTypes eAssum
 /// Flat-rate science bonus
 int CvMinorCivAI::GetCurrentScienceFlatBonus(PlayerTypes ePlayer)
 {
+	return GetCurrentScienceFlatBonusTimes100(ePlayer) / 100;
+}
+
+int CvMinorCivAI::GetCurrentScienceBonus(PlayerTypes ePlayer)
+{
+	return GetCurrentScienceBonusTimes100(ePlayer) / 100;
+}
+
+/// Flat-rate science bonus
+int CvMinorCivAI::GetCurrentScienceFlatBonusTimes100(PlayerTypes ePlayer)
+{
 	CvAssertMsg(ePlayer >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	CvAssertMsg(ePlayer < MAX_PLAYERS, "ePlayer is expected to be within maximum bounds (invalid Index)");
 	if (ePlayer < 0 || ePlayer >= MAX_PLAYERS) return 0;
@@ -9368,16 +9379,12 @@ int CvMinorCivAI::GetCurrentScienceFlatBonus(PlayerTypes ePlayer)
 #ifdef NEW_LEAGUE_RESOLUTIONS
 	iModifier += GC.getGame().GetGameLeagues()->GetCSBonuModifier(m_pPlayer->GetID());
 #endif
-	if (iModifier > 0)
-	{
-		iAmount *= (iModifier + 100);
-		iAmount /= 100;
-	}
+	iAmount *= (iModifier + 100);
 
 	return iAmount;
 }
 
-int CvMinorCivAI::GetCurrentScienceBonus(PlayerTypes ePlayer)
+int CvMinorCivAI::GetCurrentScienceBonusTimes100(PlayerTypes ePlayer)
 {
 	CvAssertMsg(ePlayer >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	CvAssertMsg(ePlayer < MAX_PLAYERS, "ePlayer is expected to be within maximum bounds (invalid Index)");
@@ -9385,7 +9392,7 @@ int CvMinorCivAI::GetCurrentScienceBonus(PlayerTypes ePlayer)
 
 	int iAmount = 0;
 
-	iAmount += GetCurrentScienceFlatBonus(ePlayer);
+	iAmount += GetCurrentScienceFlatBonusTimes100(ePlayer);
 
 	return iAmount;
 }

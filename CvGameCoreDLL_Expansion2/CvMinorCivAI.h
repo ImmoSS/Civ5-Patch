@@ -505,6 +505,9 @@ public:
 	int GetCurrentScienceFlatBonus(PlayerTypes ePlayer);
 	int GetCurrentScienceBonus(PlayerTypes ePlayer);
 
+	int GetCurrentScienceFlatBonusTimes100(PlayerTypes ePlayer);
+	int GetCurrentScienceBonusTimes100(PlayerTypes ePlayer);
+
 	// Production bonuses
 #ifdef NEW_LEAGUE_RESOLUTIONS
 	int GetFriendsCapitalProductionBonus(PlayerTypes ePlayer, EraTypes eAssumeEra = NO_ERA, int iLeagueMod = 0);

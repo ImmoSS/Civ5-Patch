@@ -623,7 +623,7 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(GetMinorCivCurrentCultureBonusTimes100);
 #endif
 #ifdef NEW_CITY_STATES_TYPES
-	Method(GetMinorCivCurrentScienceBonus);
+	Method(GetMinorCivCurrentScienceBonusTimes100);
 #endif
 	Method(GetMinorCivHappinessFriendshipBonus); // DEPRECATED
 	Method(GetMinorCivCurrentHappinessFlatBonus);
@@ -6675,11 +6675,11 @@ int CvLuaPlayer::lGetMinorCivCurrentCultureBonusTimes100(lua_State* L)
 #endif
 #ifdef NEW_CITY_STATES_TYPES
 //------------------------------------------------------------------------------
-int CvLuaPlayer::lGetMinorCivCurrentScienceBonus(lua_State* L)
+int CvLuaPlayer::lGetMinorCivCurrentScienceBonusTimes100(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);
 	PlayerTypes ePlayer = (PlayerTypes)lua_tointeger(L, 2);
-	lua_pushinteger(L, pkPlayer->GetMinorCivAI()->GetCurrentScienceBonus(ePlayer));
+	lua_pushinteger(L, pkPlayer->GetMinorCivAI()->GetCurrentScienceBonusTimes100(ePlayer));
 	return 1;
 }
 #endif
