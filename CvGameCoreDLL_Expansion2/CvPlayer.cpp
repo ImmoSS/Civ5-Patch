@@ -10523,11 +10523,11 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst
 				}
 			}
 		}
+	}
 
 #ifdef BUILDING_ATTRITION_INSIDE_BORDERS
-		changeAttritionInsideBorders(pBuildingInfo->GetAttritionInsideBorders() * iChange);
+	changeAttritionInsideBorders(pBuildingInfo->GetAttritionInsideBorders()* iChange);
 #endif
-	}
 }
 
 //	--------------------------------------------------------------------------------

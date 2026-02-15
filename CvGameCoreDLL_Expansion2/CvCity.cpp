@@ -1611,7 +1611,7 @@ void CvCity::kill()
 		{
 			if(pLoopUnit->IsImmobile())
 			{
-#ifdef FIX_NULL_POINTER_ON_NULING
+#ifdef FIX_NULL_POINTER_ON_NUKING
 				if (pLoopUnit->isSuicide())
 					pLoopUnit->kill(true, eOwner);
 				else
