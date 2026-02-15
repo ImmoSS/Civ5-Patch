@@ -11469,6 +11469,13 @@ int CvUnit::GetBaseCombatStrengthConsideringDamage() const
 
 	// Mod (Policies, etc.) - lower means Units are less bothered by damage
 	iWoundedDamageMultiplier += GET_PLAYER(getOwner()).GetWoundedUnitDamageMod();
+#ifdef UNIT_FIGHT_WELL_DAMAGE
+	if (getUnitInfo().IsFightWellDamaged())
+	{
+		iWoundedDamageMultiplier -= GC.getWOUNDED_DAMAGE_MULTIPLIER();
+		iWoundedDamageMultiplier = std::max(iWoundedDamageMultiplier, 0);
+	}
+#endif
 
 	int iStrength = GetMaxAttackStrength(NULL,NULL,NULL) / 100;
 
@@ -13696,6 +13703,13 @@ int CvUnit::GetRangeCombatDamage(const CvUnit* pDefender, CvCity* pCity, bool bI
 	// Note, 0 is valid - means we don't do anything
 	int iWoundedDamageMultiplier = /*50*/ GC.getWOUNDED_DAMAGE_MULTIPLIER();
 	iWoundedDamageMultiplier += kPlayer.GetWoundedUnitDamageMod();
+#ifdef UNIT_FIGHT_WELL_DAMAGE
+	if (getUnitInfo().IsFightWellDamaged())
+	{
+		iWoundedDamageMultiplier -= GC.getWOUNDED_DAMAGE_MULTIPLIER();
+		iWoundedDamageMultiplier = std::max(iWoundedDamageMultiplier, 0);
+	}
+#endif
 
 
 	int iAttackerDamageRatio = GC.getMAX_HIT_POINTS() - ((getDamage() - iAssumeExtraDamage) * iWoundedDamageMultiplier / 100);
