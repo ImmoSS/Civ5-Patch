@@ -568,6 +568,16 @@ void CvUnit::initWithNameOffset(int iID, UnitTypes eUnit, int iNameOffset, UnitA
 			}
 
 		}
+#ifdef POLICY_FREE_PROMOTION_UNIT_COMBAT
+		if (kPlayer.IsFreePromotionUnitCombat(ePromotion, (UnitCombatTypes)GC.getUnitInfo(getUnitType())->GetUnitCombatType()))
+		{
+			// Valid Promotion for this Unit?
+			if (::IsPromotionValidForUnitCombatType(ePromotion, getUnitType()))
+			{
+				setHasPromotion(ePromotion, true);
+			}
+		}
+#endif
 	}
 
 	// Give embark promotion for free?
@@ -1234,6 +1244,12 @@ void CvUnit::convert(CvUnit* pUnit, bool bIsUpgrade)
 			{
 				bGivePromotion = true;
 			}
+#ifdef POLICY_FREE_PROMOTION_UNIT_COMBAT
+			else if (GET_PLAYER(getOwner()).IsFreePromotionUnitCombat(ePromotion, (UnitCombatTypes)GC.getUnitInfo(getUnitType())->GetUnitCombatType()) && ::IsPromotionValidForUnitCombatType(ePromotion, getUnitType()))
+			{
+				bGivePromotion = true;
+			}
+#endif
 
 			setHasPromotion(ePromotion, bGivePromotion);
 		}

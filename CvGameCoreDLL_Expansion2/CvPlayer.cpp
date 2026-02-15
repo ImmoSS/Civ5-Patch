@@ -28799,7 +28799,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	if (uiVersion >= 1016)
 	{
 # endif
-		CvInfosSerializationHelper::ReadHashedDataArray(kStream, m_ppaaiFreePromotionUnitCombatCount.dirtyGet());
+		kStream >> m_ppaaiFreePromotionUnitCombatCount;
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	}
 	else
@@ -29661,7 +29661,7 @@ void CvPlayer::Write(FDataStream& kStream) const
 
 	CvInfosSerializationHelper::WriteHashedDataArray<PromotionTypes, int>(kStream, m_paiFreePromotionCount);
 #ifdef POLICY_FREE_PROMOTION_UNIT_COMBAT
-	CvInfosSerializationHelper::WriteHashedDataArray<PromotionTypes, int>(kStream, m_ppaaiFreePromotionUnitCombatCount);
+	kStream << m_ppaaiFreePromotionUnitCombatCount;
 #endif
 
 	kStream << m_paiUnitCombatProductionModifiers;
