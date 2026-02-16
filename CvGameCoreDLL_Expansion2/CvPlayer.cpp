@@ -22754,7 +22754,14 @@ int CvPlayer::GetFreePromotionUnitCombatCount(PromotionTypes ePromotion, UnitCom
 /// Is ePromotion a free promotion for a specific CombatType?
 bool CvPlayer::IsFreePromotionUnitCombat(PromotionTypes ePromotion, UnitCombatTypes eUnitCombatType)	const
 {
-	return (GetFreePromotionUnitCombatCount(ePromotion, eUnitCombatType) > 0);
+	if (eUnitCombatType != NO_UNITCOMBAT)
+	{
+		return (GetFreePromotionUnitCombatCount(ePromotion, eUnitCombatType) > 0);
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 //	--------------------------------------------------------------------------------
