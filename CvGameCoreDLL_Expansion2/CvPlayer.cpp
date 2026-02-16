@@ -6075,7 +6075,7 @@ void CvPlayer::DoUnitReset()
 		}
 
 		// Finally (now that healing is done), restore movement points
-#ifdef DO_TURN_CHANGE_ORDER
+#ifdef DO_TURN_CHANGE_ORDER_UNIT_RESET
 		if (!(pLoopUnit->isTrade() && pLoopUnit->IsAutomated()))
 #endif
 		pLoopUnit->setMoves(pLoopUnit->maxMoves());
@@ -20211,7 +20211,7 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 
 						doTurn();
 
-#ifdef DO_TURN_CHANGE_ORDER
+#ifdef DO_TURN_CHANGE_ORDER_UNIT_RESET
 						DoUnitReset();
 #endif
 
@@ -20268,10 +20268,10 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 			CvAssertFmt(GetEndTurnBlockingType() == NO_ENDTURN_BLOCKING_TYPE, "Expecting the end-turn blocking to be NO_ENDTURN_BLOCKING_TYPE, got %d", GetEndTurnBlockingType());
 			SetEndTurnBlocking(NO_ENDTURN_BLOCKING_TYPE, -1);	// Make sure this is clear so the UI doesn't block when it is not our turn.
 
-#ifndef DO_TURN_CHANGE_ORDER
+#ifndef DO_TURN_CHANGE_ORDER_UNIT_RESET
 			DoUnitReset();
 #endif
-#ifdef DO_TURN_CHANGE_ORDER
+#ifdef DO_TURN_CHANGE_ORDER_UNIT_RESET
 			CvUnit* pLoopUnit;
 			int iLoop;
 			for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
