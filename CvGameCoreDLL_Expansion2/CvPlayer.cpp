@@ -7870,6 +7870,12 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 		{
 			PromotionTypes eMobility = (PromotionTypes)GC.getInfoTypeForString("PROMOTION_MOBILITY", true);
 			pUnit->setHasPromotion(eMobility, true);
+#ifdef FIX_PROMOTION_MOVES_CHANGE_ON_MID_TURN_PROMOTION
+			if (pUnit->getMoves() > 0)
+			{
+				pUnit->changeMoves(GC.getPromotionInfo(eMobility)->GetMovesChange() * GC.getMOVE_DENOMINATOR());
+			}
+#endif
 		}
 #else
 		pUnit->changeExperience(kGoodyInfo.getExperience());
@@ -22729,11 +22735,23 @@ void CvPlayer::ChangeFreePromotionCount(PromotionTypes ePromotion, int iChange)
 				if(::IsPromotionValidForUnitCombatType(ePromotion, pLoopUnit->getUnitType()))
 				{
 					pLoopUnit->setHasPromotion(ePromotion, true);
+#ifdef FIX_PROMOTION_MOVES_CHANGE_ON_MID_TURN_PROMOTION
+					if (pLoopUnit->getMoves() > 0)
+					{
+						pLoopUnit->changeMoves(GC.getPromotionInfo(ePromotion)->GetMovesChange() * GC.getMOVE_DENOMINATOR());
+					}
+#endif
 				}
 
 				else if(::IsPromotionValidForCivilianUnitType(ePromotion, pLoopUnit->getUnitType()))
 				{
 					pLoopUnit->setHasPromotion(ePromotion, true);
+#ifdef FIX_PROMOTION_MOVES_CHANGE_ON_MID_TURN_PROMOTION
+					if (pLoopUnit->getMoves() > 0)
+					{
+						pLoopUnit->changeMoves(GC.getPromotionInfo(ePromotion)->GetMovesChange() * GC.getMOVE_DENOMINATOR());
+					}
+#endif
 				}
 			}
 		}
@@ -22796,11 +22814,23 @@ void CvPlayer::ChangeFreePromotionUnitCombatCount(PromotionTypes ePromotion, Uni
 				if (::IsPromotionValidForUnitCombatType(ePromotion, pLoopUnit->getUnitType()) && GC.getUnitInfo(pLoopUnit->getUnitType())->GetUnitCombatType() == eUnitCombatType)
 				{
 					pLoopUnit->setHasPromotion(ePromotion, true);
+#ifdef FIX_PROMOTION_MOVES_CHANGE_ON_MID_TURN_PROMOTION
+					if (pLoopUnit->getMoves() > 0)
+					{
+						pLoopUnit->changeMoves(GC.getPromotionInfo(ePromotion)->GetMovesChange() * GC.getMOVE_DENOMINATOR());
+					}
+#endif
 				}
 
 				else if (::IsPromotionValidForCivilianUnitType(ePromotion, pLoopUnit->getUnitType()))
 				{
 					pLoopUnit->setHasPromotion(ePromotion, true);
+#ifdef FIX_PROMOTION_MOVES_CHANGE_ON_MID_TURN_PROMOTION
+					if (pLoopUnit->getMoves() > 0)
+					{
+						pLoopUnit->changeMoves(GC.getPromotionInfo(ePromotion)->GetMovesChange() * GC.getMOVE_DENOMINATOR());
+					}
+#endif
 				}
 			}
 		}
