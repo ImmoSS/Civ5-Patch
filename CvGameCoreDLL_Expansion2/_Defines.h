@@ -1141,7 +1141,6 @@
 #define GAME_ALLOW_ONLY_ONE_UNIT_MOVE_ON_TURN_LOADING
 ///
 #define DO_TURN_CHANGE_ORDER
-// TODO: DO_TURN_CHANGE_ORDER_UNIT_RESET
 /// move autosave to the end of turn
 #define AUTOSAVE_END_OF_TURN
 /// Game.GetTurnTimeElapsed() returns elapsed time in milliseconds
