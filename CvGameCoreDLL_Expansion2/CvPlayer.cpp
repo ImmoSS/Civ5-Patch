@@ -16357,10 +16357,32 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 				locString << getCivilizationAdjectiveKey();
 				GC.getGame().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, GetID(), locString.toUTF8(), -1, -1);
 
+#ifdef FIX_CHANGE_GOLDEN_AGE_MOVES_ON_START_END_GOLDEN_AGE
+				int iLoop = 0;
+				for (CvUnit* pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+				{
+					if (pLoopUnit->getMoves() > 0)
+					{
+						pLoopUnit->changeMoves(GetPlayerTraits()->GetGoldenAgeMoveChange() * GC.getMOVE_DENOMINATOR());
+					}
+				}
+#endif
+
 				gDLL->GameplayGoldenAgeStarted();
 			}
 			else
 			{
+#ifdef FIX_CHANGE_GOLDEN_AGE_MOVES_ON_START_END_GOLDEN_AGE
+				int iLoop = 0;
+				for (CvUnit* pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+				{
+					if (pLoopUnit->getMoves() > 0)
+					{
+						pLoopUnit->changeMoves(-GetPlayerTraits()->GetGoldenAgeMoveChange() * GC.getMOVE_DENOMINATOR());
+					}
+				}
+#endif
+
 				gDLL->GameplayGoldenAgeEnded();
 			}
 
