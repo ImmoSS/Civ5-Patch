@@ -1616,13 +1616,6 @@ int CvMinorCivQuest::GetEveryTurnReward()
 	if (!IsRewardEveryTurn())
 		return 0;
 
-	CvPlayer* pMinor = &GET_PLAYER(m_eMinor);
-
-	bool bWasFriends = pMinor->GetMinorCivAI()->IsFriends(m_eAssignedPlayer);
-	bool bWasAllies = pMinor->GetMinorCivAI()->IsAllies(m_eAssignedPlayer);
-	PlayerTypes eOldAlly = pMinor->GetMinorCivAI()->GetAlly();
-	int iOldInf = pMinor->GetMinorCivAI()->GetEffectiveFriendshipWithMajor(m_eAssignedPlayer);
-
 	int iLength = GC.getMINOR_QUEST_STANDARD_CONTEST_LENGTH();
 	iLength *= GC.getGame().getGameSpeedInfo().getGreatPeoplePercent();
 	iLength /= 100;
