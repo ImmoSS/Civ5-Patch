@@ -6348,6 +6348,13 @@ void CvMinorCivAI::SetAlly(PlayerTypes eNewAlly)
 				}
 			}
 
+#ifdef FIX_UPDATE_DEFERRED_FOG_ON_SET_ALLY
+			if (eNewAlly == GC.getGame().getActivePlayer())
+			{
+				theMap.updateDeferredFog();
+			}
+#endif
+
 			for (int iPolicyLoop = 0; iPolicyLoop < GC.getNumPolicyInfos(); iPolicyLoop++)
 			{
 				const PolicyTypes eLoopPolicy = static_cast<PolicyTypes>(iPolicyLoop);
