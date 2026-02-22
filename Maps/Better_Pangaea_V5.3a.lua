@@ -5524,7 +5524,8 @@ function AssignStartingPlots:FindCoastalStart(region_number)
 	-- This function returns two boolean flags, indicating the success level of the operation.
 	local bSuccessFlag = false; -- Returns true when a start is placed, false when process fails.
 	local bForcedPlacementFlag = false; -- Returns true if this region had no eligible starts and one was forced to occur.
-	
+	local AllowInlandSea = self.AllowInlandSea;
+
 	-- Obtain data needed to process this region.
 	local iW, iH = Map.GetGridSize();
 	local region_data_table = self.regionData[region_number];
@@ -5547,7 +5548,7 @@ function AssignStartingPlots:FindCoastalStart(region_number)
 	-- Check region for AlongOcean eligibility.
 	if coastalLandCount < 3 then
 		-- This region cannot support an Along Ocean start. Try instead to find an inland start for it.
-		bSuccessFlag, bForcedPlacementFlag = self:FindStart(region_number)
+		bSuccessFlag, bForcedPlacementFlag = self:FindStart(region_number, false)
 		if bSuccessFlag == false then
 			-- This region cannot have a start and something has gone way wrong.
 			-- We'll force a one tile grass island in the SW corner of the region and put the start there.
@@ -5614,7 +5615,7 @@ function AssignStartingPlots:FindCoastalStart(region_number)
 			if self.plotDataIsCoastal[plotIndex] == true then -- This plot is a land plot next to an ocean.
 				local plot = Map.GetPlot(x, y);
 				local plotType = plot:GetPlotType()
-				if plotType ~= PlotTypes.PLOT_MOUNTAIN then -- Not a mountain plot.
+				if plotType ~= PlotTypes.PLOT_MOUNTAIN and (AllowInlandSea == 1 or plot:IsCoastalLand(50)) then -- Not a mountain plot, nor a plot adjacent to inland sea, or inland sea allowed.
 					local area_of_plot = plot:GetArea();
 					if area_of_plot == iAreaID or iAreaID == -1 then -- This plot is a member, so it goes on at least one candidate list.
 						--
@@ -5664,6 +5665,8 @@ function AssignStartingPlots:FindCoastalStart(region_number)
 	--[[ Debug printout.
 	print("-");
 	print("--- Number of Candidate Plots next to an ocean in Region #", region_number, " - Region Type:", region_type, " ---");
+	print("-");
+	print("Center Of Region at: " .. tostring(iCenterWestX) .. "," .. tostring(iCenterSouthY));
 	print("-");
 	print("Coastal Plots in Center Bias area: ", iNumCenterCoastal);
 	print("Which are along rivers: ", iNumCenterRiver);
@@ -5826,7 +5829,7 @@ function AssignStartingPlots:FindCoastalStart(region_number)
 		bSuccessFlag = true;
 	else
 		-- This region cannot support an Along Ocean start. Try instead to find an Inland start for it.
-		bSuccessFlag, bForcedPlacementFlag = self:FindStart(region_number)
+		bSuccessFlag, bForcedPlacementFlag = self:FindStart(region_number, false)
 		if bSuccessFlag == false then
 			-- This region cannot have a start and something has gone way wrong.
 			-- We'll force a one tile grass island in the SW corner of the region and put the start there.
