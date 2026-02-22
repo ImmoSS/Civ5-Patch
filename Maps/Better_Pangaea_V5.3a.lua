@@ -6533,6 +6533,7 @@ function AssignStartingPlots.Create()
 		-- Civ start position variables
 		startingPlots = {},				-- Stores x and y coordinates (and "score") of starting plots for civs, indexed by region number
 		method = 2,						-- Method of regional division, default is 2
+		NoCoastInland = true,			-- Decides if inland civs can spawn on the coast
 		iNumCivs = 0,					-- Number of civs at game start
 		player_ID_list = {},			-- Correct list of player IDs (includes handling of any 'gaps' that occur in MP games)
 		plotDataIsCoastal = {},			-- Stores table of NextToSaltWater plots to reduce redundant calculations
