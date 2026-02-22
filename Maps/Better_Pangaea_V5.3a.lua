@@ -5192,6 +5192,313 @@ function NWCustomPlacement(x, y, row_number, method_number, AssignStartingPlots)
 	end
 end
 ------------------------------------------------------------------------------
+function AssignStartingPlots:FindStart(region_number)
+	-- This function attempts to choose a start position for a single region.
+	-- This function returns two boolean flags, indicating the success level of the operation.
+	local bSuccessFlag = false; -- Returns true when a start is placed, false when process fails.
+	local bForcedPlacementFlag = false; -- Returns true if this region had no eligible starts and one was forced to occur.
+	
+	-- Obtain data needed to process this region.
+	local iW, iH = Map.GetGridSize();
+	local region_data_table = self.regionData[region_number];
+	local iWestX = region_data_table[1];
+	local iSouthY = region_data_table[2];
+	local iWidth = region_data_table[3];
+	local iHeight = region_data_table[4];
+	local iAreaID = region_data_table[5];
+	local iMembershipEastX = iWestX + iWidth - 1;
+	local iMembershipNorthY = iSouthY + iHeight - 1;
+	--
+	local terrainCounts = self.regionTerrainCounts[region_number];
+	--
+	local region_type = self.regionTypes[region_number];
+	-- Done setting up region data.
+	-- Set up contingency.
+	local fallback_plots = {};
+	
+	-- Establish scope of center bias.
+	local fCenterWidth = (self.centerBias / 100) * iWidth;
+	local iNonCenterWidth = math.floor((iWidth - fCenterWidth) / 2)
+	local iCenterWidth = iWidth - (iNonCenterWidth * 2);
+	local iCenterWestX = (iWestX + iNonCenterWidth) % iW; -- Modulo math to synch coordinate to actual map in case of world wrap.
+	local iCenterTestWestX = (iWestX + iNonCenterWidth); -- "Test" values ignore world wrap for easier membership testing.
+	local iCenterTestEastX = (iCenterWestX + iCenterWidth - 1);
+
+	local fCenterHeight = (self.centerBias / 100) * iHeight;
+	local iNonCenterHeight = math.floor((iHeight - fCenterHeight) / 2)
+	local iCenterHeight = iHeight - (iNonCenterHeight * 2);
+	local iCenterSouthY = (iSouthY + iNonCenterHeight) % iH;
+	local iCenterTestSouthY = (iSouthY + iNonCenterHeight);
+	local iCenterTestNorthY = (iCenterTestSouthY + iCenterHeight - 1);
+
+	-- Establish scope of "middle donut", outside the center but inside the outer.
+	local fMiddleWidth = (self.middleBias / 100) * iWidth;
+	local iOuterWidth = math.floor((iWidth - fMiddleWidth) / 2)
+	local iMiddleWidth = iWidth - (iOuterWidth * 2);
+	local iMiddleWestX = (iWestX + iOuterWidth) % iW;
+	local iMiddleTestWestX = (iWestX + iOuterWidth);
+	local iMiddleTestEastX = (iMiddleTestWestX + iMiddleWidth - 1);
+
+	local fMiddleHeight = (self.middleBias / 100) * iHeight;
+	local iOuterHeight = math.floor((iHeight - fMiddleHeight) / 2)
+	local iMiddleHeight = iHeight - (iOuterHeight * 2);
+	local iMiddleSouthY = (iSouthY + iOuterHeight) % iH;
+	local iMiddleTestSouthY = (iSouthY + iOuterHeight);
+	local iMiddleTestNorthY = (iMiddleTestSouthY + iMiddleHeight - 1); 
+
+	-- Assemble candidates lists.
+	local two_plots_from_ocean = {};
+	local center_candidates = {};
+	local center_river = {};
+	local center_coastal = {};
+	local center_inland_dry = {};
+	local middle_candidates = {};
+	local middle_river = {};
+	local middle_coastal = {};
+	local middle_inland_dry = {};
+	local outer_plots = {};
+	
+	-- Identify candidate plots.
+	for region_y = 0, iHeight - 1 do -- When handling global plot indices, process Y first.
+		for region_x = 0, iWidth - 1 do
+			local x = (region_x + iWestX) % iW; -- Actual coords, adjusted for world wrap, if any.
+			local y = (region_y + iSouthY) % iH; --
+			local plotIndex = y * iW + x + 1;
+			local plot = Map.GetPlot(x, y);
+			local plotType = plot:GetPlotType()
+			if plotType == PlotTypes.PLOT_HILLS or plotType == PlotTypes.PLOT_LAND then -- Could host a city.
+				-- Check if plot is two away from salt water.
+				if self.plotDataIsNextToCoast[plotIndex] == true then
+					table.insert(two_plots_from_ocean, plotIndex);
+				else
+					local area_of_plot = plot:GetArea();
+					if area_of_plot == iAreaID or iAreaID == -1 then -- This plot is a member, so it goes on at least one candidate list.
+						--
+						-- Test whether plot is in center bias, middle donut, or outer donut.
+						--
+						local test_x = region_x + iWestX; -- "Test" coords, ignoring any world wrap and
+						local test_y = region_y + iSouthY; -- reaching in to virtual space if necessary.
+						if (test_x >= iCenterTestWestX and test_x <= iCenterTestEastX) and 
+						   (test_y >= iCenterTestSouthY and test_y <= iCenterTestNorthY) then -- Center Bias.
+							table.insert(center_candidates, plotIndex);
+							if plot:IsRiverSide() then
+								table.insert(center_river, plotIndex);
+							elseif plot:IsFreshWater() or self.plotDataIsCoastal[plotIndex] == true then
+								table.insert(center_coastal, plotIndex);
+							else
+								table.insert(center_inland_dry, plotIndex);
+							end
+						elseif (test_x >= iMiddleTestWestX and test_x <= iMiddleTestEastX) and 
+						       (test_y >= iMiddleTestSouthY and test_y <= iMiddleTestNorthY) then
+							table.insert(middle_candidates, plotIndex);
+							if plot:IsRiverSide() then
+								table.insert(middle_river, plotIndex);
+							elseif plot:IsFreshWater() or self.plotDataIsCoastal[plotIndex] == true then
+								table.insert(middle_coastal, plotIndex);
+							else
+								table.insert(middle_inland_dry, plotIndex);
+							end
+						else
+							table.insert(outer_plots, plotIndex);
+						end
+					end
+				end
+			end
+		end
+	end
+
+	-- Check how many plots landed on each list.
+	local iNumDisqualified = table.maxn(two_plots_from_ocean);
+	local iNumCenter = table.maxn(center_candidates);
+	local iNumCenterRiver = table.maxn(center_river);
+	local iNumCenterCoastLake = table.maxn(center_coastal);
+	local iNumCenterInlandDry = table.maxn(center_inland_dry);
+	local iNumMiddle = table.maxn(middle_candidates);
+	local iNumMiddleRiver = table.maxn(middle_river);
+	local iNumMiddleCoastLake = table.maxn(middle_coastal);
+	local iNumMiddleInlandDry = table.maxn(middle_inland_dry);
+	local iNumOuter = table.maxn(outer_plots);
+	
+	--[[ Debug printout.
+	print("-");
+	print("--- Number of Candidate Plots in Region #", region_number, " - Region Type:", region_type, " ---");
+	print("-");
+	print("Candidates in Center Bias area: ", iNumCenter);
+	print("Which are next to river: ", iNumCenterRiver);
+	print("Which are next to lake or sea: ", iNumCenterCoastLake);
+	print("Which are inland and dry: ", iNumCenterInlandDry);
+	print("-");
+	print("Candidates in Middle Donut area: ", iNumMiddle);
+	print("Which are next to river: ", iNumMiddleRiver);
+	print("Which are next to lake or sea: ", iNumMiddleCoastLake);
+	print("Which are inland and dry: ", iNumMiddleInlandDry);
+	print("-");
+	print("Candidate Plots in Outer area: ", iNumOuter);
+	print("-");
+	print("Disqualified, two plots away from salt water: ", iNumDisqualified);
+	print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+	]]--
+	
+	-- Process lists of candidate plots.
+	if iNumCenter + iNumMiddle > 0 then
+		local candidate_lists = {};
+		if iNumCenterRiver > 0 then -- Process center bias river plots.
+			table.insert(candidate_lists, center_river);
+		end
+		if iNumCenterCoastLake > 0 then -- Process center bias lake or coastal plots.
+			table.insert(candidate_lists, center_coastal);
+		end
+		if iNumCenterInlandDry > 0 then -- Process center bias inland dry plots.
+			table.insert(candidate_lists, center_inland_dry);
+		end
+		if iNumMiddleRiver > 0 then -- Process middle donut river plots.
+			table.insert(candidate_lists, middle_river);
+		end
+		if iNumMiddleCoastLake > 0 then -- Process middle donut lake or coastal plots.
+			table.insert(candidate_lists, middle_coastal);
+		end
+		if iNumMiddleInlandDry > 0 then -- Process middle donut inland dry plots.
+			table.insert(candidate_lists, middle_inland_dry);
+		end
+		--
+		for loop, plot_list in ipairs(candidate_lists) do -- Up to six plot lists, processed by priority.
+			local election_returns = self:IterateThroughCandidatePlotList(plot_list, region_type)
+			-- If any candidates are eligible, choose one.
+			local found_eligible = election_returns[1];
+			if found_eligible then
+				local bestPlotScore = election_returns[2]; 
+				local bestPlotIndex = election_returns[3];
+				local x = (bestPlotIndex - 1) % iW;
+				local y = (bestPlotIndex - x - 1) / iW;
+				self.startingPlots[region_number] = {x, y, bestPlotScore};
+				self:PlaceImpactAndRipples(x, y)
+				return true, false
+			end
+			-- If none eligible, check for fallback plot.
+			local found_fallback = election_returns[4];
+			if found_fallback then
+				local bestFallbackScore = election_returns[5];
+				local bestFallbackIndex = election_returns[6];
+				local x = (bestFallbackIndex - 1) % iW;
+				local y = (bestFallbackIndex - x - 1) / iW;
+				table.insert(fallback_plots, {x, y, bestFallbackScore});
+			end
+		end
+	end
+	-- Reaching this point means no eligible sites in center bias or middle donut subregions!
+	
+	-- Process candidates from Outer subregion, if any.
+	if iNumOuter > 0 then
+		local outer_eligible_list = {};
+		local found_eligible = false;
+		local found_fallback = false;
+		local bestFallbackScore = -50;
+		local bestFallbackIndex;
+		-- Process list of candidate plots.
+		for loop, plotIndex in ipairs(outer_plots) do
+			local score, meets_minimums = self:EvaluateCandidatePlot(plotIndex, region_type)
+			-- Test current plot against best known plot.
+			if meets_minimums == true then
+				found_eligible = true;
+				table.insert(outer_eligible_list, plotIndex);
+			else
+				found_fallback = true;
+				if score > bestFallbackScore then
+					bestFallbackScore = score;
+					bestFallbackIndex = plotIndex;
+				end
+			end
+		end
+		if found_eligible then -- Iterate through eligible plots and choose the one closest to the center of the region.
+			local closestPlot;
+			local closestDistance = math.max(iW, iH);
+			local bullseyeX = iWestX + (iWidth / 2);
+			if bullseyeX < iWestX then -- wrapped around: un-wrap it for test purposes.
+				bullseyeX = bullseyeX + iW;
+			end
+			local bullseyeY = iSouthY + (iHeight / 2);
+			if bullseyeY < iSouthY then -- wrapped around: un-wrap it for test purposes.
+				bullseyeY = bullseyeY + iH;
+			end
+			if bullseyeY / 2 ~= math.floor(bullseyeY / 2) then -- Y coord is odd, add .5 to X coord for hex-shift.
+				bullseyeX = bullseyeX + 0.5;
+			end
+			
+			for loop, plotIndex in ipairs(outer_eligible_list) do
+				local x = (plotIndex - 1) % iW;
+				local y = (plotIndex - x - 1) / iW;
+				local adjusted_x = x;
+				local adjusted_y = y;
+				if y / 2 ~= math.floor(y / 2) then -- Y coord is odd, add .5 to X coord for hex-shift.
+					adjusted_x = x + 0.5;
+				end
+				
+				if x < iWestX then -- wrapped around: un-wrap it for test purposes.
+					adjusted_x = adjusted_x + iW;
+				end
+				if y < iSouthY then -- wrapped around: un-wrap it for test purposes.
+					adjusted_y = y + iH;
+				end
+				local fDistance = math.sqrt( (adjusted_x - bullseyeX)^2 + (adjusted_y - bullseyeY)^2 );
+				if fDistance < closestDistance then -- Found new "closer" plot.
+					closestPlot = plotIndex;
+					closestDistance = fDistance;
+				end
+			end
+			-- Assign the closest eligible plot as the start point.
+			local x = (closestPlot - 1) % iW;
+			local y = (closestPlot - x - 1) / iW;
+			-- Re-get plot score for inclusion in start plot data.
+			local score, meets_minimums = self:EvaluateCandidatePlot(closestPlot, region_type)
+			-- Assign this plot as the start for this region.
+			self.startingPlots[region_number] = {x, y, score};
+			self:PlaceImpactAndRipples(x, y)
+			return true, false
+		end
+		-- Add the fallback plot (best scored plot) from the Outer region to the fallback list.
+		if found_fallback then
+			local x = (bestFallbackIndex - 1) % iW;
+			local y = (bestFallbackIndex - x - 1) / iW;
+			table.insert(fallback_plots, {x, y, bestFallbackScore});
+		end
+	end
+	-- Reaching here means no plot in the entire region met the minimum standards for selection.
+	
+	-- The fallback plot contains the best-scored plots from each test area in this region.
+	-- We will compare all the fallback plots and choose the best to be the start plot.
+	local iNumFallbacks = table.maxn(fallback_plots);
+	if iNumFallbacks > 0 then
+		local best_fallback_score = 0
+		local best_fallback_x;
+		local best_fallback_y;
+		for loop, plotData in ipairs(fallback_plots) do
+			local score = plotData[3];
+			if score > best_fallback_score then
+				best_fallback_score = score;
+				best_fallback_x = plotData[1];
+				best_fallback_y = plotData[2];
+			end
+		end
+		-- Assign the start for this region.
+		self.startingPlots[region_number] = {best_fallback_x, best_fallback_y, best_fallback_score};
+		self:PlaceImpactAndRipples(best_fallback_x, best_fallback_y)
+		bSuccessFlag = true;
+	else
+		-- This region cannot have a start and something has gone way wrong.
+		-- We'll force a one tile grass island in the SW corner of the region and put the start there.
+		local forcePlot = Map.GetPlot(iWestX, iSouthY);
+		bSuccessFlag = true;
+		bForcedPlacementFlag = true;
+		forcePlot:SetPlotType(PlotTypes.PLOT_LAND, false, true);
+		forcePlot:SetTerrainType(TerrainTypes.TERRAIN_GRASS, false, true);
+		forcePlot:SetFeatureType(FeatureTypes.NO_FEATURE, -1);
+		self.startingPlots[region_number] = {iWestX, iSouthY, 0};
+		self:PlaceImpactAndRipples(iWestX, iSouthY)
+	end
+
+	return bSuccessFlag, bForcedPlacementFlag
+end
+------------------------------------------------------------------------------
 function StartPlotSystem()
 	-- Get Resources setting input by user.
 	local res = Map.GetCustomOption(5)
