@@ -6221,17 +6221,162 @@ function AssignStartingPlots:ChooseLocations(args)
 	end
 
 	-- main loop
+	-- lets check how many coastal civs are in the game and force that many regions to be coastal
+	
+	print("<<<<<<<<<<<<<<<<<< START OF REGION MANIPLUATION >>>>>>>>>>>>>>>>>>>>>");
+	
+	local iNumCoastNeeded = 0;
+	local iNumRiverCivs, iNumPriorityCivs = 0, 0;
+	local priority_lists = {};
+	local res_reg = table.fill(false, self.iNumCivs);
+	local reg_still_active = {};
+	
+	for loop = 1, self.iNumCivs do
+		table.insert(reg_still_active, loop);
+	end
+	
+	for loop = 1, self.iNumCivs do
+		local playerNum = self.player_ID_list[loop]; -- MP games can have gaps between player numbers, so we cannot assume a sequential set of IDs.
+		local player = Players[playerNum];
+		local civType = GameInfo.Civilizations[player:GetCivilizationType()].Type;
+		print("Player", playerNum, "of Civ Type", civType);
+		local bNeedsCoastalStart = CivNeedsCoastalStart(civType);
+		-- Roll for coastal start for weak bias civs
+		if self.MixedBias and Map.Rand(100, "") >= 60 and CivNeedsPlaceFirstCoastalStart(civType) then
+			bNeedsCoastalStart = false;
+		end
+		if bNeedsCoastalStart == true then
+			print("- - - - - - - needs Coastal Start!"); print("-");
+			iNumCoastNeeded = iNumCoastNeeded + 1;
+		else
+			local bNeedsRiverStart = CivNeedsRiverStart(civType)
+			if bNeedsRiverStart == true then
+				print("- - - - - - - needs River Start!"); print("-");
+				iNumRiverCivs = iNumRiverCivs + 1;
+			else
+				local iNumRegionPriority = GetNumStartRegionPriorityForCiv(civType)
+				if iNumRegionPriority > 0 then
+					print("- - - - - - - needs Region Priority!"); print("-");
+					local table_of_this_civs_priority_needs = GetStartRegionPriorityListForCiv_GetIDs(civType)
+					iNumPriorityCivs = iNumPriorityCivs + 1;
+					priority_lists[playerNum] = table_of_this_civs_priority_needs;
+				end
+			end
+		end
+	end
+	
+	for regcount = 1, iNumRegions do
+		print("Region #", regcount, " Is type: ", self.regionTypes[regcount]);
+	end
+	
+	print("-"); print("-"); print("--- REGION PRIORITY READOUT ---"); print("-");
+	local iNumSinglePriority, iNumMultiPriority, iNumNeedFallbackPriority, iNumReserved = 0, 0, 0, 0;
+	local single_priority, multi_priority, fallback_priority = {}, {}, {};
+	local single_sorted, multi_sorted = {}, {};
+	-- Separate priority civs in to two categories: single priority, multiple priority.
+	for playerNum, priority_needs in pairs(priority_lists) do
+		local len = table.maxn(priority_needs)
+		if len == 1 then
+			print("Player#", playerNum, "has a single Region Priority of type", priority_needs[1]);
+			
+			local found_reg = false;
+			
+			--loop thru all the regions and see if we can find a match
+			for regcount = 1, iNumRegions do
+				if self.regionTypes[regcount] == priority_needs[1] and found_reg == false then	
+					-- this region matches this civ
+					
+					if res_reg[regcount] == false then
+						print("Region match found for player #", playerNum, " Region #:", regcount);
+						print("--");
+						res_reg[regcount] = true;
+						iNumReserved = iNumReserved + 1;
+						found_reg = true;
+						table.remove(reg_still_active, regcount);
+					end
+				end
+			end
+			
+			-- if found_reg is still false at this point there are no regions left for this civs type, find the next best
+			if found_reg == false then
+				local iPriorityType = priority_needs[1];
+				local choose_this_region = self:FindFallbackForUnmatchedRegionPriority(iPriorityType, reg_still_active)
+				print("Fallback region found for player #", playerNum, " Region #:", choose_this_region);
+				res_reg[choose_this_region] = true;
+				iNumReserved = iNumReserved + 1;
+				table.remove(reg_still_active, choose_this_region);
+			end
+		else
+			print("Player#", playerNum, "has multiple Region Priority, this many types:", len);
+			--local priority_data = {playerNum, len};
+			--table.insert(multi_priority, priority_data)
+			--iNumMultiPriority = iNumMultiPriority + 1;
+		end
+	end
+	-- add extra coastals if balanced coast setting was chosen
+	if self.BalancedCoastal then
+		iRoll = Map.Rand(100, "Roll for extra coast");
+		local iNumCoastStart = iNumCoastNeeded;
+		if iNumRegions == 6 then
+			if iNumCoastStart == 0 then
+				iNumCoastNeeded = iNumCoastNeeded + (iRoll >= 20 and 1 or 0) + (iRoll >= 45 and 1 or 0) + (iRoll >= 95 and 1 or 0);
+			end
+			if iNumCoastStart == 1 then
+				iNumCoastNeeded = iNumCoastNeeded + (iRoll >= 15 and 1 or 0) + (iRoll >= 90 and 1 or 0)
+			end
+			if iNumCoastStart == 2 then
+				iNumCoastNeeded = iNumCoastNeeded + (iRoll >= 90 and 1 or 0)
+			end
+		end
+		
+		if iNumRegions == 8 then
+			if iNumCoastStart == 0 then
+				iNumCoastNeeded = iNumCoastNeeded + (iRoll >= 15 and 1 or 0) + (iRoll >= 35 and 1 or 0) + (iRoll >= 65 and 1 or 0) + (iRoll >= 85 and 1 or 0)
+			end
+			if iNumCoastStart == 1 then
+				iNumCoastNeeded = iNumCoastNeeded + (iRoll >= 10 and 1 or 0) + (iRoll >= 55 and 1 or 0) + (iRoll >= 85 and 1 or 0)
+			end
+			if iNumCoastStart == 2 then
+				iNumCoastNeeded = iNumCoastNeeded + (iRoll >= 35 and 1 or 0) + (iRoll >= 80 and 1 or 0)  + (iRoll >= 95 and 1 or 0)
+			end
+			if iNumCoastStart == 3 then
+				iNumCoastNeeded = iNumCoastNeeded + (iRoll >= 60 and 1 or 0)  + (iRoll >= 90 and 1 or 0)
+			end
+			if iNumCoastStart == 4 then
+				iNumCoastNeeded = iNumCoastNeeded + (iRoll >= 75 and 1 or 0)  + (iRoll >= 95 and 1 or 0)
+			end
+		end
+		
+		-- clear out reservations randomly
+		local i = 1;
+		while iNumRegions - iNumReserved > iNumCoastNeeded and i <= 100 do
+		iRoll = Map.Rand(iNumRegions, "Roll region number to clear");
+			if res_reg[iRoll] then
+				res_reg[iRoll] = false;
+				iNumReserved = iNumReserved - 1;
+			end
+			i = i + 1;
+		end
+	end
+	-- now we have reserved the bias region all civ left must be coastal, so give them the remanining regions
+	
 	for assignIndex = 1, iNumRegions do
 		local currentRegionNumber = regionAssignList[assignIndex];
 		local bSuccessFlag = false;
 		local bForcedPlacementFlag = false;
 		
-		if self.method == 3 or self.method == 4 then
-			bSuccessFlag, bForcedPlacementFlag = self:FindStartWithoutRegardToAreaID(currentRegionNumber, mustBeCoast)
-		elseif mustBeCoast == true then
+		print("Region #" .. currentRegionNumber);
+		print("Num coastal still needed " .. tostring(iNumCoastNeeded));
+		--print(tostring(self.startLocationConditions[currentRegionNumber][1]));
+
+		if res_reg[currentRegionNumber] == false and iNumCoastNeeded > 0 then
+			-- not already reserved, can be coastal
 			bSuccessFlag, bForcedPlacementFlag = self:FindCoastalStart(currentRegionNumber)
+			iNumCoastNeeded = iNumCoastNeeded - 1;
 		else
-			bSuccessFlag, bForcedPlacementFlag = self:FindStart(currentRegionNumber)
+			print("Don't Allow Spawning on Coast: " .. tostring(self.NoCoastInland));
+
+			bSuccessFlag, bForcedPlacementFlag = self:FindStart(currentRegionNumber, self.NoCoastInland)
 		end
 		
 		--[[ Printout for debug only.
