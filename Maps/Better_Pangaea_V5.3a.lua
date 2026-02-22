@@ -5862,6 +5862,8 @@ function AssignStartingPlots:GenerateRegions(args)
 	local iW, iH = Map.GetGridSize();
 	self.method = args.method or self.method; -- Continental method is default.
 	self.resource_setting = args.resources or 2; -- Each map script has to pass in parameter for Resource setting chosen by user.
+	self.AllowInlandSea = args.AllowInlandSea or 1;
+	self.NoCoastInland = args.NoCoastInland;
 
 	-- Determine number of civilizations and city states present in this game.
 	self.iNumCivs, self.iNumCityStates, self.player_ID_list, self.bTeamGame, self.teams_with_major_civs, self.number_civs_per_team = GetPlayerAndTeamInfo()
