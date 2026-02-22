@@ -100,6 +100,28 @@ function GetMapScriptInfo()
 				DefaultValue = 3,
 				SortPriority = -91,
 			},
+
+			{
+				Name = "Coastal Spawns",	-- Can inland civ spawn on the coast (16)
+				Values = {
+					"Coastal Civs Only",
+					"Random",
+				},
+
+				DefaultValue = 1,
+				SortPriority = -85,
+			},
+
+			{
+				Name = "Inland Sea Spawns",	-- Can coastal civ spawn on inland seas (18)
+				Values = {
+					"Allowed",
+					"Not Allowed for Coastal Civs",
+				},
+
+				DefaultValue = 2,
+				SortPriority = -83,
+			},
 		},
 	}
 end
@@ -6857,9 +6879,16 @@ end
 ------------------------------------------------------------------------------
 function StartPlotSystem()
 	-- Get Resources setting input by user.
+	local AllowInlandSea = Map.GetCustomOption(11)
 	local res = Map.GetCustomOption(5)
 	if res == 7 then
 		res = 1 + Map.Rand(3, "Random Resources Option - Lua");
+	end
+	if Map.GetCustomOption(10) == 1 then
+		OnlyCoastal = true;
+	end	
+	if Map.GetCustomOption(10) == 2 then
+		OnlyCoastal = false;
 	end
 
 	print("Creating start plot database.");
@@ -6870,6 +6899,8 @@ function StartPlotSystem()
 	local args = {
 		method = 1,
 		resources = res,
+		AllowInlandSea = AllowInlandSea,
+		NoCoastInland = OnlyCoastal,
 		};
 	start_plot_database:GenerateRegions(args)
 
