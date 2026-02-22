@@ -5192,7 +5192,10 @@ function NWCustomPlacement(x, y, row_number, method_number, AssignStartingPlots)
 	end
 end
 ------------------------------------------------------------------------------
-function AssignStartingPlots:FindStart(region_number)
+function AssignStartingPlots:FindStart(region_number, NoCoast)
+	
+	print("No Coast: ", NoCoast);
+	
 	-- This function attempts to choose a start position for a single region.
 	-- This function returns two boolean flags, indicating the success level of the operation.
 	local bSuccessFlag = false; -- Returns true when a start is placed, false when process fails.
@@ -5280,26 +5283,41 @@ function AssignStartingPlots:FindStart(region_number)
 						local test_y = region_y + iSouthY; -- reaching in to virtual space if necessary.
 						if (test_x >= iCenterTestWestX and test_x <= iCenterTestEastX) and 
 						   (test_y >= iCenterTestSouthY and test_y <= iCenterTestNorthY) then -- Center Bias.
-							table.insert(center_candidates, plotIndex);
-							if plot:IsRiverSide() then
+							
+							if NoCoast == true and self.plotDataIsCoastal[plotIndex] == true then
+								-- do nothing
+							elseif plot:IsRiverSide() then
 								table.insert(center_river, plotIndex);
+								table.insert(center_candidates, plotIndex);
 							elseif plot:IsFreshWater() or self.plotDataIsCoastal[plotIndex] == true then
 								table.insert(center_coastal, plotIndex);
+								table.insert(center_candidates, plotIndex);
 							else
 								table.insert(center_inland_dry, plotIndex);
+								table.insert(center_candidates, plotIndex);
 							end
+							
 						elseif (test_x >= iMiddleTestWestX and test_x <= iMiddleTestEastX) and 
 						       (test_y >= iMiddleTestSouthY and test_y <= iMiddleTestNorthY) then
-							table.insert(middle_candidates, plotIndex);
-							if plot:IsRiverSide() then
+							
+							if NoCoast == true and self.plotDataIsCoastal[plotIndex] == true then
+								--do nothing
+							elseif plot:IsRiverSide() then
 								table.insert(middle_river, plotIndex);
+								table.insert(middle_candidates, plotIndex);
 							elseif plot:IsFreshWater() or self.plotDataIsCoastal[plotIndex] == true then
 								table.insert(middle_coastal, plotIndex);
+								table.insert(middle_candidates, plotIndex);
 							else
 								table.insert(middle_inland_dry, plotIndex);
+								table.insert(middle_candidates, plotIndex);
 							end
 						else
-							table.insert(outer_plots, plotIndex);
+							if NoCoast == true and self.plotDataIsCoastal[plotIndex] == true then
+								--do nothing
+							else
+								table.insert(outer_plots, plotIndex);
+							end
 						end
 					end
 				end
@@ -5322,6 +5340,8 @@ function AssignStartingPlots:FindStart(region_number)
 	--[[ Debug printout.
 	print("-");
 	print("--- Number of Candidate Plots in Region #", region_number, " - Region Type:", region_type, " ---");
+	print("-");
+	print("Center Of Region at: " .. tostring(iCenterWestX) .. "," .. tostring(iCenterSouthY));
 	print("-");
 	print("Candidates in Center Bias area: ", iNumCenter);
 	print("Which are next to river: ", iNumCenterRiver);
