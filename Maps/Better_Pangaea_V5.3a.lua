@@ -95,8 +95,9 @@ function GetMapScriptInfo()
 				Values = {
 					"TXT_KEY_NO_BUTTON",
 					"TXT_KEY_YES_BUTTON",
+					"TXT_KEY_MAP_OPTION_RANDOM",
 				},
-				DefaultValue = 2,
+				DefaultValue = 3,
 				SortPriority = -91,
 			},
 		},
@@ -159,7 +160,11 @@ function FractalWorld:InitFractal(args)
 	local numPlates = sizevalues[sizekey] or 4
 	-- Blend a bit of ridge into the fractal.
 	-- This will do things like roughen the coastlines and build inland seas. - Brian
-	if Map.GetCustomOption(9) == 2 then
+	local iBuildRidges = Map.GetCustomOption(9)
+	if iBuildRidges == 3 then
+		iBuildRidges = 1 + Map.Rand(2, "Random BuildRidges - Lua");
+	end
+	if iBuildRidges == 2 then
 		self.continentsFrac:BuildRidges(numPlates, ridge_flags, 1, 2);
 	end
 end
