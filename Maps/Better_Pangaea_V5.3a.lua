@@ -6162,6 +6162,104 @@ function AssignStartingPlots:GenerateRegions(args)
 	--
 end
 ------------------------------------------------------------------------------
+function AssignStartingPlots:ChooseLocations(args)
+	print("Map Generation - Choosing Start Locations for Civilizations");
+	local args = args or {};
+	local iW, iH = Map.GetGridSize();
+	local mustBeCoast = args.mustBeCoast or false; -- if true, will force all starts on salt water coast if possible
+	
+	-- Defaults for evaluating potential start plots are assigned in .Create but args
+	-- passed in here can override. If args value for a field is nil (no arg) then
+	-- these assignments will keep the default values in place.
+	self.centerBias = args.centerBias or self.centerBias; -- % of radius from region center to examine first
+	self.middleBias = args.middleBias or self.middleBias; -- % of radius from region center to check second
+	self.minFoodInner = args.minFoodInner or self.minFoodInner;
+	self.minProdInner = args.minProdInner or self.minProdInner;
+	self.minGoodInner = args.minGoodInner or self.minGoodInner;
+	self.minFoodMiddle = args.minFoodMiddle or self.minFoodMiddle;
+	self.minProdMiddle = args.minProdMiddle or self.minProdMiddle;
+	self.minGoodMiddle = args.minGoodMiddle or self.minGoodMiddle;
+	self.minFoodOuter = args.minFoodOuter or self.minFoodOuter;
+	self.minProdOuter = args.minProdOuter or self.minProdOuter;
+	self.minGoodOuter = args.minGoodOuter or self.minGoodOuter;
+	self.maxJunk = args.maxJunk or self.maxJunk;
+
+	-- Measure terrain/plot/feature in regions.
+	self:MeasureTerrainInRegions()
+	
+	-- Determine region type.
+	self:DetermineRegionTypes()
+
+	-- Set up list of regions (to be processed in this order).
+	--
+	-- First, make a list of all average fertility values...
+	local regionAssignList = {};
+	local averageFertilityListUnsorted = {};
+	local averageFertilityListSorted = {}; -- Have to make this a separate table, not merely a pointer to the first table.
+	for i, region_data in ipairs(self.regionData) do
+		local thisRegionAvgFert = region_data[8];
+		table.insert(averageFertilityListUnsorted, {i, thisRegionAvgFert});
+		table.insert(averageFertilityListSorted, thisRegionAvgFert);
+	end
+	-- Now sort the copy low to high.
+	table.sort(averageFertilityListSorted);
+	-- Finally, match each sorted fertilty value to the matching unsorted region number and record in sequence.
+	local iNumRegions = table.maxn(averageFertilityListSorted);
+	for region_order = 1, iNumRegions do
+		for loop, data_pair in ipairs(averageFertilityListUnsorted) do
+			local unsorted_fert = data_pair[2];
+			if averageFertilityListSorted[region_order] == unsorted_fert then
+				local unsorted_reg_num = data_pair[1];
+				table.insert(regionAssignList, unsorted_reg_num);
+				-- HAVE TO remove the entry from the table in rare case of ties on fert 
+				-- value. Or it will just match this value for a second time, then crash 
+				-- when the region it was tied with ends up with nil data.
+				table.remove(averageFertilityListUnsorted, loop);
+				break
+			end
+		end
+	end
+
+	-- main loop
+	for assignIndex = 1, iNumRegions do
+		local currentRegionNumber = regionAssignList[assignIndex];
+		local bSuccessFlag = false;
+		local bForcedPlacementFlag = false;
+		
+		if self.method == 3 or self.method == 4 then
+			bSuccessFlag, bForcedPlacementFlag = self:FindStartWithoutRegardToAreaID(currentRegionNumber, mustBeCoast)
+		elseif mustBeCoast == true then
+			bSuccessFlag, bForcedPlacementFlag = self:FindCoastalStart(currentRegionNumber)
+		else
+			bSuccessFlag, bForcedPlacementFlag = self:FindStart(currentRegionNumber)
+		end
+		
+		--[[ Printout for debug only.
+		print("- - -");
+		print("Start Plot for Region #", currentRegionNumber, " was successful: ", bSuccessFlag);
+		print("Start Plot for Region #", currentRegionNumber, " was forced: ", bForcedPlacementFlag);
+		]]--		
+	end
+	--
+
+	--[[ Printout of start plots. Debug use only.
+	print("-");
+	print("--- Table of results, New Start Finder ---");
+	for loop, startData in ipairs(self.startingPlots) do
+		print("-");
+		print("Region#", loop, " has start plot at: ", startData[1], startData[2], "with Fertility Rating of ", startData[3]);
+	end
+	print("-");
+	print("--- Table of results, New Start Finder ---");
+	print("-");
+	]]--
+	
+	--[[ Printout of Impact and Ripple data.
+	print("--- Impact and Ripple ---");
+	PrintContentsOfTable(self.distanceData)
+	print("-");  ]]--
+end
+------------------------------------------------------------------------------
 function StartPlotSystem()
 	-- Get Resources setting input by user.
 	local res = Map.GetCustomOption(5)
