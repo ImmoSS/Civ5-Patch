@@ -4531,6 +4531,7 @@ function AssignStartingPlots:FindStart(region_number, NoCoast)
 
 	-- Assemble candidates lists.
 	local two_plots_from_ocean = {};
+	local three_plots_from_ocean = {};
 	local center_candidates = {};
 	local center_river = {};
 	local center_coastal = {};
@@ -4561,6 +4562,8 @@ function AssignStartingPlots:FindStart(region_number, NoCoast)
 				-- Check if plot is two away from salt water.
 				if self.plotDataIsNextToCoast[plotIndex] == true then
 					table.insert(two_plots_from_ocean, plotIndex);
+				elseif self.plotDataIsThreeFromCoast[plotIndex] == true then
+					table.insert(three_plots_from_ocean, plotIndex);
 				else
 					local area_of_plot = plot:GetArea();
 					if area_of_plot == iAreaID or iAreaID == -1 then -- This plot is a member, so it goes on at least one candidate list.
@@ -4614,7 +4617,7 @@ function AssignStartingPlots:FindStart(region_number, NoCoast)
 	end
 
 	-- Check how many plots landed on each list.
-	local iNumDisqualified = table.maxn(two_plots_from_ocean);
+	local iNumDisqualified = table.maxn(two_plots_from_ocean) + table.maxn(three_plots_from_ocean);
 	local iNumCenter = table.maxn(center_candidates);
 	local iNumCenterRiver = table.maxn(center_river);
 	local iNumCenterCoastLake = table.maxn(center_coastal);
@@ -4643,7 +4646,7 @@ function AssignStartingPlots:FindStart(region_number, NoCoast)
 	print("-");
 	print("Candidate Plots in Outer area: ", iNumOuter);
 	print("-");
-	print("Disqualified, two plots away from salt water: ", iNumDisqualified);
+	print("Disqualified, two or three plots away from salt water: ", iNumDisqualified);
 	print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
 	]]--
 	
