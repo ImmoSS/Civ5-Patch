@@ -6700,6 +6700,93 @@ function AssignStartingPlots:PlaceCityStates()
 	end
 end
 ------------------------------------------------------------------------------
+function AssignStartingPlots:__Init()
+	-- Set up data tables that record whether a plot is coastal land and whether a plot is adjacent to coastal land.
+	self.plotDataIsCoastal, self.plotDataIsNextToCoast = GenerateNextToCoastalLandDataTables()
+	--
+	-- Set up data for resource ID shortcuts.
+	for resource_data in GameInfo.Resources() do
+		table.insert(self.resources, resource_data);
+		local resourceID = resource_data.ID;
+		local resourceType = resource_data.Type;
+		-- Set up Bonus IDs
+		if resourceType == "RESOURCE_WHEAT" then
+			self.wheat_ID = resourceID;
+		elseif resourceType == "RESOURCE_COW" then
+			self.cow_ID = resourceID;
+		elseif resourceType == "RESOURCE_DEER" then
+			self.deer_ID = resourceID;
+		elseif resourceType == "RESOURCE_BANANA" then
+			self.banana_ID = resourceID;
+		elseif resourceType == "RESOURCE_FISH" then
+			self.fish_ID = resourceID;
+		elseif resourceType == "RESOURCE_SHEEP" then
+			self.sheep_ID = resourceID;
+		elseif resourceType == "RESOURCE_STONE" then
+			self.stone_ID = resourceID;
+		-- Set up Strategic IDs
+		elseif resourceType == "RESOURCE_IRON" then
+			self.iron_ID = resourceID;
+		elseif resourceType == "RESOURCE_HORSE" then
+			self.horse_ID = resourceID;
+		elseif resourceType == "RESOURCE_COAL" then
+			self.coal_ID = resourceID;
+		elseif resourceType == "RESOURCE_OIL" then
+			self.oil_ID = resourceID;
+		elseif resourceType == "RESOURCE_ALUMINUM" then
+			self.aluminum_ID = resourceID;
+		elseif resourceType == "RESOURCE_URANIUM" then
+			self.uranium_ID = resourceID;
+		-- Set up Luxury IDs
+		elseif resourceType == "RESOURCE_WHALE" then
+			self.whale_ID = resourceID;
+		elseif resourceType == "RESOURCE_PEARLS" then
+			self.pearls_ID = resourceID;
+		elseif resourceType == "RESOURCE_IVORY" then
+			self.ivory_ID = resourceID;
+		elseif resourceType == "RESOURCE_FUR" then
+			self.fur_ID = resourceID;
+		elseif resourceType == "RESOURCE_SILK" then
+			self.silk_ID = resourceID;
+		elseif resourceType == "RESOURCE_DYE" then
+			self.dye_ID = resourceID;
+		elseif resourceType == "RESOURCE_SPICES" then
+			self.spices_ID = resourceID;
+		elseif resourceType == "RESOURCE_SUGAR" then
+			self.sugar_ID = resourceID;
+		elseif resourceType == "RESOURCE_COTTON" then
+			self.cotton_ID = resourceID;
+		elseif resourceType == "RESOURCE_WINE" then
+			self.wine_ID = resourceID;
+		elseif resourceType == "RESOURCE_INCENSE" then
+			self.incense_ID = resourceID;
+		elseif resourceType == "RESOURCE_GOLD" then
+			self.gold_ID = resourceID;
+		elseif resourceType == "RESOURCE_SILVER" then
+			self.silver_ID = resourceID;
+		elseif resourceType == "RESOURCE_GEMS" then
+			self.gems_ID = resourceID;
+		elseif resourceType == "RESOURCE_MARBLE" then
+			self.marble_ID = resourceID;
+		-- Set up Expansion Pack Luxury IDs
+		elseif resourceType == "RESOURCE_COPPER" then
+			self.copper_ID = resourceID;
+		elseif resourceType == "RESOURCE_SALT" then
+			self.salt_ID = resourceID;
+		elseif resourceType == "RESOURCE_CITRUS" then
+			self.citrus_ID = resourceID;
+		elseif resourceType == "RESOURCE_TRUFFLES" then
+			self.truffles_ID = resourceID;
+		elseif resourceType == "RESOURCE_CRAB" then
+			self.crab_ID = resourceID;
+		elseif resourceType == "RESOURCE_COCOA" then
+			self.cocoa_ID = resourceID;
+		elseif resourceType == "RESOURCE_BISON" then
+			self.bison_ID = resourceID;
+		end
+	end
+end
+------------------------------------------------------------------------------
 function StartPlotSystem()
 	-- Get Resources setting input by user.
 	local AllowInlandSea = Map.GetCustomOption(11)
