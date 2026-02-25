@@ -899,7 +899,7 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 							{
 								CvPlot* pLoopPlot = plotXYWithRangeCheck(pkTargetPlot->getX(), pkTargetPlot->getY(), iDX, iDY, 1);
 
-								if (pLoopPlot != NULL && pLoopPlot != pkTargetPlot)
+								if (pLoopPlot != NULL && pLoopPlot != pkTargetPlot && !pLoopPlot->getPlotCity())
 								{
 									FFastSmallFixedList<IDInfo, 25, true, c_eCiv5GameplayDLL > oldUnits;
 									IDInfo* pUnitNode = pLoopPlot->headUnitNode();
@@ -919,7 +919,7 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 
 										if (pLoopUnit != NULL)
 										{
-											if (pLoopUnit != pkAttacker && pLoopUnit->GetGarrisonedCity() == NULL && !pLoopUnit->isInvisible(pkAttacker->getTeam(), false))
+											if (pLoopUnit != pkAttacker && GET_TEAM(pkAttacker->getTeam()).isAtWar(pLoopUnit->getTeam()) && !pLoopUnit->isInvisible(pkAttacker->getTeam(), false))
 											{
 												int iSplashDamage = pkAttacker->GetRangeCombatDamage(pLoopUnit, /*pCity*/ NULL, /*bIncludeRand*/ true);
 												iSplashDamage *= iSplashDamageMod;
@@ -1055,7 +1055,7 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 							{
 								CvPlot* pLoopPlot = plotXYWithRangeCheck(pkTargetPlot->getX(), pkTargetPlot->getY(), iDX, iDY, 1);
 
-								if (pLoopPlot != NULL && pLoopPlot != pkTargetPlot)
+								if (pLoopPlot != NULL && pLoopPlot != pkTargetPlot && !pLoopPlot->getPlotCity())
 								{
 									FFastSmallFixedList<IDInfo, 25, true, c_eCiv5GameplayDLL > oldUnits;
 									IDInfo* pUnitNode = pLoopPlot->headUnitNode();
@@ -1075,7 +1075,7 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 
 										if (pLoopUnit != NULL)
 										{
-											if (pLoopUnit != pkAttacker && pLoopUnit->GetGarrisonedCity() == NULL && !pLoopUnit->isInvisible(pkAttacker->getTeam(), false))
+											if (pLoopUnit != pkAttacker && GET_TEAM(pkAttacker->getTeam()).isAtWar(pLoopUnit->getTeam()) && !pLoopUnit->isInvisible(pkAttacker->getTeam(), false))
 											{
 												int iSplashDamage = pkAttacker->GetRangeCombatDamage(pLoopUnit, /*pCity*/ NULL, /*bIncludeRand*/ true);
 												iSplashDamage *= iSplashDamageMod;
