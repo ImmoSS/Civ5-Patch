@@ -6258,6 +6258,7 @@ function AssignStartingPlots.Create()
 		player_ID_list = {},			-- Correct list of player IDs (includes handling of any 'gaps' that occur in MP games)
 		plotDataIsCoastal = {},			-- Stores table of NextToSaltWater plots to reduce redundant calculations
 		plotDataIsNextToCoast = {},		-- Stores table of TwoAwayFromSaltWater plots to reduce redundant calculations
+		plotDataIsThreeFromCoast = {},	-- Stores table of ThreeAwayFromSaltWater plots to reduce redundant calculations
 		regionData = {},				-- Stores data returned from regional division algorithm
 		regionTerrainCounts = {},		-- Stores counts of terrain elements for all regions
 		regionTypes = {},				-- Stores region types
