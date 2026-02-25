@@ -6700,6 +6700,94 @@ function AssignStartingPlots:PlaceCityStates()
 	end
 end
 ------------------------------------------------------------------------------
+function GenerateThreeFromCoastTable(plotDataIsCoastal, plotDataIsNextToCoast)
+	-- Set up data table for IsNextToCoast
+	local iW, iH = Map.GetGridSize();
+	local plotDataIsThreeFromCoast = {};
+	table.fill(plotDataIsThreeFromCoast, false, iW * iH);
+	-- When generating a plot data table incrementally, process Y first so that plots go row by row.
+	-- Keeping plot data table indices consistent with the main plot database could save you enormous grief.
+	-- In this case, accessing an existing table by plot index, it doesn't matter.
+	for x = 0, iW - 1 do
+		for y = 0, iH - 1 do
+			local i = iW * y + x + 1;
+			local plot = Map.GetPlot(x, y);
+			if plotDataIsCoastal[i] == false and plotDataIsNextToCoast[i] == false then -- plot is not itself on the coast or next to coast or in the water.
+				
+				if not plot:IsWater() or (plot:IsWater() and plot:IsFreshWater()) then
+					
+					-- So we will check all adjacent plots to see if any of those are on the coast.
+					local NEPlot = Map.PlotDirection(x, y, DirectionTypes.DIRECTION_NORTHEAST);
+					local EPlot = Map.PlotDirection(x, y, DirectionTypes.DIRECTION_EAST);
+					local SEPlot = Map.PlotDirection(x, y, DirectionTypes.DIRECTION_SOUTHEAST);
+					local SWPlot = Map.PlotDirection(x, y, DirectionTypes.DIRECTION_SOUTHWEST);
+					local WPlot = Map.PlotDirection(x, y, DirectionTypes.DIRECTION_WEST);
+					local NWPlot = Map.PlotDirection(x, y, DirectionTypes.DIRECTION_NORTHWEST);
+					-- 
+					-- Check plot to northeast of current plot. This operation accounts for map edge and world wrap.
+					if NEPlot ~= nil then
+						local adjX = NEPlot:GetX();
+						local adjY = NEPlot:GetY();
+						local adjI = iW * adjY + adjX + 1;
+						if plotDataIsNextToCoast[adjI] == true then
+							-- The current loop plot is not itself on the coast but is next to a plot that is on the coast.
+							plotDataIsThreeFromCoast[i] = true;
+						end
+					end
+					-- Check plot to east of current plot.
+					if EPlot ~= nil then
+						local adjX = EPlot:GetX();
+						local adjY = EPlot:GetY();
+						local adjI = iW * adjY + adjX + 1;
+						if plotDataIsNextToCoast[adjI] == true then
+							plotDataIsThreeFromCoast[i] = true;
+						end
+					end
+					-- Check plot to southeast of current plot.
+					if SEPlot ~= nil then
+						local adjX = SEPlot:GetX();
+						local adjY = SEPlot:GetY();
+						local adjI = iW * adjY + adjX + 1;
+						if plotDataIsNextToCoast[adjI] == true then
+							plotDataIsThreeFromCoast[i] = true;
+						end
+					end
+					-- Check plot to southwest of current plot.
+					if SWPlot ~= nil then
+						local adjX = SWPlot:GetX();
+						local adjY = SWPlot:GetY();
+						local adjI = iW * adjY + adjX + 1;
+						if plotDataIsNextToCoast[adjI] == true then
+							plotDataIsThreeFromCoast[i] = true;
+						end
+					end
+					-- Check plot to west of current plot.
+					if WPlot ~= nil then
+						local adjX = WPlot:GetX();
+						local adjY = WPlot:GetY();
+						local adjI = iW * adjY + adjX + 1;
+						if plotDataIsNextToCoast[adjI] == true then
+							plotDataIsThreeFromCoast[i] = true;
+						end
+					end
+					-- Check plot to northwest of current plot.
+					if NWPlot ~= nil then
+						local adjX = NWPlot:GetX();
+						local adjY = NWPlot:GetY();
+						local adjI = iW * adjY + adjX + 1;
+						if plotDataIsNextToCoast[adjI] == true then
+							plotDataIsThreeFromCoast[i] = true;
+						end
+					end
+				end
+			end
+		end
+	end
+	
+	-- returns table
+	return plotDataIsThreeFromCoast
+end
+------------------------------------------------------------------------------
 function AssignStartingPlots:__Init()
 	-- Set up data tables that record whether a plot is coastal land and whether a plot is adjacent to coastal land.
 	self.plotDataIsCoastal, self.plotDataIsNextToCoast = GenerateNextToCoastalLandDataTables()
