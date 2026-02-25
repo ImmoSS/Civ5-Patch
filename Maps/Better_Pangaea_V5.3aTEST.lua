@@ -6877,6 +6877,130 @@ function AssignStartingPlots.Create()
 	return findStarts
 end
 ------------------------------------------------------------------------------
+function AssignStartingPlots:PlaceCityStates()
+	print("Map Generation - Choosing sites for City States");
+	-- This function is dependent on AssignLuxuryRoles() having been executed first.
+	-- This is because some city state placements are made in compensation for drawing
+	-- the short straw in regard to multiple regions being assigned the same luxury type.
+
+	self:AssignCityStatesToRegionsOrToUninhabited()
+	
+	--print("-"); print("--- City State Placement Results ---");
+
+	local iW, iH = Map.GetGridSize();
+	local iUninhabitedCandidatePlots = table.maxn(self.uninhabited_areas_coastal_plots) + table.maxn(self.uninhabited_areas_inland_plots);
+	--print("-"); print("."); print(". NUMBER OF UNINHABITED CS CANDIDATE PLOTS: ", iUninhabitedCandidatePlots); print(".");
+	for cs_number, region_number in ipairs(self.city_state_region_assignments) do
+		if cs_number <= self.iNumCityStates then -- Make sure it's an active city state before processing.
+			if region_number == -1 and iUninhabitedCandidatePlots > 0 then -- Assigned to areas outside of Regions.
+				--print("Place City States, place in uninhabited called for City State", cs_number);
+				iUninhabitedCandidatePlots = iUninhabitedCandidatePlots - 1;
+				local cs_x, cs_y, success;
+				cs_x, cs_y, success = self:PlaceCityState(self.uninhabited_areas_coastal_plots, self.uninhabited_areas_inland_plots, true, true)
+				--
+				-- Disabling fallback methods that remove proximity and collision checks. Jon has decided
+				-- that city states that do not fit on the map will simply not be placed, but instead discarded.
+				--[[
+				if not success then -- Try again, this time with proximity checks disabled.
+					cs_x, cs_y, success = self:PlaceCityState(self.uninhabited_areas_coastal_plots, self.uninhabited_areas_inland_plots, false, true)
+					if not success then -- Try a third time, this time with all collision checks disabled.
+						cs_x, cs_y, success = self:PlaceCityState(self.uninhabited_areas_coastal_plots, self.uninhabited_areas_inland_plots, false, false)
+					end
+				end
+				]]--
+				--
+				if success == true then
+					self.cityStatePlots[cs_number] = {cs_x, cs_y, -1};
+					self.city_state_validity_table[cs_number] = true; -- This is the line that marks a city state as valid to be processed by the rest of the system.
+					local city_state_ID = cs_number + GameDefines.MAX_MAJOR_CIVS - 1;
+					local cityState = Players[city_state_ID];
+					local cs_start_plot = Map.GetPlot(cs_x, cs_y)
+					cityState:SetStartingPlot(cs_start_plot)
+					self:GenerateLuxuryPlotListsAtCitySite(cs_x, cs_y, 1, true) -- Removes Feature Ice from coasts adjacent to the city state's new location
+					self:PlaceResourceImpact(cs_x, cs_y, 5, 4) -- City State layer
+					self:PlaceResourceImpact(cs_x, cs_y, 2, 3) -- Luxury layer
+					self:PlaceResourceImpact(cs_x, cs_y, 1, 0) -- Strategic layer, at start point only.
+					self:PlaceResourceImpact(cs_x, cs_y, 3, 3) -- Bonus layer
+					self:PlaceResourceImpact(cs_x, cs_y, 4, 3) -- Fish layer
+					self:PlaceResourceImpact(cs_x, cs_y, 7, 3) -- Marble layer
+					local impactPlotIndex = cs_y * iW + cs_x + 1;
+					self.playerCollisionData[impactPlotIndex] = true;
+					--print("-"); print("City State", cs_number, "has been started at Plot", cs_x, cs_y, "in Uninhabited Lands");
+				else
+					--print("-"); print("WARNING: Crowding issues for City State #", city_state_number, " - Could not find valid site in Uninhabited Lands.", region_number);
+					self.iNumCityStatesDiscarded = self.iNumCityStatesDiscarded + 1;
+				end
+			elseif region_number == -1 and iUninhabitedCandidatePlots <= 0 then -- Assigned to areas outside of Regions, but nowhere there to put them!
+				local iRandRegion = 1 + Map.Rand(self.iNumCivs, "Emergency Redirect of CS placement, choosing Region - LUA");
+				--print("Place City States, place in uninhabited called for City State", cs_number, "but it has no legal site, so is being put in Region#", iRandRegion);
+				self:PlaceCityStateInRegion(cs_number, iRandRegion)
+			else -- Assigned to a Region.
+				--print("Place City States, place in Region#", region_number, "for City State", cs_number);
+				self:PlaceCityStateInRegion(cs_number, region_number)
+			end
+		end
+	end
+	
+	-- Last chance method to place city states that didn't fit where they were supposed to go.
+	if self.iNumCityStatesDiscarded > 0 then
+		-- Assemble a global plot list of eligible City State sites that remain.
+		local cs_last_chance_plot_list = {};
+		for y = 0, iH - 1 do
+			for x = 0, iW - 1 do
+				if self:CanPlaceCityStateAt(x, y, -1, false, false) == true then
+					local i = y * iW + x + 1;
+					table.insert(cs_last_chance_plot_list, i);
+				end
+			end
+		end
+		local iNumLastChanceCandidates = table.maxn(cs_last_chance_plot_list);
+		-- If any eligible sites were found anywhere on the map, place as many of the remaining CS as possible.
+		if iNumLastChanceCandidates > 0 then
+			--print("-"); print("-"); print("ALERT: Some City States failed to be placed due to overcrowding. Attempting 'last chance' placement method.");
+			--print("Total number of remaining eligible candidate plots:", iNumLastChanceCandidates);
+			local last_chance_shuffled = GetShuffledCopyOfTable(cs_last_chance_plot_list)
+			local cs_list = {};
+			for cs_num = 1, self.iNumCityStates do
+				if self.city_state_validity_table[cs_num] == false then
+					table.insert(cs_list, cs_num);
+					--print("City State #", cs_num, "not yet placed, adding it to 'last chance' list.");
+				end
+			end
+			for loop, cs_number in ipairs(cs_list) do
+				local cs_x, cs_y, success;
+				cs_x, cs_y, success = self:PlaceCityState(last_chance_shuffled, {}, true, true)
+				if success == true then
+					self.cityStatePlots[cs_number] = {cs_x, cs_y, -1};
+					self.city_state_validity_table[cs_number] = true; -- This is the line that marks a city state as valid to be processed by the rest of the system.
+					local city_state_ID = cs_number + GameDefines.MAX_MAJOR_CIVS - 1;
+					local cityState = Players[city_state_ID];
+					local cs_start_plot = Map.GetPlot(cs_x, cs_y)
+					cityState:SetStartingPlot(cs_start_plot)
+					self:GenerateLuxuryPlotListsAtCitySite(cs_x, cs_y, 1, true) -- Removes Feature Ice from coasts adjacent to the city state's new location
+					self:PlaceResourceImpact(cs_x, cs_y, 5, 4) -- City State layer
+					self:PlaceResourceImpact(cs_x, cs_y, 2, 3) -- Luxury layer
+					self:PlaceResourceImpact(cs_x, cs_y, 1, 0) -- Strategic layer, at start point only.
+					self:PlaceResourceImpact(cs_x, cs_y, 3, 3) -- Bonus layer
+					self:PlaceResourceImpact(cs_x, cs_y, 4, 3) -- Fish layer
+					self:PlaceResourceImpact(cs_x, cs_y, 7, 3) -- Marble layer
+					local impactPlotIndex = cs_y * iW + cs_x + 1;
+					self.playerCollisionData[impactPlotIndex] = true;
+					self.iNumCityStatesDiscarded = self.iNumCityStatesDiscarded - 1;
+					--print("-"); print("City State", cs_number, "has been RESCUED from the trash bin of history and started at Fallback Plot", cs_x, cs_y);
+				else
+					--print("-"); print("We have run out of possible 'last chance' sites for unplaced city states!");
+					break
+				end
+			end
+			if self.iNumCityStatesDiscarded > 0 then
+				print("-"); print("ALERT: No eligible city state sites remain. DISCARDING", self.iNumCityStatesDiscarded, "city states. BYE BYE!"); print("-");
+			end
+		else
+			print("-"); print("-"); print("ALERT: No eligible city state sites remain. DISCARDING", self.iNumCityStatesDiscarded, "city states. BYE BYE!"); print("-");
+		end
+	end
+end
+------------------------------------------------------------------------------
 function StartPlotSystem()
 	-- Get Resources setting input by user.
 	local AllowInlandSea = Map.GetCustomOption(11)
