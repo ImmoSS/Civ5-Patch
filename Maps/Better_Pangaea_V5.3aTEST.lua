@@ -6703,6 +6703,7 @@ end
 function AssignStartingPlots:__Init()
 	-- Set up data tables that record whether a plot is coastal land and whether a plot is adjacent to coastal land.
 	self.plotDataIsCoastal, self.plotDataIsNextToCoast = GenerateNextToCoastalLandDataTables()
+	self.plotDataIsThreeFromCoast = GenerateThreeFromCoastTable(self.plotDataIsCoastal, self.plotDataIsNextToCoast)
 	--
 	-- Set up data for resource ID shortcuts.
 	for resource_data in GameInfo.Resources() do
