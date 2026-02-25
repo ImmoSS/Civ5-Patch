@@ -1824,7 +1824,7 @@ function AssignStartingPlots:AddStrategicBalanceResources(region_number)
 	end
 
 	if res == 6 then
-		local radius = 6;
+		radius = 6;
 		for ripple_radius = 1, radius do
 			local ripple_value = radius - ripple_radius + 1;
 			local currentX = x - ripple_radius;
@@ -1862,8 +1862,10 @@ function AssignStartingPlots:AddStrategicBalanceResources(region_number)
 							if plotType == PlotTypes.PLOT_HILLS then
 								if ripple_radius < 6 then
 									table.insert(coal_list, plotIndex)
+									table.insert(alum_list, plotIndex)
 								else
 									table.insert(coal_fallback, plotIndex)
+									table.insert(alum_fallback, plotIndex)
 								end
 							elseif plotType == PlotTypes.PLOT_LAND then
 								if featureType == FeatureTypes.NO_FEATURE then
@@ -1908,8 +1910,8 @@ function AssignStartingPlots:AddStrategicBalanceResources(region_number)
 									table.insert(alum_fallback, plotIndex)
 								end
 							end
-							currentX, currentY = nextX, nextY;
 						end
+						currentX, currentY = nextX, nextY;
 					end
 				end
 			end
