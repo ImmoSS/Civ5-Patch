@@ -341,6 +341,9 @@ CvUnit::CvUnit() :
 	, m_iMapLayer(DEFAULT_UNIT_MAP_LAYER)
 	, m_iNumGoodyHutsPopped(0)
 	, m_iLastGameTurnAtFullHealth(-1)
+#ifdef PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
+	, m_iFriendlyLandsDefenseModifier(0)
+#endif
 {
 	initPromotions();
 	OBJECT_ALLOCATED
@@ -1022,6 +1025,9 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iMapLayer = DEFAULT_UNIT_MAP_LAYER;
 	m_iNumGoodyHutsPopped = 0;
 	m_iLastGameTurnAtFullHealth = -1;
+#ifdef PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
+	m_iFriendlyLandsDefenseModifier = 0;
+#endif
 
 	if(!bConstructorCall)
 	{
@@ -12038,6 +12044,14 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 	iTempModifier = getDefenseModifier();
 	iModifier += iTempModifier;
 
+#ifdef PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
+	if (pInPlot->IsFriendlyTerritory(getOwner()))
+	{
+		iTempModifier = getFriendlyLandsDefenseModifier();
+		iModifier += iTempModifier;
+	}
+#endif
+
 	// Defense against Ranged
 	if(bFromRangedAttack)
 		iModifier += rangedDefenseModifier();
@@ -12201,6 +12215,14 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 	// Generic Defense Bonus
 	iTempModifier = getDefenseModifier();
 	iModifier += iTempModifier;
+
+#ifdef PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
+	if (pInPlot->IsFriendlyTerritory(getOwner()))
+	{
+		iTempModifier = getFriendlyLandsDefenseModifier();
+		iModifier += iTempModifier;
+	}
+#endif
 
 	// Defense against Ranged
 	if (bFromRangedAttack)
@@ -12824,6 +12846,14 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 
 		iModifier += getDefenseModifier();
 
+#ifdef PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
+		if (plot()->IsFriendlyTerritory(getOwner()))
+		{
+			iTempModifier = getFriendlyLandsDefenseModifier();
+			iModifier += iTempModifier;
+		}
+#endif
+
 		// Tourism Defense
 		if (pOtherUnit != NULL)
 		{
@@ -13415,6 +13445,14 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 #endif
 
 		iModifier += getDefenseModifier();
+
+#ifdef PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
+		if (plot()->IsFriendlyTerritory(getOwner()))
+		{
+			iTempModifier = getFriendlyLandsDefenseModifier();
+			iModifier += iTempModifier;
+		}
+#endif
 
 #ifdef FIX_RANGE_DEFENSE_MOD
 		// Ranged Defense Mod
@@ -20952,6 +20990,10 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 		{
 			gDLL->UnlockAchievement(ACHIEVEMENT_XP2_27);
 		}
+
+#ifdef PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
+		changeFriendlyLandsDefenseModifier(thisPromotion.GetFriendlyLandsDefenseModifier() * iChange);
+#endif
 	}
 }
 
@@ -21323,6 +21365,20 @@ void CvUnit::read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1003)
+	{
+# endif
+		kStream >> m_iFriendlyLandsDefenseModifier;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iFriendlyLandsDefenseModifier = 0;
+	}
+# endif
+#endif
 
 	//  Read mission queue
 	UINT uSize;
@@ -21454,6 +21510,9 @@ void CvUnit::write(FDataStream& kStream) const
 #ifdef PROMOTION_INSTA_HEAL_LOCKED
 	kStream << m_bInstaHealLocked;
 #endif
+#ifdef PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
+	kStream << m_iFriendlyLandsDefenseModifier;
+#endif 
 
 	//  Write mission list
 	kStream << m_missionQueue.getLength();
@@ -24778,3 +24837,22 @@ FDataStream& operator>>(FDataStream& loadFrom, CvUnit& writeTo)
 	writeTo.read(loadFrom);
 	return loadFrom;
 }
+
+#ifdef PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
+//	--------------------------------------------------------------------------------
+int CvUnit::getFriendlyLandsDefenseModifier() const
+{
+	VALIDATE_OBJECT
+	return m_iFriendlyLandsDefenseModifier;
+}
+
+//	--------------------------------------------------------------------------------
+void CvUnit::changeFriendlyLandsDefenseModifier(int iChange)
+{
+	VALIDATE_OBJECT
+	if(iChange != 0)
+	{
+		m_iFriendlyLandsDefenseModifier += iChange;
+	}
+}
+#endif

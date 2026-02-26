@@ -371,6 +371,8 @@
 #define UNIT_IGNORE_TERRAIN_DEFENSE
 ///
 #define LACK_OF_STRATEGIC_RESOURCE_HEAL_PENALTY
+///
+#define PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
 /*UNITS CHANGES END*/
 
 
@@ -1371,7 +1373,8 @@
 // 1000: v7.0   (initial)
 // 1001: v8.0   (adds NEW_WRITERS_CULTURE_BOMB)
 // 1002: v11.0  (adds PROMOTION_NO_UNHAPPINESS_PENALTY)
-# define BUMP_SAVE_VERSION_UNIT 1002
+// 1003: v12.1  (adds PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD)
+# define BUMP_SAVE_VERSION_UNIT 1003
 // 1000: v7.1   (starts versioning, adds iCreationTurn) -- incompatible with 7.0 (vanilla is ok though)
 # define BUMP_SAVE_VERSION_MP_VOTING_SYSTEM 1000
 // 1000: v7.2   (initial, adds m_iTimeMilliseconds)
