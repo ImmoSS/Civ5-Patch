@@ -16342,7 +16342,7 @@
 			<GreatGeneralModifier>0</GreatGeneralModifier> 
 			<GreatGeneralReceivesMovement>false</GreatGeneralReceivesMovement> 
 			<GreatGeneralCombatModifier>0</GreatGeneralCombatModifier> 
-			<FriendlyLandsModifier>20</FriendlyLandsModifier> 
+			<FriendlyLandsModifier>0</FriendlyLandsModifier> 
 			<FriendlyLandsAttackModifier>0</FriendlyLandsAttackModifier> 
 			<OutsideFriendlyLandsModifier>0</OutsideFriendlyLandsModifier> 
 			<HPHealedIfDestroyEnemy>0</HPHealedIfDestroyEnemy> 
@@ -16360,6 +16360,7 @@
 			<HeavyCharge>false</HeavyCharge> 
 			<PediaType>PEDIA_SHARED</PediaType> 
 			<PediaEntry>TXT_KEY_PROMOTION_NATIONALISM</PediaEntry> 
+			<FriendlyLandsDefenseModifier>20</FriendlyLandsDefenseModifier> 
 		</Row>
 		<Row> 
 			<ID>91</ID> 
