@@ -15442,11 +15442,19 @@ void CvCity::Purchase(UnitTypes eUnitType, BuildingTypes eBuildingType, ProjectT
 #endif
 
 			kPlayer.ChangeFaith(-iFaithCost);
-#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+#if defined(EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS) || defined(EG_REPLAYDATASET_NUMFAITHONNONCOMBATUNITS)
 			CvUnitEntry* pkUnitInfo = GC.getUnitInfo(eUnitType);
-			if (pkUnitInfo->GetCombat() > 0)
+#endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
+			if (pkUnitInfo->GetCombat() > 0 || pkUnitInfo->GetRangedCombat() > 0)
 			{
 				kPlayer.ChangeNumFaithSpentOnMilitaryUnits(iFaithCost);
+			}
+#endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONNONCOMBATUNITS
+			if (pkUnitInfo->GetCombat() == 0 && pkUnitInfo->GetRangedCombat() == 0)
+			{
+				kPlayer.ChangeNumFaithSpentOnNonCombatUnits(iFaithCost);
 			}
 #endif
 
@@ -15782,6 +15790,9 @@ void CvCity::doGrowth()
 		}
 		else
 		{
+			#ifdef EG_REPLAYDATASET_FOODKEPTAFTERGROWTH
+			GET_PLAYER(getOwner()).ChangeFoodKeptAfterGrowth(getFoodKept());
+			#endif
 			changeFood(-(std::max(0, (growthThreshold() - getFoodKept()))));
 			changePopulation(1);
 #ifdef REPLAY_EVENTS
@@ -16150,6 +16161,52 @@ void CvCity::doProduction(bool bAllowNoProduction)
 			}
 		}
 
+		#if defined(EG_REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS) || defined(EG_REPLAYDATASET_PRODUCTIONSPENTONCOMBATUNITS) || defined(EG_REPLAYDATASET_PRODUCTIONSPENTONNONCOMBATUNITS) || defined(EG_REPLAYDATASET_PRODUCTIONSPENTONWONDERS)
+		int iProd = getCurrentProductionDifferenceTimes100(true, true) / 100;
+		const OrderData* pOrderNode = headOrderQueueNode();
+		int iData1 = -1;
+		if (pOrderNode != NULL)
+		{
+			iData1 = pOrderNode->iData1;
+		}
+		if (isProductionBuilding())
+		{
+			const BuildingTypes eBuilding = static_cast<BuildingTypes>(iData1);
+			CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eBuilding);
+			if (pkBuildingInfo)
+			{
+				#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONWONDERS
+				if (isWorldWonderClass(pkBuildingInfo->GetBuildingClassInfo()))
+				{
+					GET_PLAYER(getOwner()).ChangeProductionSpentOnWonders(iProd);
+				}
+				#endif
+				#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS
+				if (!isWorldWonderClass(pkBuildingInfo->GetBuildingClassInfo()))
+				{
+					GET_PLAYER(getOwner()).ChangeProductionSpentOnBuildings(iProd);
+				}
+				#endif
+			}
+		}
+		else if (isProductionUnit())
+		{
+			const UnitTypes eUnitType = static_cast<UnitTypes>(iData1);
+			CvUnitEntry* pkUnitInfo = GC.getUnitInfo(eUnitType);
+			#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONCOMBATUNITS
+			if (pkUnitInfo->GetCombat() > 0 || pkUnitInfo->GetRangedCombat() > 0)
+			{
+				GET_PLAYER(getOwner()).ChangeProductionSpentOnCombatUnits(iProd);
+			}
+			#endif
+			#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONNONCOMBATUNITS
+			if (pkUnitInfo->GetCombat() == 0 && pkUnitInfo->GetRangedCombat() == 0)
+			{
+				GET_PLAYER(getOwner()).ChangeProductionSpentOnNonCombatUnits(iProd);
+			}
+			#endif
+		}
+		#endif
 		changeProductionTimes100(getCurrentProductionDifferenceTimes100(false, true));
 
 #ifdef FIX_EXCHANGE_PRODUCTION_OVERFLOW_INTO_GOLD_OR_SCIENCE

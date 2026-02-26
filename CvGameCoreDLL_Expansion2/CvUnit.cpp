@@ -1351,6 +1351,12 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer /*= NO_PLAYER*/)
 		GET_PLAYER(ePlayer).ChangeNumKilledUnits(1);
 	}
 #endif
+#ifdef EG_REPLAYDATASET_KILLEDGENERALS
+	if (getUnitClassType() == (UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_GREAT_GENERAL", true) && ePlayer != NO_PLAYER && ePlayer != BARBARIAN_PLAYER)
+	{
+		GET_PLAYER(ePlayer).ChangeKilledGenerals(1);
+	}
+#endif
 #ifdef EG_REPLAYDATASET_NUMLOSTUNITS
 	if (getUnitCombatType() != NO_UNITCOMBAT && ePlayer != NO_PLAYER && ePlayer != BARBARIAN_PLAYER)
 	{

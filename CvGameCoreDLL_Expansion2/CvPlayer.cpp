@@ -317,6 +317,57 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
 	, m_iNumFaithSpentOnMilitaryUnits(0)
 #endif
+	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+	, m_iConqueredCities(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
+	, m_iDisbandedUnitsStrength(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_NUMFAITHONNONCOMBATUNITS
+	, m_iNumFaithSpentOnNonCombatUnits(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_FOODKEPTAFTERGROWTH
+	, m_iFoodKeptAfterGrowth(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_KILLEDGENERALS
+	, m_iKilledGenerals(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_EFFECTIVEKNOWNTECHSCOST
+	, m_iEffectiveKnownTechsCost(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS
+	, m_iProductionSpentOnBuildings(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONCOMBATUNITS
+	, m_iProductionSpentOnCombatUnits(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONNONCOMBATUNITS
+	, m_iProductionSpentOnNonCombatUnits(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONWONDERS
+	, m_iProductionSpentOnWonders(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_SCIENCEFROMRESEARCHAGREEMENTS
+	, m_iNumScienceFromResearchAgreements(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_SCIENCEDISCOUNTSGAIN
+	, m_iScienceDiscountGain(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
+	, m_iScienceLostToDeficit(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
+	, m_iScienceFromReligion(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
+	, m_iNumUnitPromotions(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+	, m_iUnitsRestoredHP(0)
+	#endif
+	#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+	, m_iUnitsHPAttrition(0)
+	#endif
 	, m_iExtraLeagueVotes(0)
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 	, m_iMaxExtraVotesFromMinors(0)
@@ -1226,6 +1277,57 @@ void CvPlayer::uninit()
 #ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
 	m_iNumFaithSpentOnMilitaryUnits = 0;
 #endif
+	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+	m_iConqueredCities = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
+	m_iDisbandedUnitsStrength = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_NUMFAITHONNONCOMBATUNITS
+	m_iNumFaithSpentOnNonCombatUnits = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_FOODKEPTAFTERGROWTH
+	m_iFoodKeptAfterGrowth = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_KILLEDGENERALS
+	m_iKilledGenerals = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_EFFECTIVEKNOWNTECHSCOST
+	m_iEffectiveKnownTechsCost = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS
+	m_iProductionSpentOnBuildings = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONCOMBATUNITS
+	m_iProductionSpentOnCombatUnits = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONNONCOMBATUNITS
+	m_iProductionSpentOnNonCombatUnits = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONWONDERS
+	m_iProductionSpentOnWonders = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_SCIENCEFROMRESEARCHAGREEMENTS
+	m_iNumScienceFromResearchAgreements = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_SCIENCEDISCOUNTSGAIN
+	m_iScienceDiscountGain = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
+	m_iScienceLostToDeficit = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
+	m_iScienceFromReligion = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
+	m_iNumUnitPromotions = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+	m_iUnitsRestoredHP = 0;
+	#endif
+	#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+	m_iUnitsHPAttrition = 0;
+	#endif
 	m_iExtraLeagueVotes = 0;
 #ifdef POLICY_MAX_EXTRA_VOTES_FROM_MINORS
 	m_iMaxExtraVotesFromMinors = 0;
@@ -11440,6 +11542,176 @@ void CvPlayer::ChangeNumFaithSpentOnMilitaryUnits(int iChange)
 	m_iNumFaithSpentOnMilitaryUnits = (m_iNumFaithSpentOnMilitaryUnits + iChange);
 }
 #endif
+#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+int CvPlayer::GetConqueredCities() const
+{
+	return m_iConqueredCities;
+}
+void CvPlayer::ChangeConqueredCities(int iChange)
+{
+	m_iConqueredCities = (m_iConqueredCities + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
+int CvPlayer::GetDisbandedUnitsStrength() const
+{
+	return m_iDisbandedUnitsStrength;
+}
+void CvPlayer::ChangeDisbandedUnitsStrength(int iChange)
+{
+	m_iDisbandedUnitsStrength = (m_iDisbandedUnitsStrength + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_NUMFAITHONNONCOMBATUNITS
+int CvPlayer::GetNumFaithSpentOnNonCombatUnits() const
+{
+	return m_iNumFaithSpentOnNonCombatUnits;
+}
+void CvPlayer::ChangeNumFaithSpentOnNonCombatUnits(int iChange)
+{
+	m_iNumFaithSpentOnNonCombatUnits = (m_iNumFaithSpentOnNonCombatUnits + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_FOODKEPTAFTERGROWTH
+int CvPlayer::GetFoodKeptAfterGrowth() const
+{
+	return m_iFoodKeptAfterGrowth;
+}
+void CvPlayer::ChangeFoodKeptAfterGrowth(int iChange)
+{
+	m_iFoodKeptAfterGrowth = (m_iFoodKeptAfterGrowth + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_KILLEDGENERALS
+int CvPlayer::GetKilledGenerals() const
+{
+	return m_iKilledGenerals;
+}
+void CvPlayer::ChangeKilledGenerals(int iChange)
+{
+	m_iKilledGenerals = (m_iKilledGenerals + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_EFFECTIVEKNOWNTECHSCOST
+int CvPlayer::GetEffectiveKnownTechsCost() const
+{
+	return m_iEffectiveKnownTechsCost;
+}
+void CvPlayer::ChangeEffectiveKnownTechsCost(int iChange)
+{
+	m_iEffectiveKnownTechsCost = (m_iEffectiveKnownTechsCost + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS
+int CvPlayer::GetProductionSpentOnBuildings() const
+{
+	return m_iProductionSpentOnBuildings;
+}
+void CvPlayer::ChangeProductionSpentOnBuildings(int iChange)
+{
+	m_iProductionSpentOnBuildings = (m_iProductionSpentOnBuildings + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONCOMBATUNITS
+int CvPlayer::GetProductionSpentOnCombatUnits() const
+{
+	return m_iProductionSpentOnCombatUnits;
+}
+void CvPlayer::ChangeProductionSpentOnCombatUnits(int iChange)
+{
+	m_iProductionSpentOnCombatUnits = (m_iProductionSpentOnCombatUnits + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONNONCOMBATUNITS
+int CvPlayer::GetProductionSpentOnNonCombatUnits() const
+{
+	return m_iProductionSpentOnNonCombatUnits;
+}
+void CvPlayer::ChangeProductionSpentOnNonCombatUnits(int iChange)
+{
+	m_iProductionSpentOnNonCombatUnits = (m_iProductionSpentOnNonCombatUnits + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONWONDERS
+int CvPlayer::GetProductionSpentOnWonders() const
+{
+	return m_iProductionSpentOnWonders;
+}
+void CvPlayer::ChangeProductionSpentOnWonders(int iChange)
+{
+	m_iProductionSpentOnWonders = (m_iProductionSpentOnWonders + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_SCIENCEFROMRESEARCHAGREEMENTS
+int CvPlayer::GetNumScienceFromResearchAgreements() const
+{
+	return m_iNumScienceFromResearchAgreements;
+}
+void CvPlayer::ChangeScienceFromResearchAgreements(int iChange)
+{
+	m_iNumScienceFromResearchAgreements = (m_iNumScienceFromResearchAgreements + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_SCIENCEDISCOUNTSGAIN
+int CvPlayer::GetScienceDiscountGain() const
+{
+	return m_iScienceDiscountGain;
+}
+void CvPlayer::ChangeScienceDiscountGain(int iChange)
+{
+	m_iScienceDiscountGain = (m_iScienceDiscountGain + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
+int CvPlayer::GetScienceLostToDeficit() const
+{
+	return m_iScienceLostToDeficit;
+}
+void CvPlayer::ChangeScienceLostToDeficit(int iChange)
+{
+	m_iScienceLostToDeficit = (m_iScienceLostToDeficit + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
+int CvPlayer::GetScienceFromReligion() const
+{
+	return m_iScienceFromReligion;
+}
+void CvPlayer::ChangeScienceFromReligion(int iChange)
+{
+	m_iScienceFromReligion = (m_iScienceFromReligion + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
+int CvPlayer::GetNumUnitPromotions() const
+{
+	return m_iNumUnitPromotions;
+}
+void CvPlayer::ChangeNumUnitPromotions(int iChange)
+{
+	m_iNumUnitPromotions = (m_iNumUnitPromotions + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+int CvPlayer::GetUnitsRestoredHP() const
+{
+	return m_iUnitsRestoredHP;
+}
+void CvPlayer::ChangeUnitsRestoredHP(int iChange)
+{
+	m_iUnitsRestoredHP = (m_iUnitsRestoredHP + iChange);
+}
+#endif
+#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+int CvPlayer::GetUnitsHPAttrition() const
+{
+	return m_iUnitsHPAttrition;
+}
+void CvPlayer::ChangeUnitsHPAttrition(int iChange)
+{
+	m_iUnitsHPAttrition = (m_iUnitsHPAttrition + iChange);
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 /// How much Units are eating Production?
@@ -21452,6 +21724,9 @@ void CvPlayer::DoDeficit()
 						GC.getGame().addReplayEvent(REPLAYEVENT_UnitDisbanded, GetID(), vArgs);
 					}
 #endif
+#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
+					ChangeDisbandedUnitsStrength(max(pLandUnit->GetBaseCombatStrength(), pLandUnit->GetBaseRangedCombatStrength()));
+#endif
 
 					pLandUnit->scrap();
 					GetMilitaryAI()->LogDeficitScrapUnit(pLandUnit);
@@ -21475,6 +21750,9 @@ void CvPlayer::DoDeficit()
 						vArgs.push_back(static_cast<int>(pNavalUnit->getUnitType()));
 						GC.getGame().addReplayEvent(REPLAYEVENT_UnitDisbanded, GetID(), vArgs);
 					}
+#endif
+#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
+					ChangeDisbandedUnitsStrength(max(pNavalUnit->GetBaseCombatStrength(), pNavalUnit->GetBaseRangedCombatStrength()));
 #endif
 
 					pNavalUnit->scrap();
@@ -27109,6 +27387,115 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iEspionageModifier;
 	kStream >> m_iSpyStartingRank;
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1017)
+	{
+		#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+		kStream >> m_iConqueredCities;
+		#endif
+		#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
+		kStream >> m_iDisbandedUnitsStrength;
+		#endif
+		#ifdef EG_REPLAYDATASET_NUMFAITHONNONCOMBATUNITS
+		kStream >> m_iNumFaithSpentOnNonCombatUnits;
+		#endif
+		#ifdef EG_REPLAYDATASET_FOODKEPTAFTERGROWTH
+		kStream >> m_iFoodKeptAfterGrowth;
+		#endif
+		#ifdef EG_REPLAYDATASET_KILLEDGENERALS
+		kStream >> m_iKilledGenerals;
+		#endif
+		#ifdef EG_REPLAYDATASET_EFFECTIVEKNOWNTECHSCOST
+		kStream >> m_iEffectiveKnownTechsCost;
+		#endif
+		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS
+		kStream >> m_iProductionSpentOnBuildings;
+		#endif
+		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONCOMBATUNITS
+		kStream >> m_iProductionSpentOnCombatUnits;
+		#endif
+		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONNONCOMBATUNITS
+		kStream >> m_iProductionSpentOnNonCombatUnits;
+		#endif
+		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONWONDERS
+		kStream >> m_iProductionSpentOnWonders;
+		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCEFROMRESEARCHAGREEMENTS
+		kStream >> m_iNumScienceFromResearchAgreements;
+		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCEDISCOUNTSGAIN
+		kStream >> m_iScienceDiscountGain;
+		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
+		kStream >> m_iScienceLostToDeficit;
+		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
+		kStream >> m_iScienceFromReligion;
+		#endif
+		#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
+		kStream >> m_iNumUnitPromotions;
+		#endif
+		#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+		kStream >> m_iUnitsRestoredHP;
+		#endif
+		#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+		kStream >> m_iUnitsHPAttrition;
+		#endif
+	}
+	else
+	{
+		#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+		m_iConqueredCities = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
+		m_iDisbandedUnitsStrength = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_NUMFAITHONNONCOMBATUNITS
+		m_iNumFaithSpentOnNonCombatUnits = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_FOODKEPTAFTERGROWTH
+		m_iFoodKeptAfterGrowth = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_KILLEDGENERALS
+		m_iKilledGenerals = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_EFFECTIVEKNOWNTECHSCOST
+		m_iEffectiveKnownTechsCost = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS
+		m_iProductionSpentOnBuildings = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONCOMBATUNITS
+		m_iProductionSpentOnCombatUnits = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONNONCOMBATUNITS
+		m_iProductionSpentOnNonCombatUnits = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONWONDERS
+		m_iProductionSpentOnWonders = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCEFROMRESEARCHAGREEMENTS
+		m_iNumScienceFromResearchAgreements = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCEDISCOUNTSGAIN
+		m_iScienceDiscountGain = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
+		m_iScienceLostToDeficit = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
+		m_iScienceFromReligion = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
+		m_iNumUnitPromotions = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+		m_iUnitsRestoredHP = 0;
+		#endif
+		#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+		m_iUnitsHPAttrition = 0;
+		#endif
+	}
+/////////////////////////////////////////////////
 	if (uiVersion >= 1013)
 	{
 #ifdef EG_REPLAYDATASET_NUMSTOLENSCIENCE
@@ -29213,6 +29600,57 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iHappinessFromLeagues;
 	kStream << m_iEspionageModifier;
 	kStream << m_iSpyStartingRank;
+	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+	kStream << m_iConqueredCities;
+	#endif
+	#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
+	kStream << m_iDisbandedUnitsStrength;
+	#endif
+	#ifdef EG_REPLAYDATASET_NUMFAITHONNONCOMBATUNITS
+	kStream << m_iNumFaithSpentOnNonCombatUnits;
+	#endif
+	#ifdef EG_REPLAYDATASET_FOODKEPTAFTERGROWTH
+	kStream << m_iFoodKeptAfterGrowth;
+	#endif
+	#ifdef EG_REPLAYDATASET_KILLEDGENERALS
+	kStream << m_iKilledGenerals;
+	#endif
+	#ifdef EG_REPLAYDATASET_EFFECTIVEKNOWNTECHSCOST
+	kStream << m_iEffectiveKnownTechsCost;
+	#endif
+	#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS
+	kStream << m_iProductionSpentOnBuildings;
+	#endif
+	#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONCOMBATUNITS
+	kStream << m_iProductionSpentOnCombatUnits;
+	#endif
+	#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONNONCOMBATUNITS
+	kStream << m_iProductionSpentOnNonCombatUnits;
+	#endif
+	#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONWONDERS
+	kStream << m_iProductionSpentOnWonders;
+	#endif
+	#ifdef EG_REPLAYDATASET_SCIENCEFROMRESEARCHAGREEMENTS
+	kStream << m_iNumScienceFromResearchAgreements;
+	#endif
+	#ifdef EG_REPLAYDATASET_SCIENCEDISCOUNTSGAIN
+	kStream << m_iScienceDiscountGain;
+	#endif
+	#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
+	kStream << m_iScienceLostToDeficit;
+	#endif
+	#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
+	kStream << m_iScienceFromReligion;
+	#endif
+	#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
+	kStream << m_iNumUnitPromotions;
+	#endif
+	#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+	kStream << m_iUnitsRestoredHP;
+	#endif
+	#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+	kStream << m_iUnitsHPAttrition;
+	#endif
 #ifdef EG_REPLAYDATASET_NUMSTOLENSCIENCE
 	kStream << m_iNumStolenScience;
 #endif
@@ -32758,6 +33196,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMBEROFWORKERS"), iGameTurn, iWorkerCount);
 
 
+		#ifdef ENHANCED_GRAPHS
 #ifdef GRAPHS_REAL_MILITARY_MIGHT
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_MILITARYMIGHT"), iGameTurn, (int)sqrt((double)GetMilitaryMight()) * 2000);
 #else
@@ -33304,6 +33743,74 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_ANARCHYTURNS"), iGameTurn, GetAnarchyNumTurns());
 #endif
 
+		/// Fifth Bunch of Enhanced Graphs
+		#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CONQUEREDCITIES"), iGameTurn, GetConqueredCities());
+		#endif
+		#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_DISBANDEDUNITSSTRENGTH"), iGameTurn, GetDisbandedUnitsStrength());
+		#endif
+		#ifdef EG_REPLAYDATASET_EFFECTIVEPRODUCTIONPERTURN
+		iLoopCity = 0;
+		int iEffectiveProduction = 0;
+		for (CvCity* pLoopCity = firstCity(&iLoopCity); pLoopCity != NULL; pLoopCity = nextCity(&iLoopCity))
+		{
+			if (!pLoopCity->IsPuppet())
+				iEffectiveProduction += pLoopCity->getCurrentProductionDifferenceTimes100(true, true) / 100;
+		}
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVEPRODUCTIONPERTURN"), iGameTurn, iEffectiveProduction);
+		#endif
+		#ifdef EG_REPLAYDATASET_NUMFAITHONNONCOMBATUNITS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMFAITHONNONCOMBATUNITS"), iGameTurn, GetNumFaithSpentOnNonCombatUnits());
+		#endif
+		#ifdef EG_REPLAYDATASET_FOODKEPTAFTERGROWTH
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FOODKEPTAFTERGROWTH"), iGameTurn, GetFoodKeptAfterGrowth());
+		#endif
+		#ifdef EG_REPLAYDATASET_GPTFROMTRADEROUTES
+		int iGPT1 = GetTreasury()->GetGoldFromCitiesTimes100(false);
+		int iGPT2 = GetTreasury()->GetGoldFromCitiesTimes100(true);
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_GPTFROMTRADEROUTES"), iGameTurn, (iGPT1 - iGPT2) / 100);
+		#endif
+		#ifdef EG_REPLAYDATASET_KILLEDGENERALS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_KILLEDGENERALS"), iGameTurn, GetKilledGenerals());
+		#endif
+		#ifdef EG_REPLAYDATASET_EFFECTIVEKNOWNTECHSCOST
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVEKNOWNTECHSCOST"), iGameTurn, GetEffectiveKnownTechsCost());
+		#endif
+		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS"), iGameTurn, GetProductionSpentOnBuildings());
+		#endif
+		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONCOMBATUNITS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PRODUCTIONSPENTONCOMBATUNITS"), iGameTurn, GetProductionSpentOnCombatUnits());
+		#endif
+		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONNONCOMBATUNITS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PRODUCTIONSPENTONNONCOMBATUNITS"), iGameTurn, GetProductionSpentOnNonCombatUnits());
+		#endif
+		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONWONDERS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PRODUCTIONSPENTONWONDERS"), iGameTurn, GetProductionSpentOnWonders());
+		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCEFROMRESEARCHAGREEMENTS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENCEFROMRESEARCHAGREEMENTS"), iGameTurn, GetNumScienceFromResearchAgreements());
+		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCEDISCOUNTSGAIN
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENCEDISCOUNTSGAIN"), iGameTurn, GetScienceDiscountGain());
+		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENCELOSTTODEFICIT"), iGameTurn, GetScienceLostToDeficit());
+		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENCEFROMRELIGION"), iGameTurn, GetScienceFromReligion());
+		#endif
+		#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMUNITPROMOTIONS"), iGameTurn, GetNumUnitPromotions());
+		#endif
+		#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_UNITSRESTOREDHP"), iGameTurn, GetUnitsRestoredHP());
+		#endif
+		#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_UNITSHPATTRITION"), iGameTurn, GetUnitsHPAttrition());
+		#endif
+
 /*#ifdef ENHANCED_GRAPHS
 		const char* szDataSetName;
 		for (int iI = 0; iI < GC.getNumPolicyInfos(); iI++)
@@ -33357,6 +33864,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 			setReplayDataValue(getReplayDataSetIndex(szDataSetName), iGameTurn, bHasBelief);
 		}
 #endif*/
+		#endif
 	}
 }
 

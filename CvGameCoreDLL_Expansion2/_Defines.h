@@ -1354,7 +1354,8 @@
 // 1014: v11.4  (adds POLICY_EXTRA_VOTES)
 // 1015: v11.4b (adds BUILDING_BORDER_TRANSITION_OBSTACLE)
 // 1016: v12.0  (adds POLICY_FREE_PROMOTION_UNIT_COMBAT, PLAYER_CULTURE_TIMES_100, BUILDING_ATTRITION_INSIDE_BORDERS)
-# define BUMP_SAVE_VERSION_PLAYER 1016
+// 1017: v12.1  (adds fifth bunch of ENHANCED_GRAPHS)
+# define BUMP_SAVE_VERSION_PLAYER 1017
 // 1000: v7.0   (initial)
 # define BUMP_SAVE_VERSION_POLICIES 1000
 // 1000: v7.0   (initial)
@@ -1537,6 +1538,47 @@
 #define EG_REPLAYDATASET_PRODUCTIONFROMTRADEROUTES_TIMES100
 ///
 #define EG_REPLAYDATASET_ANARCHYTURNS
+///
+/// Fifth Bunch of Enhanced Graphs
+///
+// conquered cities
+#define EG_REPLAYDATASET_CONQUEREDCITIES
+// disbanded units' combat strength
+#define EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
+// effective production per turn
+#define EG_REPLAYDATASET_EFFECTIVEPRODUCTIONPERTURN
+// Faith spent on non-combat Units purchases
+#define EG_REPLAYDATASET_NUMFAITHONNONCOMBATUNITS
+// food kept after city growth
+#define EG_REPLAYDATASET_FOODKEPTAFTERGROWTH
+// GPT from Trade Routes
+#define EG_REPLAYDATASET_GPTFROMTRADEROUTES
+// killed enemy great generals
+#define EG_REPLAYDATASET_KILLEDGENERALS
+// known techs' effective cost
+#define EG_REPLAYDATASET_EFFECTIVEKNOWNTECHSCOST
+// production spent on buildings
+#define EG_REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS
+// production spent on combat units
+#define EG_REPLAYDATASET_PRODUCTIONSPENTONCOMBATUNITS
+// production spent on non-combat units
+#define EG_REPLAYDATASET_PRODUCTIONSPENTONNONCOMBATUNITS
+// production spent on world wonders
+#define EG_REPLAYDATASET_PRODUCTIONSPENTONWONDERS
+// science gained from research agreements
+#define EG_REPLAYDATASET_SCIENCEFROMRESEARCHAGREEMENTS
+// science gained from technology discounts
+#define EG_REPLAYDATASET_SCIENCEDISCOUNTSGAIN
+// science lost due to deficit
+#define EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
+// science per turn from religion
+#define EG_REPLAYDATASET_SCIENCEFROMRELIGION
+// units: XP promotions
+#define EG_REPLAYDATASET_NUMUNITPROMOTIONS
+// units: restored HP
+#define EG_REPLAYDATASET_UNITSRESTOREDHP
+// units: HP lost to attrition
+#define EG_REPLAYDATASET_UNITSHPATTRITION
 ///
 ///
 #endif
