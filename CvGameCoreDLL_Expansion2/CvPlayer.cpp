@@ -29220,7 +29220,6 @@ void CvPlayer::Read(FDataStream& kStream)
 	CvInfosSerializationHelper::ReadHashedDataArray(kStream, m_paiFreeBuildingCount.dirtyGet());
 	CvInfosSerializationHelper::ReadHashedDataArray(kStream, m_paiFreePromotionCount.dirtyGet());
 #ifdef POLICY_FREE_PROMOTION_UNIT_COMBAT
-	// TODO
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1016)
 	{
