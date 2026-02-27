@@ -483,10 +483,6 @@ public:
 	int GetNumFaithSpentOnMilitaryUnits() const;
 	void ChangeNumFaithSpentOnMilitaryUnits(int iChange);
 #endif
-	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
-	int GetConqueredCities() const;
-	void ChangeConqueredCities(int iChange);
-	#endif
 	#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
 	int GetDisbandedUnitsStrength() const;
 	void ChangeDisbandedUnitsStrength(int iChange);
@@ -534,10 +530,6 @@ public:
 	#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
 	int GetScienceLostToDeficit() const;
 	void ChangeScienceLostToDeficit(int iChange);
-	#endif
-	#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
-	int GetScienceFromReligion() const;
-	void ChangeScienceFromReligion(int iChange);
 	#endif
 	#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
 	int GetNumUnitPromotions() const;
@@ -2277,9 +2269,6 @@ protected:
 #ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
 	int m_iNumFaithSpentOnMilitaryUnits;
 #endif
-	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
-	int m_iConqueredCities;
-	#endif
 	#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
 	int m_iDisbandedUnitsStrength;
 	#endif
@@ -2315,9 +2304,6 @@ protected:
 	#endif
 	#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
 	int m_iScienceLostToDeficit;
-	#endif
-	#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
-	int m_iScienceFromReligion;
 	#endif
 	#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
 	int m_iNumUnitPromotions;
