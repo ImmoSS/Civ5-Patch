@@ -32891,7 +32891,7 @@ int CvPlayer::GetNumCapitalsControlled() const
 	const CvCity* pLoopCity = NULL;
 	for (pLoopCity = firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = nextCity(&iCityLoop))
 	{
-		if (pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && pLoopCity->IsOriginalCapital())
+		if (pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && pLoopCity->IsOriginalMajorCapital())
 		{
 			iNumCapitalsControlled += 1;
 		}
