@@ -668,6 +668,9 @@ CvPlayer::CvPlayer() :
 #ifdef POLICY_FREE_PROMOTION_UNIT_COMBAT
 	, m_ppaaiFreePromotionUnitCombatCount("CvPlayer::m_ppaaiFreePromotionUnitCombatCount", m_syncArchive)
 #endif
+#ifdef BELIEF_FREE_PROMOTION_UNIT_CLASSES
+	, m_ppaaiFreePromotionUnitClassCount("CvPlayer::m_ppaaiFreePromotionUnitClassCount", m_syncArchive)
+#endif
 	, m_paiUnitCombatProductionModifiers("CvPlayer::m_paiUnitCombatProductionModifiers", m_syncArchive)
 	, m_paiUnitCombatFreeExperiences("CvPlayer::m_paiUnitCombatFreeExperiences", m_syncArchive)
 	, m_paiUnitClassCount("CvPlayer::m_paiUnitClassCount", m_syncArchive, true)
@@ -996,6 +999,9 @@ void CvPlayer::uninit()
 	m_paiFreePromotionCount.clear();
 #ifdef POLICY_FREE_PROMOTION_UNIT_COMBAT
 	m_ppaaiFreePromotionUnitCombatCount.clear();
+#endif
+#ifdef BELIEF_FREE_PROMOTION_UNIT_CLASSES
+	m_ppaaiFreePromotionUnitClassCount.clear();
 #endif
 	m_paiUnitCombatProductionModifiers.clear();
 	m_paiUnitCombatFreeExperiences.clear();
@@ -1776,6 +1782,11 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 #ifdef POLICY_FREE_PROMOTION_UNIT_COMBAT
 		m_ppaaiFreePromotionUnitCombatCount.clear();
 		m_ppaaiFreePromotionUnitCombatCount.resize(GC.getNumPromotionInfos() * GC.getNumUnitCombatClassInfos(), 0);
+#endif
+
+#ifdef BELIEF_FREE_PROMOTION_UNIT_CLASSES
+		m_ppaaiFreePromotionUnitClassCount.clear();
+		m_ppaaiFreePromotionUnitClassCount.resize(GC.getNumPromotionInfos() * GC.getNumUnitClassInfos(), 0);
 #endif
 
 		m_paiUnitClassCount.clear();
@@ -13719,6 +13730,19 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 	}
 #endif
 
+#ifdef BELIEF_FREE_PROMOTION_UNIT_CLASSES
+	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+	{
+		for (int iJ = 0; iJ < GC.getNumUnitClassInfos(); iJ++)
+		{
+			if (pReligion->m_Beliefs.IsFreePromotionUnitClass(iI, iJ))
+			{
+				ChangeFreePromotionUnitClassCount((PromotionTypes)iI, (UnitClassTypes)iJ, 1);
+			}
+		}
+	}
+#endif
+
 	if (setUnitReligion)
 	{
 		// make sure free religious units are of this religion (if they haven't had one assigned already)
@@ -23117,6 +23141,87 @@ void CvPlayer::ChangeFreePromotionUnitCombatCount(PromotionTypes ePromotion, Uni
 #endif
 
 
+#ifdef BELIEF_FREE_PROMOTION_UNIT_CLASSES
+//	--------------------------------------------------------------------------------
+/// Is ePromotion a free promotion for a specific UnitClassType?
+int CvPlayer::GetFreePromotionUnitClassCount(PromotionTypes ePromotion, UnitClassTypes eUnitClassType) const
+{
+	CvAssertMsg(ePromotion >= 0, "ePromotion is expected to be non-negative (invalid Index)");
+	CvAssertMsg(ePromotion < GC.getNumPromotionInfos(), "ePromotion is expected to be within maximum bounds (invalid Index)");
+	CvAssertMsg(eUnitClassType >= 0, "eUnitClassType is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eUnitClassType < GC.getNumUnitClassInfos(), "eUnitClassType is expected to be within maximum bounds (invalid Index)");
+	return m_ppaaiFreePromotionUnitClassCount[eUnitClassType * GC.getNumPromotionInfos() + ePromotion];
+}
+
+//	--------------------------------------------------------------------------------
+/// Is ePromotion a free promotion for a specific UnitClassType?
+bool CvPlayer::IsFreePromotionUnitClass(PromotionTypes ePromotion, UnitClassTypes eUnitClassType)	const
+{
+	if (eUnitClassType != NO_UNITCLASS)
+	{
+		return (GetFreePromotionUnitClassCount(ePromotion, eUnitClassType) > 0);
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+//	--------------------------------------------------------------------------------
+/// Is ePromotion a free promotion for a specific UnitClassType?
+void CvPlayer::ChangeFreePromotionUnitClassCount(PromotionTypes ePromotion, UnitClassTypes eUnitClassType, int iChange)
+{
+	CvAssertMsg(ePromotion >= 0, "ePromotion is expected to be non-negative (invalid Index)");
+	CvAssertMsg(ePromotion < GC.getNumPromotionInfos(), "ePromotion is expected to be within maximum bounds (invalid Index)");
+	CvAssertMsg(eUnitClassType >= 0, "eUnitClassType is expected to be non-negative (invalid Index)");
+	CvAssertMsg(eUnitClassType < GC.getNumUnitClassInfos(), "eUnitClassType is expected to be within maximum bounds (invalid Index)");
+
+	if (iChange != 0)
+	{
+		bool bWasFree = IsFreePromotionUnitClass(ePromotion, eUnitClassType);
+
+		m_ppaaiFreePromotionUnitClassCount.setAt(eUnitClassType * GC.getNumPromotionInfos() + ePromotion, m_ppaaiFreePromotionUnitClassCount[eUnitClassType * GC.getNumPromotionInfos() + ePromotion] + iChange);
+
+		CvAssert(GetFreePromotionUnitClassCount(ePromotion, eUnitClassType) >= 0);
+
+		// This promotion is now set to be free, but wasn't before we called this function
+		if (IsFreePromotionUnitClass(ePromotion, eUnitClassType) && !bWasFree)
+		{
+			// Loop through Units
+			CvUnit* pLoopUnit;
+
+			int iLoop;
+			for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+			{
+				// Valid Promotion for this Unit?
+				if (::IsPromotionValidForUnitCombatType(ePromotion, pLoopUnit->getUnitType()) && GC.getUnitInfo(pLoopUnit->getUnitType())->GetUnitClassType() == eUnitClassType)
+				{
+					pLoopUnit->setHasPromotion(ePromotion, true);
+#ifdef FIX_PROMOTION_MOVES_CHANGE_ON_MID_TURN_PROMOTION
+					if (pLoopUnit->getMoves() > 0)
+					{
+						pLoopUnit->changeMoves(GC.getPromotionInfo(ePromotion)->GetMovesChange() * GC.getMOVE_DENOMINATOR());
+					}
+#endif
+				}
+
+				else if (::IsPromotionValidForCivilianUnitType(ePromotion, pLoopUnit->getUnitType()) && GC.getUnitInfo(pLoopUnit->getUnitType())->GetUnitClassType() == eUnitClassType)
+				{
+					pLoopUnit->setHasPromotion(ePromotion, true);
+#ifdef FIX_PROMOTION_MOVES_CHANGE_ON_MID_TURN_PROMOTION
+					if (pLoopUnit->getMoves() > 0)
+					{
+						pLoopUnit->changeMoves(GC.getPromotionInfo(ePromotion)->GetMovesChange() * GC.getMOVE_DENOMINATOR());
+					}
+#endif
+				}
+			}
+		}
+	}
+}
+#endif
+
+
 //	--------------------------------------------------------------------------------
 int CvPlayer::getUnitCombatProductionModifiers(UnitCombatTypes eIndex) const
 {
@@ -29234,6 +29339,21 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 # endif
 #endif
+#ifdef BELIEF_FREE_PROMOTION_UNIT_CLASSES
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1017)
+	{
+# endif
+		kStream >> m_ppaaiFreePromotionUnitClassCount;
+# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_ppaaiFreePromotionUnitClassCount.clear();
+		m_ppaaiFreePromotionUnitClassCount.resize(GC.getNumPromotionInfos() * GC.getNumUnitClassInfos(), 0);
+	}
+# endif
+#endif
 
 	kStream >> m_paiUnitCombatProductionModifiers;
 	kStream >> m_paiUnitCombatFreeExperiences;
@@ -30138,6 +30258,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 	CvInfosSerializationHelper::WriteHashedDataArray<PromotionTypes, int>(kStream, m_paiFreePromotionCount);
 #ifdef POLICY_FREE_PROMOTION_UNIT_COMBAT
 	kStream << m_ppaaiFreePromotionUnitCombatCount;
+#endif
+#ifdef BELIEF_FREE_PROMOTION_UNIT_CLASSES
+	kStream << m_ppaaiFreePromotionUnitClassCount;
 #endif
 
 	kStream << m_paiUnitCombatProductionModifiers;

@@ -1592,6 +1592,11 @@ public:
 	bool IsFreePromotionUnitCombat(PromotionTypes eIndex, UnitCombatTypes eUnitCombatType) const;
 	void ChangeFreePromotionUnitCombatCount(PromotionTypes eIndex, UnitCombatTypes eUnitCombatType, int iChange);
 #endif
+#ifdef BELIEF_FREE_PROMOTION_UNIT_CLASSES
+	int GetFreePromotionUnitClassCount(PromotionTypes eIndex, UnitClassTypes eUnitClassType) const;
+	bool IsFreePromotionUnitClass(PromotionTypes eIndex, UnitClassTypes eUnitClassType) const;
+	void ChangeFreePromotionUnitClassCount(PromotionTypes eIndex, UnitClassTypes eUnitClassType, int iChange);
+#endif
 
 	int getUnitCombatProductionModifiers(UnitCombatTypes eIndex) const;
 	void changeUnitCombatProductionModifiers(UnitCombatTypes eIndex, int iChange);
@@ -2653,6 +2658,9 @@ protected:
 	FAutoVariable<std::vector<int>, CvPlayer> m_paiFreePromotionCount;
 #ifdef POLICY_FREE_PROMOTION_UNIT_COMBAT
 	FAutoVariable<std::vector<int>, CvPlayer> m_ppaaiFreePromotionUnitCombatCount;
+#endif
+#ifdef BELIEF_FREE_PROMOTION_UNIT_CLASSES
+	FAutoVariable<std::vector<int>, CvPlayer> m_ppaaiFreePromotionUnitClassCount;
 #endif
 	FAutoVariable<std::vector<int>, CvPlayer> m_paiUnitCombatProductionModifiers;
 	FAutoVariable<std::vector<int>, CvPlayer> m_paiUnitCombatFreeExperiences;

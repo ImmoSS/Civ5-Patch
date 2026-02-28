@@ -581,6 +581,21 @@ void CvUnit::initWithNameOffset(int iID, UnitTypes eUnit, int iNameOffset, UnitA
 			}
 		}
 #endif
+#ifdef BELIEF_FREE_PROMOTION_UNIT_CLASSES
+		if (kPlayer.IsFreePromotionUnitClass(ePromotion, (UnitClassTypes)GC.getUnitInfo(getUnitType())->GetUnitClassType()))
+		{
+			// Valid Promotion for this Unit?
+			if (::IsPromotionValidForUnitCombatType(ePromotion, getUnitType()))
+			{
+				setHasPromotion(ePromotion, true);
+			}
+
+			else if (::IsPromotionValidForCivilianUnitType(ePromotion, getUnitType()))
+			{
+				setHasPromotion(ePromotion, true);
+			}
+		}
+#endif
 	}
 
 	// Give embark promotion for free?
@@ -1252,6 +1267,12 @@ void CvUnit::convert(CvUnit* pUnit, bool bIsUpgrade)
 			}
 #ifdef POLICY_FREE_PROMOTION_UNIT_COMBAT
 			else if (GET_PLAYER(getOwner()).IsFreePromotionUnitCombat(ePromotion, (UnitCombatTypes)GC.getUnitInfo(getUnitType())->GetUnitCombatType()) && ::IsPromotionValidForUnitCombatType(ePromotion, getUnitType()))
+			{
+				bGivePromotion = true;
+			}
+#endif
+#ifdef BELIEF_FREE_PROMOTION_UNIT_CLASSES
+			else if (GET_PLAYER(getOwner()).IsFreePromotionUnitClass(ePromotion, (UnitClassTypes)GC.getUnitInfo(getUnitType())->GetUnitClassType()) && (::IsPromotionValidForUnitCombatType(ePromotion, getUnitType()) || ::IsPromotionValidForCivilianUnitType(ePromotion, getUnitType())))
 			{
 				bGivePromotion = true;
 			}
