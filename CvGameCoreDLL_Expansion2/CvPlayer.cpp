@@ -33533,7 +33533,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 
 #ifdef EG_REPLAYDATASET_FOODFROMCS
-#ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
 		int iFoodFromMinersTimes100 = 0;
 		for (int iI = 0; iI < getNumCities(); iI++)
 		{
@@ -33553,7 +33553,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FOODFROMCS"), iGameTurn, iFoodFromMinersTimes100 / 100);
 #endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-#ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
 		int iProductionFromMinersTimes100 = 0;
 		for (int iI = 0; iI < getNumCities(); iI++)
 		{
