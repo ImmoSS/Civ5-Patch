@@ -205,6 +205,9 @@ CvCity::CvCity() :
 	, m_bFeatureSurrounded("CvCity::m_bFeatureSurrounded", m_syncArchive)
 	, m_ePreviousOwner("CvCity::m_ePreviousOwner", m_syncArchive)
 	, m_eOriginalOwner("CvCity::m_eOriginalOwner", m_syncArchive)
+	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+	, m_eSettlementFounder("CvCity::m_eSettlementFounder", m_syncArchive)
+	#endif
 #ifdef CITY_MINOR_MAJORITY_OWNER
 	, m_eMinorMajorityOwner("CvCity::m_eMinorMajorityOwner", m_syncArchive)
 #endif
@@ -854,6 +857,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_eOwner = eOwner;
 	m_ePreviousOwner = NO_PLAYER;
 	m_eOriginalOwner = eOwner;
+	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+	m_eSettlementFounder = eOwner;
+	#endif
 #ifdef CITY_MINOR_MAJORITY_OWNER
 	m_eMinorMajorityOwner = NO_PLAYER;
 #endif
@@ -11167,7 +11173,22 @@ void CvCity::setOriginalOwner(PlayerTypes eNewValue)
 	m_eOriginalOwner = eNewValue;
 }
 
+#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+//	--------------------------------------------------------------------------------
+PlayerTypes CvCity::getSettlementFounder() const
+{
+	VALIDATE_OBJECT
+	return m_eSettlementFounder;
+}
 
+
+//	--------------------------------------------------------------------------------
+void CvCity::setSettlementFounder(PlayerTypes eNewValue)
+{
+	VALIDATE_OBJECT
+	m_eSettlementFounder = eNewValue;
+}
+#endif
 #ifdef CITY_MINOR_MAJORITY_OWNER
 //	--------------------------------------------------------------------------------
 PlayerTypes CvCity::getMinorMajorityOwner() const
@@ -16589,6 +16610,20 @@ void CvCity::read(FDataStream& kStream)
 	kStream >> m_eOwner;
 	kStream >> m_ePreviousOwner;
 	kStream >> m_eOriginalOwner;
+	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+	# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1009)
+	{
+	# endif
+		kStream >> m_eSettlementFounder;
+	# ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_eSettlementFounder = m_eOriginalOwner;
+	}
+	# endif
+	#endif
 #ifdef CITY_MINOR_MAJORITY_OWNER
 # ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1008)
@@ -17276,6 +17311,9 @@ void CvCity::write(FDataStream& kStream) const
 	kStream << m_eOwner;
 	kStream << m_ePreviousOwner;
 	kStream << m_eOriginalOwner;
+	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+	kStream << m_eSettlementFounder;
+	#endif
 #ifdef CITY_MINOR_MAJORITY_OWNER
 	kStream << m_eMinorMajorityOwner;
 #endif

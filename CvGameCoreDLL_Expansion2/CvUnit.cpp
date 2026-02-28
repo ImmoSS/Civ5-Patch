@@ -1909,6 +1909,9 @@ void CvUnit::doTurn()
 	{
 		if(0 != GC.getFeatureInfo(eFeature)->getTurnDamage())
 		{
+			#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+			GET_PLAYER(getOwner()).ChangeUnitsHPAttrition(min(GetMaxHitPoints() - getDamage(), GC.getFeatureInfo(eFeature)->getTurnDamage()));
+			#endif
 			changeDamage(GC.getFeatureInfo(eFeature)->getTurnDamage(), NO_PLAYER);
 		}
 	}
@@ -5713,6 +5716,9 @@ void CvUnit::doHeal()
 		{
 			iHealRate = std::min(GC.getENEMY_HEAL_RATE(), iHealRate);
 		}
+		#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+		GET_PLAYER(getOwner()).ChangeUnitsRestoredHP(min(getDamage(), iHealRate));
+		#endif
 		changeDamage(-iHealRate);
 #else
 		changeDamage(-(healRate(plot())));
@@ -5733,6 +5739,9 @@ void CvUnit::DoAttrition()
 			if(GC.getGame().getJonRandNum(100, "Enemy Territory Damage Chance") < getEnemyDamageChance())
 			{
 				strAppendText =  GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DAMAGED_ATTRITION");
+				#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+				GET_PLAYER(getOwner()).ChangeUnitsHPAttrition(min(GetMaxHitPoints() - getDamage(), getEnemyDamage()));
+				#endif
 				changeDamage(getEnemyDamage(), NO_PLAYER, 0.0, &strAppendText);
 			}
 		}
@@ -5741,6 +5750,9 @@ void CvUnit::DoAttrition()
 			if(GC.getGame().getJonRandNum(100, "Neutral Territory Damage Chance") < getNeutralDamageChance())
 			{
 				strAppendText =  GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DAMAGED_ATTRITION");
+				#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+				GET_PLAYER(getOwner()).ChangeUnitsHPAttrition(min(GetMaxHitPoints() - getDamage(), getNeutralDamage()));
+				#endif
 				changeDamage(getNeutralDamage(), NO_PLAYER, 0.0, &strAppendText);
 			}
 		}
@@ -5750,6 +5762,9 @@ void CvUnit::DoAttrition()
 	if (getOwner() != pPlot->getOwner() && GET_TEAM(getTeam()).isAtWar(pPlot->getTeam()) && GET_PLAYER(pPlot->getOwner()).getAttritionInsideBorders() > 0)
 	{
 		strAppendText = GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DAMAGED_ATTRITION");
+		#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+		GET_PLAYER(getOwner()).ChangeUnitsHPAttrition(min(GetMaxHitPoints() - getDamage(), GET_PLAYER(pPlot->getOwner()).getAttritionInsideBorders()));
+		#endif
 		changeDamage(GET_PLAYER(pPlot->getOwner()).getAttritionInsideBorders(), NO_PLAYER, 0.0, &strAppendText);
 	}
 #endif
@@ -5758,6 +5773,9 @@ void CvUnit::DoAttrition()
 	if(getDomainType() == DOMAIN_LAND && pPlot->isMountain() && !canMoveAllTerrain())
 	{
 		strAppendText =  GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DAMAGED_ATTRITION");
+		#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+		GET_PLAYER(getOwner()).ChangeUnitsHPAttrition(min(GetMaxHitPoints() - getDamage(), 50));
+		#endif
 		changeDamage(50, NO_PLAYER, 0.0, &strAppendText);
 	}
 
@@ -7568,11 +7586,17 @@ bool CvUnit::pillage()
 		if (hasHealOnPillage())
 		{
 			// completely heal unit
+			#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+			GET_PLAYER(getOwner()).ChangeUnitsRestoredHP(getDamage());
+			#endif
 			changeDamage(-getDamage());
 		}
 		else
 		{
 			int iHealAmount = min(getDamage(), GC.getPILLAGE_HEAL_AMOUNT());
+			#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+			GET_PLAYER(getOwner()).ChangeUnitsRestoredHP(iHealAmount);
+			#endif
 			changeDamage(-iHealAmount);
 		}
 	}
@@ -9113,6 +9137,9 @@ bool CvUnit::repairFleet()
 		CvUnit *pUnit = pPlot->getUnitByIndex(iUnitLoop);
 		if (pUnit->getOwner() == getOwner() && (pUnit->isEmbarked() || pUnit->getDomainType() == DOMAIN_SEA))
 		{
+			#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+			GET_PLAYER(getOwner()).ChangeUnitsRestoredHP(pUnit->getDamage());
+			#endif
 			pUnit->changeDamage(-pUnit->getDamage());
 		}
 	}
@@ -9129,6 +9156,9 @@ bool CvUnit::repairFleet()
 				CvUnit *pUnit = pAdjacentPlot->getUnitByIndex(iUnitLoop);
 				if (pUnit->getOwner() == getOwner() && (pUnit->isEmbarked() || pUnit->getDomainType() == DOMAIN_SEA))
 				{
+					#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+					GET_PLAYER(getOwner()).ChangeUnitsRestoredHP(pUnit->getDamage());
+					#endif
 					pUnit->changeDamage(-pUnit->getDamage());
 				}
 			}
@@ -10264,10 +10294,16 @@ void CvUnit::promote(PromotionTypes ePromotion, int iLeaderUnitId)
 	{
 		changeLevel(1);
 	}
-
+	
+	#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
+	GET_PLAYER(getOwner()).ChangeNumUnitPromotions(1);
+	#endif
 	// Insta-Heal: never earned
 	if(pkPromotionInfo->IsInstaHeal())
 	{
+		#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+		GET_PLAYER(getOwner()).ChangeUnitsRestoredHP(min(getDamage(), GC.getINSTA_HEAL_RATE()));
+		#endif
 		changeDamage(-GC.getINSTA_HEAL_RATE());
 	}
 	// Set that we have this Promotion
@@ -10277,6 +10313,9 @@ void CvUnit::promote(PromotionTypes ePromotion, int iLeaderUnitId)
 #ifdef PROMOTION_INSTA_HEAL_LOCKED
 		if (!isInstaHealLocked())
 		{
+			#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+			GET_PLAYER(getOwner()).ChangeUnitsRestoredHP(min(getDamage(), GC.getINSTA_HEAL_RATE()));
+			#endif
 			changeDamage(-GC.getINSTA_HEAL_RATE());
 		}
 #else

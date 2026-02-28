@@ -317,9 +317,6 @@ CvPlayer::CvPlayer() :
 #ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
 	, m_iNumFaithSpentOnMilitaryUnits(0)
 #endif
-	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
-	, m_iConqueredCities(0)
-	#endif
 	#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
 	, m_iDisbandedUnitsStrength(0)
 	#endif
@@ -355,9 +352,6 @@ CvPlayer::CvPlayer() :
 	#endif
 	#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
 	, m_iScienceLostToDeficit(0)
-	#endif
-	#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
-	, m_iScienceFromReligion(0)
 	#endif
 	#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
 	, m_iNumUnitPromotions(0)
@@ -1283,9 +1277,6 @@ void CvPlayer::uninit()
 #ifdef EG_REPLAYDATASET_NUMFAITHONMILITARYUNITS
 	m_iNumFaithSpentOnMilitaryUnits = 0;
 #endif
-	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
-	m_iConqueredCities = 0;
-	#endif
 	#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
 	m_iDisbandedUnitsStrength = 0;
 	#endif
@@ -1321,9 +1312,6 @@ void CvPlayer::uninit()
 	#endif
 	#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
 	m_iScienceLostToDeficit = 0;
-	#endif
-	#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
-	m_iScienceFromReligion = 0;
 	#endif
 	#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
 	m_iNumUnitPromotions = 0;
@@ -2572,6 +2560,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 #else
 	PlayerTypes eOriginalOwner;
 #endif
+	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+	PlayerTypes eSettlementFounder = pOldCity->getSettlementFounder();
+	#endif
 #ifdef CITY_MINOR_MAJORITY_OWNER
 	PlayerTypes eMinorMajorityOwner = pOldCity->getMinorMajorityOwner();
 #endif
@@ -3203,6 +3194,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 		pNewCity->setGameTurnFounded(iGameTurnFounded);
 		pNewCity->SetEverCapital(bEverCapital);
 	}
+	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
+	pNewCity->setSettlementFounder(eSettlementFounder);
+	#endif
 
 	// Population change for capturing a city
 	if(!bRecapture && bConquest)	// Don't drop it if we're recapturing our own City
@@ -6184,6 +6178,9 @@ void CvPlayer::DoUnitReset()
 		int iCitadelDamage;
 		if(pLoopUnit->IsNearEnemyCitadel(iCitadelDamage))
 		{
+			#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+			ChangeUnitsHPAttrition(min(pLoopUnit->GetMaxHitPoints() - pLoopUnit->getDamage(), iCitadelDamage));
+			#endif
 			pLoopUnit->changeDamage(iCitadelDamage, NO_PLAYER, /*fAdditionalTextDelay*/ 0.5f);
 		}
 
@@ -7998,6 +7995,9 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 	// Unit Heal
 	if(pUnit != NULL)
 	{
+		#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+		ChangeUnitsRestoredHP(min(pUnit->getDamage(), kGoodyInfo.getHealing()));
+		#endif
 		pUnit->changeDamage(-(kGoodyInfo.getHealing()));
 	}
 
@@ -11553,16 +11553,6 @@ void CvPlayer::ChangeNumFaithSpentOnMilitaryUnits(int iChange)
 	m_iNumFaithSpentOnMilitaryUnits = (m_iNumFaithSpentOnMilitaryUnits + iChange);
 }
 #endif
-#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
-int CvPlayer::GetConqueredCities() const
-{
-	return m_iConqueredCities;
-}
-void CvPlayer::ChangeConqueredCities(int iChange)
-{
-	m_iConqueredCities = (m_iConqueredCities + iChange);
-}
-#endif
 #ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
 int CvPlayer::GetDisbandedUnitsStrength() const
 {
@@ -11681,16 +11671,6 @@ int CvPlayer::GetScienceLostToDeficit() const
 void CvPlayer::ChangeScienceLostToDeficit(int iChange)
 {
 	m_iScienceLostToDeficit = (m_iScienceLostToDeficit + iChange);
-}
-#endif
-#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
-int CvPlayer::GetScienceFromReligion() const
-{
-	return m_iScienceFromReligion;
-}
-void CvPlayer::ChangeScienceFromReligion(int iChange)
-{
-	m_iScienceFromReligion = (m_iScienceFromReligion + iChange);
 }
 #endif
 #ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
@@ -24933,6 +24913,44 @@ void CvPlayer::doResearch()
 			}
 		}
 
+		#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
+		// If we're in anarchy, then no Research is done!
+		#ifdef PENALTY_FOR_DELAYING_POLICIES
+		if (!IsAnarchy() && !IsDelayedPolicy())
+		#else
+		if (IsAnarchy())
+		#endif
+		{
+			int iValue = 0;
+			int iDeficit = 0;
+			#if defined PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+			int iMod = 0;
+			#endif
+			iValue += GetScienceFromCitiesTimes100(false);
+			iValue += GetScienceFromOtherPlayersTimes100();
+			iValue += GetScienceFromHappinessTimes100();
+			iValue += GetScienceFromResearchAgreementsTimes100();
+			#ifdef BELIEF_INTERFAITH_DIALOGUE_PER_FOLLOWERS
+			iValue += GetSciencePerTurnFromReligionTimes100();
+			#endif
+			#ifdef NEW_CITY_STATES_TYPES
+			iValue += GetSciencePerTurnFromMinorCivsTimes100();
+			#endif
+			#ifdef SCIENCE_FROM_INFLUENCED_CIVS
+			iValue += GetSciencePerTurnFromInfluencedCivsTimes100();
+			#endif
+
+			iDeficit = min(iValue, GetScienceFromBudgetDeficitTimes100() * -1);  // limited by science output
+			#ifdef PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+			iMod += 5 * std::max(GetNumCapitalsControlled() - 1, 0);
+			#endif
+			#if defined PLAYER_MODIFIERS_FOR_NUM_CAP_CONTROLLED
+			iDeficit *= (100 + iMod);
+			iDeficit /= 100;
+			#endif
+			ChangeScienceLostToDeficit(iDeficit / 100);
+		}
+		#endif
 		TechTypes eCurrentTech = GetPlayerTechs()->GetCurrentResearch();
 		if(eCurrentTech == NO_TECH)
 		{
@@ -27494,9 +27512,6 @@ void CvPlayer::Read(FDataStream& kStream)
 #ifdef SAVE_BACKWARDS_COMPATIBILITY
 	if (uiVersion >= 1017)
 	{
-		#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
-		kStream >> m_iConqueredCities;
-		#endif
 		#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
 		kStream >> m_iDisbandedUnitsStrength;
 		#endif
@@ -27533,9 +27548,6 @@ void CvPlayer::Read(FDataStream& kStream)
 		#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
 		kStream >> m_iScienceLostToDeficit;
 		#endif
-		#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
-		kStream >> m_iScienceFromReligion;
-		#endif
 		#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
 		kStream >> m_iNumUnitPromotions;
 		#endif
@@ -27548,9 +27560,6 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 	else
 	{
-		#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
-		m_iConqueredCities = 0;
-		#endif
 		#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
 		m_iDisbandedUnitsStrength = 0;
 		#endif
@@ -27586,9 +27595,6 @@ void CvPlayer::Read(FDataStream& kStream)
 		#endif
 		#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
 		m_iScienceLostToDeficit = 0;
-		#endif
-		#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
-		m_iScienceFromReligion = 0;
 		#endif
 		#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
 		m_iNumUnitPromotions = 0;
@@ -29719,9 +29725,6 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iHappinessFromLeagues;
 	kStream << m_iEspionageModifier;
 	kStream << m_iSpyStartingRank;
-	#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
-	kStream << m_iConqueredCities;
-	#endif
 	#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
 	kStream << m_iDisbandedUnitsStrength;
 	#endif
@@ -29757,9 +29760,6 @@ void CvPlayer::Write(FDataStream& kStream) const
 	#endif
 	#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
 	kStream << m_iScienceLostToDeficit;
-	#endif
-	#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
-	kStream << m_iScienceFromReligion;
 	#endif
 	#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
 	kStream << m_iNumUnitPromotions;
@@ -33013,7 +33013,7 @@ int CvPlayer::GetNumCapitalsControlled() const
 	const CvCity* pLoopCity = NULL;
 	for (pLoopCity = firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = nextCity(&iCityLoop))
 	{
-		if (pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && pLoopCity->IsOriginalCapital())
+		if (pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS && pLoopCity->IsOriginalMajorCapital())
 		{
 			iNumCapitalsControlled += 1;
 		}
@@ -33655,7 +33655,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 #endif
 
 #ifdef EG_REPLAYDATASET_FOODFROMCS
-#ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
 		int iFoodFromMinersTimes100 = 0;
 		for (int iI = 0; iI < getNumCities(); iI++)
 		{
@@ -33675,7 +33675,7 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_FOODFROMCS"), iGameTurn, iFoodFromMinersTimes100 / 100);
 #endif
 #ifdef EG_REPLAYDATASET_PRODUCTIONFROMCS
-#ifdef PLAYER_GET_NUM_CAPITALS_CONTROLLED
+#ifdef CHANGE_FOOD_PROD_MINORS_SCALE
 		int iProductionFromMinersTimes100 = 0;
 		for (int iI = 0; iI < getNumCities(); iI++)
 		{
@@ -33867,7 +33867,14 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 
 		/// Fifth Bunch of Enhanced Graphs
 		#ifdef EG_REPLAYDATASET_CONQUEREDCITIES
-		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CONQUEREDCITIES"), iGameTurn, GetConqueredCities());
+		iLoopCity = 0;
+		int iNumConqueredCities = 0;
+		for (CvCity* pLoopCity = firstCity(&iLoopCity); pLoopCity != NULL; pLoopCity = nextCity(&iLoopCity))
+		{
+			if (pLoopCity->getSettlementFounder() != GetID())
+				iNumConqueredCities++;
+		}
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_CONQUEREDCITIES"), iGameTurn, iNumConqueredCities);
 		#endif
 		#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_DISBANDEDUNITSSTRENGTH"), iGameTurn, GetDisbandedUnitsStrength());
@@ -33897,7 +33904,37 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_KILLEDGENERALS"), iGameTurn, GetKilledGenerals());
 		#endif
 		#ifdef EG_REPLAYDATASET_EFFECTIVEKNOWNTECHSCOST
-		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVEKNOWNTECHSCOST"), iGameTurn, GetEffectiveKnownTechsCost());
+		int iProgress = 0;  // include progress from partially researched techs
+		for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
+		{
+			const TechTypes eTech = static_cast<TechTypes>(iI);
+			if (!GET_TEAM(getTeam()).GetTeamTechs()->HasTech(eTech) && GET_TEAM(getTeam()).GetTeamTechs()->GetResearchProgressTimes100(eTech) > 0)
+			{
+				int iResearchCost = GET_TEAM(getTeam()).GetTeamTechs()->GetResearchCost(eTech) * 100;
+
+				// Player modifiers to cost
+				int iResearchMod = std::max(1, calculateResearchModifier(eTech));
+				iResearchCost = (iResearchCost * 100) / iResearchMod;
+				int iNumCitiesMod = GC.getMap().getWorldInfo().GetNumCitiesTechCostMod();	// Default is 40, gets smaller on larger maps
+				#ifdef NEW_NUM_CITIES_RESEARCH_COST_MODIFIER
+				#ifdef NO_PUPPET_TECH_COST_MOD
+				iNumCitiesMod = GetPlayerTechs()->GetNumCitiesResearchCostModifier(GetMaxEffectiveCities());
+				#else
+				iNumCitiesMod = GetPlayerTechs()->GetNumCitiesResearchCostModifier(GetMaxEffectiveCities(/*bIncludePuppets*/ true));
+				#endif
+				#else
+				#ifdef NO_PUPPET_TECH_COST_MOD
+				iNumCitiesMod = iNumCitiesMod * GetMaxEffectiveCities();
+				#else
+				iNumCitiesMod = iNumCitiesMod * GetMaxEffectiveCities(/*bIncludePuppets*/ true);
+				#endif
+				#endif
+				iResearchCost = iResearchCost * (100 + iNumCitiesMod) / 100;
+
+				iProgress += (GET_TEAM(getTeam()).GetTeamTechs()->GetResearchProgressTimes100(eTech) * 100 / iResearchCost) * GET_TEAM(getTeam()).GetTeamTechs()->GetResearchCost(eTech) / 100;
+			}
+		}
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVEKNOWNTECHSCOST"), iGameTurn, GetEffectiveKnownTechsCost() + iProgress);
 		#endif
 		#ifdef EG_REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS"), iGameTurn, GetProductionSpentOnBuildings());
@@ -33920,8 +33957,11 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		#ifdef EG_REPLAYDATASET_SCIENCELOSTTODEFICIT
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENCELOSTTODEFICIT"), iGameTurn, GetScienceLostToDeficit());
 		#endif
+		#ifdef EG_REPLAYDATASET_SCIENCEFROMCULTURALINFLUENCE
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENCEFROMCULTURALINFLUENCE"), iGameTurn, GetSciencePerTurnFromInfluencedCivsTimes100() / 100);
+		#endif
 		#ifdef EG_REPLAYDATASET_SCIENCEFROMRELIGION
-		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENCEFROMRELIGION"), iGameTurn, GetScienceFromReligion());
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_SCIENCEFROMRELIGION"), iGameTurn, GetSciencePerTurnFromReligionTimes100() / 100);
 		#endif
 		#ifdef EG_REPLAYDATASET_NUMUNITPROMOTIONS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMUNITPROMOTIONS"), iGameTurn, GetNumUnitPromotions());
