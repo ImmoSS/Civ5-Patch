@@ -12410,7 +12410,7 @@ void CvPlayer::ChangeJONSCulturePerTurnFromMinorCivs(int /*iChange*/)
 int CvPlayer::GetCulturePerTurnFromMinorCivs() const
 {
 #ifdef PLAYER_CULTURE_TIMES_100
-	return GetCulturePerTurnFromMinorCivsTimes100();
+	return GetCulturePerTurnFromMinorCivsTimes100() / 100;
 #else
 	int iAmount = 0;
 	PlayerTypes eMinor;
