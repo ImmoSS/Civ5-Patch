@@ -3956,7 +3956,14 @@ bool CvCity::canContinueProduction(OrderData order)
 	switch(order.eOrderType)
 	{
 	case ORDER_TRAIN:
+#ifdef FIX_CAN_CONTINUE_PRODUCTION
+	{
+		UnitTypes eUpgradeUnit = allUpgradesAvailable((UnitTypes)(order.iData1));
+		return canTrain((UnitTypes)(order.iData1), true) || canTrain(eUpgradeUnit, true);
+	}
+#else
 		return canTrain((UnitTypes)(order.iData1), true);
+#endif
 		break;
 
 	case ORDER_CONSTRUCT:
