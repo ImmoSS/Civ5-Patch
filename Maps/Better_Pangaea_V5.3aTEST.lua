@@ -4542,72 +4542,87 @@ function AssignStartingPlots:FindStart(region_number, NoCoast)
 	local middle_inland_dry = {};
 	local outer_plots = {};
 	
-	-- Identify candidate plots.
-	for region_y = 0, iHeight - 1 do -- When handling global plot indices, process Y first.
-		for region_x = 0, iWidth - 1 do
-			local x = (region_x + iWestX) % iW; -- Actual coords, adjusted for world wrap, if any.
-			local y = (region_y + iSouthY) % iH; --
-			local plotIndex = y * iW + x + 1;
-			local isTooCloseToOthers = false;
-			for region_num = 1, table.maxn(self.regionData) do
-				if region_number ~= region_num and self.startingPlots[region_num] ~= nil then
-					if Map.PlotDistance(x, y, self.startingPlots[region_num][1], self.startingPlots[region_num][2]) < 11 then
-						isTooCloseToOthers = true;
+	local iNumPossiblePlots = 0;
+	local iDistanceBetweenPlayers = 12;
+	while iNumPossiblePlots < 10 do
+		iDistanceBetweenPlayers = iDistanceBetweenPlayers - 1
+		-- Identify candidate plots.
+		for region_y = 0, iHeight - 1 do -- When handling global plot indices, process Y first.
+			for region_x = 0, iWidth - 1 do
+				local x = (region_x + iWestX) % iW; -- Actual coords, adjusted for world wrap, if any.
+				local y = (region_y + iSouthY) % iH; --
+				local plotIndex = y * iW + x + 1;
+				local isTooCloseToOthers = false;
+				for region_num = 1, table.maxn(self.regionData) do
+					if region_number ~= region_num and self.startingPlots[region_num] ~= nil then
+						if Map.PlotDistance(x, y, self.startingPlots[region_num][1], self.startingPlots[region_num][2]) < iDistanceBetweenPlayers then
+							isTooCloseToOthers = true;
+						else
+						end
 					end
 				end
-			end
-			local plot = Map.GetPlot(x, y);
-			local plotType = plot:GetPlotType()
-			if plotType == PlotTypes.PLOT_HILLS or plotType == PlotTypes.PLOT_LAND and not isTooCloseToOthers then -- Could host a city.
-				-- Check if plot is two away from salt water.
-				if self.plotDataIsNextToCoast[plotIndex] == true then
-					table.insert(two_plots_from_ocean, plotIndex);
-				elseif self.plotDataIsThreeFromCoast[plotIndex] == true then
-					table.insert(three_plots_from_ocean, plotIndex);
-				else
-					local area_of_plot = plot:GetArea();
-					if area_of_plot == iAreaID or iAreaID == -1 then -- This plot is a member, so it goes on at least one candidate list.
-						--
-						-- Test whether plot is in center bias, middle donut, or outer donut.
-						--
-						local test_x = region_x + iWestX; -- "Test" coords, ignoring any world wrap and
-						local test_y = region_y + iSouthY; -- reaching in to virtual space if necessary.
-						if (test_x >= iCenterTestWestX and test_x <= iCenterTestEastX) and 
-						   (test_y >= iCenterTestSouthY and test_y <= iCenterTestNorthY) then -- Center Bias.
-							
-							if NoCoast == true and self.plotDataIsCoastal[plotIndex] == true then
-								-- do nothing
-							elseif plot:IsRiverSide() then
-								table.insert(center_river, plotIndex);
-								table.insert(center_candidates, plotIndex);
-							elseif plot:IsFreshWater() or self.plotDataIsCoastal[plotIndex] == true then
-								table.insert(center_coastal, plotIndex);
-								table.insert(center_candidates, plotIndex);
+				local plot = Map.GetPlot(x, y);
+				local plotType = plot:GetPlotType()
+				if (plotType == PlotTypes.PLOT_HILLS or plotType == PlotTypes.PLOT_LAND) and not isTooCloseToOthers then -- Could host a city.
+					-- Check if plot is two away from salt water.
+					if self.plotDataIsNextToCoast[plotIndex] == true then
+						table.insert(two_plots_from_ocean, plotIndex);
+						iNumPossiblePlots = iNumPossiblePlots + 1;
+					elseif self.plotDataIsThreeFromCoast[plotIndex] == true then
+						table.insert(three_plots_from_ocean, plotIndex);
+						iNumPossiblePlots = iNumPossiblePlots + 1;
+					else
+						local area_of_plot = plot:GetArea();
+						if area_of_plot == iAreaID or iAreaID == -1 then -- This plot is a member, so it goes on at least one candidate list.
+							--
+							-- Test whether plot is in center bias, middle donut, or outer donut.
+							--
+							local test_x = region_x + iWestX; -- "Test" coords, ignoring any world wrap and
+							local test_y = region_y + iSouthY; -- reaching in to virtual space if necessary.
+							if (test_x >= iCenterTestWestX and test_x <= iCenterTestEastX) and 
+							   (test_y >= iCenterTestSouthY and test_y <= iCenterTestNorthY) then -- Center Bias.
+								
+								if NoCoast == true and self.plotDataIsCoastal[plotIndex] == true then
+									-- do nothing
+								elseif plot:IsRiverSide() then
+									table.insert(center_river, plotIndex);
+									table.insert(center_candidates, plotIndex);
+									iNumPossiblePlots = iNumPossiblePlots + 1;
+								elseif plot:IsFreshWater() or self.plotDataIsCoastal[plotIndex] == true then
+									table.insert(center_coastal, plotIndex);
+									table.insert(center_candidates, plotIndex);
+									iNumPossiblePlots = iNumPossiblePlots + 1;
+								else
+									table.insert(center_inland_dry, plotIndex);
+									table.insert(center_candidates, plotIndex);
+									iNumPossiblePlots = iNumPossiblePlots + 1;
+								end
+								
+							elseif (test_x >= iMiddleTestWestX and test_x <= iMiddleTestEastX) and 
+							       (test_y >= iMiddleTestSouthY and test_y <= iMiddleTestNorthY) then
+								
+								if NoCoast == true and self.plotDataIsCoastal[plotIndex] == true then
+									--do nothing
+								elseif plot:IsRiverSide() then
+									table.insert(middle_river, plotIndex);
+									table.insert(middle_candidates, plotIndex);
+									iNumPossiblePlots = iNumPossiblePlots + 1;
+								elseif plot:IsFreshWater() or self.plotDataIsCoastal[plotIndex] == true then
+									table.insert(middle_coastal, plotIndex);
+									table.insert(middle_candidates, plotIndex);
+									iNumPossiblePlots = iNumPossiblePlots + 1;
+								else
+									table.insert(middle_inland_dry, plotIndex);
+									table.insert(middle_candidates, plotIndex);
+									iNumPossiblePlots = iNumPossiblePlots + 1;
+								end
 							else
-								table.insert(center_inland_dry, plotIndex);
-								table.insert(center_candidates, plotIndex);
-							end
-							
-						elseif (test_x >= iMiddleTestWestX and test_x <= iMiddleTestEastX) and 
-						       (test_y >= iMiddleTestSouthY and test_y <= iMiddleTestNorthY) then
-							
-							if NoCoast == true and self.plotDataIsCoastal[plotIndex] == true then
-								--do nothing
-							elseif plot:IsRiverSide() then
-								table.insert(middle_river, plotIndex);
-								table.insert(middle_candidates, plotIndex);
-							elseif plot:IsFreshWater() or self.plotDataIsCoastal[plotIndex] == true then
-								table.insert(middle_coastal, plotIndex);
-								table.insert(middle_candidates, plotIndex);
-							else
-								table.insert(middle_inland_dry, plotIndex);
-								table.insert(middle_candidates, plotIndex);
-							end
-						else
-							if NoCoast == true and self.plotDataIsCoastal[plotIndex] == true then
-								--do nothing
-							else
-								table.insert(outer_plots, plotIndex);
+								if NoCoast == true and self.plotDataIsCoastal[plotIndex] == true then
+									--do nothing
+								else
+									table.insert(outer_plots, plotIndex);
+									iNumPossiblePlots = iNumPossiblePlots + 1;
+								end
 							end
 						end
 					end
@@ -4615,6 +4630,8 @@ function AssignStartingPlots:FindStart(region_number, NoCoast)
 			end
 		end
 	end
+	
+	print("region_number =", region_number, "iNumPossiblePlots =", iNumPossiblePlots);
 
 	-- Check how many plots landed on each list.
 	local iNumDisqualified = table.maxn(two_plots_from_ocean) + table.maxn(three_plots_from_ocean);
