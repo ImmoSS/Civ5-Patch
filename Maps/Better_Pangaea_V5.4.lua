@@ -16,7 +16,7 @@ include("TerrainGenerator");
 function GetMapScriptInfo()
 	local world_age, temperature, rainfall, sea_level, resources = GetCoreMapOptions()
 	return {
-		Name = "Better Pangaea V5.3aTEST",
+		Name = "Better Pangaea V5.4 Test",
 		Description = "TXT_KEY_MAP_PANGAEA_HELP",
 		IsAdvancedMap = false,
 		IconIndex = 0,
