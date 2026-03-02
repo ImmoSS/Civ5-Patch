@@ -43878,7 +43878,7 @@
 			<BuildingClass>BUILDINGCLASS_GREAT_WALL</BuildingClass> 
 			<ArtDefineTag>ART_DEF_BUILDING_GREAT_WALL</ArtDefineTag> 
 			<MaxStartEra>ERA_MEDIEVAL</MaxStartEra> 
-			<ObsoleteTech>TECH_CHEMISTRY</ObsoleteTech> 
+			<ObsoleteTech>TECH_DYNAMITE</ObsoleteTech> 
 			<TechEnhancedTourism>0</TechEnhancedTourism> 
 			<FreeBuildingThisCity>BUILDINGCLASS_WALLS</FreeBuildingThisCity> 
 			<PrereqTech>TECH_ENGINEERING</PrereqTech> 
