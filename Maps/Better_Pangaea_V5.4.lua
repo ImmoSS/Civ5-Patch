@@ -302,7 +302,7 @@ function PangaeaFractalWorld:GeneratePlotTypes(args)
 	numPlates = numPlates * adjust_plates;
 
 	-- Generate continental fractal layer and examine the largest landmass. Reject
-	-- the result until the largest landmass occupies 100% or more of the total land.
+	-- the result until the largest landmass occupies 84% or more of the total land.
 	local done = false;
 	local iAttempts = 0;
 	local iWaterThreshold, biggest_area, iNumTotalLandTiles, iNumBiggestAreaTiles, iBiggestID;
@@ -342,7 +342,7 @@ function PangaeaFractalWorld:GeneratePlotTypes(args)
 		biggest_area = Map.FindBiggestArea(false);
 		iNumBiggestAreaTiles = biggest_area:GetNumTiles();
 		-- Now test the biggest landmass to see if it is large enough.
-		if iNumBiggestAreaTiles >= iNumTotalLandTiles * 1.00 then
+		if iNumBiggestAreaTiles >= iNumTotalLandTiles * 0.84 then
 			done = true;
 			iBiggestID = biggest_area:GetID();
 		end
@@ -4543,7 +4543,7 @@ function AssignStartingPlots:FindStart(region_number, NoCoast)
 	local outer_plots = {};
 	
 	local iNumPossiblePlots = 0;
-	local iDistanceBetweenPlayers = 12;
+	local iDistanceBetweenPlayers = 10;
 	while iNumPossiblePlots < 10 do
 		iDistanceBetweenPlayers = iDistanceBetweenPlayers - 1
 		-- Identify candidate plots.
