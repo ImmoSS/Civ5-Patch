@@ -97851,7 +97851,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_ECONOMIC_UNION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Learned Society[ENDCOLOR][NEWLINE]+1%, +4%, +9%, +16%, +25%, +36% [ICON_RESEARCH] Science in cities with population of 5+, 10+, 15+, 20+, 25+, 30+.
+				[COLOR_POSITIVE_TEXT]Learned Society[ENDCOLOR][NEWLINE]+1%, +4%, +9%, +16%, +25%, +36%, 49% [ICON_RESEARCH] Science in cities with population of 5+, 10+, 15+, 20+, 25+, 30+. 35+.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_ECONOMIC_UNION_TEXT"> 
@@ -129618,7 +129618,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_ECONOMIC_UNION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Научное общество[ENDCOLOR][NEWLINE]+1%, +4%, +9%, +16%, +25%, +36% [ICON_RESEARCH] к науке в городах с населением 5+, 10+, 15+, 20+, 25+, 30+.
+				[COLOR_POSITIVE_TEXT]Научное общество[ENDCOLOR][NEWLINE]+1%, +4%, +9%, +16%, +25%, +36%, 49% [ICON_RESEARCH] к науке в городах с населением 5+, 10+, 15+, 20+, 25+, 30+, 35+.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_ECONOMIC_UNION"> 
