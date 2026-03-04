@@ -80803,6 +80803,26 @@ The ship has weather'd every rack; the prize we sought is won."
 				Normal Start
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_MAP_OPTION_COASTAL_SPAWNS"> 
+			<Text>
+				Coastal Spawns
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_MAP_OPTION_COASTAL_SPAWNS_ONLY_COASTAL"> 
+			<Text>
+				Coastal Civs Only
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_MAP_OPTION_INLAND_SPAWNS"> 
+			<Text>
+				Inland Spawns
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_MAP_OPTION_INLAND_SPAWNS_ONLY_INLAND"> 
+			<Text>
+				Inland Civs Only
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_MAP_OVAL"> 
 			<Text>
 				Oval
@@ -131220,6 +131240,26 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_MAP_OPTION_NORMAL_START"> 
 			<Text>
 				Обычное начало
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_MAP_OPTION_COASTAL_SPAWNS"> 
+			<Text>
+				Морские появления
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_MAP_OPTION_COASTAL_SPAWNS_ONLY_COASTAL"> 
+			<Text>
+				Только морские державы
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_MAP_OPTION_INLAND_SPAWNS"> 
+			<Text>
+				Наземные появления
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_MAP_OPTION_INLAND_SPAWNS_ONLY_INLAND"> 
+			<Text>
+				Только наземные державы
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RANDOM_LEADER_CIV"> 
