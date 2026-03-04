@@ -7162,12 +7162,12 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ROYAL_LIBRARY_HELP"> 
 			<Text>
-				Unique Assyrian Public School replacement. +1 [ICON_RESEARCH] Science for every 2 [ICON_CITIZEN] Citizens in this City. Also has a slot for a Great Work of Writing.
+				Unique Assyrian Public School replacement. +1 [ICON_RESEARCH] Science for every 2 [ICON_CITIZEN] Citizens in this City. +15 XP for all Units. Also has a slot for a Great Work of Writing.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ROYAL_LIBRARY_STRATEGY"> 
 			<Text>
-				In addition to the [ICON_RESEARCH] Science output of the Public School it replaces, the Royal Library also has a Great Work of Writing slot. Only the Assyrians may build it.
+				In addition to the [ICON_RESEARCH] Science output of the Public School it replaces, the Royal Library also has a Great Work of Writing slot. +15 XP for all Units. Only the Assyrians may build it.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_SATRAPS_COURT_DESC"> 
