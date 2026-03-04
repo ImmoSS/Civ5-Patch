@@ -6007,12 +6007,12 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_GREAT_WALL_STRATEGY"> 
 			<Text>
-				The Great Wall damages all enemy units which end turn on your territory and make them not healing every turn nor gaining HP from pillaging. It also provides +1 [ICON_CULTURE] Culture and +1 Great Engineer point. The defensive benefits of this Wonder, particularly for a sprawling empire with a road network, are incalculable.
+				The Great Wall damages all enemy land units which end turn on your territory and make them not healing every turn nor gaining HP from pillaging. It also provides +1 [ICON_CULTURE] Culture and +1 Great Engineer point. The defensive benefits of this Wonder, particularly for a sprawling empire with a road network, are incalculable.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_GREAT_WALL_HELP"> 
 			<Text>
-				Great Wall damages all enemy units which end turn on your territory and make them not healing every turn nor gaining HP from pillaging. Provides Walls for free in the city in which it is built. Upon discovering Artillery, The Great Wall becomes obsolete.
+				Great Wall damages all enemy land units which end turn on your territory and make them not healing every turn nor gaining HP from pillaging. Provides Walls for free in the city in which it is built. Upon discovering Artillery, The Great Wall becomes obsolete.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_GROCER"> 
@@ -135719,12 +135719,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_GREAT_WALL_STRATEGY"> 
 			<Text>
-				Великая стена наносит урон вражеским юнитам, закончившим ход на вашей территории, и не позволяет им восстанавливать ОЗ каждый ход и получать ОЗ за грабеж клеток. Она также дает +1 [ICON_CULTURE] к культуре и +1 к очкам великого инженера. Преимущества этого чуда неоценимы, особенно для огромной империи с развитой сетью дорог.
+				Великая стена наносит урон вражеским сухопутным юнитам, закончившим ход на вашей территории, и не позволяет им восстанавливать ОЗ каждый ход и получать ОЗ за грабеж клеток. Она также дает +1 [ICON_CULTURE] к культуре и +1 к очкам великого инженера. Преимущества этого чуда неоценимы, особенно для огромной империи с развитой сетью дорог.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_GREAT_WALL_HELP"> 
 			<Text>
-				При завершении хода на вашей территории вражеские юниты будут получать урон, а также не смогут восстанавливать ОЗ каждый ход и получать ОЗ за грабеж клеток. В городе, где было создано это чудо, бесплатно появляются стены. После открытия артиллерии Великая стена утрачивает свое значение.
+				При завершении хода на вашей территории вражеские сухопутные юниты будут получать урон, а также не смогут восстанавливать ОЗ каждый ход и получать ОЗ за грабеж клеток. В городе, где было создано это чудо, бесплатно появляются стены. После открытия артиллерии Великая стена утрачивает свое значение.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CHORAL_MUSIC"> 
