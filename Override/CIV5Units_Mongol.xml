@@ -129002,7 +129002,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_PATCH_VERSION"> 
 			<Text>
-				v12.1
+				v12.1a
 			</Text>
 		</Replace>
 	</Language_en_US>
@@ -136293,7 +136293,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_PATCH_VERSION"> 
 			<Text>
-				v12.1
+				v12.1a
 			</Text>
 		</Replace>
 	</Language_RU_RU>
