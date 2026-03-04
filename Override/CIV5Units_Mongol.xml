@@ -131209,7 +131209,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Replace Tag="TXT_KEY_MAP_OPTION_STRATEGIC_BALANCE_WITH_COAL"> 
 			<Text>
-				Стратегический баланс с углем и алюминием
+				Страт. баланс с углем и алюминием
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MAP_OPTION_MORE_RIVERS"> 
@@ -131244,7 +131244,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_MAP_OPTION_COASTAL_SPAWNS"> 
 			<Text>
-				Морские появления
+				Старт на побережье
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MAP_OPTION_COASTAL_SPAWNS_ONLY_COASTAL"> 
@@ -131254,12 +131254,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_MAP_OPTION_INLAND_SPAWNS"> 
 			<Text>
-				Наземные появления
+				Старт на суше
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MAP_OPTION_INLAND_SPAWNS_ONLY_INLAND"> 
 			<Text>
-				Только наземные державы
+				Без морских держав
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RANDOM_LEADER_CIV"> 
