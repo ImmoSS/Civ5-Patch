@@ -16,14 +16,14 @@ include("TerrainGenerator");
 function GetMapScriptInfo()
 	local world_age, temperature, rainfall, sea_level, resources = GetCoreMapOptions()
 	return {
-		Name = "Better Pangaea V5.4 Test",
+		Name = "Better Pangaea V5.4",
 		Description = "TXT_KEY_MAP_PANGAEA_HELP",
 		IsAdvancedMap = false,
 		IconIndex = 0,
 		SortIndex = 2,
 		CustomOptions = {world_age, temperature, rainfall,
 			{
-				Name = "TXT_KEY_MAP_OPTION_SEA_LEVEL",
+				Name = "TXT_KEY_MAP_OPTION_SEA_LEVEL", -- (4)
 				Values = {
 					"TXT_KEY_MAP_OPTION_LOW",
 					"TXT_KEY_MAP_OPTION_MEDIUM",
@@ -34,7 +34,7 @@ function GetMapScriptInfo()
 				SortPriority = -96,
 			},
 			{
-				Name = "TXT_KEY_MAP_OPTION_RESOURCES",	-- Customizing the Resource setting to Default to Strategic Balance.
+				Name = "TXT_KEY_MAP_OPTION_RESOURCES",	-- Customizing the Resource setting to Default to Strategic Balance. (5)
 				Values = {
 					"TXT_KEY_MAP_OPTION_SPARSE",
 					"TXT_KEY_MAP_OPTION_STANDARD",
@@ -48,7 +48,7 @@ function GetMapScriptInfo()
 				SortPriority = -95,
 			},
 			{
-				Name = "TXT_KEY_MAP_OPTION_MORE_RIVERS",
+				Name = "TXT_KEY_MAP_OPTION_MORE_RIVERS", -- (6)
 				Values = {
 					"TXT_KEY_YES_BUTTON",
 					"TXT_KEY_NO_BUTTON",
@@ -57,7 +57,7 @@ function GetMapScriptInfo()
 				SortPriority = -94,
 			},
 			{
-				Name = "TXT_KEY_MAP_OPTION_EXTRA_RESOURCES",
+				Name = "TXT_KEY_MAP_OPTION_EXTRA_RESOURCES", -- (7)
 				Values = {
 					"1",
 					"2",
@@ -76,7 +76,7 @@ function GetMapScriptInfo()
 				SortPriority = -93,
 			},
 			{
-				Name = "TXT_KEY_MAP_OPTION_MAX_MOUNTAINS",
+				Name = "TXT_KEY_MAP_OPTION_MAX_MOUNTAINS", -- (8)
 				Values = {
 					"3",
 					"4",
@@ -91,7 +91,7 @@ function GetMapScriptInfo()
 				SortPriority = -92,
 			},
 			{
-				Name = "TXT_KEY_BUILID_RIDGES",
+				Name = "TXT_KEY_BUILID_RIDGES", -- (9)
 				Values = {
 					"TXT_KEY_NO_BUTTON",
 					"TXT_KEY_YES_BUTTON",
@@ -102,25 +102,25 @@ function GetMapScriptInfo()
 			},
 
 			{
-				Name = "Coastal Spawns",	-- Can inland civ spawn on the coast (16)
+				Name = "TXT_KEY_MAP_OPTION_COASTAL_SPAWNS",	-- Can inland civ spawn on the coast (10)
 				Values = {
-					"Coastal Civs Only",
-					"Random",
+					"TXT_KEY_MAP_OPTION_RANDOM",
+					"TXT_KEY_MAP_OPTION_COASTAL_SPAWNS_ONLY_COASTAL",
 				},
 
 				DefaultValue = 1,
-				SortPriority = -85,
+				SortPriority = -90,
 			},
 
 			{
-				Name = "Inland Sea Spawns",	-- Can coastal civ spawn on inland seas (18)
+				Name = "TXT_KEY_MAP_OPTION_INLAND_SPAWNS",	-- Can coastal civ spawn on inland seas (11)
 				Values = {
-					"Allowed",
-					"Not Allowed for Coastal Civs",
+					"TXT_KEY_MAP_OPTION_RANDOM",
+					"TXT_KEY_MAP_OPTION_INLAND_SPAWNS_ONLY_INLAND",
 				},
 
-				DefaultValue = 2,
-				SortPriority = -83,
+				DefaultValue = 1,
+				SortPriority = -89,
 			},
 		},
 	}
@@ -6901,10 +6901,10 @@ function StartPlotSystem()
 		res = 1 + Map.Rand(3, "Random Resources Option - Lua");
 	end
 	if Map.GetCustomOption(10) == 1 then
-		OnlyCoastal = true;
+		OnlyCoastal = false;
 	end	
 	if Map.GetCustomOption(10) == 2 then
-		OnlyCoastal = false;
+		OnlyCoastal = true;
 	end
 
 	print("Creating start plot database.");
