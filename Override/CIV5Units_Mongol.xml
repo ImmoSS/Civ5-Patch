@@ -131219,12 +131219,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_MAP_OPTION_MAX_MOUNTAINS"> 
 			<Text>
-				Максимальное кол-во гор
+				Макс. кол-во гор
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MAP_OPTION_EXTRA_RESOURCES"> 
 			<Text>
-				Дополнительные ресурсы
+				Доп. ресурсы
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MAP_OPTION_START"> 
