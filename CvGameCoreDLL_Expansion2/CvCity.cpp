@@ -15740,6 +15740,9 @@ void CvCity::Purchase(UnitTypes eUnitType, BuildingTypes eBuildingType, ProjectT
 			}
 
 			kPlayer.ChangeFaith(-iFaithCost);
+#ifdef EG_REPLAYDATASET_NUMFAITHONBUILDINGS
+			kPlayer.ChangeNumFaithSpentOnBuildings(iFaithCost);
+#endif
 
 			if(GC.getLogging())
 			{

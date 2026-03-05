@@ -152731,6 +152731,11 @@
 			<Type>REPLAYDATASET_SCIENCEFROMCULTURALINFLUENCE</Type>
 			<Description>TXT_KEY_REPLAY_DATA_SCIENCEFROMCULTURALINFLUENCE</Description>
 		</Row>
+		<Row> 
+			<ID>135</ID> 
+			<Type>REPLAYDATASET_NUMFAITHONBUILDINGS</Type>
+			<Description>TXT_KEY_REPLAY_DATA_NUMFAITHONBUILDINGS</Description>
+		</Row>
 	</ReplayDataSets> 
 
 	<Table name="ResolutionDecisions">

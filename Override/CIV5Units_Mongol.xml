@@ -105018,6 +105018,11 @@ The ship has weather'd every rack; the prize we sought is won."
 				Faith [ICON_PEACE] spent on Non-Combat Units purchases
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_REPLAY_DATA_NUMFAITHONBUILDINGS">
+			<Text>
+				Faith [ICON_PEACE] spent on Buildings purchases
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_REPLAY_DATA_FOODKEPTAFTERGROWTH">
 			<Text>
 				Food [ICON_FOOD] kept after City Growth
@@ -132387,6 +132392,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_REPLAY_DATA_NUMFAITHONNONCOMBATUNITS">
 			<Text>
 				Очки веры [ICON_PEACE], потраченные на покупку мирных юнитов
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_REPLAY_DATA_NUMFAITHONBUILDINGS">
+			<Text>
+				Очки веры [ICON_PEACE], потраченные на покупку зданий
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_REPLAY_DATA_FOODKEPTAFTERGROWTH">
