@@ -33904,15 +33904,15 @@ void CvPlayer::GatherPerTurnReplayStats(int iGameTurn)
 		#ifdef EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_DISBANDEDUNITSSTRENGTH"), iGameTurn, GetDisbandedUnitsStrength());
 		#endif
-		#ifdef EG_REPLAYDATASET_EFFECTIVEPRODUCTIONPERTURN
+		#ifdef EG_REPLAYDATASET_EFFECTIVEPRODUCTIONPERTURN_TIMES100
 		iLoopCity = 0;
 		int iEffectiveProduction = 0;
 		for (CvCity* pLoopCity = firstCity(&iLoopCity); pLoopCity != NULL; pLoopCity = nextCity(&iLoopCity))
 		{
 			if (!pLoopCity->IsPuppet())
-				iEffectiveProduction += pLoopCity->getCurrentProductionDifferenceTimes100(true, true) / 100;
+				iEffectiveProduction += pLoopCity->getCurrentProductionDifferenceTimes100(false, false);
 		}
-		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVEPRODUCTIONPERTURN"), iGameTurn, iEffectiveProduction);
+		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_EFFECTIVEPRODUCTIONPERTURN_TIMES100"), iGameTurn, iEffectiveProduction);
 		#endif
 		#ifdef EG_REPLAYDATASET_NUMFAITHONNONCOMBATUNITS
 		setReplayDataValue(getReplayDataSetIndex("REPLAYDATASET_NUMFAITHONNONCOMBATUNITS"), iGameTurn, GetNumFaithSpentOnNonCombatUnits());

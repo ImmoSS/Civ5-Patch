@@ -16193,7 +16193,7 @@ void CvCity::doProduction(bool bAllowNoProduction)
 		}
 
 		#if defined(EG_REPLAYDATASET_PRODUCTIONSPENTONBUILDINGS) || defined(EG_REPLAYDATASET_PRODUCTIONSPENTONCOMBATUNITS) || defined(EG_REPLAYDATASET_PRODUCTIONSPENTONNONCOMBATUNITS) || defined(EG_REPLAYDATASET_PRODUCTIONSPENTONWONDERS)
-		int iProd = getCurrentProductionDifferenceTimes100(true, true) / 100;
+		int iProd = getCurrentProductionDifferenceTimes100(false, false) / 100;
 		const OrderData* pOrderNode = headOrderQueueNode();
 		int iData1 = -1;
 		if (pOrderNode != NULL)

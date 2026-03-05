@@ -132384,7 +132384,7 @@ The ship has weather'd every rack; the prize we sought is won."
 				Боевая мощь распущенных юнитов
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_REPLAY_DATA_EFFECTIVEPRODUCTIONPERTURN">
+		<Replace Tag="TXT_KEY_REPLAY_DATA_EFFECTIVEPRODUCTIONPERTURN_TIMES100">
 			<Text>
 				Эффективное производство [ICON_PRODUCTION] за ход
 			</Text>

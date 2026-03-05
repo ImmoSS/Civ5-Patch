@@ -1559,7 +1559,7 @@
 // disbanded units' combat strength
 #define EG_REPLAYDATASET_DISBANDEDUNITSSTRENGTH
 // effective production per turn
-#define EG_REPLAYDATASET_EFFECTIVEPRODUCTIONPERTURN
+#define EG_REPLAYDATASET_EFFECTIVEPRODUCTIONPERTURN_TIMES100
 // Faith spent on non-combat Units purchases
 #define EG_REPLAYDATASET_NUMFAITHONNONCOMBATUNITS
 // Faith spent on buildings purchases
