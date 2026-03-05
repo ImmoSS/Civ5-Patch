@@ -196714,6 +196714,51 @@
 			<Type>REPLAYEVENT_DraftPlayerPicks</Type> 
 			<Description>TXT_KEY_REPLAYEVENT_DraftPlayerPicks_DESC</Description> 
 		</Row> 
+		<Row> 
+			<ID>105</ID> 
+			<Type>REPLAYEVENT_AddTerrain</Type> 
+			<Description>AddTerrain</Description> 
+			<Num3Type>36</Num3Type> 
+			<Num4Type>37</Num4Type> 
+			<Num8Type>38</Num8Type> 
+			<Num9Type>38</Num9Type> 
+			<Num10Type>38</Num10Type> 
+		</Row> 
+		<Row> 
+			<ID>106</ID> 
+			<Type>REPLAYEVENT_BuildProgress</Type> 
+			<Description>BuildProgress</Description> 
+			<Num3Type>39</Num3Type> 
+		</Row> 
+		<Row> 
+			<ID>107</ID> 
+			<Type>REPLAYEVENT_FeatureChanged</Type> 
+			<Description>FeatureChanged</Description> 
+			<Num3Type>32</Num3Type> 
+		</Row> 
+		<Row> 
+			<ID>108</ID> 
+			<Type>REPLAYEVENT_ResourceChanged</Type> 
+			<Description>ResourceChanged</Description> 
+			<Num3Type>40</Num3Type> 
+		</Row> 
+		<Row> 
+			<ID>109</ID> 
+			<Type>REPLAYEVENT_RouteChanged</Type> 
+			<Description>RouteChanged</Description> 
+			<Num3Type>41</Num3Type> 
+		</Row> 
+		<Row> 
+			<ID>110</ID> 
+			<Type>REPLAYEVENT_TileOwnerChanged</Type> 
+			<Description>TileOwnerChanged</Description> 
+			<Num3Type>15</Num3Type> 
+		</Row> 
+		<Row> 
+			<ID>111</ID> 
+			<Type>REPLAYEVENT_YieldChanged</Type> 
+			<Description>YieldChanged</Description> 
+		</Row> 
 	</ReplayEvents>
 	<Table name="ReplayEventCategories">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
