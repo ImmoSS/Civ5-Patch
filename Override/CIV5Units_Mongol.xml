@@ -121742,7 +121742,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_MACHINE_GUN"> 
 			<Text>
-				Late-game ranged Unit that must be adjacent to an enemy to strike.
+				Late-game ranged Unit.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_MARINE"> 
@@ -122324,7 +122324,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_MACHINE_GUN_STRATEGY"> 
 			<Text>
-				The Machine Gun is the penultimate non-siege ranged unit. It is more powerful than earlier ranged units. Like the Gatling Gun it has only a one-hex range, but still can deal significant damage to other units without being hurt itself. It is vulnerable to melee attack. Put Machine Guns in your city for defense.
+				The Machine Gun is the penultimate non-siege ranged unit. It is more powerful than earlier ranged units. It can deal significant damage to other units without being hurt itself. Put Machine Guns in your city for defense.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_MARINE"> 
@@ -136294,6 +136294,16 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_UNIT_HELP_BAZOOKA"> 
 			<Text>
 				Дальнобойный юнит эпохи атома.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_MACHINE_GUN"> 
+			<Text>
+				Дальнобойное подразделение поздних этапов игры.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_MACHINE_GUN_STRATEGY"> 
+			<Text>
+				Пулеметная рота - предпоследний дальнобойный юнит, не являющийся осадным орудием. Она гораздо мощнее более ранних дальнобойных юнитов. Пулеметная рота может нанести противнику значительный урон. Лучше всего использовать ее для защиты собственных городов.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
