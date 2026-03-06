@@ -120731,7 +120731,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_BAZOOKA_STRATEGY"> 
 			<Text>
-				The Bazooka is the last non-siege ranged unit. It is the most powerful ranged unit. Despite having only a one-hex range it can still deal significant damage to other units without being hurt itself. This makes it a great defense unit.
+				The Bazooka is the last non-siege ranged unit. It is the most powerful ranged unit. It can deal significant damage to other units without being hurt itself. This makes it a great defense unit.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_BERBER_CAVALRY"> 
@@ -121437,7 +121437,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_BAZOOKA"> 
 			<Text>
-				Atomic era ranged Unit that must be adjacent to an enemy to strike.
+				Atomic era ranged Unit.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_BERBER_CAVALRY"> 
@@ -136284,6 +136284,16 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_EUPANEL_DEFENSE_IN_FRIEND_LANDS"> 
 			<Text>
 				Защита на друж. земле
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_BAZOOKA_STRATEGY"> 
+			<Text>
+				Базука - последний не-осадный дальнобойный юнит. Это самый мощный дальнобойный юнит. Базука может наносить серьезнейшие повреждения другим юнитам, не страдая при этом сама. Таким образом, этот юнит отлично подходит для защиты.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_BAZOOKA"> 
+			<Text>
+				Дальнобойный юнит эпохи атома.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
