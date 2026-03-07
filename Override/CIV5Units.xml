@@ -179444,34 +179444,6 @@
 			<UnitType>UNIT_BAZOOKA</UnitType> 
 			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
 		</Row>
-		<Row> 
-			<UnitType>UNIT_MONGOLIAN_KESHIK</UnitType> 
-			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_CHARIOT_ARCHER</UnitType> 
-			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_HUN_HORSE_ARCHER</UnitType> 
-			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_EGYPTIAN_WARCHARIOT</UnitType> 
-			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_INDIAN_WARELEPHANT</UnitType> 
-			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_ARABIAN_CAMELARCHER</UnitType> 
-			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_INCAN_SLINGER</UnitType> 
-			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
-		</Row>
 	</Unit_FreePromotions> 
 
 	<Table name="Unit_GreatPersons">
