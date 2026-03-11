@@ -12834,6 +12834,40 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 		if (getDamage() >= 50)
 			iModifier += getUnitInfo().GetLowHealthDefenseModifier();
 #endif
+
+#ifdef FIX_IS_FRIENDLY_TERRITORY_MODIFIERS_AGAINST_CITIES
+		CvPlot* pTargetPlot = pCity->plot();
+		// Bonus for fighting in one's lands
+		if (pTargetPlot->IsFriendlyTerritory(getOwner()))
+		{
+		}
+
+		// Bonus for fighting outside one's lands
+		else
+		{
+			iTempModifier = getOutsideFriendlyLandsModifier();
+			iModifier += iTempModifier;
+
+			// Founder Belief bonus (this must be a city controlled by an enemy)
+			CvCity* pPlotCity = pTargetPlot->getWorkingCity();
+			if (pPlotCity)
+			{
+				if (atWar(getTeam(), pPlotCity->getTeam()))
+				{
+					ReligionTypes eReligion = pPlotCity->GetCityReligions()->GetReligiousMajority();
+					if (eReligion != NO_RELIGION && eReligion == eFoundedReligion)
+					{
+						const CvReligion* pCityReligion = GC.getGame().GetGameReligions()->GetReligion(eReligion, pPlotCity->getOwner());
+						if (pCityReligion)
+						{
+							iTempModifier = pCityReligion->m_Beliefs.GetCombatModifierEnemyCities();
+							iModifier += iTempModifier;
+						}
+					}
+				}
+			}
+		}
+#endif
 	}
 
 	// Ranged attack mod
