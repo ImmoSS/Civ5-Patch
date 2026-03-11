@@ -2044,15 +2044,6 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 				controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
 			end
 		end
-
-		-- FortifyModifier
-		iModifier = theirUnit:FortifyModifier();
-		if (iModifier ~= 0) then
-			controlTable = g_TheirCombatDataIM:GetInstance();
-			controlTable.Text:LocalizeAndSetText(  "TXT_KEY_EUPANEL_FORTIFICATION_BONUS" );
-			controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
---				strString.append(GetLocalizedText("TXT_KEY_COMBAT_PLOT_FORTIFY_MOD", iModifier));
-		end
 		
 		-- Great General bonus
 		if (theirUnit:IsNearGreatGeneral()) then
