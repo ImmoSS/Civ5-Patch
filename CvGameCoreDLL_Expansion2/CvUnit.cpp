@@ -12360,6 +12360,15 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 		{
 			iTempModifier = featureDefenseModifier(pInPlot->getFeatureType());
 			iModifier += iTempModifier;
+
+#ifdef FIX_RANGE_DEFENSE_MOD
+			// Tack on Hills Attack Mod
+			if (plot()->isHills())
+			{
+				iTempModifier = terrainDefenseModifier(TERRAIN_HILL);
+				iModifier += iTempModifier;
+			}
+#endif
 		}
 		// No Feature - use Terrain Defense Mod
 		else
@@ -13121,6 +13130,33 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 				}
 			}
 		}
+
+		// Attacking into a Feature
+		if (plot()->getFeatureType() != NO_FEATURE)
+		{
+			iTempModifier = featureDefenseModifier(plot()->getFeatureType());
+			iModifier += iTempModifier;
+
+			// Tack on Hills Attack Mod
+			if (plot()->isHills())
+			{
+				iTempModifier = terrainDefenseModifier(TERRAIN_HILL);
+				iModifier += iTempModifier;
+			}
+		}
+		// No Feature - Use Terrain Attack Mod
+		else
+		{
+			iTempModifier = terrainDefenseModifier(plot()->getTerrainType());
+			iModifier += iTempModifier;
+
+			// Tack on Hills Attack Mod
+			if (plot()->isHills())
+			{
+				iTempModifier = terrainDefenseModifier(TERRAIN_HILL);
+				iModifier += iTempModifier;
+			}
+		}
 #endif
 	}
 
@@ -13737,6 +13773,33 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 						}
 					}
 				}
+			}
+		}
+
+		// Attacking into a Feature
+		if (plot()->getFeatureType() != NO_FEATURE)
+		{
+			iTempModifier = featureDefenseModifier(plot()->getFeatureType());
+			iModifier += iTempModifier;
+
+			// Tack on Hills Attack Mod
+			if (plot()->isHills())
+			{
+				iTempModifier = terrainDefenseModifier(TERRAIN_HILL);
+				iModifier += iTempModifier;
+			}
+		}
+		// No Feature - Use Terrain Attack Mod
+		else
+		{
+			iTempModifier = terrainDefenseModifier(plot()->getTerrainType());
+			iModifier += iTempModifier;
+
+			// Tack on Hills Attack Mod
+			if (plot()->isHills())
+			{
+				iTempModifier = terrainDefenseModifier(TERRAIN_HILL);
+				iModifier += iTempModifier;
 			}
 		}
 #endif
