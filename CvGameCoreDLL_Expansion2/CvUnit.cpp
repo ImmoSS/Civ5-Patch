@@ -12790,6 +12790,35 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 					}
 				}
 			}
+
+#ifdef FIX_RANGE_ATTACK_MOD
+			// Attacking into a Feature
+			if (pTargetPlot->getFeatureType() != NO_FEATURE)
+			{
+				iTempModifier = featureAttackModifier(pTargetPlot->getFeatureType());
+				iModifier += iTempModifier;
+
+				// Tack on Hills Attack Mod
+				if (pTargetPlot->isHills())
+				{
+					iTempModifier = terrainAttackModifier(TERRAIN_HILL);
+					iModifier += iTempModifier;
+				}
+			}
+			// No Feature - Use Terrain Attack Mod
+			else
+			{
+				iTempModifier = terrainAttackModifier(pTargetPlot->getTerrainType());
+				iModifier += iTempModifier;
+
+				// Tack on Hills Attack Mod
+				if (pTargetPlot->isHills())
+				{
+					iTempModifier = terrainAttackModifier(TERRAIN_HILL);
+					iModifier += iTempModifier;
+				}
+			}
+#endif
 		}
 
 		// Ranged DEFENSE
@@ -13423,6 +13452,35 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 						}
 					}
 				}
+
+#ifdef FIX_RANGE_ATTACK_MOD
+				// Attacking into a Feature
+				if (pTargetPlot->getFeatureType() != NO_FEATURE)
+				{
+					iTempModifier = featureAttackModifier(pTargetPlot->getFeatureType());
+					iModifier += iTempModifier;
+
+					// Tack on Hills Attack Mod
+					if (pTargetPlot->isHills())
+					{
+						iTempModifier = terrainAttackModifier(TERRAIN_HILL);
+						iModifier += iTempModifier;
+					}
+				}
+				// No Feature - Use Terrain Attack Mod
+				else
+				{
+					iTempModifier = terrainAttackModifier(pTargetPlot->getTerrainType());
+					iModifier += iTempModifier;
+
+					// Tack on Hills Attack Mod
+					if (pTargetPlot->isHills())
+					{
+						iTempModifier = terrainAttackModifier(TERRAIN_HILL);
+						iModifier += iTempModifier;
+					}
+				}
+#endif
 			}
 		}
 
