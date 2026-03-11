@@ -11988,6 +11988,15 @@ int CvUnit::GetMaxAttackStrength(const CvPlot* pFromPlot, const CvPlot* pToPlot,
 			{
 				iTempModifier = featureAttackModifier(pToPlot->getFeatureType());
 				iModifier += iTempModifier;
+
+#ifdef FIX_MELEE_ATTACK_MOD
+				// Tack on Hills Attack Mod
+				if (pToPlot->isHills())
+				{
+					iTempModifier = terrainAttackModifier(TERRAIN_HILL);
+					iModifier += iTempModifier;
+				}
+#endif
 			}
 			// No Feature - Use Terrain Attack Mod
 			else
