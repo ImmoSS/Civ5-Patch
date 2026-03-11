@@ -12169,6 +12169,10 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 					iModifier += iTempModifier;
 				}
 			}
+			else
+			{
+				iModifier += iTempModifier;
+			}
 #else
 			iModifier += iTempModifier;
 #endif
@@ -12990,6 +12994,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 					iModifier += iTempModifier;
 				}
 			}
+			else
+			{
+				iModifier += iTempModifier;
+			}
 #else
 			iModifier += iTempModifier;
 #endif
@@ -13645,6 +13653,10 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 				{
 					iModifier += iTempModifier;
 				}
+			}
+			else
+			{
+				iModifier += iTempModifier;
 			}
 #else
 			iModifier += iTempModifier;
