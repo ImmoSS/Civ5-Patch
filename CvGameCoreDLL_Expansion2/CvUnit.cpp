@@ -13920,7 +13920,7 @@ int CvUnit::GetAirCombatDamage(const CvUnit* pDefender, CvCity* pCity, bool bInc
 #endif
 
 
-	int iAttackerDamageRatio = GC.getMAX_HIT_POINTS() - ((getDamage() - iAssumeExtraDamage) * iWoundedDamageMultiplier / 100);
+	int iAttackerDamageRatio = GC.getMAX_HIT_POINTS() - ((getDamage() + iAssumeExtraDamage) * iWoundedDamageMultiplier / 100);
 #else
 	int iAttackerDamageRatio = GC.getMAX_HIT_POINTS() - getDamage() - iAssumeExtraDamage;
 #endif
