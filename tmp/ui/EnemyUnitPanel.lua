@@ -616,6 +616,14 @@ function UpdateCombatOddsUnitVsCity(pMyUnit, pCity)
 				end
 			end
 			
+			-- Attack Modifier
+			iModifier = pMyUnit:GetAttackModifier();
+			if (iModifier ~= 0) then
+				controlTable = g_MyCombatDataIM:GetInstance();
+				controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_ATTACK_MOD_BONUS" );
+				controlTable.Value:SetText( GetFormattedText(strText, iModifier, true, true) );
+			end
+			
 			-- Policy Attack bonus
 			local iTurns = pMyPlayer:GetAttackBonusTurns();
 			if (iTurns > 0) then
