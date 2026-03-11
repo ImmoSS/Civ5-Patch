@@ -5527,6 +5527,35 @@ void CvPlayer::doTurn()
 					}
 				}
 #endif
+#ifdef CHANGE_CITY_ORIGINAL_OWNER
+				if (GC.getGame().isNetworkMultiPlayer())
+				{
+					for (int iPlayerLoop = 0; iPlayerLoop < MAX_MAJOR_CIVS; iPlayerLoop++)
+					{
+						PlayerTypes eLoopPlayer = (PlayerTypes)iPlayerLoop;
+
+						if (eLoopPlayer != GetID() && GET_PLAYER(eLoopPlayer).isAlive() && GET_PLAYER(eLoopPlayer).isHuman())
+						{
+							int iCityLoop;
+							CvCity* pLoopCity = NULL;
+							for (pLoopCity = GET_PLAYER(eLoopPlayer).firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(eLoopPlayer).nextCity(&iCityLoop))
+							{
+								if ((int)pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS)
+								{
+									if (!GET_PLAYER(pLoopCity->getOriginalOwner()).isHuman() && pLoopCity->getOriginalOwner() == GetID())
+									{
+										if (pLoopCity->IsNoOccupiedUnhappiness())
+										{
+											pLoopCity->setOriginalOwner(eLoopPlayer);
+											pLoopCity->SetOccupied(false);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+#endif
 #ifndef DO_TURN_CHANGE_ORDER
 				GetTrade()->DoTurn();
 #endif
@@ -5546,42 +5575,6 @@ void CvPlayer::doTurn()
 			}
 		}
 	}
-
-#ifdef CHANGE_CITY_ORIGINAL_OWNER
-	if (!isBarbarian())
-	{
-		if (!isMinorCiv())
-		{
-			if (GC.getGame().isNetworkMultiPlayer())
-			{
-				for (int iPlayerLoop = 0; iPlayerLoop < MAX_MAJOR_CIVS; iPlayerLoop++)
-				{
-					PlayerTypes eLoopPlayer = (PlayerTypes)iPlayerLoop;
-
-					if (eLoopPlayer != GetID() && GET_PLAYER(eLoopPlayer).isAlive() && GET_PLAYER(eLoopPlayer).isHuman())
-					{
-						int iCityLoop;
-						CvCity* pLoopCity = NULL;
-						for (pLoopCity = GET_PLAYER(eLoopPlayer).firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(eLoopPlayer).nextCity(&iCityLoop))
-						{
-							if ((int)pLoopCity->getOriginalOwner() < MAX_MAJOR_CIVS)
-							{
-								if (!GET_PLAYER(pLoopCity->getOriginalOwner()).isHuman() && pLoopCity->getOriginalOwner() == GetID())
-								{
-									if (pLoopCity->IsNoOccupiedUnhappiness())
-									{
-										pLoopCity->setOriginalOwner(eLoopPlayer);
-										pLoopCity->SetOccupied(false);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-#endif
 
 	if(isHuman() && !GC.getGame().isGameMultiPlayer())
 		doArmySize();
