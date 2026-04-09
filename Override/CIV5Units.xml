@@ -21097,6 +21097,11 @@
 			<Happiness>1</Happiness> 
 		</Row>
 		<Row> 
+			<BeliefType>BELIEF_MONUMENT_GODS</BeliefType> 
+			<BuildingClassType>BUILDINGCLASS_STONEHENGE</BuildingClassType> 
+			<Happiness>1</Happiness> 
+		</Row>
+		<Row> 
 			<BeliefType>BELIEF_PROPHECY</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_ALHAMBRA</BuildingClassType> 
 			<Happiness>1</Happiness> 
