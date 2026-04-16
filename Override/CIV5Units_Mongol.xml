@@ -98876,7 +98876,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_SCHOLASTICISM_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Scholasticism[ENDCOLOR][NEWLINE]+10% [ICON_CULTURE] Culture in the [ICON_CAPITAL] Capital for every active Diplomat. Build Constabularies and Police Stations 50% faster. They provide +3 [ICON_RESEARCH] Science each.
+				[COLOR_POSITIVE_TEXT]Scholasticism[ENDCOLOR][NEWLINE]+20% [ICON_CULTURE] Culture in the [ICON_CAPITAL] Capital for every active Diplomat. Build Constabularies and Police Stations 50% faster. They provide +3 [ICON_RESEARCH] Science each.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_SCHOLASTICISM_TEXT"> 
@@ -134575,7 +134575,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_SCHOLASTICISM_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Схоластика[ENDCOLOR][NEWLINE]+10% [ICON_CULTURE] к культуре в [ICON_CAPITAL] столице за каждого действующего дипломата. +3 [ICON_RESEARCH] к науке от жандармерий и полицейских участков. Они строятся на 50% быстрее.			
+				[COLOR_POSITIVE_TEXT]Схоластика[ENDCOLOR][NEWLINE]+20% [ICON_CULTURE] к культуре в [ICON_CAPITAL] столице за каждого действующего дипломата. +3 [ICON_RESEARCH] к науке от жандармерий и полицейских участков. Они строятся на 50% быстрее.			
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MERCHANT_CONFEDERACY_HELP"> 

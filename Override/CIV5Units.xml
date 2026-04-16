@@ -135813,7 +135813,7 @@
 			<PortraitIndex>39</PortraitIndex> 
 			<IconAtlas>POLICY_ATLAS</IconAtlas> 
 			<IconAtlasAchieved>POLICY_A_ATLAS</IconAtlasAchieved> 
-			<CapitalCultureModPerDiplomat>10</CapitalCultureModPerDiplomat>
+			<CapitalCultureModPerDiplomat>20</CapitalCultureModPerDiplomat>
 		</Row>
 		<Row> 
 			<ID>28</ID> 
