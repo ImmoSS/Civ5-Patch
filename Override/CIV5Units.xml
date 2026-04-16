@@ -136281,7 +136281,7 @@
 			<PolicyBranchType>POLICY_BRANCH_COMMERCE</PolicyBranchType> 
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
-			<GridX>3</GridX> 
+			<GridX>4</GridX> 
 			<GridY>1</GridY> 
 			<Level>0</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
@@ -136885,8 +136885,8 @@
 			<PolicyBranchType>POLICY_BRANCH_COMMERCE</PolicyBranchType> 
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
-			<GridX>4</GridX> 
-			<GridY>2</GridY> 
+			<GridX>2</GridX> 
+			<GridY>1</GridY> 
 			<Level>0</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
 			<CulturePerCity>0</CulturePerCity> 
@@ -150814,12 +150814,8 @@
 			<PrereqPolicy>POLICY_FLOURISHING_OF_ARTS</PrereqPolicy> 
 		</Row>
 		<Row> 
-			<PolicyType>POLICY_PROTECTIONISM</PolicyType> 
-			<PrereqPolicy>POLICY_TRADE_UNIONS</PrereqPolicy> 
-		</Row>
-		<Row> 
 			<PolicyType>POLICY_MERCANTILISM</PolicyType> 
-			<PrereqPolicy>POLICY_TRADE_UNIONS</PrereqPolicy> 
+			<PrereqPolicy>POLICY_PROTECTIONISM</PrereqPolicy> 
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_ENTREPRENEURSHIP</PolicyType> 
@@ -150831,7 +150827,7 @@
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_CARAVANS</PolicyType> 
-			<PrereqPolicy>POLICY_PROTECTIONISM</PrereqPolicy> 
+			<PrereqPolicy>POLICY_TRADE_UNIONS</PrereqPolicy> 
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_MERCHANT_NAVY</PolicyType> 
