@@ -29021,7 +29021,7 @@
 		</Row>
 		<Row> 
 			<BuildingType>BUILDING_FILM_STUDIO</BuildingType> 
-			<BuildingClassType>BUILDINGCLASS_MUSEUM</BuildingClassType> 
+			<BuildingClassType>BUILDINGCLASS_OPERA_HOUSE</BuildingClassType> 
 		</Row>
 		<Row> 
 			<BuildingType>BUILDING_HERMITAGE</BuildingType> 

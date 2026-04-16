@@ -128512,7 +128512,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FILM_STUDIO_HELP"> 
 			<Text>
-				+33% [ICON_CULTURE] Culture in this City.[NEWLINE][NEWLINE]City must have a Museum.
+				+33% [ICON_CULTURE] Culture in this City.[NEWLINE][NEWLINE]City must have an Opera.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FILM_STUDIO_STRATEGY"> 
@@ -134586,7 +134586,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FILM_STUDIO_HELP"> 
 			<Text>
-				Увеличивает на 33% прирост [ICON_CULTURE] культуры за ход в городе.[NEWLINE][NEWLINE]В городе должен быть музей.
+				Увеличивает на 33% прирост [ICON_CULTURE] культуры за ход в городе.[NEWLINE][NEWLINE]В городе должна быть опера.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FILM_STUDIO_STRATEGY"> 
