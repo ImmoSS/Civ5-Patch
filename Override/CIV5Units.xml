@@ -151084,7 +151084,7 @@
 		<Row> 
 			<PolicyType>POLICY_ARTISTIC_GENIUS</PolicyType> 
 			<YieldType>YIELD_SCIENCE</YieldType> 
-			<Yield>10</Yield> 
+			<Yield>15</Yield> 
 		</Row>
 	</Policy_GoldenAgeYieldModifiers> 
 
