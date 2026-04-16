@@ -150933,6 +150933,42 @@
 			<YieldType>YIELD_PRODUCTION</YieldType> 
 			<Yield>1</Yield> 
 		</Row>
+		<Row> 
+			<PolicyType>POLICY_NEW_DEAL</PolicyType> 
+			<SpecialistType>SPECIALIST_ARTIST</SpecialistType> 
+			<YieldType>YIELD_SCIENCE</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_NEW_DEAL</PolicyType> 
+			<SpecialistType>SPECIALIST_MERCHANT</SpecialistType> 
+			<YieldType>YIELD_SCIENCE</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_NEW_DEAL</PolicyType> 
+			<SpecialistType>SPECIALIST_ENGINEER</SpecialistType> 
+			<YieldType>YIELD_SCIENCE</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_NEW_DEAL</PolicyType> 
+			<SpecialistType>SPECIALIST_WRITER</SpecialistType> 
+			<YieldType>YIELD_SCIENCE</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_NEW_DEAL</PolicyType> 
+			<SpecialistType>SPECIALIST_MUSICIAN</SpecialistType> 
+			<YieldType>YIELD_SCIENCE</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_NEW_DEAL</PolicyType> 
+			<SpecialistType>SPECIALIST_SCIENTIST</SpecialistType> 
+			<YieldType>YIELD_SCIENCE</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
 	</Policy_SpecialistExtraYields> 
 
 	<Table name="Policy_TourismOnUnitCreation">

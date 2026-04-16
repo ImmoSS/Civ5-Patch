@@ -98481,7 +98481,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_NEW_DEAL_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]New Deal[ENDCOLOR][NEWLINE]+1 [ICON_PRODUCTION] Production from Specialists in every city.
+				[COLOR_POSITIVE_TEXT]New Deal[ENDCOLOR][NEWLINE]+1 [ICON_PRODUCTION] Production and [ICON_RESEARCH] Science from Specialists in every city.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_NEW_DEAL_TEXT"> 
@@ -129803,7 +129803,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_NEW_DEAL_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Новый курс[ENDCOLOR][NEWLINE]Увеличивает на +1 [ICON_PRODUCTION] производство от специалистов во всех городах.
+				[COLOR_POSITIVE_TEXT]Новый курс[ENDCOLOR][NEWLINE]Увеличивает на +1 [ICON_PRODUCTION] производство и [ICON_RESEARCH] науку от специалистов во всех городах.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_VIKING_FURY"> 
