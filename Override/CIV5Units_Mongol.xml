@@ -128266,7 +128266,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_TORRE_DE_BELEM_HELP"> 
 			<Text>
-				Doubles city healing rate. Provides +3 [ICON_PRODUCTION] Production after Gunpowder is researched.[NEWLINE][NEWLINE]City must have Walls.
+				Doubles city healing rate. Provides +3 [ICON_PRODUCTION] Production after Gunpowder is researched.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_TORRE_DE_BELEM_STRATEGY"> 
@@ -134412,7 +134412,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_TORRE_DE_BELEM_HELP"> 
 			<Text>
-				Увеличивает восстановление ОЗ города в два раза. Дает +3 [ICON_PRODUCTION] к производству после изучения Пороха.[NEWLINE][NEWLINE]В городе должны быть стены.
+				Увеличивает восстановление ОЗ города в два раза. Дает +3 [ICON_PRODUCTION] к производству после изучения Пороха.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_TORRE_DE_BELEM_STRATEGY"> 

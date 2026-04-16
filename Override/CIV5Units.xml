@@ -28880,10 +28880,6 @@
 			<BuildingClassType>BUILDINGCLASS_WALLS</BuildingClassType> 
 		</Row>
 		<Row> 
-			<BuildingType>BUILDING_TORRE_DE_BELEM</BuildingType> 
-			<BuildingClassType>BUILDINGCLASS_WALLS</BuildingClassType> 
-		</Row>
-		<Row> 
 			<BuildingType>BUILDING_MILITARY_BASE</BuildingType> 
 			<BuildingClassType>BUILDINGCLASS_ARSENAL</BuildingClassType> 
 		</Row>
