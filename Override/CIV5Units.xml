@@ -32038,22 +32038,6 @@
 			<ResourceType>RESOURCE_SILVER</ResourceType> 
 		</Row>
 		<Row> 
-			<BuildingType>BUILDING_HELVETIC_JEWELLERY_WORKSHOP</BuildingType> 
-			<ResourceType>RESOURCE_GOLD</ResourceType> 
-		</Row>
-		<Row> 
-			<BuildingType>BUILDING_HELVETIC_JEWELLERY_WORKSHOP</BuildingType> 
-			<ResourceType>RESOURCE_SILVER</ResourceType> 
-		</Row>
-		<Row> 
-			<BuildingType>BUILDING_HELVETIC_JEWELLERY_WORKSHOP</BuildingType> 
-			<ResourceType>RESOURCE_COPPER</ResourceType> 
-		</Row>
-		<Row> 
-			<BuildingType>BUILDING_HELVETIC_JEWELLERY_WORKSHOP</BuildingType> 
-			<ResourceType>RESOURCE_GEMS</ResourceType> 
-		</Row>
-		<Row> 
 			<BuildingType>BUILDING_CIRCUS</BuildingType> 
 			<ResourceType>RESOURCE_HORSE</ResourceType> 
 		</Row>
@@ -33392,6 +33376,11 @@
 			<BuildingType>BUILDING_HELVETIC_JEWELLERY_WORKSHOP</BuildingType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
 			<Yield>1</Yield> 
+		</Row>
+		<Row> 
+			<BuildingType>BUILDING_HELVETIC_JEWELLERY_WORKSHOP</BuildingType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<Yield>2</Yield> 
 		</Row>
 		<Row> 
 			<BuildingType>BUILDING_SATRAPS_COURT</BuildingType> 

@@ -128567,12 +128567,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HELVETIC_JEWELLERY_WORKSHOP_HELP"> 
 			<Text>
-				Each source of [ICON_RES_GOLD] Gold [ICON_RES_SILVER] Silver [ICON_RES_COPPER] Copper and [ICON_RES_GEMS] Gems worked by this City produces +2 [ICON_GOLD] Gold.[NEWLINE][NEWLINE]City must have at least one of these resources mined nearby.
+				Each source of [ICON_RES_GOLD] Gold [ICON_RES_SILVER] Silver [ICON_RES_COPPER] Copper and [ICON_RES_GEMS] Gems worked by this City produces +2 [ICON_GOLD] Gold.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HELVETIC_JEWELLERY_WORKSHOP_STRATEGY"> 
 			<Text>
-				Helvetian Silversmith is a unique Celtic replacement for Mint. It provides 1 [ICON_CULTURE] Culture. Helvetian Silversmith can only be constructed in a city with improved gold, silver, copper or gems resources nearby. Helvetian Silversmith increases the [ICON_GOLD] Gold output of each such resource the city has access to.
+				Helvetian Silversmith is a unique Celtic replacement for Mint. It provides 1 [ICON_CULTURE] Culture and 2 [ICON_GOLD] Gold. Unlike Mint Helvetian Silversmith doesn't require any resources nearby to be constructed. It also increases the [ICON_GOLD] Gold output of each Gold, Silver, Copper or Gems resource the city has access to.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_HELVETIC_JEWELLERY_WORKSHOP_TEXT"> 
@@ -134954,12 +134954,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HELVETIC_JEWELLERY_WORKSHOP_HELP"> 
 			<Text>
-				Каждое месторождение [ICON_RES_GOLD] золота [ICON_RES_SILVER] серебра [ICON_RES_COPPER] меди и [ICON_RES_GEMS] алмазов, разрабатываемое городом, дает +2 [ICON_GOLD] к золоту.[NEWLINE][NEWLINE]Город должен иметь поблизости хотя бы один такой рудник.
+				Каждое месторождение [ICON_RES_GOLD] золота [ICON_RES_SILVER] серебра [ICON_RES_COPPER] меди и [ICON_RES_GEMS] алмазов, разрабатываемое городом, дает +2 [ICON_GOLD] к золоту.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HELVETIC_JEWELLERY_WORKSHOP_STRATEGY"> 
 			<Text>
-				Гельветская мастерская украшений — это уникальная постройка Кельтов, замещающая монетный двор. Она увеличивает [ICON_CULTURE] культуру в городе. Гельветскую мастерскую украшений можно строить только в городе, поблизости от которого имеется золотой, серебряный, медный или алмазный рудник. Она увеличивает поступление золота с каждого такого ресурса в радиусе города.
+				Гельветская мастерская украшений — это уникальная постройка Кельтов, замещающая монетный двор. Она увеличивает [ICON_CULTURE] культуру в городе. В отличие от монетного двора, гельветскую мастерскую украшений можно строить в городах, поблизости от которых не имеется золотых, серебряных, медных или алмазных рудников. Тем не менее она увеличивает поступление золота с каждого такого ресурса в радиусе города.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_HELVETIC_JEWELLERY_WORKSHOP_TEXT"> 
