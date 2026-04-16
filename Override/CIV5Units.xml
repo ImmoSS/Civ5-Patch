@@ -190758,7 +190758,7 @@
 			<Civilopedia>TXT_KEY_CIV5_KOREA_TURTLESHIP_TEXT</Civilopedia> 
 			<Strategy>TXT_KEY_CIV5_KOREA_TURTLESHIP_STRATEGY</Strategy> 
 			<Help>TXT_KEY_CIV5_KOREA_TURTLESHIP_HELP</Help> 
-			<Combat>36</Combat> 
+			<Combat>34</Combat> 
 			<RangedCombat>0</RangedCombat> 
 			<Cost>120</Cost> 
 			<FaithCost>0</FaithCost> 
