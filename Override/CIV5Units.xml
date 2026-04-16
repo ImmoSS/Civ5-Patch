@@ -53826,7 +53826,7 @@
 			<ID>172</ID>
 			<Type>BUILDING_GLASSBLOWING_WORKSHOP</Type>
 			<BuildingClass>BUILDINGCLASS_WINDMILL</BuildingClass>
-			<Cost>300</Cost>
+			<Cost>250</Cost>
 			<GoldMaintenance>2</GoldMaintenance>
 			<PrereqTech>TECH_ECONOMICS</PrereqTech>
 			<Description>TXT_KEY_BUILDING_GLASSBLOWING_WORKSHOP</Description>
