@@ -144404,7 +144404,7 @@
 			<CultureCost>10</CultureCost> 
 			<GridX>0</GridX> 
 			<GridY>0</GridY> 
-			<Level>2</Level> 
+			<Level>1</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
 			<CulturePerCity>0</CulturePerCity> 
 			<CulturePerWonder>0</CulturePerWonder> 
@@ -149480,22 +149480,27 @@
 		<Row> 
 			<PolicyType>POLICY_PARTY_LEADERSHIP</PolicyType> 
 			<YieldType>YIELD_FOOD</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>1</Yield> 
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_PARTY_LEADERSHIP</PolicyType> 
 			<YieldType>YIELD_PRODUCTION</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>1</Yield> 
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_PARTY_LEADERSHIP</PolicyType> 
 			<YieldType>YIELD_SCIENCE</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>1</Yield> 
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_PARTY_LEADERSHIP</PolicyType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_PARTY_LEADERSHIP</PolicyType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<Yield>1</Yield> 
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_FIVE_YEAR_PLAN</PolicyType> 

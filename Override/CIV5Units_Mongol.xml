@@ -98586,7 +98586,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_PARTY_LEADERSHIP_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Party Leadership[ENDCOLOR][NEWLINE]+2 [ICON_FOOD] Food, [ICON_PRODUCTION] Production, [ICON_RESEARCH] Science, and [ICON_CULTURE] Culture per city.
+				[COLOR_POSITIVE_TEXT]Party Leadership[ENDCOLOR][NEWLINE]+1 [ICON_FOOD] Food, [ICON_PRODUCTION] Production, [ICON_RESEARCH] Science, [ICON_GOLD] Gold and [ICON_CULTURE] Culture per city.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_PARTY_LEADERSHIP_TEXT"> 
@@ -129648,7 +129648,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_PARTY_LEADERSHIP_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Партийное руководство[ENDCOLOR][NEWLINE]+2 [ICON_FOOD] к пище, [ICON_PRODUCTION] производству, [ICON_RESEARCH] науке и [ICON_CULTURE] культуре каждого города.
+				[COLOR_POSITIVE_TEXT]Партийное руководство[ENDCOLOR][NEWLINE]+1 [ICON_FOOD] к пище, [ICON_PRODUCTION] производству, [ICON_RESEARCH] науке, [ICON_GOLD] золоту и [ICON_CULTURE] культуре каждого города.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_SPACEFLIGHT_PIONEERS_HELP"> 
