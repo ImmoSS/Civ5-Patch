@@ -133694,7 +133694,7 @@
 			<EnablesSSPartPurchase>false</EnablesSSPartPurchase> 
 			<AbleToAnnexCityStates>false</AbleToAnnexCityStates> 
 			<OneShot>false</OneShot> 
-			<IncludesOneShotFreeUnits>true</IncludesOneShotFreeUnits> 
+			<IncludesOneShotFreeUnits>false</IncludesOneShotFreeUnits> 
 			<PortraitIndex>19</PortraitIndex> 
 			<IconAtlas>POLICY_ATLAS</IconAtlas> 
 			<IconAtlasAchieved>POLICY_A_ATLAS</IconAtlasAchieved> 
@@ -150512,11 +150512,6 @@
 	<Policy_FreeUnitClasses>
 		<Delete />
 
-		<Row> 
-			<PolicyType>POLICY_WARRIOR_CODE</PolicyType> 
-			<UnitClassType>UNITCLASS_GREAT_GENERAL</UnitClassType> 
-			<Count>1</Count> 
-		</Row>
 		<Row> 
 			<PolicyType>POLICY_PIETY_FINISHER</PolicyType> 
 			<UnitClassType>UNITCLASS_PROPHET</UnitClassType> 

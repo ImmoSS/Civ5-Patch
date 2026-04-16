@@ -99241,7 +99241,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_WARRIOR_CODE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Warrior Code[ENDCOLOR][NEWLINE]+10% [ICON_PRODUCTION] Production when training land units and a Great General appears outside the [ICON_CAPITAL] Capital. Great Generals are earned 50% faster.
+				[COLOR_POSITIVE_TEXT]Warrior Code[ENDCOLOR][NEWLINE]+10% [ICON_PRODUCTION] Production when training land units. Great Generals are earned 50% faster.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_WORKERS_FACULTIES"> 
@@ -132964,7 +132964,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_WARRIOR_CODE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Кодекс чести[ENDCOLOR][NEWLINE]+10% [ICON_PRODUCTION] к производству при обучении наземных подразделений. Великий полководец появляется у [ICON_CAPITAL] столицы. Великие полководцы появляются на 50% быстрее.
+				[COLOR_POSITIVE_TEXT]Кодекс чести[ENDCOLOR][NEWLINE]+10% [ICON_PRODUCTION] к производству при обучении наземных подразделений. Великие полководцы появляются на 50% быстрее.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_DISCIPLINE_HELP"> 
