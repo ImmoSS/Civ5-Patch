@@ -128261,7 +128261,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_TORRE_DE_BELEM_STRATEGY"> 
 			<Text>
-				Torre de Belem is a unique Portuguese replacement for Castle. Torre de Belem increases a civilization's [ICON_HAPPINESS_1] Happiness. It cannot provide more Happiness than there are [ICON_CITIZEN] Citizens in a city. Provides +3 [ICON_PRODUCTION] Production after Gunpowder is researched. The city must possess Walls before Torre de Belem can be constructed. 
+				Torre de Belem is a unique Portuguese replacement for Castle. Torre de Belem increases a civilization's [ICON_HAPPINESS_1] Happiness. It cannot provide more Happiness than there are [ICON_CITIZEN] Citizens in a city. Provides +3 [ICON_PRODUCTION] Production after Gunpowder is researched. 
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_TORRE_DE_BELEM_TEXT"> 
@@ -134407,7 +134407,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_TORRE_DE_BELEM_STRATEGY"> 
 			<Text>
-				Торре-де-Белем — это уникальная постройка Португалии, замещающая замок. Торре-де-Белем повышает [ICON_HAPPINESS_1] настроение цивилизации. При этом он не может увеличить настроение на величину, [ICON_CITIZEN] превышающую число горожан в городе. Дает +3 [ICON_PRODUCTION] к производству после изучения Пороха. Чтобы построить Торре-де-Белем, в городе должны быть стены. 
+				Торре-де-Белем — это уникальная постройка Португалии, замещающая замок. Торре-де-Белем повышает [ICON_HAPPINESS_1] настроение цивилизации. При этом он не может увеличить настроение на величину, [ICON_CITIZEN] превышающую число горожан в городе. Дает +3 [ICON_PRODUCTION] к производству после изучения Пороха.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_TORRE_DE_BELEM_TEXT"> 
