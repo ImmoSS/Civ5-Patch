@@ -4160,7 +4160,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_FERTILITY_RITES"> 
 			<Text>
-				+1 [ICON_FOOD] Food and +1 [ICON_PRODUCTION] in cities with population of 3+
+				+1 [ICON_FOOD] Food and +1 [ICON_PRODUCTION] in cities with population of 4+
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_FERTILITY_RITES_SHORT"> 
@@ -129353,7 +129353,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_FERTILITY_RITES"> 
 			<Text>
-				+1 [ICON_FOOD] к пище и +1 [ICON_PRODUCTION] к производству в городах с населением 3+
+				+1 [ICON_FOOD] к пище и +1 [ICON_PRODUCTION] к производству в городах с населением 4+
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_FERTILITY_RITES_SHORT"> 

@@ -22894,7 +22894,7 @@
 			<RequiresPeace>false</RequiresPeace> 
 			<ConvertsBarbarians>false</ConvertsBarbarians> 
 			<FaithPurchaseAllGreatPeople>false</FaithPurchaseAllGreatPeople> 
-			<MinPopulation>3</MinPopulation> 
+			<MinPopulation>4</MinPopulation> 
 			<MinFollowers>0</MinFollowers> 
 			<MaxDistance>0</MaxDistance> 
 			<CityGrowthModifier>0</CityGrowthModifier> 
