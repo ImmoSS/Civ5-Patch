@@ -20981,7 +20981,15 @@
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
+			<BuildingClassType>BUILDINGCLASS_LIBRARY</BuildingClassType> 
+		</Row>
+		<Row> 
+			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_UNIVERSITY</BuildingClassType> 
+		</Row>
+		<Row> 
+			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
+			<BuildingClassType>BUILDINGCLASS_OBSERVATORY</BuildingClassType> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
@@ -21635,21 +21643,33 @@
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
+			<BuildingClassType>BUILDINGCLASS_LIBRARY</BuildingClassType> 
+			<YieldType>YIELD_SCIENCE</YieldType> 
+			<YieldChange>1</YieldChange> 
+		</Row>
+		<Row> 
+			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_UNIVERSITY</BuildingClassType> 
 			<YieldType>YIELD_SCIENCE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>1</YieldChange> 
+		</Row>
+		<Row> 
+			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
+			<BuildingClassType>BUILDINGCLASS_OBSERVATORY</BuildingClassType> 
+			<YieldType>YIELD_SCIENCE</YieldType> 
+			<YieldChange>1</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_PUBLIC_SCHOOL</BuildingClassType> 
 			<YieldType>YIELD_SCIENCE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>1</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_LABORATORY</BuildingClassType> 
 			<YieldType>YIELD_SCIENCE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>1</YieldChange> 
 		</Row>
 	</Belief_BuildingClassYieldChanges> 
 
@@ -37097,7 +37117,7 @@
 			<AffectSpiesNow>false</AffectSpiesNow> 
 			<NullifyInfluenceModifier>false</NullifyInfluenceModifier> 
 			<Cost>200</Cost> 
-			<FaithCost>0</FaithCost> 
+			<FaithCost>180</FaithCost> 
 			<LeagueCost>0</LeagueCost> 
 			<UnlockedByBelief>false</UnlockedByBelief> 
 			<UnlockedByLeague>false</UnlockedByLeague> 
@@ -41109,7 +41129,7 @@
 			<AffectSpiesNow>false</AffectSpiesNow> 
 			<NullifyInfluenceModifier>false</NullifyInfluenceModifier> 
 			<Cost>75</Cost> 
-			<FaithCost>0</FaithCost> 
+			<FaithCost>60</FaithCost> 
 			<LeagueCost>0</LeagueCost> 
 			<UnlockedByBelief>false</UnlockedByBelief> 
 			<UnlockedByLeague>false</UnlockedByLeague> 

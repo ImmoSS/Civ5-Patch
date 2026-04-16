@@ -4415,7 +4415,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_JESUIT_EDUCATION"> 
 			<Text>
-				May build Universities, Public Schools, and Research Labs with [ICON_PEACE] Faith. Also these buildings provide +2 [ICON_RESEARCH] Science.
+				May build Libraries, Universities, Observatories, Public Schools, and Research Labs with [ICON_PEACE] Faith. Also these buildings provide +1 [ICON_RESEARCH] Science.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_JESUIT_EDUCATION_SHORT"> 
@@ -133865,7 +133865,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_JESUIT_EDUCATION"> 
 			<Text>
-				Можно строить университеты, школы и лаборатории с помощью [ICON_PEACE] веры. Эти здания дают +2 [ICON_RESEARCH] к науке.
+				Можно строить библиотеки, университеты, обсерватории, школы и лаборатории с помощью [ICON_PEACE] веры. Эти здания дают +1 [ICON_RESEARCH] к науке.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MISSION_RELIGIOUS_EXPANSION"> 
