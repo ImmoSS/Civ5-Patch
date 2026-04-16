@@ -33971,7 +33971,7 @@
 		<Row> 
 			<BuildingType>BUILDING_PRUSSIAN_STAFF_COLLEGE</BuildingType> 
 			<YieldType>YIELD_SCIENCE</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>3</Yield> 
 		</Row>
 		<Row> 
 			<BuildingType>BUILDING_CANOE_DOCK</BuildingType> 
