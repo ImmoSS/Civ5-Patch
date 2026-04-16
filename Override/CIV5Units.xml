@@ -168515,7 +168515,7 @@
 			<CombatBonusVsHigherTech>0</CombatBonusVsHigherTech> 
 			<CombatBonusVsLargerCiv>0</CombatBonusVsLargerCiv> 
 			<RazeSpeedModifier>0</RazeSpeedModifier> 
-			<DOFGreatPersonModifier>-25</DOFGreatPersonModifier> 
+			<DOFGreatPersonModifier>0</DOFGreatPersonModifier> 
 			<LuxuryHappinessRetention>0</LuxuryHappinessRetention> 
 			<ExtraSpies>0</ExtraSpies> 
 			<UnresearchedTechBonusFromKills>0</UnresearchedTechBonusFromKills> 

@@ -119199,7 +119199,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_DIPLOMACY_GREAT_PEOPLE"> 
 			<Text>
-				Gain 90 [ICON_INFLUENCE] Influence with a Great Person gift to a City-State. Great Scientists, Great Engineers, and Great Merchants each have independent Great People counters, but their generation is decreased by 25%.
+				Gain 90 [ICON_INFLUENCE] Influence with a Great Person gift to a City-State. Great Scientists, Great Engineers, and Great Merchants each have independent Great People counters.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_DIPLOMACY_GREAT_PEOPLE_SHORT"> 
@@ -131679,7 +131679,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_DIPLOMACY_GREAT_PEOPLE"> 
 			<Text>
-				При передаче великого человека городу-государству [ICON_INFLUENCE] влияние на него растет на 90. У великих ученых, великих инженеров и великих торговцев свои отдельные счетчики великих людей, но скорость их появления уменьшена на 25%.
+				При передаче великого человека городу-государству [ICON_INFLUENCE] влияние на него растет на 90. У великих ученых, великих инженеров и великих торговцев свои отдельные счетчики великих людей.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PLAYER_NEGATIVE_GP_MOD"> 
