@@ -33421,7 +33421,7 @@
 		<Row> 
 			<BuildingType>BUILDING_TEXTILE_FACTORY</BuildingType> 
 			<YieldType>YIELD_PRODUCTION</YieldType> 
-			<Yield>4</Yield> 
+			<Yield>6</Yield> 
 		</Row>
 		<Row> 
 			<BuildingType>BUILDING_CHARCOAL_PLANT</BuildingType> 
