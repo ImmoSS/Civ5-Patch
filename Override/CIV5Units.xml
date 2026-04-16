@@ -53845,7 +53845,7 @@
 			<Type>BUILDING_HIPPODROME</Type>
 			<BuildingClass>BUILDINGCLASS_COLOSSEUM</BuildingClass>
 			<FreeStartEra>ERA_INDUSTRIAL</FreeStartEra>
-			<Cost>100</Cost>
+			<Cost>75</Cost>
 			<PrereqTech>TECH_CONSTRUCTION</PrereqTech>
 			<Help>TXT_KEY_BUILDING_HIPPODROME_HELP</Help>
 			<Description>TXT_KEY_BUILDING_HIPPODROME</Description>

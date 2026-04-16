@@ -128321,7 +128321,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HIPPODROME_STRATEGY"> 
 			<Text>
-				Hippodrome is a unique Byzantine building replacing Colosseum. It costs no maintenance and provides +10% [ICON_STRENGTH] Combat Strength to Mounted and Ranged Mounted units and also increases a civilization's [ICON_HAPPINESS_1] Happiness. It cannot provide more Happiness than there are [ICON_CITIZEN] Citizens in a city.
+				Hippodrome is a unique Byzantine building replacing Colosseum. It is cheaper, costs no maintenance and provides +10% [ICON_STRENGTH] Combat Strength to Mounted and Ranged Mounted units and also increases a civilization's [ICON_HAPPINESS_1] Happiness. It cannot provide more Happiness than there are [ICON_CITIZEN] Citizens in a city.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_THERMAE"> 
@@ -134715,7 +134715,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HIPPODROME_STRATEGY"> 
 			<Text>
-				Ипподром — уникальная Византийская постройка, заменяющая арену. Ипподром не требует [ICON_GOLD] золота на содержание и увеличивает [ICON_STRENGTH] боевую мощь кавалерийских юнитов, созданных в городе, а также повышает [ICON_HAPPINESS_1] настроение цивилизации. При этом он не может увеличить настроение на величину, [ICON_CITIZEN] превышающую число горожан в городе.
+				Ипподром — уникальная Византийская постройка, заменяющая арену. Ипподром стоит дешевле, не требует [ICON_GOLD] золота на содержание и увеличивает [ICON_STRENGTH] боевую мощь кавалерийских юнитов, созданных в городе, а также повышает [ICON_HAPPINESS_1] настроение цивилизации. При этом он не может увеличить настроение на величину, [ICON_CITIZEN] превышающую число горожан в городе.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_HIPPODROME_TEXT"> 
