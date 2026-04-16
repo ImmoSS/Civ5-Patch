@@ -132384,7 +132384,7 @@
 			<DomesticGreatGeneralRateModifier>0</DomesticGreatGeneralRateModifier> 
 			<ExtraHappiness>0</ExtraHappiness> 
 			<ExtraHappinessPerCity>0</ExtraHappinessPerCity> 
-			<UnhappinessMod>-10</UnhappinessMod> 
+			<UnhappinessMod>-5</UnhappinessMod> 
 			<CityCountUnhappinessMod>0</CityCountUnhappinessMod> 
 			<OccupiedPopulationUnhappinessMod>0</OccupiedPopulationUnhappinessMod> 
 			<CapitalUnhappinessMod>0</CapitalUnhappinessMod> 

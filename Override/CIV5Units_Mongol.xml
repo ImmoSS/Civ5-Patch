@@ -98351,7 +98351,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MERITOCRACY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Meritocracy[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] Happiness for each City you own [ICON_CONNECTED] connected to the [ICON_CAPITAL] Capital and -10% [ICON_HAPPINESS_4] Unhappiness from [ICON_CITIZEN] Citizens in non-occupied Cities.
+				[COLOR_POSITIVE_TEXT]Meritocracy[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] Happiness for each City you own [ICON_CONNECTED] connected to the [ICON_CAPITAL] Capital and -5% [ICON_HAPPINESS_4] Unhappiness from [ICON_CITIZEN] Citizens in non-occupied Cities.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MILITARISM"> 
@@ -133645,7 +133645,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MERITOCRACY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Меритократия[ENDCOLOR][NEWLINE]Улучшает на +1 [ICON_HAPPINESS_1] настроение каждого города, [ICON_CONNECTED] связанного со [ICON_CAPITAL] столицей. Сокращает на 10% [ICON_HAPPINESS_4] недовольство от [ICON_CITIZEN] граждан в неоккупированных городах.
+				[COLOR_POSITIVE_TEXT]Меритократия[ENDCOLOR][NEWLINE]Улучшает на +1 [ICON_HAPPINESS_1] настроение каждого города, [ICON_CONNECTED] связанного со [ICON_CAPITAL] столицей. Сокращает на 5% [ICON_HAPPINESS_4] недовольство от [ICON_CITIZEN] граждан в неоккупированных городах.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_VOLUNTEER_ARMY_HELP"> 
