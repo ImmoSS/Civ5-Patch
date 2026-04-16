@@ -20989,10 +20989,6 @@
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
-			<BuildingClassType>BUILDINGCLASS_OBSERVATORY</BuildingClassType> 
-		</Row>
-		<Row> 
-			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_PUBLIC_SCHOOL</BuildingClassType> 
 		</Row>
 		<Row> 
@@ -21650,12 +21646,6 @@
 		<Row> 
 			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_UNIVERSITY</BuildingClassType> 
-			<YieldType>YIELD_SCIENCE</YieldType> 
-			<YieldChange>1</YieldChange> 
-		</Row>
-		<Row> 
-			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType> 
-			<BuildingClassType>BUILDINGCLASS_OBSERVATORY</BuildingClassType> 
 			<YieldType>YIELD_SCIENCE</YieldType> 
 			<YieldChange>1</YieldChange> 
 		</Row>
@@ -37102,7 +37092,7 @@
 			<AffectSpiesNow>false</AffectSpiesNow> 
 			<NullifyInfluenceModifier>false</NullifyInfluenceModifier> 
 			<Cost>200</Cost> 
-			<FaithCost>180</FaithCost> 
+			<FaithCost>0</FaithCost> 
 			<LeagueCost>0</LeagueCost> 
 			<UnlockedByBelief>false</UnlockedByBelief> 
 			<UnlockedByLeague>false</UnlockedByLeague> 
