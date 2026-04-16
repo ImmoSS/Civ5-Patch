@@ -4070,7 +4070,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SPIRIT_ANIMALS"> 
 			<Text>
-				+1 [ICON_PEACE] Faith for each Cattle and Sheep resource
+				+1 [ICON_PEACE] Faith for each Cattle, Sheep and Deer resource
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SPIRIT_ANIMALS_SHORT"> 
@@ -136029,7 +136029,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SPIRIT_ANIMALS"> 
 			<Text>
-				+1 [ICON_PEACE] к вере от каждого источника скота и овец 
+				+1 [ICON_PEACE] к вере от каждого источника скота, овец и оленей 
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SPIRIT_ANIMALS_SHORT"> 
