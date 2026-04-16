@@ -149058,6 +149058,21 @@
 			<ProductionModifier>50</ProductionModifier> 
 		</Row>
 		<Row> 
+			<PolicyType>POLICY_AESTHETICS</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_ARTISTS_GUILD</BuildingClassType> 
+			<ProductionModifier>50</ProductionModifier> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_AESTHETICS</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_WRITERS_GUILD</BuildingClassType> 
+			<ProductionModifier>50</ProductionModifier> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_AESTHETICS</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_MUSICIANS_GUILD</BuildingClassType> 
+			<ProductionModifier>50</ProductionModifier> 
+		</Row>
+		<Row> 
 			<PolicyType>POLICY_CULTURAL_CENTERS</PolicyType> 
 			<BuildingClassType>BUILDINGCLASS_MONUMENT</BuildingClassType> 
 			<ProductionModifier>50</ProductionModifier> 

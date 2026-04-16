@@ -97276,7 +97276,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_AESTHETICS_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Aesthetics[ENDCOLOR] improves the civilization's ability to generate [ICON_CULTURE] Culture.[NEWLINE][NEWLINE]Adopting Aesthetics allows you to earn Great Writers, Artists, and Musicians 25% faster. Unlocks building the Uffizi.[NEWLINE][NEWLINE]Adopting all policies and researching Archeology allows you to see Hidden Antiquity Sites. It also allows the purchase of Great Writers, Artists, or Musicians with [ICON_PEACE] Faith starting in the Industrial Era. Negates [ICON_TOURISM] Tourism penalty for differing ideologies.
+				[COLOR_POSITIVE_TEXT]Aesthetics[ENDCOLOR] improves the civilization's ability to generate [ICON_CULTURE] Culture.[NEWLINE][NEWLINE]Adopting Aesthetics allows you to earn Great Writers, Artists, and Musicians 25% faster and build their guilds 50% faster. Unlocks building the Uffizi.[NEWLINE][NEWLINE]Adopting all policies and researching Archeology allows you to see Hidden Antiquity Sites. It also allows the purchase of Great Writers, Artists, or Musicians with [ICON_PEACE] Faith starting in the Industrial Era. Negates [ICON_TOURISM] Tourism penalty for differing ideologies.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_AMERICAN"> 
@@ -136304,6 +136304,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_UNIT_MACHINE_GUN_STRATEGY"> 
 			<Text>
 				Пулеметная рота - предпоследний дальнобойный юнит, не являющийся осадным орудием. Она гораздо мощнее более ранних дальнобойных юнитов. Пулеметная рота может нанести противнику значительный урон. Лучше всего использовать ее для защиты собственных городов.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_POLICY_BRANCH_AESTHETICS_HELP"> 
+			<Text>
+				[COLOR_POSITIVE_TEXT]Эстетика[ENDCOLOR] помогает цивилизации генерировать очки [ICON_CULTURE] культуры.[NEWLINE][NEWLINE]Принятие эстетики позволит вам получать великих писателей, художников и музыкантов на 25% быстрее, а также увеличит скорость постройки их гильдий на 50%. Открывает постройку галереи Уффици.[NEWLINE][NEWLINE]Принятие всех общественных институтов эстетики удваивает тематический бонус, который вы получаете от музеев и чудес. Также позволяет приобретать великих писателей, художников и музыкантов за счет  [ICON_PEACE] веры, начиная с новейшего времени.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
