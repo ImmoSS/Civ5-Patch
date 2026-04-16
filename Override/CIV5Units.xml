@@ -22041,6 +22041,24 @@
 			<Yield>1</Yield> 
 		</Row>
 		<Row> 
+			<BeliefType>BELIEF_SEAFOOD_RITUALS</BeliefType> 
+			<ResourceType>RESOURCE_PEARLS</ResourceType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
+			<BeliefType>BELIEF_SEAFOOD_RITUALS</BeliefType> 
+			<ResourceType>RESOURCE_WHALE</ResourceType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
+			<BeliefType>BELIEF_SEAFOOD_RITUALS</BeliefType> 
+			<ResourceType>RESOURCE_CRAB</ResourceType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
 			<BeliefType>BELIEF_SPIRIT_ANIMALS</BeliefType> 
 			<ResourceType>RESOURCE_SHEEP</ResourceType> 
 			<YieldType>YIELD_FAITH</YieldType> 

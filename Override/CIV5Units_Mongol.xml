@@ -4080,7 +4080,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SEAFOOD_RITUALS"> 
 			<Text>
-				+1 [ICON_PEACE] Faith for each Crab, Pearls, and Whales resource and +2 [ICON_PEACE] Faith for each Fish
+				+1 [ICON_PEACE] Faith and +1 [ICON_GOLD] Gold for each Crab, Pearls, and Whales resource. +2 [ICON_PEACE] Faith for each Fish
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SEAFOOD_RITUALS_SHORT"> 
@@ -136039,7 +136039,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SEAFOOD_RITUALS"> 
 			<Text>
-				+1 [ICON_PEACE] к вере от каждого источника крабов, жемчуга и китов и +2 [ICON_PEACE] к вере от каждого источника рыбы
+				+1 [ICON_PEACE] к вере и +1 [ICON_GOLD] к золоту от каждого источника крабов, жемчуга и китов. +2 [ICON_PEACE] к вере от каждого источника рыбы
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SEAFOOD_RITUALS_SHORT"> 
