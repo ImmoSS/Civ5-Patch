@@ -138371,6 +138371,7 @@
 			<OneShot>false</OneShot> 
 			<IncludesOneShotFreeUnits>false</IncludesOneShotFreeUnits> 
 			<PortraitIndex>0</PortraitIndex> 
+			<TechFromCityConquer>true</TechFromCityConquer> 
 		</Row>
 		<Row> 
 			<ID>45</ID> 
