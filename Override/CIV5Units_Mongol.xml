@@ -98396,7 +98396,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MILITARY_TRADITION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Military Tradition[ENDCOLOR][NEWLINE]Military Units gain 50% more Experience from combat. When a non-occupied city of civilization with population of 5+ is conquered, gain a free Technology already discovered by its owner.  Gaining a city through a trade deal does not count, and it can only happen once per enemy city.
+				[COLOR_POSITIVE_TEXT]Military Tradition[ENDCOLOR][NEWLINE]Military Units gain 50% more Experience from combat.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MOBILIZATION"> 
@@ -131614,7 +131614,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MILITARY_TRADITION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Воинские традиции[ENDCOLOR][NEWLINE]Подразделения получают в бою на 50% больше опыта. При захвате неоккупированного города цивилизации с населением 5+ вы бесплатно получаете одну технологию, уже изученную этой цивилизацией (только один раз за город). Получение города в результате торговой сделки не считается.
+				[COLOR_POSITIVE_TEXT]Воинские традиции[ENDCOLOR][NEWLINE]Подразделения получают в бою на 50% больше опыта.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MERCANTILISM_HELP"> 

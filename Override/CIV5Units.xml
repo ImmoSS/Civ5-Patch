@@ -134000,7 +134000,7 @@
 			<PortraitIndex>21</PortraitIndex> 
 			<IconAtlas>POLICY_ATLAS</IconAtlas> 
 			<IconAtlasAchieved>POLICY_A_ATLAS</IconAtlasAchieved> 
-			<TechFromCityConquer>true</TechFromCityConquer>
+			<TechFromCityConquer>false</TechFromCityConquer>
 		</Row>
 		<Row> 
 			<ID>16</ID> 
