@@ -21349,62 +21349,62 @@
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_PALACE</BuildingClassType> 
-			<Tourism>2</Tourism> 
+			<Tourism>3</Tourism> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_NATIONAL_EPIC</BuildingClassType> 
-			<Tourism>2</Tourism> 
+			<Tourism>3</Tourism> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_HEROIC_EPIC</BuildingClassType> 
-			<Tourism>2</Tourism> 
+			<Tourism>3</Tourism> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_CIRCUS_MAXIMUS</BuildingClassType> 
-			<Tourism>2</Tourism> 
+			<Tourism>3</Tourism> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_NATIONAL_COLLEGE</BuildingClassType> 
-			<Tourism>2</Tourism> 
+			<Tourism>3</Tourism> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_NATIONAL_TREASURY</BuildingClassType> 
-			<Tourism>2</Tourism> 
+			<Tourism>3</Tourism> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_GRAND_TEMPLE</BuildingClassType> 
-			<Tourism>2</Tourism> 
+			<Tourism>3</Tourism> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_OXFORD_UNIVERSITY</BuildingClassType> 
-			<Tourism>2</Tourism> 
+			<Tourism>3</Tourism> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_IRONWORKS</BuildingClassType> 
-			<Tourism>2</Tourism> 
+			<Tourism>3</Tourism> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_HERMITAGE</BuildingClassType> 
-			<Tourism>2</Tourism> 
+			<Tourism>3</Tourism> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_INTELLIGENCE_AGENCY</BuildingClassType> 
-			<Tourism>2</Tourism> 
+			<Tourism>3</Tourism> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_TOURIST_CENTER</BuildingClassType> 
-			<Tourism>2</Tourism> 
+			<Tourism>3</Tourism> 
 		</Row>
 	</Belief_BuildingClassTourism> 
 
@@ -21469,73 +21469,73 @@
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_PALACE</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>3</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_NATIONAL_EPIC</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>3</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_HEROIC_EPIC</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>3</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_CIRCUS_MAXIMUS</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>3</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_NATIONAL_COLLEGE</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>3</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_NATIONAL_TREASURY</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>3</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_GRAND_TEMPLE</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>3</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_OXFORD_UNIVERSITY</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>3</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_IRONWORKS</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>3</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_HERMITAGE</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>3</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_INTELLIGENCE_AGENCY</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>3</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_RELIGIOUS_ART</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_TOURIST_CENTER</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<YieldChange>2</YieldChange> 
+			<YieldChange>3</YieldChange> 
 		</Row>
 		<Row> 
 			<BeliefType>BELIEF_GOD_KING</BeliefType> 

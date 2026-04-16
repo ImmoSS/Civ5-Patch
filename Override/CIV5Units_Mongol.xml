@@ -4610,7 +4610,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RELIGIOUS_ART"> 
 			<Text>
-				National Wonders provide +2 [ICON_CULTURE] Culture and +2 [ICON_TOURISM] Tourism
+				National Wonders provide +3 [ICON_CULTURE] Culture and +3 [ICON_TOURISM] Tourism
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RELIGIOUS_ART_SHORT"> 
@@ -129403,7 +129403,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RELIGIOUS_ART"> 
 			<Text>
-				Национальные чудеса дают +2 [ICON_CULTURE] к культуре и +2 [ICON_TOURISM] к туризму в городе
+				Национальные чудеса дают +3 [ICON_CULTURE] к культуре и +3 [ICON_TOURISM] к туризму в городе
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RELIGIOUS_TROUBADOURS"> 
