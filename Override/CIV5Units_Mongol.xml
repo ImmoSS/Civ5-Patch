@@ -4455,7 +4455,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_MESSENGER_GODS"> 
 			<Text>
-				+2 [ICON_RESEARCH] Science and +1 [ICON_PEACE] Faith in cities with a [ICON_CONNECTED] City Connection. Palace provides +2 [ICON_RESEARCH] Science and +1 [ICON_PEACE] Faith
+				+2 [ICON_RESEARCH] Science and +1 [ICON_PEACE] Faith in cities with a [ICON_CONNECTED] City Connection
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_MESSENGER_GODS_SHORT"> 
@@ -131359,7 +131359,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Replace Tag="TXT_KEY_BELIEF_MESSENGER_GODS"> 
 			<Text>
-				+2 [ICON_RESEARCH] к науке и +1 [ICON_PEACE] к вере в городах с [ICON_CONNECTED] торговыми путями. Дворец дает +2 [ICON_RESEARCH] к науке и +1 [ICON_PEACE] к вере
+				+2 [ICON_RESEARCH] к науке и +1 [ICON_PEACE] к вере в городах с [ICON_CONNECTED] торговыми путями
 			</Text>
 		</Replace>
 		<Row Tag="TXT_KEY_GAME_OPTION_DUEL_MODE"> 

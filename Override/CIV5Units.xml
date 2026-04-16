@@ -21574,18 +21574,6 @@
 			<YieldChange>1</YieldChange> 
 		</Row>
 		<Row> 
-			<BeliefType>BELIEF_MESSENGER_GODS</BeliefType> 
-			<BuildingClassType>BUILDINGCLASS_PALACE</BuildingClassType> 
-			<YieldType>YIELD_SCIENCE</YieldType> 
-			<YieldChange>2</YieldChange> 
-		</Row>
-		<Row> 
-			<BeliefType>BELIEF_MESSENGER_GODS</BeliefType> 
-			<BuildingClassType>BUILDINGCLASS_PALACE</BuildingClassType> 
-			<YieldType>YIELD_FAITH</YieldType> 
-			<YieldChange>1</YieldChange> 
-		</Row>
-		<Row> 
 			<BeliefType>BELIEF_SACRED_SITES</BeliefType> 
 			<BuildingClassType>BUILDINGCLASS_TEMPLE</BuildingClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
