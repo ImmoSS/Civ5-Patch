@@ -4700,7 +4700,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_PATH"> 
 			<Text>
-				+1 [ICON_CULTURE] Culture from Jungle tiles and Lakes
+				+1 [ICON_CULTURE] Culture from Jungle tiles and Lakes. +1 [ICON_FOOD] from Lakes
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_PATH_NWS"> 
@@ -131284,7 +131284,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_PATH"> 
 			<Text>
-				Дает +1 [ICON_CULTURE] к культуре за каждую обрабатываемую клетку джунглей и озер
+				Дает +1 [ICON_CULTURE] к культуре за каждую обрабатываемую клетку джунглей и озер. +1 [ICON_FOOD] к пище от озер
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_SECULARISM_HELP"> 

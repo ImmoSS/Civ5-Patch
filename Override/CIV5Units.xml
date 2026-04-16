@@ -21785,6 +21785,12 @@
 			<Yield>1</Yield> 
 		</Row>
 		<Row> 
+			<BeliefType>BELIEF_SACRED_PATH</BeliefType> 
+			<FeatureType>FEATURE_ICE</FeatureType> 
+			<YieldType>YIELD_FOOD</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
 			<BeliefType>BELIEF_DESERT_FOLKLORE</BeliefType> 
 			<FeatureType>FEATURE_FLOOD_PLAINS</FeatureType> 
 			<YieldType>YIELD_FAITH</YieldType> 
