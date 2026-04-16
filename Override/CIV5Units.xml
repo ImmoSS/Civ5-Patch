@@ -53755,7 +53755,7 @@
 			<HurryCostModifier>15</HurryCostModifier>
 			<IconAtlas>NEW_BUILDING_ATLAS</IconAtlas>
 			<PortraitIndex>5</PortraitIndex>
-			<FaithToScience>25</FaithToScience>
+			<FaithToScience>50</FaithToScience>
 		</Row>
 		<Row>
 			<ID>169</ID> 

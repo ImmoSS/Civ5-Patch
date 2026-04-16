@@ -6490,16 +6490,6 @@
 				Madrasah
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_BUILDING_MADRASAH_HELP"> 
-			<Text>
-				+2 [ICON_RESEARCH] Science from Jungle tiles worked by this City. 25% [ICON_PEACE] Faith produced by city converts to [ICON_RESEARCH] Science.[NEWLINE][NEWLINE]City must have a Library.
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_BUILDING_MADRASAH_STRATEGY"> 
-			<Text>
-				The Madrasah is a Medieval-era building. It increases the science output of the city, and it's even more effective if the city is near to jungle tiles. It also provides [ICON_PEACE] Faith, unlike the University which it replaces. The city must already have a Library in order to construct a Madrasah.
-			</Text>
-		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MAINTENANCE_TT"> 
 			<Text>
 				{1_Num} [ICON_GOLD] Gold per turn spent on Building maintenance in this City.
@@ -128036,7 +128026,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MADRASAH_HELP"> 
 			<Text>
-				+2 [ICON_RESEARCH] Science from Jungle tiles worked by this City. 25% [ICON_PEACE] Faith produced by this city converts to [ICON_RESEARCH] Science. Allows Archaeologists to be built in this city.[NEWLINE][NEWLINE]City must have a Library.
+				+2 [ICON_RESEARCH] Science from Jungle tiles worked by this City. 50% [ICON_PEACE] Faith produced by this city converts to [ICON_RESEARCH] Science. Allows Archaeologists to be built in this city.[NEWLINE][NEWLINE]City must have a Library.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MADRASAH_STRATEGY"> 
@@ -134243,7 +134233,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MADRASAH_HELP"> 
 			<Text>
-				+2 [ICON_RESEARCH] к науке на клетках с джунглями, которые обрабатывает город. 25% очков [ICON_PEACE] веры, производимых городом, добавляются к очкам [ICON_RESEARCH] науки. Позволяет обучать в городе археологов.[NEWLINE][NEWLINE]В городе должна быть библиотека.
+				+2 [ICON_RESEARCH] к науке на клетках с джунглями, которые обрабатывает город. 50% очков [ICON_PEACE] веры, производимых городом, добавляются к очкам [ICON_RESEARCH] науки. Позволяет обучать в городе археологов.[NEWLINE][NEWLINE]В городе должна быть библиотека.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MADRASAH_STRATEGY"> 
