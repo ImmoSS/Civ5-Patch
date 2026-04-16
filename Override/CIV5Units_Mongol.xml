@@ -119454,7 +119454,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_LUXURY_RETENTION"> 
 			<Text>
-				Retains 50% of the [ICON_HAPPINESS_1] Happiness benefits from a Luxury Resource if your last copy of it is traded away.
+				Retains 100% of the [ICON_HAPPINESS_1] Happiness benefits from a Luxury Resource if your last copy of it is traded away.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_LUXURY_RETENTION_SHORT"> 
@@ -136309,6 +136309,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_AESTHETICS_HELP"> 
 			<Text>
 				[COLOR_POSITIVE_TEXT]Эстетика[ENDCOLOR] помогает цивилизации генерировать очки [ICON_CULTURE] культуры.[NEWLINE][NEWLINE]Принятие эстетики позволит вам получать великих писателей, художников и музыкантов на 25% быстрее, а также увеличит скорость постройки их гильдий на 50%. Открывает постройку галереи Уффици.[NEWLINE][NEWLINE]Принятие всех общественных институтов эстетики удваивает тематический бонус, который вы получаете от музеев и чудес. Также позволяет приобретать великих писателей, художников и музыкантов за счет  [ICON_PEACE] веры, начиная с новейшего времени.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_LUXURY_RETENTION"> 
+			<Text>
+				Оставляет 100% от [ICON_HAPPINESS_1] настроения за редкий ресурс, если последняя его единица была продана другой державе.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 

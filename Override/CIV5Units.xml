@@ -168874,7 +168874,7 @@
 			<CombatBonusVsLargerCiv>0</CombatBonusVsLargerCiv> 
 			<RazeSpeedModifier>0</RazeSpeedModifier> 
 			<DOFGreatPersonModifier>0</DOFGreatPersonModifier> 
-			<LuxuryHappinessRetention>50</LuxuryHappinessRetention> 
+			<LuxuryHappinessRetention>100</LuxuryHappinessRetention> 
 			<ExtraSpies>0</ExtraSpies> 
 			<UnresearchedTechBonusFromKills>0</UnresearchedTechBonusFromKills> 
 			<ExtraFoundedCityTerritoryClaimRange>0</ExtraFoundedCityTerritoryClaimRange> 
