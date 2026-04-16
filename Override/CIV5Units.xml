@@ -24106,7 +24106,7 @@
 			<GoldPerXFollowers>0</GoldPerXFollowers> 
 			<GoldPerFirstCityConversion>0</GoldPerFirstCityConversion> 
 			<SciencePerOtherReligionFollower>0</SciencePerOtherReligionFollower> 
-			<SpreadDistanceModifier>20</SpreadDistanceModifier> 
+			<SpreadDistanceModifier>30</SpreadDistanceModifier> 
 			<SpreadStrengthModifier>50</SpreadStrengthModifier> 
 			<ProphetStrengthModifier>0</ProphetStrengthModifier> 
 			<ProphetCostModifier>0</ProphetCostModifier> 

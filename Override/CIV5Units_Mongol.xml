@@ -4660,7 +4660,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RELIGIOUS_TEXTS"> 
 			<Text>
-				Religion spreads to cities 20% further away (and 50% faster with Printing Press)
+				Religion spreads to cities 30% further away (and 50% faster with Printing Press)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RELIGIOUS_TEXTS_SHORT"> 
@@ -133655,7 +133655,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RELIGIOUS_TEXTS"> 
 			<Text>
-				Религия распространяется к городам на 20% дальше (и на 50% быстрее после открытия печатного пресса)
+				Религия распространяется к городам на 30% дальше (и на 50% быстрее после открытия печатного пресса)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CULTURE_WONDER_BONUS"> 
