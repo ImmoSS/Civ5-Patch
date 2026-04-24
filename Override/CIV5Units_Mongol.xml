@@ -121139,7 +121139,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_FRENCH_MUSKETEER_STRATEGY"> 
 			<Text>
-				The Musketeer is the French unique unit, replacing the Musketman. The Musketeer is significantly more powerful than the Musketman, making it the most powerful foot soldier unit in the game (until the introduction of Industrial Era Infantry units). It also gets +20% [ICON_STRENGTH] Combat Strength when has less than 50 HP.
+				The Musketeer is the French unique unit, replacing the Musketman. The Musketeer is significantly more powerful than the Musketman, making it the most powerful foot soldier unit in the game (until the introduction of Industrial Era Infantry units). It also gets +20% [ICON_STRENGTH] Combat Strength when defending when has less than 50 HP.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_FRIGATE"> 
@@ -121792,7 +121792,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_MUSKETEER"> 
 			<Text>
-				One of the first gunpowder units of the game. Only the French may build it. This Unit has a higher [ICON_STRENGTH] Combat Strength than the Musketman, which it replaces. It also gets +20% [ICON_STRENGTH] Combat Strength when has less than 50 HP.
+				One of the first gunpowder units of the game. Only the French may build it. This Unit has a higher [ICON_STRENGTH] Combat Strength than the Musketman, which it replaces. It also gets +20% [ICON_STRENGTH] Combat Strength when defending when has less than 50 HP.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_MUSKETMAN"> 
@@ -135969,12 +135969,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_MUSKETEER"> 
 			<Text>
-				Одно из первых подразделений с огнестрельным оружием в игре. Его могут создавать только французы. Это подразделение обладает большей [ICON_STRENGTH] боевой мощью, чем аркебузиры, которых оно замещает. Также получает +20% [ICON_STRENGTH] к боевой мощи, если имеет меньше 50 ОЗ.
+				Одно из первых подразделений с огнестрельным оружием в игре. Его могут создавать только французы. Это подразделение обладает большей [ICON_STRENGTH] боевой мощью, чем аркебузиры, которых оно замещает. Также получает +20% [ICON_STRENGTH] к боевой мощи в обороне, если имеет меньше 50 ОЗ.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_FRENCH_MUSKETEER_STRATEGY"> 
 			<Text>
-				Мушкетеры являются уникальным подразделением Франции. Они сильнее, чем обычные аркебузиры, что делает их самыми мощными пехотными подразделениями до появления юнитов Новейшего времени. Также получают +20% [ICON_STRENGTH] к боевой мощи, если имеют меньше 50 ОЗ.
+				Мушкетеры являются уникальным подразделением Франции. Они сильнее, чем обычные аркебузиры, что делает их самыми мощными пехотными подразделениями до появления юнитов Новейшего времени. Также получают +20% [ICON_STRENGTH] к боевой мощи в обороне, если имеют меньше 50 ОЗ.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_DENMARK_BERSERKER_HELP"> 
