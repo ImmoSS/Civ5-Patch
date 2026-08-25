@@ -179481,6 +179481,10 @@
 			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
 		</Row>
 		<Row> 
+			<UnitType>UNIT_BARBARIAN_ARCHER</UnitType> 
+			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
+		</Row>
+		<Row> 
 			<UnitType>UNIT_BABYLONIAN_BOWMAN</UnitType> 
 			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
 		</Row>
