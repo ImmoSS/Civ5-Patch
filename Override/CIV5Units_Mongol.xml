@@ -98826,7 +98826,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_REPUBLIC_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Republic[ENDCOLOR][NEWLINE]+1 [ICON_PRODUCTION] Production in every City and +5% [ICON_PRODUCTION] Production in cities when constructing Buildings.
+				[COLOR_POSITIVE_TEXT]Republic[ENDCOLOR][NEWLINE]+1 [ICON_PRODUCTION] Production in every City and +10% [ICON_PRODUCTION] Production in cities when constructing Buildings.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_RESETTLEMENT"> 
@@ -136309,6 +136309,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_POLICY_LEGALISM_HELP"> 
 			<Text>
 				[COLOR_POSITIVE_TEXT]Легализм[ENDCOLOR][NEWLINE]В первых пяти городах державы бесплатно появится культурное здание.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_POLICY_REPUBLIC_HELP"> 
+			<Text>
+				[COLOR_POSITIVE_TEXT]Республика[ENDCOLOR][NEWLINE]Увеличивает на +1 [ICON_PRODUCTION] производство в каждом городе и на +10% [ICON_PRODUCTION] производство при строительстве зданий.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
