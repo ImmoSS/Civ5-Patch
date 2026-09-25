@@ -866,6 +866,8 @@
 #define AUTO_PEACE_WITH_MINOR_ON_ALLYING
 ///
 #define EXPIRATION_CONDITIONS_FOR_SOME_QUESTS
+// Adds a text popup showing the amount of gold received when meeting city states
+#define CS_SHOW_FIRST_MEET_GOLD
 /*CITY-STATES CHANGES END*/
 
 
@@ -1143,6 +1145,12 @@
 #define FIX_SET_HAS_TECH_RESOURCE_CONNECTION
 ///
 #define FIX_IS_FRIENDLY_TERRITORY_MODIFIERS_AGAINST_CITIES
+// prevents post combat promotions (kris) text popups from being visible in unrevealed plots
+#define FIX_UNIT_PROMOTION_POST_COMBAT_MESSAGE_VISIBILITY
+// plot purchase/border growth reveals FOW immediately
+#define FIX_UPDATE_DEFERRED_FOG_ON_PLOT_ACQUISITION
+// removing a road or chopping down a forest with a traidng post will no longer show a confirmation popup
+#define FIX_REDUNDANT_CONFIRM_REBUILD_POPUPS
 /*BUGS FIXES END*/
 
 
@@ -1632,6 +1640,10 @@
 // #define EMERGENCY_LOGGING
 ///
 #define SEED_LOGGING
+// custom hooks for CvDllNetMessageHandler allow players to send modded messages via existing net functions
+#define NET_MESSAGE_MODDING
+// Allows players to highlight tiles using INTERFACEMODE_PING and moving the cursor
+#define MP_MAP_PING
 /*OTHER CHANGES END*/
 
 

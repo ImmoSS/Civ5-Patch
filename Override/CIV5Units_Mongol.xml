@@ -105013,7 +105013,7 @@ The ship has weather'd every rack; the prize we sought is won."
 				Disbanded Units' Combat Strength
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_REPLAY_DATA_EFFECTIVEPRODUCTIONPERTURN">
+		<Replace Tag="TXT_KEY_REPLAY_DATA_EFFECTIVEPRODUCTIONPERTURN_TIMES100">
 			<Text>
 				Effective Production [ICON_PRODUCTION] Per Turn
 			</Text>
@@ -129010,6 +129010,11 @@ The ship has weather'd every rack; the prize we sought is won."
 				Defending in Friendly Lands
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_REPLAY_VIEWER_TURN_RANGE_SLIDER_TT"> 
+			<Text>
+				Show Turns {1_Num}-{2_Num}
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_PATCH_VERSION"> 
 			<Text>
 				v12.2a
@@ -136354,6 +136359,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_POLICY_THIRD_ALTERNATIVE_HELP"> 
 			<Text>
 				[COLOR_POSITIVE_TEXT]Третья альтернатива[ENDCOLOR][NEWLINE]Количество стратегических ресурсов, производимых государством, увеличивается на 100%. +10 [ICON_FOOD] единиц пищи и +10 [ICON_RESEARCH] к науке в [ICON_CAPITAL] столице.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_REPLAY_VIEWER_TURN_RANGE_SLIDER_TT"> 
+			<Text>
+				Показать ходы {1_Num}-{2_Num}
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 

@@ -17464,6 +17464,9 @@ void CvUnit::changeExperience(int iChange, int iMax, bool bFromCombat, bool bInB
 						CvPromotionEntry* pkNewPromotionInfo = GC.getPromotionInfo(eNewPromotion);
 						Localization::String localizedText = Localization::Lookup(pkNewPromotionInfo->GetDescriptionKey());
 						float fDelay = GC.getPOST_COMBAT_TEXT_DELAY() * 2;
+#ifdef FIX_UNIT_PROMOTION_POST_COMBAT_MESSAGE_VISIBILITY
+						if (plot()->isRevealed(GC.getGame().getActiveTeam()))
+#endif
 						DLLUI->AddPopupText(getX(), getY(), localizedText.toUTF8(), fDelay);
 					}
 				}
