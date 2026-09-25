@@ -138039,7 +138039,7 @@
 			<UnitSupplyMod>0</UnitSupplyMod> 
 			<UnitUpgradeCostMod>0</UnitUpgradeCostMod> 
 			<CityStrengthMod>0</CityStrengthMod> 
-			<CityGrowthMod>20</CityGrowthMod> 
+			<CityGrowthMod>15</CityGrowthMod> 
 			<CapitalGrowthMod>0</CapitalGrowthMod> 
 			<SettlerProductionModifier>0</SettlerProductionModifier> 
 			<CapitalSettlerProductionModifier>0</CapitalSettlerProductionModifier> 
@@ -138050,7 +138050,7 @@
 			<HappinessToCulture>0</HappinessToCulture> 
 			<HappinessToScience>0</HappinessToScience> 
 			<NumCitiesFreeCultureBuilding>0</NumCitiesFreeCultureBuilding> 
-			<NumCitiesFreeFoodBuilding>4</NumCitiesFreeFoodBuilding> 
+			<NumCitiesFreeFoodBuilding>5</NumCitiesFreeFoodBuilding> 
 			<HalfSpecialistUnhappiness>false</HalfSpecialistUnhappiness> 
 			<HalfSpecialistFood>false</HalfSpecialistFood> 
 			<MaxConscript>0</MaxConscript> 

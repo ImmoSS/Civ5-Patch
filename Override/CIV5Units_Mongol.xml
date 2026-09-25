@@ -97471,7 +97471,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_TRADITION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Tradition[ENDCOLOR] is best for small empires.[NEWLINE][NEWLINE]Adopting Tradition greatly increases the rate of border expansion in cities and also grants 3 [ICON_CULTURE] Culture in the [ICON_CAPITAL] Capital. Unlocks building the Hanging Gardens.[NEWLINE][NEWLINE]Adopting all Policies in the Tradition tree will grant +20% [ICON_FOOD] Growth and a free Aqueduct in your first 4 cities. It also allows the purchase of Great Engineers with [ICON_PEACE] Faith starting in the Industrial Era.
+				[COLOR_POSITIVE_TEXT]Tradition[ENDCOLOR] is best for small empires.[NEWLINE][NEWLINE]Adopting Tradition greatly increases the rate of border expansion in cities and also grants 3 [ICON_CULTURE] Culture in the [ICON_CAPITAL] Capital. Unlocks building the Hanging Gardens.[NEWLINE][NEWLINE]Adopting all Policies in the Tradition tree will grant +15% [ICON_FOOD] Growth in the Empire and a free Aqueduct in your first 5 cities. It also allows the purchase of Great Engineers with [ICON_PEACE] Faith starting in the Industrial Era.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_UNLOCK_SPEND"> 
@@ -134051,7 +134051,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_TRADITION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Традиция[ENDCOLOR] хорошо подходит небольшим державам.[NEWLINE][NEWLINE]Принятие традиции значительно снижает затраты  [ICON_CULTURE] культуры в [ICON_CAPITAL] столице. Открывает постройку Висячих садов.[NEWLINE][NEWLINE]Принятие всех общественных институтов традиции увеличивает на 20% [ICON_FOOD] производство пищи и дает бесплатный акведук в первых четырех городах. Также позволяет приобретать великих инженеров за счет [ICON_PEACE] веры, начиная с Новейшего времени.
+				[COLOR_POSITIVE_TEXT]Традиция[ENDCOLOR] хорошо подходит небольшим державам.[NEWLINE][NEWLINE]Принятие традиции значительно снижает затраты  [ICON_CULTURE] культуры в [ICON_CAPITAL] столице. Открывает постройку Висячих садов.[NEWLINE][NEWLINE]Принятие всех общественных институтов традиции увеличивает на 15% [ICON_FOOD] производство пищи в империи и дает бесплатный акведук в первых пяти городах. Также позволяет приобретать великих инженеров за счет [ICON_PEACE] веры, начиная с Новейшего времени.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_FAITH_PLAYER_MOD"> 
