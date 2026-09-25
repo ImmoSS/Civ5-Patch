@@ -98206,7 +98206,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_LEGALISM_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Legalism[ENDCOLOR][NEWLINE]Provides a free culture building in your first 4 cities.
+				[COLOR_POSITIVE_TEXT]Legalism[ENDCOLOR][NEWLINE]Provides a free culture building in your first 5 cities.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_LEGALISM_TEXT"> 
@@ -136304,6 +136304,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_TRAIT_LUXURY_RETENTION"> 
 			<Text>
 				Оставляет 100% от [ICON_HAPPINESS_1] настроения за редкий ресурс, если последняя его единица была продана другой державе.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_POLICY_LEGALISM_HELP"> 
+			<Text>
+				[COLOR_POSITIVE_TEXT]Легализм[ENDCOLOR][NEWLINE]В первых пяти городах державы бесплатно появится культурное здание.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
