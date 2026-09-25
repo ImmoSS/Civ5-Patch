@@ -1640,6 +1640,8 @@
 // #define EMERGENCY_LOGGING
 ///
 #define SEED_LOGGING
+// custom hooks for CvDllNetMessageHandler allow players to send modded messages via existing net functions
+#define NET_MESSAGE_MODDING
 /*OTHER CHANGES END*/
 
 
