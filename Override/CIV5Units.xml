@@ -149596,11 +149596,6 @@
 			<YieldType>YIELD_GOLD</YieldType> 
 			<Yield>1</Yield> 
 		</Row>
-		<Row> 
-			<PolicyType>POLICY_FIVE_YEAR_PLAN</PolicyType> 
-			<YieldType>YIELD_PRODUCTION</YieldType> 
-			<Yield>2</Yield> 
-		</Row>
 	</Policy_CityYieldChanges> 
 
 	<Table name="Policy_CoastalCityYieldChanges">
@@ -150816,6 +150811,18 @@
 			<PolicyType>POLICY_FIVE_YEAR_PLAN</PolicyType> 
 			<ImprovementType>IMPROVEMENT_QUARRY</ImprovementType> 
 			<YieldType>YIELD_PRODUCTION</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_FIVE_YEAR_PLAN</PolicyType> 
+			<ImprovementType>IMPROVEMENT_MINE</ImprovementType> 
+			<YieldType>YIELD_SCIENCE</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_FIVE_YEAR_PLAN</PolicyType> 
+			<ImprovementType>IMPROVEMENT_QUARRY</ImprovementType> 
+			<YieldType>YIELD_SCIENCE</YieldType> 
 			<Yield>1</Yield> 
 		</Row>
 	</Policy_ImprovementYieldChanges> 

@@ -97966,7 +97966,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_FIVE_YEAR_PLAN_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Five-Year Plan[ENDCOLOR][NEWLINE]+2 [ICON_PRODUCTION] Production in every city and +1 [ICON_PRODUCTION] Production for every Mine and Quarry.
+				[COLOR_POSITIVE_TEXT]Five-Year Plan[ENDCOLOR][NEWLINE]+1 [ICON_PRODUCTION] Production and +1 [ICON_RESEARCH] Science for every Mine and Quarry.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_FIVE_YEAR_PLAN_TEXT"> 
@@ -130019,7 +130019,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_FIVE_YEAR_PLAN_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Пятилетний план[ENDCOLOR][NEWLINE]+2 [ICON_PRODUCTION] к производству в каждом городе и +1 [ICON_PRODUCTION] к производству за каждую шахту или каменоломню.
+				[COLOR_POSITIVE_TEXT]Пятилетний план[ENDCOLOR][NEWLINE]+1 [ICON_PRODUCTION] к производству и +1 [ICON_RESEARCH] к науке за каждую шахту или каменоломню.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_TRADE_UNIONS_HELP"> 
