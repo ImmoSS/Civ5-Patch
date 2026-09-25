@@ -98071,7 +98071,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_FUTURISM_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Futurism[ENDCOLOR][NEWLINE]+250 [ICON_TOURISM] Tourism with all known civs when a Great General, Admiral, Writer, Artist or Musician is born.
+				[COLOR_POSITIVE_TEXT]Futurism[ENDCOLOR][NEWLINE]+250 [ICON_TOURISM] Tourism with all known civs when a Great General, Admiral, Writer, Artist or Musician is born. Earn Great Writers, Artists, and Musicians 33% faster.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_FUTURISM_TEXT"> 
@@ -134116,7 +134116,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_FUTURISM_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Футуризм[ENDCOLOR][NEWLINE]+250 к [ICON_TOURISM] туризму от всех известных держав при рождении великого полководца, флотоводца, писателя, художника или музыканта.
+				[COLOR_POSITIVE_TEXT]Футуризм[ENDCOLOR][NEWLINE]+250 к [ICON_TOURISM] туризму от всех известных держав при рождении великого полководца, флотоводца, писателя, художника или музыканта. Великие писатели, художники и музыканты появляются на 33% быстрее.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_NATIONALISM_HELP"> 

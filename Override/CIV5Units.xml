@@ -146114,9 +146114,9 @@
 			<GreatPeopleRateModifier>0</GreatPeopleRateModifier> 
 			<GreatGeneralRateModifier>0</GreatGeneralRateModifier> 
 			<GreatAdmiralRateModifier>0</GreatAdmiralRateModifier> 
-			<GreatWriterRateModifier>0</GreatWriterRateModifier> 
-			<GreatArtistRateModifier>0</GreatArtistRateModifier> 
-			<GreatMusicianRateModifier>0</GreatMusicianRateModifier> 
+			<GreatWriterRateModifier>33</GreatWriterRateModifier> 
+			<GreatArtistRateModifier>33</GreatArtistRateModifier> 
+			<GreatMusicianRateModifier>33</GreatMusicianRateModifier> 
 			<GreatMerchantRateModifier>0</GreatMerchantRateModifier> 
 			<GreatScientistRateModifier>0</GreatScientistRateModifier> 
 			<DomesticGreatGeneralRateModifier>0</DomesticGreatGeneralRateModifier> 
