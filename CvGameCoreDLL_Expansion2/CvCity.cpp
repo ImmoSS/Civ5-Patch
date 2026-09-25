@@ -13463,6 +13463,9 @@ void CvCity::DoAcquirePlot(int iPlotX, int iPlotY)
 
 	DoUpdateCheapestPlotInfluence();
 
+#ifdef FIX_UPDATE_DEFERRED_FOG_ON_PLOT_ACQUISITION
+	GC.getMap().updateDeferredFog();
+#endif
 #ifdef UPDATE_UNIT_PROMOTIONS_ON_ACQUIRED_PLOT
 	if (GET_TEAM(GET_PLAYER(getOwner()).getTeam()).canEmbark())
 	{
