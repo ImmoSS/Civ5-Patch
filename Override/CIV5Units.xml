@@ -148200,7 +148200,7 @@
 			<Type>POLICY_UNIVERSAL_HEALTHCARE_A</Type> 
 			<Description>TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE</Description> 
 			<Civilopedia>TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_TEXT</Civilopedia> 
-			<Help>TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_HELP</Help> 
+			<Help>TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_A_HELP</Help> 
 			<PolicyBranchType>POLICY_BRANCH_AUTOCRACY</PolicyBranchType> 
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
@@ -149509,6 +149509,78 @@
 			<BuildingClassType>BUILDINGCLASS_TOURIST_CENTER</BuildingClassType> 
 			<YieldType>YIELD_FOOD</YieldType> 
 			<YieldChange>2</YieldChange>  
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_UNIVERSAL_HEALTHCARE_A</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_PALACE</BuildingClassType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<YieldChange>5</YieldChange>  
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_UNIVERSAL_HEALTHCARE_A</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_HEROIC_EPIC</BuildingClassType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<YieldChange>5</YieldChange>  
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_UNIVERSAL_HEALTHCARE_A</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_NATIONAL_EPIC</BuildingClassType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<YieldChange>5</YieldChange> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_UNIVERSAL_HEALTHCARE_A</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_CIRCUS_MAXIMUS</BuildingClassType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<YieldChange>5</YieldChange>  
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_UNIVERSAL_HEALTHCARE_A</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_NATIONAL_TREASURY</BuildingClassType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<YieldChange>5</YieldChange>  
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_UNIVERSAL_HEALTHCARE_A</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_NATIONAL_COLLEGE</BuildingClassType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<YieldChange>5</YieldChange>  
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_UNIVERSAL_HEALTHCARE_A</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_IRONWORKS</BuildingClassType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<YieldChange>5</YieldChange>  
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_UNIVERSAL_HEALTHCARE_A</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_OXFORD_UNIVERSITY</BuildingClassType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<YieldChange>5</YieldChange>  
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_UNIVERSAL_HEALTHCARE_A</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_HERMITAGE</BuildingClassType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<YieldChange>5</YieldChange>  
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_UNIVERSAL_HEALTHCARE_A</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_INTELLIGENCE_AGENCY</BuildingClassType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<YieldChange>5</YieldChange>  
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_UNIVERSAL_HEALTHCARE_A</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_GRAND_TEMPLE</BuildingClassType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<YieldChange>5</YieldChange>  
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_UNIVERSAL_HEALTHCARE_A</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_TOURIST_CENTER</BuildingClassType> 
+			<YieldType>YIELD_GOLD</YieldType> 
+			<YieldChange>5</YieldChange>  
 		</Row>
 	</Policy_BuildingClassYieldChanges> 
 
