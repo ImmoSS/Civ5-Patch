@@ -128995,6 +128995,11 @@ The ship has weather'd every rack; the prize we sought is won."
 				Defending in Friendly Lands
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_REPLAY_VIEWER_TURN_RANGE_SLIDER_TT"> 
+			<Text>
+				Show Turns {1_Num}-{2_Num}
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_PATCH_VERSION"> 
 			<Text>
 				v12.2a
@@ -136304,6 +136309,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_TRAIT_LUXURY_RETENTION"> 
 			<Text>
 				Оставляет 100% от [ICON_HAPPINESS_1] настроения за редкий ресурс, если последняя его единица была продана другой державе.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_REPLAY_VIEWER_TURN_RANGE_SLIDER_TT"> 
+			<Text>
+				Показать ходы {1_Num}-{2_Num}
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
