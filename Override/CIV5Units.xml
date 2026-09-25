@@ -149181,6 +149181,21 @@
 			<BuildingClassType>BUILDINGCLASS_MILITARY_BASE</BuildingClassType> 
 			<ProductionModifier>25</ProductionModifier>  
 		</Row>
+		<Row> 
+			<PolicyType>POLICY_EXPLORATION</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_LIGHTHOUSE</BuildingClassType> 
+			<ProductionModifier>50</ProductionModifier> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_EXPLORATION</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_HARBOR</BuildingClassType> 
+			<ProductionModifier>50</ProductionModifier> 
+		</Row>
+		<Row> 
+			<PolicyType>POLICY_EXPLORATION</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_SEAPORT</BuildingClassType> 
+			<ProductionModifier>50</ProductionModifier> 
+		</Row>
 	</Policy_BuildingClassProductionModifiers> 
 
 	<Table name="Policy_BuildingClassTourismModifiers">

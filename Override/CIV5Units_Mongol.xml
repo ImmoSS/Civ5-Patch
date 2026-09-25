@@ -97346,7 +97346,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_EXPLORATION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Exploration[ENDCOLOR] enhances your abilities to spread your empire over the seas.[NEWLINE][NEWLINE]Adopting Exploration gives +1 [ICON_MOVES] Movement for Naval units and +1 Sight for Naval combat units. Unlocks building the Venetian Arsenal.[NEWLINE][NEWLINE]Adopting all policies in the Exploration tree gives +1 Sight for Naval combat units and Lighthouses, Harbors and Seaports provide +1 [ICON_FOOD] Food, +1 [ICON_PRODUCTION] Production and +1 [ICON_RESEARCH] Science. It also allows the purchase of Great Admirals with [ICON_PEACE] Faith starting in the Industrial Era.
+				[COLOR_POSITIVE_TEXT]Exploration[ENDCOLOR] enhances your abilities to spread your empire over the seas.[NEWLINE][NEWLINE]Adopting Exploration gives +1 [ICON_MOVES] Movement for Naval units and +1 Sight for Naval combat units and provides +50% [ICON_PRODUCTION] Production towards Lighthouses, Harbors and Seaports constructing. Unlocks building the Venetian Arsenal.[NEWLINE][NEWLINE]Adopting all policies in the Exploration tree gives +1 Sight for Naval combat units and Lighthouses, Harbors and Seaports provide +1 [ICON_FOOD] Food, +1 [ICON_PRODUCTION] Production and +1 [ICON_RESEARCH] Science. It also allows the purchase of Great Admirals with [ICON_PEACE] Faith starting in the Industrial Era.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_FREEDOM"> 
@@ -130009,7 +130009,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_EXPLORATION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Мореплавание[ENDCOLOR] позволяет расширить ваши владения за пределы одного континента.[NEWLINE][NEWLINE]Освоение мореплавания увеличивает на +1 [ICON_MOVES] ОП кораблей и увеличивает на +1 радиус обзора боевых кораблей. Открывает постройку Венецианского Арсенала.[NEWLINE][NEWLINE]При принятии всех общественных институтов мореплавания маяки, гавани и морские порты дают дополнительно +1 [ICON_FOOD] к пище, +1 [ICON_PRODUCTION] к производству, +1 [ICON_RESEARCH] к науке, и радиус обзора боевых кораблей увеличивается на 1. Также позволяет приобретать великих флотоводцев за счет [ICON_PEACE] веры, начиная с Новейшего времени.
+				[COLOR_POSITIVE_TEXT]Мореплавание[ENDCOLOR] позволяет расширить ваши владения за пределы одного континента.[NEWLINE][NEWLINE]Освоение мореплавания увеличивает на +1 [ICON_MOVES] ОП кораблей и увеличивает на +1 радиус обзора боевых кораблей, а также дает +50% к производству маяков, гаваней и морских портов. Открывает постройку Венецианского Арсенала.[NEWLINE][NEWLINE]При принятии всех общественных институтов мореплавания маяки, гавани и морские порты дают дополнительно +1 [ICON_FOOD] к пище, +1 [ICON_PRODUCTION] к производству, +1 [ICON_RESEARCH] к науке, и радиус обзора боевых кораблей увеличивается на 1. Также позволяет приобретать великих флотоводцев за счет [ICON_PEACE] веры, начиная с Новейшего времени.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_FIVE_YEAR_PLAN_HELP"> 
