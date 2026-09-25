@@ -4090,7 +4090,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_DESERT_FOLKLORE"> 
 			<Text>
-				+1 [ICON_PEACE] Faith from Flood Plains tiles. +2 [ICON_PEACE] Faith and +1 [ICON_PRODUCTION] Production from Oases 
+				+1 [ICON_PEACE] Faith from Flood Plains tiles. +2 [ICON_PEACE] Faith and +2 [ICON_PRODUCTION] Production from Oases 
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_DESERT_FOLKLORE_NWS"> 
@@ -136029,7 +136029,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_DESERT_FOLKLORE"> 
 			<Text>
-				+1 [ICON_PEACE] к вере на клетках пойм. Оазисы дают +2 [ICON_PEACE] к вере и +1 [ICON_PRODUCTION] к производству
+				+1 [ICON_PEACE] к вере на клетках пойм. Оазисы дают +2 [ICON_PEACE] к вере и +2 [ICON_PRODUCTION] к производству
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SPIRIT_ANIMALS"> 

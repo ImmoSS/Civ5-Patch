@@ -21814,7 +21814,7 @@
 			<BeliefType>BELIEF_DESERT_FOLKLORE</BeliefType> 
 			<FeatureType>FEATURE_OASIS</FeatureType> 
 			<YieldType>YIELD_PRODUCTION</YieldType> 
-			<Yield>1</Yield> 
+			<Yield>2</Yield> 
 		</Row>
 	</Belief_FeatureYieldChanges> 
 
