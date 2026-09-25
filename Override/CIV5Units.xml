@@ -149474,27 +149474,27 @@
 		<Row> 
 			<PolicyType>POLICY_CULTURAL_REVOLUTION</PolicyType> 
 			<BuildingClassType>BUILDINGCLASS_MONUMENT</BuildingClassType> 
-			<TourismChange>3</TourismChange> 
+			<TourismChange>5</TourismChange> 
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_CULTURAL_REVOLUTION</PolicyType> 
 			<BuildingClassType>BUILDINGCLASS_AMPHITHEATER</BuildingClassType> 
-			<TourismChange>3</TourismChange> 
+			<TourismChange>5</TourismChange> 
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_CULTURAL_REVOLUTION</PolicyType> 
 			<BuildingClassType>BUILDINGCLASS_OPERA_HOUSE</BuildingClassType> 
-			<TourismChange>3</TourismChange> 
+			<TourismChange>5</TourismChange> 
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_CULTURAL_REVOLUTION</PolicyType> 
 			<BuildingClassType>BUILDINGCLASS_MUSEUM</BuildingClassType> 
-			<TourismChange>3</TourismChange> 
+			<TourismChange>5</TourismChange> 
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_CULTURAL_REVOLUTION</PolicyType> 
 			<BuildingClassType>BUILDINGCLASS_BROADCAST_TOWER</BuildingClassType> 
-			<TourismChange>3</TourismChange> 
+			<TourismChange>5</TourismChange> 
 		</Row>
 	</Policy_BuildingClassTourismChanges> 
 

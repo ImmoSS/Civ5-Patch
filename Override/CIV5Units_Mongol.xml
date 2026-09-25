@@ -97731,7 +97731,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CULTURAL_REVOLUTION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Cultural Revolution[ENDCOLOR][NEWLINE]+3 Tourism [ICON_TOURISM] from [ICON_CULTURE] Culture buildings.
+				[COLOR_POSITIVE_TEXT]Cultural Revolution[ENDCOLOR][NEWLINE]+5 [ICON_TOURISM] Tourism from [ICON_CULTURE] Culture buildings.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CULTURAL_REVOLUTION_TEXT"> 
@@ -134171,7 +134171,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CULTURAL_REVOLUTION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Культурная революция[ENDCOLOR][NEWLINE]+3 [ICON_TOURISM] к туризму от [ICON_CULTURE] культурных построек.
+				[COLOR_POSITIVE_TEXT]Культурная революция[ENDCOLOR][NEWLINE]+5 [ICON_TOURISM] к туризму от [ICON_CULTURE] культурных построек.
 			</Text>
 		</Replace><Replace Tag="TXT_KEY_BUILDING_SKI_RESORT_DESC"> 
 			<Text>
