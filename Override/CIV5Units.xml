@@ -150643,6 +150643,11 @@
 			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType> 
 			<PromotionType>PROMOTION_MARCH</PromotionType> 
 		</Row>
+		<Row> 
+			<PolicyType>POLICY_ARSENAL_DEMOCRACY</PolicyType> 
+			<UnitCombatType>UNITCOMBAT_FIGHTER</UnitCombatType> 
+			<PromotionType>PROMOTION_INTERCEPTION_1</PromotionType> 
+		</Row>
 	</Policy_FreePromotionUnitCombats> 
 
 	<Table name="Policy_FreePromotions">

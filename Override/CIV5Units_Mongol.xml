@@ -97201,7 +97201,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_ARSENAL_DEMOCRACY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Arsenal of Democracy[ENDCOLOR][NEWLINE]+50% [ICON_PRODUCTION] Production when building Air units and Guided and Nuclear Missiles.
+				[COLOR_POSITIVE_TEXT]Arsenal of Democracy[ENDCOLOR][NEWLINE]+50% [ICON_PRODUCTION] Production when building Air units and Guided and Nuclear Missiles. Triplans, Fighters and Jet Fighters get "Interception I" Promotion.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_ARSENAL_DEMOCRACY_TEXT"> 
@@ -133004,7 +133004,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_ARSENAL_DEMOCRACY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Арсенал демократии[ENDCOLOR][NEWLINE]+50% [ICON_PRODUCTION] к производству при создании Авиации, Управляемых и Ядерных ракет. 
+				[COLOR_POSITIVE_TEXT]Арсенал демократии[ENDCOLOR][NEWLINE]+50% [ICON_PRODUCTION] к производству при создании Авиации, Управляемых и Ядерных ракет. Трипланы, истребители и реактивные истребители получают повышение "Перехват I".
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RELIGIOUS_FERVOR"> 
