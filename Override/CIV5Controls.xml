@@ -1716,6 +1716,7 @@
 			<ID>17</ID> 
 			<Type>CONTROL_PING</Type> 
 			<Description>TXT_KEY_ACTION_PING</Description> 
+			<HotKey>KB_GRAVE</HotKey> 
 			<HotKeyPriority>0</HotKeyPriority> 
 			<HotKeyPriorityAlt>0</HotKeyPriorityAlt> 
 			<AltDown>false</AltDown> 
