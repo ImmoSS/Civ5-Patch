@@ -1149,6 +1149,8 @@
 #define FIX_UNIT_PROMOTION_POST_COMBAT_MESSAGE_VISIBILITY
 // plot purchase/border growth reveals FOW immediately
 #define FIX_UPDATE_DEFERRED_FOG_ON_PLOT_ACQUISITION
+// removing a road or chopping down a forest with a traidng post will no longer show a confirmation popup
+#define FIX_REDUNDANT_CONFIRM_REBUILD_POPUPS
 /*BUGS FIXES END*/
 
 
