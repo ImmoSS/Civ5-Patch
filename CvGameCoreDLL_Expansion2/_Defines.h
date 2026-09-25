@@ -866,6 +866,8 @@
 #define AUTO_PEACE_WITH_MINOR_ON_ALLYING
 ///
 #define EXPIRATION_CONDITIONS_FOR_SOME_QUESTS
+// Adds a text popup showing the amount of gold received when meeting city states
+#define CS_SHOW_FIRST_MEET_GOLD
 /*CITY-STATES CHANGES END*/
 
 
