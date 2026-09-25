@@ -133576,7 +133576,7 @@
 			<PolicyBranchType>POLICY_BRANCH_HONOR</PolicyBranchType> 
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
-			<GridX>2</GridX> 
+			<GridX>3</GridX> 
 			<GridY>1</GridY> 
 			<Level>0</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
@@ -133878,7 +133878,7 @@
 			<PolicyBranchType>POLICY_BRANCH_HONOR</PolicyBranchType> 
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
-			<GridX>3</GridX> 
+			<GridX>4</GridX> 
 			<GridY>2</GridY> 
 			<Level>0</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
@@ -134181,7 +134181,7 @@
 			<PolicyBranchType>POLICY_BRANCH_HONOR</PolicyBranchType> 
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
-			<GridX>1</GridX> 
+			<GridX>2</GridX> 
 			<GridY>2</GridY> 
 			<Level>0</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
