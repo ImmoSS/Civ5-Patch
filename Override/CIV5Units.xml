@@ -22692,7 +22692,7 @@
 		<Row>
 			<BeliefType>BELIEF_WORLD_CHURCH</BeliefType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<ForeignFollowers>7</ForeignFollowers> 
+			<ForeignFollowers>6</ForeignFollowers> 
 		</Row>
 		<Row>
 			<BeliefType>BELIEF_INTERFAITH_DIALOGUE</BeliefType> 

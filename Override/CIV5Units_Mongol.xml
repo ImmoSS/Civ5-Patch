@@ -4880,7 +4880,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WORLD_CHURCH"> 
 			<Text>
-				+1 [ICON_CULTURE] Culture for every 7 followers of this religion
+				+1 [ICON_CULTURE] Culture for every 6 followers of this religion
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WORLD_CHURCH_SHORT"> 
@@ -129333,7 +129333,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WORLD_CHURCH"> 
 			<Text>
-				Дает +1 [ICON_CULTURE] к культуре за каждые 7 последователей этой религии
+				Дает +1 [ICON_CULTURE] к культуре за каждые 6 последователей этой религии
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PEACE_LOVING"> 
