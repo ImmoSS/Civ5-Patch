@@ -1145,6 +1145,8 @@
 #define FIX_SET_HAS_TECH_RESOURCE_CONNECTION
 ///
 #define FIX_IS_FRIENDLY_TERRITORY_MODIFIERS_AGAINST_CITIES
+// prevents post combat promotions (kris) text popups from being visible in unrevealed plots
+#define FIX_UNIT_PROMOTION_POST_COMBAT_MESSAGE_VISIBILITY
 /*BUGS FIXES END*/
 
 
