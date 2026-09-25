@@ -98376,7 +98376,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MILITARY_CASTE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Military Caste[ENDCOLOR][NEWLINE]Each City with a garrison increases Local City [ICON_HAPPINESS_1] Happiness by 1 and [ICON_CULTURE] Culture by 2.
+				[COLOR_POSITIVE_TEXT]Military Caste[ENDCOLOR][NEWLINE]Each City with a garrison increases Local City [ICON_HAPPINESS_1] Happiness and [ICON_CULTURE] Culture by 1.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MILITARY_TRADITION"> 
@@ -136314,6 +136314,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_POLICY_REPUBLIC_HELP"> 
 			<Text>
 				[COLOR_POSITIVE_TEXT]Республика[ENDCOLOR][NEWLINE]Увеличивает на +1 [ICON_PRODUCTION] производство в каждом городе и на +10% [ICON_PRODUCTION] производство при строительстве зданий.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_POLICY_MILITARY_CASTE_HELP"> 
+			<Text>
+				[COLOR_POSITIVE_TEXT]Каста воинов[ENDCOLOR][NEWLINE]Каждый город с гарнизоном увеличивает [ICON_HAPPINESS_1] настроение в городе и [ICON_CULTURE] культуру на 1.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 

@@ -134030,8 +134030,8 @@
 			<PolicyBranchType>POLICY_BRANCH_HONOR</PolicyBranchType> 
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
-			<GridX>5</GridX> 
-			<GridY>2</GridY> 
+			<GridX>1</GridX> 
+			<GridY>1</GridY> 
 			<Level>0</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
 			<CulturePerCity>0</CulturePerCity> 
@@ -134082,7 +134082,7 @@
 			<FreeUnitsPopulationPercent>0</FreeUnitsPopulationPercent> 
 			<FreeMilitaryUnitsPopulationPercent>0</FreeMilitaryUnitsPopulationPercent> 
 			<HappinessPerGarrisonedUnit>1</HappinessPerGarrisonedUnit> 
-			<CulturePerGarrisonedUnit>2</CulturePerGarrisonedUnit> 
+			<CulturePerGarrisonedUnit>1</CulturePerGarrisonedUnit> 
 			<HappinessPerTradeRoute>0</HappinessPerTradeRoute> 
 			<HappinessPerXPopulation>0</HappinessPerXPopulation> 
 			<ExtraHappinessPerLuxury>0</ExtraHappinessPerLuxury> 
@@ -150788,10 +150788,6 @@
 		<Row> 
 			<PolicyType>POLICY_MILITARY_TRADITION</PolicyType> 
 			<PrereqPolicy>POLICY_WARRIOR_CODE</PrereqPolicy> 
-		</Row>
-		<Row> 
-			<PolicyType>POLICY_MILITARY_CASTE</PolicyType> 
-			<PrereqPolicy>POLICY_DISCIPLINE</PrereqPolicy> 
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_PROFESSIONAL_ARMY</PolicyType> 
