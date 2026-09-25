@@ -1642,6 +1642,8 @@
 #define SEED_LOGGING
 // custom hooks for CvDllNetMessageHandler allow players to send modded messages via existing net functions
 #define NET_MESSAGE_MODDING
+// Allows players to highlight tiles using INTERFACEMODE_PING and moving the cursor
+#define MP_MAP_PING
 /*OTHER CHANGES END*/
 
 

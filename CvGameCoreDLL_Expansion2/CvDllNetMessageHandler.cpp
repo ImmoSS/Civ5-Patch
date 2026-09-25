@@ -1040,6 +1040,7 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 		MOD_MESSAGE_AUTOPAUSE_TIMER_ON = -10,
 		MOD_MESSAGE_AUTOPAUSE_TIMER_OFF = -11,
 		MOD_MESSAGE_CITY_REPEAT_ORDER = -12,
+		MOD_MESSAGE_MAP_PING = -13,
 	};
 #endif
 #ifdef MP_PLAYERS_VOTING_SYSTEM
@@ -1285,6 +1286,23 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 			}
 		}
 		GET_PLAYER(ePlayer).ChangeNumTimesOpenedDemographics(1);
+	}
+	else
+#endif
+#ifdef MP_MAP_PING
+	if (iUnitID == MOD_MESSAGE_MAP_PING) {
+		int iX = static_cast<int>((static_cast<uint>(eMinor) >> 16) & 65535);  // 16-bit
+		int iY = static_cast<int>((static_cast<uint>(eMinor)) & 65535);  // 16-bit
+		ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+		if (pkScriptSystem)
+		{
+			CvLuaArgsHandle args;
+			bool bResult;
+			args->Push(ePlayer);
+			args->Push(iX);
+			args->Push(iY);
+			LuaSupport::CallHook(pkScriptSystem, "AddMapPing", args.get(), bResult);
+		}
 	}
 	else
 #endif
@@ -1743,12 +1761,12 @@ void CvDllNetMessageHandler::ResponseRenameCity(PlayerTypes ePlayer, int iCityID
 		}
 		return;
 	}
-	else if (iCityID == -6)
+	else if (iCityID == MOD_MESSAGE_DRAFT_PLAYERS_SWAP)
 	{
 		CvPreGame::DraftResponseSwapPlayers(ePlayer, szName);
 		return;
 	}
-	else if (iCityID == -7)
+	else if (iCityID == MOD_MESSAGE_DRAFT_ALL_BANS_RECEIVED)
 	{
 		CvPreGame::DraftResponseAllBansReceived(ePlayer);
 		return;
