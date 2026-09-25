@@ -104998,7 +104998,7 @@ The ship has weather'd every rack; the prize we sought is won."
 				Disbanded Units' Combat Strength
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_REPLAY_DATA_EFFECTIVEPRODUCTIONPERTURN">
+		<Replace Tag="TXT_KEY_REPLAY_DATA_EFFECTIVEPRODUCTIONPERTURN_TIMES100">
 			<Text>
 				Effective Production [ICON_PRODUCTION] Per Turn
 			</Text>
