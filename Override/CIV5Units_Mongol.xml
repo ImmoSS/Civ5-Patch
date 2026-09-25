@@ -99179,6 +99179,11 @@ The ship has weather'd every rack; the prize we sought is won."
 				[COLOR_POSITIVE_TEXT]Universal Healthcare[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] Local Happiness and +3 [ICON_CULTURE] Culture from every National Wonder.
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_F_HELP"> 
+			<Text>
+				[COLOR_POSITIVE_TEXT]Universal Healthcare[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] Local Happiness and +2 [ICON_FOOD] Food from every National Wonder.
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_TEXT"> 
 			<Text>
 				Universal Health Care, sometimes referred to as "social health," is a government-funded system intended to provide equal access to health services and improved health outcomes for all citizens through a specific package of benefits. In 1912 AD, Norway was the first country to create a near-universal health care system; according to the World Health Organization, 32 nations offered some form of universal health care in 2010.
@@ -136329,6 +136334,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_O_HELP"> 
 			<Text>
 				[COLOR_POSITIVE_TEXT]Бесплатная медицина[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] к настроению и +3 [ICON_CULTURE] к культуре в городе от каждого национального чуда.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_F_HELP"> 
+			<Text>
+				[COLOR_POSITIVE_TEXT]Бесплатная медицина[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] к настроению и +2 [ICON_FOOD] к пище в городе от каждого национального чуда.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
