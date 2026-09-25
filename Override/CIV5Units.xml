@@ -29060,10 +29060,6 @@
 			<BuildingClassType>BUILDINGCLASS_AQUEDUCT</BuildingClassType> 
 		</Row>
 		<Row> 
-			<BuildingType>BUILDING_SEAPORT</BuildingType> 
-			<BuildingClassType>BUILDINGCLASS_HARBOR</BuildingClassType> 
-		</Row>
-		<Row> 
 			<BuildingType>BUILDING_CEILIDH_HALL</BuildingType> 
 			<BuildingClassType>BUILDINGCLASS_AMPHITHEATER</BuildingClassType> 
 		</Row>

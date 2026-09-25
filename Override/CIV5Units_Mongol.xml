@@ -7187,7 +7187,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_SEAPORT_HELP"> 
 			<Text>
-				+1 [ICON_PRODUCTION] Production and [ICON_GOLD] Gold from Sea Resources worked by this City.  +15% [ICON_PRODUCTION] Production when building Naval Units.[NEWLINE][NEWLINE]City must be built on the coast.
+				+1 [ICON_PRODUCTION] Production and [ICON_GOLD] Gold from Sea Resources worked by this City. +15% [ICON_PRODUCTION] Production when building Naval Units.[NEWLINE][NEWLINE]City must be built on the coast.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_SEAPORT_STRATEGY"> 
