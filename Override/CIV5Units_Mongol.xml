@@ -99046,7 +99046,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_THIRD_ALTERNATIVE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Third Alternative[ENDCOLOR][NEWLINE]Quantity of Strategic Resources produced is increased by 100%. +5 [ICON_FOOD] Food and +5 [ICON_RESEARCH] Science in [ICON_CAPITAL] Capital.
+				[COLOR_POSITIVE_TEXT]Third Alternative[ENDCOLOR][NEWLINE]Quantity of Strategic Resources produced is increased by 100%. +10 [ICON_FOOD] Food and +10 [ICON_RESEARCH] Science in [ICON_CAPITAL] Capital.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_THIRD_ALTERNATIVE_TEXT"> 
@@ -136349,6 +136349,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_A_HELP"> 
 			<Text>
 				[COLOR_POSITIVE_TEXT]Бесплатная медицина[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] к настроению и +5 [ICON_GOLD] к золоту в городе от каждого национального чуда.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_POLICY_THIRD_ALTERNATIVE_HELP"> 
+			<Text>
+				[COLOR_POSITIVE_TEXT]Третья альтернатива[ENDCOLOR][NEWLINE]Количество стратегических ресурсов, производимых государством, увеличивается на 100%. +10 [ICON_FOOD] единиц пищи и +10 [ICON_RESEARCH] к науке в [ICON_CAPITAL] столице.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
