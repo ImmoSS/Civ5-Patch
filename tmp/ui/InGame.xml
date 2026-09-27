@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Anton Strenger (Firaxis Games) -->
+<!-- edit:
+    - Ingame Hotkey Manager
+for EUI & Vanilla UI -->
 <Context Name="InGame">
 	<LuaContext FileName="Assets/UI/Civilopedia/CivilopediaScreen" ID="CivilopediaScreen" Hidden="True"/>
 	<Container Size="F,F" ID="BulkUI">
@@ -17,11 +20,11 @@
 		<LuaContext FileName="Assets/UI/InGame/WorldView/WorldView" ID="WorldView"/>
 		<LuaContext FileName="Assets/UI/InGame/CityView/CityView" ID="CityView" Hidden="True"/>
 		<LuaContext FileName="Assets/UI/InGame/TechTree/TechTree" ID="TechTree" Hidden="True"/>
-    <LuaContext FileName="Assets/UI/FrontEnd/Multiplayer/StagingRoom" ID="StagingRoom" Hidden="1"/>
+		<LuaContext FileName="Assets/UI/FrontEnd/Multiplayer/StagingRoom" ID="StagingRoom" Hidden="1"/>
 		<!--<LuaContext FileName="Assets/UI/InGame/Popups/CityPurchasePopup"      ID="CityPurchasePopup"      Hidden="True" />-->
 		<LuaContext FileName="Assets/UI/InGame/Popups/GenericPopup" ID="GenericPopup" Hidden="True"/>
-    <LuaContext FileName="DeclareWarPopup" ID="DeclareWarPopup" Hidden="True"/>
-    <LuaContext FileName="Assets/UI/InGame/Popups/TextPopup" ID="TextPopup" Hidden="True"/>
+		<LuaContext FileName="DeclareWarPopup" ID="DeclareWarPopup" Hidden="True"/>
+		<LuaContext FileName="Assets/UI/InGame/Popups/TextPopup" ID="TextPopup" Hidden="True"/>
 		<LuaContext FileName="Assets/UI/InGame/Popups/SocialPolicyPopup" ID="SocialPolicyPopup" Hidden="True"/>
 		<LuaContext FileName="Assets/UI/InGame/Popups/NotificationLogPopup" ID="NotificationLogPopup" Hidden="True"/>
 		<!--<LuaContext FileName="Assets/UI/InGame/Popups/MinorCivsListPopup"     ID="MinorCivsListPopup"     Hidden="True" />-->
@@ -66,9 +69,10 @@
 		<LuaContext FileName="Assets/DLC/Expansion2/UI/InGame/Popups/GreatWorkPopup" ID="GreatWorkSplash" Hidden="True"/>
 		<LuaContext FileName="Assets/DLC/Expansion2/UI/InGame/Popups/TradeRouteOverview" ID="TradeRouteOverview" Hidden="True"/>
 		<LuaContext FileName="Assets/DLC/Expansion2/UI/InGame/Popups/LeagueProjectPopup" ID="LeagueProjectPopup" Hidden="True"/>
-    <LuaContext FileName="Assets/DLC/Expansion2/UI/InGame/Popups/ChooseGoodyHutReward" ID="ChooseGoodyHutRewardPopup" Hidden="True"/>
-    <LuaContext FileName="Assets/DLC/Expansion2/UI/InGame/Popups/ChooseAdmiralNewPort" ID="ChooseAdmiralNewPort" Hidden="True"/>
-    <LuaContext FileName="Assets/DLC/Expansion2/UI/InGame/Popups/LeagueSplash" ID="LeagueSplash" Hidden="True"/>
+		<LuaContext FileName="Assets/DLC/Expansion2/UI/InGame/Popups/ChooseGoodyHutReward" ID="ChooseGoodyHutRewardPopup" Hidden="True"/>
+		<LuaContext FileName="Assets/DLC/Expansion2/UI/InGame/Popups/ChooseAdmiralNewPort" ID="ChooseAdmiralNewPort" Hidden="True"/>
+		<LuaContext FileName="Assets/DLC/Expansion2/UI/InGame/Popups/LeagueSplash" ID="LeagueSplash" Hidden="True"/>
+		<!-- Ingame Hotkey Manager --><LuaContext FileName="QuickHotkeyEdit" ID="QuickHotkeyEdit" Hidden="True"/>
 		<LuaContext FileName="Assets/UI/InGame/TopPanel" ID="TopPanel"/>
 		<Stack Anchor="C,T" Size="Full,Full" StackGrowth="B" Padding="16" ID="AlertStack" Offset="0,129"/>
 		<LuaContext FileName="Assets/UI/InGame/Menus/GameMenu" ID="GameMenu" Hidden="True"/>

@@ -1089,6 +1089,9 @@ local function UpdateUnitActions( unit )
 		end
 
 		button:RegisterCallback( Mouse.eLClick, OnUnitActionClicked )
+		-- Ingame Hotkey Manager START
+		button:RegisterCallback( Mouse.eRClick, OnHotkeyEdit )
+		-- Ingame Hotkey Manager END
 		button:SetVoid1( action.ID )
 		button:SetToolTipCallback( ActionToolTipHandler )
 
@@ -2366,7 +2369,14 @@ end)
 --]]
 
 -- Ingame Hotkey Manager START
--- NEW update GameInfoActions for this context explicitly
+function OnHotkeyEdit( actionID )
+	if not UIManager:GetControl() then  -- Ctrl + RClick
+		return
+	end
+	LuaEvents.QuickHotkeyEdit(actionID)
+end
+
+-- update GameInfoActions for this context explicitly
 local function updateActions()
 	Game.UpdateActions()
 	g_iActionStyle = math.max(math.min(tonumber(HotkeyManagerData.GetValue('iActionStyle')) or 1, 4), 1)

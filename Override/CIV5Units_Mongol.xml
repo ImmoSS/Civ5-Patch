@@ -129015,6 +129015,11 @@ The ship has weather'd every rack; the prize we sought is won."
 				Show Turns {1_Num}-{2_Num}
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_OPSCREEN_HOTKEY_EDIT_HELP"> 
+			<Text>
+				Pro tip: You can change the Hotkeys for Actions and unit Promotions by pressing Ctrl + Right-Click on any action button (In-Game!)
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_PATCH_VERSION"> 
 			<Text>
 				v12.2a
@@ -136364,6 +136369,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_REPLAY_VIEWER_TURN_RANGE_SLIDER_TT"> 
 			<Text>
 				Показать ходы {1_Num}-{2_Num}
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_OPSCREEN_HOTKEY_EDIT_HELP"> 
+			<Text>
+				Совет: вы можете поменять горячие клавиши действий и повышений юнитов нажатием Ctrl + ПКМ по кнопке действия (в игре!)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
