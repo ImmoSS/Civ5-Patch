@@ -323,7 +323,7 @@ InterfaceModeMessageHandler[InterfaceModeTypes.INTERFACEMODE_GIFT_TILE_IMPROVEME
 -- Map Pings START
 function PingInputHandler()
 	local plot = Map.GetPlot( UI.GetMouseOverHex() );
-	if plot:IsRevealed(Players[Matchmaking:GetLocalID()]:GetTeam(), false) then
+	if plot and plot:IsRevealed(Players[Matchmaking:GetLocalID()]:GetTeam(), false) then
 		local plotX = plot:GetX();
 		local plotY = plot:GetY();
 		local product = plotX * 2 ^ 16 + plotY
@@ -340,7 +340,7 @@ Events.SerialEventMouseOverHex.Add( OnMouseMoveHex );
 
 g_MapPings = {}
 local C = {}
-for i = 0, GameDefines.MAX_MAJOR_CIVS do
+for i = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
 	local col1, col2 = Players[i]:GetPlayerColors()  -- cache player colors
 	C[i] = {col1, col2}
 end
