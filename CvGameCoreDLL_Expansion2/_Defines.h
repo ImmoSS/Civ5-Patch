@@ -612,7 +612,7 @@
 ///
 #define GODDESS_LOVE_FREE_WORKER
 ///
-#define GOD_SEA_FREE_WORK_BOAT
+// #define GOD_SEA_FREE_WORK_BOAT
 ///
 #define SACRED_WATERS_FRESH_WATER
 ///
