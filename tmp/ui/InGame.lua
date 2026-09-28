@@ -347,7 +347,18 @@ end
 local mw, _ = Map.GetGridSize()
 
 GameEvents.AddMapPing.Add(function(playerID,x,y)
-	g_MapPings[y*mw + x] = {playerID = playerID, x = x, y = y, cache = 40, tick = 2, ended = 0}
+	if g_MapPingMute[playerID] ~= true then
+		g_MapPings[y*mw + x] = {playerID = playerID, x = x, y = y, cache = 40, tick = 2, ended = 0}
+	end
+end)
+
+g_MapPingMute = {}
+LuaEvents.MapPingMutePlayer.Add(function(_, playerID)
+	if g_MapPingMute[playerID] == true then
+		g_MapPingMute[playerID] = false
+	else
+		g_MapPingMute[playerID] = true
+	end
 end)
 -- Map Pings END
 ----------------------------------------------------------------        
