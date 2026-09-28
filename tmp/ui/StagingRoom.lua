@@ -2550,7 +2550,7 @@ Controls.EmotesScrollPanel:CalculateInternalSize()
 -- Emote Picker Menu END
 
 -- Civilopedia Button START
-Controls.CivilopediaButton:RegisterCallback( Mouse.eLClick, function() UIManager:QueuePopup(Controls.Civilopedia, PopupPriority.HallOfFame) end )
+Controls.CivilopediaButton:RegisterCallback( Mouse.eLClick, function() PreGame.SetReady(Matchmaking.GetLocalID(), false); UIManager:QueuePopup(Controls.Civilopedia, PopupPriority.HallOfFame) end )
 -- Civilopedia Button END
 
 -------------------------------------------------
