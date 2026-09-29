@@ -373,6 +373,8 @@
 #define LACK_OF_STRATEGIC_RESOURCE_HEAL_PENALTY
 ///
 #define PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
+// adds missing notifications when a unit dies from attrition (Multiplayer only)
+#define DEATH_ON_ATTRITION_NOTIFICATIONS
 /*UNITS CHANGES END*/
 
 

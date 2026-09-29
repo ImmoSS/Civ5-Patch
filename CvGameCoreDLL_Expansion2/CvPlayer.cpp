@@ -6183,6 +6183,19 @@ void CvPlayer::DoUnitReset()
 			ChangeUnitsHPAttrition(min(pLoopUnit->GetMaxHitPoints() - pLoopUnit->getDamage(), iCitadelDamage));
 			#endif
 			pLoopUnit->changeDamage(iCitadelDamage, NO_PLAYER, /*fAdditionalTextDelay*/ 0.5f);
+#ifdef DEATH_ON_ATTRITION_NOTIFICATIONS
+			if (pLoopUnit->getDamage() >= GC.getMAX_HIT_POINTS())
+			{
+				CvString strBuffer;
+				CvNotifications* pNotification = GetNotifications();
+				if (pNotification)
+				{
+					strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DESTROYED_ATTRITION", getNameKey());
+					Localization::String strSummary = Localization::Lookup("TXT_KEY_UNIT_LOST");
+					pNotification->Add(NOTIFICATION_UNIT_DIED, strBuffer, strSummary.toUTF8(), pLoopUnit->getX(), pLoopUnit->getY(), (int)pLoopUnit->getUnitType(), GetID());
+				}
+			}
+#endif
 		}
 
 		// Finally (now that healing is done), restore movement points

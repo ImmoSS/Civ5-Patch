@@ -1913,6 +1913,19 @@ void CvUnit::doTurn()
 			GET_PLAYER(getOwner()).ChangeUnitsHPAttrition(min(GetMaxHitPoints() - getDamage(), GC.getFeatureInfo(eFeature)->getTurnDamage()));
 			#endif
 			changeDamage(GC.getFeatureInfo(eFeature)->getTurnDamage(), NO_PLAYER);
+#ifdef DEATH_ON_ATTRITION_NOTIFICATIONS
+			if (getDamage() >= GC.getMAX_HIT_POINTS())
+			{
+				CvString strBuffer;
+				CvNotifications* pNotification = GET_PLAYER(getOwner()).GetNotifications();
+				if (pNotification)
+				{
+					strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DESTROYED_ATTRITION", getNameKey());
+					Localization::String strSummary = Localization::Lookup("TXT_KEY_UNIT_LOST");
+					pNotification->Add(NOTIFICATION_UNIT_DIED, strBuffer, strSummary.toUTF8(), getX(), getY(), (int)getUnitType(), getOwner());
+				}
+			}
+#endif
 		}
 	}
 
@@ -5743,6 +5756,19 @@ void CvUnit::DoAttrition()
 				GET_PLAYER(getOwner()).ChangeUnitsHPAttrition(min(GetMaxHitPoints() - getDamage(), getEnemyDamage()));
 				#endif
 				changeDamage(getEnemyDamage(), NO_PLAYER, 0.0, &strAppendText);
+#ifdef DEATH_ON_ATTRITION_NOTIFICATIONS
+				if (getDamage() >= GC.getMAX_HIT_POINTS())
+				{
+					CvString strBuffer;
+					CvNotifications* pNotification = GET_PLAYER(getOwner()).GetNotifications();
+					if (pNotification)
+					{
+						strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DESTROYED_ATTRITION", getNameKey());
+						Localization::String strSummary = Localization::Lookup("TXT_KEY_UNIT_LOST");
+						pNotification->Add(NOTIFICATION_UNIT_DIED, strBuffer, strSummary.toUTF8(), getX(), getY(), (int)getUnitType(), getOwner());
+					}
+				}
+#endif
 			}
 		}
 		else if(getNeutralDamageChance() > 0 && getNeutralDamage() > 0)
@@ -5754,6 +5780,19 @@ void CvUnit::DoAttrition()
 				GET_PLAYER(getOwner()).ChangeUnitsHPAttrition(min(GetMaxHitPoints() - getDamage(), getNeutralDamage()));
 				#endif
 				changeDamage(getNeutralDamage(), NO_PLAYER, 0.0, &strAppendText);
+#ifdef DEATH_ON_ATTRITION_NOTIFICATIONS
+				if (getDamage() >= GC.getMAX_HIT_POINTS())
+				{
+					CvString strBuffer;
+					CvNotifications* pNotification = GET_PLAYER(getOwner()).GetNotifications();
+					if (pNotification)
+					{
+						strBuffer = GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DESTROYED_ATTRITION", getNameKey());
+						Localization::String strSummary = Localization::Lookup("TXT_KEY_UNIT_LOST");
+						pNotification->Add(NOTIFICATION_UNIT_DIED, strBuffer, strSummary.toUTF8(), getX(), getY(), (int)getUnitType(), getOwner());
+					}
+				}
+#endif
 			}
 		}
 	}
