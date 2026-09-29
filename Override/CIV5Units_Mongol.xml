@@ -129041,6 +129041,408 @@ The ship has weather'd every rack; the prize we sought is won."
 	<Language_PL_PL>
 	</Language_PL_PL>
 	<Language_RU_RU>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_AFFECTSPIESNOW">
+			<Text>Влиять на шпионов сейчас</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_AIRLIFT">
+			<Text>{TXT_KEY_MISSION_AIRLIFT}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_AIRMODIFIER">
+			<Text>Модификатор воздушных юнитов {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_ALLOWSFOODTRADEROUTES">
+			<Text>[ICON_FOOD]{TXT_KEY_TRADE_ROUTES_HEADING2_TITLE}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_ALLOWSPRODUCTIONTRADEROUTES">
+			<Text>[ICON_PRODUCTION]{TXT_KEY_TRADE_ROUTES_HEADING2_TITLE}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_ALLOWSRANGESTRIKE">
+			<Text>{TXT_KEY_PROMOTION_INDIRECT_FIRE}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_ALLOWSWATERROUTES">
+			<Text>Доступны водные пути</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_BORDEROBSTACLE">
+			<Text>Увеличивает стоимость передвижения для захода на клетку на вашей территории на +1[ICON_MOVES] для всех вражеских юнитов</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_BUILDINGPRODUCTIONMODIFIER">
+			<Text>Модификатор скорости строительства зданий {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_CAPITAL">
+			<Text>Столица</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_CAPTUREPLUNDERMODIFIER">
+			<Text>Если этот город будет захвачен, количество награбленного противником [ICON_GOLD] золота увеличивается на {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_CITIESPREREQ">
+			<Text>Требования к городу {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_CITYCONNECTIONTRADEROUTEMODIFIER">
+			<Text>Модификатор скорости создания торговых путей {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_CITYCOUNTUNHAPPINESSMOD">
+			<Text>Модификатор недовольства от количества городов {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_CITYSTATETRADEROUTEPRODUCTIONMODIFIER"> 
+			<Text>Модификатор производства торговых путей города-государства {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_CONQUESTPROB">
+			<Text>{1}% шанс захвата</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_DIPLOMATICVOTING">
+			<Text>Дипломатическое голосование</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_ESPIONAGE">
+			<Text>{TXT_KEY_GAME_CONCEPT_SECTION_22}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_ESPIONAGEMODIFIER">
+			<Text>Модификатор шпионажа {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_EXPERIENCE">
+			<Text>Опыт {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_EXTRALEAGUEVOTES">
+			<Text>{1} дополнительных голосов лиги</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_EXTRALUXURIES">
+			<Text>Дополнительные редкие ресурсы</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_EXTRAMISSIONARYSPREADS">
+			<Text>Дополнительное влияние миссионеров {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_EXTRASPIES">
+			<Text>{1} дополнительных шпионов</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_FOODKEPT">
+			<Text>{1}% [ICON_FOOD] еды переносится после рождения нового [ICON_CITIZEN] жителя (эффект суммируется)</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_FOUNDSRELIGION">
+			<Text>{TXT_KEY_MISSION_FOUND_RELIGION}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_FREEGREATPEOPLE">
+			<Text>{1} БЕСПЛАТНЫХ [COLOR_UNIT_TEXT]великих людей[ENDCOLOR]</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_FREEPOLICIES">
+			<Text>{1} БЕСПЛАТНЫХ [COLOR_MAGENTA]общественных институтов[ENDCOLOR]</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_FREETECHS">
+			<Text>{1} БЕСПЛАТНЫХ [COLOR_CYAN]технологий[ENDCOLOR]</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GLOBALCULTURERATEMODIFIER">
+			<Text>Глобальный модификатор культуры {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GLOBALDEFENSEMOD">
+			<Text>Глобальный модификатор защиты {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GLOBALESPIONAGEMODIFIER">
+			<Text>Глобальный модификатор шпионажа {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GLOBALEXPERIENCE">
+			<Text>Глобальный опыт {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GLOBALGREATPEOPLERATEMODIFIER">
+			<Text>Глобальный модификатор великих личностей {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GLOBALPLOTBUYCOSTMODIFIER">
+			<Text>[ICON_GOLD] золота требуется на получение новых клеток меньше на {1}% в каждом городе</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GLOBALPLOTCULTURECOSTMODIFIER">
+			<Text>[ICON_CULTURE] культуры требуется на получение новых клеток меньше на {1}% в каждом городе</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GLOBALPOPULATIONCHANGE">
+			<Text>Добавляет {1}[ICON_CITIZEN] жителей в каждый город империи игрока</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GLOBALSPACEPRODUCTIONMODIFIER">
+			<Text>Глобальный модификатор космического производства {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GOLD">
+			<Text>Золото {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GOLDENAGE">
+			<Text>{TXT_KEY_MISSION_START_GOLDENAGE}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GOLDENAGEMODIFIER"> 
+			<Text>+{1}% {TXT_KEY_REPLAY_DATA_GOLDAGETURNS}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GREATGENERALRATEMODIFIER">
+			<Text>Модификатор великих полководцев {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GREATPEOPLERATEMODIFIER">
+			<Text>+{1}%[ICON_GREAT_PEOPLE] {TXT_KEY_CITYVIEW_GREAT_PEOPLE_TEXT}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GREATPERSONEXPENDGOLD">
+			<Text>Великий человек тратит золото {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GREATSCIENTISTBEAKERMODIFIER">
+			<Text>Модификатор науки великого учёного {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_GREATWORKSTOURISMMODIFIER">
+			<Text>+{1}% [ICON_TOURISM] туризма от шедевров</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_HAPPINESSPERCITY">
+			<Text>+{1}[ICON_HAPPINESS_1] счастья в каждом городе</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_HAPPINESSPERXPOLICIES">
+			<Text>+1[ICON_HAPPINESS_1] счастья в империи за каждые {1} политик</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_HEALRATECHANGE">
+			<Text>{1}% улучшение скорости лечения юнита</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_HOLYCITY">
+			<Text>[COLOR_WHITE]{TXT_KEY_RO_WR_HOLY_CITY}[ENDCOLOR]</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_INSTANTMILITARYINCREASE">
+			<Text>Мгновенное военное увеличение {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_INSTANTSPYRANKCHANGE">
+			<Text>Мгновенное изменение ранга шпионов {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_ISRELIGIOUS">
+			<Text>Религиозное</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_LANDMARKSTOURISMPERCENT">
+			<Text>{1}% [ICON_CULTURE] культуры от Чудес света, Чудес природы и Улучшений (Достопримечательности, Моаи, Шато) добавляется к [ICON_TOURISM] туризму, исходящему из города</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_LEAGUECOST">
+			<Text>Стоимость лиги {1}[ICON_PRODUCTION]</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_LEVELPREREQ">
+			<Text>Требования к уровню {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_MAPCENTERING">
+			<Text>Центрирование карты</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_MEDIANTECHPERCENTCHANGE">
+			<Text>Средне-взвешенная стоимость технологий {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_MILITARYPRODUCTIONMODIFIER">
+			<Text>Модификатор военного производства {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_MINORFRIENDSHIPCHANGE">
+			<Text>Незначительные изменения дружбы {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_NEVERCAPTURE">
+			<Text>Никогда не захватывать</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_NOOCCUPIEDUNHAPPINESS"> 
+			<Text>{TXT_KEY_BUILDING_COURTHOUSE_HELP}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_NUKEEXPLOSIONRAND">
+			<Text>{1}% шанс, что это здание создаст техногенную катастрофу, если город подвергнется ядерному удару</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_NUKEIMMUNE">
+			<Text>Иммунитет к ядерному удару</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_NUKEMODIFIER">
+			<Text>Модификатор ядерного оружия {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_NULLIFYINFLUENCEMODIFIER">
+			<Text>Обнулить модификатор влияния</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_NUMCITYCOSTMOD">
+			<Text>Стоимость увеличивается на {1}[ICON_PRODUCTION] за город</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_NUMTRADEROUTEBONUS">
+			<Text>+{1}[ICON_INTERNATIONAL_TRADE]{TXT_KEY_DECLARE_WAR_TRADE_ROUTES_HEADER}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_PLAYERBORDEROBSTACLE">
+			<Text>Увеличивает стоимость передвижения для захода на клетку на вашей территории на +1[ICON_MOVES] для всех вражеских юнитов</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_PLOTBUYCOSTMODIFIER">
+			<Text>[ICON_GOLD] золота требуется на получение новых клеток меньше на {1}% в этом городе</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_PLOTCULTURECOSTMODIFIER">
+			<Text>[ICON_CULTURE] культуры требуется на получение новых клеток меньше на {1}% в этом городе</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_POLICYCOSTMODIFIER">
+			<Text>[ICON_CULTURE] культуры требуется на получение нового социального института меньше на {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_RELIGIOUSPRESSUREMODIFIER">
+			<Text>Модификатор религиозного давления {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_SPACEPRODUCTIONMODIFIER">
+			<Text>Модификатор производства космических деталей {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_SPECIALISTEXTRACULTURE">
+			<Text>{1} дополнительной [ICON_CULTURE] культуры за специалиста</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_SPYRANKCHANGE">
+			<Text>Изменение ранга шпионов {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_TEAMSHARE"> 
+			<Text>{TXT_KEY_POP_UN_TEAM}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_TECHSHARE">
+			<Text>Если {1} игроков обладают технологией, то владельцы этого здания тоже получат эту технологию</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_TRADEROUTELANDDISTANCEMODIFIER">
+			<Text>Модификатор дальности сухопутных торговых путей {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_TRADEROUTELANDGOLDBONUS">
+			<Text>Бонус золота от сухопутных торговых путей {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_TRADEROUTERECIPIENTBONUS">
+			<Text>[ICON_INTERNATIONAL_TRADE]{TXT_KEY_DECLARE_WAR_TRADE_ROUTES_HEADER} +{1}[ICON_GOLD][ICON_ARROW_LEFT]</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_TRADEROUTESEADISTANCEMODIFIER">
+			<Text>Модификатор дальности морских торговых путей {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_TRADEROUTESEAGOLDBONUS">
+			<Text>Бонус золота от морских торговых путей {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_TRADEROUTETARGETBONUS"> 
+			<Text>[ICON_INTERNATIONAL_TRADE]{TXT_KEY_DECLARE_WAR_TRADE_ROUTES_HEADER} +{1}[ICON_GOLD][ICON_ARROW_RIGHT]</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_UNHAPPINESSMODIFIER">
+			<Text>Модификатор недовольства {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_UNITUPGRADECOSTMOD">
+			<Text>Модификатор стоимости улучшения юнитов {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_VICTORYPOINTS">
+			<Text>{1} очков победы</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_WONDERPRODUCTIONMODIFIER">
+			<Text>Модификатор скорости строительства чудес света {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_WORKERSPEEDMODIFIER">
+			<Text>Модификатор скорости рабочих {1}%</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILDING_XBUILTTRIGGERSIDEOLOGYCHOICE">
+			<Text>Постройте {1} для запуска выбора идеологии</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_BUILT_IN_X_CITIES">
+			<Text>Построено в {1}/{3} {3: plural 1?городе; 2?городах;}, Строительство в {2} {2: plural 1?городе; 2?городах;}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_CLOSED_BORDERS_THEIR">
+			<Text>Их границы закрыты для вас</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_CLOSED_BORDERS_YOUR">
+			<Text>Ваши границы закрыты для них</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_OPEN_BORDERS_THEIR">
+			<Text>Их границы открыты для вас</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_OPEN_BORDERS_YOUR">
+			<Text>Ваши границы открыты для них</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_AIRINTERCEPTRANGE"> 
+			<Text>{TXT_KEY_MISSION_INTERCEPT} [ICON_RANGE_STRENGTH]{1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_AIRUNITCAP">
+			<Text>Лимит воздушных юнитов {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_BASEBEAKERSTURNSTOCOUNT">
+			<Text>{TXT_KEY_MISSION_DISCOVER_TECH} ({1} {TXT_KEY_TURNS})</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_BASECULTURETURNSTOCOUNT"> 
+			<Text>{TXT_KEY_MISSION_GIVE_POLICIES} ({1} {TXT_KEY_TURNS})</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_CANBUYCITYSTATE"> 
+			<Text>{TXT_KEY_MISSION_BUY_CITY_STATE}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_CAPTUREWHILEEMBARKED">
+			<Text>Может быть захвачен во время перевозки</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_CULTUREBOMBRADIUS"> 
+			<Text>{TXT_KEY_MISSION_CULTURE_BOMB} ({1})</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_EXTRAMAINTENANCECOST"> 
+			<Text>{TXT_KEY_PEDIA_MAINT_LABEL} {1}[ICON_GOLD]</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_FOOD"> 
+			<Text>{TXT_KEY_CITYVIEW_STAGNATION_TEXT}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_FOUND">
+			<Text>Может основывать города для расширения вашей империи</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_FOUNDABROAD">
+			<Text>Может основывать заморские города для расширения вашей империи</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_FOUNDRELIGION"> 
+			<Text>{TXT_KEY_MISSION_FOUND_RELIGION}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_FREEPOLICIES"> 
+			<Text>{TXT_KEY_MISSION_GIVE_POLICIES} ({1}x[ICON_CULTURE])</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_GOLDENAGETURNS"> 
+			<Text>{TXT_KEY_MISSION_START_GOLDENAGE} ({1} {TXT_KEY_TURNS})</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_LEADEREXPERIENCE">
+			<Text>Опыт лидера {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_MOVEAFTERPURCHASE">
+			<Text>Может двигаться сразу после покупки</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_NOBADGOODIES">
+			<Text>Без плохих древних руин</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_NOMAINTENANCE"> 
+			<Text>{TXT_KEY_PEDIA_MAINT_LABEL} 0</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_NUKEDAMAGELEVEL"> 
+			<Text>Уровень ядерного удара {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_NUMEXOTICGOODS"> 
+			<Text>{TXT_KEY_MISSION_SELL_EXOTIC_GOODS}: {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_NUMFREETECHS"> 
+			<Text>{TXT_KEY_MISSION_DISCOVER_TECH} ({1})</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_ONESHOTTOURISM"> 
+			<Text>{TXT_KEY_MISSION_ONE_SHOT_TOURISM} ({1}x[ICON_TOURISM])</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_ONESHOTTOURISMPERCENTOTHERS"> 
+			<Text>Процент единовременного улучшения показателей туризма на остальных {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_PILLAGE">
+			<Text>Может грабить улучшенные клетки</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_PROHIBITSSPREAD">
+			<Text>Запрещает распространение</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_RANGEATTACKIGNORELOS"> 
+			<Text>{TXT_KEY_PROMOTION_INDIRECT_FIRE}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_RANGEATTACKONLYINDOMAIN">
+			<Text>Дальняя атака только в своей области</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_RELIGIONSPREADS"> 
+			<Text>{TXT_KEY_UPANEL_SPREAD_RELIGION_USES}: {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_RELIGIOUSSTRENGTH">
+			<Text>Религиозная сила {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_NUMEXOTICGOODS">
+			<Text>{TXT_KEY_MISSION_SELL_EXOTIC_GOODS}: {1}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_REQUIRESENHANCEDRELIGION">
+			<Text>Требует укрепленной религии</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_RIVALTERRITORY">
+			<Text>Вражеская территория</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_RUSHBUILDING"> 
+			<Text>{TXT_KEY_MISSION_HURRY_PRODUCTION}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_SPREADRELIGION"> 
+			<Text>{TXT_KEY_MISSION_SPREAD_RELIGION}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_SUICIDE">
+			<Text>Юнит уничтожается во время атаки</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_TRADE"> 
+			<Text>{TXT_KEY_MISSION_ESTABLISH_TRADE_ROUTE}</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNIT_UNHAPPINESS"> 
+			<Text>{TXT_KEY_UNHAPPINESS}: {1}[ICON_HAPPINESS_3]</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_UNKNOWN_CITY">
+			<Text>Неизвестный город</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_EUI_WONDER_BUILT_BY">
+			<Text>Построено цивилизацией {@1_CivName} в {@2_CityName} {@3_YearBuilt}</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_LEANING_TOWER_HELP"> 
 			<Text>
 				Увеличивает на 25% скорость возникновения [ICON_GREAT_PEOPLE] великих людей во всех городах.
