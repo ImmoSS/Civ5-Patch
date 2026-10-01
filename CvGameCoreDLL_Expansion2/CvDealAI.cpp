@@ -3230,7 +3230,7 @@ bool CvDealAI::IsOfferPeace(PlayerTypes eOtherPlayer, CvDeal* pDeal, bool bEqual
 		// Add the peace items to the deal so that we actually stop the war
 #ifdef AI_PEACE_TURNS
 		int iPeaceTreatyLength;
-		if (GET_PLAYER(eMyPlayer).isHuman() && GET_PLAYER(eOtherPlayer).isHuman())
+		if (!GC.getGame().isOption("GAMEOPTION_AI_TWEAKS") || GET_PLAYER(eMyPlayer).isHuman() && GET_PLAYER(eOtherPlayer).isHuman())
 		{
 			iPeaceTreatyLength = GC.getGame().getGameSpeedInfo().getPeaceDealDuration();
 		}
@@ -3289,7 +3289,7 @@ bool CvDealAI::IsOfferPeace(PlayerTypes eOtherPlayer, CvDeal* pDeal, bool bEqual
 		}
 #ifdef AI_PEACE_TURNS
 		int iPeaceTreatyLength;
-		if (GET_PLAYER(eMyPlayer).isHuman() && GET_PLAYER(eOtherPlayer).isHuman())
+		if (!GC.getGame().isOption("GAMEOPTION_AI_TWEAKS") || GET_PLAYER(eMyPlayer).isHuman() && GET_PLAYER(eOtherPlayer).isHuman())
 		{
 			iPeaceTreatyLength = GC.getGame().getGameSpeedInfo().getPeaceDealDuration();
 		}
@@ -3939,7 +3939,7 @@ void CvDealAI::DoTradeScreenOpened()
 			pkUIDeal->SetToPlayer(eMyPlayer);	// The order of these is very important!
 #ifdef AI_PEACE_TURNS
 			int iPeaceTreatyLength;
-			if (GET_PLAYER(eMyPlayer).isHuman() && GET_PLAYER(eActivePlayer).isHuman())
+			if (!GC.getGame().isOption("GAMEOPTION_AI_TWEAKS") || GET_PLAYER(eMyPlayer).isHuman() && GET_PLAYER(eActivePlayer).isHuman())
 			{
 				iPeaceTreatyLength = GC.getGame().getGameSpeedInfo().getPeaceDealDuration();
 			}

@@ -1232,7 +1232,7 @@ void CvTeam::DoDeclareWar(TeamTypes eTeam, bool bDefensivePact, bool bMinorAllyP
 			{
 				int iTurnsSincePeace = GC.getGame().getElapsedGameTurns() - iPeaceTreatyTurn;
 #ifdef AI_PEACE_TURNS
-				if (GET_TEAM(eTeam).isHuman() && GET_TEAM(GetID()).isHuman())
+				if (!GC.getGame().isOption("GAMEOPTION_AI_TWEAKS") || GET_TEAM(eTeam).isHuman() && GET_TEAM(GetID()).isHuman())
 				{
 					if (iTurnsSincePeace < GC.getPEACE_TREATY_LENGTH())
 					{
