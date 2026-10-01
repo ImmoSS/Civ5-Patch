@@ -944,6 +944,8 @@
 #define PRODUCTION_FROM_TRADE_ROUTES_SHIFT_TO_BASE
 ///
 #define CITY_MINOR_MAJORITY_OWNER
+// makes the captured city a puppet by default, unless it can be liberated (skips the redundant popup)
+#define CITY_CAPTURE_AUTO_PUPPET
 /*CITIES CHANGES END*/
 
 

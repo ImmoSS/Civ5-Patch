@@ -3874,6 +3874,13 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 				else if (pNewCity->getOriginalOwner() != GetID() || GetPlayerTraits()->IsNoAnnexing() || bIsMinorCivBuyout)
 #endif
 				{
+#ifdef CITY_CAPTURE_AUTO_PUPPET
+					if (eLiberatedPlayer == NO_PLAYER)
+					{
+						pNewCity->DoCreatePuppet();
+					}
+					else
+#endif
 					if(GC.getGame().getActivePlayer() == GetID())
 					{
 						int iTemp[5] = { pNewCity->GetID(), iCaptureGold, iCaptureCulture, iCaptureGreatWorks, eLiberatedPlayer };
