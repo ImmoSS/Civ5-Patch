@@ -3,7 +3,10 @@
 -- modified by bc1 from Civ V 1.0.3.276 code
 -- code is common using gk_mode and bnw_mode switches
 ------------------------------------------------------
--- edit: Ingame Hotkey Manager for EUI
+-- edit:
+--     Ingame Hotkey Manager
+--     FIX promotions always visible
+-- for EUI
 ------------------------------------------------------
 -- Ingame Hotkey Manager START
 g_actionInstances = {};
@@ -2391,7 +2394,9 @@ Events.GameOptionsChanged.Add( updateActions )
 LuaEvents.EnemyPanelHide.Add(
 	function( isEnemyPanelHide )
 		if g_isWorkerActionPanelOpen then
-			Controls.WorkerActionPanel:SetHide( not isEnemyPanelHide )
+			-- FIX promotions always visible START
+			Controls.WorkerActionPanel:SetHide( not UI_GetHeadSelectedUnit():IsCombatUnit() and UI_GetHeadSelectedUnit():GetDomainType() ~= DomainTypes.DOMAIN_AIR and not isEnemyPanelHide )
+			-- FIX promotions always visible END
 		end
 		if not g_isHideUnitTypes and not g_isHideUnitList then
 			Controls.UnitTypesPanel:SetHide( not isEnemyPanelHide )

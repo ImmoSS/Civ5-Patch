@@ -1,7 +1,10 @@
 --------------------------------------------------
 -- Unit Panel Screen 
 --------------------------------------------------
--- edit: Ingame Hotkey Manager for vanilla UI
+-- edit:
+--     Ingame Hotkey Manager
+--     FIX promotions always visible
+-- for vanilla UI
 --------------------------------------------------
 -- Ingame Hotkey Manager START
 g_actionInstances = {};
@@ -1836,7 +1839,9 @@ Events.GameOptionsChanged.Add( updateActions )
 
 function OnEnemyPanelHide( bIsEnemyPanelHide )
     if( g_bWorkerActionPanelOpen ) then
-        Controls.WorkerActionPanel:SetHide( not bIsEnemyPanelHide );
+    	-- FIX promotions always visible START
+        Controls.WorkerActionPanel:SetHide( not UI.GetHeadSelectedUnit():IsCombatUnit() and UI.GetHeadSelectedUnit():GetDomainType() ~= DomainTypes.DOMAIN_AIR and not bIsEnemyPanelHide );
+        -- FIX promotions always visible END
     end
 end
 LuaEvents.EnemyPanelHide.Add( OnEnemyPanelHide );
