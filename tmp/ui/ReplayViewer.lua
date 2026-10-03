@@ -650,7 +650,7 @@ Panels = {
 			end
 		end,
 		
-		Refresh = function(panel) 
+		Refresh = function(panel, bKeepChecks) 
 		
 			local graphWidth, graphHeight = Controls.GraphCanvas:GetSizeVal();
 			local initialTurn = g_GraphStartTurn;
@@ -778,6 +778,11 @@ Panels = {
 					
 					-- Default city states to be unchecked.
 					local checked = civ.Type ~= "CIVILIZATION_MINOR";
+					-- Graph Turn Range Slider START
+					if bKeepChecks then
+						checked = g_GraphShown[i]
+					end
+					-- Graph Turn Range Slider END
 					graphLegendInstance.ShowHide:SetCheck(checked);
 					-- Graph Tooltip START
 					g_GraphShown[i] = checked
@@ -1710,7 +1715,7 @@ function OnTurnRangeSlider()
 	local endTurn = g_ReplayInfo.InitialTurn + math.floor(rangeEnd * dturns + 0.49999999999999994)
 	if g_GraphStartTurn ~= startTurn or g_GraphEndTurn ~= endTurn then
 		g_GraphStartTurn, g_GraphEndTurn = Panels[2].PadHorizontalValues(startTurn, endTurn)
-		Panels[2]:Refresh()
+		Panels[2]:Refresh(true)
 		Panels[2]:DrawGraph()
 	end
 	Controls.GraphTurnRangeSliderBackHL:SetOffsetX(rangeStart * graphTurnRangeSliderSizeX)
