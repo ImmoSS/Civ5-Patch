@@ -1148,16 +1148,8 @@ end
 Controls.BackButton:RegisterCallback(Mouse.eLClick, OnBack);
 
 ----------------------------------------------------------------
-local MouseMove = MouseEvents.MouseMove
 local KeyDown = KeyEvents.KeyDown
-local bTrackMouse = false
 function InputHandler(uiMsg, wParam, lParam)
-	if uiMsg == MouseMove then
-		local x, _ = UIManager:GetMousePos()
-		local dx, _ = UIManager:GetMouseDelta()
-		if bTrackMouse and dx ~= 0 then
-		end
-	end
     if(uiMsg == KeyDown) then
         if(wParam == Keys.VK_ESCAPE or wParam == Keys.VK_RETURN) then
 			OnBack();
@@ -1682,6 +1674,7 @@ function GenerateReplayInfoFromCurrentGame()
 end
 
 -- Graph Turn Range Slider START
+local graphTurnRangeSliderSizeX = Controls.GraphTurnRangeSliderBack:GetSizeX() - 24
 function OnTurnRangeSlider()
 	local v1 = Controls.GraphTurnRangeSlider1:GetValue()
 	local v2 = Controls.GraphTurnRangeSlider2:GetValue()
@@ -1695,6 +1688,8 @@ function OnTurnRangeSlider()
 		Panels[2]:Refresh()
 		Panels[2]:DrawGraph()
 	end
+	Controls.GraphTurnRangeSliderBackHL:SetOffsetX(rangeStart * graphTurnRangeSliderSizeX)
+	Controls.GraphTurnRangeSliderBackHL:SetSizeX(math.max(0, (rangeEnd - rangeStart) * graphTurnRangeSliderSizeX))
 end
 Controls.GraphTurnRangeSlider1:RegisterSliderCallback( OnTurnRangeSlider )
 Controls.GraphTurnRangeSlider2:RegisterSliderCallback( OnTurnRangeSlider )
