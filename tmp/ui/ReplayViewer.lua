@@ -6,6 +6,7 @@
 --     Graph Tooltip
 --     Graph Fractional Values
 --     Graph Turn Range Slider
+--     Graph Legend RClick
 -- for EUI & vanilla UI
 -------------------------------------------------------------------
 include("InstanceManager");
@@ -795,6 +796,30 @@ Panels = {
 					end);
 					
 					panel.GraphLegendsByPlayer[i] = graphLegendInstance;
+					-- Graph Legend RClick START
+					graphLegendInstance.ShowHide:RegisterCallback(Mouse.eRClick, function()
+						for k, _ in ipairs(panel.SegmentsByPlayer) do
+							if k ~= i then
+								local segments = panel.SegmentsByPlayer[k];
+								if(segments) then
+									for _, v in ipairs(segments) do
+										v.LineSegment:SetHide(true);
+									end
+								end
+								g_GraphShown[k] = false
+								panel.GraphLegendsByPlayer[k].ShowHide:SetCheck(false)
+							end
+						end
+						local segments = panel.SegmentsByPlayer[i];
+						if(segments) then
+							for _, v in ipairs(segments) do
+								v.LineSegment:SetHide(false);
+							end
+						end
+						g_GraphShown[i] = true
+						panel.GraphLegendsByPlayer[i].ShowHide:SetCheck(true)
+					end);
+					-- Graph Legend RClick END
 					end
 				end
 				
