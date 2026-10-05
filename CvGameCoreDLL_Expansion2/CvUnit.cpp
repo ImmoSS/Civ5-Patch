@@ -10349,16 +10349,29 @@ void CvUnit::promote(PromotionTypes ePromotion, int iLeaderUnitId)
 	else
 	{
 #ifdef INSTA_HEAL_EVERYPROMOTION
-#ifdef PROMOTION_INSTA_HEAL_LOCKED
-		if (!isInstaHealLocked())
+		int iHealAmount = GC.getINSTA_HEAL_RATE();
+#ifdef INSTA_HEAL_EVERYPROMOTION_BUFFED
+		PlayerTypes eOwner = getOwner();
+		if (eOwner != NO_PLAYER)
 		{
-			#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
-			GET_PLAYER(getOwner()).ChangeUnitsRestoredHP(min(getDamage(), GC.getINSTA_HEAL_RATE()));
-			#endif
-			changeDamage(-GC.getINSTA_HEAL_RATE());
+			CvPlayer& kPlayer = GET_PLAYER(eOwner);
+			PolicyTypes eBonusPolicy = (PolicyTypes)GC.getInfoTypeForString("POLICY_MILITARY_TRADITION");
+			if (eBonusPolicy != NO_POLICY && kPlayer.GetPlayerPolicies()->HasPolicy(eBonusPolicy))
+			{
+				iHealAmount += 10;
+			}
+		}
+#endif
+
+#ifdef PROMOTION_INSTA_HEAL_LOCKED
+		if (!isInstaHealLocked()) {
+#ifdef EG_REPLAYDATASET_UNITSRESTOREDHP
+			GET_PLAYER(getOwner()).ChangeUnitsRestoredHP(min(getDamage(), iHealAmount));
+#endif
+			changeDamage(-iHealAmount);
 		}
 #else
-		changeDamage(-GC.getINSTA_HEAL_RATE());
+		changeDamage(-iHealAmount);
 #endif
 #endif
 		setHasPromotion(ePromotion, true);

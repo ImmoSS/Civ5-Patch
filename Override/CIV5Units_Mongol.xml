@@ -98386,7 +98386,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MILITARY_TRADITION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Military Tradition[ENDCOLOR][NEWLINE]Military Units gain 50% more Experience from combat.
+				[COLOR_POSITIVE_TEXT]Military Tradition[ENDCOLOR][NEWLINE]Military Units gain 50% more Experience from combat and heal 10 HP more when promouting.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MOBILIZATION"> 
@@ -132031,7 +132031,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MILITARY_TRADITION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Воинские традиции[ENDCOLOR][NEWLINE]Подразделения получают в бою на 50% больше опыта.
+				[COLOR_POSITIVE_TEXT]Воинские традиции[ENDCOLOR][NEWLINE]Подразделения получают в бою на 50% больше опыта и восстанавливают на 10 ОЗ больше после выбора повышения.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MERCANTILISM_HELP"> 
