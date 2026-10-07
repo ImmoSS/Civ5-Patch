@@ -92859,6 +92859,16 @@ The ship has weather'd every rack; the prize we sought is won."
 				{1_CityName} Coup Success!
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_NOTIFICATION_SPY_YOU_STAGE_COUP_READY"> 
+			<Text>
+				{1_SpyRank} {2_SpyName} gathered enough intelligence in {3_CityName} to stage a coup!
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_NOTIFICATION_SPY_YOU_STAGE_COUP_READY_S"> 
+			<Text>
+				{1_CityName} Coup Ready!
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_NOTIFICATION_SUMMARY_ADD_REFORMATION_BELIEF"> 
 			<Text>
 				ADD REFORMATION BELIEF
@@ -136661,6 +136671,16 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_NOTIFICATION_SPY_YOU_STAGE_COUP_SUCCESS"> 
 			<Text>
 				{1_SpyRank} {@2_SpyName} {@2: plural 1?{@2: gender masculine?устроил; feminine?устроила; neuter?устроило;}; 2?устроили; other?устроил;} успешный переворот в{@3: gender masculine? ; feminine? ; neuter? ; other? городе ;}{@3_CityName[6]}. Ваше влияние на увеличилось на 60!
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_NOTIFICATION_SPY_YOU_STAGE_COUP_READY"> 
+			<Text>
+				{1_SpyRank} {@2_SpyName} в городе {3_CityName} {@2: plural 1?{@2: gender masculine?собрал; feminine?собрала; neuter?собрало;}; 2?собрали; other?собрал;} достаточно информации, чтобы совершить переворот и увеличить ваше влияние!
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_NOTIFICATION_SPY_YOU_STAGE_COUP_READY_S"> 
+			<Text>
+				{1_CityName}: можно совершить переворот!
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_STAGE_COUP_QUESTION"> 
