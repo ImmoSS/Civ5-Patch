@@ -9281,6 +9281,28 @@ int CvCity::GetBaseJONSCulturePerTurn() const
 int CvCity::GetJONSCulturePerTurnFromBuildings() const
 {
 	VALIDATE_OBJECT
+
+	// CulturePerPopulationInCity
+	int iCulturePerPop = 0;
+	for (int iBuildingLoop = 0; iBuildingLoop < GC.getNumBuildingInfos(); iBuildingLoop++)
+	{
+		BuildingTypes eBuilding = (BuildingTypes)iBuildingLoop;
+
+		if (GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
+		{
+			CvBuildingEntry* pInfo = GC.getBuildingInfo(eBuilding);
+			if (pInfo)
+			{
+				int iXPopulation = pInfo->GetCulturePerXPopulationInCity();
+
+				if (iXPopulation > 0)
+				{
+					iCulturePerPop += getPopulation() / iXPopulation;
+				}
+			}
+		}
+	}
+
 #ifdef BUILDING_CULTURE_PER_X_ANCIENCT_BUILDING
 	int iCulturePerXAncientBuildings = 0;
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
@@ -9293,9 +9315,9 @@ int CvCity::GetJONSCulturePerTurnFromBuildings() const
 		}
 	}
 
-	return m_iJONSCulturePerTurnFromBuildings + iCulturePerXAncientBuildings;
+	return m_iJONSCulturePerTurnFromBuildings + iCulturePerXAncientBuildings + iCulturePerPop;
 #else
-	return m_iJONSCulturePerTurnFromBuildings;
+	return m_iJONSCulturePerTurnFromBuildings + iCulturePerPop;
 #endif
 }
 

@@ -744,8 +744,10 @@ public:
 	void ChangeExtraHappinessPerCity(int iChange);
 	int GetExtraHappinessPerXPolicies() const;
 	int GetExtraHappinessPerXPopulationInCity() const;
+	int GetExtraCulturePerXPopulationInCity() const;
 	void ChangeExtraHappinessPerXPolicies(int iChange);
 	void ChangeExtraHappinessPerXPopulationInCity(int iChange);
+	void ChangeExtraCulturePerXPopulationInCity(int iChange);
 
 	int GetHappinessFromResources() const;
 	int GetHappinessFromResourceVariety() const;
@@ -2126,6 +2128,7 @@ protected:
 	FAutoVariable<int, CvPlayer> m_iHappinessPerCity;
 	int m_iHappinessPerXPolicies;
 	int m_iHappinessPerXPopulationInCity;
+	int m_iCulturePerXPopulationInCity;
 	int m_iEspionageModifier;
 	int m_iSpyStartingRank;
 #ifdef EG_REPLAYDATASET_NUMSTOLENSCIENCE
