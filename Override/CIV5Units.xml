@@ -130560,6 +130560,12 @@
 			<Welcomeness>0</Welcomeness> 
 			<Urgent>false</Urgent> 
 		</Row>
+		<Row> 
+			<ID>150</ID> 
+			<NotificationType>NOTIFICATION_SPY_YOU_STAGE_COUP_READY</NotificationType> 
+			<Welcomeness>0</Welcomeness> 
+			<Urgent>false</Urgent> 
+		</Row>
 	</Notifications> 
 
 	<Table name="PlayerColors">
