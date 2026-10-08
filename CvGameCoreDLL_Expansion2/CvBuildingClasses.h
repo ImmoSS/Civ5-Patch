@@ -155,6 +155,7 @@ public:
 	int GetUnhappinessModifier() const;
 	int GetHappinessPerCity() const;
 	int GetHappinessPerXPolicies() const;
+	int GetHappinessPerXPopulationInCity() const;
 	int GetCityCountUnhappinessMod() const;
 	bool IsNoOccupiedUnhappiness() const;
 	int GetGlobalPopulationChange() const;
@@ -457,6 +458,7 @@ private:
 	int m_iUnhappinessModifier;
 	int m_iHappinessPerCity;
 	int m_iHappinessPerXPolicies;
+	int m_iHappinessPerXPopulationInCity;
 	int m_iCityCountUnhappinessMod;
 	bool m_bNoOccupiedUnhappiness;
 	int m_iGlobalPopulationChange;

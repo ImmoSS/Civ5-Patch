@@ -10548,6 +10548,25 @@ int CvCity::GetLocalHappiness() const
 		}
 	}
 #endif
+	
+	// HappinessPerPopulationInCity
+	for (int iBuilding = 0; iBuilding < GetCityBuildings()->GetBuildings()->GetNumBuildings(); iBuilding++)
+	{
+		CvBuildingEntry* pInfo = pkBuildings->GetEntry(iBuilding);
+		if (pInfo)
+		{
+			if (GetCityBuildings()->GetNumBuilding((BuildingTypes)iBuilding) > 0)
+			{
+				int iXPopulation = pInfo->GetHappinessPerXPopulationInCity();
+
+				if (iXPopulation > 0)
+				{
+					iLocalHappiness += (getPopulation() / iXPopulation);
+				}
+			}
+		}
+	}
+
 
 	int iHappinessPerGarrison = kPlayer.GetHappinessPerGarrisonedUnit();
 	if(iHappinessPerGarrison > 0)

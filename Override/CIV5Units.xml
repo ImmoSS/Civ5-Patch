@@ -34392,6 +34392,7 @@
 		<Column name="BorderTransitionObstacle" type="boolean"  default="0"/>
 		<Column name="CapitalGoldModifier" type="integer"  default="0"/>
 		<Column name="AttritionInsideBorders" type="integer"  default="0"/>
+		<Column name="HappinessPerXPopulationInCity" type="integer"  default="0"/>
 	</Table> 
 	<Buildings>
 		<Delete />

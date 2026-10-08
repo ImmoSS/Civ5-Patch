@@ -410,6 +410,7 @@ CvPlayer::CvPlayer() :
 	, m_iHappinessFromBuildings("CvPlayer::m_iHappinessFromBuildings", m_syncArchive)
 	, m_iHappinessPerCity("CvPlayer::m_iHappinessPerCity", m_syncArchive)
 	, m_iHappinessPerXPolicies(0)
+	, m_iHappinessPerXPopulationInCity(0)
 	, m_iAdvancedStartPoints("CvPlayer::m_iAdvancedStartPoints", m_syncArchive)
 	, m_iAttackBonusTurns("CvPlayer::m_iAttackBonusTurns", m_syncArchive)
 	, m_iCultureBonusTurns(0)
@@ -1373,6 +1374,7 @@ void CvPlayer::uninit()
 	m_iHappinessFromBuildings = 0;
 	m_iHappinessPerCity = 0;
 	m_iHappinessPerXPolicies = 0;
+	m_iHappinessPerXPopulationInCity = 0;
 	m_iAdvancedStartPoints = -1;
 	m_iAttackBonusTurns = 0;
 	m_iCultureBonusTurns = 0;
@@ -10536,6 +10538,9 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst
 	// Extra Happiness Per Policy
 	ChangeExtraHappinessPerXPolicies(pBuildingInfo->GetHappinessPerXPolicies() * iChange);
 
+	// Extra Happiness Per Population In City
+	ChangeExtraHappinessPerXPopulationInCity(pBuildingInfo->GetHappinessPerXPopulationInCity()* iChange);
+
 	// City Count Unhappiness Mod
 	ChangeCityCountUnhappinessMod(pBuildingInfo->GetCityCountUnhappinessMod() * iChange);
 
@@ -14788,6 +14793,13 @@ int CvPlayer::GetExtraHappinessPerXPolicies() const
 }
 
 //	--------------------------------------------------------------------------------
+/// Returns the amount of extra Happiness per City Population
+int CvPlayer::GetExtraHappinessPerXPopulationInCity() const
+{
+	return m_iHappinessPerXPopulationInCity;
+}
+
+//	--------------------------------------------------------------------------------
 /// Changes amount of extra Happiness per City
 void CvPlayer::ChangeExtraHappinessPerXPolicies(int iChange)
 {
@@ -14796,6 +14808,17 @@ void CvPlayer::ChangeExtraHappinessPerXPolicies(int iChange)
 	if(iChange != 0)
 		m_iHappinessPerXPolicies += iChange;
 }
+
+//	--------------------------------------------------------------------------------
+/// Changes amount of extra Happiness per City Population
+void CvPlayer::ChangeExtraHappinessPerXPopulationInCity(int iChange)
+{
+	CvAssertMsg(m_iHappinessPerXPopulationInCity >= 0, "Count of extra happiness per population is corrupted");
+
+	if (iChange != 0)
+		m_iHappinessPerXPopulationInCity += iChange;
+}
+
 
 //	--------------------------------------------------------------------------------
 /// Total amount of Happiness gained from Resources
@@ -27530,6 +27553,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iHappinessPerTradeRouteCount;
 	kStream >> m_iHappinessPerXPopulation;
 	kStream >> m_iHappinessPerXPolicies;
+	kStream >> m_iHappinessPerXPopulationInCity;
 	if (uiVersion >= 8)
 	{
 		kStream >> m_iHappinessFromLeagues;
@@ -29759,6 +29783,7 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iHappinessPerTradeRouteCount;
 	kStream << m_iHappinessPerXPopulation;
 	kStream << m_iHappinessPerXPolicies;
+	kStream << m_iHappinessPerXPopulationInCity;
 	kStream << m_iHappinessFromLeagues;
 	kStream << m_iEspionageModifier;
 	kStream << m_iSpyStartingRank;

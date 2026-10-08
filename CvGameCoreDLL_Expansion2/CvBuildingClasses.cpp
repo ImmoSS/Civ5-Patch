@@ -83,6 +83,7 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iUnhappinessModifier(0),
 	m_iHappinessPerCity(0),
 	m_iHappinessPerXPolicies(0),
+	m_iHappinessPerXPopulationInCity(0),
 	m_iCityCountUnhappinessMod(0),
 	m_bNoOccupiedUnhappiness(false),
 	m_iGlobalPopulationChange(0),
@@ -393,6 +394,7 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iUnhappinessModifier = kResults.GetInt("UnhappinessModifier");
 	m_iHappinessPerCity = kResults.GetInt("HappinessPerCity");
 	m_iHappinessPerXPolicies = kResults.GetInt("HappinessPerXPolicies");
+	m_iHappinessPerXPopulationInCity = kResults.GetInt("HappinessPerXPopulationInCity");
 	m_iCityCountUnhappinessMod = kResults.GetInt("CityCountUnhappinessMod");
 	m_bNoOccupiedUnhappiness = kResults.GetBool("NoOccupiedUnhappiness");
 	m_iWorkerSpeedModifier = kResults.GetInt("WorkerSpeedModifier");
@@ -1287,6 +1289,13 @@ int CvBuildingEntry::GetHappinessPerXPolicies() const
 {
 	return m_iHappinessPerXPolicies;
 }
+
+/// Happiness per X number of Population in City provided by this building
+int CvBuildingEntry::GetHappinessPerXPopulationInCity() const
+{
+	return m_iHappinessPerXPopulationInCity;
+}
+
 
 /// CityCountUnhappinessMod provided by this building
 int CvBuildingEntry::GetCityCountUnhappinessMod() const
