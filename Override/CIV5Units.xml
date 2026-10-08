@@ -144461,7 +144461,7 @@
 			<GreatScientistRateModifier>0</GreatScientistRateModifier> 
 			<DomesticGreatGeneralRateModifier>0</DomesticGreatGeneralRateModifier> 
 			<ExtraHappiness>0</ExtraHappiness> 
-			<ExtraHappinessPerCity>0</ExtraHappinessPerCity> 
+			<ExtraHappinessPerCity>1</ExtraHappinessPerCity> 
 			<UnhappinessMod>0</UnhappinessMod> 
 			<CityCountUnhappinessMod>0</CityCountUnhappinessMod> 
 			<OccupiedPopulationUnhappinessMod>0</OccupiedPopulationUnhappinessMod> 
