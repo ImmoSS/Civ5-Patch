@@ -3965,7 +3965,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CATHEDRALS"> 
 			<Text>
-				Use [ICON_PEACE] Faith to purchase Cathedrals (+1 [ICON_PEACE] Faith, +1 [ICON_CULTURE] Culture. +1 [ICON_HAPPINESS_1] Happiness for each 6th [ICON_CITIZEN] Citizen in a City)
+				Use [ICON_PEACE] Faith to purchase Cathedrals (+1 [ICON_PEACE] Faith, +1 [ICON_CULTURE] Culture. +1 [ICON_HAPPINESS_1] Happiness for every 6th [ICON_CITIZEN] Citizen in a City)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CATHEDRALS_SHORT"> 
