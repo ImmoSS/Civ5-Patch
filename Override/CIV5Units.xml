@@ -49974,11 +49974,12 @@
 			<NukeModifier>0</NukeModifier> 
 			<NukeExplosionRand>0</NukeExplosionRand> 
 			<HealRateChange>0</HealRateChange> 
-			<Happiness>2</Happiness> 
+			<Happiness>0</Happiness> 
 			<UnmoddedHappiness>0</UnmoddedHappiness> 
 			<UnhappinessModifier>0</UnhappinessModifier> 
 			<HappinessPerCity>0</HappinessPerCity> 
 			<HappinessPerXPolicies>0</HappinessPerXPolicies> 
+			<HappinessPerXPopulationInCity>6</HappinessPerXPopulationInCity>
 			<CityCountUnhappinessMod>0</CityCountUnhappinessMod> 
 			<NoOccupiedUnhappiness>false</NoOccupiedUnhappiness> 
 			<WorkerSpeedModifier>0</WorkerSpeedModifier> 

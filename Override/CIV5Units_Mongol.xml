@@ -3965,7 +3965,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CATHEDRALS"> 
 			<Text>
-				Use [ICON_PEACE] Faith to purchase Cathedrals (+1 [ICON_PEACE] Faith, +1 [ICON_CULTURE] Culture, +2 [ICON_HAPPINESS_1] Happiness)
+				Use [ICON_PEACE] Faith to purchase Cathedrals (+1 [ICON_PEACE] Faith, +1 [ICON_CULTURE] Culture. +1 [ICON_HAPPINESS_1] Happiness for each 6th [ICON_CITIZEN] Citizen in a City)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CATHEDRALS_SHORT"> 
@@ -130140,7 +130140,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CATHEDRALS"> 
 			<Text>
-				Позволяет за очки [ICON_PEACE] веры строить соборы (+1 [ICON_PEACE] к вере, +1 [ICON_CULTURE] к культуре, +2 [ICON_HAPPINESS_1] к настроению)
+				Позволяет за очки [ICON_PEACE] веры строить соборы (+1 [ICON_PEACE] к вере, +1 [ICON_CULTURE] к культуре. +1 [ICON_HAPPINESS_1] к настроению за каждого 6 [ICON_CITIZEN] жителя в городе)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_BONUS_AGAINST_TECH"> 
