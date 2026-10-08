@@ -4555,7 +4555,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PAGODAS"> 
 			<Text>
-				Use [ICON_PEACE] Faith to purchase Pagodas (+1 [ICON_PEACE] Faith, +3 [ICON_CULTURE] Culture, +1 [ICON_HAPPINESS_1] Happiness)
+				Use [ICON_PEACE] Faith to purchase Pagodas (+1 [ICON_PEACE] Faith, +1 [ICON_HAPPINESS_1] Happiness. +1 [ICON_CULTURE] Culture for every 5th [ICON_CITIZEN] Citizen in a City)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PAGODAS_SHORT"> 
@@ -130291,7 +130291,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PAGODAS"> 
 			<Text>
-				Можно строить пагоды (+1 [ICON_PEACE] к вере, +3 [ICON_CULTURE] к культуре, +1 [ICON_HAPPINESS_1] к настроению) за [ICON_PEACE] очки веры
+				Можно строить пагоды (+1 [ICON_PEACE] к вере, +1 [ICON_HAPPINESS_1] к настроению. +1 [ICON_CULTURE] к культуре за каждого 5 [ICON_CITIZEN] жителя в городе) за [ICON_PEACE] очки веры
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_MOSQUES"> 

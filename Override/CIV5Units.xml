@@ -33842,11 +33842,6 @@
 		</Row>
 		<Row> 
 			<BuildingType>BUILDING_PAGODA</BuildingType> 
-			<YieldType>YIELD_CULTURE</YieldType> 
-			<Yield>3</Yield> 
-		</Row>
-		<Row> 
-			<BuildingType>BUILDING_PAGODA</BuildingType> 
 			<YieldType>YIELD_FAITH</YieldType> 
 			<Yield>1</Yield> 
 		</Row>
@@ -50309,6 +50304,7 @@
 			<ArtInfoCulturalVariation>false</ArtInfoCulturalVariation> 
 			<ArtInfoEraVariation>false</ArtInfoEraVariation> 
 			<ArtInfoRandomVariation>false</ArtInfoRandomVariation> 
+			<CulturePerXPopulationInCity>5</CulturePerXPopulationInCity>
 		</Row>
 		<Row> 
 			<ID>140</ID> 
