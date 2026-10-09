@@ -4505,7 +4505,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_MOSQUES"> 
 			<Text>
-				Use [ICON_PEACE] Faith to purchase Mosques (+3 [ICON_PEACE] Faith, +1 [ICON_CULTURE] Culture, +1 [ICON_HAPPINESS_1] Happiness)
+				Use [ICON_PEACE] Faith to purchase Mosques (+1 [ICON_CULTURE] Culture, +1 [ICON_HAPPINESS_1] Happiness. +1 [ICON_PEACE] Faith for every 4th [ICON_CITIZEN] Citizen in a City)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_MOSQUES_SHORT"> 
@@ -130296,7 +130296,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_MOSQUES"> 
 			<Text>
-				Можно строить мечети (+3 [ICON_PEACE] к вере, +1 [ICON_CULTURE] к культуре, +1 [ICON_HAPPINESS_1] к настроению) за [ICON_PEACE] очки веры
+				Можно строить мечети (+1 [ICON_CULTURE] к культуре, +1 [ICON_HAPPINESS_1] к настроению. +1 [ICON_PEACE] к вере, за каждого 4 [ICON_CITIZEN] жителя в городе) за [ICON_PEACE] очки веры
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_RATIONALISM_HELP"> 

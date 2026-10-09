@@ -33836,11 +33836,6 @@
 			<Yield>1</Yield> 
 		</Row>
 		<Row> 
-			<BuildingType>BUILDING_MOSQUE</BuildingType> 
-			<YieldType>YIELD_FAITH</YieldType> 
-			<Yield>3</Yield> 
-		</Row>
-		<Row> 
 			<BuildingType>BUILDING_PAGODA</BuildingType> 
 			<YieldType>YIELD_FAITH</YieldType> 
 			<Yield>1</Yield> 
@@ -50174,6 +50169,7 @@
 			<ArtInfoCulturalVariation>false</ArtInfoCulturalVariation> 
 			<ArtInfoEraVariation>false</ArtInfoEraVariation> 
 			<ArtInfoRandomVariation>false</ArtInfoRandomVariation> 
+			<FaithPerXPopulationInCity>4</FaithPerXPopulationInCity> 
 		</Row>
 		<Row> 
 			<ID>139</ID> 
