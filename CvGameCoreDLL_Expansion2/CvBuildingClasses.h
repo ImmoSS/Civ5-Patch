@@ -157,6 +157,7 @@ public:
 	int GetHappinessPerXPolicies() const;
 	int GetHappinessPerXPopulationInCity() const;
 	int GetCulturePerXPopulationInCity() const;
+	int GetFaithPerXPopulationInCity() const;
 	int GetCityCountUnhappinessMod() const;
 	bool IsNoOccupiedUnhappiness() const;
 	int GetGlobalPopulationChange() const;
@@ -461,6 +462,7 @@ private:
 	int m_iHappinessPerXPolicies;
 	int m_iHappinessPerXPopulationInCity;
 	int m_iCulturePerXPopulationInCity;
+	int m_iFaithPerXPopulationInCity;
 	int m_iCityCountUnhappinessMod;
 	bool m_bNoOccupiedUnhappiness;
 	int m_iGlobalPopulationChange;

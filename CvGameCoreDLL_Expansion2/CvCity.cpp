@@ -9514,7 +9514,29 @@ int CvCity::GetFaithPerTurn() const
 int CvCity::GetFaithPerTurnFromBuildings() const
 {
 	VALIDATE_OBJECT
-	return m_iFaithPerTurnFromBuildings;
+
+	// FaithPerPopulationInCity
+	int iFaithPerPop = 0;
+	for (int iBuildingLoop = 0; iBuildingLoop < GC.getNumBuildingInfos(); iBuildingLoop++)
+	{
+		BuildingTypes eBuilding = (BuildingTypes)iBuildingLoop;
+
+		if (GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
+		{
+			CvBuildingEntry* pInfo = GC.getBuildingInfo(eBuilding);
+			if (pInfo)
+			{
+				int iXPopulation = pInfo->GetFaithPerXPopulationInCity();
+
+				if (iXPopulation > 0)
+				{
+					iFaithPerPop += getPopulation() / iXPopulation;
+				}
+			}
+		}
+	}
+
+	return m_iFaithPerTurnFromBuildings + iFaithPerPop;
 }
 
 //	--------------------------------------------------------------------------------

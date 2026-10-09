@@ -745,9 +745,11 @@ public:
 	int GetExtraHappinessPerXPolicies() const;
 	int GetExtraHappinessPerXPopulationInCity() const;
 	int GetExtraCulturePerXPopulationInCity() const;
+	int GetExtraFaithPerXPopulationInCity() const;
 	void ChangeExtraHappinessPerXPolicies(int iChange);
 	void ChangeExtraHappinessPerXPopulationInCity(int iChange);
 	void ChangeExtraCulturePerXPopulationInCity(int iChange);
+	void ChangeExtraFaithPerXPopulationInCity(int iChange);
 
 	int GetHappinessFromResources() const;
 	int GetHappinessFromResourceVariety() const;
@@ -2129,6 +2131,7 @@ protected:
 	int m_iHappinessPerXPolicies;
 	int m_iHappinessPerXPopulationInCity;
 	int m_iCulturePerXPopulationInCity;
+	int m_iFaithPerXPopulationInCity;
 	int m_iEspionageModifier;
 	int m_iSpyStartingRank;
 #ifdef EG_REPLAYDATASET_NUMSTOLENSCIENCE
