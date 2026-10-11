@@ -6081,7 +6081,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HARBOR_HELP"> 
 			<Text>
-				Forms a [ICON_CONNECTED] City Connection with the [ICON_CAPITAL] Capital over water (if they're not already [ICON_CONNECTED] connected by land). Sea trade routes originating from this city have a 50% increase in range and produce an additional 1 [ICON_GOLD] Gold when connecting to another civilization.[NEWLINE][NEWLINE]City must be built on the coast.
+				Forms a [ICON_CONNECTED] City Connection with the [ICON_CAPITAL] Capital over water (if they're not already [ICON_CONNECTED] connected by land). Sea trade routes originating from this city have a 50% increase in range and produce an additional 1 [ICON_GOLD] Gold and 1 [ICON_CULTURE] Culture when connecting to another civilization.[NEWLINE][NEWLINE]City must be built on the coast.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HARBOR_PEDIA"> 
@@ -128261,7 +128261,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_COTHON_HELP"> 
 			<Text>
-				Forms a [ICON_CONNECTED] City Connection with the [ICON_CAPITAL] Capital over water (if they're not already [ICON_CONNECTED] connected by land). Sea trade routes originating from this city have a 50% increase in range and produce an additional 1 [ICON_GOLD] Gold when connecting to another civilization. Provides +15% [ICON_STRENGTH] Combat Bonus to all naval units fighting in city's territory. +1 [ICON_GOLD] Gold from Coast and Ocean Tiles.[NEWLINE][NEWLINE]City must be built on the coast.
+				Forms a [ICON_CONNECTED] City Connection with the [ICON_CAPITAL] Capital over water (if they're not already [ICON_CONNECTED] connected by land). Sea trade routes originating from this city have a 50% increase in range and produce an additional 1 [ICON_GOLD] Gold and 1 [ICON_CULTURE] Culture when connecting to another civilization. Provides +15% [ICON_STRENGTH] Combat Bonus to all naval units fighting in city's territory. +1 [ICON_GOLD] Gold from Coast and Ocean Tiles.[NEWLINE][NEWLINE]City must be built on the coast.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_COTHON_STRATEGY"> 
@@ -135355,7 +135355,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_COTHON_HELP"> 
 			<Text>
-				Прокладывает [ICON_CONNECTED] торговый путь в [ICON_CAPITAL] столицу по воде (если еще не существует [ICON_CONNECTED] наземный торговый путь). Морские торговые маршруты, исходящие из этого города, могут быть на 50% длиннее и производят дополнительно 1 [ICON_GOLD], если ведут в другую державу. Дает +15% [ICON_STRENGTH] к боевой мощи морским юнитам, сражающимся на территории города с котоном. Дает +1 [ICON_GOLD] к золоту на клетках побережья и океана.[NEWLINE][NEWLINE]Город должен быть построен на побережье.
+				Прокладывает [ICON_CONNECTED] торговый путь в [ICON_CAPITAL] столицу по воде (если еще не существует [ICON_CONNECTED] наземный торговый путь). Морские торговые маршруты, исходящие из этого города, могут быть на 50% длиннее и производят дополнительно 1 [ICON_GOLD] и 2 [ICON_CULTURE], если ведут в другую державу. Дает +15% [ICON_STRENGTH] к боевой мощи морским юнитам, сражающимся на территории города с котоном. Дает +1 [ICON_GOLD] к золоту на клетках побережья и океана.[NEWLINE][NEWLINE]Город должен быть построен на побережье.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_COTHON_STRATEGY"> 
@@ -136796,6 +136796,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_OPSCREEN_HOTKEY_EDIT_HELP"> 
 			<Text>
 				Совет: вы можете поменять горячие клавиши действий и повышений юнитов нажатием Ctrl + ПКМ по кнопке действия (в игре!)
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_HARBOR_HELP"> 
+			<Text>
+				Прокладывает [ICON_CONNECTED] торговый путь в [ICON_CAPITAL] столицу по воде (если еще не существует [ICON_CONNECTED] наземный торговый путь). Морские торговые маршруты, исходящие из этого города, могут быть на 50% длиннее и производят дополнительно 1 [ICON_GOLD] и 2 [ICON_CULTURE], если ведут в другую державу.[NEWLINE][NEWLINE]Город должен быть построен на побережье.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
