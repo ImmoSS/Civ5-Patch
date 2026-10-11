@@ -1,6 +1,7 @@
 ----------------------------------------------------------------
 -- HOTKEY MANAGER START
 ----------------------------------------------------------------
+include( "IconSupport" );
 HotkeyManagerData = Modding.OpenUserData( "IngameHotkeyManager", 1);
 
 g_ListenInput = false;
@@ -296,13 +297,9 @@ end
 -------------------------------------------------
 -------------------------------------------------
 function OnHotkeyEditMode( actionID )
-	if not UIManager:GetControl() then  -- Ctrl + RClick
-		return
-	end
 	local action = GameInfoActions[actionID]
 	local Cat = action.SubType
 	local Id = action.OriginalIndex
-    print('OnHotkeyEditMode', actionID, Cat, Id)
     g_InputSeqStr = {'', '', '', ''};
     local HK = GetHotkey(Cat, Id);
     local hotkey = HK.HotKey
@@ -570,33 +567,26 @@ function ShowHideHandler( bIsHide, bIsInit )
 
     if( not bIsInit ) then
         if( not bIsHide ) then
-			VerifyUserDataIntegrity();
-			OnHotkeyEditMode(m_PopupInfo.Data1)
-
 	        UI.incTurnTimerSemaphore();
-	        Events.SerialEventGameMessagePopupShown(m_PopupInfo);
         else
-			Events.SerialEventGameMessagePopupProcessed.CallImmediate(ButtonPopupTypes.BUTTONPOPUP_DEMOGRAPHICS, 0);
 	        UI.decTurnTimerSemaphore();
         end
+    else
+        VerifyUserDataIntegrity();
     end
 
 end
 ContextPtr:SetShowHideHandler( ShowHideHandler );
 
-function OnPopup( popupInfo )
-	if( popupInfo.Type == UI.RegisterPopupType('QuickHotkeyEdit') ) then
-		m_PopupInfo = popupInfo;
-		print('OnPopup', popupInfo.Data1, popupInfo.Data2)
-        UIManager:QueuePopup( ContextPtr, PopupPriority.InGameUtmost );
-	end
+function OnPopup( actionID )
+    OnHotkeyEditMode( actionID )
+    UIManager:QueuePopup( ContextPtr, PopupPriority.eUtmost );
 end
-Events.SerialEventGameMessagePopup.Add( OnPopup );
+LuaEvents.QuickHotkeyEdit.Add( OnPopup );
 
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function OnBack()
-	print("Dequeuing QuickHotkeyEdit");
 	UIManager:DequeuePopup( ContextPtr );
 end
 
