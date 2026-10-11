@@ -9736,6 +9736,14 @@ int CvCity::getJONSCulturePerTurnTimes100() const
 		iModifier += GC.getPUPPET_CULTURE_MODIFIER();
 	}
 
+#ifdef BUILDING_HARBOR_INTERNATIONAL_CARGO_CULTURE
+		CvPlayerTrade* pPlayerTrade = GET_PLAYER(getOwner()).GetTrade();
+	if (pPlayerTrade)
+	{
+		iCulture += pPlayerTrade->GetTradeValuesAtCityTimes100(this, YIELD_CULTURE);
+	}
+#endif
+
 	iCulture *= iModifier;
 	iCulture /= 100;
 
