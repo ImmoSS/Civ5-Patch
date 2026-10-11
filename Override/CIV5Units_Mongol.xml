@@ -28274,7 +28274,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_KOREA_TURTLESHIP_STRATEGY"> 
 			<Text>
-				The Turtle Ship is a Korean unique unit. This unit replaces the Caravel. The Turtle Ship has a more powerful attack than the Caravel, and is extremely difficult to destroy.  However it may not enter deep ocean hexes outside of the city borders.
+				The Turtle Ship is a Korean unique unit. This unit replaces the Caravel. The Turtle Ship has a more powerful attack than the Caravel, and is extremely difficult to destroy. However it is not that mobile on the deep ocean hexes.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_KOREA_TURTLESHIP_TEXT"> 
@@ -132936,6 +132936,11 @@ The ship has weather'd every rack; the prize we sought is won."
 				Тяжелобронированный морской корабль Нового времени, который чрезвычайно трудно уничтожить. Кобуксон расплачивается за толстую броню и мощные орудия низкой скоростью. Его умеют строить только корейцы. Замещает каравеллу.
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_CIV5_KOREA_TURTLESHIP_STRATEGY"> 
+			<Text>
+				Кобуксон - уникальный корейский корабль, замещающий каравеллу. "Корабль-черепаха" в бою мощнее, чем каравелла, и его чрезвычайно трудно уничтожить. Однако он очень медлителен при перемещении по клеткам открытого океана.
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_CARNIVAL"> 
 			<Text>
 				В течение [ICON_GOLDEN_AGE] золотого века [ICON_PRODUCTION] производство в городе увеличивается на 30%, а приток [ICON_CULTURE] культуры увеличивается на 30%. Во время золотого века великие художники, писатели и музыканты появляются на 25% быстрее.
@@ -136801,6 +136806,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_BUILDING_HARBOR_HELP"> 
 			<Text>
 				Прокладывает [ICON_CONNECTED] торговый путь в [ICON_CAPITAL] столицу по воде (если еще не существует [ICON_CONNECTED] наземный торговый путь). Морские торговые маршруты, исходящие из этого города, могут быть на 50% длиннее и производят дополнительно 1 [ICON_GOLD] и 2 [ICON_CULTURE], если ведут в другую державу.[NEWLINE][NEWLINE]Город должен быть построен на побережье.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_IRONCLAD_STRATEGY"> 
+			<Text>
+				Броненосцы - это первые боевые корабли на паровой тяге. Такие корабли предназначены для ближнего боя. Они гораздо надежнее любого парусного судна, а их дистанционная атака мощнее. При этом броненосцы медленно перемещаются по клеткам открытого океана. Используйте их, в первую очередь, для защиты побережья.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
