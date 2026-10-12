@@ -60,7 +60,7 @@
 #include "CvInfosSerializationHelper.h"
 #include "CvCityManager.h"
 
-#if defined (DEV_RECORDING_STATISTICS) || defined (REPLAY_EVENTS)
+#if defined (DEV_RECORDING_STATISTICS) && defined (REPLAY_EVENTS)
 # include <winsqlite3.h>
 # pragma comment(lib, "winsqlite3.lib")
 #endif
@@ -10354,7 +10354,7 @@ void CvGame::generateReplayKeys()
 	}
 }
 #endif
-#ifdef REPLAY_EVENTS
+#if defined (DEV_RECORDING_STATISTICS) && defined (REPLAY_EVENTS)
 
 //	--------------------------------------------------------------------------------
 void CvGame::exportReplayEvents()
