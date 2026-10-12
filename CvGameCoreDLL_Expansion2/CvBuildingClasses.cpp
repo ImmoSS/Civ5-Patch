@@ -3077,6 +3077,45 @@ void CvCityBuildings::SetNumRealBuildingTimed(BuildingTypes eIndex, int iNewValu
 			pPlayer->GetTreasury()->ChangeBaseBuildingGoldMaintenance(buildingEntry->GetGoldMaintenance() * iChangeNumRealBuilding);
 		}
 
+		// Skipped case where player can have more than 1 grand temple
+#ifdef BUILDING_GRAND_TEMPLE_MAINTENANCE_DISCOUNT
+		BuildingTypes eGrandTemple = (BuildingTypes)GC.getInfoTypeForString("BUILDING_GRAND_TEMPLE");
+		BuildingTypes eTemple1 = (BuildingTypes)GC.getInfoTypeForString("BUILDING_TEMPLE");
+		BuildingTypes eTemple2 = (BuildingTypes)GC.getInfoTypeForString("BUILDING_ASHRAM");
+		BuildingTypes eTemple3 = (BuildingTypes)GC.getInfoTypeForString("BUILDING_STAVE_CHURCH");
+
+		if (eIndex == eGrandTemple && eGrandTemple != NO_BUILDING)
+		{
+			int iLoop;
+			int iTotalTemplesCountInEmpire = 0;
+
+			for (CvCity* pLoopCity = pPlayer->firstCity(&iLoop); pLoopCity != NULL; pLoopCity = pPlayer->nextCity(&iLoop))
+			{
+				if (eTemple1 != NO_BUILDING) iTotalTemplesCountInEmpire += pLoopCity->GetCityBuildings()->GetNumBuilding(eTemple1);
+				if (eTemple2 != NO_BUILDING) iTotalTemplesCountInEmpire += pLoopCity->GetCityBuildings()->GetNumBuilding(eTemple2);
+				if (eTemple3 != NO_BUILDING) iTotalTemplesCountInEmpire += pLoopCity->GetCityBuildings()->GetNumBuilding(eTemple3);
+			}
+
+			if (iTotalTemplesCountInEmpire > 0)
+			{
+				pPlayer->GetTreasury()->ChangeBaseBuildingGoldMaintenance(-1 * iTotalTemplesCountInEmpire * iChangeNumRealBuilding);
+			}
+		}
+		else if (eGrandTemple != NO_BUILDING && (eIndex == eTemple1 || eIndex == eTemple2 || eIndex == eTemple3))
+		{
+			CvBuildingEntry* pkGrandTempleInfo = GC.getBuildingInfo(eGrandTemple);
+			if (pkGrandTempleInfo)
+			{
+				BuildingClassTypes eGrandTempleClass = (BuildingClassTypes)pkGrandTempleInfo->GetBuildingClassType();
+
+				if (pPlayer->getBuildingClassCount(eGrandTempleClass) > 0)
+				{
+					pPlayer->GetTreasury()->ChangeBaseBuildingGoldMaintenance(-1 * iChangeNumRealBuilding);
+				}
+			}
+		}
+#endif
+
 		//Achievement for Temples
 		const char* szBuildingTypeC = buildingEntry->GetType();
 		CvString szBuildingType = szBuildingTypeC;
