@@ -5945,7 +5945,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_GRAND_TEMPLE_HELP"> 
 			<Text>
-				Doubles religious pressure emanating from this City.[NEWLINE][NEWLINE]Must be built in a Holy City. Must have built a Temple in all Cities. The cost goes up the more cities there are in the empire.
+				Doubles religious pressure emanating from this City and reduces [ICON_GOLD] maintenance cost of all Temples in the Empire by 1.[NEWLINE][NEWLINE]Must be built in a Holy City. Must have built a Temple in all Cities. The cost goes up the more cities there are in the empire.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_GRAND_TEMPLE_STRATEGY"> 
@@ -136811,6 +136811,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_UNIT_IRONCLAD_STRATEGY"> 
 			<Text>
 				Броненосцы - это первые боевые корабли на паровой тяге. Такие корабли предназначены для ближнего боя. Они гораздо надежнее любого парусного судна, а их дистанционная атака мощнее. При этом броненосцы медленно перемещаются по клеткам открытого океана. Используйте их, в первую очередь, для защиты побережья.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_GRAND_TEMPLE_HELP"> 
+			<Text>
+				Удваивает религиозное влияние этого города и уменьшает стоимость содержания храмов в державе на 1.[NEWLINE][NEWLINE]Должен быть построен в священном городе. Во всех других городах необходимы храмы. Чем больше городов в империи, тем выше стоимость строительства.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
