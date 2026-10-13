@@ -97796,7 +97796,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_DICTATORSHIP_PROLETARIAT_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Dictatorship of the Proletariat[ENDCOLOR][NEWLINE]+34% Tourism [ICON_TOURISM] while your empire is [ICON_HAPPINESS_1] Happy.
+				[COLOR_POSITIVE_TEXT]Dictatorship of the Proletariat[ENDCOLOR][NEWLINE]+10% [ICON_TOURISM] Tourism in Cities for every 5 excess [ICON_HAPPINESS_1] Happiness in the Empire (max 50%).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_DICTATORSHIP_PROLETARIAT_TEXT"> 
@@ -134603,7 +134603,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_DICTATORSHIP_PROLETARIAT_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Диктатура пролетариата[ENDCOLOR][NEWLINE]+34% к показателям [ICON_TOURISM] туризма, если население государства [ICON_HAPPINESS_1] довольно.
+				[COLOR_POSITIVE_TEXT]Диктатура пролетариата[ENDCOLOR][NEWLINE]+10% к показателям [ICON_TOURISM] туризма в городах за каждые 5 [ICON_HAPPINESS_1] избыточного настроения в империи (максимум 50%).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_SKYSCRAPERS_HELP"> 

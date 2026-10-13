@@ -145327,7 +145327,7 @@
 			<PortraitIndex>11</PortraitIndex> 
 			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas> 
 			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved> 
-			<HappyTourismModifier>34</HappyTourismModifier> 
+			<HappyTourismModifier>0</HappyTourismModifier> 
 		</Row>
 		<Row> 
 			<ID>91</ID> 
