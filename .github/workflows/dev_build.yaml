@@ -1,0 +1,89 @@
+name: Nightly Build DLL
+
+run-name: "Nightly Build DLL: ${{ github.event_name != 'pull_request' && github.event.head_commit.message || github.event.pull_request.title }}"
+
+on: 
+  push:
+    branches: [dev-branch]
+    paths:
+      - CvGameCoreDLL_Expansion2/**
+      - .github/workflows/dev_build.yaml
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build from source
+    strategy:
+      matrix:
+        config: [Mod]
+    env:
+      url_0: https://archive.org/download/vs-2008-express-w-sp-1/VS2008-Express-w-SP1.ISO # Visual Studio 2008 Express Editions
+      url_1: https://archive.org/download/microsoftnet.framework4.0/Microsoft%20Net.Framework%204.0.iso # Net.Framework 4.0
+      url_2: https://archive.org/download/microsoft-windows-sdk-for-windows-7-and-.net-framework-4/GRMSDKX_EN_DVD.iso # Windows SDK 7.1
+      url_3: https://download.microsoft.com/download/7/5/0/75040801-126c-4591-bce4-4cd1fd1499aa/VC-Compiler-KB2519277.exe # Microsoft Visual C++ 2010 Service Pack 1 Compiler Update for the Windows SDK 7.1
+    runs-on: windows-2022
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          ref: dev-branch
+          sparse-checkout: |
+            CvGameCoreDLL_Expansion2/
+          sparse-checkout-cone-mode: false
+
+      - name: Cache VS Installer
+        id: cache-vs-install
+        uses: actions/cache@v4
+        with:
+          path: |
+            redist
+          key: ${{ runner.os }}-vs2008-install
+
+      - name: Download VS Installer
+        if: steps.cache-vs-install.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          choco install 7zip.install
+          Invoke-WebRequest "$($Env:url_0)" -OutFile vs2008.iso
+          Invoke-WebRequest "$($Env:url_1)" -OutFile net4.iso
+          Invoke-WebRequest "$($Env:url_2)" -OutFile sdk7_1.iso
+          7z.exe x -y -o".\redist\vs2008" vs2008.iso
+          7z.exe x -y -o".\redist\net4" net4.iso
+          7z.exe x -y -o".\redist\sdk7_1" sdk7_1.iso
+          Invoke-WebRequest "$($Env:url_3)" -OutFile redist/KB2519277.exe
+
+      - name: Install Visual Studio
+        shell: pwsh
+        run: |
+          Start-Process -FilePath ".\redist\vs2008\VCExpress\setup.exe" -ArgumentList "/q" -Wait
+          Start-Process -FilePath ".\redist\net4\Framwork 4.0\dotNetFx40_Full_x86_x64.exe" -ArgumentList "/q" -Wait
+          Start-Process -FilePath ".\redist\sdk7_1\setup.exe" -ArgumentList "/q" -Wait
+          Start-Process -FilePath ".\redist\KB2519277.exe" -ArgumentList "/q" -Wait
+          Get-Content -Path "$([System.IO.Path]::GetTempPath())VSMsi*.txt" -ErrorAction SilentlyContinue
+          Set-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows" -Name "CurrentInstallFolder" -Value "C:\Program Files\Microsoft SDKs\Windows\v7.1\"
+
+      - name: Build Project
+        shell: pwsh
+        run: |
+          C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe "CvGameCoreDLL_Expansion2\_build_gh_actions.vcxproj" /p:configuration=${{ matrix.config }} /p:platform=Win32
+
+      - name: Generate Artifact Id
+        id: aid
+        run: |
+          echo "::set-output name=artifact_id::Dev_Build_$(date +"%Y%m%d%H%M")"
+
+      - name: Prepare Artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        shell: pwsh
+        run: |
+          mkdir artifact
+          Copy-Item "CvGameCoreDLL_Expansion2\BuildOutput\VS2013_ModWin32\CvGameCore_Expansion2.dll" -Destination artifact
+          Copy-Item "CvGameCoreDLL_Expansion2\BuildOutput\VS2013_ModWin32\CvGameCore_Expansion2.pdb" -Destination artifact
+
+      - name: Upload Artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: dev-build-${{ steps.aid.outputs.artifact_id }}
+          path: artifact
