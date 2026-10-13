@@ -185,6 +185,38 @@ function GetHelpTextForBuilding(iBuildingID, bExcludeName, bExcludeHeader, bNoMa
 		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_FAITH", iFaith));
 	end
 	
+	if (pCity ~= nil) then
+		-- Counting Cities Population for XPerPopYields
+		local iPopulation = pCity:GetPopulation();
+		if (pBuildingInfo ~= nil) then
+			-- Culture Per Population
+			if (pBuildingInfo.CulturePerXPopulationInCity ~= nil and pBuildingInfo.CulturePerXPopulationInCity > 0) then
+				local iXPop = pBuildingInfo.CulturePerXPopulationInCity;
+				local iBonus = math.floor(iPopulation / iXPop);
+				if (iBonus > 0) then
+					table.insert(lines, Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_CULTURE_PER_POP", iBonus));
+				end
+			end
+			-- Happiness Per Population
+			if (pBuildingInfo.HappinessPerXPopulationInCity ~= nil and pBuildingInfo.HappinessPerXPopulationInCity > 0) then
+				local iXPop = pBuildingInfo.HappinessPerXPopulationInCity;
+				local iBonus = math.floor(iPopulation / iXPop);
+				if (iBonus > 0) then
+					table.insert(lines, Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_HAPPINESS_PER_POP", iBonus));
+				end
+			end
+			-- Faith Per Population
+			if (pBuildingInfo.FaithPerXPopulationInCity ~= nil and pBuildingInfo.FaithPerXPopulationInCity > 0) then
+				local iXPop = pBuildingInfo.FaithPerXPopulationInCity;
+				local iBonus = math.floor(iPopulation / iXPop);
+				if (iBonus > 0) then
+					table.insert(lines, Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_FAITH_PER_POP", iBonus));
+				end
+			end
+		end
+	end
+
+
 	-- Defense
 	local iDefense = pBuildingInfo.Defense;
 	if (iDefense ~= nil and iDefense ~= 0) then
