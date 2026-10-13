@@ -41715,6 +41715,11 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 				+{1_Num}% Bonus while the empire is [ICON_HAPPINESS_1] Happy:[NEWLINE]
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_CO_CITY_TOURISM_HAPPY_BONUS_NEW"> 
+			<Text>
+				+{1_Num}% [ICON_TOURISM] Tourism from excess Empire [ICON_HAPPINESS_1] Happiness (Current Happiness: {2_Num})[NEWLINE]
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_CO_CITY_TOURISM_NUM_CAPITALS_CONTROLLED_BONUS"> 
 			<Text>
 				+{1_Num}% Bonus for the number of controlled [ICON_CAPITAL] Capitals:[NEWLINE]
@@ -136816,6 +136821,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_BUILDING_GRAND_TEMPLE_HELP"> 
 			<Text>
 				Удваивает религиозное влияние этого города и уменьшает стоимость содержания храмов в державе на 1.[NEWLINE][NEWLINE]Должен быть построен в священном городе. Во всех других городах необходимы храмы. Чем больше городов в империи, тем выше стоимость строительства.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CO_CITY_TOURISM_HAPPY_BONUS_NEW"> 
+			<Text>
+				+{1_Num}% [ICON_TOURISM] к туризму от избыточного [ICON_HAPPINESS_1] настроения в империи (Текущее настроение: {2_Num})[NEWLINE]
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
