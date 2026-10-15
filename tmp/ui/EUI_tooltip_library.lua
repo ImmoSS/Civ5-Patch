@@ -710,6 +710,25 @@ local function GetHelpTextForBuilding( buildingID, bExcludeName, bExcludeHeader,
 					yieldChange = yieldChange + Game.GetPlayerPerkBuildingClassFlatYieldChange( activePerkTypes[i], buildingClassID, yieldID )
 					yieldModifier = yieldModifier + Game.GetPlayerPerkBuildingClassPercentYieldChange( activePerkTypes[i], buildingClassID, yieldID )
 				end
+
+				if city then
+					local pBuildingInfo = GameInfo.Buildings[buildingID]
+					if pBuildingInfo then
+						local iPopulation = city:GetPopulation()
+						if yield.Type == "YIELD_CULTURE" then
+							if pBuildingInfo.CulturePerXPopulationInCity and pBuildingInfo.CulturePerXPopulationInCity > 0 then
+								local iXPop = pBuildingInfo.CulturePerXPopulationInCity
+								yieldChange = yieldChange + math.floor(iPopulation / iXPop)
+							end
+						end
+						if yield.Type == "YIELD_FAITH" then -- В некоторых модах может называться "YIELD_PEACE"
+							if pBuildingInfo.FaithPerXPopulationInCity and pBuildingInfo.FaithPerXPopulationInCity > 0 then
+								local iXPop = pBuildingInfo.FaithPerXPopulationInCity
+								yieldChange = yieldChange + math.floor(iPopulation / iXPop)
+							end
+						end
+					end
+				end
 			end
 			if city and gk_mode then
 				yieldChange = yieldChange + city:GetReligionBuildingClassYieldChange( buildingClassID, yieldID )
@@ -763,8 +782,19 @@ local function GetHelpTextForBuilding( buildingID, bExcludeName, bExcludeHeader,
 	end
 	if civ5_mode then
 		-- Happiness:
-		if happinessChange ~=0 then
-			tip = S( "%s %+i[ICON_HAPPINESS_1]", tip, happinessChange )
+		local iTotalHappiness = happinessChange
+		local sPopSuffix = ""
+		if city and building.HappinessPerXPopulationInCity and building.HappinessPerXPopulationInCity > 0 then
+			local iXPop = building.HappinessPerXPopulationInCity
+			local iPopulation = city:GetPopulation()
+			local iBonus = math.floor(iPopulation / iXPop)
+			
+			if iBonus > 0 then
+				iTotalHappiness = iTotalHappiness + iBonus
+			end
+		end
+		if iTotalHappiness ~= 0 then
+			tip = S( "%s %+i[ICON_HAPPINESS_1]%s", tip, iTotalHappiness, sPopSuffix )
 		end
 		if bnw_mode and (building.HappinessPerXPolicies or 0)~=0 then
 			tip = S( "%s +1[ICON_HAPPINESS_1]/%i %s", tip, building.HappinessPerXPolicies, PolicyColor( L"TXT_KEY_VP_POLICIES" ) )

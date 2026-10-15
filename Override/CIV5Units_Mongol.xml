@@ -41720,21 +41720,6 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 				+{1_Num}% [ICON_TOURISM] Tourism from excess Empire [ICON_HAPPINESS_1] Happiness (Current Happiness: {2_Num})[NEWLINE]
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_PRODUCTION_BUILDING_CULTURE_PER_POP"> 
-			<Text>
-				Culture: +{1_Num} [ICON_CULTURE]
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_PRODUCTION_BUILDING_HAPPINESS_PER_POP"> 
-			<Text>
-				Happiness: +{1_Num} [ICON_HAPPINESS_1]
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_PRODUCTION_BUILDING_FAITH_PER_POP"> 
-			<Text>
-				Faith: +{1_Num} [ICON_PEACE]
-			</Text>
-		</Replace>
 		<Replace Tag="TXT_KEY_CO_CITY_TOURISM_NUM_CAPITALS_CONTROLLED_BONUS"> 
 			<Text>
 				+{1_Num}% Bonus for the number of controlled [ICON_CAPITAL] Capitals:[NEWLINE]
@@ -136892,21 +136877,6 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_CO_CITY_TOURISM_HAPPY_BONUS_NEW"> 
 			<Text>
 				+{1_Num}% [ICON_TOURISM] к туризму от избыточного [ICON_HAPPINESS_1] настроения в империи (Текущее настроение: {2_Num})[NEWLINE]
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_PRODUCTION_BUILDING_CULTURE_PER_POP"> 
-			<Text>
-				Культура: +{1_Num} [ICON_CULTURE]
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_PRODUCTION_BUILDING_HAPPINESS_PER_POP"> 
-			<Text>
-				Настроение: +{1_Num} [ICON_HAPPINESS_1]
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_PRODUCTION_BUILDING_FAITH_PER_POP"> 
-			<Text>
-				Вера: +{1_Num} [ICON_PEACE]
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
