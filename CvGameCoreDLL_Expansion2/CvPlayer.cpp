@@ -6176,9 +6176,27 @@ void CvPlayer::DoUnitReset()
 			else
 			{
 #ifdef BUILDING_ATTRITION_INSIDE_BORDERS
-				if (pLoopUnit->IsHurt() && !(pLoopUnit->plot()->getOwner() != NO_PLAYER && pLoopUnit->plot()->getOwner() != pLoopUnit->getOwner() && GET_PLAYER(pLoopUnit->plot()->getOwner()).getAttritionInsideBorders() > 0 && pLoopUnit->getDomainType() == DOMAIN_LAND))
+				if (pLoopUnit->IsHurt())
 				{
-					pLoopUnit->doHeal();
+					bool bBlockHealingByWall = false;
+
+					if (pLoopUnit->plot()->getOwner() != NO_PLAYER &&
+						pLoopUnit->plot()->getOwner() != pLoopUnit->getOwner() &&
+						GET_PLAYER(pLoopUnit->plot()->getOwner()).getAttritionInsideBorders() > 0 &&
+						pLoopUnit->getDomainType() == DOMAIN_LAND)
+					{
+						TeamTypes ePlotOwnerTeam = GET_PLAYER(pLoopUnit->plot()->getOwner()).getTeam();
+
+						if (GET_TEAM(pLoopUnit->getTeam()).isAtWar(ePlotOwnerTeam))
+						{
+							bBlockHealingByWall = true;
+						}
+					}
+
+					if (!bBlockHealingByWall)
+					{
+						pLoopUnit->doHeal();
+					}
 				}
 #else
 				if(pLoopUnit->IsHurt())

@@ -5437,7 +5437,12 @@ bool CvUnit::canHeal(const CvPlot* pPlot, bool bTestVisible) const
 #ifdef BUILDING_ATTRITION_INSIDE_BORDERS
 	if (pPlot->getOwner() != NO_PLAYER && pPlot->getOwner() != getOwner() && GET_PLAYER(pPlot->getOwner()).getAttritionInsideBorders() > 0 && getDomainType() == DOMAIN_LAND)
 	{
-		return false;
+		TeamTypes ePlotOwnerTeam = GET_PLAYER(pPlot->getOwner()).getTeam();
+
+		if (GET_TEAM(getTeam()).isAtWar(ePlotOwnerTeam))
+		{
+			return false;
+		}
 	}
 #endif
 
