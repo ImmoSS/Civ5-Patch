@@ -99201,7 +99201,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_A_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Universal Healthcare[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] Local Happiness and +5 [ICON_GOLD] Gold from every National Wonder.
+				[COLOR_POSITIVE_TEXT]Universal Healthcare[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] Local Happiness and +4 [ICON_GOLD] Gold from every National Wonder.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_TEXT"> 
@@ -136790,7 +136790,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_A_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Бесплатная медицина[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] к настроению и +5 [ICON_GOLD] к золоту в городе от каждого национального чуда.
+				[COLOR_POSITIVE_TEXT]Бесплатная медицина[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] к настроению и +4 [ICON_GOLD] к золоту в городе от каждого национального чуда.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_THIRD_ALTERNATIVE_HELP"> 
