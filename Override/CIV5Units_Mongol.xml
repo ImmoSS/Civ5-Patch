@@ -128992,7 +128992,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Replace Tag="TXT_KEY_PROMOTION_PENALTY_AGAINST_NAVAL"> 
 			<Text>
-				Penalty when attacking Naval (50)
+				Penalty when attacking Naval (33)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_BONUS_AGAINST_ARMOR_1">
@@ -136386,7 +136386,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_PENALTY_AGAINST_NAVAL"> 
 			<Text>
-				Штраф в бою при атаке морских подразделений (50)
+				Штраф в бою при атаке морских подразделений (33)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_GATLINGGUN_STRATEGY"> 

@@ -172706,12 +172706,12 @@
 		<Row> 
 			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
 			<UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType> 
-			<Attack>-50</Attack> 
+			<Attack>-33</Attack> 
 		</Row>
 		<Row> 
 			<PromotionType>PROMOTION_PENALTY_AGAINST_NAVAL</PromotionType> 
 			<UnitCombatType>UNITCOMBAT_NAVALRANGED</UnitCombatType> 
-			<Attack>-50</Attack> 
+			<Attack>-33</Attack> 
 		</Row>
 	</UnitPromotions_UnitCombatMods> 
 
