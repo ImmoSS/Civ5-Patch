@@ -122147,7 +122147,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_INDIAN_WARELEPHANT_STRATEGY"> 
 			<Text>
-				The War Elephant is the Indian unique unit, replacing the Chariot Archer, that can move after attacking. It is more powerful (if slower) than the Chariot Archer and can move through any terrain without the Chariot Archer's penalty. A mounted unit, the War Elephant is quite vulnerable to the Spearman.
+				The War Elephant is the Indian unique unit, replacing the Chariot Archer, that can move after attacking. It is more powerful (if slower) than the Chariot Archer and can move through any terrain without the Chariot Archer's penalty, but deals 33% less damage when attacking on a maximum possible range. A mounted unit, the War Elephant is quite vulnerable to the Spearman.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_INDONESIAN_KRIS_SWORDSMAN"> 
@@ -136286,7 +136286,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_INDIAN_WARELEPHANT_STRATEGY"> 
 			<Text>
-				Боевые слоны - уникальные индийские войска, замещающие лучников на колесницах, которые могут двигаться после атаки. Хотя они медленнее последних, зато гораздо сильнее и могут без помех перемещаться по любым типам местности. Поскольку боевые слоны относятся к кавалерийским подразделениям, они уязвимы для копейщиков.
+				Боевые слоны - уникальные индийские войска, замещающие лучников на колесницах, которые могут двигаться после атаки. Хотя они медленнее последних, зато гораздо сильнее и могут без помех перемещаться по любым типам местности, но наносят на 33% меньше урона, если атакуют на максимально возможную дальность. Поскольку боевые слоны относятся к кавалерийским подразделениям, они уязвимы для копейщиков.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_INDONESIAN_KRIS_SWORDSMAN_STRATEGY"> 
