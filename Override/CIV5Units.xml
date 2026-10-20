@@ -50733,7 +50733,7 @@
 			<DiplomaticVoting>false</DiplomaticVoting> 
 			<AffectSpiesNow>false</AffectSpiesNow> 
 			<NullifyInfluenceModifier>false</NullifyInfluenceModifier> 
-			<Cost>75</Cost> 
+			<Cost>65</Cost> 
 			<FaithCost>0</FaithCost> 
 			<LeagueCost>0</LeagueCost> 
 			<UnlockedByBelief>false</UnlockedByBelief> 
