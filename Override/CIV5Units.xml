@@ -53675,7 +53675,7 @@
 			<ID>165</ID> 
 			<Type>BUILDING_SKI_RESORT</Type>
 			<BuildingClass>BUILDINGCLASS_HOTEL</BuildingClass>
-			<Cost>300</Cost>
+			<Cost>250</Cost>
 			<GoldMaintenance>0</GoldMaintenance>
 			<PrereqTech>TECH_REFRIGERATION</PrereqTech>
 			<Help>TXT_KEY_BUILDING_SKI_RESORT_HELP</Help>
