@@ -33306,6 +33306,11 @@
 			<Yield>3</Yield> 
 		</Row>
 		<Row> 
+			<BuildingType>BUILDING_FLOATING_MARKET</BuildingType> 
+			<YieldType>YIELD_FOOD</YieldType> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row> 
 			<BuildingType>BUILDING_GLASSBLOWING_WORKSHOP</BuildingType> 
 			<YieldType>YIELD_PRODUCTION</YieldType> 
 			<Yield>3</Yield> 

@@ -128326,7 +128326,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FLOATING_MARKET_HELP"> 
 			<Text>
-				Provides more base [ICON_GOLD] Gold and additional +2 [ICON_GOLD] Gold if city is on river. +1 [ICON_GOLD] Gold from lake tiles.
+				Provides +1 [ICON_FOOD] Food, more base [ICON_GOLD] Gold and additional +2 [ICON_GOLD] Gold if city is on river. +1 [ICON_GOLD] Gold from lake tiles.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FLOATING_MARKET_STRATEGY"> 
@@ -134875,7 +134875,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FLOATING_MARKET_HELP"> 
 			<Text>
-				Дает больше базового [ICON_GOLD] золота, а также дополнительно +2 [ICON_GOLD] к золоту, если город расположен на реке. +1 [ICON_GOLD] к золоту на клетках озер.
+				Дает +1 [ICON_FOOD] к пище, больше базового [ICON_GOLD] золота, а также дополнительно +2 [ICON_GOLD] к золоту, если город расположен на реке. +1 [ICON_GOLD] к золоту на клетках озер.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FLOATING_MARKET_STRATEGY"> 
