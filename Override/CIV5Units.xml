@@ -190353,6 +190353,7 @@
 			<PortraitIndex>0</PortraitIndex> 
 			<IconAtlas>GENGHIS_UNIT_ATLAS</IconAtlas> 
 			<UnitFlagAtlas>GENGHIS_UNIT_FLAG_ATLAS</UnitFlagAtlas> 
+			<OuterRingsRangeAttackMod>-33</OuterRingsRangeAttackMod> 
 		</Row>
 		<Row> 
 			<ID>91</ID> 

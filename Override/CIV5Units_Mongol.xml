@@ -28604,7 +28604,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_MONGOLIA_KESHIK_INFO"> 
 			<Text>
-				The Keshik is a Mongolian Unique Unit, available in the Medieval Era. This replacement for the standard Knight moves at an increased rate, earns promotions at a double rate, and contributes twice the amount of points towards earning Great Generals.  The Keshik can also attack its enemies from afar, using its powerful ranged attack.
+				The Keshik is a Mongolian Unique Unit, available in the Medieval Era. This replacement for the standard Knight moves at an increased rate, earns promotions at a double rate, and contributes twice the amount of points towards earning Great Generals. The Keshik can also attack its enemies from afar, using its powerful ranged attack, but deals 33% less damage when attacking on a maximum possible range.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_MONGOLIA_KESHIK_STRATEGY"> 
@@ -136831,6 +136831,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_UNIT_ARABIAN_CAMELARCHER_STRATEGY"> 
 			<Text>
 				Лучники на верблюдах - это уникальные арабские войска, замещающие рыцарей. У них мощная дистанционная атака, позволяющая наносить урон врагу на расстоянии двух клеток. Это подразделение может двигаться после боя, но наносит на 33% меньше урона, если атакуют на максимально возможную дальность. В ближнем бою лучники на верблюдах довольно слабы. Как и всякое кавалерийское подразделение, оно уязвимо для атак пикинеров.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIV5_MONGOLIA_KESHIK_INFO"> 
+			<Text>
+				Кешиктены - уникальное монгольское подразделение, доступное в Средневековье. Замещая обычных рыцарей, они двигаются с большей скоростью, в два раза быстрее повышают квалификацию и приносят в два раза больше очков великих полководцев. Кешиктены могут нападать издалека, так как обладают мощной дальнобойной атакой, но наносят на 33% меньше урона, если атакуют на максимально возможную дальность.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
