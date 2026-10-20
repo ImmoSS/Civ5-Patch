@@ -128231,7 +128231,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_PA_STRATEGY"> 
 			<Text>
-				Pa is a unique Polynesian replacement for Walls. It increases a city's Defense Strength by 5 and Hit Points by 50. Unlike Walls Pa can be useful in peacetime.
+				Pa is a unique Polynesian replacement for Walls. It is cheaper and increases a city's Defense Strength by 5 and Hit Points by 50. Unlike Walls Pa can be useful in peacetime.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_PA_TEXT"> 
@@ -134803,7 +134803,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_PA_STRATEGY"> 
 			<Text>
-				Па — уникальная Полинезийская постройка, замещающая стены. Па увеличивает обороноспособность города на 5 очков и ОЗ - на 50. В отличие от стен, па может быть полезен и в мирное время. 
+				Па — уникальная Полинезийская постройка, замещающая стены. Па стоит дешевле и увеличивает обороноспособность города на 5 очков и ОЗ - на 50. В отличие от стен, па может быть полезен и в мирное время. 
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_PA_TEXT"> 

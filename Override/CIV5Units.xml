@@ -54191,7 +54191,7 @@
 			<ID>190</ID>
 			<Type>BUILDING_PA</Type>
 			<BuildingClass>BUILDINGCLASS_WALLS</BuildingClass>
-			<Cost>75</Cost>
+			<Cost>65</Cost>
 			<PrereqTech>TECH_MASONRY</PrereqTech>
 			<Help>TXT_KEY_BUILDING_PA_HELP</Help>
 			<Description>TXT_KEY_BUILDING_PA</Description>
