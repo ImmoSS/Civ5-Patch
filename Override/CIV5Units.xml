@@ -53862,7 +53862,7 @@
 			<ID>174</ID>
 			<Type>BUILDING_PRUSSIAN_STAFF_COLLEGE</Type>
 			<BuildingClass>BUILDINGCLASS_MILITARY_ACADEMY</BuildingClass>
-			<Cost>300</Cost>
+			<Cost>250</Cost>
 			<GoldMaintenance>1</GoldMaintenance>
 			<PrereqTech>TECH_MILITARY_SCIENCE</PrereqTech>
 			<Help>TXT_KEY_BUILDING_PRUSSIAN_STAFF_COLLEGE_HELP</Help>
