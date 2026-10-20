@@ -179222,7 +179222,7 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_MAYAN_ATLATLIST</UnitType> 
-			<PromotionType>PROMOTION_STRONGER_VS_DAMAGED_25</PromotionType> 
+			<PromotionType>PROMOTION_STRONGER_VS_DAMAGED_20</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_BYZANTINE_DROMON</UnitType> 

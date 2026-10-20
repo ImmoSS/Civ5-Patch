@@ -96184,9 +96184,9 @@ The ship has weather'd every rack; the prize we sought is won."
 				Damaged Enemy Bonus (33)
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_STRONGER_VS_DAMAGED_25"> 
+		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_STRONGER_VS_DAMAGED_20"> 
 			<Text>
-				Damaged Enemy Bonus (25)
+				Damaged Enemy Bonus (20)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_WEAK_RANGED"> 
@@ -103763,14 +103763,14 @@ The ship has weather'd every rack; the prize we sought is won."
 				Combat Bonus against Damaged Enemy Units (33).
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_25"> 
+		<Replace Tag="TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_20"> 
 			<Text>
-				Damaged Enemy Bonus (25)
+				Damaged Enemy Bonus (20)
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_25_HELP"> 
+		<Replace Tag="TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_20_HELP"> 
 			<Text>
-				Combat Bonus against Damaged Enemy Units (25).
+				Combat Bonus against Damaged Enemy Units (20).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_SUPPLY"> 
@@ -136643,19 +136643,19 @@ The ship has weather'd every rack; the prize we sought is won."
 				Бонус против поврежд. врага (33)
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_25"> 
+		<Replace Tag="TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_20"> 
 			<Text>
-				Бонус против поврежд. врага (25)
+				Бонус против поврежд. врага (20)
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_25_HELP"> 
+		<Replace Tag="TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_20_HELP"> 
 			<Text>
-				Бонус в бою против поврежденного противника (25).
+				Бонус в бою против поврежденного противника (20).
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_STRONGER_VS_DAMAGED_25"> 
+		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_STRONGER_VS_DAMAGED_20"> 
 			<Text>
-				Бонус против поврежд. врага (25)
+				Бонус против поврежд. врага (20)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_COUP_DISABLED_NO_ALLY_TT"> 

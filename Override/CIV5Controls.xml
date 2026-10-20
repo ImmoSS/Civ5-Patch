@@ -33948,9 +33948,9 @@
 		</Row>
 		<Row> 
 			<ID>242</ID> 
-			<Type>PROMOTION_STRONGER_VS_DAMAGED_25</Type> 
-			<Description>TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_25</Description> 
-			<Help>TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_25_HELP</Help> 
+			<Type>PROMOTION_STRONGER_VS_DAMAGED_20</Type> 
+			<Description>TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_20</Description> 
+			<Help>TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_20_HELP</Help> 
 			<PortraitIndex>59</PortraitIndex> 
 			<IconAtlas>ABILITY_ATLAS</IconAtlas> 
 			<HotKeyPriority>0</HotKeyPriority> 
@@ -33964,7 +33964,7 @@
 			<CtrlDownAlt>false</CtrlDownAlt> 
 			<Sound>AS2D_IF_LEVELUP</Sound> 
 			<CannotBeChosen>false</CannotBeChosen> 
-			<LostWithUpgrade>true</LostWithUpgrade> 
+			<LostWithUpgrade>false</LostWithUpgrade> 
 			<NotWithUpgrade>false</NotWithUpgrade> 
 			<InstaHeal>false</InstaHeal> 
 			<Leader>false</Leader> 
@@ -34042,7 +34042,7 @@
 			<RoughRangedAttackMod>0</RoughRangedAttackMod> 
 			<RoughDefense>0</RoughDefense> 
 			<AttackFortifiedMod>0</AttackFortifiedMod> 
-			<AttackWoundedMod>25</AttackWoundedMod> 
+			<AttackWoundedMod>20</AttackWoundedMod> 
 			<FlankAttackModifier>0</FlankAttackModifier> 
 			<NearbyEnemyCombatMod>0</NearbyEnemyCombatMod> 
 			<NearbyEnemyCombatRange>0</NearbyEnemyCombatRange> 
@@ -34074,7 +34074,7 @@
 			<Sapper>false</Sapper> 
 			<HeavyCharge>false</HeavyCharge> 
 			<PediaType>PEDIA_ATTRIBUTES</PediaType> 
-			<PediaEntry>TXT_KEY_PEDIA_PROMOTION_STRONGER_VS_DAMAGED_25</PediaEntry> 
+			<PediaEntry>TXT_KEY_PEDIA_PROMOTION_STRONGER_VS_DAMAGED_20</PediaEntry> 
 		</Row>
 
 		<Delete Type="PROMOTION_INSTA_HEAL" />
