@@ -54237,7 +54237,7 @@
 			<ID>192</ID>
 			<Type>BUILDING_TORRE_DE_BELEM</Type>
 			<BuildingClass>BUILDINGCLASS_CASTLE</BuildingClass>
-			<Cost>160</Cost>
+			<Cost>150</Cost>
 			<PrereqTech>TECH_CHIVALRY</PrereqTech>
 			<Help>TXT_KEY_BUILDING_TORRE_DE_BELEM_HELP</Help>
 			<Description>TXT_KEY_BUILDING_TORRE_DE_BELEM</Description>
