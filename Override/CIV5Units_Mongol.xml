@@ -128251,7 +128251,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BARBICAN_STRATEGY"> 
 			<Text>
-				Barbakan is a unique Poland replacement for Castle. Barbakan deals a lot of damage to units that end their turn next to a city. The city must possess Walls before Barbakan can be constructed.
+				Barbakan is a unique Poland replacement for Castle. Barbakan is cheaper than Castle and also deals a lot of damage to units that end their turn next to a city. The city must possess Walls before Barbakan can be constructed.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_BARBICAN_TEXT"> 
@@ -134834,7 +134834,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BARBICAN_STRATEGY"> 
 			<Text>
-				Барбакан — это уникальная Польская постройка эпохи Средневековья, заменяющая замок. Барбакан наносит огромный урон вражеским юнитам, завершившим свой ход рядом с городом. Чтобы построить барбакан, в городе должны быть стены. 
+				Барбакан — это уникальная Польская постройка эпохи Средневековья, заменяющая замок. Барбакан немного дешевле замка, а также наносит огромный урон вражеским юнитам, завершившим свой ход рядом с городом. Чтобы построить барбакан, в городе должны быть стены. 
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_BARBICAN_TEXT"> 

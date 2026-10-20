@@ -54213,7 +54213,7 @@
 			<ID>191</ID>
 			<Type>BUILDING_BARBICAN</Type>
 			<BuildingClass>BUILDINGCLASS_CASTLE</BuildingClass>
-			<Cost>160</Cost>
+			<Cost>150</Cost>
 			<PrereqTech>TECH_CHIVALRY</PrereqTech>
 			<Help>TXT_KEY_BUILDING_BARBICAN_HELP</Help>
 			<Description>TXT_KEY_BUILDING_BARBICAN</Description>
