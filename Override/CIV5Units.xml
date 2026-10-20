@@ -188844,7 +188844,7 @@
 			<Civilopedia>TXT_KEY_CIV5_ANTIQUITY_LEGION_TEXT</Civilopedia> 
 			<Strategy>TXT_KEY_UNIT_ROMAN_LEGION_STRATEGY</Strategy> 
 			<Help>TXT_KEY_UNIT_HELP_ROMAN_LEGION</Help> 
-			<Combat>17</Combat> 
+			<Combat>16</Combat> 
 			<RangedCombat>0</RangedCombat> 
 			<Cost>75</Cost> 
 			<FaithCost>75</FaithCost> 
