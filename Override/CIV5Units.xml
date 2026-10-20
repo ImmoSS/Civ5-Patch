@@ -148775,6 +148775,11 @@
 			<Happiness>1</Happiness> 
 		</Row>
 		<Row> 
+			<PolicyType>POLICY_MANDATE_OF_HEAVEN</PolicyType> 
+			<BuildingClassType>BUILDINGCLASS_TEMPLE</BuildingClassType> 
+			<Happiness>1</Happiness> 
+		</Row>
+		<Row> 
 			<PolicyType>POLICY_CAPITALISM</PolicyType> 
 			<BuildingClassType>BUILDINGCLASS_MARKET</BuildingClassType> 
 			<Happiness>1</Happiness> 

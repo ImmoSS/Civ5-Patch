@@ -98266,7 +98266,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MANDATE_OF_HEAVEN_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Mandate of Heaven[ENDCOLOR][NEWLINE]20% discount on all purchases of units and buildings with [ICON_PEACE] Faith.
+				[COLOR_POSITIVE_TEXT]Mandate of Heaven[ENDCOLOR][NEWLINE]20% discount on all purchases of units and buildings with [ICON_PEACE] Faith. Temples provide +1 [ICON_HAPPINESS_1] Happiness.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MARITIME_INFRASTRUCTURE"> 
@@ -133160,7 +133160,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MANDATE_OF_HEAVEN_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Небесный мандат[ENDCOLOR][NEWLINE]Сокращает на 20% затраты на покупку юнитов и построек за счет [ICON_PEACE] веры.
+				[COLOR_POSITIVE_TEXT]Небесный мандат[ENDCOLOR][NEWLINE]Сокращает на 20% затраты на покупку юнитов и построек за счет [ICON_PEACE] веры. Храмы дают +1 [ICON_HAPPINESS_1] к настроению.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_ELITE_FORCES_HELP"> 
