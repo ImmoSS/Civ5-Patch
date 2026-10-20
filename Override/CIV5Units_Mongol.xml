@@ -120611,7 +120611,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_ARABIAN_CAMELARCHER_STRATEGY"> 
 			<Text>
-				The Camel Archer is the Arabian unique unit, replacing the Knight. The Camel Archer is a powerful ranged attack unit, allowing it to do damage to enemies 2 hexes away. It can move after combat. The Camel Archer is less powerful than the Knight in melee combat. As a mounted unit, the Camel Archer is vulnerable to Pikemen attack.
+				The Camel Archer is the Arabian unique unit, replacing the Knight. The Camel Archer is a powerful ranged attack unit, allowing it to do damage to enemies 2 hexes away. It can move after combat but deals 33% less damage when attacking on a maximum possible range. The Camel Archer is less powerful than the Knight in melee combat. As a mounted unit, the Camel Archer is vulnerable to Pikemen attack.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_ARCHAEOLOGIST"> 
@@ -136826,6 +136826,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_CO_CITY_TOURISM_HAPPY_BONUS_NEW"> 
 			<Text>
 				+{1_Num}% [ICON_TOURISM] к туризму от избыточного [ICON_HAPPINESS_1] настроения в империи (Текущее настроение: {2_Num})[NEWLINE]
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_ARABIAN_CAMELARCHER_STRATEGY"> 
+			<Text>
+				Лучники на верблюдах - это уникальные арабские войска, замещающие рыцарей. У них мощная дистанционная атака, позволяющая наносить урон врагу на расстоянии двух клеток. Это подразделение может двигаться после боя, но наносит на 33% меньше урона, если атакуют на максимально возможную дальность. В ближнем бою лучники на верблюдах довольно слабы. Как и всякое кавалерийское подразделение, оно уязвимо для атак пикинеров.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 

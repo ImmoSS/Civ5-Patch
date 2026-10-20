@@ -187666,6 +187666,7 @@
 			<PortraitIndex>28</PortraitIndex> 
 			<IconAtlas>UNIT_ATLAS_1</IconAtlas> 
 			<UnitFlagAtlas>UNIT_FLAG_ATLAS</UnitFlagAtlas> 
+			<OuterRingsRangeAttackMod>-33</OuterRingsRangeAttackMod> 
 		</Row>
 		<Row> 
 			<ID>61</ID> 
