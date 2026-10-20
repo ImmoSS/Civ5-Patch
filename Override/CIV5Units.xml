@@ -189385,7 +189385,7 @@
 			<Civilopedia>TXT_KEY_CIV5_ANTIQUITY_IMMORTAL_TEXT</Civilopedia> 
 			<Strategy>TXT_KEY_UNIT_PERSIAN_IMMORTAL_STRATEGY</Strategy> 
 			<Help>TXT_KEY_UNIT_HELP_IMMORTAL</Help> 
-			<Combat>11</Combat> 
+			<Combat>10</Combat> 
 			<RangedCombat>0</RangedCombat> 
 			<Cost>56</Cost> 
 			<FaithCost>56</FaithCost> 

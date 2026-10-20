@@ -122593,7 +122593,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_PERSIAN_IMMORTAL_STRATEGY"> 
 			<Text>
-				The Immortal is the Persian unique unit, replacing the Spearman. It heals twice as quickly and can do it every turn. It is quite deadly against mounted units.
+				The Immortal is the Persian unique unit, replacing the Spearman. It is weaker but heals twice as quickly and can do it every turn. It is quite deadly against mounted units.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_PIKEMAN"> 
@@ -136351,7 +136351,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_PERSIAN_IMMORTAL_STRATEGY"> 
 			<Text>
-				Бессмертные - уникальные персидские войска, замещающие копейщиков. Они исцеляются быстрее и делают это каждый ход. Особенно эффективны они против конницы.
+				Бессмертные - уникальные персидские войска, замещающие копейщиков. Они слабее, но исцеляются быстрее и делают это каждый ход. Особенно эффективны они против конницы.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_POLYNESIAN_MAORI_WARRIOR_HELP"> 
