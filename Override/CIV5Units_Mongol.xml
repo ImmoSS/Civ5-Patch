@@ -128081,7 +128081,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_SENNACHERIB_GARDEN_STRATEGY"> 
 			<Text>
-				Sennacherib Garden is a unique Assyrian replacement for Garden. It provides +1 [ICON_FOOD] Food and +1 [ICON_CULTURE] Culture.[NEWLINE][NEWLINE]Unlike the Garden Sennacherib Garden does not have to be built next to a River or Lake.
+				Sennacherib Garden is a unique Assyrian replacement for Garden. It is more expencive but provides +1 [ICON_FOOD] Food and +1 [ICON_CULTURE] Culture.[NEWLINE][NEWLINE]Unlike the Garden Sennacherib Garden does not have to be built next to a River or Lake.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_SENNACHERIB_GARDEN_TEXT"> 
@@ -134711,7 +134711,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_SENNACHERIB_GARDEN_STRATEGY"> 
 			<Text>
-				Сад Сеннахериба — уникальная Ассирийская постройка, заменяющая сад. Он увеличивает прирост [ICON_FOOD] пищи и [ICON_CULTURE] культуры в городе на 1. Также не требует наличия реки или озера для постройки.
+				Сад Сеннахериба — уникальная Ассирийская постройка, заменяющая сад. Он стоит дороже, но увеличивает прирост [ICON_FOOD] пищи и [ICON_CULTURE] культуры в городе на 1. Также не требует наличия реки или озера для постройки.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_SENNACHERIB_GARDEN_TEXT"> 

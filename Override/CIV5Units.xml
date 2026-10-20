@@ -53759,7 +53759,7 @@
 			<ID>169</ID> 
 			<Type>BUILDING_SENNACHERIB_GARDEN</Type>
 			<BuildingClass>BUILDINGCLASS_GARDEN</BuildingClass>
-			<Cost>120</Cost>
+			<Cost>140</Cost>
 			<GoldMaintenance>1</GoldMaintenance>
 			<PrereqTech>TECH_THEOLOGY</PrereqTech>
 			<Description>TXT_KEY_BUILDING_SENNACHERIB_GARDEN</Description>
