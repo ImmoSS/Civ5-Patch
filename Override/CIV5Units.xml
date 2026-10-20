@@ -47995,7 +47995,7 @@
 			<FreeStartEra>ERA_MEDIEVAL</FreeStartEra> 
 			<MaxStartEra>ERA_RENAISSANCE</MaxStartEra> 
 			<TechEnhancedTourism>0</TechEnhancedTourism> 
-			<PrereqTech>TECH_CAVE_ART</PrereqTech> 
+			<PrereqTech>TECH_POTTERY</PrereqTech> 
 			<SpecialistCount>0</SpecialistCount> 
 			<GreatWorkCount>0</GreatWorkCount> 
 			<SpecialistExtraCulture>0</SpecialistExtraCulture> 
@@ -100749,48 +100749,6 @@
 			<Filename>TechnologyAtlasTwo360.dds</Filename> 
 			<IconsPerRow>8</IconsPerRow> 
 			<IconsPerColumn>8</IconsPerColumn> 
-		</Row>
-		<Row> 
-			<Atlas>TECH_ATLAS_NEW</Atlas> 
-			<IconSize>256</IconSize> 
-			<Filename>TechnologyAtlasNew.dds</Filename> 
-			<IconsPerRow>8</IconsPerRow> 
-			<IconsPerColumn>1</IconsPerColumn> 
-		</Row>
-		<Row> 
-			<Atlas>TECH_ATLAS_NEW</Atlas> 
-			<IconSize>214</IconSize> 
-			<Filename>TechnologyAtlasNew1712.dds</Filename> 
-			<IconsPerRow>8</IconsPerRow> 
-			<IconsPerColumn>1</IconsPerColumn> 
-		</Row>
-		<Row> 
-			<Atlas>TECH_ATLAS_NEW</Atlas> 
-			<IconSize>128</IconSize> 
-			<Filename>TechnologyAtlasNew1024.dds</Filename> 
-			<IconsPerRow>8</IconsPerRow> 
-			<IconsPerColumn>1</IconsPerColumn> 
-		</Row>
-		<Row> 
-			<Atlas>TECH_ATLAS_NEW</Atlas> 
-			<IconSize>80</IconSize> 
-			<Filename>TechnologyAtlasNew640.dds</Filename> 
-			<IconsPerRow>8</IconsPerRow> 
-			<IconsPerColumn>1</IconsPerColumn> 
-		</Row>
-		<Row> 
-			<Atlas>TECH_ATLAS_NEW</Atlas> 
-			<IconSize>64</IconSize> 
-			<Filename>TechnologyAtlasNew512.dds</Filename> 
-			<IconsPerRow>8</IconsPerRow> 
-			<IconsPerColumn>1</IconsPerColumn> 
-		</Row>
-		<Row> 
-			<Atlas>TECH_ATLAS_NEW</Atlas> 
-			<IconSize>45</IconSize> 
-			<Filename>TechnologyAtlasNew360.dds</Filename> 
-			<IconsPerRow>8</IconsPerRow> 
-			<IconsPerColumn>1</IconsPerColumn> 
 		</Row>
 		<Row> 
 			<Atlas>UNIT_ATLAS_1</Atlas> 
@@ -162108,58 +162066,6 @@
 			<AudioIntro>AS2D_TECH_FUTURE_TECH</AudioIntro> 
 			<AudioIntroHeader>AS2D_HEADING_TECH_FUTURE_TECH</AudioIntroHeader> 
 		</Row>
-		<Row> 
-			<ID>81</ID> 
-			<Type>TECH_CAVE_ART</Type> 
-			<Description>TXT_KEY_TECH_CAVE_ART_TITLE</Description> 
-			<Civilopedia>TXT_KEY_TECH_CAVE_ART_DESC</Civilopedia> 
-			<Help>TXT_KEY_TECH_CAVE_ART_HELP</Help> 
-			<AIWeight>0</AIWeight> 
-			<AITradeModifier>0</AITradeModifier> 
-			<Cost>35</Cost> 
-			<AdvancedStartCost>-1</AdvancedStartCost> 
-			<Era>ERA_ANCIENT</Era> 
-			<FeatureProductionModifier>0</FeatureProductionModifier> 
-			<UnitFortificationModifier>0</UnitFortificationModifier> 
-			<UnitBaseHealModifier>0</UnitBaseHealModifier> 
-			<WorkerSpeedModifier>0</WorkerSpeedModifier> 
-			<FirstFreeTechs>0</FirstFreeTechs> 
-			<EmbarkedMoveChange>0</EmbarkedMoveChange> 
-			<InternationalTradeRoutesChange>0</InternationalTradeRoutesChange> 
-			<InfluenceSpreadModifier>0</InfluenceSpreadModifier> 
-			<ExtraVotesPerDiplomat>0</ExtraVotesPerDiplomat> 
-			<EndsGame>false</EndsGame> 
-			<AllowsEmbarking>false</AllowsEmbarking> 
-			<AllowsDefensiveEmbarking>false</AllowsDefensiveEmbarking> 
-			<EmbarkedAllWaterPassage>false</EmbarkedAllWaterPassage> 
-			<AllowsBarbarianBoats>false</AllowsBarbarianBoats> 
-			<Repeat>false</Repeat> 
-			<Trade>true</Trade> 
-			<Disable>false</Disable> 
-			<GoodyTech>true</GoodyTech> 
-			<ExtraWaterSeeFrom>false</ExtraWaterSeeFrom> 
-			<MapCentering>false</MapCentering> 
-			<MapVisible>false</MapVisible> 
-			<MapTrading>false</MapTrading> 
-			<TechTrading>false</TechTrading> 
-			<GoldTrading>false</GoldTrading> 
-			<AllowEmbassyTradingAllowed>false</AllowEmbassyTradingAllowed> 
-			<OpenBordersTradingAllowed>false</OpenBordersTradingAllowed> 
-			<DefensivePactTradingAllowed>false</DefensivePactTradingAllowed> 
-			<ResearchAgreementTradingAllowed>false</ResearchAgreementTradingAllowed> 
-			<TradeAgreementTradingAllowed>false</TradeAgreementTradingAllowed> 
-			<PermanentAllianceTradingAllowed>false</PermanentAllianceTradingAllowed> 
-			<BridgeBuilding>false</BridgeBuilding> 
-			<WaterWork>false</WaterWork> 
-			<TriggersArchaeologicalSites>false</TriggersArchaeologicalSites> 
-			<AllowsWorldCongress>false</AllowsWorldCongress> 
-			<GridX>1</GridX> 
-			<GridY>2</GridY> 
-			<Quote>TXT_KEY_TECH_CAVE_ART_QUOTE</Quote> 
-			<PortraitIndex>0</PortraitIndex> 
-			<ScenarioTechButton>-1</ScenarioTechButton> 
-			<IconAtlas>TECH_ATLAS_NEW</IconAtlas>  
-		</Row>
 	</Technologies> 
 
 	<Table name="Technology_DomainExtraMoves">
@@ -163407,10 +163313,6 @@
 			<PrereqTech>TECH_AGRICULTURE</PrereqTech> 
 		</Row>
 		<Row> 
-			<TechType>TECH_CAVE_ART</TechType> 
-			<PrereqTech>TECH_AGRICULTURE</PrereqTech> 
-		</Row>
-		<Row> 
 			<TechType>TECH_ANIMAL_HUSBANDRY</TechType> 
 			<PrereqTech>TECH_AGRICULTURE</PrereqTech> 
 		</Row>
@@ -163432,7 +163334,7 @@
 		</Row>
 		<Row> 
 			<TechType>TECH_WRITING</TechType> 
-			<PrereqTech>TECH_CAVE_ART</PrereqTech> 
+			<PrereqTech>TECH_POTTERY</PrereqTech> 
 		</Row>
 		<Row> 
 			<TechType>TECH_TRAPPING</TechType> 

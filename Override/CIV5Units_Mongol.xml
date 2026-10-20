@@ -129035,26 +129035,6 @@ The ship has weather'd every rack; the prize we sought is won."
 				Pro tip: You can change the Hotkeys for Actions and unit Promotions by pressing Ctrl + Right-Click on any action button (In-Game!)
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_TECH_CAVE_ART_TITLE"> 
-			<Text>
-				Cave art
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_TECH_CAVE_ART_DESC"> 
-			<Text>
-				Cave art is a form of primitive art consisting of images created in caves by Paleolithic humans using ochre and other pigments. It should not be confused with ancient rock images created by incising or carving without the use of pigments known as petroglyphs. A distinction is typically made between single-color (monochrome) and multi-color (polychrome) images. As the art form evolved, by the 12th millennium BC, cave art began to incorporate volume, perspective, color, and figure proportions, as well as a sense of movement. Later, cave art became more stylized.[NEWLINE][NEWLINE]Pigments of various origins were used to create the drawings: mineral (hematite, clay, manganese oxide), animal, and plant-based (charcoal). When necessary, the pigments were mixed with binding agents such as tree resin or animal fat and applied directly to the surface with fingers; tools were also used, including hollow tubes for blowing pigment onto the surface, as well as reeds and primitive brushes. Sometimes, to achieve sharper outlines, the contours of the figures were scraped or carved into the cave walls. Since sunlight barely penetrates the caves where most of these paintings are found, torches and primitive lamps were used for illumination during the creative process.
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_TECH_CAVE_ART_HELP"> 
-			<Text>
-				Allows you to build the [COLOR_POSITIVE_TEXT]Shrine[ENDCOLOR], the first [ICON_PEACE] Faith producing building in the game. Also notifications will be provided when new Barbarian Encampments spawn in revealed territory.
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_TECH_CAVE_ART_QUOTE"> 
-			<Text>
-				[NEWLINE][TAB][TAB]"Since the Lascaux cave, we have created nothing new".[NEWLINE][TAB][TAB] - Pablo Picasso[NEWLINE][TAB]
-			</Text>
-		</Replace>
 		<Replace Tag="TXT_KEY_PATCH_VERSION"> 
 			<Text>
 				v12.2a
@@ -136841,37 +136821,6 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_BUILDING_GRAND_TEMPLE_HELP"> 
 			<Text>
 				Удваивает религиозное влияние этого города и уменьшает стоимость содержания храмов в державе на 1.[NEWLINE][NEWLINE]Должен быть построен в священном городе. Во всех других городах необходимы храмы. Чем больше городов в империи, тем выше стоимость строительства.
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_TECH_CAVE_ART_TITLE"> 
-			<Text>
-				Наскальная живопись|Наскальной живописи|Наскальной живописи|Наскальную живопись|Наскальной живописью|Наскальной живописи
-			</Text>
-			<Gender>
-				neuter
-			</Gender>
-			<Plurality>
-				1
-			</Plurality>
-		</Replace>
-		<Replace Tag="TXT_KEY_TECH_CAVE_ART_DESC"> 
-			<Text>
-				Пещерная (наскальная) живопись — один из видов первобытного искусства: изображения в пещерах, выполненные людьми эпохи палеолита с применением охры и иных пигментов. Не путать с древними наскальными изображениями, созданными резцом, без применения пигментов — петроглифами. Принято различать одноцветные, или монохромные, и многоцветные, или полихромные, изображения. Развиваясь со временем, к XII тысячелетию до н. э. пещерная живопись стала выполняться с учётом объёма, перспективы, цвета и пропорции фигур, учитывала движение. Позднее пещерная живопись стала более стилизованной.[NEWLINE][NEWLINE]Для создания рисунков использовались красители различного происхождения: минерального (гематит, глина, окись марганца), животного, растительного (древесный уголь). Красители при необходимости смешивались с вяжущими веществами, такими как древесная смола или животный жир, и наносились на поверхность непосредственно пальцами; применялись и инструменты, такие как полые трубки, через которые наносились красители, а также тростины и примитивные кисти. Иногда для достижения большей чёткости контуров применялось выскабливание или вырезание на стенах контуров фигур. Поскольку в пещеры, где находится большинство наскальных рисунков, практически не проникает солнечный свет, при создании рисунков для освещения использовались факелы и примитивные лампы.
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_TECH_CAVE_ART_HELP"> 
-			<Text>
-				Изучение наскальной живописи позволяет узнавать о местонахождении варварских лагерей поблизости, а также дает возможность строить [COLOR_POSITIVE_TEXT]святилище[ENDCOLOR], первое здание в игре, дающее очки [ICON_PEACE] веры.
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_TECH_CAVE_ART_QUOTE"> 
-			<Text>
-				[NEWLINE][TAB][TAB]"После пещеры Ласко мы не создали ничего нового".[NEWLINE][TAB][TAB] - Пабло Пикассо[NEWLINE][TAB]
-			</Text>
-		</Replace>
-		<Replace Tag="TXT_KEY_TECH_POTTERY_HELP"> 
-			<Text>
-				Позволяет строить [COLOR_POSITIVE_TEXT]амбары[ENDCOLOR] и [COLOR_POSITIVE_TEXT]овины[ENDCOLOR] в городах, что повышает производство [ICON_FOOD] пищи и ускоряет рост городов.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CO_CITY_TOURISM_HAPPY_BONUS_NEW"> 
