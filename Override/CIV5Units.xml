@@ -53927,7 +53927,7 @@
 			<BuildingClass>BUILDINGCLASS_TEMPLE</BuildingClass>
 			<MaxStartEra>ERA_RENAISSANCE</MaxStartEra>
 			<Cost>100</Cost>
-			<GoldMaintenance>2</GoldMaintenance>
+			<GoldMaintenance>1</GoldMaintenance>
 			<PrereqTech>TECH_PHILOSOPHY</PrereqTech>
 			<Description>TXT_KEY_BUILDING_STAVE_CHURCH_DESC</Description>
 			<Help>TXT_KEY_BUILDING_STAVE_CHURCH_HELP</Help>
