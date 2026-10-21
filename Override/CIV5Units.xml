@@ -82329,7 +82329,7 @@
 		</Row>
 		<Row> 
 			<Name>EXOTIC_GOODS_GOLD_MAX</Name> 
-			<Value>400</Value> 
+			<Value>300</Value> 
 		</Row>
 		<Row> 
 			<Name>EXOTIC_GOODS_XP_MIN</Name> 
@@ -194563,7 +194563,7 @@
 			<Civilopedia>TXT_KEY_CIV5_PORTUGUESE_NAU_TEXT</Civilopedia> 
 			<Strategy>TXT_KEY_UNIT_PORTUGUESE_NAU_STRATEGY</Strategy> 
 			<Help>TXT_KEY_UNIT_HELP_PORTUGUESE_NAU</Help> 
-			<Combat>20</Combat> 
+			<Combat>23</Combat> 
 			<RangedCombat>0</RangedCombat> 
 			<Cost>120</Cost> 
 			<FaithCost>0</FaithCost> 
