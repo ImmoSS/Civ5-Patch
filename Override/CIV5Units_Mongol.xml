@@ -119169,7 +119169,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_CONVERTS_LAND_BARBARIANS"> 
 			<Text>
-				Upon defeating a Barbarian unit inside an encampment, you earn 60 [ICON_GOLD] Gold and they join your side. Pay 25% less for land unit maintenance.
+				Empire will get notifications when new Barbarian Encampments spawn in revealed territory. Upon defeating a Barbarian unit inside an encampment, you earn 60 [ICON_GOLD] Gold and they join your side. Pay 25% less for land unit maintenance.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_CONVERTS_LAND_BARBARIANS_SHORT"> 
@@ -129970,7 +129970,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_CONVERTS_LAND_BARBARIANS">
 			<Text>
-				При уничтожении лагеря варваров вы получаете 60 [ICON_GOLD] золота и побежденный отряд. Содержание сухопутных юнитов стоит на 25% дешевле.
+				Получает извещение всякий раз, когда варвары ставят новый лагерь на открытой территории. При уничтожении лагеря варваров вы получаете 60 [ICON_GOLD] золота и побежденный отряд. Содержание сухопутных юнитов стоит на 25% дешевле.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_ENHANCED_GOLDEN_AGES"> 
