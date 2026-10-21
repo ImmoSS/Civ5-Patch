@@ -5813,13 +5813,17 @@ void CvUnit::DoAttrition()
 	}
 #endif
 
-	// slewis - helicopters take attrition when ending their turn over mountains.
-	if(getDomainType() == DOMAIN_LAND && pPlot->isMountain() && !canMoveAllTerrain())
+#ifdef UNIT_HELICOPTER_NO_MOUNTAIN_ATTRITION
+	UnitTypes eHelicopter = (UnitTypes)GC.getInfoTypeForString("UNIT_HELICOPTER_GUNSHIP");
+	if (getDomainType() == DOMAIN_LAND && pPlot->isMountain() && !canMoveAllTerrain() && (eHelicopter == NO_UNIT || getUnitType() != eHelicopter))
+#else
+	if (getDomainType() == DOMAIN_LAND && pPlot->isMountain() && !canMoveAllTerrain())
+#endif
 	{
-		strAppendText =  GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DAMAGED_ATTRITION");
-		#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
+		strAppendText = GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DAMAGED_ATTRITION");
+#ifdef EG_REPLAYDATASET_UNITSHPATTRITION
 		GET_PLAYER(getOwner()).ChangeUnitsHPAttrition(min(GetMaxHitPoints() - getDamage(), 50));
-		#endif
+#endif
 		changeDamage(50, NO_PLAYER, 0.0, &strAppendText);
 	}
 

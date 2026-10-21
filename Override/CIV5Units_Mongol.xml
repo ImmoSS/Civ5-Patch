@@ -121387,7 +121387,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELICOPTER_GUNSHIP_STRATEGY"> 
 			<Text>
-				The Helicopter Gunship is a deadly air unit that in most respects acts like any ground unit, except that it cannot capture cities. Its movement of 6 makes it extremely quick, and it can move over all terrain types including mountains as if they were clear, but it must embark to cross water. Gunships receive a hefty combat bonus when fighting tanks.
+				The Helicopter Gunship is a deadly air unit that in most respects acts like any ground unit, except that it cannot capture cities. Its movement of 6 makes it extremely quick, and it can move over all terrain types including mountains and water as if they were clear. Gunships receive a hefty combat bonus when fighting tanks.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_ANTI_AIRCRAFT_GUN"> 
@@ -121662,7 +121662,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_HELICOPTER_GUNSHIP"> 
 			<Text>
-				Unit specialized in fighting Modern Armor and Tanks. It is capable of hovering over mountains, but takes damage if ending its turn on one.
+				Unit specialized in fighting Modern Armor and Tanks. It is capable of hovering over mountains.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_HOPLITE"> 
@@ -136846,6 +136846,16 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_TRAIT_WONDER_BUILDER_SHORT"> 
 			<Text>
 				Строители памятников, Власть фараона
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELICOPTER_GUNSHIP_STRATEGY"> 
+			<Text>
+				Штурмовой вертолет - это смертоносная воздушная машина, которая в большинстве случаев ведет себя как обычные сухопутные войска, но не может захватывать города. Вертолеты очень быстрые: у них шесть очков передвижения, и они могут перемещаться по всем типам ландшафта, включая горы, моря и ледники (если те не заняты противником). Вертолеты получают серьезный бонус при сражении с танками.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_HELICOPTER_GUNSHIP"> 
+			<Text>
+				Создан специально для борьбы с танками любого вида. Может преодолевать горы.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 

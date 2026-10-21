@@ -377,6 +377,8 @@
 #define PROMOTION_FRIENDLY_LANDS_DEFENSE_MOD
 // adds missing notifications when a unit dies from attrition (Multiplayer only)
 #define DEATH_ON_ATTRITION_NOTIFICATIONS
+///
+#define UNIT_HELICOPTER_NO_MOUNTAIN_ATTRITION
 /*UNITS CHANGES END*/
 
 
