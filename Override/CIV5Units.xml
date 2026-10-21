@@ -137371,7 +137371,7 @@
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
 			<GridX>5</GridX> 
-			<GridY>2</GridY> 
+			<GridY>1</GridY> 
 			<Level>0</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
 			<CulturePerCity>0</CulturePerCity> 
@@ -137522,7 +137522,7 @@
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
 			<GridX>1</GridX> 
-			<GridY>2</GridY> 
+			<GridY>1</GridY> 
 			<Level>0</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
 			<CulturePerCity>0</CulturePerCity> 
@@ -137673,7 +137673,7 @@
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
 			<GridX>2</GridX> 
-			<GridY>3</GridY> 
+			<GridY>2</GridY> 
 			<Level>0</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
 			<CulturePerCity>0</CulturePerCity> 
@@ -137824,7 +137824,7 @@
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
 			<GridX>4</GridX> 
-			<GridY>3</GridY> 
+			<GridY>2</GridY> 
 			<Level>0</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
 			<CulturePerCity>0</CulturePerCity> 
