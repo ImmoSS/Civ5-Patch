@@ -119774,12 +119774,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_WONDER_BUILDER"> 
 			<Text>
-				+20% [ICON_PRODUCTION] Production towards Wonder construction.
+				+20% [ICON_PRODUCTION] Production towards Wonder construction. +1 [ICON_PEACE] Faith for every 3rd [ICON_CITIZEN] Citizen in the [ICON_CAPITAL] Capital.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_WONDER_BUILDER_SHORT"> 
 			<Text>
-				Monument Builders
+				Monument Builders, Pharaonic Rule
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRO_COL_DOMAIN"> 
@@ -136836,6 +136836,16 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_CIV5_MONGOLIA_KESHIK_INFO"> 
 			<Text>
 				Кешиктены - уникальное монгольское подразделение, доступное в Средневековье. Замещая обычных рыцарей, они двигаются с большей скоростью, в два раза быстрее повышают квалификацию и приносят в два раза больше очков великих полководцев. Кешиктены могут нападать издалека, так как обладают мощной дальнобойной атакой, но наносят на 33% меньше урона, если атакуют на максимально возможную дальность.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_WONDER_BUILDER"> 
+			<Text>
+				При строительстве чудес света [ICON_PRODUCTION] производство увеличивается на 20%. Получает +1 к [ICON_PEACE] вере за каждого третьего [ICON_CITIZEN] жителя в [ICON_CAPITAL] столице.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_WONDER_BUILDER_SHORT"> 
+			<Text>
+				Строители памятников, Власть фараона
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 

@@ -9514,7 +9514,7 @@ int CvCity::GetFaithPerTurn() const
 int CvCity::GetFaithPerTurnFromBuildings() const
 {
 	VALIDATE_OBJECT
-
+	int iTotalFaith = m_iFaithPerTurnFromBuildings;
 	// FaithPerPopulationInCity
 	int iFaithPerPop = 0;
 	for (int iBuildingLoop = 0; iBuildingLoop < GC.getNumBuildingInfos(); iBuildingLoop++)
@@ -9531,12 +9531,26 @@ int CvCity::GetFaithPerTurnFromBuildings() const
 				if (iXPopulation > 0)
 				{
 					iFaithPerPop += getPopulation() / iXPopulation;
+					iTotalFaith += iFaithPerPop;
 				}
 			}
 		}
 	}
-
-	return m_iFaithPerTurnFromBuildings + iFaithPerPop;
+#ifdef TRAIT_WONDER_BUILDERS_FAITH_PER_POP
+	int iCustomPalaceFaith = 0;
+		BuildingTypes ePalace = (BuildingTypes)GC.getInfoTypeForString("BUILDING_PALACE");
+	if (ePalace != NO_BUILDING && GetCityBuildings()->GetNumBuilding(ePalace) > 0)
+	{
+		CvPlayer& kPlayer = GET_PLAYER(getOwner());
+		CivilizationTypes eTargetCiv = (CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_EGYPT");
+		if (eTargetCiv != NO_CIVILIZATION && kPlayer.getCivilizationType() == eTargetCiv)
+		{
+			iCustomPalaceFaith += getPopulation() / 3;
+		}
+	}
+	iTotalFaith += iCustomPalaceFaith;
+#endif
+	return iTotalFaith;
 }
 
 //	--------------------------------------------------------------------------------

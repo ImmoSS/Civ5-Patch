@@ -204,6 +204,15 @@ function GetHelpTextForBuilding(iBuildingID, bExcludeName, bExcludeHeader, bNoMa
 				iFaith = iFaith + iBonus;
 			end
 		end
+		-- Egypt Faith bonus in Capital
+		if (pBuildingInfo.Type == "BUILDING_PALACE") then
+			local pPlayer = Players[pCity:GetOwner()]
+			if (pPlayer and pPlayer:GetCivilizationType() == GameInfoTypes["CIVILIZATION_EGYPT"]) then
+				local iCustomBonus = math.floor(iPopulation / 3);
+				iFaith = iFaith + iCustomBonus;
+			end
+		end
+		--
 	end
 	if (iFaith ~= nil and iFaith ~= 0) then
 		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_FAITH", iFaith));

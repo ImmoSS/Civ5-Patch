@@ -721,12 +721,20 @@ local function GetHelpTextForBuilding( buildingID, bExcludeName, bExcludeHeader,
 								yieldChange = yieldChange + math.floor(iPopulation / iXPop)
 							end
 						end
-						if yield.Type == "YIELD_FAITH" then -- В некоторых модах может называться "YIELD_PEACE"
+						if yield.Type == "YIELD_FAITH" then
 							if pBuildingInfo.FaithPerXPopulationInCity and pBuildingInfo.FaithPerXPopulationInCity > 0 then
 								local iXPop = pBuildingInfo.FaithPerXPopulationInCity
 								yieldChange = yieldChange + math.floor(iPopulation / iXPop)
 							end
 						end
+						-- Egypt Faith bonus in Capital
+						if yield.Type == "YIELD_FAITH" and pBuildingInfo.Type == "BUILDING_PALACE" then
+							local pPlayer = Players[city:GetOwner()]
+							if pPlayer and pPlayer:GetCivilizationType() == GameInfoTypes["CIVILIZATION_EGYPT"] then
+							yieldChange = yieldChange + math.floor(iPopulation / 3)
+							end
+						end
+						--
 					end
 				end
 			end
