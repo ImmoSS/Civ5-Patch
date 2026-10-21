@@ -1692,17 +1692,6 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit)
 					--strString.append(GetLocalizedText("TXT_KEY_COMBAT_PLOT_MOD_VS_TYPE", iModifier, kDomainInfo.GetDescription()));
 				end
 			
-				-- HealthyMod
-				if (pMyUnit:GetDamage() == 0) then
-					iModifier = pTheirUnit:HealthyModifier();
-
-					if (iModifier ~= 0) then
-						controlTable = g_MyCombatDataIM:GetInstance();
-						controlTable.Text:LocalizeAndSetText( "TXT_KEY_EUPANEL_BONUS_VS_HEALTHY_UNITS" );
-						controlTable.Value:SetText( GetFormattedText(strText, iModifier, false, true) );
-					end
-				end
-		
 				-- Range Defense Modifier
 				if (bRanged) then
 					iModifier = pTheirUnit:RangedDefenseModifier();
