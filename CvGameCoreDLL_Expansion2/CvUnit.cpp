@@ -12015,6 +12015,12 @@ int CvUnit::GetMaxAttackStrength(const CvPlot* pFromPlot, const CvPlot* pToPlot,
 				iTempModifier = GC.getBARBARIAN_CITY_ATTACK_MODIFIER();
 				iModifier += iTempModifier;
 			}
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
+			if (getDamage() >= 50)
+			{
+				iModifier += getUnitInfo().GetLowHealthCombatModifier();
+			}
+#endif
 		}
 		// Some bonuses only apply when NOT attacking a city
 		else
@@ -12135,6 +12141,10 @@ int CvUnit::GetMaxAttackStrength(const CvPlot* pFromPlot, const CvPlot* pToPlot,
 		if (pDefender->getDamage() == 0)
 			iModifier += getUnitInfo().GetHealthyMod();
 #endif
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
+		if (getDamage() >= 50)
+			iModifier += getUnitInfo().GetLowHealthCombatModifier();
+#endif
 	}
 
 	// Unit can't drop below 10% strength
@@ -12194,9 +12204,9 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 		iModifier += iTempModifier;
 	}
 
-#ifdef UNIT_LOW_HEALTH_DEFENSE_MOD
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 	if (getDamage() >= 50)
-		iModifier += getUnitInfo().GetLowHealthDefenseModifier();
+		iModifier += getUnitInfo().GetLowHealthCombatModifier();
 #endif
 
 	////////////////////////
@@ -12760,9 +12770,9 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 				iModifier += getUnitInfo().GetNoAdjacentMod();
 #endif
 
-#ifdef UNIT_LOW_HEALTH_DEFENSE_MOD
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 			if (getDamage() >= 50)
-				iModifier += getUnitInfo().GetLowHealthDefenseModifier();
+				iModifier += getUnitInfo().GetLowHealthCombatModifier();
 #endif
 
 			// Trait (player level) bonus against higher tech units
@@ -12947,9 +12957,9 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			iModifier += getUnitInfo().GetNoAdjacentMod();
 #endif
 
-#ifdef UNIT_LOW_HEALTH_DEFENSE_MOD
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 		if (getDamage() >= 50)
-			iModifier += getUnitInfo().GetLowHealthDefenseModifier();
+			iModifier += getUnitInfo().GetLowHealthCombatModifier();
 #endif
 
 #ifdef FIX_IS_FRIENDLY_TERRITORY_MODIFIERS_AGAINST_CITIES
@@ -13096,9 +13106,9 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			iModifier += getUnitInfo().GetNoAdjacentMod();
 #endif
 
-#ifdef UNIT_LOW_HEALTH_DEFENSE_MOD
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 		if (getDamage() >= 50)
-			iModifier += getUnitInfo().GetLowHealthDefenseModifier();
+			iModifier += getUnitInfo().GetLowHealthCombatModifier();
 #endif
 
 		// Trait (player level) bonus against higher tech units
@@ -13450,9 +13460,9 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 				iModifier += getUnitInfo().GetNoAdjacentMod();
 #endif
 
-#ifdef UNIT_LOW_HEALTH_DEFENSE_MOD
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 			if (getDamage() >= 50)
-				iModifier += getUnitInfo().GetLowHealthDefenseModifier();
+				iModifier += getUnitInfo().GetLowHealthCombatModifier();
 #endif
 
 			// Trait (player level) bonus against higher tech units
@@ -13641,9 +13651,9 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			iModifier += getUnitInfo().GetNoAdjacentMod();
 #endif
 
-#ifdef UNIT_LOW_HEALTH_DEFENSE_MOD
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 		if (getDamage() >= 50)
-			iModifier += getUnitInfo().GetLowHealthDefenseModifier();
+			iModifier += getUnitInfo().GetLowHealthCombatModifier();
 #endif
 	}
 
@@ -13745,9 +13755,9 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			iModifier += getUnitInfo().GetNoAdjacentMod();
 #endif
 
-#ifdef UNIT_LOW_HEALTH_DEFENSE_MOD
+#ifdef UNIT_LOW_HEALTH_COMBAT_MOD
 		if (getDamage() >= 50)
-			iModifier += getUnitInfo().GetLowHealthDefenseModifier();
+			iModifier += getUnitInfo().GetLowHealthCombatModifier();
 #endif
 
 		// Trait (player level) bonus against higher tech units

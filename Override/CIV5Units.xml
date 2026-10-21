@@ -182312,7 +182312,7 @@
 		<Column name="HealthyMod" type="integer"  default="0"/>
 		<Column name="NoAdjacentMod" type="integer"  default="0"/>
 		<Column name="RangeAttackAreaDamageMod" type="integer"  default="0"/>
-		<Column name="LowHealthDefenseModifier" type="integer"  default="0"/>
+		<Column name="LowHealthCombatModifier" type="integer"  default="0"/>
 		<Column name="FortificationModifier" type="integer"  default="0"/>
 		<Column name="IgnoreTerrainDefense" type="boolean"  default="0"/>
 	</Table> 
@@ -187124,7 +187124,7 @@
 			<PortraitIndex>40</PortraitIndex> 
 			<IconAtlas>UNIT_ATLAS_1</IconAtlas> 
 			<UnitFlagAtlas>UNIT_FLAG_ATLAS</UnitFlagAtlas> 
-			<LowHealthDefenseModifier>20</LowHealthDefenseModifier>
+			<LowHealthCombatModifier>20</LowHealthCombatModifier>
 		</Row>
 		<Row> 
 			<ID>55</ID> 
