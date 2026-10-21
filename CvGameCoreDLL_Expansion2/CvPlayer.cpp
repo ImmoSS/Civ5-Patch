@@ -15082,12 +15082,29 @@ int CvPlayer::GetHappinessFromLuxury(ResourceTypes eResource) const
 			return 0;
 		}
 
+#ifdef TRAIT_EXTRA_LUXURY_HAPPINESS
+		int iResourceCount = getNumResourceAvailable(eResource, /*bIncludeImport*/ true);
+		if (iResourceCount > 0)
+		{
+			int iTotalHappiness = iBaseHappiness;
+			CivilizationTypes eTargetCiv = (CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_PORTUGAL");
+			if (eTargetCiv != NO_CIVILIZATION && getCivilizationType() == eTargetCiv)
+			{
+				if (iResourceCount > 1)
+				{
+					int iExtraCopies = iResourceCount - 1;
+					iTotalHappiness += (iExtraCopies * 1);
+				}
+			}
+			return iTotalHappiness;
+		}
+#else
 		// Any extras?
-		else if(getNumResourceAvailable(eResource, /*bIncludeImport*/ true) > 0)
+		else if (getNumResourceAvailable(eResource, /*bIncludeImport*/ true) > 0)
 		{
 			return iBaseHappiness;
 		}
-
+#endif
 		else if(GetPlayerTraits()->GetLuxuryHappinessRetention() > 0)
 		{
 			if(getResourceExport(eResource) > 0)

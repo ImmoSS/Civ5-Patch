@@ -119259,7 +119259,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_EXTRA_TRADE"> 
 			<Text>
-				+1 [ICON_GOLD] Gold from Luxury resource tiles.
+				+1 [ICON_GOLD] Gold from Luxury resource tiles. Each extra copy of a luxury resource provides +1 [ICON_HAPPINESS_1] Happiness.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_EXTRA_TRADE_SHORT"> 
@@ -130215,7 +130215,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_EXTRA_TRADE"> 
 			<Text>
-				+1 [ICON_GOLD] к золоту на клетках с редкими ресурсами.
+				+1 [ICON_GOLD] к золоту на клетках с редкими ресурсами. Каждая дополнительная копия редкого ресурса дает +1 [ICON_HAPPINESS_1] к настроению.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_STRATEGIC_RICHES"> 
