@@ -98926,7 +98926,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_SKYSCRAPERS_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Skyscrapers[ENDCOLOR][NEWLINE][ICON_GOLD] Gold cost of purchasing and maintenance buildings reduced by 33%.
+				[COLOR_POSITIVE_TEXT]Skyscrapers[ENDCOLOR][NEWLINE][ICON_GOLD] Gold cost of purchasing and maintenance buildings reduced by 25%.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_SKYSCRAPERS_TEXT"> 
@@ -134608,7 +134608,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_SKYSCRAPERS_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Небоскребы[ENDCOLOR][NEWLINE][ICON_GOLD] Снижает на 33% стоимость покупки и содержания объектов во всех городах.
+				[COLOR_POSITIVE_TEXT]Небоскребы[ENDCOLOR][NEWLINE][ICON_GOLD] Снижает на 25% стоимость покупки и содержания объектов во всех городах.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CULTURAL_REVOLUTION_HELP"> 

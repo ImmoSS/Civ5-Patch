@@ -143741,7 +143741,7 @@
 			<NumCitiesPolicyCostDiscount>0</NumCitiesPolicyCostDiscount> 
 			<GarrisonedCityRangeStrikeModifier>0</GarrisonedCityRangeStrikeModifier> 
 			<UnitPurchaseCostModifier>0</UnitPurchaseCostModifier> 
-			<BuildingPurchaseCostModifier>-33</BuildingPurchaseCostModifier> 
+			<BuildingPurchaseCostModifier>-25</BuildingPurchaseCostModifier> 
 			<CityConnectionTradeRouteGoldModifier>0</CityConnectionTradeRouteGoldModifier> 
 			<TradeMissionGoldModifier>0</TradeMissionGoldModifier> 
 			<FaithCostModifier>0</FaithCostModifier> 
@@ -143752,7 +143752,7 @@
 			<GoldPerUnit>0</GoldPerUnit> 
 			<GoldPerMilitaryUnit>0</GoldPerMilitaryUnit> 
 			<RouteGoldMaintenanceMod>0</RouteGoldMaintenanceMod> 
-			<BuildingGoldMaintenanceMod>-33</BuildingGoldMaintenanceMod> 
+			<BuildingGoldMaintenanceMod>-25</BuildingGoldMaintenanceMod> 
 			<UnitGoldMaintenanceMod>0</UnitGoldMaintenanceMod> 
 			<UnitSupplyMod>0</UnitSupplyMod> 
 			<UnitUpgradeCostMod>0</UnitUpgradeCostMod> 
