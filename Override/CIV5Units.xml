@@ -82329,7 +82329,7 @@
 		</Row>
 		<Row> 
 			<Name>EXOTIC_GOODS_GOLD_MAX</Name> 
-			<Value>300</Value> 
+			<Value>250</Value> 
 		</Row>
 		<Row> 
 			<Name>EXOTIC_GOODS_XP_MIN</Name> 
