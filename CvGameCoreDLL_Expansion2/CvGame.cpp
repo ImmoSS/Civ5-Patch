@@ -5623,6 +5623,14 @@ void CvGame::DoUpdateDiploVictory()
 	iVotesToWin = MAX(iVotesForHost + iVotesPerCiv + 1, iVotesToWin);
 	iVotesToWin = MIN(iVotesForHost + (iVotesPerCiv * (int)fCivsToCount) + (iVotesPerCityState * (int)fCityStatesToCount), iVotesToWin);
 
+#ifdef LESS_TOTAL_VOTES_FOR_VICTORY
+	iVotesToWin -= LESS_TOTAL_VOTES_FOR_VICTORY;
+	if (iVotesToWin < 1)
+	{
+		iVotesToWin = 1;
+	}
+#endif
+
 	SetVotesNeededForDiploVictory(iVotesToWin);
 	GC.GetEngineUserInterface()->setDirty(LeagueScreen_DIRTY_BIT, true);
 }
