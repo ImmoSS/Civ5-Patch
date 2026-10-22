@@ -749,7 +749,9 @@ public:
 #ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	int GetExtraCulturePerXPopulationInCity() const;
 #endif
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 	int GetExtraFaithPerXPopulationInCity() const;
+#endif
 	void ChangeExtraHappinessPerXPolicies(int iChange);
 #ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	void ChangeExtraHappinessPerXPopulationInCity(int iChange);
@@ -757,7 +759,9 @@ public:
 #ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	void ChangeExtraCulturePerXPopulationInCity(int iChange);
 #endif
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 	void ChangeExtraFaithPerXPopulationInCity(int iChange);
+#endif
 
 	int GetHappinessFromResources() const;
 	int GetHappinessFromResourceVariety() const;
@@ -2143,7 +2147,9 @@ protected:
 #ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	int m_iCulturePerXPopulationInCity;
 #endif
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 	int m_iFaithPerXPopulationInCity;
+#endif
 	int m_iEspionageModifier;
 	int m_iSpyStartingRank;
 #ifdef EG_REPLAYDATASET_NUMSTOLENSCIENCE

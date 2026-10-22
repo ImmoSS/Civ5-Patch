@@ -9517,6 +9517,7 @@ int CvCity::GetFaithPerTurnFromBuildings() const
 {
 	VALIDATE_OBJECT
 	int iTotalFaith = m_iFaithPerTurnFromBuildings;
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 	// FaithPerPopulationInCity
 	int iFaithPerPop = 0;
 	for (int iBuildingLoop = 0; iBuildingLoop < GC.getNumBuildingInfos(); iBuildingLoop++)
@@ -9538,6 +9539,7 @@ int CvCity::GetFaithPerTurnFromBuildings() const
 			}
 		}
 	}
+#endif
 #ifdef TRAIT_WONDER_BUILDERS_FAITH_PER_POP
 	int iCustomPalaceFaith = 0;
 		BuildingTypes ePalace = (BuildingTypes)GC.getInfoTypeForString("BUILDING_PALACE");

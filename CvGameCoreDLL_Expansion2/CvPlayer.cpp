@@ -416,7 +416,9 @@ CvPlayer::CvPlayer() :
 #ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	, m_iCulturePerXPopulationInCity(0)
 #endif
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 	, m_iFaithPerXPopulationInCity(0)
+#endif
 	, m_iAdvancedStartPoints("CvPlayer::m_iAdvancedStartPoints", m_syncArchive)
 	, m_iAttackBonusTurns("CvPlayer::m_iAttackBonusTurns", m_syncArchive)
 	, m_iCultureBonusTurns(0)
@@ -1386,7 +1388,9 @@ void CvPlayer::uninit()
 #ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	m_iCulturePerXPopulationInCity = 0;
 #endif
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 	m_iFaithPerXPopulationInCity = 0;
+#endif
 	m_iAdvancedStartPoints = -1;
 	m_iAttackBonusTurns = 0;
 	m_iCultureBonusTurns = 0;
@@ -10578,8 +10582,10 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst
 	ChangeExtraCulturePerXPopulationInCity(pBuildingInfo->GetCulturePerXPopulationInCity()* iChange);
 #endif
 
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 	// Extra Faith Per Population In City
 	ChangeExtraFaithPerXPopulationInCity(pBuildingInfo->GetFaithPerXPopulationInCity()* iChange);
+#endif
 
 	// City Count Unhappiness Mod
 	ChangeCityCountUnhappinessMod(pBuildingInfo->GetCityCountUnhappinessMod() * iChange);
@@ -14850,12 +14856,14 @@ int CvPlayer::GetExtraCulturePerXPopulationInCity() const
 }
 #endif
 
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 //	--------------------------------------------------------------------------------
 /// Returns the amount of extra Culture per City Population
 int CvPlayer::GetExtraFaithPerXPopulationInCity() const
 {
 	return m_iFaithPerXPopulationInCity;
 }
+#endif
 
 
 //	--------------------------------------------------------------------------------
@@ -14892,6 +14900,7 @@ void CvPlayer::ChangeExtraCulturePerXPopulationInCity(int iChange)
 }
 #endif
 
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 //	--------------------------------------------------------------------------------
 /// Changes amount of extra Faith per City Population
 void CvPlayer::ChangeExtraFaithPerXPopulationInCity(int iChange)
@@ -14901,6 +14910,7 @@ void CvPlayer::ChangeExtraFaithPerXPopulationInCity(int iChange)
 	if (iChange != 0)
 		m_iFaithPerXPopulationInCity += iChange;
 }
+#endif
 
 
 
@@ -27682,7 +27692,20 @@ void CvPlayer::Read(FDataStream& kStream)
 	}
 #endif
 #endif
-	kStream >> m_iFaithPerXPopulationInCity;
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	if (uiVersion >= 1018)
+	{
+#endif
+		kStream >> m_iFaithPerXPopulationInCity;
+#ifdef SAVE_BACKWARDS_COMPATIBILITY
+	}
+	else
+	{
+		m_iFaithPerXPopulationInCity = 0;
+	}
+#endif
+#endif
 	if (uiVersion >= 8)
 	{
 		kStream >> m_iHappinessFromLeagues;
@@ -29918,7 +29941,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	kStream << m_iCulturePerXPopulationInCity;
 #endif
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 	kStream << m_iFaithPerXPopulationInCity;
+#endif
 	kStream << m_iHappinessFromLeagues;
 	kStream << m_iEspionageModifier;
 	kStream << m_iSpyStartingRank;

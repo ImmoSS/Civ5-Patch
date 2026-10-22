@@ -89,7 +89,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	m_iCulturePerXPopulationInCity(0),
 #endif
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 	m_iFaithPerXPopulationInCity(0),
+#endif
 	m_iCityCountUnhappinessMod(0),
 	m_bNoOccupiedUnhappiness(false),
 	m_iGlobalPopulationChange(0),
@@ -406,7 +408,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	m_iCulturePerXPopulationInCity = kResults.GetInt("CulturePerXPopulationInCity");
 #endif
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 	m_iFaithPerXPopulationInCity = kResults.GetInt("FaithPerXPopulationInCity");
+#endif
 	m_iCityCountUnhappinessMod = kResults.GetInt("CityCountUnhappinessMod");
 	m_bNoOccupiedUnhappiness = kResults.GetBool("NoOccupiedUnhappiness");
 	m_iWorkerSpeedModifier = kResults.GetInt("WorkerSpeedModifier");
@@ -1318,11 +1322,13 @@ int CvBuildingEntry::GetCulturePerXPopulationInCity() const
 }
 #endif
 
+#ifdef BUILDING_FAITH_PER_X_POPULATION_IN_CITY
 /// Faith per X number of Population in City provided by this building
 int CvBuildingEntry::GetFaithPerXPopulationInCity() const
 {
 	return m_iFaithPerXPopulationInCity;
 }
+#endif
 
 
 
