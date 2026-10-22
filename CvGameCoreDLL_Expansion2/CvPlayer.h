@@ -746,13 +746,17 @@ public:
 #ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	int GetExtraHappinessPerXPopulationInCity() const;
 #endif
+#ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	int GetExtraCulturePerXPopulationInCity() const;
+#endif
 	int GetExtraFaithPerXPopulationInCity() const;
 	void ChangeExtraHappinessPerXPolicies(int iChange);
 #ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	void ChangeExtraHappinessPerXPopulationInCity(int iChange);
 #endif
+#ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	void ChangeExtraCulturePerXPopulationInCity(int iChange);
+#endif
 	void ChangeExtraFaithPerXPopulationInCity(int iChange);
 
 	int GetHappinessFromResources() const;
@@ -2136,7 +2140,9 @@ protected:
 #ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	int m_iHappinessPerXPopulationInCity;
 #endif
+#ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	int m_iCulturePerXPopulationInCity;
+#endif
 	int m_iFaithPerXPopulationInCity;
 	int m_iEspionageModifier;
 	int m_iSpyStartingRank;

@@ -158,7 +158,9 @@ public:
 #ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	int GetHappinessPerXPopulationInCity() const;
 #endif
+#ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	int GetCulturePerXPopulationInCity() const;
+#endif
 	int GetFaithPerXPopulationInCity() const;
 	int GetCityCountUnhappinessMod() const;
 	bool IsNoOccupiedUnhappiness() const;
@@ -465,7 +467,9 @@ private:
 #ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	int m_iHappinessPerXPopulationInCity;
 #endif
+#ifdef BUILDING_CULTURE_PER_X_POPULATION_IN_CITY
 	int m_iCulturePerXPopulationInCity;
+#endif
 	int m_iFaithPerXPopulationInCity;
 	int m_iCityCountUnhappinessMod;
 	bool m_bNoOccupiedUnhappiness;
