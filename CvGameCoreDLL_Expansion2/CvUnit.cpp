@@ -10359,7 +10359,7 @@ void CvUnit::promote(PromotionTypes ePromotion, int iLeaderUnitId)
 	{
 #ifdef INSTA_HEAL_EVERYPROMOTION
 		int iHealAmount = GC.getINSTA_HEAL_RATE();
-#ifdef INSTA_HEAL_EVERYPROMOTION_BUFFED
+#ifdef POLICY_MILITARY_TRADITION_EXTRA_HEAL_ON_PROMOTION
 		PlayerTypes eOwner = getOwner();
 		if (eOwner != NO_PLAYER)
 		{
