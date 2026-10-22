@@ -155,7 +155,9 @@ public:
 	int GetUnhappinessModifier() const;
 	int GetHappinessPerCity() const;
 	int GetHappinessPerXPolicies() const;
+#ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	int GetHappinessPerXPopulationInCity() const;
+#endif
 	int GetCulturePerXPopulationInCity() const;
 	int GetFaithPerXPopulationInCity() const;
 	int GetCityCountUnhappinessMod() const;
@@ -460,7 +462,9 @@ private:
 	int m_iUnhappinessModifier;
 	int m_iHappinessPerCity;
 	int m_iHappinessPerXPolicies;
+#ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	int m_iHappinessPerXPopulationInCity;
+#endif
 	int m_iCulturePerXPopulationInCity;
 	int m_iFaithPerXPopulationInCity;
 	int m_iCityCountUnhappinessMod;

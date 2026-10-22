@@ -743,11 +743,15 @@ public:
 	int GetExtraHappinessPerCity() const;
 	void ChangeExtraHappinessPerCity(int iChange);
 	int GetExtraHappinessPerXPolicies() const;
+#ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	int GetExtraHappinessPerXPopulationInCity() const;
+#endif
 	int GetExtraCulturePerXPopulationInCity() const;
 	int GetExtraFaithPerXPopulationInCity() const;
 	void ChangeExtraHappinessPerXPolicies(int iChange);
+#ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	void ChangeExtraHappinessPerXPopulationInCity(int iChange);
+#endif
 	void ChangeExtraCulturePerXPopulationInCity(int iChange);
 	void ChangeExtraFaithPerXPopulationInCity(int iChange);
 
@@ -2129,7 +2133,9 @@ protected:
 	FAutoVariable<int, CvPlayer> m_iHappinessFromBuildings;
 	FAutoVariable<int, CvPlayer> m_iHappinessPerCity;
 	int m_iHappinessPerXPolicies;
+#ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	int m_iHappinessPerXPopulationInCity;
+#endif
 	int m_iCulturePerXPopulationInCity;
 	int m_iFaithPerXPopulationInCity;
 	int m_iEspionageModifier;

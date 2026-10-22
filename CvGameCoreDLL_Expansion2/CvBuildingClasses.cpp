@@ -83,7 +83,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iUnhappinessModifier(0),
 	m_iHappinessPerCity(0),
 	m_iHappinessPerXPolicies(0),
+#ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	m_iHappinessPerXPopulationInCity(0),
+#endif
 	m_iCulturePerXPopulationInCity(0),
 	m_iFaithPerXPopulationInCity(0),
 	m_iCityCountUnhappinessMod(0),
@@ -396,7 +398,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iUnhappinessModifier = kResults.GetInt("UnhappinessModifier");
 	m_iHappinessPerCity = kResults.GetInt("HappinessPerCity");
 	m_iHappinessPerXPolicies = kResults.GetInt("HappinessPerXPolicies");
+#ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 	m_iHappinessPerXPopulationInCity = kResults.GetInt("HappinessPerXPopulationInCity");
+#endif
 	m_iCulturePerXPopulationInCity = kResults.GetInt("CulturePerXPopulationInCity");
 	m_iFaithPerXPopulationInCity = kResults.GetInt("FaithPerXPopulationInCity");
 	m_iCityCountUnhappinessMod = kResults.GetInt("CityCountUnhappinessMod");
@@ -1294,11 +1298,13 @@ int CvBuildingEntry::GetHappinessPerXPolicies() const
 	return m_iHappinessPerXPolicies;
 }
 
+#ifdef BUILDING_HAPPINESS_PER_X_POPULATION_IN_CITY
 /// Happiness per X number of Population in City provided by this building
 int CvBuildingEntry::GetHappinessPerXPopulationInCity() const
 {
 	return m_iHappinessPerXPopulationInCity;
 }
+#endif
 
 /// Culture per X number of Population in City provided by this building
 int CvBuildingEntry::GetCulturePerXPopulationInCity() const
