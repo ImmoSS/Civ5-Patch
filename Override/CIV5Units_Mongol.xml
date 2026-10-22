@@ -119109,7 +119109,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_CAPITAL_BUILDINGS_CHEAPER"> 
 			<Text>
-				+15% [ICON_PRODUCTION] Production towards buildings construction in cities with a [ICON_CONNECTED] City Connection.
+				+15% [ICON_PRODUCTION] Production towards buildings construction in cities with a [ICON_CONNECTED] City Connection. Roads constructed within friendly territory are completed instantly.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_CAPITAL_BUILDINGS_CHEAPER_SHORT"> 
@@ -131756,7 +131756,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_CAPITAL_BUILDINGS_CHEAPER"> 
 			<Text>
-				+15% [ICON_PRODUCTION] к производству зданий в городах, [ICON_CONNECTED] соединенных со столицей.
+				+15% [ICON_PRODUCTION] к производству зданий в городах, [ICON_CONNECTED] соединенных со столицей. Дороги на дружественной территории строятся мгновенно.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PRODMOD_CAPITAL_BUILDING_TRAIT"> 

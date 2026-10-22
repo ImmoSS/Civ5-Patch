@@ -2670,6 +2670,24 @@ int CvPlot::getBuildTime(BuildTypes eBuild, PlayerTypes ePlayer) const
 		}
 	}
 #endif
+#ifdef TRAIT_FAST_FRIENDLY_ROADS
+	if (ePlayer != NO_PLAYER)
+	{
+		CivilizationTypes eRomeCiv = (CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_ROME");
+		if (eRomeCiv != NO_CIVILIZATION && GET_PLAYER(ePlayer).getCivilizationType() == eRomeCiv)
+		{
+			RouteTypes eRoute = (RouteTypes)GC.getBuildInfo(eBuild)->getRoute();
+			RouteTypes eNormalRoad = (RouteTypes)GC.getInfoTypeForString("ROUTE_ROAD");
+			if (eRoute != NO_ROUTE && eNormalRoad != NO_ROUTE && eRoute == eNormalRoad)
+			{
+				if (IsFriendlyTerritory(ePlayer))
+				{
+					iTime = 100;
+				}
+			}
+		}
+	}
+#endif
 
 	return iTime;
 }
