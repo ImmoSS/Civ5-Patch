@@ -136464,7 +136464,7 @@
 			<PolicyBranchType>POLICY_BRANCH_COMMERCE</PolicyBranchType> 
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
-			<GridX>2</GridX> 
+			<GridX>4</GridX> 
 			<GridY>3</GridY> 
 			<Level>0</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
@@ -136766,7 +136766,7 @@
 			<PolicyBranchType>POLICY_BRANCH_COMMERCE</PolicyBranchType> 
 			<NumExtraBranches>0</NumExtraBranches> 
 			<CultureCost>10</CultureCost> 
-			<GridX>4</GridX> 
+			<GridX>2</GridX> 
 			<GridY>3</GridY> 
 			<Level>0</Level> 
 			<PolicyCostModifier>0</PolicyCostModifier> 
@@ -151088,7 +151088,7 @@
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_ENTREPRENEURSHIP</PolicyType> 
-			<PrereqPolicy>POLICY_MERCANTILISM</PrereqPolicy> 
+			<PrereqPolicy>POLICY_PROTECTIONISM</PrereqPolicy> 
 		</Row>
 		<Row> 
 			<PolicyType>POLICY_CARAVANS</PolicyType> 
