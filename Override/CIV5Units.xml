@@ -149673,16 +149673,6 @@
 			<YieldType>YIELD_FOOD</YieldType> 
 			<Yield>2</Yield> 
 		</Row>
-		<Row> 
-			<PolicyType>POLICY_THIRD_ALTERNATIVE</PolicyType> 
-			<YieldType>YIELD_FOOD</YieldType> 
-			<Yield>10</Yield> 
-		</Row>
-		<Row> 
-			<PolicyType>POLICY_THIRD_ALTERNATIVE</PolicyType> 
-			<YieldType>YIELD_SCIENCE</YieldType> 
-			<Yield>10</Yield> 
-		</Row>
 	</Policy_CapitalYieldChanges> 
 
 	<Table name="Policy_CapitalYieldModifiers">
