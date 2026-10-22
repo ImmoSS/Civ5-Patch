@@ -119049,7 +119049,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_AMPHIB_WARLORD"> 
 			<Text>
-				Receive triple [ICON_GOLD] Gold from Barbarian encampments and pillaging Cities. Land units gain the War Canoe and Amphibious promotions, strengthening them while embarked.
+				Receive triple [ICON_GOLD] Gold from Barbarian encampments and pillaging Cities. Receive +1 [ICON_CITIZEN] Citizen in the [ICON_CAPITAL] Capital when pillaging a City for the first time. Land units gain the War Canoe and Amphibious promotions, strengthening them while embarked.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_AMPHIB_WARLORD_SHORT"> 
@@ -136856,6 +136856,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_UNIT_HELP_HELICOPTER_GUNSHIP"> 
 			<Text>
 				Создан специально для борьбы с танками любого вида. Может преодолевать горы.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_AMPHIB_WARLORD"> 
+			<Text>
+				Дается в три раза больше [ICON_GOLD] золота от лагерей варваров и грабежа городов. Получает +1 [ICON_CITIZEN] к населению [ICON_CAPITAL] в столице за каждое первое разграбление города. Сухопутные войска получают повышения "Боевые каноэ" и "Морской десант" и могут давать более сильный отпор на воде.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 

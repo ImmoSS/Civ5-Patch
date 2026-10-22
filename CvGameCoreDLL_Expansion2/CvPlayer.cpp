@@ -2853,6 +2853,34 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift)
 	}
 #endif
 
+#ifdef SONGHAI_UA_ADDITION
+	if (bConquest)
+	{
+		CivilizationTypes eTargetCiv = (CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_SONGHAI");
+		if (eTargetCiv != NO_CIVILIZATION && getCivilizationType() == eTargetCiv)
+		{
+			if (!pOldCity->isEverOwned(GetID()))
+			{
+				PlayerTypes eOldOwner = pOldCity->getOwner();
+				if (eOldOwner != NO_PLAYER)
+				{
+					bool bIsOldOwnerHuman = GET_PLAYER(eOldOwner).isHuman();
+					bool bIsOldOwnerMinor = GET_PLAYER(eOldOwner).isMinorCiv();
+					bool bIsOptionEnabled = GC.getGame().isOption("GAMEOPTION_AI_TWEAKS");
+					if (bIsOldOwnerHuman || bIsOldOwnerMinor || (!bIsOldOwnerHuman && !bIsOptionEnabled))
+					{
+						CvCity* pCapital = getCapitalCity();
+						if (pCapital != NULL)
+						{
+							pCapital->changePopulation(1, true);							
+						}
+					}
+				}
+			}
+		}
+	}
+#endif
+
 	// slewis - warmonger calculations
 	if (bConquest)
 	{
