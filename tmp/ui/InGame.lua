@@ -341,8 +341,10 @@ Events.SerialEventMouseOverHex.Add( OnMouseMoveHex );
 g_MapPings = {}
 local C = {}
 for i = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
-	local col1, col2 = Players[i]:GetPlayerColors()  -- cache player colors
-	C[i] = {col1, col2}
+	if Players[i]:IsEverAlive() then
+		local col1, col2 = Players[i]:GetPlayerColors()  -- cache player colors
+		C[i] = {col1, col2}
+	end
 end
 local mw, _ = Map.GetGridSize()
 
