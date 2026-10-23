@@ -194432,7 +194432,7 @@
 			<Civilopedia>TXT_KEY_CIV5_ASSYRIAN_SIEGE_TOWER_TEXT</Civilopedia> 
 			<Strategy>TXT_KEY_UNIT_ASSYRIAN_SIEGE_TOWER_STRATEGY</Strategy> 
 			<Help>TXT_KEY_UNIT_HELP_ASSYRIAN_SIEGE_TOWER</Help> 
-			<Combat>12</Combat> 
+			<Combat>11</Combat> 
 			<RangedCombat>0</RangedCombat> 
 			<Cost>75</Cost> 
 			<FaithCost>75</FaithCost> 
