@@ -103793,6 +103793,21 @@ The ship has weather'd every rack; the prize we sought is won."
 				Long range penalty (33)
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_MOVEMENT_PENLATY_ATTACKING_CITY"> 
+			<Text>
+				Movement penalty when attacking city
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_MOVEMENT_PENLATY_ATTACKING_CITY_HELP"> 
+			<Text>
+				Attacking city consumes 2 MP.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_MOVEMENT_PENLATY_ATTACKING_CITY"> 
+			<Text>
+				Movement penalty when attacking city
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_20"> 
 			<Text>
 				Damaged Enemy Bonus (20)
@@ -136926,6 +136941,21 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_PENLATY_ATTACKING_OUTER_RING_33"> 
 			<Text>
 				Штраф на предельной дальности (33)
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_MOVEMENT_PENLATY_ATTACKING_CITY"> 
+			<Text>
+				Штраф к ОП при атаке города
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_MOVEMENT_PENLATY_ATTACKING_CITY_HELP"> 
+			<Text>
+				Юнит теряет 2 ОП при атаке города.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_MOVEMENT_PENLATY_ATTACKING_CITY"> 
+			<Text>
+				Штраф к ОП при атаке города
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
