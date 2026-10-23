@@ -121214,7 +121214,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_FRENCH_MUSKETEER_STRATEGY"> 
 			<Text>
-				The Musketeer is the French unique unit, replacing the Musketman. The Musketeer is significantly more powerful than the Musketman, making it the most powerful foot soldier unit in the game (until the introduction of Industrial Era Infantry units). It also gets +20% [ICON_STRENGTH] Combat Strength when has less than 50 HP.
+				The Musketeer is the French unique unit, replacing the Musketman. The Musketeer is significantly more powerful than the Musketman, making it the most powerful foot soldier unit in the game (until the introduction of Industrial Era Infantry units). It also gets Combat Bonuses on low health.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_FRIGATE"> 
@@ -121737,7 +121737,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_IMMORTAL"> 
 			<Text>
-				Ancient Era Unit which specializes in defeating Mounted Units. Only the Persians may build it. This Unit has a higher [ICON_STRENGTH] Combat Strength and heals more quickly than the Spearman, which it replaces.
+				Ancient Era Unit which specializes in defeating Mounted Units. Only the Persians may build it. This Unit has a lower [ICON_STRENGTH] Combat Strength but heals more quickly than the Spearman, which it replaces.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_INDIAN_WAR_ELEPHANT"> 
@@ -128066,7 +128066,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_STAVE_CHURCH_STRATEGY"> 
 			<Text>
-				Stave Church is a unique Danish replacement for Temple. Stave Church doubles Pantheon belief bonus in the city.
+				Stave Church is a unique Danish replacement for Temple. Besides lower maintenance costs, it also doubles Pantheon belief bonus in the city.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_STAVE_CHURCH_TEXT"> 
@@ -128396,7 +128396,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HIPPODROME_STRATEGY"> 
 			<Text>
-				Hippodrome is a unique Byzantine building replacing Colosseum. It is cheaper, costs no maintenance and provides +10% [ICON_STRENGTH] Combat Strength to Mounted and Ranged Mounted units and also increases a civilization's [ICON_HAPPINESS_1] Happiness. It cannot provide more Happiness than there are [ICON_CITIZEN] Citizens in a city.
+				Hippodrome is a unique Byzantine building replacing Colosseum. It is cheaper, costs no [ICON_GOLD] Gold maintenance and provides +10% [ICON_STRENGTH] Combat Strength to Mounted and Ranged Mounted units and also increases a civilization's [ICON_HAPPINESS_1] Happiness. It cannot provide more Happiness than there are [ICON_CITIZEN] Citizens in a city.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_THERMAE"> 
@@ -135306,7 +135306,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_STAVE_CHURCH_STRATEGY"> 
 			<Text>
-				Ставкирка — уникальное здание Датчан, заменяющее храм. Она удваивает бонус пантеона в городе.
+				Ставкирка — уникальное здание Датчан, заменяющее храм. Помимо более дешевого содержания она также удваивает бонус пантеона в городе.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_STAVE_CHURCH_TEXT"> 
@@ -136466,7 +136466,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_FRENCH_MUSKETEER_STRATEGY"> 
 			<Text>
-				Мушкетеры являются уникальным подразделением Франции. Они сильнее, чем обычные аркебузиры, что делает их самыми мощными пехотными подразделениями до появления юнитов Новейшего времени. Также получают +20% [ICON_STRENGTH] к боевой мощи, если имеют меньше 50 ОЗ.
+				Мушкетеры являются уникальным подразделением Франции. Они сильнее, чем обычные аркебузиры, что делает их самыми мощными пехотными подразделениями до появления юнитов Новейшего времени. Также получают бонус к боевой мощи при низком запасе здоровья.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_DENMARK_BERSERKER_HELP"> 
@@ -136971,6 +136971,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_BUILDING_CATHEDRAL_STRATEGY"> 
 			<Text>
 				Можно строить только в тех городах, где главенствует религия с верованием "Соборы". Дает дополнительное [ICON_HAPPINESS_1] настроение за каждого 6-го [ICON_CITIZEN] жителя в городе. Чтобы возвести это здание, необходимо потратить [ICON_PEACE] очки веры.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_IMMORTAL"> 
+			<Text>
+				Подразделение Древнейшего мира, специализирующееся на уничтожении кавалерии. Его могут создавать только персы. [ICON_STRENGTH] Боевая мощь этого подразделения ниже, чем у копейщиков, которых оно замещает, но оно быстрее восстанавливает здоровье.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
