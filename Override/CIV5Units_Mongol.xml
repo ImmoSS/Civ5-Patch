@@ -103000,7 +103000,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_HOVERING_UNIT_HELP"> 
 			<Text>
-				Unit may pass over Mountains, but takes damage if ending its turn on a Mountain.
+				Unit may pass over Mountains.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_IGNORE_TERRAIN_COST"> 
@@ -136861,6 +136861,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_TRAIT_AMPHIB_WARLORD"> 
 			<Text>
 				Дается в три раза больше [ICON_GOLD] золота от лагерей варваров и грабежа городов. Получает +1 [ICON_CITIZEN] к населению [ICON_CAPITAL] в столице за каждое первое разграбление города. Сухопутные войска получают повышения "Боевые каноэ" и "Морской десант" и могут давать более сильный отпор на воде.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_HOVERING_UNIT_HELP"> 
+			<Text>
+				Может перелетать через горы.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 

@@ -5813,9 +5813,10 @@ void CvUnit::DoAttrition()
 	}
 #endif
 
-#ifdef UNIT_HELICOPTER_NO_MOUNTAIN_ATTRITION
-	UnitTypes eHelicopter = (UnitTypes)GC.getInfoTypeForString("UNIT_HELICOPTER_GUNSHIP");
-	if (getDomainType() == DOMAIN_LAND && pPlot->isMountain() && !canMoveAllTerrain() && (eHelicopter == NO_UNIT || getUnitType() != eHelicopter))
+#ifdef PROMOTION_HOVERINT_UNIT_NO_MOUNTAIN_ATTRITION
+	PromotionTypes ePromotionHovering = (PromotionTypes)GC.getInfoTypeForString("PROMOTION_HOVERING_UNIT");
+	if (getDomainType() == DOMAIN_LAND && pPlot->isMountain() && !canMoveAllTerrain() &&
+		(ePromotionHovering == NO_PROMOTION || !isHasPromotion(ePromotionHovering)))
 #else
 	if (getDomainType() == DOMAIN_LAND && pPlot->isMountain() && !canMoveAllTerrain())
 #endif

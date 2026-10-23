@@ -376,7 +376,7 @@
 // adds missing notifications when a unit dies from attrition (Multiplayer only)
 #define DEATH_ON_ATTRITION_NOTIFICATIONS
 ///
-#define UNIT_HELICOPTER_NO_MOUNTAIN_ATTRITION
+#define PROMOTION_HOVERINT_UNIT_NO_MOUNTAIN_ATTRITION
 ///
 #define UNIT_NAVAL_MELEE_COMBAT_PENALTY_ATTACKING_CITY
 /*UNITS CHANGES END*/
