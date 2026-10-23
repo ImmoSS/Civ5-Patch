@@ -98401,7 +98401,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MILITARY_TRADITION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Military Tradition[ENDCOLOR][NEWLINE]Military Units gain 50% more Experience from combat and heal 10 HP more when promouting.
+				[COLOR_POSITIVE_TEXT]Military Tradition[ENDCOLOR][NEWLINE]Military Units gain 50% more Experience from combat and heal 10 HP more when promoting.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MOBILIZATION"> 
