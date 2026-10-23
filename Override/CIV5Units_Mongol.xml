@@ -103763,6 +103763,36 @@ The ship has weather'd every rack; the prize we sought is won."
 				Combat Bonus against Damaged Enemy Units (33).
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_PENLATY_ATTACKING_OUTER_RING_50"> 
+			<Text>
+				Long range penalty (50)
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_PENLATY_ATTACKING_OUTER_RING_50_HELP"> 
+			<Text>
+				Penalty when attacking on a maximum possible range (50).
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_PENLATY_ATTACKING_OUTER_RING_50"> 
+			<Text>
+				Long range penalty (50)
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_PENLATY_ATTACKING_OUTER_RING_33"> 
+			<Text>
+				Long range penalty (33)
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_PENLATY_ATTACKING_OUTER_RING_33_HELP"> 
+			<Text>
+				Penalty when attacking on a maximum possible range (33).
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_PENLATY_ATTACKING_OUTER_RING_33"> 
+			<Text>
+				Long range penalty (33)
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_STRONGER_VS_DAMAGED_20"> 
 			<Text>
 				Damaged Enemy Bonus (20)
@@ -136866,6 +136896,36 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_PROMOTION_HOVERING_UNIT_HELP"> 
 			<Text>
 				Может перелетать через горы.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_PENLATY_ATTACKING_OUTER_RING_50"> 
+			<Text>
+				Штраф на предельной дальности (50)
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_PENLATY_ATTACKING_OUTER_RING_50_HELP"> 
+			<Text>
+				Штраф при атаке на максимальную возможную дальность (50).
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_PENLATY_ATTACKING_OUTER_RING_50"> 
+			<Text>
+				Штраф на предельной дальности (50)
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_PENLATY_ATTACKING_OUTER_RING_33"> 
+			<Text>
+				Штраф на предельной дальности (33)
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_PENLATY_ATTACKING_OUTER_RING_33_HELP"> 
+			<Text>
+				Штраф при атаке на максимальную возможную дальность (33).
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_PENLATY_ATTACKING_OUTER_RING_33"> 
+			<Text>
+				Штраф на предельной дальности (33)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 

@@ -178413,6 +178413,26 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_ARABIAN_CAMELARCHER</UnitType> 
+			<PromotionType>PROMOTION_PENLATY_ATTACKING_OUTER_RING_33</PromotionType> 
+		</Row>
+		<Row> 
+			<UnitType>UNIT_MONGOLIAN_KESHIK</UnitType> 
+			<PromotionType>PROMOTION_PENLATY_ATTACKING_OUTER_RING_33</PromotionType> 
+		</Row>
+		<Row> 
+			<UnitType>UNIT_INDIAN_WARELEPHANT</UnitType> 
+			<PromotionType>PROMOTION_PENLATY_ATTACKING_OUTER_RING_33</PromotionType> 
+		</Row>
+		<Row> 
+			<UnitType>UNIT_GATLINGGUN</UnitType> 
+			<PromotionType>PROMOTION_PENLATY_ATTACKING_OUTER_RING_50</PromotionType> 
+		</Row>
+		<Row> 
+			<UnitType>UNIT_INCAN_SLINGER</UnitType> 
+			<PromotionType>PROMOTION_PENLATY_ATTACKING_OUTER_RING_50</PromotionType> 
+		</Row>
+		<Row> 
+			<UnitType>UNIT_ARABIAN_CAMELARCHER</UnitType> 
 			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType> 
 		</Row>
 		<Row> 
