@@ -3965,7 +3965,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CATHEDRALS"> 
 			<Text>
-				Use [ICON_PEACE] Faith to purchase Cathedrals (+1 [ICON_PEACE] Faith, +1 [ICON_CULTURE] Culture. +1 [ICON_HAPPINESS_1] Happiness for every 6th [ICON_CITIZEN] Citizen in a City)
+				Use [ICON_PEACE] Faith to purchase Cathedrals (+1 [ICON_PEACE] Faith, +1 [ICON_CULTURE] Culture. Additional +1 [ICON_HAPPINESS_1] Happiness for every 6th [ICON_CITIZEN] Citizen in a City)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CATHEDRALS_SHORT"> 
@@ -4505,7 +4505,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_MOSQUES"> 
 			<Text>
-				Use [ICON_PEACE] Faith to purchase Mosques (+1 [ICON_CULTURE] Culture, +1 [ICON_HAPPINESS_1] Happiness. +1 [ICON_PEACE] Faith for every 4th [ICON_CITIZEN] Citizen in a City)
+				Use [ICON_PEACE] Faith to purchase Mosques (+1 [ICON_CULTURE] Culture, +1 [ICON_HAPPINESS_1] Happiness. Additional +1 [ICON_PEACE] Faith for every 4th [ICON_CITIZEN] Citizen in a City)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_MOSQUES_SHORT"> 
@@ -4555,7 +4555,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PAGODAS"> 
 			<Text>
-				Use [ICON_PEACE] Faith to purchase Pagodas (+1 [ICON_PEACE] Faith, +1 [ICON_HAPPINESS_1] Happiness. +1 [ICON_CULTURE] Culture for every 5th [ICON_CITIZEN] Citizen in a City)
+				Use [ICON_PEACE] Faith to purchase Pagodas (+1 [ICON_PEACE] Faith, +1 [ICON_HAPPINESS_1] Happiness. Additional +1 [ICON_CULTURE] Culture for every 5th [ICON_CITIZEN] Citizen in a City)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PAGODAS_SHORT"> 
@@ -5535,7 +5535,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CATHEDRAL_STRATEGY"> 
 			<Text>
-				Can only be built in cities following a religion with the Cathedrals belief. Construct this building by purchasing it with [ICON_PEACE] Faith.
+				Can only be built in cities following a religion with the Cathedrals belief. Provides additional [ICON_HAPPINESS_1] Happiness for each 6th [ICON_CITIZEN] Citizen in a City. Construct this building by purchasing it with [ICON_PEACE] Faith.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CEILIDH_HALL"> 
@@ -6660,7 +6660,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MOSQUE_STRATEGY"> 
 			<Text>
-				Can only be built in cities following a religion with the Mosques belief. Construct this building by purchasing it with [ICON_PEACE] Faith.
+				Can only be built in cities following a religion with the Mosques belief. Provides additional [ICON_PEACE] Faith for each 4th [ICON_CITIZEN] Citizen in a City. Construct this building by purchasing it with [ICON_PEACE] Faith.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MUD_PYRAMID_MOSQUE_DESC"> 
@@ -6911,7 +6911,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_PAGODA_STRATEGY"> 
 			<Text>
-				Can only be built in cities following a religion with the Pagodas belief. Construct this building by purchasing it with [ICON_PEACE] Faith.
+				Can only be built in cities following a religion with the Pagodas belief. Provides additional [ICON_CULTURE] Culture for each 5th [ICON_CITIZEN] Citizen in a City. Construct this building by purchasing it with [ICON_PEACE] Faith.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_PALACE"> 
@@ -130190,7 +130190,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CATHEDRALS"> 
 			<Text>
-				Позволяет за очки [ICON_PEACE] веры строить соборы (+1 [ICON_PEACE] к вере, +1 [ICON_CULTURE] к культуре. +1 [ICON_HAPPINESS_1] к настроению за каждого 6 [ICON_CITIZEN] жителя в городе)
+				Позволяет за очки [ICON_PEACE] веры строить соборы (+1 [ICON_PEACE] к вере, +1 [ICON_CULTURE] к культуре. Дополнительно +1 [ICON_HAPPINESS_1] к настроению за каждого 6-го [ICON_CITIZEN] жителя в городе)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_BONUS_AGAINST_TECH"> 
@@ -130341,12 +130341,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PAGODAS"> 
 			<Text>
-				Можно строить пагоды (+1 [ICON_PEACE] к вере, +1 [ICON_HAPPINESS_1] к настроению. +1 [ICON_CULTURE] к культуре за каждого 5 [ICON_CITIZEN] жителя в городе) за [ICON_PEACE] очки веры
+				Можно строить пагоды (+1 [ICON_PEACE] к вере, +1 [ICON_HAPPINESS_1] к настроению. Дополнительно +1 [ICON_CULTURE] к культуре за каждого 5-го [ICON_CITIZEN] жителя в городе) за [ICON_PEACE] очки веры
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_MOSQUES"> 
 			<Text>
-				Можно строить мечети (+1 [ICON_CULTURE] к культуре, +1 [ICON_HAPPINESS_1] к настроению. +1 [ICON_PEACE] к вере, за каждого 4 [ICON_CITIZEN] жителя в городе) за [ICON_PEACE] очки веры
+				Можно строить мечети (+1 [ICON_CULTURE] к культуре, +1 [ICON_HAPPINESS_1] к настроению. Дополнительно +1 [ICON_PEACE] к вере, за каждого 4-го [ICON_CITIZEN] жителя в городе) за [ICON_PEACE] очки веры
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_RATIONALISM_HELP"> 
@@ -136956,6 +136956,21 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_PEDIA_PROMOTION_MOVEMENT_PENLATY_ATTACKING_CITY"> 
 			<Text>
 				Штраф к ОП при атаке города
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_PAGODA_STRATEGY"> 
+			<Text>
+				Пагоду можно построить за очки [ICON_PEACE] веры только в городах, придерживающихся религии, в которой есть соответствующее верование. Дает дополнительные очки [ICON_CULTURE] культуры за каждого 5-го [ICON_CITIZEN] жителя в городе.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_MOSQUE_STRATEGY"> 
+			<Text>
+				Мечеть можно построить за очки [ICON_PEACE] веры только в городах, придерживающихся религии, в которой есть верование "Мечети". Дает дополнительные очки [ICON_PEACE] веры за каждого 4-го [ICON_CITIZEN] жителя в городе.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_CATHEDRAL_STRATEGY"> 
+			<Text>
+				Можно строить только в тех городах, где главенствует религия с верованием "Соборы". Дает дополнительное [ICON_HAPPINESS_1] настроение за каждого 6-го [ICON_CITIZEN] жителя в городе. Чтобы возвести это здание, необходимо потратить [ICON_PEACE] очки веры.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
