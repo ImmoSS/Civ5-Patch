@@ -121867,7 +121867,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_MUSKETEER"> 
 			<Text>
-				One of the first gunpowder units of the game. Only the French may build it. This Unit has a higher [ICON_STRENGTH] Combat Strength than the Musketman, which it replaces. It also gets +20% [ICON_STRENGTH] Combat Strength when has less than 50 HP.
+				One of the first gunpowder units of the game. Only the French may build it. This Unit has a higher [ICON_STRENGTH] Combat Strength than the Musketman, which it replaces. It also gets +20% [ICON_STRENGTH] Combat Strength its HP is below 50.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_MUSKETMAN"> 
