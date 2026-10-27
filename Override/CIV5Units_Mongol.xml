@@ -115574,6 +115574,11 @@ The ship has weather'd every rack; the prize we sought is won."
 				Combined Arms
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_FAST_ROAD_BUILD"> 
+			<Text>
+				Roads are built immediately
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_TECH_COMBUSTION"> 
 			<Text>
 				Combustion
@@ -136981,6 +136986,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_EL_DORADO_HELP"> 
 			<Text>
 				Первый обнаруживший это чудо получит 100 [ICON_GOLD] золота.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_FAST_ROAD_BUILD"> 
+			<Text>
+				Дороги строятся мгновенно
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
