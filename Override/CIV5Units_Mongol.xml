@@ -129501,7 +129501,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Неизвестный город</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EUI_WONDER_BUILT_BY">
-			<Text>Построено цивилизацией {@1_CivName} в {@2_CityName} {@3_YearBuilt}</Text>
+			<Text>Построено цивилизацией {@1_CivName} в {@2_CityName}</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_LEANING_TOWER_HELP"> 
 			<Text>
