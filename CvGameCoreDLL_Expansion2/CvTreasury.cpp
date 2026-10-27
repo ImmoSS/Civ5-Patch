@@ -491,6 +491,7 @@ int CvTreasury::GetGoldPerTurnFromReligion() const
 #ifdef DUEL_SACRED_WATERS_CHANGE
 	if (!GC.getGame().isOption("GAMEOPTION_DUEL_STUFF"))
 	{
+#endif
 		CvBeliefXMLEntries* pBeliefs = GC.GetGameBeliefs();
 		int iGoldPerRiverOrCoastalCity = 0;
 		int iLoop = 0;
@@ -531,6 +532,7 @@ int CvTreasury::GetGoldPerTurnFromReligion() const
 
 		iGoldFromReligion += iGoldPerRiverOrCoastalCity;
 #endif
+#ifdef DUEL_SACRED_WATERS_CHANGE
 	}
 #endif
 
