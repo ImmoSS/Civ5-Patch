@@ -4555,7 +4555,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PAGODAS"> 
 			<Text>
-				Use [ICON_PEACE] Faith to purchase Pagodas (+1 [ICON_PEACE] Faith, +1 [ICON_HAPPINESS_1] Happiness. Additional +1 [ICON_CULTURE] Culture for every 5th [ICON_CITIZEN] Citizen in a City)
+				Use [ICON_PEACE] Faith to purchase Pagodas (+1 [ICON_PEACE] Faith, +1 [ICON_HAPPINESS_1] Happiness. Additional +1 [ICON_CULTURE] Culture for every 4th [ICON_CITIZEN] Citizen in a City)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PAGODAS_SHORT"> 
@@ -6911,7 +6911,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_PAGODA_STRATEGY"> 
 			<Text>
-				Can only be built in cities following a religion with the Pagodas belief. Provides additional [ICON_CULTURE] Culture for each 5th [ICON_CITIZEN] Citizen in a City. Construct this building by purchasing it with [ICON_PEACE] Faith.
+				Can only be built in cities following a religion with the Pagodas belief. Provides additional [ICON_CULTURE] Culture for each 4th [ICON_CITIZEN] Citizen in a City. Construct this building by purchasing it with [ICON_PEACE] Faith.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_PALACE"> 
@@ -130346,7 +130346,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PAGODAS"> 
 			<Text>
-				Можно строить пагоды (+1 [ICON_PEACE] к вере, +1 [ICON_HAPPINESS_1] к настроению. Дополнительно +1 [ICON_CULTURE] к культуре за каждого 5-го [ICON_CITIZEN] жителя в городе) за [ICON_PEACE] очки веры
+				Можно строить пагоды (+1 [ICON_PEACE] к вере, +1 [ICON_HAPPINESS_1] к настроению. Дополнительно +1 [ICON_CULTURE] к культуре за каждого 4-го [ICON_CITIZEN] жителя в городе) за [ICON_PEACE] очки веры
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_MOSQUES"> 
@@ -136965,7 +136965,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_PAGODA_STRATEGY"> 
 			<Text>
-				Пагоду можно построить за очки [ICON_PEACE] веры только в городах, придерживающихся религии, в которой есть соответствующее верование. Дает дополнительные очки [ICON_CULTURE] культуры за каждого 5-го [ICON_CITIZEN] жителя в городе.
+				Пагоду можно построить за очки [ICON_PEACE] веры только в городах, придерживающихся религии, в которой есть соответствующее верование. Дает дополнительные очки [ICON_CULTURE] культуры за каждого 4-го [ICON_CITIZEN] жителя в городе.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MOSQUE_STRATEGY"> 

@@ -50301,7 +50301,7 @@
 			<ArtInfoCulturalVariation>false</ArtInfoCulturalVariation> 
 			<ArtInfoEraVariation>false</ArtInfoEraVariation> 
 			<ArtInfoRandomVariation>false</ArtInfoRandomVariation> 
-			<CulturePerXPopulationInCity>5</CulturePerXPopulationInCity>
+			<CulturePerXPopulationInCity>4</CulturePerXPopulationInCity>
 		</Row>
 		<Row> 
 			<ID>140</ID> 
