@@ -50169,7 +50169,7 @@
 			<ArtInfoCulturalVariation>false</ArtInfoCulturalVariation> 
 			<ArtInfoEraVariation>false</ArtInfoEraVariation> 
 			<ArtInfoRandomVariation>false</ArtInfoRandomVariation> 
-			<FaithPerXPopulationInCity>4</FaithPerXPopulationInCity> 
+			<FaithPerXPopulationInCity>3</FaithPerXPopulationInCity> 
 		</Row>
 		<Row> 
 			<ID>139</ID> 
