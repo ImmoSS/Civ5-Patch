@@ -142482,7 +142482,7 @@
 			<GoldFromKills>0</GoldFromKills> 
 			<EmbarkedExtraMoves>0</EmbarkedExtraMoves> 
 			<AttackBonusTurns>0</AttackBonusTurns> 
-			<GoldenAgeTurns>0</GoldenAgeTurns> 
+			<GoldenAgeTurns>10</GoldenAgeTurns> 
 			<GoldenAgeMeterMod>0</GoldenAgeMeterMod> 
 			<GoldenAgeDurationMod>50</GoldenAgeDurationMod> 
 			<NumFreeTechs>0</NumFreeTechs> 
@@ -142560,7 +142560,7 @@
 			<HappinessToScience>0</HappinessToScience> 
 			<NumCitiesFreeCultureBuilding>0</NumCitiesFreeCultureBuilding> 
 			<NumCitiesFreeFoodBuilding>0</NumCitiesFreeFoodBuilding> 
-			<HalfSpecialistUnhappiness>true</HalfSpecialistUnhappiness> 
+			<HalfSpecialistUnhappiness>false</HalfSpecialistUnhappiness> 
 			<HalfSpecialistFood>false</HalfSpecialistFood> 
 			<MaxConscript>0</MaxConscript> 
 			<UnitSightRangeChange>0</UnitSightRangeChange> 

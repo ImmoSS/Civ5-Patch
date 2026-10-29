@@ -99216,7 +99216,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_UNIVERSAL_SUFFRAGE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Universal Suffrage[ENDCOLOR][NEWLINE]Specialists in Cities produce half the normal amount of [ICON_HAPPINESS_4] Unhappiness. [ICON_GOLDEN_AGE] Golden Ages are 50% longer.
+				[COLOR_POSITIVE_TEXT]Universal Suffrage[ENDCOLOR][NEWLINE]Starts a [ICON_GOLDEN_AGE] Golden Age. [ICON_GOLDEN_AGE] Golden Ages are 50% longer.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_URBANIZATION"> 
@@ -133360,7 +133360,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_UNIVERSAL_SUFFRAGE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Всеобщее избирательное право[ENDCOLOR][NEWLINE]В два раза снижает [ICON_HAPPINESS_4] недовольство специалистов в городах. [ICON_GOLDEN_AGE] Золотой век длится на 50% дольше.
+				[COLOR_POSITIVE_TEXT]Всеобщее избирательное право[ENDCOLOR][NEWLINE]Начинает в державе [ICON_GOLDEN_AGE] золотой век. [ICON_GOLDEN_AGE] Золотой век длится на 50% дольше.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_FASTER_HEAL"> 
