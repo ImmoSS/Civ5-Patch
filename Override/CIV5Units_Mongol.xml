@@ -7728,12 +7728,12 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ZIGGURAT_HELP"> 
 			<Text>
-				Provides +1 [ICON_PEACE] Faith and +1 [ICON_CULTURE] Culture after Masonry is researched.
+				Provides +1 [ICON_CULTURE] Culture.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ZIGGURAT_STRATEGY"> 
 			<Text>
-				Ziggurat is a unique Babylonian replacement for Shrine. It provides +1 [ICON_PEACE] Faith and +1 [ICON_CULTURE] Culture after Masonry is researched.
+				Ziggurat is a unique Babylonian replacement for Shrine. It provides additional [ICON_CULTURE] Culture.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILD_ACADEMY"> 
@@ -135155,12 +135155,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ZIGGURAT_HELP"> 
 			<Text>
-				Дает +1 [ICON_PEACE] к вере и +1 [ICON_CULTURE] к культуре после изучения Каменной кладки.
+				Дает +1 [ICON_CULTURE] к культуре.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ZIGGURAT_STRATEGY"> 
 			<Text>
-				Зиккурат — уникальная Вавилонская постройка, заменяющая святилище. Зиккурат дает больше очков [ICON_PEACE] веры и [ICON_CULTURE] культуры после изучения Каменной кладки.
+				Зиккурат — уникальная Вавилонская постройка, заменяющая святилище. Зиккурат дает дополнительные очки [ICON_CULTURE] культуры.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_ZIGGURAT_TEXT"> 
