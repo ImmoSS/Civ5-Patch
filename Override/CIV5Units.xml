@@ -168505,7 +168505,7 @@
 			<RiverTradeRoad>false</RiverTradeRoad> 
 			<AngerFreeIntrusionOfCityStates>false</AngerFreeIntrusionOfCityStates> 
 			<FreeUnit>UNITCLASS_SCIENTIST</FreeUnit> 
-			<FreeUnitPrereqTech>TECH_EDUCATION</FreeUnitPrereqTech> 
+			<FreeUnitPrereqTech>TECH_PHILOSOPHY</FreeUnitPrereqTech> 
 		</Row>
 		<Row> 
 			<ID>30</ID> 

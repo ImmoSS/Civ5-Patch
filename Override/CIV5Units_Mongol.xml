@@ -119454,7 +119454,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_INGENIOUS"> 
 			<Text>
-				Receive free Great Scientist when you discover Education. Earn Great Scientists 33% faster.
+				Receive free Great Scientist when you discover Phylosophy. Earn Great Scientists 33% faster.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_INGENIOUS_SHORT"> 
@@ -129530,7 +129530,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_INGENIOUS"> 
 			<Text>
-				После открытия образования дается великий ученый, а в дальнейшем они начинают появляться на 33% быстрее.
+				После открытия философии дается великий ученый, а в дальнейшем они начинают появляться на 33% быстрее.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_OXFORD_UNIVERSITY_THEMING_BONUS_HELP"> 
