@@ -284,6 +284,7 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
 		end
 	end	
 
+	-- FAST_ROAD_BUILD
 	if tech.Type == "TECH_COMBINED_ARMS" then
 	local buttonName = "B"..tostring(buttonNum);
 	local thisButton = thisTechButtonInstance[buttonName];
