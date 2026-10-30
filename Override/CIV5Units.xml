@@ -49914,6 +49914,7 @@
 			<Description>TXT_KEY_BUILDING_CATHEDRAL</Description> 
 			<Civilopedia>TXT_KEY_CIV5_BUILDINGS_CATHEDRAL_TEXT</Civilopedia> 
 			<Strategy>TXT_KEY_BUILDING_CATHEDRAL_STRATEGY</Strategy> 
+			<Help>TXT_KEY_BUILDING_CATHEDRAL_HELP</Help> 
 			<GoldMaintenance>0</GoldMaintenance> 
 			<MutuallyExclusiveGroup>-1</MutuallyExclusiveGroup> 
 			<TeamShare>false</TeamShare> 
@@ -50045,6 +50046,7 @@
 			<Description>TXT_KEY_BUILDING_MOSQUE</Description> 
 			<Civilopedia>TXT_KEY_CIV5_BUILDINGS_MOSQUE_TEXT</Civilopedia> 
 			<Strategy>TXT_KEY_BUILDING_MOSQUE_STRATEGY</Strategy> 
+			<Help>TXT_KEY_BUILDING_MOSQUE_HELP</Help> 
 			<GoldMaintenance>0</GoldMaintenance> 
 			<MutuallyExclusiveGroup>-1</MutuallyExclusiveGroup> 
 			<TeamShare>false</TeamShare> 
@@ -50177,6 +50179,7 @@
 			<Description>TXT_KEY_BUILDING_PAGODA</Description> 
 			<Civilopedia>TXT_KEY_CIV5_BUILDINGS_PAGODA_TEXT</Civilopedia> 
 			<Strategy>TXT_KEY_BUILDING_PAGODA_STRATEGY</Strategy> 
+			<Help>TXT_KEY_BUILDING_PAGODA_HELP</Help> 
 			<GoldMaintenance>0</GoldMaintenance> 
 			<MutuallyExclusiveGroup>-1</MutuallyExclusiveGroup> 
 			<TeamShare>false</TeamShare> 

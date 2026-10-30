@@ -5535,7 +5535,12 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CATHEDRAL_STRATEGY"> 
 			<Text>
-				Can only be built in cities following a religion with the Cathedrals belief. Provides additional [ICON_HAPPINESS_1] Happiness for each 6th [ICON_CITIZEN] Citizen in a City. Construct this building by purchasing it with [ICON_PEACE] Faith.
+				Can only be built in cities following a religion with the Cathedrals belief. Construct this building by purchasing it with [ICON_PEACE] Faith.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_CATHEDRAL_HELP"> 
+			<Text>
+				Provides +1 [ICON_HAPPINESS_1] Happiness for each 6th [ICON_CITIZEN] Citizen in a City.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CEILIDH_HALL"> 
@@ -6660,7 +6665,12 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MOSQUE_STRATEGY"> 
 			<Text>
-				Can only be built in cities following a religion with the Mosques belief. Provides additional [ICON_PEACE] Faith for each 3rd [ICON_CITIZEN] Citizen in a City. Construct this building by purchasing it with [ICON_PEACE] Faith.
+				Can only be built in cities following a religion with the Mosques belief. Construct this building by purchasing it with [ICON_PEACE] Faith.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_MOSQUE_STRATEGY"> 
+			<Text>
+				Provides additional [ICON_PEACE] Faith for each 3rd [ICON_CITIZEN] Citizen in a City.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MUD_PYRAMID_MOSQUE_DESC"> 
@@ -6911,7 +6921,12 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_PAGODA_STRATEGY"> 
 			<Text>
-				Can only be built in cities following a religion with the Pagodas belief. Provides additional [ICON_CULTURE] Culture for each 4th [ICON_CITIZEN] Citizen in a City. Construct this building by purchasing it with [ICON_PEACE] Faith.
+				Can only be built in cities following a religion with the Pagodas belief. Construct this building by purchasing it with [ICON_PEACE] Faith.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_PAGODA_HELP"> 
+			<Text>
+				Provides +1 [ICON_CULTURE] Culture for each 4th [ICON_CITIZEN] Citizen in a City.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_PALACE"> 
@@ -136970,17 +136985,32 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_PAGODA_STRATEGY"> 
 			<Text>
-				Пагоду можно построить за очки [ICON_PEACE] веры только в городах, придерживающихся религии, в которой есть соответствующее верование. Дает дополнительные очки [ICON_CULTURE] культуры за каждого 4-го [ICON_CITIZEN] жителя в городе.
+				Пагоду можно построить за очки [ICON_PEACE] веры только в городах, придерживающихся религии, в которой есть соответствующее верование.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_PAGODA_HELP"> 
+			<Text>
+				Дает +1 [ICON_CULTURE] к культуре за каждого 4-го [ICON_CITIZEN] жителя в городе.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MOSQUE_STRATEGY"> 
 			<Text>
-				Мечеть можно построить за очки [ICON_PEACE] веры только в городах, придерживающихся религии, в которой есть верование "Мечети". Дает дополнительные очки [ICON_PEACE] веры за каждого 3-го [ICON_CITIZEN] жителя в городе.
+				Мечеть можно построить за очки [ICON_PEACE] веры только в городах, придерживающихся религии, в которой есть верование "Мечети".
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_MOSQUE_HELP"> 
+			<Text>
+				Дает +1 [ICON_PEACE] к вере за каждого 3-го [ICON_CITIZEN] жителя в городе.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CATHEDRAL_STRATEGY"> 
 			<Text>
-				Можно строить только в тех городах, где главенствует религия с верованием "Соборы". Дает дополнительное [ICON_HAPPINESS_1] настроение за каждого 6-го [ICON_CITIZEN] жителя в городе. Чтобы возвести это здание, необходимо потратить [ICON_PEACE] очки веры.
+				Можно строить только в тех городах, где главенствует религия с верованием "Соборы". Чтобы возвести это здание, необходимо потратить [ICON_PEACE] очки веры.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_CATHEDRAL_HELP"> 
+			<Text>
+				Дает +1 [ICON_HAPPINESS_1] к настроению за каждого 6-го [ICON_CITIZEN] жителя в городе.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_IMMORTAL"> 
