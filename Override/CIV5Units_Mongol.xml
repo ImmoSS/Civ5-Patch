@@ -4260,7 +4260,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_GOD_SEA"> 
 			<Text>
-				+1 [ICON_PRODUCTION] Production from Fishing Boats
+				+1 [ICON_PRODUCTION] Production from Fishing Boats. Fishing Boats are built 25% faster.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_GOD_SEA_SHORT"> 
@@ -101399,6 +101399,11 @@ The ship has weather'd every rack; the prize we sought is won."
 				[NEWLINE][ICON_BULLET]Modifier for Religion: {1_Num}%
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_PRODMOD_PANTHEON_BELIEF"> 
+			<Text>
+				[NEWLINE][ICON_BULLET]Modifier for Pantheon: {1_Num}%
+			</Text>
+		</Row>
 		<Replace Tag="TXT_KEY_PRODMOD_YIELD_CAPITAL"> 
 			<Text>
 				[NEWLINE][ICON_BULLET]City Modifier for [ICON_CAPITAL] Capital: {1_Num}%
@@ -134297,7 +134302,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_GOD_SEA"> 
 			<Text>
-				+1 [ICON_PRODUCTION] за каждую рыбацкую лодку
+				+1 [ICON_PRODUCTION] за каждую рыбацкую лодку. Рабочие лодки строятся на 25% быстрее.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CO_OPINION_TT_UNHAPPINESS_LINE3"> 
@@ -136993,6 +136998,11 @@ The ship has weather'd every rack; the prize we sought is won."
 				Дороги строятся мгновенно
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_PRODMOD_PANTHEON_BELIEF"> 
+			<Text>
+				[NEWLINE][ICON_BULLET]Влияние пантеона: {1_Num}%
+			</Text>
+		</Row>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_STAGING_ROOM"> 
 			<Text>
 				[COLOR_POSITIVE_TEXT]Патч для FFA6 турнира {TXT_KEY_PATCH_VERSION}[ENDCOLOR]
