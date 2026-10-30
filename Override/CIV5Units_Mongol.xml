@@ -119164,7 +119164,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_CAPITAL_BUILDINGS_CHEAPER"> 
 			<Text>
-				+15% [ICON_PRODUCTION] Production towards buildings construction in cities with a [ICON_CONNECTED] City Connection. Roads constructed within friendly territory are completed instantly after researeching Iron Working.
+				+15% [ICON_PRODUCTION] Production towards buildings construction in cities with a [ICON_CONNECTED] City Connection. Roads constructed within friendly territory are completed instantly after researching Iron Working.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_CAPITAL_BUILDINGS_CHEAPER_SHORT"> 
