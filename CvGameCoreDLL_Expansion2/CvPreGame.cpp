@@ -2216,6 +2216,7 @@ void resetGame()
 	s_draftResult = DRAFT_RESULT_NONE;
 	s_draftShuffledCivs= "";
 	s_draftPlayersReady = 0;
+	//s_draftRemapPlayersReady = 0;
 	CvPreGame::SetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS1", 0);
 	CvPreGame::SetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS2", 0);
 	s_draftBansMsgQueue.clear();
@@ -3245,7 +3246,7 @@ void DraftResponseSecret(PlayerTypes p, const char* szSecret)
 		SLOG("received all secrets");
 		if (GC.getGame().isFinalInitialized())
 		{
-			s_draftCurrentProgress = DRAFT_PROGRESS_INGAME_2;
+			//s_draftCurrentProgress = DRAFT_PROGRESS_INGAME_2;
 		}
 		else
 		{
@@ -3560,7 +3561,7 @@ void DraftLocalReset(const char* szReason)
 	s_draftResult = DRAFT_RESULT_NONE;
 	s_draftShuffledCivs = "";
 	s_draftPlayersReady = 0;
-	s_draftRemapPlayersReady = 0;
+	//s_draftRemapPlayersReady = 0;
 	SetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS1", 0);
 	SetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS2", 0);
 	int r = -1;

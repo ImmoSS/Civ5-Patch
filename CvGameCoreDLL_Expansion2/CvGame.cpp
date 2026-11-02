@@ -1560,7 +1560,7 @@ void CvGame::initDrafts()
 	}
 	CvPreGame::setDraftPlayerPicks(vstrPicks);
 	// WIP start remap vote here?
-	CvPreGame::setDraftCurrentProgress(DRAFT_PROGRESS_INGAME_1);
+	//CvPreGame::setDraftCurrentProgress(DRAFT_PROGRESS_INGAME_1);
 	// inform UI
 	ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
 	if (pkScriptSystem)
