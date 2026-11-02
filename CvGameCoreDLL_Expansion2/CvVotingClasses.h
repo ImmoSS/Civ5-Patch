@@ -1410,6 +1410,7 @@ public:
 
 	int GetLastProposalID();
 	Proposal* GetProposalByID(int iProposalID);
+	Proposal* GetProposalByType(MPVotingSystemProposalTypes eType);
 	int GetProposalExpirationCounter(int iProposalID);
 	int GetProposalTypeCooldownResetTurn(MPVotingSystemProposalTypes eType, PlayerTypes ePlayerID);
 	MPVotingSystemProposalTypes GetProposalType(int iProposalID);

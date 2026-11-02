@@ -11753,6 +11753,16 @@ CvMPVotingSystem::Proposal* CvMPVotingSystem::GetProposalByID(int iProposalID)
 	return NULL;
 }
 
+CvMPVotingSystem::Proposal* CvMPVotingSystem::GetProposalByType(MPVotingSystemProposalTypes eType)
+{
+	for (uint i = 0; i < m_vProposals.size(); i++)
+	{
+		if (m_vProposals.at(i).eType == eType)
+			return &m_vProposals.at(i);
+	}
+	return NULL;
+}
+
 int CvMPVotingSystem::GetProposalExpirationCounter(int iProposalID)
 {
 	return m_vProposals.at(iProposalID).iExpirationCounter;
