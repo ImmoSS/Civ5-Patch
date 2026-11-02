@@ -29,7 +29,7 @@
 			<Stack Anchor="L,T" Size="926,32" Offset="0,3" Padding="0" StackGrowth="Right">
 
 
-			<Button ID="GameButton" Void1="1" Anchor="L,T" Size="160,24" Font="TwCenMT18" String="TXT_KEY_GAME_OPTIONS" >
+			<Button ID="GameButton" Void1="1" Anchor="L,T" Size="150,24" Font="TwCenMT18" String="TXT_KEY_GAME_OPTIONS" >
 				<ShowOnMouseOver>
 				<AlphaAnim Anchor="L,T" Size="160,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1">
 					<Grid Size="160,27" Offset="0,-1" Style="Grid9FrameTurnsHL" />
@@ -38,7 +38,7 @@
 				<Grid ID="GameHighlight" Anchor="C,C" Size="160,26" Style="Grid9FrameTurns" Hidden="1" />
 			</Button>
 
-			<Button ID="IFaceButton" Void1="2" Anchor="L,T" Size="185,24" Font="TwCenMT18" String="TXT_KEY_INTERFACE_OPTIONS" >
+			<Button ID="IFaceButton" Void1="2" Anchor="L,T" Size="175,24" Font="TwCenMT18" String="TXT_KEY_INTERFACE_OPTIONS" >
 				<ShowOnMouseOver>
 				<AlphaAnim Anchor="L,T" Size="185,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1">
 					<Grid Size="185,27" Offset="0,-1" Style="Grid9FrameTurnsHL" />
@@ -47,7 +47,7 @@
 				<Grid ID="IFaceHighlight" Anchor="C,C" Size="185,26" Style="Grid9FrameTurns" Hidden="1" />
 			</Button>
 
-			<Button ID="VideoButton" Void1="3" Anchor="L,T" Size="160,24" Font="TwCenMT18" String="TXT_KEY_VIDEO_OPTIONS" >
+			<Button ID="VideoButton" Void1="3" Anchor="L,T" Size="150,24" Font="TwCenMT18" String="TXT_KEY_VIDEO_OPTIONS" >
 				<ShowOnMouseOver>
 				<AlphaAnim Anchor="L,T" Size="160,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1">
 					<Grid Size="160,27" Offset="0,-1" Style="Grid9FrameTurnsHL" />
@@ -56,7 +56,7 @@
 				<Grid ID="VideoHighlight" Anchor="C,C" Size="160,26" Style="Grid9FrameTurns" Hidden="1" />
 			</Button>
 
-			<Button ID="AudioButton" Void1="4" Anchor="L,T" Size="160,24" Font="TwCenMT18" String="TXT_KEY_AUDIO_OPTIONS" >
+			<Button ID="AudioButton" Void1="4" Anchor="L,T" Size="150,24" Font="TwCenMT18" String="TXT_KEY_AUDIO_OPTIONS" >
 				<ShowOnMouseOver>
 				<AlphaAnim Anchor="L,T" Size="160,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1">
 					<Grid Size="160,27" Offset="0,-1" Style="Grid9FrameTurnsHL" />
@@ -66,7 +66,7 @@
 			</Button>
 			
 			<!-- NEW: shorten this tab a bit -->
-			<Button ID="MultiplayerButton" Void1="5" Anchor="L,T" Size="160,24" Font="TwCenMT18" String="TXT_KEY_MULTIPLAYER_OPTIONS_SHORT" >
+			<Button ID="MultiplayerButton" Void1="5" Anchor="L,T" Size="150,24" Font="TwCenMT18" String="TXT_KEY_MULTIPLAYER_OPTIONS_SHORT" >
 				<ShowOnMouseOver>
 				<AlphaAnim Anchor="L,T" Size="160,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1">
 					<Grid Size="160,27" Offset="0,-1" Style="Grid9FrameTurnsHL" />
@@ -76,10 +76,10 @@
 			</Button>
 
 			<!-- NEW: Hotkey Manager tab -->
-			<Button ID="HotkeyManagerButton" Void1="6" Anchor="L,T" Size="100,24" Font="TwCenMT18" String="TXT_KEY_HOTKEY_OPTIONS_SHORT" >
+			<Button ID="HotkeyManagerButton" Void1="6" Anchor="L,T" Size="150,24" Font="TwCenMT18" String="TXT_KEY_HOTKEY_OPTIONS_SHORT" >
 				<ShowOnMouseOver>
-				<AlphaAnim Anchor="L,T" Size="120,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1">
-					<Grid Size="100,27" Offset="0,-1" Style="Grid9FrameTurnsHL" />
+				<AlphaAnim Anchor="L,T" Size="160,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1">
+					<Grid Size="160,27" Offset="0,-1" Style="Grid9FrameTurnsHL" />
 				</AlphaAnim>
 				</ShowOnMouseOver>
 				<Grid ID="HotkeyManagerHighlight" Anchor="C,C" Size="100,26" Style="Grid9FrameTurns" Hidden="1" />
@@ -317,80 +317,26 @@
 		<Container ID="MultiplayerPanel" Size="971,500" Hidden="1" >
 
 			<!-- Turn Notify Options -->
-			<Grid Offset="40,100" Size="395,200" Color="White,128" Style="Grid9FrameButtons" >
-			<Label Anchor="C,T" Offset="0,5" WrapWidth="250" LeadingOffset="-10" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_OPTIONS" />
-			<Box Anchor="C,T" Offset="0,30" Size="375,160" Color="0,0,0,0">
-				<Stack Anchor="L,T" Padding="0" StackGrowth="Bottom">
-				<CheckBox ID="TurnNotifySteamInviteCheckbox" Anchor="R,T" Offset="-32,0" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_STEAM_INVITE" LeadingOffset="0" WrapWidth="350" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_STEAM_INVITE_TT" />
-				<CheckBox ID="TurnNotifyEmailCheckbox" Anchor="R,T" Offset="-32,0" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_EMAIL" LeadingOffset="0" WrapWidth="350" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_EMAIL_TT" />
-				<Label Anchor="L,T" Offset="0,10" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_EMAIL_ADDRESS" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_EMAIL_ADDRESS_TT" >
-					<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="184,24" Color="255,255,200,255" >
-					<Box Anchor="C,C" Size="182,22" Color="0,0,0,255" >
-						<EditBox ID="TurnNotifyEmailAddressEdit" EditMode="1" Size="180,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
-					</Box>
-					</Box>
-				</Label>
-				</Stack>
-			</Box>
-			</Grid>
-
-			<!-- Turn Notify Host Options -->
-			<Grid Offset="440,100" Size="460,280" Color="White,128" Style="Grid9FrameButtons" >
-			<Label Anchor="C,T" Offset="0,5" WrapWidth="250" LeadingOffset="-10" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_HOST_OPTIONS" />
-			<Stack Anchor="L,T" Offset="10,30" Padding="10" StackGrowth="Bottom">
-				<Label Anchor="L,C" Offset="0,10" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_EMAIL_ADDRESS" >
-				<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="184,24" Color="255,255,200,255" >
-					<Box Anchor="C,C" Size="182,22" Color="0,0,0,255" >
-					<EditBox ID="TurnNotifySmtpEmailEdit" EditMode="1" Size="180,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
-					</Box>
+			<Grid Offset="40,100" Size="395,180" Color="White,128" Style="Grid9FrameButtons" >
+				<Label Anchor="C,T" Offset="0,8" WrapWidth="250" LeadingOffset="-10" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_OPTIONS" />
+				<Box Anchor="C,T" Offset="0,30" Size="375,160" Color="0,0,0,0">
+					<Stack Anchor="L,T" Padding="0" StackGrowth="Bottom">
+						<CheckBox ID="TurnNotifySteamInviteCheckbox" Anchor="L,T" Offset="0,0" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_STEAM_INVITE" LeadingOffset="0" WrapWidth="350" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_STEAM_INVITE_TT" />
+						<CheckBox ID="TurnNotifyEmailCheckbox" Anchor="L,T" Offset="0,0" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_EMAIL" LeadingOffset="0" WrapWidth="350" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_EMAIL_TT" />
+						<Label Anchor="L,T" Offset="0,10" LeadingOffset="-10" WrapWidth="200" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_EMAIL_ADDRESS" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_EMAIL_ADDRESS_TT" >
+							<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="184,24" Color="255,255,200,255" >
+								<Box Anchor="C,C" Size="182,22" Color="0,0,0,255" >
+									<EditBox ID="TurnNotifyEmailAddressEdit" EditMode="1" Size="180,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
+								</Box>
+							</Box>
+						</Label>
+					</Stack>
 				</Box>
-				</Label>
-				<Label Anchor="L,C" Offset="0,10" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_HOST" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_HOST_TT" >
-				<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="184,24" Color="255,255,200,255" >
-					<Box Anchor="C,C" Size="182,22" Color="0,0,0,255" >
-					<EditBox ID="TurnNotifySmtpHostEdit" EditMode="1" Size="180,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
-					</Box>
-				</Box>
-				</Label>
-				<Stack Anchor="C,C" Offset="30,0" Padding="0" StackGrowth="Right">
-				<CheckBox ID="TurnNotifySmtpTLS" Anchor="L,C" Offset="0,10" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_TLS" LeadingOffset="0" WrapWidth="350" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_TLS_TT" />
-				<Label Anchor="L,C" Offset="0,10" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_PORT" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_PORT_TT" >
-					<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="34,24" Color="255,255,200,255" >
-					<Box Anchor="C,C" Size="32,22" Color="0,0,0,255" >
-						<EditBox ID="TurnNotifySmtpPortEdit" EditMode="1" Size="30,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
-					</Box>
-					</Box>
-				</Label>
-				</Stack>
-				<Label Anchor="L,C" Offset="0,10" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_USERNAME" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_USERNAME_TT" >
-				<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="84,24" Color="255,255,200,255" >
-					<Box Anchor="C,C" Size="82,22" Color="0,0,0,255" >
-					<EditBox ID="TurnNotifySmtpUserEdit" EditMode="1" Size="80,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
-					</Box>
-				</Box>
-				</Label>
-				<Label Anchor="L,C" Offset="0,10" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_PASSWORD" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_PASSWORD_TT" >
-				<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="84,24" Color="255,255,200,255" >
-					<Box Anchor="C,C" Size="82,22" Color="0,0,0,255" >
-					<EditBox ID="TurnNotifySmtpPassEdit" EditMode="1" CallOnChar="1" Obscure="1" Size="80,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
-					</Box>
-				</Box>
-				</Label>
-				<Stack Anchor="C,C" Padding="0" StackGrowth="Right">
-				<Label Anchor="L,C" Offset="0,10" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_RETYPE_PASSWORD" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_RETYPE_PASSWORD_TT" />
-				<Box Anchor="L,C" Offset="10,10" Size="84,24" Color="255,255,200,255" >
-					<Box Anchor="C,C" Size="82,22" Color="0,0,0,255" >
-					<EditBox ID="TurnNotifySmtpPassRetypeEdit" EditMode="1" CallOnChar="1" Obscure="1" Size="80,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
-					</Box>
-				</Box>
-				<Label ID="StmpPasswordMatchLabel" Anchor="L,C" Offset="5,10" LeadingOffset="-10" WrapWidth="300" String="test" ToolTip="test tt" />
-				</Stack>
-			</Stack>
 			</Grid>
 
 			<!-- LAN Nick Name Option -->
-			<Grid Offset="40,350" Size="395,200" Color="White,128" Style="Grid9FrameButtons" >
-				<Label Anchor="C,T" Offset="0,5" WrapWidth="250" LeadingOffset="-10" String="TXT_KEY_MULTIPLAYER_LAN_GAME" />
+			<Grid Offset="40,300" Size="395,215" Color="White,128" Style="Grid9FrameButtons" >
+				<Label Anchor="C,T" Offset="0,8" WrapWidth="250" LeadingOffset="-10" String="TXT_KEY_MULTIPLAYER_LAN_GAME" />
 				<Stack Anchor="L,T" Offset="10,30" Padding="10" StackGrowth="Bottom">
 					<Label Anchor="L,C" Offset="0,10" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_MP_NICK_NAME">
 						<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="84,24" Color="255,255,200,255" >
@@ -401,6 +347,79 @@
 					</Label>
 				</Stack>
 			</Grid>
+
+			<!-- Turn Notify Host Options -->
+			<Grid Offset="460,100" Size="460,250" Color="White,128" Style="Grid9FrameButtons" >
+				<Label Anchor="C,T" Offset="0,8" WrapWidth="350" LeadingOffset="-10" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_HOST_OPTIONS" />
+				<Stack Anchor="L,T" Offset="10,35" Padding="10" StackGrowth="Bottom">
+					<Label Anchor="L,C" Offset="0,10" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_EMAIL_ADDRESS" >
+						<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="184,24" Color="255,255,200,255" >
+							<Box Anchor="C,C" Size="182,22" Color="0,0,0,255" >
+								<EditBox ID="TurnNotifySmtpEmailEdit" EditMode="1" Size="180,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
+							</Box>
+						</Box>
+					</Label>
+					<Label Anchor="L,C" Offset="0,10" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_HOST" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_HOST_TT" >
+						<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="184,24" Color="255,255,200,255" >
+							<Box Anchor="C,C" Size="182,22" Color="0,0,0,255" >
+								<EditBox ID="TurnNotifySmtpHostEdit" EditMode="1" Size="180,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
+							</Box>
+						</Box>
+					</Label>
+					<Stack Anchor="C,C" Offset="50,0" Padding="0" StackGrowth="Right">
+						<CheckBox ID="TurnNotifySmtpTLS" Anchor="L,C" Offset="0,0" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_TLS" LeadingOffset="0" WrapWidth="350" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_TLS_TT" />
+						<Label Anchor="L,C" Offset="0,0" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_PORT" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_PORT_TT" >
+							<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="34,24" Color="255,255,200,255" >
+								<Box Anchor="C,C" Size="32,22" Color="0,0,0,255" >
+									<EditBox ID="TurnNotifySmtpPortEdit" EditMode="1" Size="30,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
+								</Box>
+							</Box>
+						</Label>
+					</Stack>
+					<Label Anchor="L,C" Offset="0,0" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_USERNAME" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_USERNAME_TT" >
+						<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="84,24" Color="255,255,200,255" >
+							<Box Anchor="C,C" Size="82,22" Color="0,0,0,255" >
+								<EditBox ID="TurnNotifySmtpUserEdit" EditMode="1" Size="80,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
+							</Box>
+						</Box>
+					</Label>
+					<Label Anchor="L,C" Offset="0,10" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_PASSWORD" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_PASSWORD_TT" >
+						<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="84,24" Color="255,255,200,255" >
+							<Box Anchor="C,C" Size="82,22" Color="0,0,0,255" >
+								<EditBox ID="TurnNotifySmtpPassEdit" EditMode="1" CallOnChar="1" Obscure="1" Size="80,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
+							</Box>
+						</Box>
+					</Label>
+					<Stack Anchor="C,C" Padding="0" StackGrowth="Right">
+						<Label Anchor="L,C" Offset="0,3" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_RETYPE_PASSWORD" ToolTip="TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_RETYPE_PASSWORD_TT" />
+						<Box Anchor="L,C" Offset="10,3" Size="84,24" Color="255,255,200,255" >
+							<Box Anchor="C,C" Size="82,22" Color="0,0,0,255" >
+								<EditBox ID="TurnNotifySmtpPassRetypeEdit" EditMode="1" CallOnChar="1" Obscure="1" Size="80,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
+							</Box>
+						</Box>
+						<Label ID="StmpPasswordMatchLabel" Anchor="L,C" Offset="5,3" LeadingOffset="-10" WrapWidth="300" String="test" ToolTip="test tt" />
+					</Stack>
+				</Stack>
+			</Grid>
+			
+			<!-- NEW: MP CivBot Integration -->
+			<Grid Offset="460,370" Size="460,145" Color="White,128" Style="Grid9FrameButtons" >
+				<Label Anchor="C,T" Offset="0,8" LeadingOffset="-10" String="TXT_KEY_OPSCREEN_CIVBOT_TITLE" />
+				<Stack Anchor="L,T" Offset="10,30" Padding="10" StackGrowth="Bottom">
+					<CheckBox ID="CivbotCheck" Anchor="L,T" Offset="155,0" String="TXT_KEY_CIVBOT_INTEGRATION_TITLE" LeadingOffset="0" WrapWidth="350" ToolTip="TXT_KEY_CIVBOT_INTEGRATION_TT" />
+					<Label Anchor="L,C" Offset="0,0" LeadingOffset="-10" WrapWidth="300" String="TXT_KEY_MP_NICK_NAME">
+						<Box Anchor="R,C" AnchorSide="o,i" Offset="10,0" Size="154,24" Color="255,255,200,255" >
+							<Box Anchor="C,C"  Size="152,22" Color="0,0,0,255" >
+								<EditBox ID="CivBotNickNameEdit" EditMode="0" Disabled="1" Size="150,18" Anchor="C,C" Font="TwCenMT16" NumberInput="0" MaxLength="64" />
+							</Box>
+						</Box>
+					</Label>
+					<GridButton ID="CivbotResetDataButton" Offset="0,3" Anchor="R,B" Size="200,32" Style="SmallButton" ToolTip="TXT_KEY_CIVBOT_RESET_DATA_TT">
+						<Label Anchor="C,C" String="TXT_KEY_CIVBOT_RESET_DATA_TITLE" Font="TwCenMT20" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+					</GridButton>
+				</Stack>
+			</Grid>
+			<SlideAnim ID="NetLoop" Anchor="L,T" Start="0,0" End="1,0" Speed="2" Pause="0" Cycle="Repeat" />
 		</Container>
 		
 		<!-- NEW: Hotkey Manager -->
@@ -451,7 +470,7 @@
 							</EditBox>
 						</Box>
 					</Box>
-					<Label WrapWidth="200" Offset="0,0" Anchor="R,B" String="TXT_KEY_OPSCREEN_HOTKEY_EDIT_HELP" Font="TwCenMT18" />
+					<Label WrapWidth="205" Offset="0,0" Anchor="R,B" String="TXT_KEY_OPSCREEN_HOTKEY_EDIT_HELP" Font="TwCenMT18" />
 				</Stack>
 			</Container>
 		</Container>
@@ -517,7 +536,7 @@
 		</Grid>
 	</Box>
 	
-	<!-- NEW: Reset all hotkeys confirmation popup -->
+	<!-- Reset all hotkeys confirmation popup -->
 	<Box ID="ConfirmResetAllHotkeysPopup" Color="Black.128" Size="Full.Full" Hidden="1" ConsumeMouseOver="1" >
 		<Grid Size="400,300" Anchor="C,C" Padding="0,20" Style="Grid9DetailFive140" Hidden="0" >
 
@@ -535,6 +554,63 @@
 			  </GridButton>
 			  <!-- No Button -->
 			  <GridButton ID="ConfirmResetAllHotkeysNo" Style="SmallButton" Size="250,36" Anchor="C,T" Hidden="0">
+			    <Label Anchor="C,C" Offset="0,0" String="TXT_KEY_NO_BUTTON" ColorSet="Beige_Black" Font="TwCenMT22" FontStyle="Shadow" />
+			  </GridButton>
+			</Stack>
+		</Grid>
+	</Box>
+
+	<!-- NEW: Civbot Integration popup -->
+	<Box ID="CivbotIntegrationPopup" Color="Black.128" Size="Full.Full" Hidden="1" ConsumeMouseOver="1" >
+		<Grid Size="500,400" Anchor="C,C" Padding="0,20" Style="Grid9DetailFive140" Hidden="0" >
+
+			<!-- Side treatments -->
+			<Box Style="PopupLeftSideTreatment"/>
+			<Box Style="PopupRightSideTreatment"/>
+			<Box Anchor="C,T" AnchorSide="I.O">
+				<Image Anchor="C,B" Offset="0,-27" Size="256,64" Texture="DecTop256x64.dds"  >
+					<Image Anchor="C,C" Offset="0,-6" Size="80,80" Texture="NotificationFrameBase.dds"  >
+						<Image Anchor="C,C" Offset="0,0" Size="80.80" Texture="assets\UI\Art\Notification\techportraits80_exp2.dds" />
+					</Image>
+				</Image>
+			</Box>
+
+			<Label Anchor="C,T"  Offset="0,60" WrapWidth="300" Font="TwCenMT22" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_CIVBOT_INTEGRATION_TITLE" />
+			<Label Anchor="C,T"  Offset="0,90" WrapWidth="470" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_CIVBOT_INTEGRATION_SUB" />
+			<Label Anchor="C,T" ID="CivbotCode" Offset="0,210" Font="TwCenMT24" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="X X X X" />
+			<Label Anchor="C,T" ID="CivbotStatus" Offset="0,280" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" Hidden="1" />
+
+			<Stack Anchor="C,B" Offset="0,60" Padding="140" StackGrowth="Right" ID="ButtonStack2">
+			  <!-- OK Button -->
+			  <GridButton ID="CivbotIntegrationOk" Style="SmallButton" Size="120,36" Anchor="L,T" Hidden="0">
+			    <Label Anchor="C,C" Offset="0,0" String="TXT_KEY_OK_BUTTON" ColorSet="Beige_Black" Font="TwCenMT22" FontStyle="Shadow" />
+			  </GridButton>
+			  <!-- Cancel Button -->
+			  <GridButton ID="CivbotIntegrationCancel" Style="SmallButton" Size="120,36" Anchor="L,T" Hidden="0">
+			    <Label Anchor="C,C" Offset="0,0" String="TXT_KEY_OPSCREEN_CANCEL_BUTTON" ColorSet="Beige_Black" Font="TwCenMT22" FontStyle="Shadow" />
+			  </GridButton>
+			</Stack>
+		</Grid>
+	</Box>
+
+	<!-- NEW: Civbot reset data confirmation popup -->
+	<Box ID="CivbotConfirmResetPopup" Color="Black.128" Size="Full.Full" Hidden="1" ConsumeMouseOver="1" >
+		<Grid Size="400,300" Anchor="C,C" Padding="0,20" Style="Grid9DetailFive140" Hidden="0" >
+
+			<!-- Side treatments -->
+			<Box Style="PopupLeftSideTreatment"/>
+			<Box Style="PopupRightSideTreatment"/>
+			<Box Style="PopupNotificationTopTreatment"/>
+
+			<Label Anchor="C,T"  Offset="0,74" WrapWidth="300" Font="TwCenMT22" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_OPSCREEN_CONFIRM" />
+
+			<Stack Anchor="C,B" Offset="0,80" Padding="24" StackGrowth="Bottom" ID="ButtonStack">
+			  <!-- Yes Button -->
+			  <GridButton ID="ConfirmCivbotResetDataYes" Style="SmallButton" Size="250,36" Anchor="C,T" Hidden="0">
+			    <Label Anchor="C,C" Offset="0,0" String="TXT_KEY_YES_BUTTON" ColorSet="Beige_Black" Font="TwCenMT22" FontStyle="Shadow" />
+			  </GridButton>
+			  <!-- No Button -->
+			  <GridButton ID="ConfirmCivbotResetDataNo" Style="SmallButton" Size="250,36" Anchor="C,T" Hidden="0">
 			    <Label Anchor="C,C" Offset="0,0" String="TXT_KEY_NO_BUTTON" ColorSet="Beige_Black" Font="TwCenMT22" FontStyle="Shadow" />
 			  </GridButton>
 			</Stack>
