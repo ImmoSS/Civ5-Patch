@@ -94756,6 +94756,46 @@
 			<SupportsSinglePlayer>false</SupportsSinglePlayer> 
 			<SupportsMultiplayer>true</SupportsMultiplayer> 
 		</Row>
+		<Row> 
+			<ID>62</ID> 
+			<Type>GAMEOPTION_DRAFT_NUM_BANS</Type> 
+			<Description>TXT_KEY_GAME_OPTION_NUM_BANS</Description> 
+			<Help>TXT_KEY_GAME_OPTION_NUM_BANS</Help> 
+			<Default>2</Default> 
+			<Visible>false</Visible> 
+			<SupportsSinglePlayer>false</SupportsSinglePlayer> 
+			<SupportsMultiplayer>true</SupportsMultiplayer> 
+		</Row>
+		<Row> 
+			<ID>63</ID> 
+			<Type>GAMEOPTION_DRAFT_NUM_PICKS</Type> 
+			<Description>TXT_KEY_GAME_OPTION_NUM_PICKS</Description> 
+			<Help>TXT_KEY_GAME_OPTION_NUM_PICKS</Help> 
+			<Default>3</Default> 
+			<Visible>false</Visible> 
+			<SupportsSinglePlayer>false</SupportsSinglePlayer> 
+			<SupportsMultiplayer>true</SupportsMultiplayer> 
+		</Row>
+		<Row> 
+			<ID>64</ID> 
+			<Type>GAMEOPTION_DRAFT_OPTION_DISCARD_PICKS</Type> 
+			<Description>TXT_KEY_DRAFT_OPTION_DISCARD_PICKS</Description> 
+			<Help>TXT_KEY_DRAFT_OPTION_DISCARD_PICKS_HELP</Help> 
+			<Default>true</Default> 
+			<Visible>false</Visible> 
+			<SupportsSinglePlayer>false</SupportsSinglePlayer> 
+			<SupportsMultiplayer>true</SupportsMultiplayer> 
+		</Row>
+		<Row> 
+			<ID>65</ID> 
+			<Type>GAMEOPTION_DRAFT_OPTION_INC_VOTE_THRESHOLD</Type> 
+			<Description>TXT_KEY_DRAFT_OPTION_INC_VOTE_THRESHOLD</Description> 
+			<Help>TXT_KEY_DRAFT_OPTION_INC_VOTE_THRESHOLD_HELP</Help> 
+			<Default>true</Default> 
+			<Visible>false</Visible> 
+			<SupportsSinglePlayer>false</SupportsSinglePlayer> 
+			<SupportsMultiplayer>true</SupportsMultiplayer> 
+		</Row>
 	</GameOptions> 
 
 	<Table name="GameSpeed_Turns">
