@@ -1711,6 +1711,7 @@ void CvDllNetMessageHandler::ResponseRenameCity(PlayerTypes ePlayer, int iCityID
 		MOD_MESSAGE_DRAFT_SYNC_BANS = -5,
 		MOD_MESSAGE_DRAFT_PLAYERS_SWAP = -6,
 		MOD_MESSAGE_DRAFT_ALL_BANS_RECEIVED = -7,
+		MOD_MESSAGE_DRAFT_LOAD = -8,
 	};
 #endif
 #ifdef INGAME_CIV_DRAFTER
@@ -1769,6 +1770,66 @@ void CvDllNetMessageHandler::ResponseRenameCity(PlayerTypes ePlayer, int iCityID
 	else if (iCityID == MOD_MESSAGE_DRAFT_ALL_BANS_RECEIVED)
 	{
 		CvPreGame::DraftResponseAllBansReceived(ePlayer);
+		return;
+	}
+	else if (iCityID == MOD_MESSAGE_DRAFT_LOAD)
+	{
+		// format: "eMsgPlayer|bans|picks|eMsgPlayer|bans|picks..."
+		SLOG("MOD_MESSAGE_DRAFT_LOAD << ePlayer %d iCityID %d szName %s", (int)ePlayer, iCityID, szName);
+		CvString s = CvString(szName);
+		std::vector<CvString> tokens;
+		std::string token;
+		size_t pos = 0;
+		while ((pos = s.find('|')) != std::string::npos) {
+			token = s.substr(0, pos);
+			tokens.push_back(token);
+			s.erase(0, pos + 1);
+		}
+		tokens.push_back(s);
+		if (tokens.size() % 3 == 0)
+		{
+			std::vector<CvString> vBans;
+			std::vector<CvString> vPicks = CvPreGame::getDraftPlayerPicks();
+			for (uint i = 0; i < vPicks.size(); i++)
+			{
+				vPicks[i] = "";
+			}
+			for (int i = 0; i < tokens.size(); i += 3)
+			{
+				uint uiMsgPlayer = atoi(tokens.at(0).c_str());
+				CvString bans = tokens.at(1);
+				CvString picks = tokens.at(2);
+				SLOG("%d|%s|%s", uiMsgPlayer, bans.c_str(), picks.c_str());
+				vBans.push_back(CvString::format("%d:%s;", uiMsgPlayer, bans.c_str()));
+				if (uiMsgPlayer < vPicks.size())
+				{
+					vPicks.at(uiMsgPlayer) = picks;
+				}
+			}
+			CvPreGame::setDraftPlayerBans(vBans);
+			CvPreGame::setDraftPlayerPicks(vPicks);
+
+			CvPreGame::setDraftCurrentProgress(DRAFT_PROGRESS_OVER);
+
+			// notify UI
+			if (GC.getGame().isFinalInitialized())
+			{
+				SLOG("g1");
+				ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+				if (pkScriptSystem)
+				{
+					CvLuaArgsHandle args;
+					bool bResult;
+					args->Push(1);
+					LuaSupport::CallHook(pkScriptSystem, "DraftLoad", args.get(), bResult);
+				}
+			}
+			else
+			{
+				SLOG("g2");
+				DLLUI->AddMessage(0, CvPreGame::activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DraftLoad");  // V2
+			}
+		}
 		return;
 	}
 #endif
