@@ -17,6 +17,7 @@
 
 #include <unordered_map>
 #ifdef INGAME_CIV_DRAFTER
+# include "Lua/CvLuaGameInfo.h"
 # include <Wincrypt.h>
 #endif
 
@@ -321,6 +322,8 @@ int s_draftPlayersReady = 0;
 int s_draftCurrentProgress = DRAFT_PROGRESS_INIT;
 int s_draftResult = DRAFT_RESULT_NONE;
 std::vector<CvString> s_draftPlayerBans;
+std::vector<CvString> s_draftPlayerPicks(MAX_MAJOR_CIVS);
+std::vector<CvString> s_draftPlayerDiscardedPicks(MAX_MAJOR_CIVS);
 std::vector<CvString> s_draftPlayerSecrets(MAX_MAJOR_CIVS);
 std::vector<CvString> s_draftPlayerSecretHashes(MAX_MAJOR_CIVS);
 std::vector<CvString> s_draftBansMsgQueue(MAX_PLAYERS);
@@ -1761,6 +1764,8 @@ const CvString& nicknameDisplayed(PlayerTypes p)
 	{
 		static CvString data;
 		CvString s = "";
+		CvString strpicks = "";
+		CvString strdiscpicks = "";
 		uint i = 0;
 		for (i = 0; i < s_draftPlayerBans.size(); i++)
 		{
@@ -2199,6 +2204,14 @@ void resetGame()
 		s_draftAllBansReceived[i] = false;
 	}
 	s_draftPlayerBans.clear();
+	for (uint i = 0; i < s_draftPlayerPicks.size(); i++)
+	{
+		s_draftPlayerPicks[i] = "";
+	}
+	for (uint i = 0; i < s_draftPlayerDiscardedPicks.size(); i++)
+	{
+		s_draftPlayerDiscardedPicks[i] = "";
+	}
 	s_draftCurrentProgress = DRAFT_PROGRESS_INIT;
 	s_draftResult = DRAFT_RESULT_NONE;
 	s_draftShuffledCivs= "";
@@ -2221,6 +2234,15 @@ void ResetGameOptions()
 		s_GameOptionsHash[FString::Hash(kOption.GetName())] = i;
 	}
 	SyncGameOptionsWithEnumList();
+#ifdef INGAME_CIV_DRAFTER
+	int r = -1;
+	GetGameOption("GAMEOPTION_TOURNAMENT_MODE", r);
+	if (r > 0)
+	{
+		SetGameOption("GAMEOPTION_DRAFT_NUM_BANS", 1);
+		SetGameOption("GAMEOPTION_DRAFT_NUM_PICKS", 3);
+	}
+#endif
 
 	// victory conditions
 	s_numVictoryInfos = GC.getNumVictoryInfos();
@@ -2956,7 +2978,24 @@ void DraftResponseSecretHash(PlayerTypes p, const char* szHash)
 		//return;
 	}
 	s_draftPlayerSecretHashes[uiPlayerID] = CvString(szHash);
-	DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("ready|%d", uiPlayerID).c_str());
+	if (GC.getGame().isFinalInitialized())
+	{
+		SLOG("g1");
+		ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+		if (pkScriptSystem)
+		{
+			CvLuaArgsHandle args;
+			bool bResult;
+			args->Push(p);
+			LuaSupport::CallHook(pkScriptSystem, "DraftsUpdate", args.get(), bResult);
+		}
+	}
+	else
+	{
+		SLOG("g2");
+		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("ready|%d", uiPlayerID).c_str());
+		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DraftsUpdate");  // V2
+	}
 	SLOG("set secret hash for player %d to %s", uiPlayerID, szHash);
 
 	// check all secret hashes received
@@ -2970,8 +3009,23 @@ void DraftResponseSecretHash(PlayerTypes p, const char* szHash)
 	{
 		SLOG("received all secret hashes");
 		s_draftCurrentProgress = DRAFT_PROGRESS_BANS;
-		// TODO enable bans in UI
-		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DRAFT_PROGRESS_BANS|");
+
+		if (GC.getGame().isFinalInitialized())
+		{
+			SLOG("g1");
+			ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+			if (pkScriptSystem)
+			{
+				CvLuaArgsHandle args;
+				bool bResult;
+				LuaSupport::CallHook(pkScriptSystem, "DraftProgress", args.get(), bResult);
+			}
+		}
+		else
+		{
+			SLOG("g2");
+			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DraftProgress|%d", s_draftCurrentProgress).c_str());
+		}
 	}
 }
 
@@ -3059,7 +3113,25 @@ void DraftResponseBans(PlayerTypes p, const char* szBans)
 	CvPreGame::SetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS2", old2 ^ civs2);
 
 	// notify UI
-	DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("ban-success|%d|%s", uiPlayerID, szBans).c_str());
+
+	if (GC.getGame().isFinalInitialized())
+	{
+		SLOG("g1");
+		ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+		if (pkScriptSystem)
+		{
+			CvLuaArgsHandle args;
+			bool bResult;
+			args->Push(p);
+			LuaSupport::CallHook(pkScriptSystem, "BanSuccess", args.get(), bResult);
+		}
+	}
+	else
+	{
+		SLOG("g2");
+		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("ban-success|%d|%s", uiPlayerID, szBans).c_str());
+		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("BanSuccess|%d", uiPlayerID).c_str());  // V2
+	}
 	s_draftPlayerBans.push_back(CvString::format("%d:%s;", uiPlayerID, szBans));
 
 	// check bans ready
@@ -3087,7 +3159,24 @@ void DraftResponseBans(PlayerTypes p, const char* szBans)
 	{
 		// extra step required due to network jitter
 		s_draftCurrentProgress = DRAFT_PROGRESS_BUSY;
-		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DRAFT_PROGRESS_BUSY|");
+
+		if (GC.getGame().isFinalInitialized())
+		{
+			SLOG("g1");
+			ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+			if (pkScriptSystem)
+			{
+				CvLuaArgsHandle args;
+				bool bResult;
+				LuaSupport::CallHook(pkScriptSystem, "DraftProgress", args.get(), bResult);
+			}
+		}
+		else
+		{
+			SLOG("g2");
+			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DraftProgress|%d", s_draftCurrentProgress).c_str());
+		}
+
 		gDLL->SendRenameCity(-7, "");
 	}
 }
@@ -3154,8 +3243,15 @@ void DraftResponseSecret(PlayerTypes p, const char* szSecret)
 	if (bReady)
 	{
 		SLOG("received all secrets");
-		s_draftCurrentProgress = DRAFT_PROGRESS_OVER;
-		// TODO gather bans & roll civs
+		if (GC.getGame().isFinalInitialized())
+		{
+			s_draftCurrentProgress = DRAFT_PROGRESS_INGAME_2;
+		}
+		else
+		{
+			s_draftCurrentProgress = DRAFT_PROGRESS_OVER;
+		}
+		// prepare a seed as the sum of the players' secrets
 		int sum = 0;
 		for (uint i = 0; i < s_draftPlayerSecrets.size(); i++)
 		{
@@ -3172,6 +3268,7 @@ void DraftResponseSecret(PlayerTypes p, const char* szSecret)
 		}
 		SLOG("SUM: %d", sum);
 
+		// create a list of non-banned civs
 		std::vector<int> civList;
 		int bans1, bans2;
 		if (!CvPreGame::GetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS1", bans1))
@@ -3202,8 +3299,64 @@ void DraftResponseSecret(PlayerTypes p, const char* szSecret)
 		}
 		SLOG("shuffled civs %s", s.c_str());
 		s_draftShuffledCivs = s;
+		// assign X civs for each player
+		size_t pos = 0;
+		uint id;
+		CvString strPicks = s;
+		CvString token;
+		int totalPlayers = 0;
+		std::vector<int> playerSlotsTbl;
+		std::vector<CvString> vstrPicks(MAX_MAJOR_CIVS);
+		for (int i = 0; i < MAX_MAJOR_CIVS; i++)
+		{
+			if (CvPreGame::slotStatus(static_cast<PlayerTypes>(i)) == SS_TAKEN && CvPreGame::slotClaim(static_cast<PlayerTypes>(i)) == SLOTCLAIM_ASSIGNED)
+			{
+				playerSlotsTbl.push_back(i);
+				totalPlayers++;
+			}
+		}
+		std::vector<CvString> vPicks(MAX_MAJOR_CIVS);
+		std::vector< std::vector<int> > playerToCivsTbl(MAX_MAJOR_CIVS);
+		int iSlot = 0;
+		uint numPicks = CvPreGame::getDraftNumPicks();
+		while ((pos = strPicks.find(',')) != std::string::npos) {
+			token = strPicks.substr(0, pos);
+			strPicks.erase(0, pos + 1);
+			if (sscanf(token.c_str(), "%d", &id) == 1)
+			{
+				if (playerToCivsTbl.at(iSlot).size() < numPicks)
+					playerToCivsTbl.at(iSlot).push_back(id);
+				iSlot = (iSlot + 1) % totalPlayers;
+			}
+		}
+		for (int i = 0; i < totalPlayers; i++)
+		{
+			CvString str;
+			for (std::vector<int>::iterator it = playerToCivsTbl[i].begin(); it != playerToCivsTbl[i].end(); ++it)
+				str.Format("%s%d,", str.c_str(), *it);
+			SLOG("player %d picks %s", playerSlotsTbl[i], str.c_str());
+			vstrPicks.at(i) = str;
+		}
+		CvPreGame::setDraftPlayerPicks(vstrPicks);
 
-		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DRAFT_PROGRESS_OVER|%s", s.c_str()).c_str());
+		// notify UI
+		if (GC.getGame().isFinalInitialized())
+		{
+			SLOG("g1");
+			ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+			if (pkScriptSystem)
+			{
+				CvLuaArgsHandle args;
+				bool bResult;
+				args->Push(1);
+				LuaSupport::CallHook(pkScriptSystem, "DraftProgress", args.get(), bResult);
+			}
+		}
+		else
+		{
+			SLOG("g2");
+			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DraftProgress|%d", s_draftCurrentProgress).c_str());
+		}
 	}
 }
 
@@ -3222,7 +3375,24 @@ void DraftResponseBanRollback(PlayerTypes p, const char* szBans)
 		return;
 	}
 
-	DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("ban-failure|%s", szBans).c_str());
+	if (GC.getGame().isFinalInitialized())
+	{
+		SLOG("g1");
+		ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+		if (pkScriptSystem)
+		{
+			CvLuaArgsHandle args;
+			bool bResult;
+			args->Push(p);
+			LuaSupport::CallHook(pkScriptSystem, "BanFailure", args.get(), bResult);
+		}
+	}
+	else
+	{
+		SLOG("g2");
+		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("ban-failure|%s", szBans).c_str());
+		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("BanFailure|%d", p).c_str());  // V2
+	}
 };
 
 void DraftResponseSwapPlayers(PlayerTypes p, const char* szSwapWith)
@@ -3245,7 +3415,24 @@ void DraftResponseSwapPlayers(PlayerTypes p, const char* szSwapWith)
 			s_draftPlayerSecretHashes[p] = "";
 			SetDraftPlayerReady((PlayerTypes)oldp, false);
 			SetDraftPlayerReady(p, false);
-			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("upd|%s", szSwapWith).c_str());
+
+			if (GC.getGame().isFinalInitialized())
+			{
+				SLOG("g1");
+				ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+				if (pkScriptSystem)
+				{
+					CvLuaArgsHandle args;
+					bool bResult;
+					LuaSupport::CallHook(pkScriptSystem, "DraftsUpdate", args.get(), bResult);
+				}
+			}
+			else
+			{
+				SLOG("g2");
+				DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("upd|%s", szSwapWith).c_str());
+				DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DraftsUpdate");  // V2
+			}
 		}
 	}
 };
@@ -3264,7 +3451,26 @@ void DraftLocalReady()
 		SLOG("WARN attempt to overwrite local secret");
 		SLOG("reusing old secret instead: %s", s_draftLocalSecret.c_str());
 		s_draftLocalSecretHash = hash(s_draftLocalSecret);
-		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DRAFT_PROGRESS_INIT|%s", s_draftLocalSecretHash.c_str()).c_str());
+
+		if (GC.getGame().isFinalInitialized())
+		{
+			SLOG("g1");
+			ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+			if (pkScriptSystem)
+			{
+				CvLuaArgsHandle args;
+				bool bResult;
+				LuaSupport::CallHook(pkScriptSystem, "DraftsUpdate", args.get(), bResult);
+				LuaSupport::CallHook(pkScriptSystem, "DraftSendSecretHash", args.get(), bResult);
+			}
+		}
+		else
+		{
+			SLOG("g2");
+			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DRAFT_PROGRESS_INIT|%s", s_draftLocalSecretHash.c_str()).c_str());
+			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DraftsUpdate");  // V2
+			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DraftSendSecretHash");  // V2
+		}
 		return;
 	}
 
@@ -3307,7 +3513,23 @@ void DraftLocalReady()
 	}
 	s_draftLocalSecretHash = hash(s_draftLocalSecret);
 
-	DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DRAFT_PROGRESS_INIT|%s", s_draftLocalSecretHash.c_str()).c_str());
+	if (GC.getGame().isFinalInitialized())
+	{
+		SLOG("g1");
+		ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+		if (pkScriptSystem)
+		{
+			CvLuaArgsHandle args;
+			bool bResult;
+			LuaSupport::CallHook(pkScriptSystem, "DraftSendSecretHash", args.get(), bResult);
+		}
+	}
+	else
+	{
+		SLOG("g2");
+		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DRAFT_PROGRESS_INIT|%s", s_draftLocalSecretHash.c_str()).c_str());
+		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DraftSendSecretHash");  // V2
+	}
 }
 
 void DraftLocalReset(const char* szReason)
@@ -3326,18 +3548,54 @@ void DraftLocalReset(const char* szReason)
 		s_draftAllBansReceived[i] = false;
 	}
 	s_draftPlayerBans.clear();
+	for (uint i = 0; i < s_draftPlayerPicks.size(); i++)
+	{
+		s_draftPlayerPicks[i] = "";
+	}
+	for (uint i = 0; i < s_draftPlayerDiscardedPicks.size(); i++)
+	{
+		s_draftPlayerDiscardedPicks[i] = "";
+	}
 	s_draftCurrentProgress = DRAFT_PROGRESS_INIT;
 	s_draftResult = DRAFT_RESULT_NONE;
 	s_draftShuffledCivs = "";
 	s_draftPlayersReady = 0;
-	CvPreGame::SetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS1", 0);
-	CvPreGame::SetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS2", 0);
+	s_draftRemapPlayersReady = 0;
+	SetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS1", 0);
+	SetGameOption("GAMEOPTION_DRAFTS_BANNED_CIVS2", 0);
+	int r = -1;
+	GetGameOption("GAMEOPTION_TOURNAMENT_MODE", r);
+	if (r > 0)
+	{
+		SetGameOption("GAMEOPTION_DRAFT_NUM_BANS", 1);
+		SetGameOption("GAMEOPTION_DRAFT_NUM_PICKS", 3);
+	}
 	s_draftBansMsgQueue.clear();
 	s_draftCurrBansMsgNumber = 0;
 	s_draftLocalSecret = "";
 	s_draftLocalSecretHash = "";
-	CvString strReason(CvString("reset|") + szReason);
-	DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), strReason.c_str());
+
+	int iReason = -1;
+	if (strcmp(szReason, "OPTIONS_CHANGED") == 0)
+		iReason = 0;
+
+	if (GC.getGame().isFinalInitialized())
+	{
+		SLOG("g1");
+		ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+		if (pkScriptSystem)
+		{
+			CvLuaArgsHandle args;
+			bool bResult;
+			args->Push(iReason);
+			LuaSupport::CallHook(pkScriptSystem, "ResetDrafts", args.get(), bResult);
+		}
+	}
+	else
+	{
+		SLOG("g2");
+		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("ResetDrafts|%d", iReason).c_str());
+	}
 }
 
 void DraftLocalUpdate()
@@ -3356,8 +3614,23 @@ void DraftLocalUpdate()
 		{
 			SLOG("received all secret hashes");
 			s_draftCurrentProgress = DRAFT_PROGRESS_BANS;
-			// TODO enable bans in UI
-			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DRAFT_PROGRESS_BANS|");
+
+			if (GC.getGame().isFinalInitialized())
+			{
+				SLOG("g1");
+				ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+				if (pkScriptSystem)
+				{
+					CvLuaArgsHandle args;
+					bool bResult;
+					LuaSupport::CallHook(pkScriptSystem, "DraftProgress", args.get(), bResult);
+				}
+			}
+			else
+			{
+				SLOG("g2");
+				DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DraftProgress|%d", s_draftCurrentProgress).c_str());
+			}
 		}
 	}
 	else if (s_draftCurrentProgress == DRAFT_PROGRESS_BANS || s_draftCurrentProgress == DRAFT_PROGRESS_BUSY)
@@ -3459,6 +3732,44 @@ std::vector<CvString> getDraftPlayerBans()
 	return s_draftPlayerBans;
 }
 
+std::vector<CvString> getDraftPlayerPicks()
+{
+	return s_draftPlayerPicks;
+}
+
+std::vector<CvString> getDraftPlayerDiscardedPicks()
+{
+	return s_draftPlayerDiscardedPicks;
+}
+
+int getDraftNumBans()
+{
+	int i = -1;
+	CvPreGame::GetGameOption("GAMEOPTION_DRAFT_NUM_BANS", i);
+	return i;
+}
+
+int getDraftMinBans()
+{
+	int i = -1;
+	CvPreGame::GetGameOption("GAMEOPTION_TOURNAMENT_MODE", i);
+	return i > 0 ? 1 : 0;
+}
+
+int getDraftNumPicks()
+{
+	int i = -1;
+	CvPreGame::GetGameOption("GAMEOPTION_DRAFT_NUM_PICKS", i);
+	return i;
+}
+
+bool getDraftDiscardPicks()
+{
+	int i = -1;
+	CvPreGame::GetGameOption("GAMEOPTION_DRAFT_OPTION_DISCARD_PICKS", i);
+	return i > 0 ? true : false;
+}
+
 std::vector<CvString> getDraftPlayerSecrets()
 {
 	return s_draftPlayerSecrets;
@@ -3467,6 +3778,16 @@ std::vector<CvString> getDraftPlayerSecrets()
 std::vector<CvString> getDraftPlayerSecretHashes()
 {
 	return s_draftPlayerSecretHashes;
+}
+
+CvString getDraftLocalSecret()
+{
+	return s_draftLocalSecret;
+}
+
+CvString getDraftLocalSecretHash()
+{
+	return s_draftLocalSecretHash;
 }
 
 std::vector<bool> getDraftAllBansReceived()
@@ -3496,6 +3817,33 @@ void setDraftResult(int value)
 void setDraftPlayerBans(std::vector<CvString> value)
 {
 	s_draftPlayerBans = value;
+}
+
+void setDraftPlayerPicks(std::vector<CvString> value)
+{
+	s_draftPlayerPicks = value;
+}
+
+void setDraftPlayerDiscardedPicks(std::vector<CvString> value)
+{
+	s_draftPlayerDiscardedPicks = value;
+}
+
+void setDraftPlayerDiscardedPicks(uint pos, CvString value)
+{
+	if (pos < s_draftPlayerDiscardedPicks.size())
+		s_draftPlayerDiscardedPicks.at(pos) = value;
+}
+
+void addDiscardedPicks(uint p)
+{
+	SLOG("p: %d", p);
+	if (p < s_draftPlayerDiscardedPicks.size())
+	{
+		SLOG("OLD DP: %s", s_draftPlayerDiscardedPicks.at(p).c_str());
+		s_draftPlayerDiscardedPicks.at(p) += CvString::format("%d,", (int)civilization(static_cast<PlayerTypes>(p)));
+		SLOG("NEW DP: %s", s_draftPlayerDiscardedPicks.at(p).c_str());
+	}
 }
 
 void setDraftPlayerSecrets(std::vector<CvString> value)
@@ -3582,6 +3930,22 @@ void setLeaderKey(PlayerTypes p, const CvString& szKey)
 		}
 		s_draftPlayerSecretHashes[uiPlayerID] = "";
 		SetDraftPlayerReady((PlayerTypes)uiPlayerID, false);
+		return;
+	}
+	else if ((((uint)p >> 28) & 15) == 7)  // register lua Drafts methods for all threads (via ExposedTypes)
+	{
+		SLOG("t1");
+		ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+		if (pkScriptSystem)
+		{
+			SLOG("t2");
+			lua_State* L = pkScriptSystem->CreateLuaThread("temp");
+			if (L != NULL)
+			{
+				CvLuaDrafts::Register(L);
+			}
+			pkScriptSystem->FreeLuaThread(L);
+		}
 		return;
 	}
 #endif
