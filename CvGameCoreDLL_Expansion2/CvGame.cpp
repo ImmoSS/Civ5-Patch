@@ -745,6 +745,9 @@ void CvGame::setInitialItems(CvGameInitialItemsOverrides& kInitialItemOverrides)
 	}
 
 	initFreeUnits(kInitialItemOverrides);
+#ifdef INGAME_CIV_DRAFTER
+	initDrafts();
+#endif
 
 	m_iEarliestBarbarianReleaseTurn = getHandicapInfo().getEarliestBarbarianReleaseTurn() + GC.getGame().getJonRandNum(GC.getAI_TACTICAL_BARBARIAN_RELEASE_VARIATION(), "Barbarian Release Turn") + 1;
 
@@ -1452,8 +1455,29 @@ void CvGame::initFreeState(CvGameInitialItemsOverrides& kOverrides)
 //	--------------------------------------------------------------------------------
 void CvGame::initFreeUnits(CvGameInitialItemsOverrides& kOverrides)
 {
-#ifdef REPLAY_EVENTS
-# ifdef INGAME_CIV_DRAFTER
+	for(int iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		const PlayerTypes ePlayer = static_cast<PlayerTypes>(iI);
+		CvPlayerAI& kPlayer = GET_PLAYER(ePlayer);
+
+		if(kOverrides.GrantInitialUnitsPerPlayer[ePlayer])
+		{
+			if(kPlayer.isAlive())
+			{
+				if((kPlayer.GetNumUnitsWithUnitAI(UNITAI_SETTLE,false,false) == 0) && (kPlayer.getNumCities() == 0))
+				{
+					kPlayer.initFreeUnits(kOverrides);
+				}
+			}
+		}
+	}
+}
+
+#ifdef INGAME_CIV_DRAFTER
+//	--------------------------------------------------------------------------------
+void CvGame::initDrafts()
+{
+	SLOG("--- init drafts ---")
 	// Bans
 	std::vector<CvString> vBans = CvPreGame::getDraftPlayerBans();
 	std::vector<CvString> vBans2(MAX_MAJOR_CIVS);
@@ -1487,7 +1511,9 @@ void CvGame::initFreeUnits(CvGameInitialItemsOverrides& kOverrides)
 			PlayerTypes playerID = static_cast<PlayerTypes>(i);
 			std::vector<int> vArgs;
 			CvString strArg = vBans2.at(i);
+# ifdef REPLAY_EVENTS
 			GC.getGame().addReplayEvent(REPLAYEVENT_DraftPlayerBans, playerID, vArgs, strArg);
+# endif
 		}
 	}
 	// Picks
@@ -1495,6 +1521,7 @@ void CvGame::initFreeUnits(CvGameInitialItemsOverrides& kOverrides)
 	CvString token;
 	int totalPlayers = 0;
 	std::vector<int> playerSlotsTbl;
+	std::vector<CvString> vstrPicks(MAX_MAJOR_CIVS);
 	for (int i = 0; i < MAX_MAJOR_CIVS; i++)
 	{
 		if (CvPreGame::slotStatus(static_cast<PlayerTypes>(i)) == SS_TAKEN && CvPreGame::slotClaim(static_cast<PlayerTypes>(i)) == SLOTCLAIM_ASSIGNED)
@@ -1526,28 +1553,24 @@ void CvGame::initFreeUnits(CvGameInitialItemsOverrides& kOverrides)
 		PlayerTypes playerID = static_cast<PlayerTypes>(playerSlotsTbl[i]);
 		std::vector<int> vArgs;
 		CvString strArg = str;
+# ifdef REPLAY_EVENTS
 		GC.getGame().addReplayEvent(REPLAYEVENT_DraftPlayerPicks, playerID, vArgs, strArg);
-	}
-	
 # endif
-#endif
-	for(int iI = 0; iI < MAX_PLAYERS; iI++)
+		vstrPicks.at(i) = str;
+	}
+	CvPreGame::setDraftPlayerPicks(vstrPicks);
+	// WIP start remap vote here?
+	CvPreGame::setDraftCurrentProgress(DRAFT_PROGRESS_INGAME_1);
+	// inform UI
+	ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+	if (pkScriptSystem)
 	{
-		const PlayerTypes ePlayer = static_cast<PlayerTypes>(iI);
-		CvPlayerAI& kPlayer = GET_PLAYER(ePlayer);
-
-		if(kOverrides.GrantInitialUnitsPerPlayer[ePlayer])
-		{
-			if(kPlayer.isAlive())
-			{
-				if((kPlayer.GetNumUnitsWithUnitAI(UNITAI_SETTLE,false,false) == 0) && (kPlayer.getNumCities() == 0))
-				{
-					kPlayer.initFreeUnits(kOverrides);
-				}
-			}
-		}
+		CvLuaArgsHandle args;
+		bool bResult;
+		LuaSupport::CallHook(pkScriptSystem, "DraftProgress", args.get(), bResult);
 	}
 }
+#endif
 
 //	--------------------------------------------------------------------------------
 void CvGame::assignStartingPlots()

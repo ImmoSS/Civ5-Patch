@@ -820,6 +820,9 @@ protected:
 	void initDiplomacy();
 	void initFreeState(CvGameInitialItemsOverrides& kOverrides);
 	void initFreeUnits(CvGameInitialItemsOverrides& kOverrides);
+#ifdef INGAME_CIV_DRAFTER
+	void initDrafts();
+#endif
 
 	bool InitMap(CvGameInitialItemsOverrides& kGameInitialItemsOverrides);
 
