@@ -129005,6 +129005,126 @@ The ship has weather'd every rack; the prize we sought is won."
 				{1_Player}[ENDCOLOR]: ban again!
 			</Text>
 		</Row>
+		<Replace Tag="TXT_KEY_DRAFT_NUM_BANS">
+			<Text>
+				Bans:
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_NUM_BANS_TT">
+			<Text>
+				The maximum number of Civilization Bans per Player.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_NUM_PICKS">
+			<Text>
+				Picks:
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_NUM_PICKS_TT">
+			<Text>
+				The number of Civilizations each Player chooses from after the Drafts.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_PROGRESS_INGAME_1">
+			<Text>
+				Vote for Map Restart: {1_Num}/{2_Num} Votes
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_PROGRESS_INGAME_1_WAITING">
+			<Text>
+				Vote for Map Restart: {1_Num}/{2_Num} Votes
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_PROGRESS_INGAME_2"> 
+			<Text>
+				Map Restart. Waiting for Players
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_DISCARDED_CIV_TT">
+			<Text>
+				Discarded due to a map restart.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_REMAP_BUTTON_TT">
+			<Text>
+				Vote for a Map Restart
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_REMAP_BUTTON_TT_DISABLED">
+			<Text>
+				You have already voted!
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_OPEN_DRAFTS_POPUP_TT">
+			<Text>
+				Open Drafts Panel
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_REMAP_BUTTON_READY">
+			<Text>
+				Map Restart. Click to proceed
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_REMAP_BUTTON_VOTE">
+			<Text>
+				Vote for Map Restart: {1_Num}/{2_Num} Votes
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_REMAP_READY">
+			<Text>
+				Ready
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_REMAP_ACTIVE">
+			<Text>
+				Voting for a Map Restart is now open! A total of {1_Num} votes are needed by Turn 15
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_REMAP_VOTE">
+			<Text>
+				{1_Player}[ENDCOLOR] has voted for a Map Restart
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_REMAP_RESULT_SUCCESS">
+			<Text>
+				Map Restart successful! Waiting for Players to get ready
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_REMAP_RESULT_FAIL">
+			<Text>
+				Map Restart failed! The Game will continue.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_PLAYER_SELECT"> 
+			<Text>
+				{1_Player}[ENDCOLOR] has chosen {2_Civ}
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_REMAP_COUNTDOWN"> 
+			<Text>
+				Restart in {1_Num}...
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_OPTION_DISCARD_PICKS">
+			<Text>
+				Discard Picks
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_OPTION_DISCARD_PICKS_HELP">
+			<Text>
+				When this option is enabled, Map Restarts will discard the currently selected Civilization from the players' Drafts who voted for the Restart, forcing them to choose another one. When there are no more picks left, the Draft will reset.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_OPTION_INC_VOTE_THRESHOLD">
+			<Text>
+				Increment Vote Threshold
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_OPTION_INC_VOTE_THRESHOLD_HELP">
+			<Text>
+				When this option is enabled, the number of votes required for the next Restart will increase with each Map Restart, up to a maximum equal to the number of players.
+			</Text>
+		</Replace>
 		<Row Tag="TXT_KEY_PATCH_UPDATE_NOTES_TITLE"> 
 			<Text>
 				Patch Notes
@@ -129103,6 +129223,71 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_OPSCREEN_HOTKEY_EDIT_HELP"> 
 			<Text>
 				Pro tip: You can change the Hotkeys for Actions and unit Promotions by pressing Ctrl + Right-Click on any action button (In-Game!)
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_OPSCREEN_CIVBOT_TITLE"> 
+			<Text>
+				CIVBOT Integration
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_INTEGRATION_TITLE"> 
+			<Text>
+				Civbot Integration
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_INTEGRATION_TT"> 
+			<Text>
+				If this option is enabled, the civbot.online service features become available in the multiplayer game lobby: saving and loading draft results, player rankings, and automatic recording of game results.[NEWLINE]Please complete the registration process before using the service for the first time. To completely delete the service's local data, click "Reset Data".
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_RESET_DATA_TITLE"> 
+			<Text>
+				Reset Data
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_RESET_DATA_TT"> 
+			<Text>
+				Disables the integration and deletes all related information on this device.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_INTEGRATION_SUB"> 
+			<Text>
+				To complete the integration process, enter this code in the integration section of your civbot.online account or in the Discord bot channel on the associated server:
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_LOADING"> 
+			<Text>
+				Loading...
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_SUCCESS"> 
+			<Text>
+				[COLOR_POSITIVE_TEXT]Registration was successful!
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_ERROR"> 
+			<Text>
+				[COLOR_NEGATIVE_TEXT]Error connecting to the server
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_ERROR_STATUS"> 
+			<Text>
+				[COLOR_NEGATIVE_TEXT]Error during registration
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_LOAD_DRAFT"> 
+			<Text>
+				Load Drafts
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_DRAFT_NODATA"> 
+			<Text>
+				[COLOR_NEGATIVE_TEXT]No saved Drafts
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_MULTIPLAYER_EXTRA_OPTIONS"> 
+			<Text>
+				Additional Options
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PATCH_VERSION"> 
@@ -135937,6 +136122,126 @@ The ship has weather'd every rack; the prize we sought is won."
 				{1_Player}[ENDCOLOR]: сделайте бан заново!
 			</Text>
 		</Row>
+		<Replace Tag="TXT_KEY_DRAFT_NUM_BANS">
+			<Text>
+				Баны:
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_NUM_BANS_TT">
+			<Text>
+				Максимальное количество банов цивилизаций для каждого игрока.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_NUM_PICKS">
+			<Text>
+				Выбор из:
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_NUM_PICKS_TT">
+			<Text>
+				Количество цивилизаций на выбор для каждого игрока в результате драфта.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_PROGRESS_INGAME_1">
+			<Text>
+				Рестарт: {1_Num}/{2_Num} Голосов
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_PROGRESS_INGAME_1_WAITING">
+			<Text>
+				Рестарт: {1_Num}/{2_Num} Голосов
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_PROGRESS_INGAME_2"> 
+			<Text>
+				Рестарт. Ожидание игроков
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_DISCARDED_CIV_TT">
+			<Text>
+				Недоступно из-за рестарта.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_REMAP_BUTTON_TT">
+			<Text>
+				Проголосовать за рестарт карты
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_REMAP_BUTTON_TT_DISABLED">
+			<Text>
+				Вы уже проголосовали!
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_OPEN_DRAFTS_POPUP_TT">
+			<Text>
+				Открыть панель драфта
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_REMAP_BUTTON_READY">
+			<Text>
+				Рестарт. Нажмите, чтобы продолжить
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_REMAP_BUTTON_VOTE">
+			<Text>
+				Рестарт: {1_Num}/{2_Num} Голосов
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_REMAP_READY">
+			<Text>
+				Готов
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_REMAP_ACTIVE">
+			<Text>
+				Голосование за рестарт карты началось! Всего необходимо {1_Num} голосов до 15-го хода
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_REMAP_VOTE">
+			<Text>
+				{1_Player}[ENDCOLOR] голосует за рестарт
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_REMAP_RESULT_SUCCESS">
+			<Text>
+				Успешный рестарт карты! Ожидание готовности игроков
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_REMAP_RESULT_FAIL">
+			<Text>
+				Рестарт карты не удался! Игра будет продолжена.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_PLAYER_SELECT"> 
+			<Text>
+				{1_Player}[ENDCOLOR] выбирает {2_Civ}
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_REMAP_COUNTDOWN"> 
+			<Text>
+				Рестарт через {1_Num}...
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_OPTION_DISCARD_PICKS">
+			<Text>
+				Вычеркивание при рестарте
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_OPTION_DISCARD_PICKS_HELP">
+			<Text>
+				Если эта опция включена, при рестарте карты текущая выбранная цивилизация будет удалена из списков выбора игроков, проголосовавших за рестарт, и им придется выбрать другую. Когда все доступные для выбора цивилизации будут исчерпаны, процесс драфта начнется заново.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_OPTION_INC_VOTE_THRESHOLD">
+			<Text>
+				Повышение порога голосов
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_OPTION_INC_VOTE_THRESHOLD_HELP">
+			<Text>
+				Если эта опция включена, количество голосов, необходимое для следующего рестарта, будет увеличиваться с каждым рестартом карты, вплоть до максимального значения, равного количеству игроков.
+			</Text>
+		</Replace>
 		<Row Tag="TXT_KEY_PATCH_UPDATE_NOTES_TITLE"> 
 			<Text>
 				Список изменений
@@ -137046,6 +137351,71 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_GAME_SELECTION_SCREEN"> 
 			<Text>
 				[COLOR_POSITIVE_TEXT]Патч для FFA6 турнира {TXT_KEY_PATCH_VERSION}[ENDCOLOR]
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_OPSCREEN_CIVBOT_TITLE"> 
+			<Text>
+				Интеграция CIVBOT
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_INTEGRATION_TITLE"> 
+			<Text>
+				Интеграция Civbot
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_INTEGRATION_TT"> 
+			<Text>
+				Если эта опция включена, в лобби сетевой игры становятся доступны функции сервиса civbot.online: сохранение и загрузка результатов драфта, рейтинги игроков, автоматическое фиксирование результатов партии.[NEWLINE]Перед первым использованием пройдите процедуру регистрации. Для полного удаления локальных данных сервиса нажмите "Сброс данных".
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_RESET_DATA_TITLE"> 
+			<Text>
+				Сброс данных
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_RESET_DATA_TT"> 
+			<Text>
+				Выключает интеграцию и стирает всю связанную с ней информацию на этом устройстве.
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_INTEGRATION_SUB"> 
+			<Text>
+				Для завершения интеграции введите данный код в разделе интеграции вашего аккаунта civbot.online или канале дискорд бота на ассоциированном сервере:
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_LOADING"> 
+			<Text>
+				Загрузка данных...
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_SUCCESS"> 
+			<Text>
+				[COLOR_POSITIVE_TEXT]Регистрация успешно завершена!
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_NETWORK_ERROR"> 
+			<Text>
+				[COLOR_NEGATIVE_TEXT]Ошибка подключения к серверу
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_ERROR_STATUS"> 
+			<Text>
+				[COLOR_NEGATIVE_TEXT]Ошибка в процессе регистрации
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_LOAD_DRAFT"> 
+			<Text>
+				Загрузить драфт
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_DRAFT_NODATA"> 
+			<Text>
+				[COLOR_NEGATIVE_TEXT]Нет сохраненных драфтов
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_MULTIPLAYER_EXTRA_OPTIONS"> 
+			<Text>
+				Дополнительные опции
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PATCH_VERSION"> 
