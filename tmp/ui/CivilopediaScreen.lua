@@ -4408,11 +4408,25 @@ CivilopediaCategory[CategoryTerrain].SelectArticle = function( rawTerrainID, sho
 				Controls.YieldFrame:SetHide( false );
 				local numYields = 0;
 				local yieldString = "";
-				for row in GameInfo.Feature_YieldChanges( condition ) do
-					numYields = numYields + 1;
-					yieldString = yieldString..tostring(row.Yield).." ";
-					yieldString = yieldString..GameInfo.Yields[row.YieldType].IconString.." ";
-				end				
+				-- Lake Fix
+				if thisFeature.Type == 'FEATURE_LAKE' then
+					for row in GameInfo.Yields() do
+						if row.LakeChange ~= 0 then
+							numYields = numYields + 1;
+							yieldString = string.format('%s%+d %s ', yieldString, row.LakeChange, row.IconString)
+						end
+					end
+				else
+					for row in GameInfo.Feature_YieldChanges( condition ) do
+						numYields = numYields + 1;
+						-- check YieldNotAdditive
+						if thisFeature.YieldNotAdditive then
+							yieldString = string.format('%s%d %s ', yieldString, row.Yield, GameInfo.Yields[row.YieldType].IconString)
+						else
+							yieldString = string.format('%s%+d %s ', yieldString, row.Yield, GameInfo.Yields[row.YieldType].IconString)
+						end
+					end		
+				end		
 				-- add happiness since it is a quasi-yield
 				if thisFeature.InBorderHappiness and thisFeature.InBorderHappiness ~= 0 then
 					numYields = numYields + 1;
