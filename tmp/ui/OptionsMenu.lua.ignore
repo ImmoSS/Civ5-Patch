@@ -1,7 +1,10 @@
 -------------------------------------------------
 -- Options Menu
 -------------------------------------------------
--- edit: NEW: Ingame Hotkey Manager for vanilla UI
+-- edit:
+--     Ingame Hotkey Manager
+--     Civbot Integration
+-- for vanilla UI
 -------------------------------------------------
 include( "IconSupport" );
 
@@ -382,6 +385,7 @@ function OnBack()
 	
 	Controls.GraphicsChangedPopup:SetHide(true);
     Controls.ConfirmResetAllHotkeysPopup:SetHide(true);
+    Controls.CivbotIntegrationPopup:SetHide(true);
 	OnCountdownNo();	
 end
 --Controls.CancelButton:RegisterCallback( Mouse.eLClick, OnBack );
@@ -1604,6 +1608,9 @@ RefreshTutorialLevelOptions();
 BuildPulldowns();
 UpdateOptionsDisplay();
 
+Controls.TurnNotifySteamInviteCheckbox:SetOffsetX(Controls.TurnNotifySteamInviteCheckbox:GetTextButton():GetSizeX())
+Controls.TurnNotifyEmailCheckbox:SetOffsetX(Controls.TurnNotifyEmailCheckbox:GetTextButton():GetSizeX())
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function OnDragSpeedSlider( fSpeed )
@@ -2512,6 +2519,13 @@ Controls.ActionStyle4:RegisterCallback( Mouse.eLClick, OnHotkeyStyle );
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 
+LuaEvents.OptMenuHotkeyChanged.Add(function(Cat, Id, HotKey, CtrlDown, AltDown, ShiftDown)
+    g_StackChildren[Cat][Id].HotkeyEditFrontLabel:SetText(KeySequenceToString(g_KeyMap[HotKey] and g_KeyMap[HotKey][3] or '--', CtrlDown, AltDown, ShiftDown))
+end)
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
 -- use UI:HasShownLegal() to backup xml hotkeys info EXACTLY once on initial application loading
 if not UI:HasShownLegal() then
     BackupActions()
@@ -2522,4 +2536,391 @@ BuildHotkeyManagerControls();
 
 -------------------------------------------------------------------------------
 -- HOTKEY MANAGER END
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+-- Civbot Integration START
+-------------------------------------------------------------------------------
+
+-- lua json helpers
+local function kind_of(obj)
+  if type(obj) ~= 'table' then return type(obj) end
+  local i = 1
+  for _ in pairs(obj) do
+    if obj[i] ~= nil then i = i + 1 else return 'table' end
+  end
+  if i == 1 then return 'table' else return 'array' end
+end
+
+local function escape_str(s)
+  local in_char  = {'\\', '"', '/', '\b', '\f', '\n', '\r', '\t'}
+  local out_char = {'\\', '"', '/',  'b',  'f',  'n',  'r',  't'}
+  for i, c in ipairs(in_char) do
+    s = s:gsub(c, '\\' .. out_char[i])
+  end
+  return s
+end
+
+local function skip_delim(str, pos, delim, err_if_missing)
+  pos = pos + #str:match('^%s*', pos)
+  if str:sub(pos, pos) ~= delim then
+    if err_if_missing then
+      error('Expected ' .. delim .. ' near position ' .. pos)
+    end
+    return pos, false
+  end
+  return pos + 1, true
+end
+
+local function parse_str_val(str, pos, val)
+  val = val or ''
+  local early_end_error = 'End of input found while parsing string.'
+  if pos > #str then error(early_end_error) end
+  local c = str:sub(pos, pos)
+  if c == '"'  then return val, pos + 1 end
+  if c ~= '\\' then return parse_str_val(str, pos + 1, val .. c) end
+  -- We must have a \ character.
+  local esc_map = {b = '\b', f = '\f', n = '\n', r = '\r', t = '\t'}
+  local nextc = str:sub(pos + 1, pos + 1)
+  if not nextc then error(early_end_error) end
+  return parse_str_val(str, pos + 2, val .. (esc_map[nextc] or nextc))
+end
+
+local function parse_num_val(str, pos)
+  local num_str = str:match('^-?%d+%.?%d*[eE]?[+-]?%d*', pos)
+  local val = tonumber(num_str)
+  if not val then error('Error parsing number at position ' .. pos .. '.') end
+  return val, pos + #num_str
+end
+
+local json = {}
+function json.stringify(obj, as_key)
+  local s = {}  -- We'll build the string as an array of strings to be concatenated.
+  local kind = kind_of(obj)  -- This is 'array' if it's an array or type(obj) otherwise.
+  if kind == 'array' then
+    if as_key then error('Can\'t encode array as key.') end
+    s[#s + 1] = '['
+    for i, val in ipairs(obj) do
+      if i > 1 then s[#s + 1] = ', ' end
+      s[#s + 1] = json.stringify(val)
+    end
+    s[#s + 1] = ']'
+  elseif kind == 'table' then
+    if as_key then error('Can\'t encode table as key.') end
+    s[#s + 1] = '{'
+    for k, v in pairs(obj) do
+      if #s > 1 then s[#s + 1] = ', ' end
+      s[#s + 1] = json.stringify(k, true)
+      s[#s + 1] = ':'
+      s[#s + 1] = json.stringify(v)
+    end
+    s[#s + 1] = '}'
+  elseif kind == 'string' then
+    return '"' .. escape_str(obj) .. '"'
+  elseif kind == 'number' then
+    if as_key then return '"' .. tostring(obj) .. '"' end
+    return tostring(obj)
+  elseif kind == 'boolean' then
+    return tostring(obj)
+  elseif kind == 'nil' then
+    return 'null'
+  else
+    error('Unjsonifiable type: ' .. kind .. '.')
+  end
+  return table.concat(s)
+end
+
+json.null = {}  -- This is a one-off table to represent the null value.
+
+function json.parse(str, pos, end_delim)
+  pos = pos or 1
+  if pos > #str then error('Reached unexpected end of input.') end
+  local pos = pos + #str:match('^%s*', pos)  -- Skip whitespace.
+  local first = str:sub(pos, pos)
+  if first == '{' then  -- Parse an object.
+    local obj, key, delim_found = {}, true, true
+    pos = pos + 1
+    while true do
+      key, pos = json.parse(str, pos, '}')
+      if key == nil then return obj, pos end
+      if not delim_found then error('Comma missing between object items.') end
+      pos = skip_delim(str, pos, ':', true)  -- true -> error if missing.
+      obj[key], pos = json.parse(str, pos)
+      pos, delim_found = skip_delim(str, pos, ',')
+    end
+  elseif first == '[' then  -- Parse an array.
+    local arr, val, delim_found = {}, true, true
+    pos = pos + 1
+    while true do
+      val, pos = json.parse(str, pos, ']')
+      if val == nil then return arr, pos end
+      if not delim_found then error('Comma missing between array items.') end
+      arr[#arr + 1] = val
+      pos, delim_found = skip_delim(str, pos, ',')
+    end
+  elseif first == '"' then  -- Parse a string.
+    return parse_str_val(str, pos + 1)
+  elseif first == '-' or first:match('%d') then  -- Parse a number.
+    return parse_num_val(str, pos)
+  elseif first == end_delim then  -- End of an object or array.
+    return nil, pos + 1
+  else  -- Parse true, false, or null.
+    local literals = {['true'] = true, ['false'] = false, ['null'] = json.null}
+    for lit_str, lit_val in pairs(literals) do
+      local lit_end = pos + #lit_str - 1
+      if str:sub(pos, lit_end) == lit_str then return lit_val, lit_end + 1 end
+    end
+    local pos_info_str = 'position ' .. pos .. ': ' .. str:sub(pos, pos + 10)
+    error('Invalid json syntax starting at ' .. pos_info_str)
+  end
+end
+
+function random_code(k)
+    local alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    local n = string.len(alphabet)
+    local pw = {}
+    for i = 1, k do
+        local r = math.random(n)
+        pw[i] = string.sub(alphabet, r, r)
+    end
+    return table.concat(pw)
+end
+
+function netRegister(code)
+    -- request api key; send netid and otp code
+    g_bCivbotPendingCode = code
+    CivbotData.SetValue('PendingCode', code)
+    req1.tdelta = 0
+    req1.pending = true
+    local netid = Steam.GetMySteamID().ID or ''
+    print('> req1', string.format('Net-ID: %s', netid), string.format('OTP-Code: %s', code))
+    req1.request = Network.HttpRequest({
+        url='https://apitest.civ5.workers.dev/api/integration/register',
+        method='GET',
+        headers={
+            'accept: application/json',
+            string.format('Net-ID: %s', netid),
+            string.format('OTP-Code: %s', code),
+        }
+    })
+end
+
+function netCheck()
+    -- request integration status; send api key
+    local key = #g_bCivbotPendingKey > 0 and g_bCivbotPendingKey or g_bCivbotKey
+    print('> req2', string.format('Api-Key: %s', key))
+    req2.tdelta = 0
+    req2.pending = true
+    req2.request = Network.HttpRequest({
+        url='https://apitest.civ5.workers.dev/api/integration/check',
+        method='GET',
+        headers={
+            'accept: application/json',
+            string.format('Api-Key: %s', key),
+        }
+    })
+end
+
+CivbotData = Modding.OpenUserData( 'CivbotIntegration', 1)
+g_bCivbotEnabled = CivbotData.GetValue('bEnabled') or 0
+g_bCivbotKey = CivbotData.GetValue('Key') or ''
+g_bCivbotPendingCode = CivbotData.GetValue('PendingCode') or ''
+g_bCivbotPendingKey = CivbotData.GetValue('PendingKey') or ''
+g_bCivbotNick = CivbotData.GetValue('Nick') or ''
+g_bCivbotStatus = 'UNAUTHORIZED'
+req1 = { tdelta = 0, pending = false, request = {} }
+req2 = { tdelta = 0, pending = false, request = {} }
+
+Controls.CivBotNickNameEdit:SetText(g_bCivbotNick)
+Controls.CivbotCheck:SetOffsetX(Controls.CivbotCheck:GetTextButton():GetSizeX())
+
+if g_bCivbotEnabled == 1 then
+    Controls.CivbotCheck:SetCheck(true)
+else
+    Controls.CivbotCheck:SetCheck(false)
+end
+Controls.CivbotCheck:RegisterCheckHandler(function(bCheck)
+    if bCheck then
+        if #g_bCivbotKey > 0 then
+            if g_bCivbotStatus == 'OK' then
+                g_bCivbotEnabled = 1
+                CivbotData.SetValue('bEnabled', g_bCivbotEnabled)
+                Controls.CivBotNickNameEdit:SetAlpha(1)
+            elseif g_bCivbotStatus == 'PENDINGCODE' then
+                Controls.CivbotIntegrationPopup:SetHide(false)
+                Controls.CivbotCheck:SetCheck(false)
+            else
+                netCheck()
+                Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_LOADING')
+                Controls.CivbotCheck:SetDisabled(true)
+                Controls.CivbotCheck:SetCheck(false)
+            end
+        elseif #g_bCivbotPendingKey > 0 then
+            netCheck()
+            Controls.CivbotCode:SetText(g_bCivbotPendingCode:gsub(".", "%1 "):sub(1,-2))  -- add spaces
+            Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_LOADING')
+            Controls.CivbotIntegrationPopup:SetHide(false)
+            Controls.CivbotCheck:SetDisabled(true)
+            Controls.CivbotCheck:SetCheck(false)
+        else
+            local code = random_code(4)
+            netRegister(code)
+            Controls.CivbotCode:SetText(code:gsub(".", "%1 "):sub(1,-2))  -- add spaces
+            Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_LOADING')
+            Controls.CivbotIntegrationOk:SetDisabled(true)
+            Controls.CivbotIntegrationPopup:SetHide(false)
+            Controls.CivbotCheck:SetCheck(false)
+        end
+    else
+        g_bCivbotEnabled = 0
+        CivbotData.SetValue('bEnabled', g_bCivbotEnabled)
+        Controls.CivBotNickNameEdit:SetAlpha(0.5)
+    end
+end)
+
+Controls.CivbotIntegrationOk:RegisterCallback(Mouse.eLClick, function()
+    if g_bCivbotStatus == 'PENDINGKEY' then
+        netCheck()
+        Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_LOADING')
+        Controls.CivbotStatus:SetHide(false)
+        Controls.CivbotIntegrationOk:SetDisabled(true)
+        Controls.CivbotIntegrationCancel:SetDisabled(true)
+    elseif g_bCivbotStatus == 'PENDINGCODE' then
+        netCheck()
+        Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_LOADING')
+        Controls.CivbotStatus:SetHide(false)
+        Controls.CivbotIntegrationOk:SetDisabled(true)
+        Controls.CivbotIntegrationCancel:SetDisabled(true)
+    else
+        Controls.CivbotIntegrationPopup:SetHide(true)
+    end
+end)
+
+Controls.CivbotIntegrationCancel:RegisterCallback(Mouse.eLClick, function()
+    if g_bCivbotEnabled == 1 then
+        Controls.CivbotCheck:SetCheck(true)
+    else
+        Controls.CivbotCheck:SetCheck(false)
+    end
+    Controls.CivbotIntegrationPopup:SetHide(true)
+end)
+
+Controls.CivbotResetDataButton:RegisterCallback(Mouse.eLClick, function()
+    Controls.CivbotConfirmResetPopup:SetHide(false)
+end)
+
+Controls.ConfirmCivbotResetDataYes:RegisterCallback(Mouse.eLClick, function()
+    g_bCivbotEnabled = 0
+    g_bCivbotStatus = 'UNAUTHORIZED'
+    g_bCivbotKey = ''
+    g_bCivbotPendingKey = ''
+    g_bCivbotPendingCode = ''
+    g_bCivbotNick = ''
+    CivbotData.SetValue('bEnabled', g_bCivbotEnabled)
+    CivbotData.SetValue('Key', g_bCivbotKey)
+    CivbotData.SetValue('PendingKey', g_bCivbotPendingKey)
+    CivbotData.SetValue('PendingCode', g_bCivbotPendingCode)
+    CivbotData.SetValue('Nick', g_bCivbotNick)
+
+    Controls.CivbotCheck:SetCheck(false)
+    Controls.CivBotNickNameEdit:SetAlpha(0.5)
+    Controls.CivBotNickNameEdit:SetText('')
+    Controls.CivbotConfirmResetPopup:SetHide(true)
+end)
+
+Controls.ConfirmCivbotResetDataNo:RegisterCallback(Mouse.eLClick, function()
+    Controls.CivbotConfirmResetPopup:SetHide(true)
+end)
+
+Controls.NetLoop:RegisterAnimCallback(function()
+    if req1.pending then
+        req1.tdelta = req1.tdelta + 1
+        if req1.request.Finished() then
+            req1.pending = false
+            local data = req1.request.PopReceivedData()
+            print('< req1 finished:', data)
+            local jdata = data and json.parse(data) or {}
+            if jdata['status'] == 'OK' then
+                g_bCivbotPendingKey = jdata['apiKey']
+                g_bCivbotStatus = 'PENDINGKEY'
+                CivbotData.SetValue('PendingKey', g_bCivbotPendingKey)
+                Controls.CivbotStatus:LocalizeAndSetText('')
+                Controls.CivbotIntegrationOk:SetDisabled(false)
+            else
+                g_bCivbotStatus = jdata['status'] or 'UNAUTHORIZED'
+                Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_ERROR_STATUS')
+            end
+        elseif req1.tdelta == 10 then
+            print('< req1 timeout')
+            req1.pending = false
+            g_bCivbotStatus = 'UNAUTHORIZED'
+            Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_ERROR')
+            Controls.CivbotStatus:SetHide(false)
+            Controls.CivbotIntegrationOk:SetDisabled(false)
+        end
+    end
+    if req2.pending then
+        req2.tdelta = req2.tdelta + 1
+        if req2.request.Finished() then
+            req2.pending = false
+            local data = req2.request.PopReceivedData()
+            print('< req2 finished:', data)
+            local jdata = data and json.parse(data) or {}
+            if jdata['status'] == 'OK' then
+                g_bCivbotNick = jdata['nick']
+                g_bCivbotEnabled = 1
+                g_bCivbotStatus = 'OK'
+                if #g_bCivbotPendingKey > 0 then
+                    g_bCivbotKey = g_bCivbotPendingKey
+                    CivbotData.SetValue('Key', g_bCivbotPendingKey)
+                    g_bCivbotPendingKey = ''
+                    CivbotData.SetValue('PendingKey', '')
+                    g_bCivbotPendingCode = ''
+                    CivbotData.SetValue('PendingCode', '')
+                end
+                CivbotData.SetValue('Nick', g_bCivbotNick)
+                CivbotData.SetValue('bEnabled', g_bCivbotEnabled)
+                Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_SUCCESS', g_bCivbotNick)
+                Controls.CivBotNickNameEdit:SetAlpha(1)
+                Controls.CivBotNickNameEdit:SetText(g_bCivbotNick)
+                Controls.CivbotIntegrationOk:SetDisabled(false)
+                Controls.CivbotCheck:SetCheck(true)
+            elseif jdata['status'] == 'PENDINGCODE' then
+                g_bCivbotStatus = 'PENDINGCODE'
+                Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_PENDING_CODE')
+                Controls.CivbotIntegrationOk:SetDisabled(false)
+                Controls.CivbotIntegrationPopup:SetHide(false)
+            elseif jdata['status'] == 'EXPIRED' then
+                g_bCivbotStatus = 'UNAUTHORIZED'
+                g_bCivbotKey = ''
+                g_bCivbotPendingKey = ''
+                g_bCivbotPendingCode = ''
+                CivbotData.SetValue('Key', '')
+                CivbotData.SetValue('PendingKey', '')
+                CivbotData.SetValue('PendingCode', '')
+                Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_EXPIRED_CODE')
+                Controls.CivbotIntegrationPopup:SetHide(false)
+            else
+                g_bCivbotStatus = jdata['status'] or 'UNAUTHORIZED'
+                Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_ERROR_STATUS')
+                Controls.CivbotIntegrationPopup:SetHide(false)
+            end
+            Controls.CivbotStatus:SetHide(false)
+            Controls.CivbotIntegrationCancel:SetDisabled(false)
+            Controls.CivbotCheck:SetDisabled(false)
+        elseif req2.tdelta == 10 then
+            print('< req2 timeout')
+            req2.pending = false
+            g_bCivbotStatus = 'UNAUTHORIZED'
+            Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_ERROR')
+            Controls.CivbotStatus:SetHide(false)
+            Controls.CivbotIntegrationOk:SetDisabled(false)
+            Controls.CivbotIntegrationCancel:SetDisabled(false)
+            Controls.CivbotCheck:SetDisabled(false)
+        end
+    end
+end)
+
+-------------------------------------------------------------------------------
+-- Civbot Integration END
 -------------------------------------------------------------------------------

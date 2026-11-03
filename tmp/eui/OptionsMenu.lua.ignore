@@ -3,10 +3,12 @@
 -- modified by bc1 from Civ V 1.0.3.276 code
 -- add new options for EUI
 -------------------------------------------------
--- edit: Diplomacy stack left/right switch option for EUI
--- edit: Larger Espionage Overview option for EUI
--------------------------------------------------
--- edit: NEW: Ingame Hotkey Manager for EUI
+-- edit:
+--     Ingame Hotkey Manager
+--     Diplomacy stack left/right switch option
+--     Larger Espionage Overview option
+--     Civbot Integration
+-- for EUI
 -------------------------------------------------
 --print("Loading EUI option menu...",os.clock())
 include( "IconSupport" );

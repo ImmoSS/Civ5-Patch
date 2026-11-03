@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- edit: Diplomacy stack left/right switch option for EUI -->
-<!-- edit: Ingame Hotkey Manager for EUI -->
-<!-- edit: Larger Espionage Overview option for EUI -->
+<!-- edit: 
+	Diplomacy stack left/right switch option
+	Ingame Hotkey Manager
+	Larger Espionage Overview option
+	Civbot Integration
+for EUI -->
 <Context ColorSet="Beige_Black" Font="TwCenMT22" FontStyle="Shadow">
 
 
