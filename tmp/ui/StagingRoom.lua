@@ -3024,7 +3024,11 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 	if playerEntry.statusInstance.Root:IsHidden() then
 		return
 	end
-	local playerName = Matchmaking.GetPlayerList()[playerID + 1].playerName or Locale.Lookup('TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME', playerID + 1);
+	local pData = Matchmaking.GetPlayerList()
+	if not pData or not pData[playerID + 1] then
+		return
+	end
+	local playerName = pData[playerID + 1].playerName or Locale.Lookup('TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME', playerID + 1);
 	local data = Drafts.GetDraftPlayerData(playerID);
 	local DraftCivEntrySmall_WIDTH = 60;
 	local DraftCivEntryBig_WIDTH = 120
