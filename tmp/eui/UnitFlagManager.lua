@@ -763,7 +763,7 @@ local function CreateNewFlag( playerID, unitID, isSelected, isHiddenByFog, isInv
 	        end
             flag.IsHealing:SetHide(g_activeTeamID ~= teamID or not bIsHealing)
 			flag.IsNoCapture:SetHide(g_activeTeamID ~= teamID or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
-			flag.IsIdleCaravan:SetHide(g_activeTeamID ~= teamID or not unit:IsTrade() or not (unit:GetMoves() > 0))
+			flag.IsIdleCaravan:SetHide(g_activeTeamID ~= teamID or not (player:IsTurnActive() and unit:IsTrade() and (unit:GetMoves() > 0)))
 			flag.IsPromotionReady:SetHide(g_activeTeamID ~= teamID or not unit:IsPromotionReady())
 		else
 			flag.IsOutOfAttacks:SetHide(true)
@@ -1041,7 +1041,7 @@ function ()
 				        end
 			            flag.IsHealing:SetHide(not bIsHealing)
                         flag.IsNoCapture:SetHide(not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
-						flag.IsIdleCaravan:SetHide(not unit:IsTrade() or not (unit:GetMoves() > 0))
+						flag.IsIdleCaravan:SetHide(not (player:IsTurnActive() and unit:IsTrade() and (unit:GetMoves() > 0)))
 						flag.IsPromotionReady:SetHide(not unit:IsPromotionReady())
                     else
                         local flag = g_UnitFlags[ i ][ unit:GetID() ];
@@ -1164,7 +1164,7 @@ function( playerID, unitID, isDimmed )
 	        end
             flag.IsHealing:SetHide(not isActiveTeam or not bIsHealing)
 			flag.IsNoCapture:SetHide(not isActiveTeam or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
-			flag.IsIdleCaravan:SetHide(not isActiveTeam or not unit:IsTrade() or not (unit:GetMoves() > 0))
+			flag.IsIdleCaravan:SetHide(not isActiveTeam or not (player:IsTurnActive() and unit:IsTrade() and (unit:GetMoves() > 0)))
 			flag.IsPromotionReady:SetHide(not isActiveTeam or not unit:IsPromotionReady())
 		else
 			flag.IsOutOfAttacks:SetHide(true)

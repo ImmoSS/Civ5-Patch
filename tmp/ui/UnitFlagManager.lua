@@ -250,7 +250,7 @@ local g_UnitFlagClass =
                 end
                 o.m_Instance.IsHealing:SetHide(not bIsHealing)
                 o.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
-                o.m_Instance.IsIdleCaravan:SetHide(not pUnit:IsTrade() or not (pUnit:GetMoves() > 0))
+                o.m_Instance.IsIdleCaravan:SetHide(not (Players[playerID]:IsTurnActive() and pUnit:IsTrade() and (pUnit:GetMoves() > 0)))
                 o.m_Instance.IsPromotionReady:SetHide(not pUnit:IsPromotionReady())
             else
                 o.m_Instance.IsOutOfAttacks:SetHide(true)
@@ -1471,7 +1471,7 @@ function OnOptionsChanged()
                         end
                         flag.m_Instance.IsHealing:SetHide(not bIsHealing)
                         flag.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
-                        flag.m_Instance.IsIdleCaravan:SetHide(not pUnit:IsTrade() or not (pUnit:GetMoves() > 0))
+                        flag.m_Instance.IsIdleCaravan:SetHide(not (player:IsTurnActive() and pUnit:IsTrade() and (pUnit:GetMoves() > 0)))
                         flag.m_Instance.IsPromotionReady:SetHide(not pUnit:IsPromotionReady())
                     else
                         local flag = g_MasterList[ i ][ pUnit:GetID() ];
@@ -1680,7 +1680,7 @@ function OnDimEvent( playerID, unitID, bDim )
                     end
                     flag.m_Instance.IsHealing:SetHide(active_team ~= team or not bIsHealing)
                     flag.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
-                    flag.m_Instance.IsIdleCaravan:SetHide(not pUnit:IsTrade() or not (pUnit:GetMoves() > 0))
+                    flag.m_Instance.IsIdleCaravan:SetHide(not (Players[playerID]:IsTurnActive() and pUnit:IsTrade() and (pUnit:GetMoves() > 0)))
                     flag.m_Instance.IsPromotionReady:SetHide(not pUnit:IsPromotionReady())
                 else
                     flag.m_Instance.IsOutOfAttacks:SetHide(true)
