@@ -3142,6 +3142,7 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 			playerEntry.statusInstance.DraftPlayerBansStack:SetAnchor('L,T');
 			inst.Root:SetSizeX(w2)
 		else
+			playerEntry.statusInstance.DraftPlayerBansStack:SetAnchor('C,T');
 			dummy.Root:SetSizeX(w1)
 			dummy.DummyButton:SetSizeX(w1 + 1)
 			inst.Root:SetSizeX(w1)
@@ -3315,6 +3316,7 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 			playerEntry.statusInstance.DraftPlayerPicksStack:SetAnchor('L,T');
 			inst.Root:SetSizeX(w2)
 		else
+			playerEntry.statusInstance.DraftPlayerPicksStack:SetAnchor('C,T');
 			dummy.Root:SetSizeX(w1)
 			dummy.DummyButton:SetSizeX(w1 + 1)
 			inst.Root:SetSizeX(w1)
@@ -3371,6 +3373,8 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 			playerEntry.statusInstance.DraftPlayerPicksBigStack:SetOffsetX(-extraPad / 2);
 			instB.Root:SetSizeX(w2B)
 		else
+			instB.CivName:SetHide(false)
+			playerEntry.statusInstance.DraftPlayerPicksBigStack:SetAnchor('C,T');
 			dummyB.Root:SetSizeX(w1B)
 			dummyB.DummyButton:SetSizeX(w1B + 1)
 			instB.Root:SetSizeX(w1B)
