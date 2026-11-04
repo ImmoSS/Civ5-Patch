@@ -258,7 +258,9 @@ for EUI & vanilla UI -->
 				LSize="0,16"  LTexStart="0,8"
 				CSize="5,16"  CTexStart="22,8"
 				RSize="0,16"  RTexStart="44,8" />
-				<Slider ID="GraphTurnRangeSlider1" Style="Slider" Texture="Blank.dds" Length="744" Size="744,32" Anchor="L,B" Offset="-12,-60" />
+				<Slider ID="GraphTurnRangeSlider1" Style="Slider" Texture="Blank.dds" Color="127,127,127,0" Length="744" Size="744,32" Anchor="L,B" Offset="-12,-60" >
+					<Shuttle Style="Slider32" Size="32,32" />
+				</Slider>
 				<Slider ID="GraphTurnRangeSlider2" Style="Slider" Length="744" Size="744,0" Anchor="L,B" Offset="-12,-44" Value="1" />
 			</Box>
 
