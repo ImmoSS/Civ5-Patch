@@ -129280,6 +129280,11 @@ The ship has weather'd every rack; the prize we sought is won."
 				Load Drafts
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_LOAD_DRAFT_TT"> 
+			<Text>
+				[COLOR_POSITIVE_TEXT]Load Previous Drafts:[ENDCOLOR][NEWLINE]{1_Timestamp}[NEWLINE][COLOR_POSITIVE_TEXT]Players: [ENDCOLOR]{2_PlayersList}
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_CIVBOT_DRAFT_NODATA"> 
 			<Text>
 				[COLOR_NEGATIVE_TEXT]No saved Drafts
@@ -137406,6 +137411,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_CIVBOT_LOAD_DRAFT"> 
 			<Text>
 				Загрузить драфт
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_LOAD_DRAFT_TT"> 
+			<Text>
+				[COLOR_POSITIVE_TEXT]Загрузить предыдущий драфт:[ENDCOLOR][NEWLINE]{1_Timestamp}[NEWLINE][COLOR_POSITIVE_TEXT]Игроки: [ENDCOLOR]{2_PlayersList}
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIVBOT_DRAFT_NODATA"> 

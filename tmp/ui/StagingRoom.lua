@@ -3999,7 +3999,7 @@ Controls.NetLoop:RegisterAnimCallback(function()
 					pnames[#pnames + 1] = string.format('%s[ENDCOLOR]', p.Name)
 				end
 				local ts = Locale.ConvertPosixTimeToString(g_RecentDraft['Timestamp'])  -- + os.time(os.date('*t')) - os.time(os.date('!*t')))
-				Controls.CivbotLoadDraft:LocalizeAndSetToolTip( 'TXT_KEY_LOAD_DRAFT_TT', ts, table.concat(pnames, ', ') )
+				Controls.CivbotLoadDraft:LocalizeAndSetToolTip( 'TXT_KEY_CIVBOT_LOAD_DRAFT_TT', ts, table.concat(pnames, ', ') )
 				-------------------------------------
 				--Controls.CivbotLoadDraft:LocalizeAndSetText('TXT_KEY_CIVBOT_DRAFT_SUCCESS')
 				Controls.CivbotLoadDraft:SetDisabled(false)

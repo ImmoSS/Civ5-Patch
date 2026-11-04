@@ -680,7 +680,7 @@ for EUI and vanilla UI -->
           <Label Anchor="C,C"  Offset="0,0"  String="TXT_KEY_BACK_BUTTON" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"  />
         </GridButton>
 		
-		<Image Anchor="C,C" Size="10,36" Offset="0,0"  />
+		<!-- Separator --><Image Anchor="C,C" Size="10,36" Offset="0,0" Texture="Blank.dds" />
 
         <!-- Invite Button  -->
         <GridButton Anchor="R,B"  Style="SmallButton" Size="150,36"  Offset="0,0" StateOffsetIncrement="0,0" ID="InviteButton" Hidden="1" >
