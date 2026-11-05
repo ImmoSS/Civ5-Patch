@@ -2960,14 +2960,16 @@ function GenerateStatusStrings(bFlush)
 		for i = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
 			if not g_PlayerEntries[i].statusInstance.Root:IsHidden() then
 				local strBans = Drafts.GetDraftPlayerData(i).Bans or ''
+				local pName = Matchmaking.GetPlayerList()[i + 1].playerName or Locale.Lookup('TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME', i + 1);
 				if #strBans > 0 then
 					local bansTbl = {}
 					for scivId in string.gmatch(strBans, '([^,]+)') do
 						local civId = tonumber(scivId) or -1
 						bansTbl[#bansTbl + 1] = g_CivNames[civId]
 					end
-					local pName = Matchmaking.GetPlayerList()[i + 1].playerName or Locale.Lookup('TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME', i + 1);
 					AddDraftStatus('TXT_KEY_DRAFT_STATUS_PLAYER_BAN', pName, next(bansTbl) and table.concat(bansTbl, ', ') or '[ENDCOLOR]{TXT_KEY_MP_NO_PROPOSAL}')
+				elseif progress > DRAFT_PROGRESS_BANS then
+					AddDraftStatus('TXT_KEY_DRAFT_STATUS_PLAYER_BAN', pName, '[ENDCOLOR]{TXT_KEY_MP_NO_PROPOSAL}')
 				end
 			end
 		end
@@ -3379,6 +3381,7 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 		else
 			instB.CivName:SetHide(false)
 			playerEntry.statusInstance.DraftPlayerPicksBigStack:SetAnchor('C,T');
+			playerEntry.statusInstance.DraftPlayerPicksBigStack:SetOffsetX(0);
 			dummyB.Root:SetSizeX(w1B)
 			dummyB.DummyButton:SetSizeX(w1B + 1)
 			instB.Root:SetSizeX(w1B)
