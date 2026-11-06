@@ -3348,7 +3348,7 @@ void CvGame::handleAction(int iAction)
 #ifdef FIX_REDUNDANT_CONFIRM_REBUILD_POPUPS
 										CvImprovementEntry* pImprovementInfo2 = GC.getImprovementInfo(pPlot->getImprovementType());
 										if (!pBuildInfo->IsRemoveRoute() &&  // Let them remove a route
-											!(pImprovementInfo2 && !pImprovementInfo2->IsRequiresFeature() && (pBuildInfo->isFeatureRemove(FEATURE_FOREST) || pBuildInfo->isFeatureRemove(FEATURE_JUNGLE) || pBuildInfo->isFeatureRemove(FEATURE_MARSH))) &&  // remove a non-required feature
+											!(pImprovementInfo2 && !pImprovementInfo2->IsRequiresFeature() && (strcmp(pBuildInfo->GetType(), "BUILD_REMOVE_FOREST") == 0 || strcmp(pBuildInfo->GetType(), "BUILD_REMOVE_JUNGLE") == 0 || strcmp(pBuildInfo->GetType(), "BUILD_REMOVE_MARSH") == 0)) &&  // remove a non-required feature
 											!(pkHeadSelectedUnit->IsGreatPerson())  // build a great person's improvement
 										)
 #endif
