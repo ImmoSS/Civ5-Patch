@@ -2661,8 +2661,10 @@ function ResetDrafts( reasonIndex )
 	print('reset drafts', reasonIndex)
 	ClearSelection()
 	UpdateDraftScreen(true)
-	if resetReasons[reasonIndex] ~= nil then
-		AddDraftStatus(resetReasons[reasonIndex])
+	local reason = resetReasons[reasonIndex]
+	if reason ~= nil then
+		AddDraftStatus(reason)
+		OnChat( 0, -1, Locale.Lookup(reason) );
 	end
 	AddDraftStatus('[NEWLINE][NEWLINE]------------------------------')
 	AddDraftStatus('TXT_KEY_DRAFT_STATUS_PROGRESS_INIT')
