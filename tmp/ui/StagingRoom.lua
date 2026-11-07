@@ -3101,14 +3101,14 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 	end
 
 	-- recalculate width for all items to make them fit in the stack
-	local width = playerEntry.statusInstance.DraftPlayerStatusFrame:GetSizeX()
-	local w1 = math.min( DraftCivEntrySmall_WIDTH, width / kbans )
-	local w2 = (width - DraftCivEntrySmall_WIDTH) / (kbans - 1)
-	local d1 = (width - DraftCivEntrySmall_WIDTH * (0.5 + 0.9)) / (kbans - 2)
+	local bwidth = playerEntry.statusInstance.DraftPlayerStatusFrame:GetSizeX()
+	local bw1 = math.min( DraftCivEntrySmall_WIDTH, bwidth / kbans )
+	local bw2 = (bwidth - DraftCivEntrySmall_WIDTH) / (kbans - 1)
+	local bd1 = (bwidth - DraftCivEntrySmall_WIDTH * (0.5 + 0.9)) / (kbans - 2)
 	for i = 1, kbans do
 		local inst = g_DraftResultInstances.Bans[playerID][i]
 		local dummy = g_DraftResultInstances.BansD[playerID][i]
-		if w1 < DraftCivEntrySmall_WIDTH then
+		if bw1 < DraftCivEntrySmall_WIDTH then
 			if i == 1 then  -- first item: half the original width
 				dummy.Root:SetSizeX(DraftCivEntrySmall_WIDTH / 2)
 				dummy.DummyButton:SetSizeX(DraftCivEntrySmall_WIDTH / 2 + 1)
@@ -3116,17 +3116,17 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 				dummy.Root:SetSizeX(DraftCivEntrySmall_WIDTH * 0.9)
 				dummy.DummyButton:SetSizeX(DraftCivEntrySmall_WIDTH * 0.9 + 1)
 			else
-				dummy.Root:SetSizeX(d1)
-				dummy.DummyButton:SetSizeX(d1 + 1)
+				dummy.Root:SetSizeX(bd1)
+				dummy.DummyButton:SetSizeX(bd1 + 1)
 			end
 			dummy.DummyButton:RegisterCallback(Mouse.eMouseEnter, function()
 				if i < kbans then
 					MouseEnteredBans[i] = true
 					for j, inst2 in next, g_DraftResultInstances.Bans[playerID] do
 						if j == i then
-							inst2.Root:SetSizeX(math.max(w2, DraftCivEntrySmall_WIDTH / 1.5));
+							inst2.Root:SetSizeX(math.max(bw2, DraftCivEntrySmall_WIDTH / 1.5));
 						else
-							inst2.Root:SetSizeX(w2 - (math.max(w2, DraftCivEntrySmall_WIDTH / 1.5) - w2) / (kbans - 2));
+							inst2.Root:SetSizeX(bw2 - (math.max(bw2, DraftCivEntrySmall_WIDTH / 1.5) - bw2) / (kbans - 2));
 						end
 					end
 				end
@@ -3141,17 +3141,19 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 				end
 				if bOut then  -- if so, resize icons evenly
 					for _, inst2 in next, g_DraftResultInstances.Bans[playerID] do
-						inst2.Root:SetSizeX(w2);
+						inst2.Root:SetSizeX(bw2);
 					end
 				end
 			end);
 			playerEntry.statusInstance.DraftPlayerBansStack:SetAnchor('L,T');
-			inst.Root:SetSizeX(w2)
+			inst.Root:SetSizeX(bw2)
 		else
 			playerEntry.statusInstance.DraftPlayerBansStack:SetAnchor('C,T');
-			dummy.Root:SetSizeX(w1)
-			dummy.DummyButton:SetSizeX(w1 + 1)
-			inst.Root:SetSizeX(w1)
+			dummy.Root:SetSizeX(bw1)
+			dummy.DummyButton:ClearCallback(Mouse.eMouseEnter)
+			dummy.DummyButton:ClearCallback(Mouse.eMouseExit)
+			dummy.DummyButton:SetSizeX(bw1 + 1)
+			inst.Root:SetSizeX(bw1)
 		end
 	end
 	playerEntry.statusInstance.DraftPlayerBansStack:CalculateSize();
@@ -3268,21 +3270,21 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 	end
 
 	-- layout & animations
-	width = playerEntry.statusInstance.DraftPlayerStatusFrame:GetSizeX()
-	w1 = math.min(DraftCivEntrySmall_WIDTH, width / kpicks )
-	w2 = (width - DraftCivEntrySmall_WIDTH) / (kpicks - 1)
-	d1 = (width - DraftCivEntrySmall_WIDTH * (0.5 + 0.9)) / (kpicks - 2)
+	local pwidth = playerEntry.statusInstance.DraftPlayerStatusFrame:GetSizeX()
+	local pw1 = math.min(DraftCivEntrySmall_WIDTH, pwidth / kpicks )
+	local pw2 = (pwidth - DraftCivEntrySmall_WIDTH) / (kpicks - 1)
+	local pd1 = (pwidth - DraftCivEntrySmall_WIDTH * (0.5 + 0.9)) / (kpicks - 2)
 	local extraPad = 50
-	local widthB = playerEntry.statusInstance.DraftPlayerStatusFrame:GetSizeX() + extraPad
-	local w1B = math.min(DraftCivEntryBig_WIDTH, widthB / kpicks )
-	local w2B = (widthB - DraftCivEntryBig_WIDTH) / (kpicks - 1)
-	local d1B = (widthB - DraftCivEntryBig_WIDTH * (0.5 + 0.9)) / (kpicks - 2)
+	local pwidthB = playerEntry.statusInstance.DraftPlayerStatusFrame:GetSizeX() + extraPad
+	local pw1B = math.min(DraftCivEntryBig_WIDTH, pwidthB / kpicks )
+	local pw2B = (pwidthB - DraftCivEntryBig_WIDTH) / (kpicks - 1)
+	local pd1B = (pwidthB - DraftCivEntryBig_WIDTH * (0.5 + 0.9)) / (kpicks - 2)
 	for i = 1, kpicks do
 		local inst = g_DraftResultInstances.Picks[playerID][i]
 		local dummy = g_DraftResultInstances.PicksD[playerID][i]
 		local instB = g_DraftResultInstances.PicksB[playerID][i]
 		local dummyB = g_DraftResultInstances.PicksBD[playerID][i]
-		if w1 < DraftCivEntrySmall_WIDTH then
+		if pw1 < DraftCivEntrySmall_WIDTH then
 			if i == 1 then
 				dummy.Root:SetSizeX(DraftCivEntrySmall_WIDTH / 2)
 				dummy.DummyButton:SetSizeX(DraftCivEntrySmall_WIDTH / 2 + 1)
@@ -3290,17 +3292,17 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 				dummy.Root:SetSizeX(DraftCivEntrySmall_WIDTH * 0.9)
 				dummy.DummyButton:SetSizeX(DraftCivEntrySmall_WIDTH * 0.9 + 1)
 			else
-				dummy.Root:SetSizeX(d1)
-				dummy.DummyButton:SetSizeX(d1 + 1)
+				dummy.Root:SetSizeX(pd1)
+				dummy.DummyButton:SetSizeX(pd1 + 1)
 			end
 			dummy.DummyButton:RegisterCallback(Mouse.eMouseEnter, function()
 				if i < kpicks then
 					MouseEnteredPicks[i] = true
 					for j, inst2 in next, g_DraftResultInstances.Picks[playerID] do
 						if j == i then
-							inst2.Root:SetSizeX(math.max(w2, DraftCivEntrySmall_WIDTH / 1.5));
+							inst2.Root:SetSizeX(math.max(pw2, DraftCivEntrySmall_WIDTH / 1.5));
 						else
-							inst2.Root:SetSizeX(w2 - (math.max(w2, DraftCivEntrySmall_WIDTH / 1.5) - w2) / (kpicks - 2));
+							inst2.Root:SetSizeX(pw2 - (math.max(pw2, DraftCivEntrySmall_WIDTH / 1.5) - pw2) / (kpicks - 2));
 						end
 					end
 				end
@@ -3315,19 +3317,21 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 				end
 				if bOut then
 					for _, inst2 in next, g_DraftResultInstances.Picks[playerID] do
-						inst2.Root:SetSizeX(w2);
+						inst2.Root:SetSizeX(pw2);
 					end
 				end
 			end);
 			playerEntry.statusInstance.DraftPlayerPicksStack:SetAnchor('L,T');
-			inst.Root:SetSizeX(w2)
+			inst.Root:SetSizeX(pw2)
 		else
 			playerEntry.statusInstance.DraftPlayerPicksStack:SetAnchor('C,T');
-			dummy.Root:SetSizeX(w1)
-			dummy.DummyButton:SetSizeX(w1 + 1)
-			inst.Root:SetSizeX(w1)
+			dummy.Root:SetSizeX(pw1)
+			dummy.DummyButton:ClearCallback(Mouse.eMouseEnter)
+			dummy.DummyButton:ClearCallback(Mouse.eMouseExit)
+			dummy.DummyButton:SetSizeX(pw1 + 1)
+			inst.Root:SetSizeX(pw1)
 		end
-		if w1B < DraftCivEntryBig_WIDTH then
+		if pw1B < DraftCivEntryBig_WIDTH then
 			instB.CivName:SetHide(true)
 			if i == 1 then
 				dummyB.Root:SetSizeX(DraftCivEntryBig_WIDTH / 2)
@@ -3336,17 +3340,17 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 				dummyB.Root:SetSizeX(DraftCivEntryBig_WIDTH * 0.9)
 				dummyB.DummyButton:SetSizeX(DraftCivEntryBig_WIDTH * 0.9 + 1)
 			else
-				dummyB.Root:SetSizeX(d1B)
-				dummyB.DummyButton:SetSizeX(d1B + 1)
+				dummyB.Root:SetSizeX(pd1B)
+				dummyB.DummyButton:SetSizeX(pd1B + 1)
 			end
 			dummyB.DummyButton:RegisterCallback(Mouse.eMouseEnter, function()
 				if i < kpicks then
 					MouseEnteredPicksB[i] = true
 					for j, inst2B in next, g_DraftResultInstances.PicksB[playerID] do
 						if j == i then
-							inst2B.Root:SetSizeX(math.max(w2B, DraftCivEntryBig_WIDTH / 1.5));
+							inst2B.Root:SetSizeX(math.max(pw2B, DraftCivEntryBig_WIDTH / 1.5));
 						else
-							inst2B.Root:SetSizeX(w2B - (math.max(w2B, DraftCivEntryBig_WIDTH / 1.5) - w2B) / (kpicks - 2));
+							inst2B.Root:SetSizeX(pw2B - (math.max(pw2B, DraftCivEntryBig_WIDTH / 1.5) - pw2B) / (kpicks - 2));
 						end
 					end
 				end
@@ -3366,7 +3370,7 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 				end
 				if bOut then
 					for _, inst2B in next, g_DraftResultInstances.PicksB[playerID] do
-						inst2B.Root:SetSizeX(w2B);
+						inst2B.Root:SetSizeX(pw2B);
 					end
 				end
 				if Matchmaking.GetLocalID() == playerID then
@@ -3377,14 +3381,16 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 			end);
 			playerEntry.statusInstance.DraftPlayerPicksBigStack:SetAnchor('L,T');
 			playerEntry.statusInstance.DraftPlayerPicksBigStack:SetOffsetX(-extraPad / 2);
-			instB.Root:SetSizeX(w2B)
+			instB.Root:SetSizeX(pw2B)
 		else
 			instB.CivName:SetHide(false)
 			playerEntry.statusInstance.DraftPlayerPicksBigStack:SetAnchor('C,T');
 			playerEntry.statusInstance.DraftPlayerPicksBigStack:SetOffsetX(0);
-			dummyB.Root:SetSizeX(w1B)
-			dummyB.DummyButton:SetSizeX(w1B + 1)
-			instB.Root:SetSizeX(w1B)
+			dummyB.DummyButton:ClearCallback(Mouse.eMouseEnter)
+			dummyB.DummyButton:ClearCallback(Mouse.eMouseExit)
+			dummyB.Root:SetSizeX(pw1B)
+			dummyB.DummyButton:SetSizeX(pw1B + 1)
+			instB.Root:SetSizeX(pw1B)
 			dummyB.DummyButton:RegisterCallback(Mouse.eMouseEnter, function()
 				if Matchmaking.GetLocalID() == playerID and not inst.isDiscarded and inst.civID ~= PreGame.GetCivilization(playerID) then
 					g_DraftResultInstances.PicksB[playerID][i].LeaderFrameSelectedAnim:SetHide(false)
