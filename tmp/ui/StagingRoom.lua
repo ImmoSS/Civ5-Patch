@@ -3231,6 +3231,11 @@ function UpdatePlayerCard(playerID)  -- updates existing ban/pick buttons (if ne
 					IconHookup(civ.PortraitIndex, 45, civ.IconAtlas, instB.LeaderSubIcon);
 					instB.CivName:SetText( Locale.Lookup(civ.ShortDescription) )
 					dummy.DummyButton:LocalizeAndSetToolTip( bonusText );
+					dummy.DummyButton:RegisterCallback(Mouse.eRClick, function()
+						PreGame.SetReady(Matchmaking.GetLocalID(), false)
+						Network.BroadcastPlayerInfo()
+						Events.SearchForPediaEntry( Locale.Lookup(GameInfo.Civilizations[civId].ShortDescription) )
+					end);
 					dummyB.DummyButton:LocalizeAndSetToolTip( bonusText );
 					dummyB.DummyButton:RegisterCallback(Mouse.eLClick, function()
 						if Matchmaking.GetLocalID() == playerID then
@@ -3462,8 +3467,8 @@ function UpdatePlayerHighlights(playerID)
 				instB.LeaderSubIcon:SetColor( C.Gray )
 				instB.CivName:SetColor( C.Orange80, 0 )
 
-				dummy.DummyButton:SetDisabled(true)
-				dummyB.DummyButton:SetDisabled(true)
+				dummy.DummyButton:ClearCallback(Mouse.eLClick)
+				dummyB.DummyButton:ClearCallback(Mouse.eLClick)
 			elseif inst.civID ~= -1 and inst.civID == PreGame.GetCivilization(playerID) then
 				print('player civ: ', inst.civID)
 				inst.LeaderFrame:SetColor( C.Green )
@@ -3477,8 +3482,8 @@ function UpdatePlayerHighlights(playerID)
 				instB.LeaderSubIcon:SetColor( C.White )
 				instB.CivName:SetColor( C.Beige, 0 )
 
-				dummy.DummyButton:SetDisabled(true)
-				dummyB.DummyButton:SetDisabled(true)
+				dummy.DummyButton:ClearCallback(Mouse.eLClick)
+				dummyB.DummyButton:ClearCallback(Mouse.eLClick)
 			else
 				inst.LeaderFrame:SetColor( C.White )
 				inst.LeaderIcon:SetColor( C.Silver )
@@ -3491,8 +3496,17 @@ function UpdatePlayerHighlights(playerID)
 				instB.LeaderSubIcon:SetColor( C.White )
 				instB.CivName:SetColor( C.Beige, 0 )
 
-				dummy.DummyButton:SetDisabled(false)
-				dummyB.DummyButton:SetDisabled(false)
+				dummyB.DummyButton:RegisterCallback(Mouse.eLClick, function()
+					if Matchmaking.GetLocalID() == playerID then
+						PreGame.SetCivilization( playerID, inst.civID );
+						Network.BroadcastPlayerInfo();
+						Controls.DraftBGBlock:SetHide(true);
+						instB.HoverAnim:SetHide(true);
+						instB.SubHoverAnim:SetHide(true);
+						instB.LeaderFrameSelectedAnim:SetHide(true)
+						instB.LeaderSubIconFrameSelectedAnim:SetHide(true)
+					end
+				end)
 			end
 		end
 	end
