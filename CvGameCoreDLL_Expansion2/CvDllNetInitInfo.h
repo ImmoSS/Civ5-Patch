@@ -86,6 +86,8 @@ private:
 	int m_draftCurrentProgress;
 	int m_draftResult;
 	std::vector<CvString> m_draftPlayerBans;
+	std::vector<CvString> m_draftPlayerPicks;
+	std::vector<CvString> m_draftPlayerDiscardedPicks;
 	std::vector<CvString> m_draftPlayerSecrets;
 	std::vector<CvString> m_draftPlayerSecretHashes;
 	std::vector<bool> m_draftAllBansReceived;
