@@ -2973,7 +2973,7 @@ void DraftResponseSecretHash(PlayerTypes p, const char* szHash)
 		return;
 	}
 	SetDraftPlayerReady(p, true);
-	if (s_draftPlayerSecretHashes[uiPlayerID] != "")
+	if (s_draftPlayerSecretHashes[uiPlayerID] != CvString(szHash))
 	{
 		SLOG("WARN attempt to overwrite secret hash for player %d", uiPlayerID);
 		//return;
