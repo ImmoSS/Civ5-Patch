@@ -23,14 +23,14 @@
 #define NOSHOWWINDOW     
 #define OEMRESOURCE      
 #define NOATOM           
-//disabling required for LUA_CLIPBOARD_COPY_PASTE
+//disabling required for LUA_UTILS_CLIPBOARD_COPY_PASTE
 //#define NOCLIPBOARD      
 #define NOCOLOR          
 #define NOCTLMGR         
 #define NODRAWTEXT       
 #define NOGDI            
 #define NOKERNEL   
-//disabling required for LUA_CLIPBOARD_COPY_PASTE
+//disabling required for LUA_UTILS_CLIPBOARD_COPY_PASTE
 //#define NOUSER           
 #define NOMB             
 #define NOMEMMGR         
