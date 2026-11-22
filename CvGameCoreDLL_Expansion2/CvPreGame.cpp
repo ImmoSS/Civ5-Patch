@@ -321,6 +321,7 @@ CvString s_draftShuffledCivs = "";
 int s_draftPlayersReady = 0;
 int s_draftCurrentProgress = DRAFT_PROGRESS_INIT;
 int s_draftResult = DRAFT_RESULT_NONE;
+SteamAPI g_c1;  // XXX
 std::vector<CvString> s_draftPlayerBans;
 std::vector<CvString> s_draftPlayerPicks(MAX_MAJOR_CIVS);
 std::vector<CvString> s_draftPlayerDiscardedPicks(MAX_MAJOR_CIVS);
@@ -3860,6 +3861,17 @@ void setDraftAllBansReceived(std::vector<bool> value)
 void setDraftPlayerSecretHashes(std::vector<CvString> value)
 {
 	s_draftPlayerSecretHashes = value;
+}
+#endif
+#ifdef LUA_UTILS_STEAM_API
+void InitSteamAPI()
+{
+	g_c1.Init();
+}
+
+uint64 getLobbyID()
+{
+	return g_c1.m_ulLobbyID;
 }
 #endif
 

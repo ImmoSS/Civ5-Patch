@@ -71,6 +71,10 @@ protected:
 	static int lGetClipboardText(lua_State* L);
 	static int lSetClipboardText(lua_State* L);
 	#endif
+	#ifdef LUA_UTILS_STEAM_API
+	static int lInitSteamAPI(lua_State* L);
+	static int lGetLobbyID(lua_State* L);
+	#endif
 
 };
 # endif

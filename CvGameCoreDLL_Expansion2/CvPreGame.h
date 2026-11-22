@@ -267,6 +267,10 @@ void                                       setDraftPlayerSecrets(std::vector<CvS
 void                                       setDraftPlayerSecretHashes(std::vector<CvString> value);
 void                                       setDraftAllBansReceived(std::vector<bool> value);
 #endif
+#ifdef LUA_UTILS_STEAM_API
+void                                       InitSteamAPI();
+uint64                                     getLobbyID();
+#endif
 void                                       setLeaderKey(PlayerTypes p, const CvString& n);
 void                                       setLeaderKeyPackageID(PlayerTypes p, const GUID& n);
 void										 setLoadFileName(const CvString& fileName);
@@ -349,5 +353,112 @@ static TeamTypes     teamType(PlayerTypes p)
 }
 
 };
+# ifdef LUA_UTILS_STEAM_API
+class CCallbackBase
+{
+public:
+	CCallbackBase() { m_nCallbackFlags = 0; m_iCallback = 0; }
+	virtual void Run(void* pvParam) = 0;
+	virtual void Run(void* pvParam, bool bIOFailure, uint64 hSteamAPICall) = 0;
+	int GetICallback() { return m_iCallback; }
+	virtual int GetCallbackSizeBytes() = 0;
+
+protected:
+	enum { k_ECallbackFlagsRegistered = 0x01, k_ECallbackFlagsGameServer = 0x02 };
+	uint8 m_nCallbackFlags;
+	int m_iCallback;
+	friend class CCallbackMgr;
+};
+
+template< class T, class P >
+class CCallback : protected CCallbackBase
+{
+public:
+	typedef void (T::* func_t)(P*);
+	CCallback(T* pObj, func_t func) : m_pObj(pObj), m_Func(func) {}
+	~CCallback() { if (m_nCallbackFlags & k_ECallbackFlagsRegistered) Unregister(); }
+	void Register(T* pObj, func_t func)
+	{
+		if (!pObj || !func) return;
+		if (m_nCallbackFlags & k_ECallbackFlagsRegistered) Unregister();
+		m_pObj = pObj; m_Func = func;
+		void (cdecl* SteamAPI_RegisterCallback)(CCallbackBase*, int) = (void (cdecl*)(CCallbackBase*, int))GetProcAddress(GetModuleHandle("steam_api.dll"), "SteamAPI_RegisterCallback");
+		SteamAPI_RegisterCallback(this, P::k_iCallback);
+	}
+	void Unregister()
+	{
+		void (cdecl* SteamAPI_UnregisterCallback)(CCallbackBase*) = (void (cdecl*)(CCallbackBase*))GetProcAddress(GetModuleHandle("steam_api.dll"), "SteamAPI_UnregisterCallback");
+		SteamAPI_UnregisterCallback(this);
+	}
+	void SetGameserverFlag() { m_nCallbackFlags |= k_ECallbackFlagsGameServer; }
+protected:
+	virtual void Run(void* pvParam) { (m_pObj->*m_Func)((P*)pvParam); }
+	virtual void Run(void* pvParam, bool, uint64) { Run(pvParam); }
+	int GetCallbackSizeBytes() { return sizeof(P); }
+	T* m_pObj;
+	func_t m_Func;
+};
+
+struct ScreenshotReady_t
+{
+	enum { k_iCallback = 2301 };
+	uint32 m_hLocal;
+	uint32 m_eResult;
+};
+
+struct GameOverlayActivated_t
+{
+	enum { k_iCallback = 331 };
+	uint8 m_bActive;	// true if it's just been activated, false otherwise
+};
+
+struct LobbyEnter_t
+{
+	enum { k_iCallback = 504 };
+
+	uint64 m_ulSteamIDLobby;							// SteamID of the Lobby you have entered
+	uint32 m_rgfChatPermissions;						// Permissions of the current user
+	bool m_bLocked;										// If true, then only invited users may join
+	uint32 m_EChatRoomEnterResponse;	// EChatRoomEnterResponse
+};
+
+class SteamAPI {
+public:
+	SteamAPI() :
+		m_GameOverlayActivated(this, &SteamAPI::OnGameOverlayActivated),
+		m_ScreenshotReady(this, &SteamAPI::OnScreenshotDone),
+		m_LobbyEnter(this, &SteamAPI::OnLobbyEnter)
+	{
+		m_ulLobbyID = 0;
+	}
+
+	void Init() {
+		m_ScreenshotReady.Register(this, &SteamAPI::OnScreenshotDone);
+		m_GameOverlayActivated.Register(this, &SteamAPI::OnGameOverlayActivated);
+		m_LobbyEnter.Register(this, &SteamAPI::OnLobbyEnter);
+	}
+
+	// Callbacks
+	CCallback< SteamAPI, ScreenshotReady_t > m_ScreenshotReady;
+	CCallback< SteamAPI, GameOverlayActivated_t > m_GameOverlayActivated;
+	CCallback< SteamAPI, LobbyEnter_t > m_LobbyEnter;
+	void OnScreenshotDone(ScreenshotReady_t* pParam)
+	{
+		SLOG("OnScreenshotDone");
+	}
+	void OnGameOverlayActivated(GameOverlayActivated_t* pParam)
+	{
+		SLOG("OnGameOverlayActivated %d", pParam->m_bActive ? 1 : 0);
+	}
+	void OnLobbyEnter(LobbyEnter_t* pParam)
+	{
+		SLOG("Entered lobby id: %I64d", pParam->m_ulSteamIDLobby);
+		m_ulLobbyID = pParam->m_ulSteamIDLobby;
+	}
+
+	// Variables
+	uint64 m_ulLobbyID;
+};
+# endif  // STEAM_API
 
 #endif//_CvPreGame_H

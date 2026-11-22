@@ -316,7 +316,7 @@ int CvLuaUtils::pRegister(lua_State* L)
 		return 0;
 	}
 
-	lua_createtable(L, 0, 3);
+	lua_createtable(L, 0, 5);
 
 	lua_pushcclosure(L, lGetSaltedHash, 0);
 	lua_setfield(L, -2, "GetSaltedHash");
@@ -327,6 +327,14 @@ int CvLuaUtils::pRegister(lua_State* L)
 
 	lua_pushcclosure(L, lSetClipboardText, 0);
 	lua_setfield(L, -2, "SetClipboardText");
+	#endif
+
+	#ifdef LUA_UTILS_STEAM_API
+	lua_pushcclosure(L, lInitSteamAPI, 0);
+	lua_setfield(L, -2, "InitSteamAPI");
+
+	lua_pushcclosure(L, lGetLobbyID, 0);
+	lua_setfield(L, -2, "GetLobbyID");
 	#endif
 
 	lua_setfield(L, -2, "Utils");  // ExposedTypes.UIManager.Utils
@@ -433,5 +441,22 @@ int CvLuaUtils::lSetClipboardText(lua_State* L)
 	return 0;
 }
 
+# endif
+# ifdef LUA_UTILS_STEAM_API
+//------------------------------------------------------------------------------
+int CvLuaUtils::lInitSteamAPI(lua_State* L)
+{
+	CvPreGame::InitSteamAPI();
+	return 0;
+}
+
+//------------------------------------------------------------------------------
+int CvLuaUtils::lGetLobbyID(lua_State* L)
+{
+	lua_pushstring(L, CvString::format("%I64d", CvPreGame::getLobbyID()).c_str());
+	return 1;
+}
+
+}
 # endif
 #endif

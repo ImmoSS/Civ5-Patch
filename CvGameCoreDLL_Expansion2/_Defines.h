@@ -1688,6 +1688,8 @@
 #define LUA_UTILS
 // Adds GetClipboardText & SetClipboardText methods to lua Utils
 #define LUA_UTILS_CLIPBOARD_COPY_PASTE
+// TEST provides a steam API interface for this dll using the steam_api.dll exports
+#define LUA_UTILS_STEAM_API
 /*OTHER CHANGES END*/
 
 
