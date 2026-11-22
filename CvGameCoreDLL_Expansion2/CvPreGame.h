@@ -223,6 +223,7 @@ bool                                       IsHasRemapToken(PlayerTypes p);
 void                                       SetHasRemapToken(PlayerTypes p, bool bValue);
 #endif
 #ifdef INGAME_CIV_DRAFTER
+CvString                                   hash(CvString m);
 bool                                       IsDraftPlayerReady(PlayerTypes p);
 void                                       SetDraftPlayerReady(PlayerTypes p, bool bValue);
 void                                       DraftResponseSecretHash(PlayerTypes p, const char* szHash);

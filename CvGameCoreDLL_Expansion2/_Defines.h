@@ -1684,6 +1684,10 @@
 #define NET_MESSAGE_MODDING
 // Allows players to highlight tiles using INTERFACEMODE_PING and moving the cursor
 #define MP_MAP_PING
+// Adds ExposedTypes.UIManager.Utils methods for Lua scripts
+#define LUA_UTILS
+// Adds GetClipboardText & SetClipboardText methods to lua Utils
+#define LUA_UTILS_CLIPBOARD_COPY_PASTE
 /*OTHER CHANGES END*/
 
 

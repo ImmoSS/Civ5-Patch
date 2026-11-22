@@ -162,7 +162,7 @@ int CvLuaDrafts::pRegister(lua_State* L)
 
 	lua_setfield(L, -2, "Drafts");  // set ExposedTypes.UIManager.Drafts
 
-	SLOG("FINISHED")
+	SLOG("FINISHED");
 
 	return 0;
 }
@@ -291,4 +291,147 @@ int CvLuaDrafts::lIsPlayerReadyForDraft(lua_State* L)
 //
 //	return 1;
 //}
+#endif
+#ifdef LUA_UTILS
+//-----------------------------------------------------------------------------------
+void CvLuaUtils::Register(lua_State* L)
+{
+	FLua::Details::CCallWithErrorHandling(L, pRegister);
+}
+//------------------------------------------------------------------------------
+int CvLuaUtils::pRegister(lua_State* L)
+{
+	lua_getglobal(L, "ExposedTypes");
+	if (!lua_istable(L, -1))
+	{
+		SLOG("WARN table not found: ExposedTypes");
+		return 0;
+	}
+
+	lua_pushstring(L, "UIManager");
+	lua_gettable(L, -2);  // get ExposedTypes.UIManager
+	if (!lua_istable(L, -1))
+	{
+		SLOG("WARN table not found: ExposedTypes.UIManager");
+		return 0;
+	}
+
+	lua_createtable(L, 0, 3);
+
+	lua_pushcclosure(L, lGetSaltedHash, 0);
+	lua_setfield(L, -2, "GetSaltedHash");
+
+	#ifdef LUA_UTILS_CLIPBOARD_COPY_PASTE
+	lua_pushcclosure(L, lGetClipboardText, 0);
+	lua_setfield(L, -2, "GetClipboardText");
+
+	lua_pushcclosure(L, lSetClipboardText, 0);
+	lua_setfield(L, -2, "SetClipboardText");
+	#endif
+
+	lua_setfield(L, -2, "Utils");  // ExposedTypes.UIManager.Utils
+
+	SLOG("FINISHED");
+
+	return 0;
+}
+//------------------------------------------------------------------------------
+int CvLuaUtils::lGetSaltedHash(lua_State* L)
+{
+	CvString data = lua_tostring(L, 1);
+	CvString salt = lua_tostring(L, 2);
+	lua_pushstring(L, CvPreGame::hash(CvString::format("%s%s", data.c_str(), salt.c_str())).c_str());
+
+	return 1;
+}
+# ifdef LUA_UTILS_CLIPBOARD_COPY_PASTE
+//------------------------------------------------------------------------------
+int CvLuaUtils::lGetClipboardText(lua_State* L)
+{
+	if (!OpenClipboard(NULL)) {
+		SLOG("Failed to open clipboard");
+		return 0;
+	}
+
+	HANDLE hData = GetClipboardData(CF_UNICODETEXT);
+	if (hData == NULL) {
+		CloseClipboard();
+		SLOG("Clipboard is empty or does not contain text");
+		return 0;
+	}
+
+	wchar_t* wData = static_cast<wchar_t*>(GlobalLock(hData));
+	if (wData == NULL) {
+		CloseClipboard();
+		SLOG("Failed to lock clipboard data");
+		return 0;
+	}
+
+	size_t len = wcslen(wData);
+
+	// determine buffer size
+	int utf8Size = WideCharToMultiByte(CP_UTF8, 0, wData, static_cast<int>(len), NULL, 0, NULL, NULL);
+	if (utf8Size == 0) {
+		GlobalUnlock(hData);
+		CloseClipboard();
+		SLOG("WideCharToMultiByte failed");
+		return 0;
+	}
+
+	std::string result(utf8Size, '\0');
+	WideCharToMultiByte(CP_UTF8, 0, wData, static_cast<int>(len), &result[0], utf8Size, NULL, NULL);
+
+	GlobalUnlock(hData);
+	CloseClipboard();
+	lua_pushstring(L, result.c_str());
+
+	return 1;
+}
+//------------------------------------------------------------------------------
+int CvLuaUtils::lSetClipboardText(lua_State* L)
+{
+	CvString data = lua_tostring(L, 1);
+
+	if (!OpenClipboard(NULL)) {
+		SLOG("Failed to open clipboard");
+		return 0;
+	}
+
+	EmptyClipboard();
+
+	// Convert UTF-8 to UTF-16
+	int wideLen = MultiByteToWideChar(CP_UTF8, 0, data.c_str(), -1, NULL, 0);
+	if (wideLen == 0) {
+		CloseClipboard();
+		SLOG("MultiByteToWideChar failed");
+		return 0;
+	}
+
+	// Allocate global memory for wide string
+	HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, wideLen * sizeof(wchar_t));
+	if (hMem == NULL) {
+		CloseClipboard();
+		SLOG("GlobalAlloc failed");
+		return 0;
+	}
+
+	wchar_t* wData = static_cast<wchar_t*>(GlobalLock(hMem));
+	if (wData == NULL) {
+		GlobalFree(hMem);
+		CloseClipboard();
+		SLOG("GlobalLock failed");
+		return 0;
+	}
+
+	MultiByteToWideChar(CP_UTF8, 0, data.c_str(), -1, wData, wideLen);
+	GlobalUnlock(hMem);
+
+	// Set clipboard data
+	SetClipboardData(CF_UNICODETEXT, hMem);
+	CloseClipboard();
+
+	return 0;
+}
+
+# endif
 #endif

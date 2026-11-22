@@ -51,6 +51,27 @@ protected:
 	static int lGetDraftCurrentProgress(lua_State* L);
 	static int lIsPlayerReadyForDraft(lua_State* L);
 	//static int lIsPlayerReadyForRemap(lua_State* L);
+
+};
+# endif
+# ifdef LUA_UTILS
+class CvLuaUtils
+{
+public:
+	//! Registers 'Utils' with Lua.
+	static void Register(lua_State* L);
+
+protected:
+
+	//! Protected call to register 'Utils'.
+	static int pRegister(lua_State* L);
+
+	static int lGetSaltedHash(lua_State* L);
+	#ifdef LUA_UTILS_CLIPBOARD_COPY_PASTE
+	static int lGetClipboardText(lua_State* L);
+	static int lSetClipboardText(lua_State* L);
+	#endif
+
 };
 # endif
 #endif //CVLUAGAMEINFO_H

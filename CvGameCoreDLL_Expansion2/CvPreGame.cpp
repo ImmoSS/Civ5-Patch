@@ -2190,7 +2190,7 @@ void resetGame()
 	ResetMapOptions();
 	ResetGameOptions();
 #ifdef INGAME_CIV_DRAFTER
-	SLOG("===DRAFT RESET===")
+	SLOG("===DRAFT RESET===");
 	for (uint i = 0; i < s_draftPlayerSecrets.size(); i++)
 	{
 		s_draftPlayerSecrets[i] = "";
@@ -3944,6 +3944,7 @@ void setLeaderKey(PlayerTypes p, const CvString& szKey)
 			if (L != NULL)
 			{
 				CvLuaDrafts::Register(L);
+				CvLuaUtils::Register(L);
 			}
 			pkScriptSystem->FreeLuaThread(L);
 		}
