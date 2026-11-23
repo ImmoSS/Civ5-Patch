@@ -129105,6 +129105,11 @@ The ship has weather'd every rack; the prize we sought is won."
 				Restart in {1_Num}...
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_LOADED"> 
+			<Text>
+				Loaded Drafts from [COLOR_POSITIVE_TEXT]{1_Timestamp}[ENDCOLOR]
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_DRAFT_OPTION_DISCARD_PICKS">
 			<Text>
 				Discard Picks
@@ -129265,7 +129270,17 @@ The ship has weather'd every rack; the prize we sought is won."
 				[COLOR_POSITIVE_TEXT]Registration was successful!
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_CIVBOT_ERROR"> 
+		<Replace Tag="TXT_KEY_CIVBOT_PENDING_CODE"> 
+			<Text>
+				[COLOR_NEGATIVE_TEXT]Error: code is pending confirmation
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_EXPIRED_CODE"> 
+			<Text>
+				[COLOR_NEGATIVE_TEXT]Error: code expired
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_NETWORK_ERROR"> 
 			<Text>
 				[COLOR_NEGATIVE_TEXT]Error connecting to the server
 			</Text>
@@ -129290,9 +129305,19 @@ The ship has weather'd every rack; the prize we sought is won."
 				[COLOR_NEGATIVE_TEXT]No saved Drafts
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_DISABLED_TT"> 
+			<Text>
+				Civbot Integration is required. To enable it, go to Options > MP Options > Civbot Integration
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_EXTRA_OPTIONS"> 
 			<Text>
 				Additional Options
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_VISIT_WEBSITE"> 
+			<Text>
+				Visit Website
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PATCH_VERSION"> 
@@ -136227,6 +136252,11 @@ The ship has weather'd every rack; the prize we sought is won."
 				Рестарт через {1_Num}...
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_DRAFT_STATUS_LOADED"> 
+			<Text>
+				Драфт был загружен: [COLOR_POSITIVE_TEXT]{1_Timestamp}[ENDCOLOR]
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_DRAFT_OPTION_DISCARD_PICKS">
 			<Text>
 				Вычеркивание при рестарте
@@ -137398,6 +137428,16 @@ The ship has weather'd every rack; the prize we sought is won."
 				[COLOR_POSITIVE_TEXT]Регистрация успешно завершена!
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_PENDING_CODE"> 
+			<Text>
+				[COLOR_NEGATIVE_TEXT]Ошибка: код ожидает подтверждения
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_EXPIRED_CODE"> 
+			<Text>
+				[COLOR_NEGATIVE_TEXT]Ошибка: code expired
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_CIVBOT_NETWORK_ERROR"> 
 			<Text>
 				[COLOR_NEGATIVE_TEXT]Ошибка подключения к серверу
@@ -137423,9 +137463,19 @@ The ship has weather'd every rack; the prize we sought is won."
 				[COLOR_NEGATIVE_TEXT]Нет сохраненных драфтов
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_CIVBOT_DISABLED_TT"> 
+			<Text>
+				Требуется интеграция Civbot. Для включения перейдите в Настройки > Сеть > Интеграция Civbot
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_MULTIPLAYER_EXTRA_OPTIONS"> 
 			<Text>
 				Дополнительные опции
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_VISIT_WEBSITE"> 
+			<Text>
+				Посетить веб-сайт
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PATCH_VERSION"> 
