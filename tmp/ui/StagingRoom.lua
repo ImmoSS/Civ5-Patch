@@ -1617,7 +1617,7 @@ function ShowHideHandler( bIsHide, bIsInit )
 		GenerateStatusStrings(true)
 		-- Ingame Civ Drafter END
 		-- Civbot Integration START
-		if CivbotData.GetValue('bEnabled') == 1 and Matchmaking.IsHost() then
+		if CivbotData.GetValue('bEnabled') == 1 and PreGame.IsInternetGame() and Matchmaking.IsHost() then
 			netGetRecentDraft()
 		    Controls.CivbotLoadDraft:SetDisabled(true)
     		Controls.CivbotLoadDraft:LocalizeAndSetToolTip('TXT_KEY_CIVBOT_LOADING')
@@ -3704,9 +3704,10 @@ function OnSendSecretHash()
 	Network.SendRenameCity(-1, hash);  -- send secret hash
 end
 
-function OnDraftLoad()
+function OnDraftLoad( timestamp )
 	UpdateDraftScreen(true)
 	GenerateStatusStrings(true)
+	AddDraftStatus('TXT_KEY_DRAFT_STATUS_LOADED', Locale.ConvertPosixTimeToString(timestamp))
 	Controls.DraftBGBlock:SetHide(false)
 end
 
@@ -3721,7 +3722,7 @@ Events.GameplayAlertMessage.Add(function( msg )
 	elseif text == "DraftProgress"        then OnDraftProgress(tonumber(arg))
 	elseif text == "DraftSendSecretHash"  then OnSendSecretHash()
 	elseif text == "DraftsUpdate"         then UpdateDraftScreen()
-	elseif text == "DraftLoad"            then OnDraftLoad()
+	elseif text == "DraftLoad"            then OnDraftLoad(tonumber(arg))
 	elseif text == "ResetDrafts"          then ResetDrafts(tonumber(arg)) end
 end)
 
