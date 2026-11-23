@@ -125,8 +125,12 @@ Controls.PatchNotesOpenWebpage:RegisterCallback( Mouse.eLClick, function() Utils
 Controls.PatchNotesCloseButton:RegisterCallback( Mouse.eLClick, function() ShowHidePatchNotesPopup() end )
 -- Patch Updates Checker and Changelog Button END
 
-
 function ShowHideHandler( bIsHide, bIsInit )
+	-- Lua Utils START
+	if bIsInit == true then
+		Utils.InitSteamAPI()
+	end
+	-- Lua Utils END
     if( not bIsHide ) then
         Controls.Civ5Logo:SetTexture( "CivilzationV_Logo.dds" );
 
