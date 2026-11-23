@@ -3655,15 +3655,16 @@ function OnBanSuccess( playerID )
 end
 
 function OnDraftProgress(progress)
-	UpdateDraftScreen()
 	print('OnDraftProgress', progress)
-
 	if progress == DRAFT_PROGRESS_BANS then
 		AddDraftStatus('TXT_KEY_DRAFT_STATUS_PROGRESS_BANS')
+		UpdateDraftScreen()
 	elseif progress == DRAFT_PROGRESS_BUSY then
 		AddDraftStatus('TXT_KEY_DRAFT_STATUS_PROGRESS_BUSY')
+		UpdateDraftScreen()
 	elseif progress == DRAFT_PROGRESS_OVER then
 		AddDraftStatus('TXT_KEY_DRAFT_STATUS_RESULT')
+		UpdateDraftScreen(true)
 		-- print drafts result
 		for i = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
 			if not g_PlayerEntries[i].statusInstance.Root:IsHidden() then
@@ -3976,7 +3977,7 @@ function LoadRecentDraft()
 		local tokens = {}  -- format: "eMsgPlayer|bans|picks|eMsgPlayer|bans|picks..."
 		for _i, p in next, g_RecentDraft['Players'] do
 			local i = tonumber(_i) or -1
-			activeSlots[i] = true
+			activeSlots[i + 1] = true
 			tokens[#tokens + 1] = i
 			tokens[#tokens + 1] = table.concat( p.Draft.Bans, ',' )
 			tokens[#tokens + 1] = table.concat( p.Draft.Picks, ',' )
@@ -3984,7 +3985,6 @@ function LoadRecentDraft()
 		local outstr = table.concat( tokens, '|' )
 
 		PreGame.ResetSlots()
-		UpdateDisplay()
 		for i = 1, #m_SlotInstances do
 			local slot = i - 1
 			if not m_SlotInstances[i].Root:IsHidden() then
