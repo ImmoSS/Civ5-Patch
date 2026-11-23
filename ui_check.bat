@@ -88,6 +88,8 @@ copy /y "%patchfolder%\tmp\ui\SelectMapSize.xml" "%patchfolder%\UI\SelectMapSize
 copy /y "%patchfolder%\tmp\ui\SelectMapType.xml" "%patchfolder%\UI\SelectMapType.xml" > nul
 copy /y "%patchfolder%\tmp\ui\QuickHotkeyEdit.xml" "%patchfolder%\UI\QuickHotkeyEdit.xml" > nul
 copy /y "%patchfolder%\tmp\ui\QuickHotkeyEdit.lua" "%patchfolder%\UI\QuickHotkeyEdit.lua" > nul
+copy /y "%patchfolder%\tmp\ui\NotificationLogPopup.xml" "%patchfolder%\UI\NotificationLogPopup.xml" > nul
+copy /y "%patchfolder%\tmp\ui\NotificationLogPopup.lua" "%patchfolder%\UI\NotificationLogPopup.lua" > nul
 
 REM -------------------------------------------------
 set text="-- destroy: check fix for need to update plot & cargo & airbase"
