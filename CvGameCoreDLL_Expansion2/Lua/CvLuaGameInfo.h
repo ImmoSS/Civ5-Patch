@@ -67,6 +67,7 @@ protected:
 	static int pRegister(lua_State* L);
 
 	static int lGetSaltedHash(lua_State* L);
+	static int lOpenWebpage(lua_State* L);
 	#ifdef LUA_UTILS_CLIPBOARD_COPY_PASTE
 	static int lGetClipboardText(lua_State* L);
 	static int lSetClipboardText(lua_State* L);

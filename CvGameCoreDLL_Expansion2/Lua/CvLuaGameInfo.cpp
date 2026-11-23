@@ -316,10 +316,13 @@ int CvLuaUtils::pRegister(lua_State* L)
 		return 0;
 	}
 
-	lua_createtable(L, 0, 5);
+	lua_createtable(L, 0, 6);
 
 	lua_pushcclosure(L, lGetSaltedHash, 0);
 	lua_setfield(L, -2, "GetSaltedHash");
+
+	lua_pushcclosure(L, lOpenWebpage, 0);
+	lua_setfield(L, -2, "OpenWebpage");
 
 	#ifdef LUA_UTILS_CLIPBOARD_COPY_PASTE
 	lua_pushcclosure(L, lGetClipboardText, 0);
@@ -352,6 +355,22 @@ int CvLuaUtils::lGetSaltedHash(lua_State* L)
 
 	return 1;
 }
+
+//------------------------------------------------------------------------------
+int CvLuaUtils::lOpenWebpage(lua_State* L)
+{
+	int urlIndex = lua_tointeger(L, 1);
+
+	CvString url("");
+	if (urlIndex == 0) { url = "https://github.com/catscatsforever/Civ5-Patch/releases/latest"; }
+	else if (urlIndex == 1) { url = "https://www.civbot.online"; }
+
+	if (url.length() > 0)
+		ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, 0);
+
+	return 0;
+}
+
 # ifdef LUA_UTILS_CLIPBOARD_COPY_PASTE
 //------------------------------------------------------------------------------
 int CvLuaUtils::lGetClipboardText(lua_State* L)
