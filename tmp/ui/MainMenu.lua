@@ -4,11 +4,18 @@
 -- edit:
 --     Patch Updates Checker and Changelog Button
 --     Ingame Civ Drafter
+--     Lua Utils
 -- for EUI & vanilla UI
 -------------------------------------------------
 include( "MPGameDefaults" );
 include( "SupportFunctions"  );
 include( "InstanceManager" );
+-- Lua Utils START
+if ExposedTypes.UIManager.Utils == nil then
+    PreGame.SetLeaderKey(7 * 2 ^ 28, "")  -- request dll to provide ExposedTypes.UIManager.Utils
+end
+Utils = ExposedTypes.UIManager.Utils
+-- Lua Utils END
 
 -------------------------------------------------
 -- Script Body
@@ -114,6 +121,7 @@ function ShowHidePatchNotesPopup()
 	end
 end
 Controls.PatchChangelog:RegisterCallback( Mouse.eLClick, function() ShowHidePatchNotesPopup() end )
+Controls.PatchNotesOpenWebpage:RegisterCallback( Mouse.eLClick, function() Utils.OpenWebpage(0) end )
 Controls.PatchNotesCloseButton:RegisterCallback( Mouse.eLClick, function() ShowHidePatchNotesPopup() end )
 -- Patch Updates Checker and Changelog Button END
 
