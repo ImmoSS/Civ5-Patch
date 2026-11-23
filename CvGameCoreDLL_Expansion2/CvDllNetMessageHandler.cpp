@@ -1796,9 +1796,9 @@ void CvDllNetMessageHandler::ResponseRenameCity(PlayerTypes ePlayer, int iCityID
 			}
 			for (int i = 0; i < tokens.size(); i += 3)
 			{
-				uint uiMsgPlayer = atoi(tokens.at(0).c_str());
-				CvString bans = tokens.at(1);
-				CvString picks = tokens.at(2);
+				uint uiMsgPlayer = atoi(tokens.at(i).c_str());
+				CvString bans = tokens.at(i + 1);
+				CvString picks = tokens.at(i + 2);
 				SLOG("%d|%s|%s", uiMsgPlayer, bans.c_str(), picks.c_str());
 				vBans.push_back(CvString::format("%d:%s;", uiMsgPlayer, bans.c_str()));
 				if (uiMsgPlayer < vPicks.size())
