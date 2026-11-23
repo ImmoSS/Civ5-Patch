@@ -1774,7 +1774,7 @@ void CvDllNetMessageHandler::ResponseRenameCity(PlayerTypes ePlayer, int iCityID
 	}
 	else if (iCityID == MOD_MESSAGE_DRAFT_LOAD)
 	{
-		// format: "eMsgPlayer|bans|picks|eMsgPlayer|bans|picks..."
+		// format: "timestamp|eMsgPlayer|bans|picks|eMsgPlayer|bans|picks..."
 		SLOG("MOD_MESSAGE_DRAFT_LOAD << ePlayer %d iCityID %d szName %s", (int)ePlayer, iCityID, szName);
 		CvString s = CvString(szName);
 		std::vector<CvString> tokens;
@@ -1786,15 +1786,16 @@ void CvDllNetMessageHandler::ResponseRenameCity(PlayerTypes ePlayer, int iCityID
 			s.erase(0, pos + 1);
 		}
 		tokens.push_back(s);
-		if (tokens.size() % 3 == 0)
+		if (tokens.size() % 3 == 1)
 		{
+			int iTimestamp = atoi(tokens.at(0).c_str());
 			std::vector<CvString> vBans;
 			std::vector<CvString> vPicks = CvPreGame::getDraftPlayerPicks();
 			for (uint i = 0; i < vPicks.size(); i++)
 			{
 				vPicks[i] = "";
 			}
-			for (int i = 0; i < tokens.size(); i += 3)
+			for (int i = 1; i < tokens.size(); i += 3)
 			{
 				uint uiMsgPlayer = atoi(tokens.at(i).c_str());
 				CvString bans = tokens.at(i + 1);
@@ -1820,14 +1821,14 @@ void CvDllNetMessageHandler::ResponseRenameCity(PlayerTypes ePlayer, int iCityID
 				{
 					CvLuaArgsHandle args;
 					bool bResult;
-					args->Push(1);
+					args->Push(iTimestamp);
 					LuaSupport::CallHook(pkScriptSystem, "DraftLoad", args.get(), bResult);
 				}
 			}
 			else
 			{
 				SLOG("g2");
-				DLLUI->AddMessage(0, CvPreGame::activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DraftLoad");  // V2
+				DLLUI->AddMessage(0, CvPreGame::activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DraftLoad|%d", iTimestamp).c_str());  // V2
 			}
 		}
 		return;
