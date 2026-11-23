@@ -16,6 +16,7 @@
 #include "CvLuaSupport.h"
 #include "CvLuaGameInfo.h"
 #include <LuaExposures.h>
+#include <shellapi.h>
 
 // Namespace aliases to reduce typing.
 namespace Lua = FLua::Details;
@@ -346,6 +347,7 @@ int CvLuaUtils::pRegister(lua_State* L)
 
 	return 0;
 }
+
 //------------------------------------------------------------------------------
 int CvLuaUtils::lGetSaltedHash(lua_State* L)
 {
