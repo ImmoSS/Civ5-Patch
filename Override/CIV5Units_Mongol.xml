@@ -129320,6 +129320,16 @@ The ship has weather'd every rack; the prize we sought is won."
 				Visit Website
 			</Text>
 		</Replace>
+		<Replace Tag="TXT_KEY_MP_COPY_INVITE_LINK"> 
+			<Text>
+				Copy Invite Link
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_MP_COPY_INVITE_LINK_TT"> 
+			<Text>
+				Copy the lobby invitation link to your clipboard.
+			</Text>
+		</Replace>
 		<Replace Tag="TXT_KEY_PATCH_VERSION"> 
 			<Text>
 				v12.3a
@@ -137476,6 +137486,16 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_VISIT_WEBSITE"> 
 			<Text>
 				Посетить веб-сайт
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_MP_COPY_INVITE_LINK"> 
+			<Text>
+				Ссылка на игру
+			</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_MP_COPY_INVITE_LINK_TT"> 
+			<Text>
+				Скопировать ссылку для приглашения игроков в лобби в буфер обмена.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PATCH_VERSION"> 

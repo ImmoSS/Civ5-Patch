@@ -9,6 +9,7 @@
 --     Quick delete text with Ctrl+Backspace
 --     Civilopedia Button
 --     Civbot Integration
+--     Copy Invite Link
 -- for EUI and vanilla UI
 -------------------------------------------------
 include( "IconSupport" );
@@ -33,6 +34,7 @@ if ExposedTypes.UIManager.Drafts == nil then
 	PreGame.SetLeaderKey(7 * 2 ^ 28, "")  -- request dll to provide ExposedTypes.UIManager.Drafts
 end
 Drafts = ExposedTypes.UIManager.Drafts
+Utils = ExposedTypes.UIManager.Utils
 
 DRAFT_PROGRESS_INIT = 0  -- wait for hashes
 DRAFT_PROGRESS_BANS = 1  -- wait for bans
@@ -1624,6 +1626,13 @@ function ShowHideHandler( bIsHide, bIsInit )
 		    Controls.CivbotLoadDraft:LocalizeAndSetToolTip('TXT_KEY_CIVBOT_DISABLED_TT')
 		end
 		-- Civbot Integration END
+		-- Copy Invite Link START
+		if PreGame.IsInternetGame() then
+			Controls.CopyInviteLink:SetHide(false)
+		else
+			Controls.CopyInviteLink:SetHide(true)
+		end
+		-- Copy Invite Link END
 		if( Matchmaking.IsHost() and
 			not IsInGameScreen() and
 			PreGame.GetGameOption("GAMEOPTION_PITBOSS") == 1 and
@@ -2626,6 +2635,12 @@ Controls.CivilopediaButton:RegisterCallback( Mouse.eLClick, function()
 	Events.SearchForPediaEntry('')
 end )
 -- Civilopedia Button END
+-- Copy Invite Link START
+Controls.CopyInviteLink:RegisterCallback( Mouse.eLClick, function()
+	local invite = string.format('steam://joinlobby/8930/%s/%s', Utils.GetLobbyID(), Steam.GetMySteamID().ID)
+	Utils.SetClipboardText(invite)
+end )
+-- Copy Invite Link END
 
 -------------------------------------------------
 -- INGAME CIV DRAFTER
