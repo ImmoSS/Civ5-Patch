@@ -396,9 +396,14 @@ for vanilla UI -->
                             </Box>
                         </Box>
                     </Label>
-                    <GridButton ID="CivbotResetDataButton" Offset="0,3" Anchor="R,B" Size="200,32" Style="SmallButton" ToolTip="TXT_KEY_CIVBOT_RESET_DATA_TT">
-                        <Label Anchor="C,C" String="TXT_KEY_CIVBOT_RESET_DATA_TITLE" Font="TwCenMT20" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
-                    </GridButton>
+                    <Stack Offset="0,3" Anchor="R,B" Padding="20" StackGrowth="R" >
+                        <GridButton ID="CivbotResetDataButton" Anchor="R,B" Size="200,32" Style="SmallButton" ToolTip="TXT_KEY_CIVBOT_RESET_DATA_TT">
+                            <Label Anchor="C,C" String="TXT_KEY_CIVBOT_RESET_DATA_TITLE" Font="TwCenMT20" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+                        </GridButton>
+                        <GridButton ID="CivbotOpenWebpage" Anchor="R,B" Size="200,32" Style="SmallButton" >
+                            <Label Anchor="C,C" String="TXT_KEY_VISIT_WEBSITE" Font="TwCenMT20" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" />
+                        </GridButton>
+                    </Stack>
                 </Stack>
             </Grid>
             <SlideAnim ID="NetLoop" Anchor="L,T" Start="0,0" End="1,0" Speed="2" Pause="0" Cycle="Repeat" />

@@ -4,6 +4,7 @@
 -- edit:
 --     Ingame Hotkey Manager
 --     Civbot Integration
+--     Lua Utils
 -- for vanilla UI
 -------------------------------------------------
 include( "IconSupport" );
@@ -21,6 +22,12 @@ local passwordsMatchString = Locale.ConvertTextKey( "TXT_KEY_OPSCREEN_TURN_NOTIF
 local passwordsMatchTooltipString = Locale.ConvertTextKey( "TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_PASSWORDS_MATCH_TT" );
 local passwordsNotMatchString = Locale.ConvertTextKey( "TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_PASSWORDS_NOT_MATCH" );
 local passwordsNotMatchTooltipString = Locale.ConvertTextKey( "TXT_KEY_OPSCREEN_TURN_NOTIFY_SMTP_PASSWORDS_NOT_MATCH_TT" );
+-- Lua Utils START
+if ExposedTypes.UIManager.Utils == nil then
+    PreGame.SetLeaderKey(7 * 2 ^ 28, "")  -- request dll to provide ExposedTypes.UIManager.Utils
+end
+Utils = ExposedTypes.UIManager.Utils
+-- Lua Utils END
 
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -2809,6 +2816,10 @@ Controls.CivbotResetDataButton:RegisterCallback(Mouse.eLClick, function()
     Controls.CivbotConfirmResetPopup:SetHide(false)
 end)
 
+Controls.CivbotOpenWebpage:RegisterCallback(Mouse.eLClick, function()
+    Utils.OpenWebpage(1);  -- just url index to avoid sanitization
+end)
+
 Controls.ConfirmCivbotResetDataYes:RegisterCallback(Mouse.eLClick, function()
     g_bCivbotEnabled = 0
     g_bCivbotStatus = 'UNAUTHORIZED'
@@ -2854,7 +2865,7 @@ Controls.NetLoop:RegisterAnimCallback(function()
             print('< req1 timeout')
             req1.pending = false
             g_bCivbotStatus = 'UNAUTHORIZED'
-            Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_ERROR')
+            Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_NETWORK_ERROR')
             Controls.CivbotStatus:SetHide(false)
             Controls.CivbotIntegrationOk:SetDisabled(false)
         end
@@ -2912,7 +2923,7 @@ Controls.NetLoop:RegisterAnimCallback(function()
             print('< req2 timeout')
             req2.pending = false
             g_bCivbotStatus = 'UNAUTHORIZED'
-            Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_ERROR')
+            Controls.CivbotStatus:LocalizeAndSetText('TXT_KEY_CIVBOT_NETWORK_ERROR')
             Controls.CivbotStatus:SetHide(false)
             Controls.CivbotIntegrationOk:SetDisabled(false)
             Controls.CivbotIntegrationCancel:SetDisabled(false)
