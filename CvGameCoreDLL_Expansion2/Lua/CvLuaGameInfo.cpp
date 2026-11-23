@@ -478,6 +478,5 @@ int CvLuaUtils::lGetLobbyID(lua_State* L)
 	return 1;
 }
 
-}
 # endif
 #endif
