@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- edit:
+    Civbot Integration
+for EUI & Vanilla UI -->
 <Context ColorSet="Beige_Black" Font="TwCenMT20" FontStyle="Shadow" >
 
 	<Box Style="BGBlock" ID="BGBlock" />
@@ -84,6 +87,9 @@
         <GridButton Size="275,36" ID="BeyondButton" Style="BaseButton" String="TXT_KEY_GO_BEYOND_EARTH" Hidden="1" />
       </Stack>
 		</Box>
+		<!-- Civbot Integration START -->
+		<SlideAnim ID="NetLoop" Anchor="L,T" Start="0,0" End="1,0" Speed="2" Pause="0" Cycle="Repeat" />
+		<!-- Civbot Integration END -->
 	</Grid>
 
 	<LuaContext FileName="Assets/UI/InGame/Popups/Ranking" ID="Ranking" Hidden="True" />
