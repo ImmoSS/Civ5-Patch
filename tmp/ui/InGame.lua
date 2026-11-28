@@ -327,6 +327,10 @@ function PingInputHandler()
 		local plotX = plot:GetX();
 		local plotY = plot:GetY();
 		local product = plotX * 2 ^ 16 + plotY
+		local playerID = Game.GetActivePlayer()
+		if g_MapPingMute[playerID] ~= true then
+			g_MapPings[plot:GetPlotIndex()] = {playerID = playerID, x = plotX, y = plotY, cache = 40, tick = 2, ended = 0}
+		end
 		Network.SendGiftUnit(product, -13)  -- send map ping
 	end
 end
@@ -349,7 +353,7 @@ end
 local mw, _ = Map.GetGridSize()
 
 GameEvents.AddMapPing.Add(function(playerID,x,y)
-	if g_MapPingMute[playerID] ~= true then
+	if playerID ~= Game.GetActivePlayer() and g_MapPingMute[playerID] ~= true then
 		g_MapPings[y*mw + x] = {playerID = playerID, x = x, y = y, cache = 40, tick = 2, ended = 0}
 	end
 end)
