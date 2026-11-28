@@ -1289,14 +1289,15 @@ function OnDisconnect( playerID )
 		end
 		ShowHideInviteButton();
 		-- Ingame Civ Drafter START
-		if g_DraftProgress == 'DRAFT_PROGRESS_INIT' or g_DraftProgress == 'DRAFT_PROGRESS_DEFAULT' then
-			print('disconnect: unready', playerID)
-			local product = 6 * 2 ^ 28 + playerID;  -- player disconnected (INIT stage)
-			local data = PreGame.SetLeaderKey( product, '' );
-		elseif g_DraftProgress ~= 'DRAFT_PROGRESS_OVER' then
+		print('disconnect: unready', playerID)
+		local product = 6 * 2 ^ 28 + playerID;  -- player disconnected
+		PreGame.SetLeaderKey( product, '' );
+
+		local progress = Drafts.GetDraftCurrentProgress()
+		if progress ~= DRAFT_PROGRESS_INIT and progress < DRAFT_PROGRESS_OVER then
 			print('disconnect: reset drafts', playerID)
-			local product = 4 * 2 ^ 28;  -- reset draft data (local)
-			local data = PreGame.SetLeaderKey( product, 'TXT_KEY_DRAFTS_RESET_DISC' );
+			product = 4 * 2 ^ 28;  -- reset draft data (local)
+			PreGame.SetLeaderKey( product, 'TXT_KEY_DRAFTS_RESET_DISC' );
 		end
 		-- Ingame Civ Drafter END
 	end
@@ -1609,6 +1610,7 @@ function ShowHideHandler( bIsHide, bIsInit )
     end
     
     if( not bIsHide and not bFromPedia ) then
+		Controls.ExtraButtonsPanel:SetSizeY( Controls.ExtraButtonsStack:GetSizeY() + 28)
 		-- Ingame Civ Drafter START
 		Controls.DraftButton:SetHide( (PreGame.GetLoadFileName() ~= "") or PreGame.GameStarted() );
 		if not bIsInit then
@@ -3497,8 +3499,8 @@ function UpdatePlayerHighlights(playerID)
 				instB.LeaderSubIcon:SetColor( C.White )
 				instB.CivName:SetColor( C.Beige, 0 )
 
-				dummy.DummyButton:ClearCallback(Mouse.eLClick)
-				dummyB.DummyButton:ClearCallback(Mouse.eLClick)
+				--dummy.DummyButton:ClearCallback(Mouse.eLClick)
+				--dummyB.DummyButton:ClearCallback(Mouse.eLClick)
 			else
 				inst.LeaderFrame:SetColor( C.White )
 				inst.LeaderIcon:SetColor( C.Silver )
@@ -3642,6 +3644,7 @@ end
 function OnBanFailure( playerID )
 	local pName = Matchmaking.GetPlayerList()[playerID + 1].playerName or Locale.Lookup('TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME', playerID + 1);
 	if Matchmaking.GetLocalID() == playerID then
+		ClearSelection()
 		AddDraftStatus('TXT_KEY_DRAFT_STATUS_BAN_REJECTED', pName)
 		if Controls.DraftConfirmBansButton:IsDisabled() then
 			Controls.DraftConfirmBansButton:SetDisabled(false);
@@ -3655,10 +3658,15 @@ function OnBanFailure( playerID )
 			Controls.DraftConfirmBansButton:LocalizeAndSetToolTip('TXT_KEY_DRAFT_BANS_CONFIRM_TT', next(civtbl) and table.concat(civtbl, ', ') or '[ENDCOLOR]{TXT_KEY_MP_NO_PROPOSAL}')
 		end
 	end
+	UpdateCivPicker()
 end
 
 function OnBanSuccess( playerID )
+	if playerID == Matchmaking.GetLocalID() then
+		ClearSelection()
+	end
 	UpdatePlayerCard(playerID)
+	UpdateCivPicker()
 	local pName = Matchmaking.GetPlayerList()[playerID + 1].playerName or Locale.Lookup('TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME', playerID + 1);
 	local strBans = Drafts.GetDraftPlayerData(playerID).Bans or ''
 	local bansTbl = {}
@@ -3723,7 +3731,7 @@ Events.GameplayAlertMessage.Add(function( msg )
 	elseif text == "DraftSendSecretHash"  then OnSendSecretHash()
 	elseif text == "DraftsUpdate"         then UpdateDraftScreen()
 	elseif text == "DraftLoad"            then OnDraftLoad(tonumber(arg))
-	elseif text == "ResetDrafts"          then ResetDrafts(tonumber(arg)) end
+	elseif text == "ResetDrafts"          then ResetDrafts(tonumber(arg))
 end)
 
 Events.SearchForPediaEntry.Add(function() bFromPedia = true end)
