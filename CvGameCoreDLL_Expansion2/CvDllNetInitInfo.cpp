@@ -57,6 +57,9 @@ CvDllNetInitInfo::CvDllNetInitInfo()
 	m_draftPlayerSecretHashes = CvPreGame::getDraftPlayerSecretHashes();
 	m_draftAllBansReceived = CvPreGame::getDraftAllBansReceived();
 #endif
+#ifdef MP_CIVBOT_INTEGRATION
+	m_PlayerNetIDHashes = CvPreGame::getPlayerNetIDHashes();
+#endif
 
 	ZeroMemory(m_szDebugString, sizeof m_szDebugString);
 }
@@ -206,6 +209,9 @@ bool CvDllNetInitInfo::Read(FDataStream& kStream)
 	SLOG("m_draftPlayersReady %d", m_draftPlayersReady);
 	SLOG("m_draftCurrentProgress %d", m_draftCurrentProgress);
 #endif
+#ifdef MP_CIVBOT_INTEGRATION
+	kStream >> m_PlayerNetIDHashes;
+#endif
 
 	return true;
 }
@@ -256,6 +262,9 @@ bool CvDllNetInitInfo::Write(FDataStream& kStream)
 	kStream << m_draftPlayerSecrets;
 	kStream << m_draftPlayerSecretHashes;
 	kStream << m_draftAllBansReceived;
+#endif
+#ifdef MP_CIVBOT_INTEGRATION
+	kStream << m_PlayerNetIDHashes;
 #endif
 
 	return true;
@@ -316,6 +325,9 @@ bool CvDllNetInitInfo::Commit()
 	CvPreGame::setDraftPlayerSecrets(m_draftPlayerSecrets);
 	CvPreGame::setDraftPlayerSecretHashes(m_draftPlayerSecretHashes);
 	CvPreGame::setDraftAllBansReceived(m_draftAllBansReceived);
+#endif
+#ifdef MP_CIVBOT_INTEGRATION
+	CvPreGame::setPlayerNetIDHashes(m_PlayerNetIDHashes);
 #endif
 
 	return true;

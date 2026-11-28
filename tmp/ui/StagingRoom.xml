@@ -5,12 +5,17 @@
 	- Ingame Civ Drafter
 	- Quick delete text with Ctrl+Backspace
 	- Civilopedia Button
+	- Civbot Integration
 for EUI and vanilla UI -->
 
 <?xml version="1.0" encoding="utf-8"?>
 <Context Font="TwCenMT18" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" >
 
   <Image Anchor="C,C" Offset="0,0"  Size="1920,1200" ID="AtlasLogo" Texture="CivilzationVAtlas.dds" Hidden="1"/>
+
+  <!-- Civbot Integration START -->
+  <SlideAnim ID="NetLoop" Anchor="L,T" Start="0,0" End="1,0" Speed="2" Pause="0" Cycle="Repeat" />
+  <!-- Civbot Integration END -->
 
   <!-- Game Option Instance -->
   <Instance Name="GameOption" Size="320.24">
@@ -43,20 +48,40 @@ for EUI and vanilla UI -->
         </AlphaAnim>
       </Box>
 
+      <!-- Civbot Integration Elo -->
+      <Grid Anchor="L,T" Offset="202,20" Size="100,27" Color="0.0.0.0" ID="CivbotEloBox" Hidden="1" >
+        <Stack Anchor="L,T" Padding="0" StackGrowth="Right" >
+          <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="63,53,25,255" />
+          <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="63,53,25,255" />
+          <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="63,53,25,255" />
+          <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="63,53,25,255" />
+          <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="63,53,25,255" />
+        </Stack>
+        <ScrollPanel Anchor="L,T" Size="100,20" Vertical="1" FullClip="1" ID="CivbotEloScrollPanel" >
+          <Stack Anchor="L,T" Padding="0" StackGrowth="Right" >
+            <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="255,215,100,255" />
+            <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="255,215,100,255" />
+            <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="255,215,100,255" />
+            <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="255,215,100,255" />
+            <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="255,215,100,255" />
+          </Stack>
+        </ScrollPanel>
+      </Grid>
+
       <!-- WaitOnPlayer -->
       <Image Anchor="L,C" Hidden="1" Size="32,32"  Texture="Assets/UI/Art/Icons/WaitOnPlayer32.dds"  ID="WaitOnPlayer" />
 
       <!-- PlayerNameLabel -->
       <Box ID="PlayerNameBox" Anchor="L,T" Size="260,32" Offset="128,38" Color="255.255.255.0" >
-				<Stack Anchor="L,B"  Offset="0,0" Padding="0" StackGrowth="Right" >
-					<Box ID="HostBox" Color="0,0,255,0" Anchor="L,C" Offset="0,0" Size="24,32">
-       			<Label Anchor="C,C"  String="[ICON_CAPITAL]" Offset="0,0" Hidden="1" ID="HostIcon" ToolTip="TXT_KEY_HOST" />
-					</Box>
-					<Box ID="ConnectedBox" Color="0,255,0,0" Anchor="L,C" Offset="0,0" Size="32,32">
-						<Image Anchor="C,C"  Offset="-2,2" ID="ConnectionStatus" Size="32,32" Texture="assets/UI/Art/Icons/MarcPips.DDS" ToolTip="TXT_KEY_MP_PLAYER_CONNECTED" hidden="1" />
-					</Box>
-        	<Label Anchor="L,C"  ID="PlayerNameLabel" Offset="0,0"  Font="TwCenMT20"  ColorSet="Beige_Black_Alpha" />
-				</Stack>
+        <Stack Anchor="L,B"  Offset="0,0" Padding="0" StackGrowth="Right" >
+          <Box ID="HostBox" Color="0,0,255,0" Anchor="L,C" Offset="0,0" Size="24,32">
+            <Label Anchor="C,C"  String="[ICON_CAPITAL]" Offset="0,0" Hidden="1" ID="HostIcon" ToolTip="TXT_KEY_HOST" />
+          </Box>
+          <Box ID="ConnectedBox" Color="0,255,0,0" Anchor="L,C" Offset="0,0" Size="32,32">
+            <Image Anchor="C,C"  Offset="-2,2" ID="ConnectionStatus" Size="32,32" Texture="assets/UI/Art/Icons/MarcPips.DDS" ToolTip="TXT_KEY_MP_PLAYER_CONNECTED" hidden="1" />
+          </Box>
+          <Label Anchor="L,C"  ID="PlayerNameLabel" Offset="0,0"  Font="TwCenMT20"  ColorSet="Beige_Black_Alpha" />
+        </Stack>
       </Box>
 
       <Stack Anchor="L,T"  Offset="128,6" Padding="6" StackGrowth="Right" >
@@ -228,13 +253,32 @@ for EUI and vanilla UI -->
         <!-- Slot Leader Name & Civ Dropdown -->
         <Stack Anchor="L,T" Offset="0,0" Padding="6" StackGrowth="Bottom" >
 
+          <!-- Civbot Integration Elo -->
+          <Grid Anchor="L,T" Offset="75,0" Size="100,27" Color="0.0.0.0" ID="CivbotEloBox" Hidden="1" >
+            <Stack Anchor="L,T" Offset="0,15" Padding="0" StackGrowth="Right" >
+              <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="63,53,25,222" />
+              <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="63,53,25,222" />
+              <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="63,53,25,222" />
+              <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="63,53,25,222" />
+              <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="63,53,25,222" />
+            </Stack>
+            <ScrollPanel Anchor="L,T" Offset="0,15" Size="100,20" Vertical="1" FullClip="1" ID="CivbotEloScrollPanel" >
+              <Stack Anchor="L,T" Padding="0" StackGrowth="Right" >
+                <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="255,215,100,255" />
+                <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="255,215,100,255" />
+                <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="255,215,100,255" />
+                <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="255,215,100,255" />
+                <Image Texture="playerindicator32.dds" Size="20,20" TextureOffset="6,6" Anchor="L,T" Color="255,215,100,255" />
+              </Stack>
+            </ScrollPanel>
+          </Grid>
+
           <!-- -->
-          <Box ID="PlayerNameBox" Anchor="L,T" Size="260,27" Offset="0,0" Color="255.255.255.0" >
-
-            <Label Anchor="L,B"  ID="PlayerNameLabel" Offset="25,-2"  Font="TwCenMT20"  ColorSet="Beige_Black_Alpha" />
-            <Label Anchor="L,B"  String="[ICON_CAPITAL]" Offset="0,0" Hidden="1" ID="HostIcon" ToolTip="TXT_KEY_HOST" />
-
+          <Box ID="PlayerNameBox" Anchor="L,T" Size="260,20" Offset="0,7" Color="255.255.255.0" >
+            <Label Anchor="L,B"  ID="PlayerNameLabel" Offset="25,5"  Font="TwCenMT20"  ColorSet="Beige_Black_Alpha" />
+            <Label Anchor="L,B"  String="[ICON_CAPITAL]" Offset="0,7" Hidden="1" ID="HostIcon" ToolTip="TXT_KEY_HOST" />
           </Box>
+
           <!-- Civ Dropdown -->
           <Box Anchor="L,T" Size="260,27" Offset="0,0" Color="255.255.255.0" >
             <PullDown Anchor="C,C" Font="TwCenMT18" FontStyle="Shadow" Style="GenericPullDown" ScrollThreshold="400" Size="260,27" AutoSizePopUp="1" SpaceForScroll="1" ID="CivPulldown" Offset="0,0" />
@@ -683,12 +727,12 @@ for EUI and vanilla UI -->
 		<!-- Separator --><Image Anchor="C,C" Size="10,36" Offset="0,0" Texture="Blank.dds" />
 
         <!-- Invite Button  -->
-        <GridButton Anchor="R,B"  Style="SmallButton" Size="150,36"  Offset="0,0" StateOffsetIncrement="0,0" ID="InviteButton" Hidden="1" >
-          <Label Anchor="C,C"  Offset="0,0"  String="TXT_KEY_MULTIPLAYER_INVITE" ToolTip="TXT_KEY_MULTIPLAYER_INVITE_TT" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"  />
+        <GridButton Anchor="R,B"  Style="SmallButton" Size="150,36"  Offset="0,0" StateOffsetIncrement="0,0" ToolTip="TXT_KEY_MULTIPLAYER_INVITE_TT" ID="InviteButton" Hidden="1" >
+          <Label Anchor="C,C"  Offset="0,0"  String="TXT_KEY_MULTIPLAYER_INVITE" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"  />
         </GridButton>
 					
-					<!-- Civilopedia Button -->
-					<GridButton Style="SmallButton" Size="150,36" Anchor="C,T" Offset="0,0" String="TXT_KEY_CIVILOPEDIA" ToolTip="TXT_KEY_CIVILOPEDIA_TOOLTIP" ID="CivilopediaButton" />
+        <!-- Civilopedia Button -->
+        <GridButton Style="SmallButton" Size="150,36" Anchor="C,T" Offset="0,0" String="TXT_KEY_CIVILOPEDIA" ToolTip="TXT_KEY_CIVILOPEDIA_TOOLTIP" ID="CivilopediaButton" />
 		
 		<!-- Ingame Civ Drafter START -->
         <GridButton Anchor="R,B"  Style="SmallButton" Size="150,36"  Offset="0,0" StateOffsetIncrement="0,0" ID="DraftButton" ToolTip="TXT_KEY_DRAFTS_HELP" Hidden="0" >
@@ -708,7 +752,6 @@ for EUI and vanilla UI -->
 		      
 		      <!-- Load Drafts Button -->
 		      <GridButton Anchor="C,B" Style="SmallButton" Size="150,36" Offset="0,0" StateOffsetIncrement="0,0" String="TXT_KEY_CIVBOT_LOAD_DRAFT" ID="CivbotLoadDraft" Hidden="0" >
-		      	<SlideAnim ID="NetLoop" Anchor="L,T" Start="0,0" End="1,0" Speed="2" Pause="0" Cycle="Repeat" />
 		      </GridButton>
 		      
 		      <!-- Copy Invite Link Button -->

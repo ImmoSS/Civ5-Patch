@@ -317,7 +317,7 @@ int CvLuaUtils::pRegister(lua_State* L)
 		return 0;
 	}
 
-	lua_createtable(L, 0, 6);
+	lua_createtable(L, 0, 7);
 
 	lua_pushcclosure(L, lGetSaltedHash, 0);
 	lua_setfield(L, -2, "GetSaltedHash");
@@ -478,5 +478,23 @@ int CvLuaUtils::lGetLobbyID(lua_State* L)
 	return 1;
 }
 
+# endif
+# ifdef MP_CIVBOT_INTEGRATION
+//------------------------------------------------------------------------------
+int CvLuaUtils::lGetNetIDHashes(lua_State* L)
+{
+	std::vector<CvString> vstr = CvPreGame::getPlayerNetIDHashes();
+
+	lua_createtable(L, vstr.size(), 0);
+	const int t = lua_gettop(L);
+
+	for (uint i = 0; i < vstr.size(); i++)
+	{
+		lua_pushstring(L, vstr[i]);
+		lua_rawseti(L, -2, i + 1);
+	}
+
+	return 1;
+}
 # endif
 #endif

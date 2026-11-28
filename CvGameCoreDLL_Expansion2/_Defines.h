@@ -1690,6 +1690,8 @@
 #define LUA_UTILS_CLIPBOARD_COPY_PASTE
 // TEST provides a steam API interface for this dll using the steam_api.dll exports
 #define LUA_UTILS_STEAM_API
+// TEST 
+#define MP_CIVBOT_INTEGRATION
 /*OTHER CHANGES END*/
 
 

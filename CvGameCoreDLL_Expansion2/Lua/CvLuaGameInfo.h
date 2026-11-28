@@ -76,6 +76,9 @@ protected:
 	static int lInitSteamAPI(lua_State* L);
 	static int lGetLobbyID(lua_State* L);
 	#endif
+	#ifdef MP_CIVBOT_INTEGRATION
+	static int lGetNetIDHashes(lua_State* L);
+	#endif
 
 };
 # endif

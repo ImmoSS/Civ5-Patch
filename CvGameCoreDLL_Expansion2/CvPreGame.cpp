@@ -429,6 +429,9 @@ CvString hash(CvString m) {
 	return s;
 }
 #endif
+#ifdef MP_CIVBOT_INTEGRATION
+std::vector<CvString> s_PlayerNetIDHashes(MAX_MAJOR_CIVS);
+#endif
 
 //	-----------------------------------------------------------------------
 //	Bind a leader head key to the leader head using the current leader head ID
@@ -2224,6 +2227,12 @@ void resetGame()
 	s_draftCurrBansMsgNumber = 0;
 
 #endif
+#ifdef MP_CIVBOT_INTEGRATION
+	for (uint i = 0; i < s_PlayerNetIDHashes.size(); i++)
+	{
+		s_PlayerNetIDHashes[i] = "";
+	}
+#endif
 }
 
 void ResetGameOptions()
@@ -2995,7 +3004,6 @@ void DraftResponseSecretHash(PlayerTypes p, const char* szHash)
 	else
 	{
 		SLOG("g2");
-		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("ready|%d", uiPlayerID).c_str());
 		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DraftsUpdate");  // V2
 	}
 	SLOG("set secret hash for player %d to %s", uiPlayerID, szHash);
@@ -3131,7 +3139,6 @@ void DraftResponseBans(PlayerTypes p, const char* szBans)
 	else
 	{
 		SLOG("g2");
-		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("ban-success|%d|%s", uiPlayerID, szBans).c_str());
 		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("BanSuccess|%d", uiPlayerID).c_str());  // V2
 	}
 	s_draftPlayerBans.push_back(CvString::format("%d:%s;", uiPlayerID, szBans));
@@ -3362,7 +3369,7 @@ void DraftResponseSecret(PlayerTypes p, const char* szSecret)
 	}
 }
 
-void DraftResponseBanRollback(PlayerTypes p, const char* szBans)
+void DraftResponseBanRollback(PlayerTypes p)
 {
 	if (s_draftCurrentProgress != DRAFT_PROGRESS_BANS)
 	{
@@ -3392,30 +3399,48 @@ void DraftResponseBanRollback(PlayerTypes p, const char* szBans)
 	else
 	{
 		SLOG("g2");
-		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("ban-failure|%s", szBans).c_str());
 		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("BanFailure|%d", p).c_str());  // V2
 	}
 };
 
 void DraftResponseSwapPlayers(PlayerTypes p, const char* szSwapWith)
 {
-	if (s_draftCurrentProgress != DRAFT_PROGRESS_OVER)
+	CvString strSwapWith = CvString(szSwapWith);
+	int newp = -1;
+	if (strSwapWith != "")
 	{
-		CvString strSwapWith = CvString(szSwapWith);
-		int newp = -1;
-		if (strSwapWith != "")
+		if (sscanf(strSwapWith.c_str(), "%d", &newp) != 1)
 		{
-			if (sscanf(strSwapWith.c_str(), "%d", &newp) != 1)
+			return;
+		}
+	}
+	int oldp = (int)p;
+	if (newp >= 0 && newp < MAX_MAJOR_CIVS)
+	{
+#ifdef MP_CIVBOT_INTEGRATION
+		SLOG("PLAYERS SWAP: %d %d", oldp, newp);
+		s_PlayerNetIDHashes[newp] = "";
+		s_PlayerNetIDHashes[oldp] = "";
+		if (GC.getGame().isFinalInitialized())
+		{
+			ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+			if (pkScriptSystem)
 			{
-				return;
+				CvLuaArgsHandle args;
+				bool bResult;
+				LuaSupport::CallHook(pkScriptSystem, "NetIDHashRequest", args.get(), bResult);
 			}
 		}
-		int oldp = (int)p;
-		if (newp >= 0 && newp < MAX_MAJOR_CIVS)
+		else
 		{
+			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "NetIDHashRequest");
+		}
+#endif
+		if (s_draftCurrentProgress != DRAFT_PROGRESS_OVER)
+		{
+			s_draftPlayerSecretHashes[newp] = "";
 			s_draftPlayerSecretHashes[oldp] = "";
-			s_draftPlayerSecretHashes[p] = "";
-			SetDraftPlayerReady((PlayerTypes)oldp, false);
+			SetDraftPlayerReady((PlayerTypes)newp, false);
 			SetDraftPlayerReady(p, false);
 
 			if (GC.getGame().isFinalInitialized())
@@ -3432,7 +3457,6 @@ void DraftResponseSwapPlayers(PlayerTypes p, const char* szSwapWith)
 			else
 			{
 				SLOG("g2");
-				DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("upd|%s", szSwapWith).c_str());
 				DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DraftsUpdate");  // V2
 			}
 		}
@@ -3469,7 +3493,6 @@ void DraftLocalReady()
 		else
 		{
 			SLOG("g2");
-			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DRAFT_PROGRESS_INIT|%s", s_draftLocalSecretHash.c_str()).c_str());
 			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DraftsUpdate");  // V2
 			DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DraftSendSecretHash");  // V2
 		}
@@ -3529,7 +3552,6 @@ void DraftLocalReady()
 	else
 	{
 		SLOG("g2");
-		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DRAFT_PROGRESS_INIT|%s", s_draftLocalSecretHash.c_str()).c_str());
 		DLLUI->AddMessage(0, activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "DraftSendSecretHash");  // V2
 	}
 }
@@ -3874,6 +3896,17 @@ uint64 getLobbyID()
 	return g_c1.m_ulLobbyID;
 }
 #endif
+#ifdef MP_CIVBOT_INTEGRATION
+std::vector<CvString> getPlayerNetIDHashes()
+{
+	return s_PlayerNetIDHashes;
+}
+
+void setPlayerNetIDHashes(std::vector<CvString> value)
+{
+	s_PlayerNetIDHashes = value;
+}
+#endif
 
 void setLeaderKey(PlayerTypes p, const CvString& szKey)
 {
@@ -3936,13 +3969,18 @@ void setLeaderKey(PlayerTypes p, const CvString& szKey)
 		uint uiPlayerID = (((uint)p) & 268435455);  // 28-bit
 		if (uiPlayerID >= MAX_MAJOR_CIVS)
 			return;
-		if (s_draftCurrentProgress != DRAFT_PROGRESS_INIT)
+		if (s_draftCurrentProgress == DRAFT_PROGRESS_INIT)
+		{
+			s_draftPlayerSecretHashes[uiPlayerID] = "";
+			SetDraftPlayerReady((PlayerTypes)uiPlayerID, false);
+		}
+		else
 		{
 			SLOG("WARN attempt to handle player disconnect outside DRAFT_PROGRESS_INIT stage; should reset drafts instead");
-			return;
 		}
-		s_draftPlayerSecretHashes[uiPlayerID] = "";
-		SetDraftPlayerReady((PlayerTypes)uiPlayerID, false);
+		#ifdef MP_CIVBOT_INTEGRATION
+		s_PlayerNetIDHashes[uiPlayerID] = "";
+		#endif
 		return;
 	}
 	else if ((((uint)p >> 28) & 15) == 7)  // register lua Drafts methods for all threads (via ExposedTypes)

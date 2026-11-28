@@ -230,7 +230,7 @@ void                                       DraftResponseSecretHash(PlayerTypes p
 void                                       DraftSyncBans(PlayerTypes p, const char* szBans);
 void                                       DraftResponseBans(PlayerTypes p, const char* szBans);
 void                                       DraftResponseSecret(PlayerTypes p, const char* szSecret);
-void                                       DraftResponseBanRollback(PlayerTypes p, const char* szBans);
+void                                       DraftResponseBanRollback(PlayerTypes p);
 void                                       DraftResponseSwapPlayers(PlayerTypes p, const char* szSwapWith);
 void                                       DraftResponseAllBansReceived(PlayerTypes p);
 void                                       DraftLocalReady();

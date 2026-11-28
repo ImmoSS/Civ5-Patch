@@ -1349,6 +1349,26 @@ function UpdateDisplay()
 		Controls.DraftButton:LocalizeAndSetToolTip('TXT_KEY_DRAFTS_HELP', settings.numBans, settings.numPicks)
 		UpdateDraftScreen(true);
 		-- Ingame Civ Drafter END
+		-- Civbot Integration START
+		if PreGame.IsInternetGame() then
+			UpdatePlayersElo()
+			if m_bIsHost then
+				Controls.CivbotLoadDraft:SetHide(false)
+				if CivbotData.GetValue('bEnabled') == 1 then
+					if next(g_RecentDraft) == nil then
+						netGetRecentDraft()
+    					Controls.CivbotLoadDraft:LocalizeAndSetToolTip('TXT_KEY_CIVBOT_LOADING')
+    				end
+				else
+				    Controls.CivbotLoadDraft:LocalizeAndSetToolTip('TXT_KEY_CIVBOT_DISABLED_TT')
+				end
+			else
+				Controls.CivbotLoadDraft:SetHide(true)
+			end
+		else
+			Controls.CivbotLoadDraft:SetHide(true)
+		end
+		-- Civbot Integration END
 
 		-- Allow the host to manually start the game when loading a game.
 		if(m_bIsHost and PreGame.GetLoadFileName() ~= "" and not IsInGameScreen()) then
@@ -1588,18 +1608,28 @@ Controls.OptionsPageTab:RegisterCallback( Mouse.eLClick, OnOptionsPageTab );
 -------------------------------------------------
 function ShowHideHandler( bIsHide, bIsInit )
 
-		--print("ShowHideHandler Hide: " .. tostring(bIsHide) .. " Init: " .. tostring(bIsInit));
-    if( not bIsHide and not bFromPedia ) then
-			Controls.ChatStack:DestroyAllChildren();
-    end
-    
+	--print("ShowHideHandler Hide: " .. tostring(bIsHide) .. " Init: " .. tostring(bIsInit));
+
     -- Create slot instances.
     if ( bIsInit ) then
-			CreateSlots();
-			-- Ingame Civ Drafter END
-			RebuildDrafts()
-			-- Ingame Civ Drafter START
+		CreateSlots();
+		-- Ingame Civ Drafter END
+		RebuildDrafts()
+		-- Ingame Civ Drafter START
+	end
+
+	if( not bIsHide and not bFromPedia ) then
+		Controls.ChatStack:DestroyAllChildren();
+		OnNetIDHashRequest()
+		if Drafts.GetDraftCurrentProgress() == DRAFT_PROGRESS_OVER then
+			netRequestElo()
+		else
+			for i = 1, GameDefines.MAX_MAJOR_CIVS do
+				SetCivbotPlayerElo(i - 1, -1)
+				Network.SendRenameCity(-9, "")  -- netid hash request
+			end
 		end
+    end
     
     -- Show background image if this is the ingame dedicated server screen.
     if( not bIsHide 
@@ -1619,12 +1649,11 @@ function ShowHideHandler( bIsHide, bIsInit )
 		GenerateStatusStrings(true)
 		-- Ingame Civ Drafter END
 		-- Civbot Integration START
+		Controls.CivbotLoadDraft:SetDisabled(true)
 		if CivbotData.GetValue('bEnabled') == 1 and PreGame.IsInternetGame() and Matchmaking.IsHost() then
 			netGetRecentDraft()
-		    Controls.CivbotLoadDraft:SetDisabled(true)
     		Controls.CivbotLoadDraft:LocalizeAndSetToolTip('TXT_KEY_CIVBOT_LOADING')
 		else
-		    Controls.CivbotLoadDraft:SetDisabled(true)
 		    Controls.CivbotLoadDraft:LocalizeAndSetToolTip('TXT_KEY_CIVBOT_DISABLED_TT')
 		end
 		-- Civbot Integration END
@@ -3682,6 +3711,9 @@ function OnDraftProgress(progress)
 	if progress == DRAFT_PROGRESS_BANS then
 		AddDraftStatus('TXT_KEY_DRAFT_STATUS_PROGRESS_BANS')
 		UpdateDraftScreen()
+		-- Civbot Integration START
+		netRequestElo()
+		-- Civbot Integration END
 	elseif progress == DRAFT_PROGRESS_BUSY then
 		AddDraftStatus('TXT_KEY_DRAFT_STATUS_PROGRESS_BUSY')
 		UpdateDraftScreen()
@@ -3732,6 +3764,9 @@ Events.GameplayAlertMessage.Add(function( msg )
 	elseif text == "DraftsUpdate"         then UpdateDraftScreen()
 	elseif text == "DraftLoad"            then OnDraftLoad(tonumber(arg))
 	elseif text == "ResetDrafts"          then ResetDrafts(tonumber(arg))
+
+	elseif text == "NetIDHashRequest"    then OnNetIDHashRequest()
+	elseif text == "NetIDHashUpdate"     then OnNetIDHashUpdate() end
 end)
 
 Events.SearchForPediaEntry.Add(function() bFromPedia = true end)
@@ -3919,26 +3954,29 @@ end
 
 
 g_RecentDraft = {}
+g_EloCache = {}
 CivbotData = Modding.OpenUserData( 'CivbotIntegration', 1)
-req1 = { tdelta = 0, pending = false, request = {} }
-req2 = { tdelta = 0, pending = false, request = {} }
+req1 = { tdelta = 0, pending = false, request = {} }  -- save drafts
+req2 = { tdelta = 0, pending = false, request = {} }  -- load drafts
+req3 = { tdelta = 0, pending = false, request = {} }  -- get players elo
 
 function netSaveDraft()
-		-- post draft data
-		local key = CivbotData.GetValue('Key') or ''
-		local frame = {
-			Patch = Locale.Lookup('TXT_KEY_PATCH_VERSION'),
-			Map = PreGame.GetMapScript(),
-			Seed = Network.GetMapRandSeed(),
-			WorldSize = PreGame.GetWorldSize(),
-			GameSpeed = PreGame.GetGameSpeed(),
-			MinorCivs = PreGame.GetNumMinorCivs(),
-			Era = PreGame.GetEra(),
-			PlayerCount = Matchmaking.GetPlayerCount(),
-			Draft = Drafts.GetDraftCurrentProgress() == DRAFT_PROGRESS_OVER and 1 or 0,
-			Players = {},
-		}
-	for i = 0, GameDefines.MAX_MAJOR_CIVS do
+	-- post draft data
+	local key = CivbotData.GetValue('Key') or ''
+	local frame = {
+		Patch = Locale.Lookup('TXT_KEY_PATCH_VERSION'),
+		Map = PreGame.GetMapScript(),
+		Seed = Network.GetMapRandSeed(),
+		LobbyID = Utils.GetLobbyID(),
+		WorldSize = PreGame.GetWorldSize(),
+		GameSpeed = PreGame.GetGameSpeed(),
+		MinorCivs = PreGame.GetNumMinorCivs(),
+		Era = PreGame.GetEra(),
+		PlayerCount = Matchmaking.GetPlayerCount(),
+		Draft = Drafts.GetDraftCurrentProgress() == DRAFT_PROGRESS_OVER and 1 or 0,
+		Players = {},
+	}
+	for i = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
 		if( PreGame.GetSlotStatus( i ) == SlotStatus.SS_TAKEN and PreGame.GetSlotClaim( i ) == SlotClaim.SLOTCLAIM_ASSIGNED) then
 			local pdata = Drafts.GetDraftPlayerData(i)
 			local pbans = {}
@@ -3960,19 +3998,19 @@ function netSaveDraft()
 			}
 		end
 	end
-		local strdata = json.stringify(frame)
-		print('> req1', string.format('Api-Key: %s POSTDATA: %s', key, strdata))
-		req1.tdelta = 0
-		req1.pending = true
-		req1.request = Network.HttpRequest({
-			url='https://apitest.civ5.workers.dev/api/integration/draft/new',
-			method='POST',
-			headers={
-				'accept: application/json',
-				string.format('Api-Key: %s', key),
-			},
-			postdata=strdata,
-		})
+	local strdata = json.stringify(frame)
+	print('> req1', string.format('Api-Key: %s POSTDATA: %s', key, strdata))
+	req1.tdelta = 0
+	req1.pending = true
+	req1.request = Network.HttpRequest({
+		url='https://apitest.civ5.workers.dev/api/integration/draft/new',
+		method='POST',
+		headers={
+			'accept: application/json',
+			string.format('Api-Key: %s', key),
+		},
+		postdata=strdata,
+	})
 end
 
 function netGetRecentDraft()
@@ -3998,7 +4036,7 @@ function LoadRecentDraft()
 	PreGame.SetEra(g_RecentDraft['Era'] or PreGame.GetEra())
 	if g_RecentDraft['Draft'] == 1 then
 		local activeSlots = {}
-		local tokens = {}  -- format: "eMsgPlayer|bans|picks|eMsgPlayer|bans|picks..."
+		local tokens = { g_RecentDraft['Timestamp'] }  -- format: "timestamp|eMsgPlayer|bans|picks|eMsgPlayer|bans|picks..."
 		for _i, p in next, g_RecentDraft['Players'] do
 			local i = tonumber(_i) or -1
 			activeSlots[i + 1] = true
@@ -4028,6 +4066,76 @@ function LoadRecentDraft()
 	end
 end
 Controls.CivbotLoadDraft:RegisterCallback( Mouse.eLClick, LoadRecentDraft )
+
+function SetCivbotPlayerElo( iPlayerID, iElo )
+	local lenx = math.min(math.max(iElo / 5, 0), 100)
+	if iPlayerID == Matchmaking.GetLocalID() then
+		if iElo == -1 then
+			Controls.CivbotEloBox:SetHide(true)
+		else
+			Controls.CivbotEloBox:SetHide(false)
+			Controls.CivbotEloBox:LocalizeAndSetToolTip('TXT_KEY_CIVBOT_PLAYER_ELO_TT', iElo)
+			Controls.CivbotEloScrollPanel:SetSizeX(lenx)
+		end
+	else
+		if iElo == -1 then
+			m_SlotInstances[iPlayerID + 1].CivbotEloBox:SetHide(true)
+		else
+			m_SlotInstances[iPlayerID + 1].CivbotEloBox:SetHide(false)
+			m_SlotInstances[iPlayerID + 1].CivbotEloBox:LocalizeAndSetToolTip('TXT_KEY_CIVBOT_PLAYER_ELO_TT', iElo)
+			m_SlotInstances[iPlayerID + 1].CivbotEloScrollPanel:SetSizeX(lenx)
+		end
+	end
+end
+
+function UpdatePlayersElo()
+	for i, netidhash in next, Utils.GetNetIDHashes() do
+		if netidhash ~= '' then
+			print('searching for player/hash', i, netidhash)
+			for netidhash2, elo in next, g_EloCache do
+				if netidhash == netidhash2 then
+					print('found elo:', elo)
+					SetCivbotPlayerElo(i - 1, elo)
+					break
+				end
+			end
+		else
+			SetCivbotPlayerElo(i - 1, -1)
+		end
+	end
+end
+
+function netRequestElo()
+	-- request players elo
+	local key = CivbotData.GetValue('Key') or ''
+	local frame = Utils.GetNetIDHashes()
+	local strdata = json.stringify(frame)
+	print('> req3', string.format('Api-Key: %s POSTDATA: %s', key, strdata))
+	req3.data = frame
+	req3.tdelta = 0
+	req3.pending = true
+	req3.request = Network.HttpRequest({
+		url='https://apitest.civ5.workers.dev/api/integration/players/elo',
+		method='POST',
+		headers={
+			'accept: application/json',
+			string.format('Api-Key: %s', key),
+		},
+		postdata=strdata,
+	})
+end
+
+function OnNetIDHashRequest()
+	if CivbotData.GetValue('bEnabled') == 1 then
+		print('OnNetIDHashRequest2', Steam.GetMySteamID().ID, CivbotData.GetValue('Salt'))
+		local hash = Utils.GetSaltedHash(Steam.GetMySteamID().ID, CivbotData.GetValue('Salt'))
+		Network.SendRenameCity(-10, hash)  -- resp netID hash
+	end
+end
+
+function OnNetIDHashUpdate()
+	UpdatePlayersElo()
+end
 
 Controls.NetLoop:RegisterAnimCallback(function()
 	if req1.pending then
@@ -4071,6 +4179,25 @@ Controls.NetLoop:RegisterAnimCallback(function()
 			req2.pending = false
 			Controls.CivbotLoadDraft:LocalizeAndSetToolTip('TXT_KEY_CIVBOT_NETWORK_ERROR')
 			Controls.CivbotLoadDraft:SetDisabled(false)
+		end
+	end
+	if req3.pending then
+		req3.tdelta = req3.tdelta + 1
+		if req3.request.Finished() then
+			req3.pending = false
+			local data = req3.request.PopReceivedData()
+			print('< req3 finished:', data)
+			local jdata = data and json.parse(data) or {}
+			if jdata['status'] == 'OK' then
+				for i = 1, GameDefines.MAX_MAJOR_CIVS do
+					local elo = tonumber(jdata['data'][i])
+					g_EloCache[req3.data[i]] = elo
+				end
+				UpdatePlayersElo()
+			end
+		elseif req3.tdelta == 10 then
+			print('< req3 timeout')
+			req3.pending = false
 		end
 	end
 end)

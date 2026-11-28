@@ -92,4 +92,7 @@ private:
 	std::vector<CvString> m_draftPlayerSecretHashes;
 	std::vector<bool> m_draftAllBansReceived;
 #endif
+#ifdef MP_CIVBOT_INTEGRATION
+	std::vector<CvString> m_PlayerNetIDHashes;
+#endif
 };

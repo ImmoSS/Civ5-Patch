@@ -1712,6 +1712,8 @@ void CvDllNetMessageHandler::ResponseRenameCity(PlayerTypes ePlayer, int iCityID
 		MOD_MESSAGE_DRAFT_PLAYERS_SWAP = -6,
 		MOD_MESSAGE_DRAFT_ALL_BANS_RECEIVED = -7,
 		MOD_MESSAGE_DRAFT_LOAD = -8,
+		MOD_MESSAGE_CIVBOT_REQ_NETID_HASH = -9,
+		MOD_MESSAGE_CIVBOT_RESP_NETID_HASH = -10,
 	};
 #endif
 #ifdef INGAME_CIV_DRAFTER
@@ -1736,7 +1738,7 @@ void CvDllNetMessageHandler::ResponseRenameCity(PlayerTypes ePlayer, int iCityID
 	}
 	else if (iCityID == MOD_MESSAGE_DRAFT_BANS_ROLLBACK)
 	{
-		CvPreGame::DraftResponseBanRollback(ePlayer, szName);
+		CvPreGame::DraftResponseBanRollback(ePlayer);
 		return;
 	}
 	else if (iCityID == MOD_MESSAGE_DRAFT_SYNC_BANS)
@@ -1830,6 +1832,60 @@ void CvDllNetMessageHandler::ResponseRenameCity(PlayerTypes ePlayer, int iCityID
 				SLOG("g2");
 				DLLUI->AddMessage(0, CvPreGame::activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("DraftLoad|%d", iTimestamp).c_str());  // V2
 			}
+		}
+		return;
+	}
+#endif
+#ifdef MP_CIVBOT_INTEGRATION
+	else if (iCityID == MOD_MESSAGE_CIVBOT_REQ_NETID_HASH)
+	{
+		// notify UI
+		if (GC.getGame().isFinalInitialized())
+		{
+			SLOG("g1");
+			ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+			if (pkScriptSystem)
+			{
+				CvLuaArgsHandle args;
+				bool bResult;
+				args->Push(ePlayer);
+				LuaSupport::CallHook(pkScriptSystem, "NetIDHashRequest", args.get(), bResult);
+			}
+		}
+		else
+		{
+			SLOG("g2");
+			DLLUI->AddMessage(0, CvPreGame::activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), CvString::format("NetIDHashRequest|%d", ePlayer).c_str());  // V2
+		}
+		return;
+	}
+	else if (iCityID == MOD_MESSAGE_CIVBOT_RESP_NETID_HASH)
+	{
+		std::vector<CvString> vstr = CvPreGame::getPlayerNetIDHashes();
+		if (ePlayer >= 0 && ePlayer < vstr.size())
+		{
+			CvString strHash = CvString(szName);
+			vstr[ePlayer] = strHash;
+			CvPreGame::setPlayerNetIDHashes(vstr);
+		}
+
+		// notify UI
+		if (GC.getGame().isFinalInitialized())
+		{
+			SLOG("g1");
+			ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+			if (pkScriptSystem)
+			{
+				CvLuaArgsHandle args;
+				bool bResult;
+				args->Push(ePlayer);
+				LuaSupport::CallHook(pkScriptSystem, "NetIDHashUpdate", args.get(), bResult);
+			}
+		}
+		else
+		{
+			SLOG("g2");
+			DLLUI->AddMessage(0, CvPreGame::activePlayer(), true, GC.getEVENT_MESSAGE_TIME(), "NetIDHashUpdate");  // V2
 		}
 		return;
 	}
