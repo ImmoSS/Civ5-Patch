@@ -321,7 +321,6 @@ CvString s_draftShuffledCivs = "";
 int s_draftPlayersReady = 0;
 int s_draftCurrentProgress = DRAFT_PROGRESS_INIT;
 int s_draftResult = DRAFT_RESULT_NONE;
-SteamAPI g_c1;  // XXX
 std::vector<CvString> s_draftPlayerBans;
 std::vector<CvString> s_draftPlayerPicks(MAX_MAJOR_CIVS);
 std::vector<CvString> s_draftPlayerDiscardedPicks(MAX_MAJOR_CIVS);
@@ -428,6 +427,9 @@ CvString hash(CvString m) {
 	//SLOG("msg: %s hash: %s", m.c_str(), s.c_str());
 	return s;
 }
+#endif
+#ifdef LUA_UTILS_STEAM_API
+SteamAPI g_c1;  // XXX
 #endif
 #ifdef MP_CIVBOT_INTEGRATION
 std::vector<CvString> s_PlayerNetIDHashes(MAX_MAJOR_CIVS);

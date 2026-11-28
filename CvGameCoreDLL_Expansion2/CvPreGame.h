@@ -271,6 +271,10 @@ void                                       setDraftAllBansReceived(std::vector<b
 void                                       InitSteamAPI();
 uint64                                     getLobbyID();
 #endif
+#ifdef MP_CIVBOT_INTEGRATION
+std::vector<CvString>                      getPlayerNetIDHashes();
+void                                       setPlayerNetIDHashes(std::vector<CvString> value);
+#endif
 void                                       setLeaderKey(PlayerTypes p, const CvString& n);
 void                                       setLeaderKeyPackageID(PlayerTypes p, const GUID& n);
 void										 setLoadFileName(const CvString& fileName);
@@ -429,13 +433,18 @@ public:
 		m_ScreenshotReady(this, &SteamAPI::OnScreenshotDone),
 		m_LobbyEnter(this, &SteamAPI::OnLobbyEnter)
 	{
+		m_bReg = false;
 		m_ulLobbyID = 0;
 	}
 
 	void Init() {
-		m_ScreenshotReady.Register(this, &SteamAPI::OnScreenshotDone);
-		m_GameOverlayActivated.Register(this, &SteamAPI::OnGameOverlayActivated);
-		m_LobbyEnter.Register(this, &SteamAPI::OnLobbyEnter);
+		if (!m_bReg)
+		{
+			m_bReg = true;
+			m_ScreenshotReady.Register(this, &SteamAPI::OnScreenshotDone);
+			m_GameOverlayActivated.Register(this, &SteamAPI::OnGameOverlayActivated);
+			m_LobbyEnter.Register(this, &SteamAPI::OnLobbyEnter);
+		}
 	}
 
 	// Callbacks
@@ -457,6 +466,7 @@ public:
 	}
 
 	// Variables
+	bool m_bReg;
 	uint64 m_ulLobbyID;
 };
 # endif  // STEAM_API
