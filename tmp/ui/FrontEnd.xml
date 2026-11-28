@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- edit:
+	- Random background image & scaling
+for EUI and vanilla UI -->
 <Context ColorSet="Beige_Black_Alpha" Font="TwCenMT22" FontStyle="Shadow" Name="FrontEnd" >
 
     <Box Anchor="C,C" Size="Full,Full" Color="0,0,0,255" />
     <Image Anchor="C,C" Offset="0,0"  Size="1920,1200" ID="AtlasLogo" />
+    <!-- Background Slideshow START -->
+    <AlphaAnim Anchor="C,C" Size="1920,1200" Texture="loadingbasegame_12.dds" Stopped="1" Cycle="Once" Speed="0.7" AlphaStart=".99" AlphaEnd="0.01" ID="AtlasLogoAnim" Hidden="0" />
+    <SlideAnim ID="BackgroundLoop" Anchor="L,T" Start="0,0" End="1,0" Speed="0.033" Pause="0" Cycle="Repeat" />
+    <!-- Background Slideshow END -->
 
 
     <!-- Child Screens -->

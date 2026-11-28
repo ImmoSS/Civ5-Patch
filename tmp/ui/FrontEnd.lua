@@ -31,6 +31,21 @@ g_LoadingPaths = {
 	'mod_loading_10.dds',  -- Alhambra
 	'mod_loading_11.dds',  -- Leaning Tower of Pisa
 }
+local numImages = 0
+for _, _ in next, g_LoadingPaths do
+	numImages = numImages + 1
+end
+numImages = #g_LoadingPaths
+-- shuffle list
+math.randomseed(os.time())
+for k = 0, numImages - 1 do
+	local r = math.random(k + 1, numImages)
+	local temp = g_LoadingPaths[k + 1]
+	g_LoadingPaths[k + 1] = g_LoadingPaths[r]
+	g_LoadingPaths[r] = temp
+end
+g_LoadingCursor = next(g_LoadingPaths)
+g_ReverseAnim = false
 -- Random background image & scaling END
 
 function ShowHideHandler( bIsHide, bIsInit )
@@ -48,7 +63,7 @@ function ShowHideHandler( bIsHide, bIsInit )
 	if not bIsHide then
 		--Controls.AtlasLogo:SetTexture( "CivilzationVAtlas.dds" );
 -- Random Random background image & scaling START
-		Controls.AtlasLogo:SetTexture( g_LoadingPaths[math.random(#g_LoadingPaths)] );
+		Controls.AtlasLogo:SetTexture( g_LoadingPaths[g_LoadingCursor] );
 		OnScreenResize()
 -- Random Random background image & scaling END
 		UIManager:SetUICursor( 0 );
@@ -63,6 +78,7 @@ ContextPtr:SetShowHideHandler( ShowHideHandler );
 function OnScreenResize()
 	local rx, ry = UIManager:GetScreenSizeVal();
 	Controls.AtlasLogo:Resize(rx, rx * 1200 / 1920);
+	Controls.AtlasLogoAnim:SetSizeVal(rx, rx * 1200 / 1920);
 end
 
 function SystemUpdateUIHandler( type )
@@ -71,4 +87,20 @@ function SystemUpdateUIHandler( type )
 	end
 end
 Events.SystemUpdateUI.Add( SystemUpdateUIHandler )
+
+Controls.BackgroundLoop:RegisterAnimCallback(function()
+	g_LoadingCursor = next(g_LoadingPaths, g_LoadingCursor) or next(g_LoadingPaths)
+	--print('NEXT IMAGE:', g_LoadingPaths[g_LoadingCursor])
+	if g_ReverseAnim then
+		g_ReverseAnim = false
+		Controls.AtlasLogoAnim:SetTexture(g_LoadingPaths[g_LoadingCursor])
+		Controls.AtlasLogoAnim:Reverse()
+	else
+		g_ReverseAnim = true
+		Controls.AtlasLogo:SetTexture(g_LoadingPaths[g_LoadingCursor])
+		Controls.AtlasLogoAnim:SetToBeginning()
+		Controls.AtlasLogoAnim:Play()
+	end
+	OnScreenResize()
+end)
 -- Random background image & scaling END
