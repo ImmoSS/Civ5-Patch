@@ -18,6 +18,7 @@ copy /y "%patchfolder%\tmp\ui\MiniMapPanel.xml" "%patchfolder%\UI\MiniMapPanel.x
 copy /y "%patchfolder%\tmp\ui\ChooseIdeologyPopup.lua" "%patchfolder%\UI\ChooseIdeologyPopup.lua" > nul
 copy /y "%patchfolder%\tmp\ui\CCVotePopup.lua" "%patchfolder%\UI\CCVotePopup.lua" > nul
 copy /y "%patchfolder%\tmp\ui\CCVotePopup.xml" "%patchfolder%\UI\CCVotePopup.xml" > nul
+copy /y "%patchfolder%\tmp\ui\EndGameMenu.xml" "%patchfolder%\UI\EndGameMenu.xml" > nul
 copy /y "%patchfolder%\tmp\ui\EndGameMenu.lua" "%patchfolder%\UI\EndGameMenu.lua" > nul
 copy /y "%patchfolder%\tmp\ui\ProposalChartPopup.lua" "%patchfolder%\UI\ProposalChartPopup.lua" > nul
 copy /y "%patchfolder%\tmp\ui\ProposalChartPopup.xml" "%patchfolder%\UI\ProposalChartPopup.xml" > nul
